@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="redis是什么redis是一个开源的，实用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库 安装过程  略基本使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis基本使用">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/redis基本使用/index.html">
+<meta property="og:site_name" content="王靖尧的博客">
+<meta property="og:description" content="redis是什么redis是一个开源的，实用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库 安装过程  略基本使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-06T10:10:57.034Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis基本使用">
+<meta name="twitter:description" content="redis是什么redis是一个开源的，实用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库 安装过程  略基本使用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/redis基本使用/">
+
+
+
+
+
+  <title>redis基本使用 | 王靖尧的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王靖尧的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/redis基本使用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王靖尧">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王靖尧的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis基本使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T18:10:43+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="redis是什么"><a href="#redis是什么" class="headerlink" title="redis是什么"></a>redis是什么</h3><p>redis是一个开源的，实用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库</p>
+<h3 id="安装过程-略"><a href="#安装过程-略" class="headerlink" title="安装过程  略"></a>安装过程  略</h3><h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br></pre></td><td class="code"><pre><span class="line">public class RedisClient &#123;</span><br><span class="line"></span><br><span class="line">	private Jedis jedis;// 非切片客户端连接</span><br><span class="line">	private JedisPool jedisPool;// 非切片连接池</span><br><span class="line">	private ShardedJedis shardedJedis;// 切片客户端连接</span><br><span class="line">	private ShardedJedisPool shardedJedisPool;// 切片连接池</span><br><span class="line"></span><br><span class="line">	public RedisClient() &#123;</span><br><span class="line">		initialPool();</span><br><span class="line">		initialShardedPool();</span><br><span class="line">		shardedJedis = shardedJedisPool.getResource();</span><br><span class="line">		jedis = jedisPool.getResource();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * 初始化非切片连接池</span><br><span class="line">	 */</span><br><span class="line">	private void initialPool() &#123;</span><br><span class="line">		// 池基本配置</span><br><span class="line">		JedisPoolConfig config = new JedisPoolConfig();</span><br><span class="line">		//可用连接实例的最大数目，默认值为8</span><br><span class="line">		config.setMaxActive(20);</span><br><span class="line">		//控制一个pool最多有多少个状态为idle(空闲的)的jedis实例，默认值也是8</span><br><span class="line">		config.setMaxIdle(5);</span><br><span class="line">		//等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException</span><br><span class="line">		config.setMaxWait(1000l);</span><br><span class="line">		config.setTestOnBorrow(false);</span><br><span class="line"></span><br><span class="line">		jedisPool = new JedisPool(config, &quot;127.0.0.1&quot;, 6379);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * 初始化切片池</span><br><span class="line">	 */</span><br><span class="line">	private void initialShardedPool() &#123;</span><br><span class="line">		// 池基本配置</span><br><span class="line">		JedisPoolConfig config = new JedisPoolConfig();</span><br><span class="line">		config.setMaxActive(20);</span><br><span class="line">		config.setMaxIdle(5);</span><br><span class="line">		config.setMaxWait(1000l);</span><br><span class="line">		config.setTestOnBorrow(false);</span><br><span class="line">		// slave链接</span><br><span class="line">		List&lt;JedisShardInfo&gt; shards = new ArrayList&lt;JedisShardInfo&gt;();</span><br><span class="line">		shards.add(new JedisShardInfo(&quot;127.0.0.1&quot;, 6379, &quot;master&quot;));</span><br><span class="line"></span><br><span class="line">		// 构造池</span><br><span class="line">		shardedJedisPool = new ShardedJedisPool(config, shards);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void show() &#123;</span><br><span class="line">		KeyOperate();</span><br><span class="line">		StringOperate();</span><br><span class="line">		ListOperate();</span><br><span class="line">		SetOperate();</span><br><span class="line">		SortedSetOperate();</span><br><span class="line">		HashOperate();</span><br><span class="line">		jedisPool.returnResource(jedis);</span><br><span class="line">		shardedJedisPool.returnResource(shardedJedis);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * key 功能 </span><br><span class="line">	 * 1.清空所有数据 jedis.flushDB()</span><br><span class="line">	 * 2.判断键是否存在 shardedJedis.exists(&quot;key1&quot;)</span><br><span class="line">	 * 3.新增键值对 shardedJedis.set(&quot;key001&quot;, &quot;value001&quot;)</span><br><span class="line">	 * 4.删除某个key,若key不存在，则忽略该命令 jedis.del(&quot;key002&quot;)</span><br><span class="line">	 * 5.设置 key001的过期时间 jedis.expire(&quot;key001&quot;, 5)</span><br><span class="line">	 * 6.查看某个key的剩余生存时间,单位【秒】.永久生存或者不存在的都返回-1  jedis.ttl(&quot;key001&quot;)</span><br><span class="line">	 * 7.移除某个key的生存时间  jedis.persist(&quot;key001&quot;)</span><br><span class="line">	 * 8.查看key所储存的值的类型 jedis.type(&quot;key001&quot;)</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	private void KeyOperate() &#123;</span><br><span class="line">		System.out.println(&quot;======================key==========================&quot;);</span><br><span class="line">		// 清空数据</span><br><span class="line">		System.out.println(&quot;清空库中所有数据：&quot; + jedis.flushDB());</span><br><span class="line">		// 判断key否存在</span><br><span class="line">		System.out.println(&quot;判断key999键是否存在：&quot; + shardedJedis.exists(&quot;key999&quot;));</span><br><span class="line">		System.out.println(&quot;新增key001,value001键值对：&quot; + shardedJedis.set(&quot;key001&quot;, &quot;value001&quot;));</span><br><span class="line">		System.out.println(&quot;判断key001是否存在：&quot; + shardedJedis.exists(&quot;key001&quot;));</span><br><span class="line">		// 输出系统中所有的key</span><br><span class="line">		System.out.println(&quot;新增key002,value002键值对：&quot; + shardedJedis.set(&quot;key002&quot;, &quot;value002&quot;));</span><br><span class="line">		System.out.println(&quot;系统中所有键如下：&quot;);</span><br><span class="line">		Set&lt;String&gt; keys = jedis.keys(&quot;*&quot;);</span><br><span class="line">		Iterator&lt;String&gt; it = keys.iterator();</span><br><span class="line">		while (it.hasNext()) &#123;</span><br><span class="line">			String key = it.next();</span><br><span class="line">			System.out.println(key);</span><br><span class="line">		&#125;</span><br><span class="line">		// 删除某个key,若key不存在，则忽略该命令。</span><br><span class="line">		System.out.println(&quot;系统中删除key002: &quot; + jedis.del(&quot;key002&quot;));</span><br><span class="line">		System.out.println(&quot;判断key002是否存在：&quot; + shardedJedis.exists(&quot;key002&quot;));</span><br><span class="line">		// 设置 key001的过期时间</span><br><span class="line">		System.out.println(&quot;设置 key001的过期时间为5秒:&quot; + jedis.expire(&quot;key001&quot;, 5));</span><br><span class="line">		try &#123;</span><br><span class="line">			Thread.sleep(2000);</span><br><span class="line">		&#125; catch (InterruptedException e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		// 查看某个key的剩余生存时间,单位【秒】.永久生存或者不存在的都返回-1</span><br><span class="line">		System.out.println(&quot;查看key001的剩余生存时间：&quot; + jedis.ttl(&quot;key001&quot;));</span><br><span class="line">		// 移除某个key的生存时间</span><br><span class="line">		System.out.println(&quot;移除key001的生存时间：&quot; + jedis.persist(&quot;key001&quot;));</span><br><span class="line">		System.out.println(&quot;查看key001的剩余生存时间：&quot; + jedis.ttl(&quot;key001&quot;));</span><br><span class="line">		// 查看key所储存的值的类型</span><br><span class="line">		System.out.println(&quot;查看key所储存的值的类型：&quot; + jedis.type(&quot;key001&quot;));</span><br><span class="line">		/*</span><br><span class="line">		 * 一些其他方法：1、修改键名：jedis.rename(&quot;key6&quot;, &quot;key0&quot;);</span><br><span class="line">		 * 2、将当前db的key移动到给定的db当中：jedis.move(&quot;foo&quot;, 1)</span><br><span class="line">		 */</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * String功能</span><br><span class="line">	 * 1.一次性新增key201,key202  jedis.mset(&quot;key201&quot;, &quot;value201&quot;, &quot;key202&quot;, &quot;value202&quot;)</span><br><span class="line">	 * 2.一次性删除key201,key202  jedis.del(new String[] &#123; &quot;key201&quot;, &quot;key202&quot; &#125;</span><br><span class="line">	 * 3.一次性获取key201,key202  jedis.mget(&quot;key201&quot;, &quot;key202&quot;)</span><br><span class="line">	 * 4.新增键值对时防止覆盖原先值  shardedJedis.setnx(&quot;key302&quot;, &quot;value302_new&quot;)</span><br><span class="line">	 * 5.获取原值，更新为新值一步完成 shardedJedis.getSet(&quot;key302&quot;, &quot;value302-after-getset&quot;)</span><br><span class="line">	 * 6.获取key302对应值中的子串   shardedJedis.getrange(&quot;key302&quot;, 5, 7)</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	private void StringOperate() &#123;</span><br><span class="line">		System.out.println(&quot;======================String_1==========================&quot;);</span><br><span class="line">		// 清空数据</span><br><span class="line">		System.out.println(&quot;清空库中所有数据：&quot; + jedis.flushDB());</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============增=============&quot;);</span><br><span class="line">		jedis.set(&quot;key001&quot;, &quot;value001&quot;);</span><br><span class="line">		jedis.set(&quot;key002&quot;, &quot;value002&quot;);</span><br><span class="line">		jedis.set(&quot;key003&quot;, &quot;value003&quot;);</span><br><span class="line">		System.out.println(&quot;已新增的3个键值对如下：&quot;);</span><br><span class="line">		System.out.println(jedis.get(&quot;key001&quot;));</span><br><span class="line">		System.out.println(jedis.get(&quot;key002&quot;));</span><br><span class="line">		System.out.println(jedis.get(&quot;key003&quot;));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============删=============&quot;);</span><br><span class="line">		System.out.println(&quot;删除key003键值对：&quot; + jedis.del(&quot;key003&quot;));</span><br><span class="line">		System.out.println(&quot;获取key003键对应的值：&quot; + jedis.get(&quot;key003&quot;));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============改=============&quot;);</span><br><span class="line">		// 1、直接覆盖原来的数据</span><br><span class="line">		System.out.println(&quot;直接覆盖key001原来的数据：&quot; + jedis.set(&quot;key001&quot;, &quot;value001-update&quot;));</span><br><span class="line">		System.out.println(&quot;获取key001对应的新值：&quot; + jedis.get(&quot;key001&quot;));</span><br><span class="line">		// 2、直接覆盖原来的数据</span><br><span class="line">		System.out.println(&quot;在key002原来值后面追加：&quot; + jedis.append(&quot;key002&quot;, &quot;+appendString&quot;));</span><br><span class="line">		System.out.println(&quot;获取key002对应的新值&quot; + jedis.get(&quot;key002&quot;));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============增，删，查（多个）=============&quot;);</span><br><span class="line">		/**</span><br><span class="line">		 * mset,mget同时新增，修改，查询多个键值对 等价于： jedis.set(&quot;name&quot;,&quot;ssss&quot;);</span><br><span class="line">		 * jedis.set(&quot;jarorwar&quot;,&quot;xxxx&quot;);</span><br><span class="line">		 */</span><br><span class="line">		System.out.println(&quot;一次性新增key201,key202,key203,key204及其对应值：&quot;</span><br><span class="line">				+ jedis.mset(&quot;key201&quot;, &quot;value201&quot;, &quot;key202&quot;, &quot;value202&quot;, &quot;key203&quot;, &quot;value203&quot;, &quot;key204&quot;, &quot;value204&quot;));</span><br><span class="line">		System.out.println(</span><br><span class="line">				&quot;一次性获取key201,key202,key203,key204各自对应的值：&quot; + jedis.mget(&quot;key201&quot;, &quot;key202&quot;, &quot;key203&quot;, &quot;key204&quot;));</span><br><span class="line">		System.out.println(&quot;一次性删除key201,key202：&quot; + jedis.del(new String[] &#123; &quot;key201&quot;, &quot;key202&quot; &#125;));</span><br><span class="line">		System.out.println(</span><br><span class="line">				&quot;一次性获取key201,key202,key203,key204各自对应的值：&quot; + jedis.mget(&quot;key201&quot;, &quot;key202&quot;, &quot;key203&quot;, &quot;key204&quot;));</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		// jedis具备的功能shardedJedis中也可直接使用，下面测试一些前面没用过的方法</span><br><span class="line">		System.out.println(&quot;======================String_2==========================&quot;);</span><br><span class="line">		// 清空数据</span><br><span class="line">		System.out.println(&quot;清空库中所有数据：&quot; + jedis.flushDB());</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============新增键值对时防止覆盖原先值=============&quot;);</span><br><span class="line">		System.out.println(&quot;原先key301不存在时，新增key301：&quot; + shardedJedis.setnx(&quot;key301&quot;, &quot;value301&quot;));</span><br><span class="line">		System.out.println(&quot;原先key302不存在时，新增key302：&quot; + shardedJedis.setnx(&quot;key302&quot;, &quot;value302&quot;));</span><br><span class="line">		System.out.println(&quot;当key302存在时，尝试新增key302：&quot; + shardedJedis.setnx(&quot;key302&quot;, &quot;value302_new&quot;));</span><br><span class="line">		System.out.println(&quot;获取key301对应的值：&quot; + shardedJedis.get(&quot;key301&quot;));</span><br><span class="line">		System.out.println(&quot;获取key302对应的值：&quot; + shardedJedis.get(&quot;key302&quot;));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============超过有效期键值对被删除=============&quot;);</span><br><span class="line">		// 设置key的有效期，并存储数据</span><br><span class="line">		System.out.println(&quot;新增key303，并指定过期时间为2秒&quot; + shardedJedis.setex(&quot;key303&quot;, 2, &quot;key303-2second&quot;));</span><br><span class="line">		System.out.println(&quot;获取key303对应的值：&quot; + shardedJedis.get(&quot;key303&quot;));</span><br><span class="line">		try &#123;</span><br><span class="line">			Thread.sleep(3000);</span><br><span class="line">		&#125; catch (InterruptedException e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(&quot;3秒之后，获取key303对应的值：&quot; + shardedJedis.get(&quot;key303&quot;));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============获取原值，更新为新值一步完成=============&quot;);</span><br><span class="line">		System.out.println(&quot;key302原值：&quot; + shardedJedis.getSet(&quot;key302&quot;, &quot;value302-after-getset&quot;));</span><br><span class="line">		System.out.println(&quot;key302新值：&quot; + shardedJedis.get(&quot;key302&quot;));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============获取子串=============&quot;);</span><br><span class="line">		System.out.println(&quot;获取key302对应值中的子串：&quot; + shardedJedis.getrange(&quot;key302&quot;, 5, 7));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * List功能</span><br><span class="line">	 * 1.</span><br><span class="line">	 * 2.</span><br><span class="line">	 * 3.</span><br><span class="line">	 * 4.</span><br><span class="line">	 * 5.</span><br><span class="line">	 * 6.</span><br><span class="line">	 * 7.</span><br><span class="line">	 * 8.</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	private void ListOperate() &#123;</span><br><span class="line">		System.out.println(&quot;======================list==========================&quot;);</span><br><span class="line">		// 清空数据</span><br><span class="line">		System.out.println(&quot;清空库中所有数据：&quot; + jedis.flushDB());</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============增=============&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;vector&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;ArrayList&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;vector&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;vector&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;LinkedList&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;MapList&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;SerialList&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;stringlists&quot;, &quot;HashList&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;numberlists&quot;, &quot;3&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;numberlists&quot;, &quot;1&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;numberlists&quot;, &quot;5&quot;);</span><br><span class="line">		shardedJedis.lpush(&quot;numberlists&quot;, &quot;2&quot;);</span><br><span class="line">		System.out.println(&quot;所有元素-stringlists：&quot; + shardedJedis.lrange(&quot;stringlists&quot;, 0, -1));</span><br><span class="line">		System.out.println(&quot;所有元素-numberlists：&quot; + shardedJedis.lrange(&quot;numberlists&quot;, 0, -1));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============删=============&quot;);</span><br><span class="line">		// 删除列表指定的值 ，第二个参数为删除的个数（有重复时），后add进去的值先被删，类似于出栈</span><br><span class="line">		System.out.println(&quot;成功删除指定元素个数-stringlists：&quot; + shardedJedis.lrem(&quot;stringlists&quot;, 2, &quot;vector&quot;));</span><br><span class="line">		System.out.println(&quot;删除指定元素之后-stringlists：&quot; + shardedJedis.lrange(&quot;stringlists&quot;, 0, -1));</span><br><span class="line">		// 删除区间以外的数据</span><br><span class="line">		System.out.println(&quot;删除下标0-3区间之外的元素：&quot; + shardedJedis.ltrim(&quot;stringlists&quot;, 0, 3));</span><br><span class="line">		System.out.println(&quot;删除指定区间之外元素后-stringlists：&quot; + shardedJedis.lrange(&quot;stringlists&quot;, 0, -1));</span><br><span class="line">		// 列表元素出栈</span><br><span class="line">		System.out.println(&quot;出栈元素：&quot; + shardedJedis.lpop(&quot;stringlists&quot;));</span><br><span class="line">		System.out.println(&quot;元素出栈后-stringlists：&quot; + shardedJedis.lrange(&quot;stringlists&quot;, 0, -1));</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============改=============&quot;);</span><br><span class="line">		// 修改列表中指定下标的值</span><br><span class="line">		shardedJedis.lset(&quot;stringlists&quot;, 0, &quot;hello list!&quot;);</span><br><span class="line">		System.out.println(&quot;下标为0的值修改后-stringlists：&quot; + shardedJedis.lrange(&quot;stringlists&quot;, 0, -1));</span><br><span class="line">		System.out.println(&quot;=============查=============&quot;);</span><br><span class="line">		// 数组长度</span><br><span class="line">		System.out.println(&quot;长度-stringlists：&quot; + shardedJedis.llen(&quot;stringlists&quot;));</span><br><span class="line">		System.out.println(&quot;长度-numberlists：&quot; + shardedJedis.llen(&quot;numberlists&quot;));</span><br><span class="line">		// 排序</span><br><span class="line">		/*</span><br><span class="line">		 * list中存字符串时必须指定参数为alpha，如果不使用SortingParams，而是直接使用sort(&quot;list&quot;)，</span><br><span class="line">		 * 会出现&quot;ERR One or more scores can&apos;t be converted into double&quot;</span><br><span class="line">		 */</span><br><span class="line">		SortingParams sortingParameters = new SortingParams();</span><br><span class="line">		sortingParameters.alpha();</span><br><span class="line">		sortingParameters.limit(0, 3);</span><br><span class="line">		System.out.println(&quot;返回排序后的结果-stringlists：&quot; + shardedJedis.sort(&quot;stringlists&quot;, sortingParameters));</span><br><span class="line">		System.out.println(&quot;返回排序后的结果-numberlists：&quot; + shardedJedis.sort(&quot;numberlists&quot;));</span><br><span class="line">		// 子串： start为元素下标，end也为元素下标；-1代表倒数一个元素，-2代表倒数第二个元素</span><br><span class="line">		System.out.println(&quot;子串-第二个开始到结束：&quot; + shardedJedis.lrange(&quot;stringlists&quot;, 1, -1));</span><br><span class="line">		// 获取列表指定下标的值</span><br><span class="line">		System.out.println(&quot;获取下标为2的元素：&quot; + shardedJedis.lindex(&quot;stringlists&quot;, 2) + &quot;\n&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * Set功能</span><br><span class="line">	 * 1.</span><br><span class="line">	 * 2.</span><br><span class="line">	 * 3.</span><br><span class="line">	 * 4.</span><br><span class="line">	 * 5.</span><br><span class="line">	 * 6.</span><br><span class="line">	 * 7.</span><br><span class="line">	 * 8.</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	private void SetOperate() &#123;</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;======================set==========================&quot;);</span><br><span class="line">		// 清空数据</span><br><span class="line">		System.out.println(&quot;清空库中所有数据：&quot; + jedis.flushDB());</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============增=============&quot;);</span><br><span class="line">		System.out.println(&quot;向sets集合中加入元素element001：&quot; + jedis.sadd(&quot;sets&quot;, &quot;element001&quot;));</span><br><span class="line">		System.out.println(&quot;向sets集合中加入元素element002：&quot; + jedis.sadd(&quot;sets&quot;, &quot;element002&quot;));</span><br><span class="line">		System.out.println(&quot;向sets集合中加入元素element003：&quot; + jedis.sadd(&quot;sets&quot;, &quot;element003&quot;));</span><br><span class="line">		System.out.println(&quot;向sets集合中加入元素element004：&quot; + jedis.sadd(&quot;sets&quot;, &quot;element004&quot;));</span><br><span class="line">		System.out.println(&quot;查看sets集合中的所有元素:&quot; + jedis.smembers(&quot;sets&quot;));</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============删=============&quot;);</span><br><span class="line">		System.out.println(&quot;集合sets中删除元素element003：&quot; + jedis.srem(&quot;sets&quot;, &quot;element003&quot;));</span><br><span class="line">		System.out.println(&quot;查看sets集合中的所有元素:&quot; + jedis.smembers(&quot;sets&quot;));</span><br><span class="line">		/*</span><br><span class="line">		 * System.out.println(&quot;sets集合中任意位置的元素出栈：&quot;+jedis.spop(&quot;sets&quot;));//注：</span><br><span class="line">		 * 出栈元素位置居然不定？--无实际意义</span><br><span class="line">		 * System.out.println(&quot;查看sets集合中的所有元素:&quot;+jedis.smembers(&quot;sets&quot;));</span><br><span class="line">		 */</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============改=============&quot;);</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============查=============&quot;);</span><br><span class="line">		System.out.println(&quot;判断element001是否在集合sets中：&quot; + jedis.sismember(&quot;sets&quot;, &quot;element001&quot;));</span><br><span class="line">		System.out.println(&quot;循环查询获取sets中的每个元素：&quot;);</span><br><span class="line">		Set&lt;String&gt; set = jedis.smembers(&quot;sets&quot;);</span><br><span class="line">		Iterator&lt;String&gt; it = set.iterator();</span><br><span class="line">		while (it.hasNext()) &#123;</span><br><span class="line">			Object obj = it.next();</span><br><span class="line">			System.out.println(obj);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============集合运算=============&quot;);</span><br><span class="line">		System.out.println(&quot;sets1中添加元素element001：&quot; + jedis.sadd(&quot;sets1&quot;, &quot;element001&quot;));</span><br><span class="line">		System.out.println(&quot;sets1中添加元素element002：&quot; + jedis.sadd(&quot;sets1&quot;, &quot;element002&quot;));</span><br><span class="line">		System.out.println(&quot;sets1中添加元素element003：&quot; + jedis.sadd(&quot;sets1&quot;, &quot;element003&quot;));</span><br><span class="line">		System.out.println(&quot;sets1中添加元素element002：&quot; + jedis.sadd(&quot;sets2&quot;, &quot;element002&quot;));</span><br><span class="line">		System.out.println(&quot;sets1中添加元素element003：&quot; + jedis.sadd(&quot;sets2&quot;, &quot;element003&quot;));</span><br><span class="line">		System.out.println(&quot;sets1中添加元素element004：&quot; + jedis.sadd(&quot;sets2&quot;, &quot;element004&quot;));</span><br><span class="line">		System.out.println(&quot;查看sets1集合中的所有元素:&quot; + jedis.smembers(&quot;sets1&quot;));</span><br><span class="line">		System.out.println(&quot;查看sets2集合中的所有元素:&quot; + jedis.smembers(&quot;sets2&quot;));</span><br><span class="line">		System.out.println(&quot;sets1和sets2交集：&quot; + jedis.sinter(&quot;sets1&quot;, &quot;sets2&quot;));</span><br><span class="line">		System.out.println(&quot;sets1和sets2并集：&quot; + jedis.sunion(&quot;sets1&quot;, &quot;sets2&quot;));</span><br><span class="line">		System.out.println(&quot;sets1和sets2差集：&quot; + jedis.sdiff(&quot;sets1&quot;, &quot;sets2&quot;));// 差集：set1中有，set2中没有的元素</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * SortedSet功能</span><br><span class="line">	 * 1.</span><br><span class="line">	 * 2.</span><br><span class="line">	 * 3.</span><br><span class="line">	 * 4.</span><br><span class="line">	 * 5.</span><br><span class="line">	 * 6.</span><br><span class="line">	 * 7.</span><br><span class="line">	 * 8.</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	private void SortedSetOperate() &#123;</span><br><span class="line">		System.out.println(&quot;======================zset==========================&quot;);</span><br><span class="line">		// 清空数据</span><br><span class="line">		System.out.println(jedis.flushDB());</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============增=============&quot;);</span><br><span class="line">		System.out.println(&quot;zset中添加元素element001：&quot; + shardedJedis.zadd(&quot;zset&quot;, 7.0, &quot;element001&quot;));</span><br><span class="line">		System.out.println(&quot;zset中添加元素element002：&quot; + shardedJedis.zadd(&quot;zset&quot;, 8.0, &quot;element002&quot;));</span><br><span class="line">		System.out.println(&quot;zset中添加元素element003：&quot; + shardedJedis.zadd(&quot;zset&quot;, 2.0, &quot;element003&quot;));</span><br><span class="line">		System.out.println(&quot;zset中添加元素element004：&quot; + shardedJedis.zadd(&quot;zset&quot;, 3.0, &quot;element004&quot;));</span><br><span class="line">		System.out.println(&quot;zset集合中的所有元素：&quot; + shardedJedis.zrange(&quot;zset&quot;, 0, -1));// 按照权重值排序</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============删=============&quot;);</span><br><span class="line">		System.out.println(&quot;zset中删除元素element002：&quot; + shardedJedis.zrem(&quot;zset&quot;, &quot;element002&quot;));</span><br><span class="line">		System.out.println(&quot;zset集合中的所有元素：&quot; + shardedJedis.zrange(&quot;zset&quot;, 0, -1));</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============改=============&quot;);</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============查=============&quot;);</span><br><span class="line">		System.out.println(&quot;统计zset集合中的元素中个数：&quot; + shardedJedis.zcard(&quot;zset&quot;));</span><br><span class="line">		System.out.println(&quot;统计zset集合中权重某个范围内（1.0——5.0），元素的个数：&quot; + shardedJedis.zcount(&quot;zset&quot;, 1.0, 5.0));</span><br><span class="line">		System.out.println(&quot;查看zset集合中element004的权重：&quot; + shardedJedis.zscore(&quot;zset&quot;, &quot;element004&quot;));</span><br><span class="line">		System.out.println(&quot;查看下标1到2范围内的元素值：&quot; + shardedJedis.zrange(&quot;zset&quot;, 1, 2));</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * Hash功能</span><br><span class="line">	 * 1.</span><br><span class="line">	 * 2.</span><br><span class="line">	 * 3.</span><br><span class="line">	 * 4.</span><br><span class="line">	 * 5.</span><br><span class="line">	 * 6.</span><br><span class="line">	 * 7.</span><br><span class="line">	 * 8.</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	private void HashOperate() &#123;</span><br><span class="line">		System.out.println(&quot;======================hash==========================&quot;);</span><br><span class="line">		// 清空数据</span><br><span class="line">		System.out.println(jedis.flushDB());</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============增=============&quot;);</span><br><span class="line">		System.out.println(&quot;hashs中添加key001和value001键值对：&quot; + shardedJedis.hset(&quot;hashs&quot;, &quot;key001&quot;, &quot;value001&quot;));</span><br><span class="line">		System.out.println(&quot;hashs中添加key002和value002键值对：&quot; + shardedJedis.hset(&quot;hashs&quot;, &quot;key002&quot;, &quot;value002&quot;));</span><br><span class="line">		System.out.println(&quot;hashs中添加key003和value003键值对：&quot; + shardedJedis.hset(&quot;hashs&quot;, &quot;key003&quot;, &quot;value003&quot;));</span><br><span class="line">		System.out.println(&quot;新增key004和4的整型键值对：&quot; + shardedJedis.hincrBy(&quot;hashs&quot;, &quot;key004&quot;, 4l));</span><br><span class="line">		System.out.println(&quot;hashs中的所有值：&quot; + shardedJedis.hvals(&quot;hashs&quot;));</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============删=============&quot;);</span><br><span class="line">		System.out.println(&quot;hashs中删除key002键值对：&quot; + shardedJedis.hdel(&quot;hashs&quot;, &quot;key002&quot;));</span><br><span class="line">		System.out.println(&quot;hashs中的所有值：&quot; + shardedJedis.hvals(&quot;hashs&quot;));</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============改=============&quot;);</span><br><span class="line">		System.out.println(&quot;key004整型键值的值增加100：&quot; + shardedJedis.hincrBy(&quot;hashs&quot;, &quot;key004&quot;, 100l));</span><br><span class="line">		System.out.println(&quot;hashs中的所有值：&quot; + shardedJedis.hvals(&quot;hashs&quot;));</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;=============查=============&quot;);</span><br><span class="line">		System.out.println(&quot;判断key003是否存在：&quot; + shardedJedis.hexists(&quot;hashs&quot;, &quot;key003&quot;));</span><br><span class="line">		System.out.println(&quot;获取key004对应的值：&quot; + shardedJedis.hget(&quot;hashs&quot;, &quot;key004&quot;));</span><br><span class="line">		System.out.println(&quot;批量获取key001和key003对应的值：&quot; + shardedJedis.hmget(&quot;hashs&quot;, &quot;key001&quot;, &quot;key003&quot;));</span><br><span class="line">		System.out.println(&quot;获取hashs中所有的key：&quot; + shardedJedis.hkeys(&quot;hashs&quot;));</span><br><span class="line">		System.out.println(&quot;获取hashs中所有的value：&quot; + shardedJedis.hvals(&quot;hashs&quot;));</span><br><span class="line">		System.out.println();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 *  1）连接操作命令</span><br><span class="line">    quit：关闭连接（connection）</span><br><span class="line">    auth：简单密码认证</span><br><span class="line">    help cmd： 查看cmd帮助，例如：help quit</span><br><span class="line">    </span><br><span class="line">    2）持久化</span><br><span class="line">    save：将数据同步保存到磁盘</span><br><span class="line">    bgsave：将数据异步保存到磁盘</span><br><span class="line">    lastsave：返回上次成功将数据保存到磁盘的Unix时戳</span><br><span class="line">    shundown：将数据同步保存到磁盘，然后关闭服务</span><br><span class="line">    </span><br><span class="line">    3）远程服务控制</span><br><span class="line">    info：提供服务器的信息和统计</span><br><span class="line">    monitor：实时转储收到的请求</span><br><span class="line">    slaveof：改变复制策略设置</span><br><span class="line">    config：在运行时配置Redis服务器</span><br><span class="line">    </span><br><span class="line">    4）对value操作的命令</span><br><span class="line">    exists(key)：确认一个key是否存在</span><br><span class="line">    del(key)：删除一个key</span><br><span class="line">    type(key)：返回值的类型</span><br><span class="line">    keys(pattern)：返回满足给定pattern的所有key</span><br><span class="line">    randomkey：随机返回key空间的一个</span><br><span class="line">    keyrename(oldname, newname)：重命名key</span><br><span class="line">    dbsize：返回当前数据库中key的数目</span><br><span class="line">    expire：设定一个key的活动时间（s）</span><br><span class="line">    ttl：获得一个key的活动时间</span><br><span class="line">    select(index)：按索引查询</span><br><span class="line">    move(key, dbindex)：移动当前数据库中的key到dbindex数据库</span><br><span class="line">    flushdb：删除当前选择数据库中的所有key</span><br><span class="line">    flushall：删除所有数据库中的所有key</span><br><span class="line">    </span><br><span class="line">    5）String</span><br><span class="line">    set(key, value)：给数据库中名称为key的string赋予值value</span><br><span class="line">    get(key)：返回数据库中名称为key的string的value</span><br><span class="line">    getset(key, value)：给名称为key的string赋予上一次的value</span><br><span class="line">    mget(key1, key2,…, key N)：返回库中多个string的value</span><br><span class="line">    setnx(key, value)：添加string，名称为key，值为value</span><br><span class="line">    setex(key, time, value)：向库中添加string，设定过期时间time</span><br><span class="line">    mset(key N, value N)：批量设置多个string的值</span><br><span class="line">    msetnx(key N, value N)：如果所有名称为key i的string都不存在</span><br><span class="line">    incr(key)：名称为key的string增1操作</span><br><span class="line">    incrby(key, integer)：名称为key的string增加integer</span><br><span class="line">    decr(key)：名称为key的string减1操作</span><br><span class="line">    decrby(key, integer)：名称为key的string减少integer</span><br><span class="line">    append(key, value)：名称为key的string的值附加value</span><br><span class="line">    substr(key, start, end)：返回名称为key的string的value的子串</span><br><span class="line">    </span><br><span class="line">    6）List </span><br><span class="line">    rpush(key, value)：在名称为key的list尾添加一个值为value的元素</span><br><span class="line">    lpush(key, value)：在名称为key的list头添加一个值为value的 元素</span><br><span class="line">    llen(key)：返回名称为key的list的长度</span><br><span class="line">    lrange(key, start, end)：返回名称为key的list中start至end之间的元素</span><br><span class="line">    ltrim(key, start, end)：截取名称为key的list</span><br><span class="line">    lindex(key, index)：返回名称为key的list中index位置的元素</span><br><span class="line">    lset(key, index, value)：给名称为key的list中index位置的元素赋值</span><br><span class="line">    lrem(key, count, value)：删除count个key的list中值为value的元素</span><br><span class="line">    lpop(key)：返回并删除名称为key的list中的首元素</span><br><span class="line">    rpop(key)：返回并删除名称为key的list中的尾元素</span><br><span class="line">    blpop(key1, key2,… key N, timeout)：lpop命令的block版本。</span><br><span class="line">    brpop(key1, key2,… key N, timeout)：rpop的block版本。</span><br><span class="line">    rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，</span><br><span class="line"></span><br><span class="line">　　　　　　　　　　　　　　并将该元素添加到名称为dstkey的list的头部</span><br><span class="line">    </span><br><span class="line">    7）Set</span><br><span class="line">    sadd(key, member)：向名称为key的set中添加元素member</span><br><span class="line">    srem(key, member) ：删除名称为key的set中的元素member</span><br><span class="line">    spop(key) ：随机返回并删除名称为key的set中一个元素</span><br><span class="line">    smove(srckey, dstkey, member) ：移到集合元素</span><br><span class="line">    scard(key) ：返回名称为key的set的基数</span><br><span class="line">    sismember(key, member) ：member是否是名称为key的set的元素</span><br><span class="line">    sinter(key1, key2,…key N) ：求交集</span><br><span class="line">    sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合</span><br><span class="line">    sunion(key1, (keys)) ：求并集</span><br><span class="line">    sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合</span><br><span class="line">    sdiff(key1, (keys)) ：求差集</span><br><span class="line">    sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合</span><br><span class="line">    smembers(key) ：返回名称为key的set的所有元素</span><br><span class="line">    srandmember(key) ：随机返回名称为key的set的一个元素</span><br><span class="line">    </span><br><span class="line">    8）Hash</span><br><span class="line">    hset(key, field, value)：向名称为key的hash中添加元素field</span><br><span class="line">    hget(key, field)：返回名称为key的hash中field对应的value</span><br><span class="line">    hmget(key, (fields))：返回名称为key的hash中field i对应的value</span><br><span class="line">    hmset(key, (fields))：向名称为key的hash中添加元素field </span><br><span class="line">    hincrby(key, field, integer)：将名称为key的hash中field的value增加integer</span><br><span class="line">    hexists(key, field)：名称为key的hash中是否存在键为field的域</span><br><span class="line">    hdel(key, field)：删除名称为key的hash中键为field的域</span><br><span class="line">    hlen(key)：返回名称为key的hash中元素个数</span><br><span class="line">    hkeys(key)：返回名称为key的hash中所有键</span><br><span class="line">    hvals(key)：返回名称为key的hash中所有键对应的value</span><br><span class="line">    hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value</span><br><span class="line"></span><br><span class="line">	 * */</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/MySql主从复制-读写分离的实现/" rel="next" title="MySql主从复制+读写分离的实现">
+                <i class="fa fa-chevron-left"></i> MySql主从复制+读写分离的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/sql使用规范/" rel="prev" title="sql使用规范">
+                sql使用规范 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">王靖尧</p>
+              <p class="site-description motion-element" itemprop="description">一晃而过的时间，都做了些什么</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis是什么"><span class="nav-number">1.</span> <span class="nav-text">redis是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装过程-略"><span class="nav-number">2.</span> <span class="nav-text">安装过程  略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用"><span class="nav-number">3.</span> <span class="nav-text">基本使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王靖尧</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="其他,">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -79,25 +79,18 @@
 
 
 
-<meta name="description" content="标题总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。 一级标题二级标题三级标题四级标题五级标题六级标题和h1到h6一样，字体由大到小 换行换行：只需在行末加两个空格键和一个回车键即可换行分段分段：段落之间空一行即可。 文本样式加粗字体两边各加两个星号  快捷键 ctrl+b（编辑器的右上角有写奥） 斜体字体两边各加  __ 快捷键 ctrl+i 删除线**各加两个波浪线">
-<meta name="keywords" content="其他">
+<meta name="description" content="基础规范表存储引擎必须使用InnoDB 表字符集默认使用utf8，必要时候使用utf8mb4解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，有存储4字节例如表情符号时，使用它 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较大，互联网业务，能让站点层和服务层干的事情，不要交到数据库层（2）调试，排错，迁移都比较困难，扩展性较差 禁止">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MarkDown语法">
-<meta property="og:url" content="http://yoursite.com/2018/12/06/MarkDown语法/index.html">
+<meta property="og:title" content="sql使用规范">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/sql使用规范/index.html">
 <meta property="og:site_name" content="王靖尧的博客">
-<meta property="og:description" content="标题总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。 一级标题二级标题三级标题四级标题五级标题六级标题和h1到h6一样，字体由大到小 换行换行：只需在行末加两个空格键和一个回车键即可换行分段分段：段落之间空一行即可。 文本样式加粗字体两边各加两个星号  快捷键 ctrl+b（编辑器的右上角有写奥） 斜体字体两边各加  __ 快捷键 ctrl+i 删除线**各加两个波浪线">
+<meta property="og:description" content="基础规范表存储引擎必须使用InnoDB 表字符集默认使用utf8，必要时候使用utf8mb4解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，有存储4字节例如表情符号时，使用它 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较大，互联网业务，能让站点层和服务层干的事情，不要交到数据库层（2）调试，排错，迁移都比较困难，扩展性较差 禁止">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/12/06/MarkDown语法/1.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/06/MarkDown语法/2.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/06/MarkDown语法/3.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/06/MarkDown语法/连接地址">
-<meta property="og:image" content="http://yoursite.com/2018/12/06/MarkDown语法/4.png">
-<meta property="og:image" content="http://yoursite.com/2018/12/06/MarkDown语法/5.png">
-<meta property="og:updated_time" content="2018-12-06T07:20:23.514Z">
+<meta property="og:updated_time" content="2018-12-06T10:12:06.922Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MarkDown语法">
-<meta name="twitter:description" content="标题总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。 一级标题二级标题三级标题四级标题五级标题六级标题和h1到h6一样，字体由大到小 换行换行：只需在行末加两个空格键和一个回车键即可换行分段分段：段落之间空一行即可。 文本样式加粗字体两边各加两个星号  快捷键 ctrl+b（编辑器的右上角有写奥） 斜体字体两边各加  __ 快捷键 ctrl+i 删除线**各加两个波浪线">
-<meta name="twitter:image" content="http://yoursite.com/2018/12/06/MarkDown语法/1.png">
+<meta name="twitter:title" content="sql使用规范">
+<meta name="twitter:description" content="基础规范表存储引擎必须使用InnoDB 表字符集默认使用utf8，必要时候使用utf8mb4解读：（1）通用，无乱码风险，汉字3字节，英文1字节（2）utf8mb4是utf8的超集，有存储4字节例如表情符号时，使用它 禁止使用存储过程，视图，触发器，Event解读：（1）对数据库性能影响较大，互联网业务，能让站点层和服务层干的事情，不要交到数据库层（2）调试，排错，迁移都比较困难，扩展性较差 禁止">
 
 
 
@@ -127,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/06/MarkDown语法/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/sql使用规范/">
 
 
 
 
 
-  <title>MarkDown语法 | 王靖尧的博客</title>
+  <title>sql使用规范 | 王靖尧的博客</title>
   
 
 
@@ -290,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/MarkDown语法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/sql使用规范/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王靖尧">
@@ -307,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MarkDown语法</h1>
+          <h1 class="post-title" itemprop="name headline">sql使用规范</h1>
         
 
         <div class="post-meta">
@@ -319,7 +312,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T14:48:51+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T18:11:56+08:00">
                 2018-12-06
               </time>
             
@@ -357,45 +350,34 @@
       
 
       
-        <h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。</p>
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><p>和h1到h6一样，字体由大到小</p>
-<p><strong>换行</strong><br>换行：只需在行末加两个空格键和一个回车键即可换行<br><strong>分段</strong><br>分段：段落之间空一行即可。</p>
-<h2 id="文本样式"><a href="#文本样式" class="headerlink" title="文本样式"></a>文本样式</h2><p><strong>加粗</strong><br>字体两边各加两个星号 <strong> 快捷键 ctrl+b（编辑器的右上角有写奥）
-</strong>斜体<strong><br>字体两边各加  __ 快捷键 ctrl+i
-</strong>删除线**<br>各加两个波浪线。  快捷键：ctrl+u ,和uc浏览器有热键冲突<br><img src="/2018/12/06/MarkDown语法/1.png" alt="文本样式"></p>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p><strong>无序列表</strong><br>直接在文字前加「 - 」(减号) 或者 「 <em> 」 即可<br>在 「 </em> 」 前加两个空格键或者一个 tab 键就可以产生一个子列表。<br><strong>有序列表</strong><br>在文本前加 「字母.」 或 「数字.」 即可生成一个有序列表。<br>注意，当你第一个序号使用什么作为标记的，那么同级别的列表就会自动使用其作为标记。<br><img src="/2018/12/06/MarkDown语法/2.png" alt=""></p>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>文本前加大于号  &gt;  即可<br><img src="/2018/12/06/MarkDown语法/3.png" alt=""></p>
-<h2 id="图片和连接"><a href="#图片和连接" class="headerlink" title="图片和连接"></a>图片和连接</h2><p><strong>图片</strong><br><img src="/2018/12/06/MarkDown语法/连接地址" alt="图片描述">：感叹号+中括号[图片描述]+小括号(连接地址)<br><strong>连接</strong><br><a href="连接地址">文本内容</a>：中括号+小括号<br>图文比连接多一个感叹号<br><img src="/2018/12/06/MarkDown语法/4.png" alt=""></p>
-<p>注:如果引用网络图片会出现连接失效的问题…<br>方法1：将图片上传到新浪图床<br>方法2:直接把图上传到github上<br>具体做法就是：建一个专门用来存图片的github仓库，然后把图片传上来，用github的内存</p>
-<h2 id="水平线"><a href="#水平线" class="headerlink" title="水平线"></a>水平线</h2><h2 id="三个减号—-或者桑和星号-都可以画出一条水平分割线"><a href="#三个减号—-或者桑和星号-都可以画出一条水平分割线" class="headerlink" title="三个减号— 或者桑和星号***都可以画出一条水平分割线"></a>三个减号— 或者桑和星号***都可以画出一条水平分割线</h2><h2 id="代码框"><a href="#代码框" class="headerlink" title="代码框"></a>代码框</h2><p><code>第一段代码，这两个符号如何用键盘打出来？</code> </p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>在 Markdown 下制作表格，是非常非常麻烦的一件事——你必须画出来！<br><img src="/2018/12/06/MarkDown语法/5.png" alt=""><br>我这么懒，肯定不会画的…</p>
-<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>和html里的注释是一样滴<br>注释是给自己看的，预览时也不会出现，当然发布出去别人也不会看见。<br><!-- 一段注释 --></p>
-<h2 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h2><p>  两个空格<br>空格好像不太对…</p>
-<h2 id="制表"><a href="#制表" class="headerlink" title="制表"></a>制表</h2><p>记录一种最简单的制表方法</p>
-<table>
-<thead>
-<tr>
-<th>title1</th>
-<th>title1</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>content1</td>
-<td>content2</td>
-</tr>
-<tr>
-<td>content3</td>
-<td>content4</td>
-</tr>
-<tr>
-<td>content5</td>
-<td>content6</td>
-</tr>
-</tbody>
-</table>
-<p>表头必须和浅表的内容间隔一行，表头和内容之间由<br>– | –<br>分隔，一个 – 表示一个表头，中间由竖线分隔，不需要加空格。如果表头有四个，<br>– | – | – | –<br>这样就可以了。</p>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2>
+        <h3 id="基础规范"><a href="#基础规范" class="headerlink" title="基础规范"></a>基础规范</h3><p>表存储引擎必须使用InnoDB</p>
+<p>表字符集默认使用utf8，必要时候使用utf8mb4<br>解读：<br>（1）通用，无乱码风险，汉字3字节，英文1字节<br>（2）utf8mb4是utf8的超集，有存储4字节例如表情符号时，使用它</p>
+<p>禁止使用存储过程，视图，触发器，Event<br>解读：<br>（1）对数据库性能影响较大，互联网业务，能让站点层和服务层干的事情，不要交到数据库层<br>（2）调试，排错，迁移都比较困难，扩展性较差</p>
+<p>禁止在线上环境做数据库压力测试<br>测试，开发，线上数据库环境必须隔离</p>
+<h3 id="二、命名规范"><a href="#二、命名规范" class="headerlink" title="二、命名规范"></a>二、命名规范</h3><p>库名，表名，列名必须用小写，采用下划线分隔<br>解读：abc，Abc，ABC都是给自己埋坑</p>
+<p>库名，表名，列名必须见名知义，长度不要超过32字符<br>解读：tmp，wushan谁TM知道这些库是干嘛的</p>
+<p>库备份必须以bak为前缀，以日期为后缀<br>从库必须以-s为后缀<br>备库必须以-ss为后缀</p>
+<h3 id="三、表设计规范"><a href="#三、表设计规范" class="headerlink" title="三、表设计规范"></a>三、表设计规范</h3><p>单实例表个数必须控制在2000个以内<br>单表分表个数必须控制在1024个以内<br>表必须有主键，推荐使用UNSIGNED整数为主键<br>潜在坑：删除无主键的表，如果是row模式的主从架构，从库会挂住</p>
+<p>禁止使用外键，如果要保证完整性，应由代码实现<br>解读：外键使得表之间相互耦合，影响update/delete等SQL性能，有可能造成死锁，高并发情况下容易成为数据库瓶颈</p>
+<p>建议将大字段，访问频度低的字段拆分到单独的表中存储，分离冷热数据</p>
+<h3 id="四、列设计规范"><a href="#四、列设计规范" class="headerlink" title="四、列设计规范"></a>四、列设计规范</h3><p>根据业务区分使用tinyint/int/bigint，分别会占用1/4/8字节<br>根据业务区分使用char/varchar</p>
+<p>解读：<br>（1）字段长度固定，或者长度近似的业务场景，适合使用char，能够减少碎片，查询性能高<br>（2）字段长度相差较大，或者更新较少的业务场景，适合使用varchar，能够减少空间</p>
+<p>根据业务区分使用datetime/timestamp<br>解读：前者占用5个字节，后者占用4个字节，存储年使用YEAR，存储日期使用DATE，存储时间使用datetime</p>
+<p>必须把字段定义为NOT NULL并设默认值<br>解读：<br>（1）NULL的列使用索引，索引统计，值都更加复杂，MySQL更难优化<br>（2）NULL需要更多的存储空间<br>（3）NULL只能采用IS NULL或者IS NOT NULL，而在=/!=/in/not in时有大坑</p>
+<p>使用INT UNSIGNED存储IPv4，不要用char(15)</p>
+<p>使用varchar(20)存储手机号，不要使用整数<br>解读：<br>（1）牵扯到国家代号，可能出现+/-/()等字符，例如+86<br>（2）手机号不会用来做数学运算<br>（3）varchar可以模糊查询，例如like ‘138%’</p>
+<p>使用TINYINT来代替ENUM<br>解读：ENUM增加新值要进行DDL操作</p>
+<h3 id="索引规范"><a href="#索引规范" class="headerlink" title="索引规范"></a>索引规范</h3><p>唯一索引使用uniq_[字段名]来命名<br>非唯一索引使用idx_[字段名]来命名<br>单张表索引数量建议控制在5个以内<br>解读：<br>（1）互联网高并发业务，太多索引会影响写性能<br>（2）生成执行计划时，如果索引太多，会降低性能，并可能导致MySQL选择不到最优索引<br>（3）异常复杂的查询需求，可以选择ES等更为适合的方式存储</p>
+<p>组合索引字段数不建议超过5个<br>解读：如果5个字段还不能极大缩小row范围，八成是设计有问题</p>
+<p>不建议在频繁更新的字段上建立索引<br>非必要不要进行JOIN查询，如果要进行JOIN查询，被JOIN的字段必须类型相同，并建立索引<br>解读：踩过因为JOIN字段类型不一致，而导致全表扫描的坑么？</p>
+<p>理解组合索引最左前缀原则，避免重复建设索引，如果建立了(a,b,c)，相当于建立了(a), (a,b), (a,b,c)</p>
+<h3 id="六、SQL规范"><a href="#六、SQL规范" class="headerlink" title="六、SQL规范"></a>六、SQL规范</h3><p>禁止使用select <em>，只获取必要字段<br>解读：<br>（1）select </em>会增加cpu/io/内存/带宽的消耗<br>（2）指定字段能有效利用索引覆盖<br>（3）指定字段查询，在表结构变更时，能保证对应用程序无影响</p>
+<p>insert必须指定字段，禁止使用insert into T values()<br>解读：指定字段插入，在表结构变更时，能保证对应用程序无影响</p>
+<p>隐式类型转换会使索引失效，导致全表扫描</p>
+<p>禁止在where条件列使用函数或者表达式<br>解读：导致不能命中索引，全表扫描</p>
+<p>禁止负向查询以及%开头的模糊查询<br>解读：导致不能命中索引，全表扫描</p>
+<p>禁止大表JOIN和子查询<br>同一个字段上的OR必须改写问IN，IN的值必须少于50个<br>应用程序必须捕获SQL异常<br>解读：方便定位线上问题</p>
+
       
     </div>
     
@@ -412,7 +394,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/其他/" rel="tag"># 其他</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
         </div>
       
@@ -425,8 +407,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/05/Hexo博客搭建/" rel="next" title="Hexo博客搭建">
-                <i class="fa fa-chevron-left"></i> Hexo博客搭建
+              <a href="/2018/12/06/redis基本使用/" rel="next" title="redis基本使用">
+                <i class="fa fa-chevron-left"></i> redis基本使用
               </a>
             
           </div>
@@ -435,8 +417,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/06/nginx负载均衡的简单配置/" rel="prev" title="nginx负载均衡的简单配置">
-                nginx负载均衡的简单配置 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/12/06/mysql基础/" rel="prev" title="mysql基础">
+                mysql基础 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -569,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#标题"><span class="nav-number">1.</span> <span class="nav-text">标题</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number"></span> <span class="nav-text">一级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题"><span class="nav-number">1.</span> <span class="nav-text">二级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题"><span class="nav-number">1.1.</span> <span class="nav-text">三级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四级标题"><span class="nav-number">1.1.1.</span> <span class="nav-text">四级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#五级标题"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">五级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#六级标题"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">六级标题</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本样式"><span class="nav-number">2.</span> <span class="nav-text">文本样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">3.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-number">4.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片和连接"><span class="nav-number">5.</span> <span class="nav-text">图片和连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#水平线"><span class="nav-number">6.</span> <span class="nav-text">水平线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三个减号—-或者桑和星号-都可以画出一条水平分割线"><span class="nav-number">7.</span> <span class="nav-text">三个减号— 或者桑和星号***都可以画出一条水平分割线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码框"><span class="nav-number">8.</span> <span class="nav-text">代码框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格"><span class="nav-number">9.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释"><span class="nav-number">10.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首行缩进"><span class="nav-number">11.</span> <span class="nav-text">首行缩进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制表"><span class="nav-number">12.</span> <span class="nav-text">制表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">13.</span> <span class="nav-text">目录</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础规范"><span class="nav-number">1.</span> <span class="nav-text">基础规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、命名规范"><span class="nav-number">2.</span> <span class="nav-text">二、命名规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、表设计规范"><span class="nav-number">3.</span> <span class="nav-text">三、表设计规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、列设计规范"><span class="nav-number">4.</span> <span class="nav-text">四、列设计规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引规范"><span class="nav-number">5.</span> <span class="nav-text">索引规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、SQL规范"><span class="nav-number">6.</span> <span class="nav-text">六、SQL规范</span></a></li></ol></div>
             
 
           </div>

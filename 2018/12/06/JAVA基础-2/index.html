@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？Java虚拟机是一个可以执行Java字节码的虚拟机进程。Java源文件被编译成能被Java虚拟机执行的字节码文件。Java被设计成允许应用程序可以运行在任意的平台，而不需要程序员为每一个平台单独重写或者是重新编译。Java虚拟机让这个变为可能，因为它知道底层硬件平台的指令长度和其他特性。 2.JDK和JRE的区别是什么？JRE">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA基础-2">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/JAVA基础-2/index.html">
+<meta property="og:site_name" content="王靖尧的博客">
+<meta property="og:description" content="1.什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？Java虚拟机是一个可以执行Java字节码的虚拟机进程。Java源文件被编译成能被Java虚拟机执行的字节码文件。Java被设计成允许应用程序可以运行在任意的平台，而不需要程序员为每一个平台单独重写或者是重新编译。Java虚拟机让这个变为可能，因为它知道底层硬件平台的指令长度和其他特性。 2.JDK和JRE的区别是什么？JRE">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/ayanamiq/images/blob/master/token.png?raw=true">
+<meta property="og:updated_time" content="2018-12-06T10:21:08.770Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA基础-2">
+<meta name="twitter:description" content="1.什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？Java虚拟机是一个可以执行Java字节码的虚拟机进程。Java源文件被编译成能被Java虚拟机执行的字节码文件。Java被设计成允许应用程序可以运行在任意的平台，而不需要程序员为每一个平台单独重写或者是重新编译。Java虚拟机让这个变为可能，因为它知道底层硬件平台的指令长度和其他特性。 2.JDK和JRE的区别是什么？JRE">
+<meta name="twitter:image" content="https://github.com/ayanamiq/images/blob/master/token.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/JAVA基础-2/">
+
+
+
+
+
+  <title>JAVA基础-2 | 王靖尧的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王靖尧的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/JAVA基础-2/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王靖尧">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王靖尧的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JAVA基础-2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T18:20:53+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？"><a href="#1-什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？" class="headerlink" title="1.什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？"></a>1.什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？</h3><p>Java虚拟机是一个可以执行Java字节码的虚拟机进程。Java源文件被编译成能被Java虚拟机执行的字节码文件。<br>Java被设计成允许应用程序可以运行在任意的平台，而不需要程序员为每一个平台单独重写或者是重新编译。<br>Java虚拟机让这个变为可能，因为它知道底层硬件平台的指令长度和其他特性。</p>
+<h3 id="2-JDK和JRE的区别是什么？"><a href="#2-JDK和JRE的区别是什么？" class="headerlink" title="2.JDK和JRE的区别是什么？"></a>2.JDK和JRE的区别是什么？</h3><p>JRE:Java运行时环境(JRE)是将要执行Java程序的Java虚拟机。它同时也包含了执行applet需要的浏览器插件。<br>JDK:Java开发工具包(JDK)是完整的Java软件开发包，包含了JRE，编译器和其他的工具(比如：JavaDoc，Java调试器)，可以让开发者开发、编译、执行Java应用程序。</p>
+<h3 id="3-是否可以在static环境中访问非static变量？-不可以"><a href="#3-是否可以在static环境中访问非static变量？-不可以" class="headerlink" title="3.是否可以在static环境中访问非static变量？(不可以)"></a>3.是否可以在static环境中访问非static变量？(不可以)</h3><p>static变量在Java中是属于类的，它在所有的实例中的值是一样的。当类被Java虚拟机载入的时候，会对static变量进行初始化。<br>如果你的代码尝试不用实例来访问非static的变量，编译器会报错，因为这些变量还没有被创建出来，还没有跟任何实例关联上。</p>
+<h3 id="4-Java支持的数据类型有哪些？什么是自动拆装箱？"><a href="#4-Java支持的数据类型有哪些？什么是自动拆装箱？" class="headerlink" title="4.Java支持的数据类型有哪些？什么是自动拆装箱？"></a>4.Java支持的数据类型有哪些？什么是自动拆装箱？</h3><p>Java语言支持的8中基本数据类型是：<br>byte,short,int,long,float,double,boolean,char<br>自动装箱是Java编译器在基本数据类型和对应的对象包装类型之间做的一个转化。<br>Integer  a=1;//这就是一个自动装箱，如果没有自动装箱的话，需要这样Integer  a=new Integer(1)<br>int b=a;//这就是一个自动拆箱，如果没有自动拆箱的话，需要这样：int b=a.intValue()<br>自动装箱和自动拆箱是简化了基本数据类型和相对应对象的转化步骤</p>
+<h3 id="5-什么是值传递和引用传递？"><a href="#5-什么是值传递和引用传递？" class="headerlink" title="5.什么是值传递和引用传递？"></a>5.什么是值传递和引用传递？</h3><p>对象被值传递，意味着传递了对象的一个副本。因此，就算是改变了对象副本，也不会影响源对象的值。<br>对象被引用传递，意味着传递的并不是实际的对象，而是对象的引用。因此，外部对引用对象所做的改变会反映到所有的对象上。</p>
+<h3 id="6-进程和线程的区别是什么？"><a href="#6-进程和线程的区别是什么？" class="headerlink" title="6.进程和线程的区别是什么？"></a>6.进程和线程的区别是什么？</h3><p>进程是执行着的应用程序，而线程是进程内部的一个执行序列<br>一个进程可以有多个线程。线程又叫做轻量级进程。</p>
+<h3 id="7-什么是死锁-deadlock-？"><a href="#7-什么是死锁-deadlock-？" class="headerlink" title="7.什么是死锁(deadlock)？"></a>7.什么是死锁(deadlock)？</h3><p>两个进程都在等待对方执行完毕才能继续往下执行的时候就发生了死锁。结果就是两个进程都陷入了无限的等待中。</p>
+<h3 id="8-如何确保N个线程可以访问N个资源同时又不导致死锁？"><a href="#8-如何确保N个线程可以访问N个资源同时又不导致死锁？" class="headerlink" title="8.如何确保N个线程可以访问N个资源同时又不导致死锁？"></a>8.如何确保N个线程可以访问N个资源同时又不导致死锁？</h3><p>使用多线程的时候，一种非常简单的避免死锁的方式就是：指定获取锁的顺序，并强制线程按照指定的顺序获取锁。因此，如果所有的线程都是以同样的顺序加锁和释放锁，就不会出现死锁了。</p>
+<h3 id="9-什么是迭代器-Iterator-？"><a href="#9-什么是迭代器-Iterator-？" class="headerlink" title="9.什么是迭代器(Iterator)？"></a>9.什么是迭代器(Iterator)？</h3><p>Iterator接口提供了很多对集合元素进行迭代的方法。每一个集合类都包含了可以返回迭代器实例的迭代方法。迭代器可以在迭代的过程中删除底层集合的元素。</p>
+<h3 id="10-Iterator和ListIterator的区别是什么？"><a href="#10-Iterator和ListIterator的区别是什么？" class="headerlink" title="10.Iterator和ListIterator的区别是什么？"></a>10.Iterator和ListIterator的区别是什么？</h3><p>Iterator可用来遍历Set和List集合，但是ListIterator只能用来遍历List。<br>Iterator对集合只能是前向遍历，ListIterator既可以前向也可以后向。<br>ListIterator实现了Iterator接口，并包含其他的功能，比如：增加元素，替换元素，获取前一个和后一个元素的索引，等等。</p>
+<h3 id="11-Java中的HashMap的工作原理是什么？"><a href="#11-Java中的HashMap的工作原理是什么？" class="headerlink" title="11.Java中的HashMap的工作原理是什么？"></a>11.Java中的HashMap的工作原理是什么？</h3><p>Java中的HashMap是以键值对(key-value)的形式存储元素的。<br>HashMap需要一个hash函数，它使用hashCode()和equals()方法来向集合/从集合添加和检索元素。<br>当调用put()方法的时候，HashMap会计算key的hash值，然后把键值对存储在集合中合适的索引上。<br>如果key已经存在了，value会被更新成新值。<br>HashMap的一些重要的特性是它的容量(capacity)，负载因子(load factor)和扩容极限(threshold resizing)。</p>
+<h4 id="12-Java中HashMap遍历的四种方式"><a href="#12-Java中HashMap遍历的四种方式" class="headerlink" title="12.Java中HashMap遍历的四种方式"></a>12.Java中HashMap遍历的四种方式</h4><p>1.entrySet().iterator()<br>效率高,以后一定要使用此种方式！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map map = new HashMap();</span><br><span class="line">　　Iterator iter = map.entrySet().iterator();</span><br><span class="line">　　while (iter.hasNext()) &#123;</span><br><span class="line">　　Map.Entry entry = (Map.Entry) iter.next();</span><br><span class="line">　　Object key = entry.getKey();</span><br><span class="line">　　Object val = entry.getValue();</span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.keySet().iterator()<br>效率低,以后尽量少使用！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map map = new HashMap();</span><br><span class="line">　　Iterator iter = map.keySet().iterator();</span><br><span class="line">　　while (iter.hasNext()) &#123;</span><br><span class="line">　　Object key = iter.next();</span><br><span class="line">　　Object val = map.get(key);</span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3.entrySet遍历key和value<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for(Map.Entry&lt;String, String&gt; entry: map.entrySet())&#123;</span><br><span class="line">    Object key = entry.getKey();</span><br><span class="line">　Object val = entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="13-数组-Array-和列表-ArrayList-有什么区别？什么时候应该使用Array而不是ArrayList？"><a href="#13-数组-Array-和列表-ArrayList-有什么区别？什么时候应该使用Array而不是ArrayList？" class="headerlink" title="13.数组(Array)和列表(ArrayList)有什么区别？什么时候应该使用Array而不是ArrayList？"></a>13.数组(Array)和列表(ArrayList)有什么区别？什么时候应该使用Array而不是ArrayList？</h3><p>Array可以包含基本类型和对象类型，ArrayList只能包含对象类型。<br>Array大小是固定的，ArrayList的大小是动态变化的。</p>
+<h3 id="14-ArrayList和LinkedList有什么区别？"><a href="#14-ArrayList和LinkedList有什么区别？" class="headerlink" title="14.ArrayList和LinkedList有什么区别？"></a>14.ArrayList和LinkedList有什么区别？</h3><p>ArrayList和LinkedList都实现了List接口，他们有以下的不同点：<br>1.ArrayList数组实现，增删慢(增删元素时，需要重新计算大小或更新数组索引)，查找快<br>LinkedList链表实现，增删快，查找慢。<br>2.LinkedList比ArrayList更占内存，因为LinkedList为每一个节点存储了两个引用，一个指向前一个元素，一个指向下一个元素。</p>
+<h3 id="15-System-gc-和Runtime-gc-会做什么事情？"><a href="#15-System-gc-和Runtime-gc-会做什么事情？" class="headerlink" title="15.System.gc()和Runtime.gc()会做什么事情？"></a>15.System.gc()和Runtime.gc()会做什么事情？</h3><p>这两个方法用来提示JVM要进行垃圾回收。但是，立即开始还是延迟进行垃圾回收是取决于JVM的。</p>
+<h3 id="16-堆栈区别？"><a href="#16-堆栈区别？" class="headerlink" title="16.堆栈区别？"></a>16.堆栈区别？</h3><p>1.栈区:编译器自动分配,存放函数的参数值，局部变量等<br>2.2.堆区:手动分配释放</p>
+<h3 id="17-什么是线程安全和不安全？"><a href="#17-什么是线程安全和不安全？" class="headerlink" title="17.什么是线程安全和不安全？"></a>17.什么是线程安全和不安全？</h3><p>1.线程安全:a,b线程同时操作一个变量,a操作的时候，b不能操作,相当于单线程<br>2.线程不安全:a,b线程同时操作一个变量,可同时操作</p>
+<h3 id="18-同步和异步？"><a href="#18-同步和异步？" class="headerlink" title="18.同步和异步？"></a>18.同步和异步？</h3><p>同步:发送一个请求,等待返回结果，然后再发送下一个请求<br>特点:需要等待,避免出现死锁，脏读数据的发生<br>异步:发送一个请求,不等待返回,随时可以再发送下一个请求<br>特点:无需等待,提高效率，但是会出现死锁，脏读数据</p>
+<h3 id="19-九种基本数据类型的大小，以及他们的封装类-一个字节是8位"><a href="#19-九种基本数据类型的大小，以及他们的封装类-一个字节是8位" class="headerlink" title="19.九种基本数据类型的大小，以及他们的封装类(一个字节是8位)"></a>19.九种基本数据类型的大小，以及他们的封装类(一个字节是8位)</h3><table>
+<thead>
+<tr>
+<th>基本类型</th>
+<th>大小(字节)</th>
+<th>默认值</th>
+<th>封装类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte</td>
+<td>1</td>
+<td>(byte)0</td>
+<td>Byte</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2</td>
+<td>(short)0</td>
+<td>Short</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4</td>
+<td>0</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>long</td>
+<td>8</td>
+<td>0L</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>float</td>
+<td>4</td>
+<td>0.0f</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8</td>
+<td>0.0d</td>
+<td>Double</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>-</td>
+<td>false</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>char</td>
+<td>2</td>
+<td>\u0000(null)</td>
+<td>Character</td>
+</tr>
+<tr>
+<td>void</td>
+<td>-</td>
+<td>-</td>
+<td>Void</td>
+</tr>
+</tbody>
+</table>
+<h3 id="20-equals、-、hashcode-区别"><a href="#20-equals、-、hashcode-区别" class="headerlink" title="20.equals、==、hashcode  区别"></a>20.equals、==、hashcode  区别</h3><p>1.基本数据类型<br>byte/int/double/boolean等，用==，比较的是他们的值<br>2.引用类型(对象)<br>用==比较的是内存地址，同一个new出来的对象，为true，反之为false<br>(对象是存放在堆中的，栈中存放的是对象的引用(地址),由此可见==比较的是栈中的值<br>如果要比较堆中的对象是否相同，要重写equals方法)</p>
+<p>equals:比较对象的内容(就是最表面的值)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String a = &quot;1&quot;;</span><br><span class="line">String b = &quot;1&quot;;</span><br><span class="line">String c = new String(&quot;1&quot;);</span><br><span class="line">System.out.println(a==b);//true,是一块内存地址</span><br><span class="line">System.out.println(a==c);//false,不是一块内存地址</span><br><span class="line">System.out.println(a.equals(b));//true,比较的是值</span><br></pre></td></tr></table></figure>
+<h3 id="21-Java的四种引用，强弱软虚，用到的场景"><a href="#21-Java的四种引用，强弱软虚，用到的场景" class="headerlink" title="21.Java的四种引用，强弱软虚，用到的场景"></a>21.Java的四种引用，强弱软虚，用到的场景</h3><p>1.强引用:如果一个对象具有强引用，那垃圾回收器绝不会回收它<br>Object o=new Object();   //  强引用<br>2.软引用:内存够，不会被回收(垃圾回收器),反之会被回收.<br>引用可用来实现内存敏感的高速缓存。<br>3.弱引用:垃圾回收器一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存<br>4.虚引用：任何时候都可能被垃圾回收器回收</p>
+<h3 id="22-Hashcode的作用"><a href="#22-Hashcode的作用" class="headerlink" title="22.Hashcode的作用"></a>22.Hashcode的作用</h3><p>1.生成一个hash码,表示对象存储的物理地址<br>2.可以用来用来鉴定2个对象是否相等</p>
+<h3 id="23-String、StringBuffer与StringBuilder的区别。"><a href="#23-String、StringBuffer与StringBuilder的区别。" class="headerlink" title="23.String、StringBuffer与StringBuilder的区别。"></a>23.String、StringBuffer与StringBuilder的区别。</h3><p>string:字符串常量，不可改变的对象<br>StringBuffer:字符串变量,可变对象,线程安全，效率低<br>StringBuilder:字符串变量,可变对象,线程不安全，效率高</p>
+<h3 id="24-HashMap和HashTable的区别"><a href="#24-HashMap和HashTable的区别" class="headerlink" title="24.HashMap和HashTable的区别"></a>24.HashMap和HashTable的区别</h3><p>HashMap:异步的，线程不安全<br>HashTable:同步的，线程安全</p>
+<h3 id="25-token"><a href="#25-token" class="headerlink" title="25.token"></a>25.token</h3><p> 一、我们先解释一下他的含义：<br>1.token的引入<br>token是客户端频繁向服务端请求数据，服务端频繁的去数据库查询用户名和密码并进行对比，判断用户名和密码正确与否，并作出相应提示，在这样的背景下，token便应运而生<br>2、Token的定义：Token是服务端生成的一串字符串，以作客户端进行请求的一个令牌，当第一次登录后，服务器生成一个Token便将此Token返回给客户端，以后客户端只需带上这个Token前来请求数据即可，无需再次带上用户名和密码。<br>3、使用Token的目的：Token的目的是为了减轻服务器的压力，减少频繁的查询数据库，使服务器更加健壮。<br>二、如何使用Token？<br>1、用设备号/设备mac地址作为Token（推荐）<br>客户端：客户端在登录的时候获取设备的设备号/mac地址，并将其作为参数传递到服务端。<br> 服务端：服务端接收到该参数后，便用一个变量来接收同时将其作为Token保存在数据库，并将该Token设置到session中，客户端每次请求的时候都要统一拦截，并将客户端传递的token和服务器端session中的token进行对比，如果相同则放行，不同则拒绝。<br>分析：此刻客户端和服务器端就统一了一个唯一的标识Token，而且保证了每一个设备拥有了一个唯一的会话。<br>该方法的缺点是客户端需要带设备号/mac地址作为参数传递，而且服务器端还需要保存；优点是客户端不需重新登录，只要登录一次以后一直可以使用，至于超时的问题是有服务器这边来处理，如何处理？若服务器的Token超时后，服务器只需将客户端传递的Token向数据库中查询，同时并赋值给变量Token，如此，Token的超时又重新计时。<br>2、用session值作为Token<br>客户端：客户端只需携带用户名和密码登陆即可。<br>客户端：客户端接收到用户名和密码后并判断，如果正确了就将本地获取sessionID作为Token返回给客户端，客户端以后只需带上请求数据即可。<br>分析：这种方式使用的好处是方便，不用存储数据，但是缺点就是当session过期后，客户端必须重新登录才能进行访问数据。<br>三、使用过程中出现的问题以及解决方案？<br>刚才我们轻松介绍了Token的两种使用方式，但是在使用过程中我们还出现各种问题，Token第一种方法中我们隐藏了一个在网络不好或者并发请求时会导致多次重复提交数据的问题。</p>
+<p>该问题的解决方案：将session和Token套用，如此便可解决，如何套用呢？请看这段解释：<br><img src="https://github.com/ayanamiq/images/blob/master/token.png?raw=true" alt=""><br>这就是解决重复提交的方案。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/JAVA基础/" rel="next" title="JAVA基础">
+                <i class="fa fa-chevron-left"></i> JAVA基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/Collection/" rel="prev" title="Collection">
+                Collection <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">王靖尧</p>
+              <p class="site-description motion-element" itemprop="description">一晃而过的时间，都做了些什么</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？"><span class="nav-number">1.</span> <span class="nav-text">1.什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JDK和JRE的区别是什么？"><span class="nav-number">2.</span> <span class="nav-text">2.JDK和JRE的区别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-是否可以在static环境中访问非static变量？-不可以"><span class="nav-number">3.</span> <span class="nav-text">3.是否可以在static环境中访问非static变量？(不可以)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Java支持的数据类型有哪些？什么是自动拆装箱？"><span class="nav-number">4.</span> <span class="nav-text">4.Java支持的数据类型有哪些？什么是自动拆装箱？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-什么是值传递和引用传递？"><span class="nav-number">5.</span> <span class="nav-text">5.什么是值传递和引用传递？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-进程和线程的区别是什么？"><span class="nav-number">6.</span> <span class="nav-text">6.进程和线程的区别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-什么是死锁-deadlock-？"><span class="nav-number">7.</span> <span class="nav-text">7.什么是死锁(deadlock)？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-如何确保N个线程可以访问N个资源同时又不导致死锁？"><span class="nav-number">8.</span> <span class="nav-text">8.如何确保N个线程可以访问N个资源同时又不导致死锁？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-什么是迭代器-Iterator-？"><span class="nav-number">9.</span> <span class="nav-text">9.什么是迭代器(Iterator)？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-Iterator和ListIterator的区别是什么？"><span class="nav-number">10.</span> <span class="nav-text">10.Iterator和ListIterator的区别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-Java中的HashMap的工作原理是什么？"><span class="nav-number">11.</span> <span class="nav-text">11.Java中的HashMap的工作原理是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#12-Java中HashMap遍历的四种方式"><span class="nav-number">11.1.</span> <span class="nav-text">12.Java中HashMap遍历的四种方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-数组-Array-和列表-ArrayList-有什么区别？什么时候应该使用Array而不是ArrayList？"><span class="nav-number">12.</span> <span class="nav-text">13.数组(Array)和列表(ArrayList)有什么区别？什么时候应该使用Array而不是ArrayList？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-ArrayList和LinkedList有什么区别？"><span class="nav-number">13.</span> <span class="nav-text">14.ArrayList和LinkedList有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-System-gc-和Runtime-gc-会做什么事情？"><span class="nav-number">14.</span> <span class="nav-text">15.System.gc()和Runtime.gc()会做什么事情？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-堆栈区别？"><span class="nav-number">15.</span> <span class="nav-text">16.堆栈区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-什么是线程安全和不安全？"><span class="nav-number">16.</span> <span class="nav-text">17.什么是线程安全和不安全？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-同步和异步？"><span class="nav-number">17.</span> <span class="nav-text">18.同步和异步？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-九种基本数据类型的大小，以及他们的封装类-一个字节是8位"><span class="nav-number">18.</span> <span class="nav-text">19.九种基本数据类型的大小，以及他们的封装类(一个字节是8位)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-equals、-、hashcode-区别"><span class="nav-number">19.</span> <span class="nav-text">20.equals、==、hashcode  区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#21-Java的四种引用，强弱软虚，用到的场景"><span class="nav-number">20.</span> <span class="nav-text">21.Java的四种引用，强弱软虚，用到的场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#22-Hashcode的作用"><span class="nav-number">21.</span> <span class="nav-text">22.Hashcode的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#23-String、StringBuffer与StringBuilder的区别。"><span class="nav-number">22.</span> <span class="nav-text">23.String、StringBuffer与StringBuilder的区别。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#24-HashMap和HashTable的区别"><span class="nav-number">23.</span> <span class="nav-text">24.HashMap和HashTable的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#25-token"><span class="nav-number">24.</span> <span class="nav-text">25.token</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王靖尧</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
