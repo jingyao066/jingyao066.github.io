@@ -302,7 +302,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/05/测试文章/" itemprop="url">测试文章</a></h1>
+                <a class="post-title-link" href="/2018/12/05/测试文章/" itemprop="url">Hexo博客搭建</a></h1>
         
 
         <div class="post-meta">
@@ -337,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/建站/" itemprop="url" rel="index">
+                    <span itemprop="name">建站</span>
                   </a>
                 </span>
 
@@ -376,7 +376,12 @@
       
         
           
-            <p>111111111</p>
+            <p>总体步骤：<br>1.安装Git Bash<br>2.安装NodeJs<br>3.安装hexo<br>4.生成SSH并添加到github<br>5.部署项目<br>6.上传到github<br>7.绑定个人域名<br>8.修改及配置主题<br>9.添加RSS<br>10.添加评论<br>11.写文章部分<br>安装git、node.js，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。</p>
+<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>Hexo官网地址：<br><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/</a></p>
+<p>在git和node安装完毕后，即可使用 npm 安装 Hexo<br>`$ npm install -g hexo-cli‘</p>
+<p>安装完之后，初始化Hexo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br><span class="line">cd &lt;folder&gt;</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
+<p>上边官网给出的指令，这里就比较坑逼了。因为不知道里填什么，实际应该是：你想安装Hexo博客文件的文件夹的路径。<br>所以建议使用git bush cd 到想存放博客文件的父目录，然后直接使用<br><code>hexo init 文件夹名</code><br>指令，就完成初始化了。</p>
+<p>遇到的坑：<br>因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令报错。解决方法：</p>
 
           
         
