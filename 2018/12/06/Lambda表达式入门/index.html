@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="##简介其实Lambda表达式的本质只是一个”语法糖”，由编译器推断并帮你转换包装为常见的代码，因此可以使用更少的代码来实现同样的功能。(建议不要乱用,因为这就和某些很高级的黑客写的代码一样,简洁,难懂,难以调试,维护人员想骂娘)Lambda表达式是Java SE 8中一个重要的新特性。lambda表达式允许你通过表达式来代替功能接口。lambda表达式就和方法一样,它提供了一个正常的参数列表和一">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lambda表达式入门">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/Lambda表达式入门/index.html">
+<meta property="og:site_name" content="王靖尧的博客">
+<meta property="og:description" content="##简介其实Lambda表达式的本质只是一个”语法糖”，由编译器推断并帮你转换包装为常见的代码，因此可以使用更少的代码来实现同样的功能。(建议不要乱用,因为这就和某些很高级的黑客写的代码一样,简洁,难懂,难以调试,维护人员想骂娘)Lambda表达式是Java SE 8中一个重要的新特性。lambda表达式允许你通过表达式来代替功能接口。lambda表达式就和方法一样,它提供了一个正常的参数列表和一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-06T10:27:08.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lambda表达式入门">
+<meta name="twitter:description" content="##简介其实Lambda表达式的本质只是一个”语法糖”，由编译器推断并帮你转换包装为常见的代码，因此可以使用更少的代码来实现同样的功能。(建议不要乱用,因为这就和某些很高级的黑客写的代码一样,简洁,难懂,难以调试,维护人员想骂娘)Lambda表达式是Java SE 8中一个重要的新特性。lambda表达式允许你通过表达式来代替功能接口。lambda表达式就和方法一样,它提供了一个正常的参数列表和一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/Lambda表达式入门/">
+
+
+
+
+
+  <title>Lambda表达式入门 | 王靖尧的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王靖尧的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/Lambda表达式入门/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王靖尧">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王靖尧的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Lambda表达式入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T18:26:54+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##简介<br>其实Lambda表达式的本质只是一个”语法糖”，由编译器推断并帮你转换包装为常见的代码，因此可以使用更少的代码来实现同样的功能。<br>(建议不要乱用,因为这就和某些很高级的黑客写的代码一样,简洁,难懂,难以调试,维护人员想骂娘)<br>Lambda表达式是Java SE 8中一个重要的新特性。lambda表达式允许你通过表达式来代替功能接口。<br>lambda表达式就和方法一样,它提供了一个正常的参数列表和一个使用这些参数的主体(body,可以是一个表达式或一个代码块)。<br>Lambda表达式还增强了集合库。<br>Java SE 8添加了2个对集合数据进行批量操作的包: java.util.function 包以及 java.util.stream 包。<br>流(stream)就如同迭代器(iterator),但附加了许多额外的功能。<br> 总的来说,lambda表达式和 stream 是自Java语言添加泛型(Generics)和注解(annotation)以来最大的变化。<br>在本文中,我们将从简单到复杂的示例中见认识lambda表达式和stream的强悍。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>必须安装jdk1.8以上版本..</p>
+<h3 id="Lambda表达式的语法"><a href="#Lambda表达式的语法" class="headerlink" title="Lambda表达式的语法"></a>Lambda表达式的语法</h3><p>基本语法:<br>(parameters) -&gt; expression<br>或<br>(parameters) -&gt;{ statements; }</p>
+<p>简单例子：<br>// 1. 不需要参数,返回值为 5<br>() -&gt; 5</p>
+<p>// 2. 接收一个参数(数字类型),返回其2倍的值<br>x -&gt; 2 * x</p>
+<p>// 3. 接受2个参数(数字),并返回他们的差值<br>(x, y) -&gt; x – y</p>
+<p>// 4. 接收2个int型整数,返回他们的和<br>(int x, int y) -&gt; x + y</p>
+<p>// 5. 接受一个 string 对象,并在控制台打印,不返回任何值(看起来像是返回void)<br>(String s) -&gt; System.out.print(s)</p>
+<h3 id="基本的Lambda例子"><a href="#基本的Lambda例子" class="headerlink" title="基本的Lambda例子"></a>基本的Lambda例子</h3><p>假设有一个玩家List ,程序员可以使用 for 语句 (“for 循环”)来遍历,在Java SE 8中可以转换为另一种形式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">String[] atp = &#123;&quot;小明&quot;,&quot;小红&quot;, &quot;小黑&quot;, &quot;小白&quot;,&quot;小兰&quot;, &quot;小强&quot;,&quot;小绿&quot;, &quot;小小&quot;&#125;;</span><br><span class="line">        List&lt;String&gt; players =  Arrays.asList(atp);</span><br><span class="line"></span><br><span class="line">        // 以前的循环方式</span><br><span class="line">//        for (String player : players) &#123;</span><br><span class="line">//            System.out.print(player + &quot;; &quot;);</span><br><span class="line">//        &#125;</span><br><span class="line"></span><br><span class="line">        //使用lambda表达式以及函数操作(functional operation)</span><br><span class="line">        //players.forEach((player) -&gt; System.out.println(player + &quot;;&quot;));</span><br><span class="line"></span><br><span class="line">        //在JAVA 8 中使用双冒号操作符(double colon operator)</span><br><span class="line">        //players.forEach(System.out::println);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//下面是使用lambdas 来实现 Runnable接口 的示例:</span><br><span class="line">        // 1.1使用匿名内部类</span><br><span class="line">        new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                System.out.println(&quot;Hello world !&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        // 1.2使用 lambda expression</span><br><span class="line">        new Thread(() -&gt; System.out.println(&quot;Hello world !&quot;)).start();</span><br><span class="line"></span><br><span class="line">        // 2.1使用匿名内部类</span><br><span class="line">        Runnable race1 = new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                System.out.println(&quot;Hello world !&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        // 2.2使用 lambda expression</span><br><span class="line">        Runnable race2 = () -&gt; System.out.println(&quot;Hello world !&quot;);</span><br><span class="line"></span><br><span class="line">        // 直接调用 run 方法(没开新线程哦!)</span><br><span class="line">        race1.run();</span><br><span class="line">        race2.run();</span><br></pre></td></tr></table></figure>
+<h3 id="使用Lambda对集合进行排序"><a href="#使用Lambda对集合进行排序" class="headerlink" title="使用Lambda对集合进行排序"></a>使用Lambda对集合进行排序</h3><p>在java中，Comparator 类被用来排序集合，<br>在下面的例子中,我们将根据球员的 name, surname, name 长度 以及最后一个字母。 和前面的示例一样,先使用匿名内部类来排序,然后再使用lambda表达式精简我们的代码。<br>在第一个例子中,我们将根据name来排序list。 使用旧的方式,代码如下所示:</p>
+<p>String[] atp = {“小明”,”小红”, “小黑”, “小白”,”小兰”, “小强”,”小绿”, “小小”};<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 1.1 使用匿名内部类根据 name 排序 players  </span><br><span class="line">Arrays.sort(players, new Comparator&lt;String&gt;() &#123;  </span><br><span class="line">    @Override  </span><br><span class="line">    public int compare(String s1, String s2) &#123;  </span><br><span class="line">        return (s1.compareTo(s2));  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>使用lambdas,可以通过下面的代码实现同样的功能:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 1.2 使用 lambda expression 排序 players  </span><br><span class="line">Comparator&lt;String&gt; sortByName = (String s1, String s2) -&gt; (s1.compareTo(s2));  </span><br><span class="line">Arrays.sort(players, sortByName);  </span><br><span class="line">  </span><br><span class="line">// 1.3 也可以采用如下形式:  </span><br><span class="line">Arrays.sort(players, (String s1, String s2) -&gt; (s1.compareTo(s2)));</span><br></pre></td></tr></table></figure></p>
+<p>其他的排序如下所示。 和上面的示例一样,代码分别通过匿名内部类和一些lambda表达式来实现Comparator :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">// 1.1 使用匿名内部类根据 surname 排序 players  </span><br><span class="line">Arrays.sort(players, new Comparator&lt;String&gt;() &#123;  </span><br><span class="line">    @Override  </span><br><span class="line">    public int compare(String s1, String s2) &#123;  </span><br><span class="line">        return (s1.substring(s1.indexOf(&quot; &quot;)).compareTo(s2.substring(s2.indexOf(&quot; &quot;))));  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);  </span><br><span class="line">  </span><br><span class="line">// 1.2 使用 lambda expression 排序,根据 surname  </span><br><span class="line">Comparator&lt;String&gt; sortBySurname = (String s1, String s2) -&gt;   </span><br><span class="line">    ( s1.substring(s1.indexOf(&quot; &quot;)).compareTo( s2.substring(s2.indexOf(&quot; &quot;)) ) );  </span><br><span class="line">Arrays.sort(players, sortBySurname);  </span><br><span class="line">  </span><br><span class="line">// 1.3 或者这样,怀疑原作者是不是想错了,括号好多...  </span><br><span class="line">Arrays.sort(players, (String s1, String s2) -&gt;   </span><br><span class="line">      ( s1.substring(s1.indexOf(&quot; &quot;)).compareTo( s2.substring(s2.indexOf(&quot; &quot;)) ) )   </span><br><span class="line">    );  </span><br><span class="line">  </span><br><span class="line">// 2.1 使用匿名内部类根据 name lenght 排序 players  </span><br><span class="line">Arrays.sort(players, new Comparator&lt;String&gt;() &#123;  </span><br><span class="line">    @Override  </span><br><span class="line">    public int compare(String s1, String s2) &#123;  </span><br><span class="line">        return (s1.length() - s2.length());  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);  </span><br><span class="line">  </span><br><span class="line">// 2.2 使用 lambda expression 排序,根据 name lenght  </span><br><span class="line">Comparator&lt;String&gt; sortByNameLenght = (String s1, String s2) -&gt; (s1.length() - s2.length());  </span><br><span class="line">Arrays.sort(players, sortByNameLenght);  </span><br><span class="line">  </span><br><span class="line">// 2.3 or this  </span><br><span class="line">Arrays.sort(players, (String s1, String s2) -&gt; (s1.length() - s2.length()));  </span><br><span class="line">  </span><br><span class="line">// 3.1 使用匿名内部类排序 players, 根据最后一个字母  </span><br><span class="line">Arrays.sort(players, new Comparator&lt;String&gt;() &#123;  </span><br><span class="line">    @Override  </span><br><span class="line">    public int compare(String s1, String s2) &#123;  </span><br><span class="line">        return (s1.charAt(s1.length() - 1) - s2.charAt(s2.length() - 1));  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);  </span><br><span class="line">  </span><br><span class="line">// 3.2 使用 lambda expression 排序,根据最后一个字母  </span><br><span class="line">Comparator&lt;String&gt; sortByLastLetter =   </span><br><span class="line">    (String s1, String s2) -&gt;   </span><br><span class="line">        (s1.charAt(s1.length() - 1) - s2.charAt(s2.length() - 1));  </span><br><span class="line">Arrays.sort(players, sortByLastLetter);  </span><br><span class="line">  </span><br><span class="line">// 3.3 or this  </span><br><span class="line">Arrays.sort(players, (String s1, String s2) -&gt; (s1.charAt(s1.length() - 1) - s2.charAt(s2.length() - 1)));</span><br></pre></td></tr></table></figure></p>
+<p>就是这样,简洁又直观。 在下一节中我们将探索更多lambdas的能力,并将其与 stream 结合起来使用。</p>
+<h3 id="使用Lambdas和Streams"><a href="#使用Lambdas和Streams" class="headerlink" title="使用Lambdas和Streams"></a>使用Lambdas和Streams</h3><p>Stream是对集合的包装,通常和lambda一起使用。<br> 使用lambdas可以支持许多操作,如 map, filter, limit, sorted, count, min, max, sum, collect 等等。<br>同样,Stream使用懒运算,他们并不会真正地读取所有数据,遇到像getFirst() 这样的方法就会结束链式语法。<br>在接下来的例子中,我们将探索lambdas和streams 能做什么。<br>我们创建了一个Person类并使用这个类来添加一些数据到list中,将用于进一步流操作。<br>Person 只是一个简单的POJO类:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Person &#123;  </span><br><span class="line">  </span><br><span class="line">private String firstName, lastName, job, gender;  </span><br><span class="line">private int salary, age;  </span><br><span class="line">  </span><br><span class="line">public Person(String firstName, String lastName, String job,  </span><br><span class="line">                String gender, int age, int salary)       &#123;  </span><br><span class="line">          this.firstName = firstName;  </span><br><span class="line">          this.lastName = lastName;  </span><br><span class="line">          this.gender = gender;  </span><br><span class="line">          this.age = age;  </span><br><span class="line">          this.job = job;  </span><br><span class="line">          this.salary = salary;  </span><br><span class="line">&#125;  </span><br><span class="line">// Getter and Setter   </span><br><span class="line">// . . . . .  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>接下来,我们将创建两个list,都用来存放Person对象:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; javaProgrammers = new ArrayList&lt;Person&gt;() &#123;  </span><br><span class="line">  &#123;  </span><br><span class="line">    add(new Person(&quot;Elsdon&quot;, &quot;Jaycob&quot;, &quot;Java programmer&quot;, &quot;male&quot;, 43, 2000));  </span><br><span class="line">    add(new Person(&quot;Tamsen&quot;, &quot;Brittany&quot;, &quot;Java programmer&quot;, &quot;female&quot;, 23, 1500));  </span><br><span class="line">    add(new Person(&quot;Floyd&quot;, &quot;Donny&quot;, &quot;Java programmer&quot;, &quot;male&quot;, 33, 1800));  </span><br><span class="line">    add(new Person(&quot;Sindy&quot;, &quot;Jonie&quot;, &quot;Java programmer&quot;, &quot;female&quot;, 32, 1600));  </span><br><span class="line">    add(new Person(&quot;Vere&quot;, &quot;Hervey&quot;, &quot;Java programmer&quot;, &quot;male&quot;, 22, 1200));  </span><br><span class="line">    add(new Person(&quot;Maude&quot;, &quot;Jaimie&quot;, &quot;Java programmer&quot;, &quot;female&quot;, 27, 1900));  </span><br><span class="line">    add(new Person(&quot;Shawn&quot;, &quot;Randall&quot;, &quot;Java programmer&quot;, &quot;male&quot;, 30, 2300));  </span><br><span class="line">    add(new Person(&quot;Jayden&quot;, &quot;Corrina&quot;, &quot;Java programmer&quot;, &quot;female&quot;, 35, 1700));  </span><br><span class="line">    add(new Person(&quot;Palmer&quot;, &quot;Dene&quot;, &quot;Java programmer&quot;, &quot;male&quot;, 33, 2000));  </span><br><span class="line">    add(new Person(&quot;Addison&quot;, &quot;Pam&quot;, &quot;Java programmer&quot;, &quot;female&quot;, 34, 1300));  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;;  </span><br><span class="line">  </span><br><span class="line">List&lt;Person&gt; phpProgrammers = new ArrayList&lt;Person&gt;() &#123;  </span><br><span class="line">  &#123;  </span><br><span class="line">    add(new Person(&quot;Jarrod&quot;, &quot;Pace&quot;, &quot;PHP programmer&quot;, &quot;male&quot;, 34, 1550));  </span><br><span class="line">    add(new Person(&quot;Clarette&quot;, &quot;Cicely&quot;, &quot;PHP programmer&quot;, &quot;female&quot;, 23, 1200));  </span><br><span class="line">    add(new Person(&quot;Victor&quot;, &quot;Channing&quot;, &quot;PHP programmer&quot;, &quot;male&quot;, 32, 1600));  </span><br><span class="line">    add(new Person(&quot;Tori&quot;, &quot;Sheryl&quot;, &quot;PHP programmer&quot;, &quot;female&quot;, 21, 1000));  </span><br><span class="line">    add(new Person(&quot;Osborne&quot;, &quot;Shad&quot;, &quot;PHP programmer&quot;, &quot;male&quot;, 32, 1100));  </span><br><span class="line">    add(new Person(&quot;Rosalind&quot;, &quot;Layla&quot;, &quot;PHP programmer&quot;, &quot;female&quot;, 25, 1300));  </span><br><span class="line">    add(new Person(&quot;Fraser&quot;, &quot;Hewie&quot;, &quot;PHP programmer&quot;, &quot;male&quot;, 36, 1100));  </span><br><span class="line">    add(new Person(&quot;Quinn&quot;, &quot;Tamara&quot;, &quot;PHP programmer&quot;, &quot;female&quot;, 21, 1000));  </span><br><span class="line">    add(new Person(&quot;Alvin&quot;, &quot;Lance&quot;, &quot;PHP programmer&quot;, &quot;male&quot;, 38, 1600));  </span><br><span class="line">    add(new Person(&quot;Evonne&quot;, &quot;Shari&quot;, &quot;PHP programmer&quot;, &quot;female&quot;, 40, 1800));  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>现在我们使用forEach方法来迭代输出上述列表:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;所有程序员的姓名:&quot;);  </span><br><span class="line">javaProgrammers.forEach((p) -&gt; System.out.printf(&quot;%s %s; &quot;, p.getFirstName(), p.getLastName()));  </span><br><span class="line">phpProgrammers.forEach((p) -&gt; System.out.printf(&quot;%s %s; &quot;, p.getFirstName(), p.getLastName()));</span><br></pre></td></tr></table></figure></p>
+<p>我们同样使用forEach方法,增加程序员的工资5%:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;给程序员加薪 5% :&quot;);  </span><br><span class="line">Consumer&lt;Person&gt; giveRaise = e -&gt; e.setSalary(e.getSalary() / 100 * 5 + e.getSalary());  </span><br><span class="line">  </span><br><span class="line">javaProgrammers.forEach(giveRaise);  </span><br><span class="line">phpProgrammers.forEach(giveRaise);</span><br></pre></td></tr></table></figure></p>
+<p>另一个有用的方法是过滤器filter() ,让我们显示月薪超过1400美元的PHP程序员:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;下面是月薪超过 $1,400 的PHP程序员:&quot;)  </span><br><span class="line">phpProgrammers.stream()  </span><br><span class="line">          .filter((p) -&gt; (p.getSalary() &gt; 1400))  </span><br><span class="line">          .forEach((p) -&gt; System.out.printf(&quot;%s %s; &quot;, p.getFirstName(), p.getLastName()));</span><br></pre></td></tr></table></figure></p>
+<p>我们也可以定义过滤器,然后重用它们来执行其他操作:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 定义 filters  </span><br><span class="line">Predicate&lt;Person&gt; ageFilter = (p) -&gt; (p.getAge() &gt; 25);  </span><br><span class="line">Predicate&lt;Person&gt; salaryFilter = (p) -&gt; (p.getSalary() &gt; 1400);  </span><br><span class="line">Predicate&lt;Person&gt; genderFilter = (p) -&gt; (&quot;female&quot;.equals(p.getGender()));  </span><br><span class="line">  </span><br><span class="line">System.out.println(&quot;下面是年龄大于 24岁且月薪在$1,400以上的女PHP程序员:&quot;);  </span><br><span class="line">phpProgrammers.stream()  </span><br><span class="line">          .filter(ageFilter)  </span><br><span class="line">          .filter(salaryFilter)  </span><br><span class="line">          .filter(genderFilter)  </span><br><span class="line">          .forEach((p) -&gt; System.out.printf(&quot;%s %s; &quot;, p.getFirstName(), p.getLastName()));  </span><br><span class="line">  </span><br><span class="line">// 重用filters  </span><br><span class="line">System.out.println(&quot;年龄大于 24岁的女性 Java programmers:&quot;);  </span><br><span class="line">javaProgrammers.stream()  </span><br><span class="line">          .filter(ageFilter)  </span><br><span class="line">          .filter(genderFilter)  </span><br><span class="line">          .forEach((p) -&gt; System.out.printf(&quot;%s %s; &quot;, p.getFirstName(), p.getLastName()));</span><br></pre></td></tr></table></figure></p>
+<p>使用limit方法,可以限制结果集的个数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;最前面的3个 Java programmers:&quot;);  </span><br><span class="line">javaProgrammers.stream()  </span><br><span class="line">          .limit(3)  </span><br><span class="line">          .forEach((p) -&gt; System.out.printf(&quot;%s %s; &quot;, p.getFirstName(), p.getLastName()));  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">System.out.println(&quot;最前面的3个女性 Java programmers:&quot;);  </span><br><span class="line">javaProgrammers.stream()  </span><br><span class="line">          .filter(genderFilter)  </span><br><span class="line">          .limit(3)  </span><br><span class="line">          .forEach((p) -&gt; System.out.printf(&quot;%s %s; &quot;, p.getFirstName(), p.getLastName()));</span><br></pre></td></tr></table></figure></p>
+<p>排序呢? 我们在stream中能处理吗? 答案是肯定的。 在下面的例子中,我们将根据名字和薪水排序Java程序员,放到一个list中,然后显示列表:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;根据 name 排序,并显示前5个 Java programmers:&quot;);  </span><br><span class="line">List&lt;Person&gt; sortedJavaProgrammers = javaProgrammers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .sorted((p, p2) -&gt; (p.getFirstName().compareTo(p2.getFirstName())))  </span><br><span class="line">          .limit(5)  </span><br><span class="line">          .collect(toList());  </span><br><span class="line">  </span><br><span class="line">sortedJavaProgrammers.forEach((p) -&gt; System.out.printf(&quot;%s %s; %n&quot;, p.getFirstName(), p.getLastName()));  </span><br><span class="line">   </span><br><span class="line">System.out.println(&quot;根据 salary 排序 Java programmers:&quot;);  </span><br><span class="line">sortedJavaProgrammers = javaProgrammers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .sorted( (p, p2) -&gt; (p.getSalary() - p2.getSalary()) )  </span><br><span class="line">          .collect( toList() );  </span><br><span class="line">  </span><br><span class="line">sortedJavaProgrammers.forEach((p) -&gt; System.out.printf(&quot;%s %s; %n&quot;, p.getFirstName(), p.getLastName()));</span><br></pre></td></tr></table></figure></p>
+<p>如果我们只对最低和最高的薪水感兴趣,比排序后选择第一个/最后一个 更快的是min和max方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;工资最低的 Java programmer:&quot;);  </span><br><span class="line">Person pers = javaProgrammers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .min((p1, p2) -&gt; (p1.getSalary() - p2.getSalary()))  </span><br><span class="line">          .get()  </span><br><span class="line">  </span><br><span class="line">System.out.printf(&quot;Name: %s %s; Salary: $%,d.&quot;, pers.getFirstName(), pers.getLastName(), pers.getSalary())  </span><br><span class="line">  </span><br><span class="line">System.out.println(&quot;工资最高的 Java programmer:&quot;);  </span><br><span class="line">Person person = javaProgrammers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .max((p, p2) -&gt; (p.getSalary() - p2.getSalary()))  </span><br><span class="line">          .get()  </span><br><span class="line">  </span><br><span class="line">System.out.printf(&quot;Name: %s %s; Salary: $%,d.&quot;, person.getFirstName(), person.getLastName(), person.getSalary())</span><br></pre></td></tr></table></figure></p>
+<p>上面的例子中我们已经看到 collect 方法是如何工作的。 结合 map 方法,我们可以使用 collect 方法来将我们的结果集放到一个字符串,一个 Set 或一个TreeSet中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;将 PHP programmers 的 first name 拼接成字符串:&quot;);  </span><br><span class="line">String phpDevelopers = phpProgrammers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .map(Person::getFirstName)  </span><br><span class="line">          .collect(joining(&quot; ; &quot;)); // 在进一步的操作中可以作为标记(token)     </span><br><span class="line">  </span><br><span class="line">System.out.println(&quot;将 Java programmers 的 first name 存放到 Set:&quot;);  </span><br><span class="line">Set&lt;String&gt; javaDevFirstName = javaProgrammers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .map(Person::getFirstName)  </span><br><span class="line">          .collect(toSet());  </span><br><span class="line">  </span><br><span class="line">System.out.println(&quot;将 Java programmers 的 first name 存放到 TreeSet:&quot;);  </span><br><span class="line">TreeSet&lt;String&gt; javaDevLastName = javaProgrammers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .map(Person::getLastName)  </span><br><span class="line">          .collect(toCollection(TreeSet::new));</span><br></pre></td></tr></table></figure></p>
+<p>Streams 还可以是并行的(parallel)。 示例如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;计算付给 Java programmers 的所有money:&quot;);  </span><br><span class="line">int totalSalary = javaProgrammers  </span><br><span class="line">          .parallelStream()  </span><br><span class="line">          .mapToInt(p -&gt; p.getSalary())  </span><br><span class="line">          .sum();</span><br></pre></td></tr></table></figure></p>
+<p>我们可以使用summaryStatistics方法获得stream 中元素的各种汇总数据。 接下来,我们可以访问这些方法,比如getMax, getMin, getSum或getAverage:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//计算 count, min, max, sum, and average for numbers  </span><br><span class="line">List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);  </span><br><span class="line">IntSummaryStatistics stats = numbers  </span><br><span class="line">          .stream()  </span><br><span class="line">          .mapToInt((x) -&gt; x)  </span><br><span class="line">          .summaryStatistics();  </span><br><span class="line">  </span><br><span class="line">System.out.println(&quot;List中最大的数字 : &quot; + stats.getMax());  </span><br><span class="line">System.out.println(&quot;List中最小的数字 : &quot; + stats.getMin());  </span><br><span class="line">System.out.println(&quot;所有数字的总和   : &quot; + stats.getSum());  </span><br><span class="line">System.out.println(&quot;所有数字的平均值 : &quot; + stats.getAverage());</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/Spring的一些概念/" rel="next" title="Spring的一些概念">
+                <i class="fa fa-chevron-left"></i> Spring的一些概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/日常/" rel="prev" title="日常">
+                日常 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">王靖尧</p>
+              <p class="site-description motion-element" itemprop="description">一晃而过的时间，都做了些什么</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda表达式的语法"><span class="nav-number">1.1.</span> <span class="nav-text">Lambda表达式的语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本的Lambda例子"><span class="nav-number">1.2.</span> <span class="nav-text">基本的Lambda例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Lambda对集合进行排序"><span class="nav-number">1.3.</span> <span class="nav-text">使用Lambda对集合进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Lambdas和Streams"><span class="nav-number">1.4.</span> <span class="nav-text">使用Lambdas和Streams</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王靖尧</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

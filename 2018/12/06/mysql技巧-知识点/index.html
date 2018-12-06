@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mysql,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据库三大范式1.1NF即第一范式,指同一列中不能有多个值,(即实体中的某个属性不能有多个值,或者不能有重复的属性),简而言之，第一范式就是无重复的列2.2NF第二范式,要求表中中的每一行(每一条数据),必须可以被唯一的区分(即唯一id,主键)3.3NF第三范式,要求一个表中,不包含,已在其他表中,已包含的,非主关键字信息 1. left join和 inner join 区别left以 left">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql技巧+知识点">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/mysql技巧-知识点/index.html">
+<meta property="og:site_name" content="王靖尧的博客">
+<meta property="og:description" content="数据库三大范式1.1NF即第一范式,指同一列中不能有多个值,(即实体中的某个属性不能有多个值,或者不能有重复的属性),简而言之，第一范式就是无重复的列2.2NF第二范式,要求表中中的每一行(每一条数据),必须可以被唯一的区分(即唯一id,主键)3.3NF第三范式,要求一个表中,不包含,已在其他表中,已包含的,非主关键字信息 1. left join和 inner join 区别left以 left">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-06T10:14:04.937Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql技巧+知识点">
+<meta name="twitter:description" content="数据库三大范式1.1NF即第一范式,指同一列中不能有多个值,(即实体中的某个属性不能有多个值,或者不能有重复的属性),简而言之，第一范式就是无重复的列2.2NF第二范式,要求表中中的每一行(每一条数据),必须可以被唯一的区分(即唯一id,主键)3.3NF第三范式,要求一个表中,不包含,已在其他表中,已包含的,非主关键字信息 1. left join和 inner join 区别left以 left">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/mysql技巧-知识点/">
+
+
+
+
+
+  <title>mysql技巧+知识点 | 王靖尧的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王靖尧的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/mysql技巧-知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王靖尧">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王靖尧的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mysql技巧+知识点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T18:13:55+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="数据库三大范式"><a href="#数据库三大范式" class="headerlink" title="数据库三大范式"></a>数据库三大范式</h3><p>1.1NF<br>即第一范式,指同一列中不能有多个值,(即实体中的某个属性不能有多个值,或者不能有重复的属性),简而言之，第一范式就是无重复的列<br>2.2NF<br>第二范式,要求表中中的每一行(每一条数据),必须可以被唯一的区分(即唯一id,主键)<br>3.3NF<br>第三范式,要求一个表中,不包含,已在其他表中,已包含的,非主关键字信息</p>
+<h3 id="1-left-join和-inner-join-区别"><a href="#1-left-join和-inner-join-区别" class="headerlink" title="1. left join和 inner join 区别"></a>1. left join和 inner join 区别</h3><p>left以 left join 左侧的表为主表<br>right 以 right join 右侧表为主表<br>inner join 查找的数据是左右两张表共有的</p>
+<h3 id="2-查找一个表中存在而另一个表中不存在的记录"><a href="#2-查找一个表中存在而另一个表中不存在的记录" class="headerlink" title="2.查找一个表中存在而另一个表中不存在的记录"></a>2.查找一个表中存在而另一个表中不存在的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select j.id,j.job_name,c.member_name as company_id,j.job_address,j.salary,j.flush_time</span><br><span class="line">from hr_job j</span><br><span class="line">left join HR_COMPANY c on c.id = j.company_id</span><br><span class="line">left join hr_job_apply ja on ja.job_id = j.id</span><br><span class="line">where not exists (select ja.id from HR_JOB_APPLY where ja.job_id = j.id)</span><br><span class="line"></span><br><span class="line">select * from t1</span><br><span class="line">where id not in(select id from t2)</span><br></pre></td></tr></table></figure>
+<h3 id="3-时间相关"><a href="#3-时间相关" class="headerlink" title="3.时间相关"></a>3.时间相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">获取今天到明天的数据</span><br><span class="line">where date_format(create_date,&apos;%y-%m-%d&apos;) </span><br><span class="line">BETWEEN date_format(curdate(),&apos;%y-%m-%d&apos;) </span><br><span class="line">and DATE_SUB(curdate(),INTERVAL -1 DAY)</span><br><span class="line"></span><br><span class="line">当天数据1</span><br><span class="line">where date_format(create_date,&apos;%y-%m-%d&apos;) = date_format(curdate(),&apos;%y-%m-%d&apos;)</span><br><span class="line"></span><br><span class="line">当天数据2</span><br><span class="line">select * from 表名 where to_days(时间字段名) = to_days(now());</span><br><span class="line">注：to_days 是mysql的函数</span><br><span class="line"></span><br><span class="line">昨天数据</span><br><span class="line">SELECT * FROM 表名 WHERE TO_DAYS( NOW( ) ) - TO_DAYS( 时间字段名) &lt;= 1</span><br><span class="line"></span><br><span class="line">近7天</span><br><span class="line">SELECT * FROM 表名 where DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(时间字段名)</span><br><span class="line"></span><br><span class="line">近30天</span><br><span class="line">SELECT * FROM 表名 where DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(时间字段名)</span><br><span class="line"></span><br><span class="line">本月</span><br><span class="line">SELECT * FROM 表名 WHERE DATE_FORMAT( 时间字段名, &apos;%Y%m&apos; ) = DATE_FORMAT( CURDATE( ) , &apos;%Y%m&apos; )</span><br><span class="line"></span><br><span class="line">上一月</span><br><span class="line">SELECT * FROM 表名 WHERE PERIOD_DIFF( date_format( now( ) , &apos;%Y%m&apos; ) , date_format( 时间字段名, &apos;%Y%m&apos; ) ) =1</span><br><span class="line"></span><br><span class="line">查询本季度数据</span><br><span class="line">select * from `ht_invoice_information` where QUARTER(create_date)=QUARTER(now());</span><br><span class="line"></span><br><span class="line">查询上季度数据</span><br><span class="line">select * from `ht_invoice_information` where QUARTER(create_date)=QUARTER(DATE_SUB(now(),interval 1 QUARTER));</span><br><span class="line"></span><br><span class="line">查询本年数据</span><br><span class="line">select * from `ht_invoice_information` where YEAR(create_date)=YEAR(NOW());</span><br><span class="line"></span><br><span class="line">查询上年数据</span><br><span class="line">select * from `ht_invoice_information` where year(create_date)=year(date_sub(now(),interval 1 year));</span><br><span class="line"></span><br><span class="line">查询当前这周的数据</span><br><span class="line">SELECT name,submittime FROM enterprise WHERE YEARWEEK(date_format(submittime,&apos;%Y-%m-%d&apos;)) = YEARWEEK(now());</span><br><span class="line"></span><br><span class="line">查询上周的数据</span><br><span class="line">SELECT name,submittime FROM enterprise WHERE YEARWEEK(date_format(submittime,&apos;%Y-%m-%d&apos;)) = YEARWEEK(now())-1;</span><br><span class="line"></span><br><span class="line">查询上个月的数据</span><br><span class="line">select name,submittime from enterprise where date_format(submittime,&apos;%Y-%m&apos;)=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),&apos;%Y-%m&apos;)</span><br><span class="line"></span><br><span class="line">select * from user where DATE_FORMAT(pudate,&apos;%Y%m&apos;) = DATE_FORMAT(CURDATE(),&apos;%Y%m&apos;) ; </span><br><span class="line"></span><br><span class="line">select * from user where WEEKOFYEAR(FROM_UNIXTIME(pudate,&apos;%y-%m-%d&apos;)) = WEEKOFYEAR(now()) </span><br><span class="line"></span><br><span class="line">select * from user where MONTH(FROM_UNIXTIME(pudate,&apos;%y-%m-%d&apos;)) = MONTH(now()) </span><br><span class="line"></span><br><span class="line">select * from user where YEAR(FROM_UNIXTIME(pudate,&apos;%y-%m-%d&apos;)) = YEAR(now()) and MONTH(FROM_UNIXTIME(pudate,&apos;%y-%m-%d&apos;)) = MONTH(now()) </span><br><span class="line"></span><br><span class="line">select * from user where pudate between  上月最后一天  and 下月第一天</span><br><span class="line"></span><br><span class="line">查询当前月份的数据 </span><br><span class="line">select name,submittime from enterprise   where date_format(submittime,&apos;%Y-%m&apos;)=date_format(now(),&apos;%Y-%m&apos;)</span><br><span class="line"></span><br><span class="line">查询距离当前现在6个月的数据</span><br><span class="line">select name,submittime from enterprise where submittime between date_sub(now(),interval 6 month) and now();</span><br></pre></td></tr></table></figure>
+<h3 id="4-几种case-when的形式"><a href="#4-几种case-when的形式" class="headerlink" title="4.几种case-when的形式"></a>4.几种case-when的形式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CASE b.check_type</span><br><span class="line">when &apos;1&apos; then b.real_name</span><br><span class="line">when &apos;2&apos; then b.association_name</span><br><span class="line">    else u2.name(有else)</span><br><span class="line">end AS &quot;user.name&quot;,</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
+<p>CASE a.exh_type<br>when ‘1’ then a.is_art<br>when ‘2’ then c.is_art<br>end AS “isArt”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">case (case后边没东西)</span><br><span class="line">when a.end_time &gt; now() then &apos;1&apos;</span><br><span class="line">when a.end_time &amp;lt; now() then &apos;2&apos;</span><br><span class="line">end AS &quot;isPass&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">where a.is_home = &apos;1&apos;</span><br><span class="line">and a.publish_status = &apos;1&apos;</span><br><span class="line">and (</span><br><span class="line">case a.exh_type</span><br><span class="line">    when &apos;1&apos; then a.audit_status = &apos;2&apos;</span><br><span class="line">        else 1 = 1</span><br><span class="line">        end</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="5-rand"><a href="#5-rand" class="headerlink" title="5.rand()"></a>5.rand()</h3><pre><code>随机函数效率很低
+order by RAND() ：随机返回结果
+</code></pre><h3 id="6-REGEXP"><a href="#6-REGEXP" class="headerlink" title="6.REGEXP"></a>6.REGEXP</h3><pre><code>单字匹配多字，或反之
+例如：木雕中，标签
+活动,展讯,文化弘扬 为一条数据的标签，要求，可以匹配到标签为展讯的内容
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">AND x.label REGEXP</span><br><span class="line">(</span><br><span class="line">    SELECT</span><br><span class="line">    replace(new_category,&apos;,&apos;,&apos;|&apos;)</span><br><span class="line">    FROM</span><br><span class="line">    wd_news a1</span><br><span class="line">    WHERE</span><br><span class="line">    a1.id = &apos;1a94c3168229403aa11ea136596e335a&apos;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="7-并发插入、存在不插入，存在更新操作"><a href="#7-并发插入、存在不插入，存在更新操作" class="headerlink" title="7.并发插入、存在不插入，存在更新操作"></a>7.并发插入、存在不插入，存在更新操作</h3><p>方法1：通常会，先查再插，但是这样无法避免并发问题，不用考虑了。</p>
+<p>2.存在即更新，不存在即插入<br><code>REPLACE into table (c1,c2) values(1,5)</code><br>如果发现表中已经有此行数据（根据主键或者唯一索引判断），<br>则先删除此行数据，然后插入新的数据，否则，直接插入新数据。</p>
+<p>所以，插入时如果不插入主键(逐渐默认递增)，就需要保证一列是唯一索引，保证唯一，才行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">创建唯一索引sql:(也可以通过navcat创建)</span><br><span class="line">	CREATE UNIQUE INDEX sub_id ON table_name(sub_id); </span><br><span class="line">删除唯一索引sql:</span><br><span class="line">	ALTER TABLE table_name DROP INDEX sub_id;</span><br></pre></td></tr></table></figure></p>
+<p>3.存在不插入，不存在再插入(感觉这种方法是最好的)<br>mysql 不能在插入时带where条件，故用临时表处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO demo_in(a,b,c) </span><br><span class="line">SELECT 123, 2, 4 FROM DUAL </span><br><span class="line">WHERE NOT EXISTS(SELECT c FROM demo_in WHERE c = 4);</span><br></pre></td></tr></table></figure></p>
+<p>用临时表DUAL来标记数据，然后插入到demo_in表中。<br>条件是c=4，并且not exists，也就是当c=4条件满足，则不插入。</p>
+<h3 id="8-视哪张表为主表，哪张为子表"><a href="#8-视哪张表为主表，哪张为子表" class="headerlink" title="8.视哪张表为主表，哪张为子表"></a>8.视哪张表为主表，哪张为子表</h3><p>对比两条SQL</p>
+<p>SQL 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">	a.id,</span><br><span class="line">	b.type,</span><br><span class="line">	b.last_price,</span><br><span class="line">	b.order_content,</span><br><span class="line">	b.create_time</span><br><span class="line">	FROM</span><br><span class="line">	business a</span><br><span class="line">	LEFT JOIN wallet_checkinout b ON a.user_id = b.user_id</span><br><span class="line">	WHERE</span><br><span class="line">		a.id = 1000039</span><br><span class="line">		AND b.money_type = 3</span><br><span class="line">		AND b.biz_type = 6</span><br><span class="line">	ORDER BY</span><br><span class="line">	 b.create_time desc</span><br></pre></td></tr></table></figure></p>
+<p>SQL 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">      a.id,</span><br><span class="line">      a.type,</span><br><span class="line">      a.last_price,</span><br><span class="line">      a.order_info,</span><br><span class="line">      a.order_content,</span><br><span class="line">      a.create_time,</span><br><span class="line">      a.close_status</span><br><span class="line">    FROM</span><br><span class="line">    wallet_checkinout a</span><br><span class="line">    LEFT JOIN business b ON b.user_id = a.user_id</span><br><span class="line">    WHERE</span><br><span class="line">      b.id = 1000039</span><br><span class="line">      AND a.type = 1</span><br><span class="line">      AND a.money_type = 3</span><br><span class="line">      AND a.biz_type = 6</span><br><span class="line">		order by a.create_time desc</span><br></pre></td></tr></table></figure></p>
+<p>以上两条sql查出的结果是一样的。<br>目前，我认为：无论以哪张表为主表都可以。</p>
+<h3 id="9-union和union-all-区别"><a href="#9-union和union-all-区别" class="headerlink" title="9.union和union all 区别"></a>9.union和union all 区别</h3><p>1.union 操作符会选取不同的值<br>   UNION ALL 允许重复的值(会将所有的值列出)</p>
+<h3 id="10-union-union-all-和order-by"><a href="#10-union-union-all-和order-by" class="headerlink" title="10.union(union all)和order by"></a>10.union(union all)和order by</h3><p>1.每一个子句可以使用()包围，但是当第一个子句使用了()时，其它的子句都必须使用括号包围。</p>
+<ol start="2">
+<li>每一个字句可以包含WHERE，GROUP BY，HAVING，JOIN，LIMIT，但是不能使用ORDER BY，如果需要使用ORDER BY，必须使用()包围子句。</li>
+</ol>
+<h3 id="11-给查询记录添加自然序号"><a href="#11-给查询记录添加自然序号" class="headerlink" title="11.给查询记录添加自然序号"></a>11.给查询记录添加自然序号</h3><p>表a，数据：<br>id name<br>12 张三<br>13 李四<br>15 王五</p>
+<p>通过一条sql获取这三条记录，并且给每行前面加上从1开始的序号</p>
+<p>1 12 张三<br>2 13 李四<br>3 14 王五<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">@rownum := @rownum + 1 AS rownum,</span><br><span class="line">a.* </span><br><span class="line">FROM</span><br><span class="line">( SELECT @rownum := 0 ) r,</span><br><span class="line">table a;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/mysql基础/" rel="next" title="mysql基础">
+                <i class="fa fa-chevron-left"></i> mysql基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/JSP-Servlet知识点/" rel="prev" title="JSP+Servlet知识点">
+                JSP+Servlet知识点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">王靖尧</p>
+              <p class="site-description motion-element" itemprop="description">一晃而过的时间，都做了些什么</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库三大范式"><span class="nav-number">1.</span> <span class="nav-text">数据库三大范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-left-join和-inner-join-区别"><span class="nav-number">2.</span> <span class="nav-text">1. left join和 inner join 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-查找一个表中存在而另一个表中不存在的记录"><span class="nav-number">3.</span> <span class="nav-text">2.查找一个表中存在而另一个表中不存在的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-时间相关"><span class="nav-number">4.</span> <span class="nav-text">3.时间相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-几种case-when的形式"><span class="nav-number">5.</span> <span class="nav-text">4.几种case-when的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-rand"><span class="nav-number">6.</span> <span class="nav-text">5.rand()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-REGEXP"><span class="nav-number">7.</span> <span class="nav-text">6.REGEXP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-并发插入、存在不插入，存在更新操作"><span class="nav-number">8.</span> <span class="nav-text">7.并发插入、存在不插入，存在更新操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-视哪张表为主表，哪张为子表"><span class="nav-number">9.</span> <span class="nav-text">8.视哪张表为主表，哪张为子表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-union和union-all-区别"><span class="nav-number">10.</span> <span class="nav-text">9.union和union all 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-union-union-all-和order-by"><span class="nav-number">11.</span> <span class="nav-text">10.union(union all)和order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-给查询记录添加自然序号"><span class="nav-number">12.</span> <span class="nav-text">11.给查询记录添加自然序号</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王靖尧</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

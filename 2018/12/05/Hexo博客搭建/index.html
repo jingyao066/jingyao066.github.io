@@ -88,7 +88,8 @@
 <meta property="og:description" content="总体步骤：1.安装Git Bash2.安装NodeJs3.安装hexo4.生成SSH并添加到github5.部署项目6.上传到github7.绑定个人域名8.修改及配置主题9.添加RSS10.添加评论11.写文章部分安装git、node.js，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。 1.安装HexoHexo官网">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/12/05/Hexo博客搭建/1.png">
-<meta property="og:updated_time" content="2018-12-06T08:08:20.126Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/05/Hexo博客搭建/本地图片测试/logo.jpg">
+<meta property="og:updated_time" content="2018-12-06T09:34:34.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo博客搭建">
 <meta name="twitter:description" content="总体步骤：1.安装Git Bash2.安装NodeJs3.安装hexo4.生成SSH并添加到github5.部署项目6.上传到github7.绑定个人域名8.修改及配置主题9.添加RSS10.添加评论11.写文章部分安装git、node.js，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。 1.安装HexoHexo官网">
@@ -409,6 +410,14 @@
 <p>细心的朋友可能已经发现，这两个的设置几乎一模一样！是的，没错，思路都是一样的。<br>所以我们可以打开scaffolds/post.md文件，在tages:上面加入categories:,<br>保存后，之后执行hexo new 文章名命令生成的文件，页面里就有categories:项了。</p>
 <p>scaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。</p>
 <h2 id="添加about标签"><a href="#添加about标签" class="headerlink" title="添加about标签"></a>添加about标签</h2><p><code>hexo new page &#39;about&#39;</code><br>在安装位置下的source文件夹下会有about文件夹，打开，编辑里面的index.md</p>
+<h2 id="引用图片"><a href="#引用图片" class="headerlink" title="引用图片"></a>引用图片</h2><p>总体来说有两种引用方式：<br>1.公网图片地址<br>2.将图片引入项目内，使用相对路径</p>
+<p>公网地址总是不可靠的，又没有自己的服务器，只能传到别的地方，这样链接总有可能会失效。<br>可行的办法：<br>1.把图片上传到新浪图床<br>2.在github新建一个res，专门用来存放图片。</p>
+<p>将图片引入项目内<br>1.修改项目的_config.yml，post_asset_folder:true<br>Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder<br>当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。</p>
+<p>2.在hexo的目录下执行<br><code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code><br>需要等待一段时间</p>
+<p>3.完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">本地图片测试</span><br><span class="line">├── apppicker.jpg</span><br><span class="line">├── logo.jpg</span><br><span class="line">└── rules.jpg</span><br><span class="line">本地图片测试.md</span><br></pre></td></tr></table></figure></p>
+<p>这样的目录结构（目录名和文章名一致），只要使用 <img src="/2018/12/05/Hexo博客搭建/本地图片测试/logo.jpg" alt="logo"> 就可以插入图片。<br>生成的结构为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public/2016/3/9/本地图片测试</span><br><span class="line">├── apppicker.jpg</span><br><span class="line">├── index.html</span><br><span class="line">├── logo.jpg</span><br><span class="line">└── rules.jpg</span><br></pre></td></tr></table></figure></p>
+<p>同时，生成的 html 是<br><code>&lt;img src=&quot;/2016/3/9/本地图片测试/logo.jpg&quot; alt=&quot;logo&quot;&gt;</code></p>
+<p>而不是愚蠢的<br><code>&lt;img src=&quot;本地图片测试/logo.jpg&quot; alt=&quot;logo&quot;&gt;</code></p>
 
       
     </div>
@@ -524,7 +533,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -546,7 +555,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -579,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装Hexo"><span class="nav-number">1.</span> <span class="nav-text">1.安装Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-修改配置文件"><span class="nav-number">2.</span> <span class="nav-text">2.修改配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-上传到github"><span class="nav-number">3.</span> <span class="nav-text">3.上传到github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-修改及配置主题"><span class="nav-number">4.</span> <span class="nav-text">4.修改及配置主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-写文章"><span class="nav-number">5.</span> <span class="nav-text">5.写文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-添加“分类”选项"><span class="nav-number">6.</span> <span class="nav-text">6.添加“分类”选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#给文章添加“categories”属性"><span class="nav-number">6.1.</span> <span class="nav-text">给文章添加“categories”属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建“标签”选项"><span class="nav-number">7.</span> <span class="nav-text">创建“标签”选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#给文章添加“tags”属性"><span class="nav-number">7.1.</span> <span class="nav-text">给文章添加“tags”属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加about标签"><span class="nav-number">8.</span> <span class="nav-text">添加about标签</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装Hexo"><span class="nav-number">1.</span> <span class="nav-text">1.安装Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-修改配置文件"><span class="nav-number">2.</span> <span class="nav-text">2.修改配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-上传到github"><span class="nav-number">3.</span> <span class="nav-text">3.上传到github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-修改及配置主题"><span class="nav-number">4.</span> <span class="nav-text">4.修改及配置主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-写文章"><span class="nav-number">5.</span> <span class="nav-text">5.写文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-添加“分类”选项"><span class="nav-number">6.</span> <span class="nav-text">6.添加“分类”选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#给文章添加“categories”属性"><span class="nav-number">6.1.</span> <span class="nav-text">给文章添加“categories”属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建“标签”选项"><span class="nav-number">7.</span> <span class="nav-text">创建“标签”选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#给文章添加“tags”属性"><span class="nav-number">7.1.</span> <span class="nav-text">给文章添加“tags”属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加about标签"><span class="nav-number">8.</span> <span class="nav-text">添加about标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用图片"><span class="nav-number">9.</span> <span class="nav-text">引用图片</span></a></li></ol></div>
             
 
           </div>

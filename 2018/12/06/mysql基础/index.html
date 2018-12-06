@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mysql,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MySQL数据库 1.增删改查1234插入(增)：insert into 表名字(列名1，列名2...) values(值1，值2...)或者：insert into 表名字 values(值1，值2...) 123删除(删)：delete from 表名字如果不加where条件，则删除数据表中所有数据 123修改：update 表名字 set 列1=值1，列2=值2...如果不加where条件，">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql基础">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/mysql基础/index.html">
+<meta property="og:site_name" content="王靖尧的博客">
+<meta property="og:description" content="MySQL数据库 1.增删改查1234插入(增)：insert into 表名字(列名1，列名2...) values(值1，值2...)或者：insert into 表名字 values(值1，值2...) 123删除(删)：delete from 表名字如果不加where条件，则删除数据表中所有数据 123修改：update 表名字 set 列1=值1，列2=值2...如果不加where条件，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-06T10:13:09.031Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql基础">
+<meta name="twitter:description" content="MySQL数据库 1.增删改查1234插入(增)：insert into 表名字(列名1，列名2...) values(值1，值2...)或者：insert into 表名字 values(值1，值2...) 123删除(删)：delete from 表名字如果不加where条件，则删除数据表中所有数据 123修改：update 表名字 set 列1=值1，列2=值2...如果不加where条件，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/mysql基础/">
+
+
+
+
+
+  <title>mysql基础 | 王靖尧的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王靖尧的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/mysql基础/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王靖尧">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王靖尧的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mysql基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T18:12:58+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>MySQL数据库</p>
+<h3 id="1-增删改查"><a href="#1-增删改查" class="headerlink" title="1.增删改查"></a>1.增删改查</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">插入(增)：</span><br><span class="line">insert into 表名字(列名1，列名2...) values(值1，值2...)</span><br><span class="line">或者：</span><br><span class="line">insert into 表名字 values(值1，值2...)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">删除(删)：</span><br><span class="line">delete from 表名字</span><br><span class="line">如果不加where条件，则删除数据表中所有数据</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">修改：</span><br><span class="line">update 表名字 set 列1=值1，列2=值2...</span><br><span class="line">如果不加where条件，则更新数据表中所有数据</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查询：</span><br><span class="line">select * from 表名字</span><br><span class="line">星号代表查询数据表中所有字段</span><br><span class="line">select id,stu_name,age, from 表名字</span><br><span class="line">查询多个字段，用逗号进行分割</span><br></pre></td></tr></table></figure>
+<p>常用数据类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int 整形</span><br><span class="line">double 浮点型</span><br><span class="line">datetime 日期型</span><br><span class="line">varchar 字符型(要给长度，如20，即20个字符)</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">1.创建数据库:</span><br><span class="line">`create database[if not exists] db_name`</span><br><span class="line"></span><br><span class="line">2.删除数据库:</span><br><span class="line">`drop database[if exists] db_name`</span><br><span class="line"></span><br><span class="line">3.创建数据表:</span><br></pre></td></tr></table></figure></p>
+<p>create table[if not exists] table_name(<br>    列名 类型 是否为空<br>    列名 类型 是否为空<br>)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 2.主外键</span><br><span class="line">主键：primary_key</span><br><span class="line">	1.保证数据唯一性</span><br><span class="line">	2.一个数据表只能有一个主键</span><br><span class="line">	3.主键不可以为空，并且不可以重复</span><br><span class="line">	</span><br><span class="line">  外键:</span><br><span class="line">	1.保证数据的完整性，一致性</span><br><span class="line">	2.外键列和参照列的数据类型必须一致</span><br><span class="line">	3.参照列的表为父表，外键列的表为子表</span><br><span class="line">	4.实现一对多，多对一的关系</span><br><span class="line">	5.外键列和参照列必须创建索引，如不创建，mySQL会自动创建</span><br></pre></td></tr></table></figure></p>
+<p>create table test(<br>    id int primary_key auto_increment,<br>    foreign key(test1_id) references  test2(id)<br>    //外键列为test1_id(当前表的列),参照了test2表的id列<br>)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">尽量不要使用外键。</span><br><span class="line"></span><br><span class="line">## 3.修改表sql</span><br><span class="line">修改数据表</span><br></pre></td></tr></table></figure></p>
+<p>ALTER TABLE &lt;表名&gt;<br>[ALTER COLUMN &lt;列名&gt; &lt;新数据类型&gt;]<br>|[ADD &lt;列名&gt; &lt;数据类型&gt; [属性]<br>|[DROP COLUMN &lt;列名&gt;]<br>|[ADD [constraint] [约束名] 约束定义<br>|[DROP [constraint] 约束名]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">create table test(</span><br><span class="line">	id int PRIMARY key auto_increment, //创建id列，规定为主键列，自增</span><br><span class="line">	test_name varchar(20),</span><br><span class="line">	test2_id int</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>新增字段<br><code>alter table wd_user add account_status varchar(255) not null default 0;</code></p>
+<p>修改字段<br><code>ALTER TABLE wd_evaluate MODIFY cus_id VARCHAR(200) NULL DEFAULT null COMMENT &#39;定制表id&#39;;</code></p>
+<p>查看表结构<br><code>desc tabl_name;</code></p>
+<h3 id="4-where条件"><a href="#4-where条件" class="headerlink" title="4.where条件"></a>4.where条件</h3><p>可以跟在select/update/delete后<br>多个where条件，并且的关系，用and链接，或者的关系，用or链接</p>
+<p>group by:把查询结构进行分组，分组结果可以升序(asc)或降序(desc),默认升序,用于去重</p>
+<p>having:如果要将group by的结果进行删选，需要用到having关键字，不可以用where</p>
+<p>order by:把查询结果进行排序，可升(asc)可降(desc),默认升序，可以进行多次排序，用逗号分割排序字段</p>
+<p>limit:限制查询返回的结果(用于分页功能)是select语句的最后一个关键字<br>    参数1：从第几条结果开始获取<br>    参数2：获取几条结果</p>
+<p>select语句结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select * from 表名字</span><br><span class="line">	where</span><br><span class="line">	 gruop by</span><br><span class="line">	  having</span><br><span class="line">	   order by</span><br><span class="line">	    limit</span><br></pre></td></tr></table></figure></p>
+<p>关键字顺序不可以颠倒</p>
+<h3 id="5-字符函数"><a href="#5-字符函数" class="headerlink" title="5.字符函数"></a>5.字符函数</h3><p> 以下字符函数都必须跟在select语句后面<br><code>concat(str1,str2,...)：拼接字符串</code></p>
+<p><code>left(str,1):左侧开始截取字符串，参数2为截取几位</code></p>
+<p><code>right(str,1):右侧开始截取，参数2位截取几位</code></p>
+<p><code>substring(参数1，参数2，参数3):1.要截取的字符串2.从第几位开始截取3.截取的长度</code></p>
+<p><code>replace(参数1，参数2，参数3):1.要处理的字符串2.要替换的字符3.替换成什么</code></p>
+<p><code>trim(str):去除字符串前后的空格</code></p>
+<p><code>length(str):字符串长度</code></p>
+<p><code>lower(str):字符串转小写</code></p>
+<p><code>upper(str):字符串转大写</code></p>
+<p>问题：<br>已知一个数字字段，内容不规律，最长有10位，最短有4位，<br>想把不够10位的全部在前边用0补齐，怎么办?</p>
+<p>SQL：<br>update 表名字 set num = right(concat(‘000000’,num),10);<br>解:因为最短有4位，在每个字符串左侧都拼接6个0，然后从右侧开始截取10个字符</p>
+<h3 id="6-聚合函数"><a href="#6-聚合函数" class="headerlink" title="6.聚合函数"></a>6.聚合函数</h3><p>聚合函数必须跟在select语句后面<br><code>一列的和：select sum(列名) from 表名 where ...条件</code></p>
+<p><code>一列的最大值：select max(列名) from 表名 where ...条件</code></p>
+<p><code>一列的最小值：select min(列名) from 表名 where ...条件</code></p>
+<p><code>一列的数量：select count(列名/一般都用id) from 表名 where ...条件</code></p>
+<p><code>一列的平均值：select avg(列名) from 表名 where ...条件</code></p>
+<h3 id="7-case-when"><a href="#7-case-when" class="headerlink" title="7. case when"></a>7. case when</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select case(</span><br><span class="line">	when sex=&apos;0&apos; then &apos;女&apos;</span><br><span class="line">	when sex=&apos;1&apos; then &apos;男&apos;</span><br><span class="line">	end</span><br><span class="line">)</span><br><span class="line">from 表名</span><br></pre></td></tr></table></figure>
+<p>case when方法，该方法用于查询时替换表中数据，<br>如性别字段，里面有0和1，<br>查询时可分别把0和1替换成女和男</p>
+<h3 id="8-like-模糊查询"><a href="#8-like-模糊查询" class="headerlink" title="8.like(模糊查询)"></a>8.like(模糊查询)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select * from student where stu_name like &apos;%小%&apos;;</span><br><span class="line">%表示可随意替换</span><br><span class="line">小%  表示必须以小开头，后边随意</span><br><span class="line">%小  表示必须以小结尾，前边随意</span><br><span class="line">%小% 表示前后都随意，中间包含小</span><br></pre></td></tr></table></figure>
+<h3 id="9-数值函数"><a href="#9-数值函数" class="headerlink" title="9.数值函数"></a>9.数值函数</h3><pre><code>ceil():向上取整
+floor():向下取整
+round():四舍五入
+power():幂运算
+</code></pre><p>以下方法必须跟在where关键字后面，作为where的修饰<br>[not] between … and …<br>区间范围，属于where关键字,可用大于号和小于号来实现相同的功能</p>
+<p>[not] in(1,2,3,4,5)<br>判断一个字段的值是否与括号内的值相同，<br>括号内是or的关系，即满足任何一个条件，都会显示出来</p>
+<p>is [not] null:判断字段是否为空</p>
+<h3 id="10-时间函数"><a href="#10-时间函数" class="headerlink" title="10..时间函数"></a>10..时间函数</h3><p>now()：当前时间(年月日  时分秒)</p>
+<p>curdate()：当前日期(年月日)</p>
+<p>curtime()：当前时间(时分秒)</p>
+<p>date_add：日期加减算法<br>参数1：要进行运算的日期<br>参数2：加或减的量<br>参数3：加或减的日期单位(小时，天，周，月，年)</p>
+<p>datediff()：日期差值计算<br>参数1：日期类型<br>参数2：日期类型</p>
+<p>date_format():日期格式化<br>将指定日期，安装指定规则进行格式化(具体请百度该函数)<br>date_format(‘2017-1-1’,’%y/%m/%d/‘)—&gt;2017/1/1</p>
+<h3 id="11-表连接"><a href="#11-表连接" class="headerlink" title="11.表连接"></a>11.表连接</h3><p>1.查询结果在哪个表<br>2.链接哪个表<br>3.链接条件<br>4.where条件</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/sql使用规范/" rel="next" title="sql使用规范">
+                <i class="fa fa-chevron-left"></i> sql使用规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/mysql技巧-知识点/" rel="prev" title="mysql技巧+知识点">
+                mysql技巧+知识点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">王靖尧</p>
+              <p class="site-description motion-element" itemprop="description">一晃而过的时间，都做了些什么</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-增删改查"><span class="nav-number">1.</span> <span class="nav-text">1.增删改查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-where条件"><span class="nav-number">2.</span> <span class="nav-text">4.where条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-字符函数"><span class="nav-number">3.</span> <span class="nav-text">5.字符函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-聚合函数"><span class="nav-number">4.</span> <span class="nav-text">6.聚合函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-case-when"><span class="nav-number">5.</span> <span class="nav-text">7. case when</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-like-模糊查询"><span class="nav-number">6.</span> <span class="nav-text">8.like(模糊查询)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-数值函数"><span class="nav-number">7.</span> <span class="nav-text">9.数值函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-时间函数"><span class="nav-number">8.</span> <span class="nav-text">10..时间函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-表连接"><span class="nav-number">9.</span> <span class="nav-text">11.表连接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王靖尧</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

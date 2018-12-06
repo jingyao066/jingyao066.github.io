@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="jsp,servlet,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.1web应用服务器目前较为主流的Web应用服务器Tomcat  ——  Apache软件基金会Jboss  ——-  JBOSS公司Weblogic ——  BEA公司Websphere —–  IBM公司IIS  —— 微软  支持ASP语言Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。 1.2 Tomcat目录结构bin目录：存放tomcat启动">
+<meta name="keywords" content="jsp,servlet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSP+Servlet知识点">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/JSP-Servlet知识点/index.html">
+<meta property="og:site_name" content="王靖尧的博客">
+<meta property="og:description" content="1.1web应用服务器目前较为主流的Web应用服务器Tomcat  ——  Apache软件基金会Jboss  ——-  JBOSS公司Weblogic ——  BEA公司Websphere —–  IBM公司IIS  —— 微软  支持ASP语言Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。 1.2 Tomcat目录结构bin目录：存放tomcat启动">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/ayanamiq/images/blob/master/images/%E5%B8%B8%E7%94%A8JSTL%E6%A0%87%E7%AD%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/ayanamiq/images/blob/master/images/jstl%E5%AE%9E%E6%88%98.png?raw=true">
+<meta property="og:image" content="https://github.com/ayanamiq/images/blob/master/images/jstl%E5%AE%9E%E6%88%981.png?raw=true">
+<meta property="og:image" content="https://github.com/ayanamiq/images/blob/master/images/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%89%E5%B1%82%E6%A8%A1%E5%BC%8F.png?raw=true">
+<meta property="og:updated_time" content="2018-12-06T10:15:21.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSP+Servlet知识点">
+<meta name="twitter:description" content="1.1web应用服务器目前较为主流的Web应用服务器Tomcat  ——  Apache软件基金会Jboss  ——-  JBOSS公司Weblogic ——  BEA公司Websphere —–  IBM公司IIS  —— 微软  支持ASP语言Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。 1.2 Tomcat目录结构bin目录：存放tomcat启动">
+<meta name="twitter:image" content="https://github.com/ayanamiq/images/blob/master/images/%E5%B8%B8%E7%94%A8JSTL%E6%A0%87%E7%AD%BE.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/JSP-Servlet知识点/">
+
+
+
+
+
+  <title>JSP+Servlet知识点 | 王靖尧的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王靖尧的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/JSP-Servlet知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王靖尧">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王靖尧的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JSP+Servlet知识点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T18:14:43+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-1web应用服务器"><a href="#1-1web应用服务器" class="headerlink" title="1.1web应用服务器"></a>1.1web应用服务器</h3><p>目前较为主流的Web应用服务器<br>Tomcat  ——  Apache软件基金会<br>Jboss  ——-  JBOSS公司<br>Weblogic ——  BEA公司<br>Websphere —–  IBM公司<br>IIS  —— 微软  支持ASP语言<br>Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。</p>
+<h3 id="1-2-Tomcat目录结构"><a href="#1-2-Tomcat目录结构" class="headerlink" title="1.2 Tomcat目录结构"></a>1.2 Tomcat目录结构</h3><p>bin目录：存放tomcat启动和关闭的脚本文件<br>conf目录：存放tomcat各种配置文件<br>lib目录：存放tomcat的jar文件<br>logs目录：存放tomcat日志文件<br>work目录：tomcat运行时产生的工作文件<br>temp目录：存放临时文件<br><strong>webapps目录：主要的发布目录，放置javaWeb程序</strong><br>发布：<br>Eclipse:右键项目，export，选定路径生成war包，放入Tomcat的webapps目录下<br>idea：maven-package</p>
+<h3 id="1-3tomcat启动与停止"><a href="#1-3tomcat启动与停止" class="headerlink" title="1.3tomcat启动与停止"></a>1.3tomcat启动与停止</h3><p>启动服务：双击tomcat   bin目录下的startup.bat<br>最后一行显示：server startup in 1234 ms<br>证明启动成功<br>打开浏览器，输入localhost:8080，可以看到tomcat默认页面<br>停止服务：双击tomcat   bin目录下的shutdown.bat 或直接闭窗口</p>
+<h3 id="1-4-Tomcat端口设置"><a href="#1-4-Tomcat端口设置" class="headerlink" title="1.4 Tomcat端口设置"></a>1.4 Tomcat端口设置</h3><p>conf目录下server.xml文件进行修改<br>在server.xml中找到<connector></connector>标签，修改port中的端口号<br>注：端口范围：0–65535，其中0–1023，这些端口，一般固定分配给一些服务，<br>21 – FTP服务(文件传输)<br>25 – SMTP(简单邮件传输协议)<br>80 – HTTP服务<br>135 – RPC(远程过程调用)</p>
+<p>动态端口范围：1024 – 65535  ,尽量不要占用系统端口</p>
+<h3 id="1-5-Tomcat启动失败常见问题"><a href="#1-5-Tomcat启动失败常见问题" class="headerlink" title="1.5 Tomcat启动失败常见问题"></a>1.5 Tomcat启动失败常见问题</h3><p>1.JAVA环境变量配置有问题为导致tomcat启动时一闪而过，启动不成功。<br>2.tomcat端口被其他程序占用，尝试关闭占用端口的程序或修改tomcat端口</p>
+<h3 id="1-6-访问Tomcat中的项目"><a href="#1-6-访问Tomcat中的项目" class="headerlink" title="1.6 访问Tomcat中的项目"></a>1.6 访问Tomcat中的项目</h3><p>IP地址:端口号/项目名字</p>
+<h3 id="1-7-Web项目结构"><a href="#1-7-Web项目结构" class="headerlink" title="1.7 Web项目结构"></a>1.7 Web项目结构</h3><p>在WEB-INF 之外，存放静态资源，可以通过浏览器访问<br>WEB-INF中的文件受保护，无法通过浏览器直接访问</p>
+<h3 id="2-1JSP语法"><a href="#2-1JSP语法" class="headerlink" title="2.1JSP语法"></a>2.1JSP语法</h3><p>JSP中可以写JAVA代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;% </span><br><span class="line">System.out.print(&quot;Hello world&quot;);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>&lt;%  JAVA代码  %&gt;<br><strong>单个脚本片段可以是不完整的，但是多个脚本片段整合的结果必须是完整的JAVA语句</strong><br>JSP脚本表达式</p>
+<p></p><h1>&lt;%=userName%&gt;</h1><br>&lt;%=  变量名 %&gt;<p></p>
+<h3 id="2-2JSP对象作用域"><a href="#2-2JSP对象作用域" class="headerlink" title="2.2JSP对象作用域"></a>2.2JSP对象作用域</h3><p>作用域：即”信息共享的范围”，就是说一个信息能够在多大范围内有效。<br>从大到小排列<br>1.Application 在所有应用程序中有效<br>例：如将一个变量保存到application中，所有人通过浏览器都可以看到该变量的值（信息是共享的）。</p>
+<p>2.Session 在当前会话有效<br>会话：打开浏览器访问某网站，等于跟目标网站开启了一个会话，将浏览器关闭，则此次会话结束。<br>例：现有一个用户如将一个变量保存到session中，当前用户打开浏览器可以看到该变量的值，其他用户看不到，关闭浏览器后则会话结束。</p>
+<p>3.Request 在当前请求有效<br>请求：每一次操作网站，比如：查询，提交，购买 ……<br>请求查询，请求提交，请求购买……</p>
+<p>4.Page 当前页面有效</p>
+<h3 id="2-3JSP内置对象"><a href="#2-3JSP内置对象" class="headerlink" title="2.3JSP内置对象"></a>2.3JSP内置对象</h3><p>Web服务器(Tomcat)启动后创建的一组对象，不需要使用new关键字直接可以使用该对象。<br>内置对象只存在于JSP中<br>JSP九大内置对象<br>session,request,response,out,page,application,pageContext,exception,config</p>
+<p>1.Session对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">类型：Javax.servlet.http.HttpSession</span><br><span class="line">作用域：Session</span><br><span class="line">表示一个会话，用来保存用户信息，以便跟踪每个用户的状态。</span><br><span class="line">常用方法：</span><br><span class="line">session.getId(); </span><br><span class="line">取得Session的ID号，ID由Tomcat自动分配。</span><br><span class="line">session.setAttribute(key,object); </span><br><span class="line">向Session中设置一个属性。</span><br><span class="line">参数 key---键、标识，可理解为该属性的名字，</span><br><span class="line">Session中相同的key所对应的值会覆盖。</span><br><span class="line">参数 object---该属性的值，可以是任意类型的JAVA对象。</span><br><span class="line">session.getAttribute(key);  </span><br><span class="line">获取Session中的一个属性。</span><br><span class="line">参数key --- 键、标识、可理解为属性名字。</span><br><span class="line">通过session.setAttribute方法所设置的key来获取对应的值。</span><br><span class="line">	  session.removeAttribute(key);</span><br><span class="line">			删除Session中的一个属性。</span><br><span class="line">参数key --- 键、标识、可理解为属性名字。</span><br><span class="line">通过session.setAttribute方法所设置的key来删除一个属性</span><br></pre></td></tr></table></figure></p>
+<p>2.Request对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">类型：javax.servlet.http.HttpServletRequest</span><br><span class="line">作用域：Request</span><br><span class="line">request对象代表了客户端的请求信息，主要用于接受通过HTTP协议传送到服务器的数据。（包括头信息、系统信息、请求方式以及请求参数等）。request对 象的作用域为一次请求。</span><br><span class="line">常用方法：</span><br><span class="line">request.getParameter(key);</span><br><span class="line">		获取表单提交数据（参数）。</span><br><span class="line">		参数key --- 参数名字。</span><br><span class="line">通过key获取页面传递的参数，key与HTML标签的name对应，如想将页面的数据当做参数标题至后台，需要指定元素的name属性。</span><br><span class="line">request.getParameterValues(key);</span><br><span class="line">		与request.getParameter方法用法一致。</span><br><span class="line">		返回值是数组，一般用于获取复选框checkbox的值。</span><br><span class="line">	  request.setAttribute(key,object);</span><br><span class="line">			向Request中设置一个属性。</span><br><span class="line">			参数同session.setAttribute方法。</span><br><span class="line">request.gettAttribute(key);</span><br><span class="line">		获取Request中的一个属性。</span><br><span class="line">		参数同session.getAttribute方法。</span><br><span class="line">request.getRequestDispatcher(&quot;list.jsp&quot;).forward(request,response);</span><br><span class="line">	用转发方式跳转到目标路径。</span><br><span class="line">   参数---JSP页面或另一个Servlet。</span><br><span class="line">	固定参数request,response。</span><br><span class="line">request.setCharacterEncoding(&quot;UTF-8&quot;);</span><br><span class="line">	设置请求的编码方式。</span><br><span class="line">	参数---编码格式UTF-8/GBK/GB2312 ……</span><br></pre></td></tr></table></figure></p>
+<p>3.Response对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">类型：Javax.servlet.http. HttpServletResponse</span><br><span class="line">作用域：Page</span><br><span class="line">response 代表的是对客户端的响应，主要是将JSP容器处理过的对象传回到客户端。</span><br><span class="line">常用方法：</span><br><span class="line">response.sendRedirect(&quot;页面&quot;);</span><br><span class="line">通过重定向方式跳转到目标路径。</span><br><span class="line">参数 --- JSP页面或另一个Servlet。</span><br><span class="line">response.setCharacterEncoding(&quot;gbk&quot;);</span><br><span class="line">设置响应编码格式。</span><br><span class="line">参数---编码格式UTF-8/GBK/GB2312 ……。</span><br></pre></td></tr></table></figure></p>
+<p>4.Out对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">类型:javax.servlet.jsp.jspWriter</span><br><span class="line">作用域:Page</span><br><span class="line">Out对象是一个输出流，用来向客户端输出数据。</span><br><span class="line">常用方法：</span><br><span class="line">out.print();</span><br><span class="line">向浏览器输出各类型的数据。</span><br><span class="line">类似System.out.print()方法;</span><br><span class="line">out.close();</span><br><span class="line">关闭流。</span><br></pre></td></tr></table></figure></p>
+<p>5.Page对象<br>类型:java.lang.Object<br>作用域：Page</p>
+<p>6.Application对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">类型：javax.servlet.ServletContext</span><br><span class="line">作用域：application</span><br><span class="line">application 对象可将信息保存在服务器中，直到服务器关闭，否则application对象中保存的信息会在整个应用中都有效。与session对象相比，application对象生命周期更长，类似于系统的“全局变量”。</span><br><span class="line">服务器启动后就产生了这个Application对象，当客户再所访问的网站的各个页面之间浏览时，这个Application对象都是同一个，直到服务器关闭。但是与Session对象不同的时，所有客户的Application对象都时同一个，即所有客户共享这个内置的Application对象。</span><br></pre></td></tr></table></figure></p>
+<ol start="7">
+<li>pageContext对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> 类型: javax.servlet.jsp.PageContext</span><br><span class="line">作用域：Page</span><br><span class="line">本JSP的页面上下文。</span><br><span class="line">上下文的理解：上下文可以联系到当前页面所有的信息。</span><br><span class="line">通过PageContext上下文对象获取当前页面的其他内置对象。</span><br><span class="line">pageContext.getRequest();获取Request对象。</span><br><span class="line">pageContext.getResponse();获取Response对象。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>8.exception对象<br> 类型：java.lang.Exception<br>作用域：Page<br>本JSP页面的异常对象</p>
+<p>9.config对象<br> 类型: javax.servlet.ServletConfig<br> 作用域：Page<br> 代表配置对象。</p>
+<p>10.总结<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">request 请求对象   作用域 Request</span><br><span class="line">response 响应对象  作用域 Page</span><br><span class="line">pageContext 页面上下文对象  作用域 Page</span><br><span class="line">session  会话对象  作用域 Session</span><br><span class="line">application  应用程序对象  作用域 Application</span><br><span class="line">out  输出对象   作用域 Page</span><br><span class="line">config   配置对象  作用域 Page</span><br><span class="line">page 页面对象   作用域 Page</span><br><span class="line">exception  异常对象  作用域 page</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-4-JSP基本指令"><a href="#2-4-JSP基本指令" class="headerlink" title="2.4 JSP基本指令"></a>2.4 JSP基本指令</h3><p>1.指令用于对JSP一些设置<br><code>指令语法  &lt;%@  指令名  属性名 = 值  %&gt;</code><br>一个指令作用于整个JSP文件<br>1.1 page指令<br><code>&lt;%@ page import=&quot;jsp_test.deleteUser&quot;%&gt;</code><br>1.2 include指令<br>附加一个页面<br><code>&lt;%@ include file=&quot;doLogin.jsp&quot; %&gt;</code><br>1.3 tablib指令<br><code>&lt;%@ prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;</code></p>
+<h3 id="2-5JSP动作"><a href="#2-5JSP动作" class="headerlink" title="2.5JSP动作"></a>2.5JSP动作</h3><p>略<br>违反了前后端分离的思想</p>
+<h3 id="2-6jsp-include与-lt-include-gt-区别"><a href="#2-6jsp-include与-lt-include-gt-区别" class="headerlink" title="2.6jsp:include与&lt;%@include%&gt;区别"></a>2.6<a href="jsp:include" target="_blank" rel="noopener">jsp:include</a>与&lt;%@include%&gt;区别</h3><p>1.&lt;%@include%&gt;嵌入代码，先合并后编译，把代码原封不动的附加过来<br>如页面a.jsp中 有变量 stuName，b.jsp 中同样存在变量 stuName<br>使用&lt;%@include%&gt; 将报错，变量名重复</p>
+<p>2.<a href="jsp:include" target="_blank" rel="noopener">jsp:include</a>嵌入执行后的内容。<br>先编译后合并，合并的是编译后的结果。<br>上述情况如使用<a href="jsp:include" target="_blank" rel="noopener">jsp:include</a>则不会报错。</p>
+<h3 id="3-1-Servlet生命周期"><a href="#3-1-Servlet生命周期" class="headerlink" title="3.1 Servlet生命周期"></a>3.1 Servlet生命周期</h3><p>1.装载并创建该Servlet的一个实例对象(实例化)<br>2.调用Servlet实例对象的init()方法(初始化)<br>3.创建了一个用于封装HTTP请求消息的HttpServletRequest对象和一个代表HTTP响应消息的<br>HttpServletResponse对象，然后调用servlet的service()方法，<br>并将请求和相应对象作为参数传递进去(服务)<br>4.Web应用程序在被停止或重新启动之前，Servlet引擎将卸载Servlet，并在卸载之前调用Servlet的<br>destroy()方法)  (销毁)</p>
+<p>实例化 — 初始化 —  服务 —  销毁</p>
+<h3 id="3-2-转发和重定向的区别"><a href="#3-2-转发和重定向的区别" class="headerlink" title="3.2 转发和重定向的区别"></a>3.2 转发和重定向的区别</h3><p>重定向(redirect)<br>1.发送请求<br>2.服务器响应请求，返回给浏览器一个新的地址和响应<br>3.浏览器根据响应码，判定该响应为重定向，自动发送一个新的请求给服务器，请求地址为之前返回的地址<br>4.服务器响应请求给浏览器</p>
+<p>转发(forward):<br>1.发送请求<br>2.服务器进行请求的重新设置，例如通过request.setAttribute<br>3.浏览器根据转发的地址，获取该地址的网页<br>4.服务器响应请求给浏览器</p>
+<p>区别：<br>1.redirect改变浏览器地址，forward浏览器网址不变<br>2.redirect产生了两次请求，forward只产生一次请求<br>3.redirect网址可以是任意网站，forward必须是本站的网址<br>4.redirect:之前request中的变量全部失效，并进入一个新的request作用域<br>forward:之前request中的变量不会失效，就像把两个页面拼到了一起</p>
+<p>1.有值没值<br>2.本站外站<br>3.变不变址<br>4.一次两次</p>
+<h3 id="3-3-JavaBean"><a href="#3-3-JavaBean" class="headerlink" title="3.3 JavaBean"></a>3.3 JavaBean</h3><p>特征：<br>1.提供了一个默认的无参构造函数<br>2.需要被序列化并且实现了Serializanle接口<br>3.可能有一系列可读写属性<br>4.可能有一系列的”getter”或”setter”方法。</p>
+<p>简单来说，JavaBean也是一个普通的JAVA类。<br>项目中，每一张数据表对应一个JavaBean, JavaBean中的属性、属性类型与数据表的字段和数据类型对应。<br>可将一个JavaBean对象看成一条数据。<br>单条数据用一个JavaBean对象接收。<br>多条数据用List&lt; JavaBean &gt; 对象接收。<br>通过JavaBean可实现数据表之间的关系。<br>使用JavaBean可保证开发时的效率以及数据类型的检查。</p>
+<h3 id="3-4-JSTL标签及EL表达式"><a href="#3-4-JSTL标签及EL表达式" class="headerlink" title="3.4  JSTL标签及EL表达式"></a>3.4  JSTL标签及EL表达式</h3><p>1.JSTL标签：<br>JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。<br>使用方法：<br>1.导入JAR包，jstl-1.2.jar。<br>2.在JSP页面中导入标签库<br>&lt;% tablib  prefix=”c” uri=”<a href="http://java.sun.com/jsp/jstl/core&quot;" target="_blank" rel="noopener">http://java.sun.com/jsp/jstl/core&quot;</a> %&gt;</p>
+<p>2.EL表达式<br>语法结构:${expression}<br>可获取Page,Request,Session,Application作用域中的对象。<br>根据setAttribute的key来获取。<br>获取request中的student对象：<br>${requestScope.student}<br>获取request中的student对象的name属性<br>${requestScope.student.name}</p>
+<p><img src="https://github.com/ayanamiq/images/blob/master/images/%E5%B8%B8%E7%94%A8JSTL%E6%A0%87%E7%AD%BE.png?raw=true" alt=""></p>
+<p>3.jstl实战<br><img src="https://github.com/ayanamiq/images/blob/master/images/jstl%E5%AE%9E%E6%88%98.png?raw=true" alt=""><br><img src="https://github.com/ayanamiq/images/blob/master/images/jstl%E5%AE%9E%E6%88%981.png?raw=true" alt=""></p>
+<h3 id="3-6-MVC模式"><a href="#3-6-MVC模式" class="headerlink" title="3.6 MVC模式"></a>3.6 MVC模式</h3><p>MVC全名是Model View Controller<br>模型(model)－视图(view)－控制器(controller)<br>MVC是一个框架模式，它强制性的使应用程序的输入、处理和输出分开。使用MVC应用程序被分成三个核心部件：模型、视图、控制器。它们各自处理自己的任务。最典型的MVC就是JSP + servlet + javabean的模式。<br>MVC工作原理<br>用户发送一个请求到控制器，控制器处理业务逻辑，如需要与数据库交互会用到相应的模型，业务逻辑处理完毕后返回一个结果（视图）给用户。</p>
+<h3 id="3-7-项目开发三层模式"><a href="#3-7-项目开发三层模式" class="headerlink" title="3.7 项目开发三层模式"></a>3.7 项目开发三层模式</h3><p>数据访问层（最下层）<br>        主要负责数据库的访问，与数据进行交互，增删改查代码。<br>    业务逻辑层（中间层）<br>        处理个性化业务逻辑代码。<br>    表现层（最上层）<br>离用户最近。用于显示数据和接收用户输入的数据，为用户提供一种交互式操作的界面。 　<br>    优点：<br>        1.开发人员可以只关注结构中的某一层。<br>        2.可以很容易的用新的实现来替换原有层次的实现。<br>        3.可以降低层与层之间的依赖。</p>
+<pre><code>    4. 有利于标准化。
+    5. 利于各层逻辑的复用。
+缺点：
+</code></pre><ol>
+<li>降低了系统的性能。这是不言而喻的。如果不采用分层式结构，很多业务可以直接造访数据库，以此获取相应的数据，如今却必须通过中间层来完成。</li>
+<li>有时会导致级联的修改。这种修改尤其体现在自上而下的方向。如果在表示层中需要增加一个功能，为保证其设计符合分层式结构，可能需要在相应的业务逻辑层和数据访问层中都增加相应的代码。<br><img src="https://github.com/ayanamiq/images/blob/master/images/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%89%E5%B1%82%E6%A8%A1%E5%BC%8F.png?raw=true" alt=""><br>注意：代码不可跨层调用。<br>与MVC模式不用,MVC属于程序语言的设计模式。<br>三层模式为实际开发模式。</li>
+</ol>
+<h3 id="3-8-分页"><a href="#3-8-分页" class="headerlink" title="3.8 分页"></a>3.8 分页</h3><p>分页所需条件<br>        1.每页显示数（自定义）<br>        2.当前页面，初识为1，第一页（通过页面JSP传递得到）<br>       3.总页数（计算得到）<br>            总页数 = 总条数/每页显示数<br>            如果总条数/每页显示数为整数 那么页数刚好<br>            如果不为整数 需要页数+1  如果总条数/每页显示 +1<br>        4.总条数（查询数据库得到）<br>        5.获取数据起始位置，用作LIMIT 关键字的第一个参数（计算得到）<br>        公式 ： （ 当前页数 - 1 ） *  每页显示数</p>
+<h3 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1</h3><p>Servlet 文件上传<br>略</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jsp/" rel="tag"># jsp</a>
+          
+            <a href="/tags/servlet/" rel="tag"># servlet</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/mysql技巧-知识点/" rel="next" title="mysql技巧+知识点">
+                <i class="fa fa-chevron-left"></i> mysql技巧+知识点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/06/深入理解JAVA虚拟机/" rel="prev" title="深入理解JAVA虚拟机">
+                深入理解JAVA虚拟机 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">王靖尧</p>
+              <p class="site-description motion-element" itemprop="description">一晃而过的时间，都做了些什么</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1web应用服务器"><span class="nav-number">1.</span> <span class="nav-text">1.1web应用服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Tomcat目录结构"><span class="nav-number">2.</span> <span class="nav-text">1.2 Tomcat目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3tomcat启动与停止"><span class="nav-number">3.</span> <span class="nav-text">1.3tomcat启动与停止</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Tomcat端口设置"><span class="nav-number">4.</span> <span class="nav-text">1.4 Tomcat端口设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-Tomcat启动失败常见问题"><span class="nav-number">5.</span> <span class="nav-text">1.5 Tomcat启动失败常见问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-访问Tomcat中的项目"><span class="nav-number">6.</span> <span class="nav-text">1.6 访问Tomcat中的项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-Web项目结构"><span class="nav-number">7.</span> <span class="nav-text">1.7 Web项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1JSP语法"><span class="nav-number">8.</span> <span class="nav-text">2.1JSP语法</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">&lt;%=userName%&gt;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2JSP对象作用域"><span class="nav-number">1.</span> <span class="nav-text">2.2JSP对象作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3JSP内置对象"><span class="nav-number">2.</span> <span class="nav-text">2.3JSP内置对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-JSP基本指令"><span class="nav-number">3.</span> <span class="nav-text">2.4 JSP基本指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5JSP动作"><span class="nav-number">4.</span> <span class="nav-text">2.5JSP动作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6jsp-include与-lt-include-gt-区别"><span class="nav-number">5.</span> <span class="nav-text">2.6jsp:include与&lt;%@include%&gt;区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Servlet生命周期"><span class="nav-number">6.</span> <span class="nav-text">3.1 Servlet生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-转发和重定向的区别"><span class="nav-number">7.</span> <span class="nav-text">3.2 转发和重定向的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-JavaBean"><span class="nav-number">8.</span> <span class="nav-text">3.3 JavaBean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-JSTL标签及EL表达式"><span class="nav-number">9.</span> <span class="nav-text">3.4  JSTL标签及EL表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-MVC模式"><span class="nav-number">10.</span> <span class="nav-text">3.6 MVC模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-项目开发三层模式"><span class="nav-number">11.</span> <span class="nav-text">3.7 项目开发三层模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-分页"><span class="nav-number">12.</span> <span class="nav-text">3.8 分页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1"><span class="nav-number">13.</span> <span class="nav-text">4.1</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王靖尧</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
