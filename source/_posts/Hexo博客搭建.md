@@ -330,4 +330,3 @@ xxx分支用于备份博客部署文件，供自己维护更新，两者在一�
 按照之前的方法写自己博客，
 然后将目录切换下username.github.io下，此时需要安装一下npm install，
 最后执行hexo g、hexo s、hexo d等命令即可提交成功
-111
