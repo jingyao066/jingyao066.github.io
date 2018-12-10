@@ -267,3 +267,67 @@ public/2016/3/9/本地图片测试
 而不是愚蠢的
 `<img src="本地图片测试/logo.jpg" alt="logo">`
 
+## 多台电脑操作hexo博客
+目的：在公司和家里都可以写博客。
+思路：git分支
+hexo生成的静态博客文件默认放在master分支上。
+hexo的源文件（部署环境文件）可以都放在hexo分支上（可以新创建一个hexo分支），换新电脑时，直接：
+`git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
+
+### 在已经安装好hexo博客的电脑上执行如下操作：
+#### 1.hexo搭建博客原理
+参考hexo本机安装目录结构：
+```
+.deploy_git：上传到github的文件
+node_modules：hexo需要的模块，不需要上传github
+public：生成的静态文件
+scaffolds：hexo new 'name' 时的配置文件
+source：博文的.md文件
+themes：主题文件
+_config.yml：全局配置文件
+package.json：记录hexo需要的包信息
+```
+hexo帮助把博客发送到github，同时把md文件转换成网页文件。
+hexo目录下的文件和github上的文件是不同的，public文件夹的文件通过hexo d 上传到github去了，其他的文件则留在本地目录下。
+
+#### 2.对username.github.io仓库新建hexo分支，并克隆
+在Github的username.github.io仓库上新建一个xxx分支,并切换到该分支,并在该仓库
+Settings->Branches->Default branch中将默认分支设为xxx,save保存；
+然后将该仓库克隆到本地，进入该username.github.io文件目录。
+`git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
+完成上面步骤后，在当前目录使用Git Bash执行git branch命令查看当前所在分支，应为新建的分支xxx：
+
+#### 3.将本地博客的部署文件拷贝进username.github.io文件目录
+将本地博客的部署文件（Hexo目录下的全部文件）全部拷贝进username.github.io文件目录中去。
+接下来，进入username.github.io文件目录下，将该目录下的全部文件提交到xxx分支，提交之前需注意：
+```
+1.将themes目录以内中的主题的.git目录删除（如果有），因为一个git仓库中不能包含另一个git仓库，提交主题文件夹会失败。
+2.可能有人会问，删除了themes目录中的.git不就不能git pull更新主题了吗，很简单，需要更新主题时在另一个地方git clone下来该主题的最新版本，然后将内容拷到当前主题目录即可
+```
+
+#### 4.提交hexo分支
+执行git add .、git commit -m 'back up hexo files'（引号内容可改）、git push即可将博客的hexo部署环境提交到GitHub个人仓库的xxx分支。
+现在可以在GitHub上的username.github.io仓库看到两个分支的差异了。
+
+master分支和xxx分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问；
+xxx分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！
+
+### 在新电脑上执行下列操作：
+#### 至此，博客已经可以在其他电脑上进行同步更新和维护了。
+1.将新电脑的生成的ssh key添加到GitHub账户上
+2.在新电脑上克隆username.github.io仓库的xxx分支到本地，此时本地git仓库处于xxx分支
+3.切换到username.github.io目录，执行npm install(由于仓库有一个.gitignore文件，里面默认是忽略掉 node_modules文件夹的，
+也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
+
+到这里了就可以开始在新的电脑上写博客了！
+1.编辑、撰写文章或其他博客更新改动
+2.依次执行git add .、git commit -m 'back up hexo files'（引号内容可改）、git push指令，保证xxx分支版本最新
+3.执行hexo d -g指令（在此之前，有时可能需要执行hexo clean），完成后就会发现，最新改动已经更新到master分支了，两个分支互不干扰！
+
+### 回到之前的电脑上更新并提交博客
+注：每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先git pull
+
+按照之前的方法写自己博客，
+然后将目录切换下username.github.io下，此时需要安装一下npm install，
+最后执行hexo g、hexo s、hexo d等命令即可提交成功
+111
