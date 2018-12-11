@@ -21,4 +21,35 @@ pom.xml获取junit的jar包的编写。
 ![](Maven详解/2.png)
 
 ## 仓库概念
-通过pom.xml中的配置，就能够获取到想要的jar包，这些jar包，
+通过pom.xml中的配置，就能够获取到想要的jar包，这些jar包存放在**仓库**中。
+仓库有三种：
+1.本地仓库
+2.第三方仓库
+3.中央仓库
+
+### 本地仓库
+Maven会将工程中依赖的构建(jar包)从远程下载到本机的一个目录下管理，每台电脑默认的仓库在
+`C:\Users\Administrator\.m2\repository`
+
+可以通过修改setting.xml中的配置，来修改仓库的位置，以及jar包的下载源。
+1.修改仓库位置：
+找到localRepository标签，将路径修改为想要修改的路径。
+
+2.修改jar包下载源：
+找到mirror标签，修改为阿里的源
+```
+<mirror>
+	  <id>alimaven</id>
+	  <mirrorOf>central</mirrorOf>
+	  <name>aliyun maven</name>
+	  <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+	</mirror>
+```
+
+idea是自带maven插件的，无需自行安装，也可以修改仓库位置以及镜像源。
+`ctrl+alt+s -> maven `
+最下面两行分别是setting.xml文件以及仓库位置。
+
+### 第三方仓库
+又称为内部仓库，也叫私服，一般是公司自己创建的，只内部使用，减少在外部访问和下载的频率。
+
