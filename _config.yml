@@ -79,5 +79,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/ayanamiq/ayanamiq.github.io
+  repo: ssh://git@github.com/ayanamiq/ayanamiq.github.io
   branch: master
