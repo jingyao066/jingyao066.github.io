@@ -48,20 +48,6 @@ date: 2018-12-06 18:21:41
 		---|ConcurrentHashMap：采用了分段锁的设计，并发map
 ```
 
-## ArrayList
-每个ArrayList实例都有一个容量，该容量是指用来存储列表元素的数组的大小。它总是至少等于列表的大小。随着向ArrayList中不断添加元素，其容量也自动增长。
-自动增长会带来数据向新数组的重新拷贝，因此，如果可预知数据量的多少，可在构造ArrayList时指定其容量。在添加大量元素前，应用程序也可以使用ensureCapacity操作来增加ArrayList实例的容量，这可以减少递增式再分配的数量。
-
-默认初始容量是10，可以在源码中看到
-```
-/**
- * Default initial capacity.
- */
-private static final int DEFAULT_CAPACITY = 10;
-```
-因为ArrayList的底层是由一个Object[]数组构成的，而这个Object[]数组，默认的长度是10。
-
-
 ## 问题
 1.list和set的区别
 list允许重复对象，set不允许重复对象
