@@ -218,3 +218,209 @@ ensureCapacity(size+1) 的作用是“确认ArrayList的容量，若容量不够
 Sun JDK包的java/lang/System.java中的arraycopy()声明如下：
 `public static native void arraycopy(Object src, int srcPos, Object dest, int destPos, int length);`
 
+arraycopy()是个JNI函数，它是在JVM中实现的。sunJDK中看不到源码，不过可以在OpenJDK包中看到的源码。网上有对arraycopy()的分析说明，请参考：http://gutspot.com/2011/11/16/system-arraycopy%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/
+实际上，我们只需要了解： System.arraycopy(elementData, index, elementData, index + 1, size - index); 会移动index之后所有元素即可。这就意味着，ArrayList的add(int index, E element)函数，会引起index之后所有元素的改变！
+
+通过上面的分析，我们就能理解为什么LinkedList中插入元素很快，而ArrayList中插入元素很慢。
+“删除元素”与“插入元素”的原理类似，这里就不再过多说明。
+
+ 
+接下来，我们看看 “为什么LinkedList中随机访问很慢，而ArrayList中随机访问很快”。
+先看看LinkedList随机访问的代码
+```
+// 返回LinkedList指定位置的元素
+public E get(int index) {
+    return entry(index).element;
+}
+
+// 获取双向链表中指定位置的节点
+private Entry<E> entry(int index) {
+    if (index < 0 || index >= size)
+        throw new IndexOutOfBoundsException("Index: "+index+
+                                            ", Size: "+size);
+    Entry<E> e = header;
+    // 获取index处的节点。
+    // 若index < 双向链表长度的1/2,则从前先后查找;
+    // 否则，从后向前查找。
+    if (index < (size >> 1)) {
+        for (int i = 0; i <= index; i++)
+            e = e.next;
+    } else {
+        for (int i = size; i > index; i--)
+            e = e.previous;
+    }
+    return e;
+}
+```
+从中，我们可以看出：通过get(int index)获取LinkedList第index个元素时。先是在双向链表中找到要index位置的元素；找到之后再返回。
+双向链表查找index位置的节点时，有一个加速动作：若index < 双向链表长度的1/2，则从前向后查找; 否则，从后向前查找。
+
+下面在看看ArrayList随机访问的源码：
+```
+// 获取index位置的元素值
+public E get(int index) {
+    RangeCheck(index);
+
+    return (E) elementData[index];
+}
+
+private void RangeCheck(int index) {
+    if (index >= size)
+        throw new IndexOutOfBoundsException(
+        "Index: "+index+", Size: "+size);
+}
+```
+从中，我们可以看出：通过get(int index)获取ArrayList第index个元素时。直接返回数组中index位置的元素，而不需要像LinkedList一样进行查找。
+
+## Vector和ArrayList比较
+### 相同之处
+1.都是List
+它们都继承于AbstractList，并且实现List接口。ArrayList和Vector的类定义如下：
+```
+// ArrayList的定义
+public class ArrayList<E> extends AbstractList<E>
+        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+
+// Vector的定义
+public class Vector<E> extends AbstractList<E>
+    implements List<E>, RandomAccess, Cloneable, java.io.Serializable {}
+```
+2.它们都实现了RandomAccess和Cloneable接口
+实现RandomAccess接口，意味着它们都支持快速随机访问；
+   实现Cloneable接口，意味着它们能克隆自己。
+
+3.它们都是通过数组实现的，本质上都是动态数组
+ArrayList.java中定义数组elementData用于保存元素
+```
+// 保存ArrayList中数据的数组
+private transient Object[] elementData;
+```
+
+Vector.java中也定义了数组elementData用于保存元素
+```
+// 保存Vector中数据的数组
+protected Object[] elementData;
+```
+
+4.默认数组容量都是10
+若创建ArrayList或Vector时，没指定容量大小；则使用默认容量大小10。
+ArrayList的默认构造函数如下：
+```
+// ArrayList构造函数。默认容量是10。
+public ArrayList() {
+    this(10);
+}
+```
+Vector的默认构造函数如下：
+
+```
+// Vector构造函数。默认容量是10。
+public Vector() {
+    this(10);
+} 
+```
+
+5.都支持Iterator和listIterator遍历
+它们都继承于AbstractList，而AbstractList中分别实现了 “iterator()接口返回Iterator迭代器” 和 “listIterator()返回ListIterator迭代器”。
+
+6.都支持序列化，即可以通过序列化的方式传输
+
+### 不同之处
+1.线程安全性不一样
+ArrayList是非线程安全，而Vector是线程安全的，它的函数都是synchronized的，即都是支持同步的。
+ArrayList适用于单线程，Vector适用于多线程。
+
+2.构造函数个数不同
+ArrayList有3个构造函数，Vector有4个构造函数，Vector除了包括和ArrayList类似的3个构造函数之外，另外的一个构造函数可以指定容量增加系数。
+
+ArrayList的构造函数如下：
+
+```
+// 默认构造函数
+ArrayList()
+
+// capacity是ArrayList的默认容量大小。当由于增加数据导致容量不足时，容量会添加上一次容量大小的一半。
+ArrayList(int capacity)
+
+// 创建一个包含collection的ArrayList
+ArrayList(Collection<? extends E> collection)
+```
+
+Vector的构造函数如下：
+```
+// 默认构造函数
+Vector()
+
+// capacity是Vector的默认容量大小。当由于增加数据导致容量增加时，每次容量会增加一倍。
+Vector(int capacity)
+
+// 创建一个包含collection的Vector
+Vector(Collection<? extends E> collection)
+
+// capacity是Vector的默认容量大小，capacityIncrement是每次Vector容量增加时的增量值。
+Vector(int capacity, int capacityIncrement)
+```
+
+3.容量增加方式不同
+逐个添加元素，Arraylist扩容方式为：
+`int newCapacity = oldCapacity + (oldCapacity >> 1);`
+将其向右一位再加上原来的数，实际上是扩充了1.5倍
+
+Vector的容量增长与“增长系数有关”，若指定了“增长系数”，且“增长系数有效(即，大于0)”；那么，每次容量不足时，“新的容量”=“原始容量+增长系数”。若增长系数无效(即，小于/等于0)，则“新的容量”=“原始容量 x 2”。
+
+ArrayList中容量增长的主要函数如下：
+```
+private void grow(int minCapacity) {
+        // overflow-conscious code
+        int oldCapacity = elementData.length;
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        // minCapacity is usually close to size, so this is a win:
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+```
+注：这是jdk1.8中重构了扩容的方式，与jdk1.6中的`“新的容量”=“(原始容量x3)/2 + 1”`有所不同
+
+Vector中容量增长的主要函数如下：
+```
+private void grow(int minCapacity) {
+        // overflow-conscious code
+        int oldCapacity = elementData.length;
+        int newCapacity = oldCapacity + ((capacityIncrement > 0) ?
+                                         capacityIncrement : oldCapacity);
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        elementData = Arrays.copyOf(elementData, newCapacity);
+    }
+```
+注：jdk1.8重构了。
+
+4.对Enumeration的支持不同。Vector支持通过Enumeration去遍历，而List不支持
+```
+public Enumeration<E> elements() {
+    // 通过匿名类实现Enumeration
+    return new Enumeration<E>() {
+        int count = 0;
+
+        // 是否存在下一个元素
+        public boolean hasMoreElements() {
+            return count < elementCount;
+        }
+
+        // 获取下一个元素
+        public E nextElement() {
+            synchronized (Vector.this) {
+                if (count < elementCount) {
+                    return (E)elementData[count++];
+                }
+            }
+            throw new NoSuchElementException("Vector Enumeration");
+        }
+    };
+}
+```
