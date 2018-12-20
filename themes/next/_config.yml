@@ -532,8 +532,8 @@ rating:
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
   enable: true
-  app_id: #<app_id>
-  app_key: #<app_key>
+  app_id: DFKH5YVSHsNt0wDOVISahMVx-gzGzoHsz
+  app_key: ILHc2Y6O0p9xfqi3iAWMwnuv
 
 # Another tool to show number of visitors to each article.
 # visit https://console.firebase.google.com/u/0/ to get apiKey and projectId
@@ -541,8 +541,8 @@ leancloud_visitors:
 firestore:
   enable: false
   collection: articles #required, a string collection name to access firestore database
-  apiKey: DFKH5YVSHsNt0wDOVISahMVx-gzGzoHsz
-  projectId: ILHc2Y6O0p9xfqi3iAWMwnuv
+  apiKey: #required
+  projectId: #required
   bluebird: false #enable this if you want to include bluebird 3.5.1(core version) Promise polyfill
 
 # Show PV/UV of the website/page with busuanzi.
