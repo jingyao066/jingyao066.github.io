@@ -142,7 +142,7 @@ ArrayList构造一个默认初始容量为10的空列表：
 3) 在ensureCapacityInternal(int minCapacity)方法中，可得的minCapacity=DEFAULT_CAPACITY=10，然后再调用ensureExplicitCapacity(minCapacity)方法，即ensureExplicitCapacity(10)；
 4) 在ensureExplicitCapacity(minCapacity)方法中调用grow(minCapacity)方法，即grow(10)，此处为真正具体的数组扩容的算法，在此方法中，通过elementData = Arrays.copyOf(elementData, 10)具体实现了elementData数组初始容量为10的构造。
 
-## 调整数组的容量
+## 调整数组的容量 jdk1.8
 从add()与addAll()方法中可以看出，每当向数组中添加元素时，都要去检查添加元素后的个数是否会超出当前数组的长度，如果超出，数组将会进行扩容，以满足添加数据的需求。
 数组扩容实质上是通过私有的方法ensureCapacityInternal(int minCapacity) -> ensureExplicitCapacity(int minCapacity) -> grow(int minCapacity)来实现的，但在jdk1.8中，
 向用户提供了一个public的方法ensureCapacity(int minCapacity)使用户可以手动的设置ArrayList实例的容量，以减少递增式再分配的数量。
