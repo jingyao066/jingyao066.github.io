@@ -330,3 +330,58 @@ xxx分支用于备份博客部署文件，供自己维护更新，两者在一�
 按照之前的方法写自己博客，
 然后将目录切换下username.github.io下，此时需要安装一下npm install，
 最后执行hexo g、hexo s、hexo d等命令即可提交成功
+
+## 使用LeanCloud统计文章访问次数
+官网：
+https://leancloud.cn/
+1.注册
+2.登录
+3.验证邮箱
+4.创建应用-选择开发板
+注：开发版免费使用，但是有请求次数限制
+```
+总请求数不超过每日 30,000 次
+云端并发线程数低于 3 个
+无自动备份
+```
+
+5.点击存储，进入到控制台页面
+6.创建class，名字必须是Counter，其他全部默认，点击创建class
+7.点击左侧设置--应用key，可以看到自己的App ID,App Key
+8.找到next主题的_config.yml文件，搜索leancloud_visitors
+enable改为true，然后写上LeanCloud的App ID,App Key
+9.设置安全域名
+设置--安全中心--Web安全域名，输入自己hexo博客地址的线上域名
+
+然后即可执行正常的clean、g、d 操作
+
+## 不蒜子统计访问人数、访问总量
+官网：
+http://busuanzi.ibruce.info/
+
+1.找到next主题的_config.yml文件，搜索busuanzi_count
+2.将配置做如下更改
+```
+  # count values only if the other configs are false
+  enable: true
+  # custom uv span for the whole site
+  site_uv: true
+  site_uv_header: <i class="fa fa-user"></i> 访问人数
+  site_uv_footer: 次
+  # custom pv span for the whole site
+  site_pv: true
+  site_pv_header: <i class="fa fa-eye"></i> 访问总量
+  site_pv_footer: 次
+  # custom pv span for one page only
+  page_pv: true
+  page_pv_header: <i class="fa fa-file-o"></i> 浏览
+  page_pv_footer: 次
+```
+### 不蒜子统计无法显示问题
+原因：不蒜子的域名过期
+解决：
+/theme/next/layout/_third-party/analytics/busuanzi-counter.swig
+按照上边路径找到该文件，修改域名为：
+https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js
+
+
