@@ -65,7 +65,7 @@ https://github.com/ilanyu
 选择ReverseProxy，再进入到Release页面：
 ![](JRebel安装/2.png)
 
-选择对应版本下载，darwin代表Mac os的UNIX-like系统。
+选择对应版本下载，darwin代表Mac os的UNIX-like系统。大多数人都是ReverseProxy_windows_amd64.exe这个版本，代表windows 64位
 选择立刻激活，再选择I have license：
 ![](JRebel安装/3.png)
 
@@ -77,9 +77,11 @@ https://github.com/ilanyu
 http://127.0.0.1:8888/wjy
 搜索GUID生成工具，输入wjy生成，则上图中正确的内容为
 http://127.0.0.1:8888/e250f540-41e3-450b-aabb-0f376f83c241
-下面的邮箱可以随意填写，只要格式正确即可，然后可以看到激活成功，可以使用180天，这个时候就可以再JRebel的界面点击work offline，开始脱机工作，如果180天后还想继续使用，可以点击Renew ofline seat，重新获取180天（Renew可以不借助反向代理）。
+下面的邮箱可以随意填写，只要格式正确即可，然后可以看到激活成功，可以使用180天，
+这个时候一定、一定、一定要点击JRebel界面work offline，切换到离线模式，开始脱机工作，如果180天后还想继续使用，可以点击Renew ofline seat，重新获取180天使用时间。Renew ofline seat也要运行反代。
 
 以上激活步骤，目前适用于JRebel 2018.1等较新版本，其他版本未测试。有条件请支持正版！
+注：以上步骤一定要保证反向代理程序一直运行。
 
 接下来，就可以享受热部署的丝滑了。找到idea上debug(小甲虫)启动旁边，
 ![](JRebel安装/5.png)
