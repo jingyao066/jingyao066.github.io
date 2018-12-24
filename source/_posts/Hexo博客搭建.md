@@ -384,4 +384,13 @@ http://busuanzi.ibruce.info/
 按照上边路径找到该文件，修改域名为：
 https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js
 
+## 添加algolia搜索
+目前版本5.1.4已经集成algolia搜索，只需在next主题的配置文件中修改即可。但是首先需要到官网注册：
+https://www.algolia.com/
+1.注册成功后，进入到hashboard，点击左侧的Indices
+2.点击create index，名字随便起。
+3.点击左侧的API keys，在根目录的站点配置文件_config.yml中加入如下配置，参照官网中的各种key值
+4.在Hexo工程根目录下执行`npm install hexo-algolia --save`
+5.执行`hexo algolia`
+
 
