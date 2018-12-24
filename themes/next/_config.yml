@@ -598,7 +598,7 @@ algolia_search:
     per_page: 10
   labels:
     input_placeholder: 输入关键字
-    hits_empty: "We didn't find any results for the search: ${query}"
+    hits_empty: "没有找到关于 ${query} 的文章"
     hits_stats: "${hits} 相关记录，共耗时 ${time} ms"
 
 # Local search
