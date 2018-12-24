@@ -4,25 +4,29 @@ tags: mysql
 date: 2018-12-06 18:12:58
 ---
 
-MySQL数据库
+MySQL基础
 
-### 1.增删改查
+## 1.增删改查
 ```
 插入(增)：
 insert into 表名字(列名1，列名2...) values(值1，值2...)
 或者：
 insert into 表名字 values(值1，值2...)
+若不指定列名，则需要插入全部字段。
 ```
+
 ```
-删除(删)：
+删除：
 delete from 表名字
-如果不加where条件，则删除数据表中所有数据
+若不加where条件，则删除数据表中所有数据
 ```
+
 ```
 修改：
 update 表名字 set 列1=值1，列2=值2...
-如果不加where条件，则更新数据表中所有数据
+若不加where条件，则更新数据表中所有数据
 ```
+
 ```
 查询：
 select * from 表名字
@@ -53,7 +57,7 @@ create table[if not exists] table_name(
 )
 ```
 
-### 2.主外键
+## 2.主外键
 主键：primary_key
 	1.保证数据唯一性
 	2.一个数据表只能有一个主键
@@ -101,7 +105,7 @@ create table test(
 查看表结构
 `desc tabl_name;`
 
-### 4.where条件
+## 4.where条件
 可以跟在select/update/delete后
 多个where条件，并且的关系，用and链接，或者的关系，用or链接
 
@@ -126,7 +130,7 @@ select * from 表名字
 ```
 关键字顺序不可以颠倒
     
-### 5.字符函数
+## 5.字符函数
  以下字符函数都必须跟在select语句后面
 `concat(str1,str2,...)：拼接字符串`
 
@@ -156,7 +160,7 @@ update 表名字 set num = right(concat('000000',num),10);
 解:因为最短有4位，在每个字符串左侧都拼接6个0，然后从右侧开始截取10个字符
 
 
-### 6.聚合函数
+## 6.聚合函数
 聚合函数必须跟在select语句后面
 `一列的和：select sum(列名) from 表名 where ...条件`
 
@@ -168,7 +172,7 @@ update 表名字 set num = right(concat('000000',num),10);
 
 `一列的平均值：select avg(列名) from 表名 where ...条件`
 	 
-### 7. case when
+## 7. case when
 ```
 select case(
 	when sex='0' then '女'
@@ -181,7 +185,7 @@ case when方法，该方法用于查询时替换表中数据，
 如性别字段，里面有0和1，
 查询时可分别把0和1替换成女和男
 
-### 8.like(模糊查询)
+## 8.like(模糊查询)
 ```
 select * from student where stu_name like '%小%';
 %表示可随意替换
@@ -189,7 +193,7 @@ select * from student where stu_name like '%小%';
 %小  表示必须以小结尾，前边随意
 %小% 表示前后都随意，中间包含小
 ```
-### 9.数值函数
+## 9.数值函数
 ```
 ceil():向上取整
 floor():向下取整
@@ -207,7 +211,7 @@ power():幂运算
 
 is [not] null:判断字段是否为空
 
-### 10..时间函数
+## 10..时间函数
 now()：当前时间(年月日  时分秒)
 
 curdate()：当前日期(年月日)
@@ -227,7 +231,7 @@ date_format():日期格式化
 将指定日期，安装指定规则进行格式化(具体请百度该函数)
 date_format('2017-1-1','%y/%m/%d/')--->2017/1/1
 
-### 11.表连接
+## 11.表连接
 1.查询结果在哪个表
 2.链接哪个表
 3.链接条件
