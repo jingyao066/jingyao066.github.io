@@ -390,7 +390,53 @@ https://www.algolia.com/
 1.注册成功后，进入到hashboard，点击左侧的Indices
 2.点击create index，名字随便起。
 3.点击左侧的API keys，在根目录的站点配置文件_config.yml中加入如下配置，参照官网中的各种key值
+```
+#添加搜索
+algolia:
+    applicationID: '你的applicationID'
+    apiKey: '你的apiKey'
+    adminApiKey: '你的adminApiKey'
+    indexName: '新建的index名字'
+    chunkSize: 5000
+    fields:
+    - title
+    - slug
+    - path
+    - content:strip
+```
+注意缩进！注意缩进！注意缩进！
 4.在Hexo工程根目录下执行`npm install hexo-algolia --save`
-5.执行`hexo algolia`
 
+5.执行`hexo algolia` 更新索引，这一步会把自己站点的索引数据上传到Algolia，如果上传成功可以在官网看到自己站点的索引数据。
 
+6.启用配置搜索功能
+修改主题配置文件，在其中找到algolia_search属性，将其enable子属性改为true，然后再看其labels子属性，修改相应的提示文本，使之更加适合自己的风格
+```
+input_placeholder: 输入关键字
+hits_empty: "没有找到关于 ${query} 的文章"
+hits_stats: "${hits} 相关记录，共耗时 ${time} ms"
+```
+
+最后，每次进行更新、删除文章等操作，都需要在提交前执行
+`hexo algolia`
+更新索引。
+
+### 遇到的坑
+1.数据上传到algolia后，发现搜索出来的文章地址是：
+`yoursite.com/2018/12/20/map`
+点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。
+解决：
+找到根目录的站点配置文件_config.yml，将url：yoursite.com，替换成自己的站点地址。
+
+2.Please provide an Algolia index name in your hexo _config.yml flle
+根目录的站点配置文件中加入的内容 apiKey/adminApiKey 等等没有缩进，然后一直报上面这个错误...注意缩进,一个tab或四个空格
+
+3.
+```
+ERROR [Algolia] Please set an HEXO_ALGOLIA_INDEXING_KEY environment variable t o enable content indexing. 
+ERROR >> Read https://npmjs.com/hexo-algolia#api-key for more informations.
+```
+解决：
+在执行`hexo algolia`前，先在git bush下执行：
+`export HEXO_ALGOLIA_INDEXING_KEY=你的API Key`
+就是你的  Search-Only API Key，网上一堆说在windows cmd下或powershell下执行set或export，然而都不行，必须在git bush下执行。
