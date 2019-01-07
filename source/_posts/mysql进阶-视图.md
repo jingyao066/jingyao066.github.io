@@ -140,7 +140,7 @@ AS select_statement
 注意：修改视图是指修改数据库中已存在的表的定义，当基表的某些字段发生改变时，可以通过修改视图来保持视图和基本表之间一致
 
 #### DML操作更新视图
-DML:Data Manipulation Language 数据操纵语言，，以INSERT、UPDATE、DELETE三种指令为核心，也可加上select。CRUD
+DML：Data Manipulation Language，数据操纵语言，以INSERT、UPDATE、DELETE三种指令为核心，通常也会加上select指令。
 因为视图本身没有数据，因此对视图进行的dml操作最终都体现在基表中。
 ```
 mysql> create view v_student as select * from student;
@@ -323,10 +323,7 @@ mysql> select playerno from cost_raisers
 ```
 
 1、替代方法：
-
-　　先把select语句中的视图名使用定义视图的select语句来替代；
-
-　　再处理所得到的select语句。
+先把select语句中的视图名使用定义视图的select语句来替代；再处理所得到的select语句。
 ```
 mysql> select playerno from
 　　 -> (
@@ -346,3 +343,4 @@ mysql> select playerno from
 然后，再在中间结果上执行select查询。
 
 `mysql> select <列名> from <中间结果>;`
+

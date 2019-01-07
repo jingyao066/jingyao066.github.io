@@ -1,5 +1,5 @@
 ---
-title: mysql技巧+知识点
+title: mysql技巧
 tags: mysql
 date: 2018-12-06 18:13:55
 ---
