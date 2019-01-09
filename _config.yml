@@ -81,7 +81,7 @@ deploy:
   type: git
   repo: ssh://git@github.com/ayanamiq/ayanamiq.github.io
   branch: master
-
+#git@github.com:ayanamiq/ayanamiq.github.io.git
 #添加搜索
 algolia:
     applicationID: 'UJCQ3PDF0F'
