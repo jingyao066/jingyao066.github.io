@@ -40,6 +40,12 @@ C:\Users\wjy\.m2
 然后打开父项目的pom文件，新建packaging标签，内容为pom，表示父项目只提供pom依赖。
 
 #### 2.搭建spring boot子模块
+注意：
+common模块：存放实体类、dao接口、mapper文件，
+service模块：存放service接口，
+util模块：存放工具类，只需要建成普通的java模块就好，不需要spring initializer。
+如果不小心建错了，需要将启动类和配置文件以及对应的文件夹删除。
+
 在父项目上右键
 New->module，选择spring initializer，点击next，
 在new module窗口上，Group需要与父项目的groupId保持一致，artifact为项目名，即子模块的名字。
