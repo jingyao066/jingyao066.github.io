@@ -124,7 +124,10 @@ https://hexo.io/zh-cn/docs/writing
 markdown编译器有一堆，比较有名的是markdownPad，但是我懒，还是直接用nodePad++好了。
 
 1.安装MarkdownViewer++
-因为7.5版本之后无论64还是32位的nodePad++都不再提供plugin manager，所以需要自行安装。
+最近发现新版的nodepad 7.6.2，新增了plugins admin即插件中心,搜索markdown，选中markdownViewer++，点击右侧的install，等待nodepad++重启就安装好了。
+
+备用方案：
+自行安装plugin manager：
 https://github.com/bruderstein/nppPluginManager/releases
 下载对应自己nodePad版本的安装包，解压后得到两个文件夹，plugins和updater，
 分别将文件夹中的文件粘贴到nodePad++安装路径下的plugins和updater文件夹下，
@@ -316,8 +319,11 @@ xxx分支用于备份博客部署文件，供自己维护更新，两者在一�
 #### 至此，博客已经可以在其他电脑上进行同步更新和维护了。
 1.将新电脑的生成的ssh key添加到GitHub账户上
 2.在新电脑上克隆username.github.io仓库的xxx分支到本地，此时本地git仓库处于xxx分支
+`git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
 3.切换到username.github.io目录，执行npm install(由于仓库有一个.gitignore文件，里面默认是忽略掉 node_modules文件夹的，
 也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
+4.在新电脑上安装hexo命令
+`npm install -g hexo-cli`
 
 到这里了就可以开始在新的电脑上写博客了！
 1.编辑、撰写文章或其他博客更新改动
