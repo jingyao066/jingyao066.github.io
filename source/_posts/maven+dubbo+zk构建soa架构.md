@@ -31,7 +31,7 @@ dubbo 2.6.2 + spring boot 1.5.10.RELEASE
 #### 1.搭建父项目
 File->New->Project
 类型选择maven，然后勾选Create from archetype，选择maven-archetype-quickstart，
-生成一个普通的maven项目，填写maven仓库坐标即可一路点击完成。
+生成一个普通的maven项目，填写maven仓库坐标即可一路点击完成.
 ![](maven+dubbo+zk构建soa架构/1.png)
 idea已经集成了maven的环境，默认的jar包存放目录在
 C:\Users\wjy\.m2
@@ -120,7 +120,7 @@ properties标签下：
         <pagehelper.starter.version>1.2.3</pagehelper.starter.version>
         <druid.starter.version>1.1.0</druid.starter.version>
         <spring.data.version>1.8.10.RELEASE</spring.data.version>
-    </properties>
+</properties>
 ```
 定义依赖：
 dependencyManagement标签下：
