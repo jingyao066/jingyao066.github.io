@@ -473,8 +473,8 @@ public class HelloController {
 
 11.Consul 消费者
 
-### 2.事物配置
-启用事物需要使用cglib的方式实现aop代理：
+### 2.事务配置
+启用事务需要使用cglib的方式实现aop代理：
 `spring.aop.proxy-target-class=true`
 在启动类加入下面两个注解：
 ```
