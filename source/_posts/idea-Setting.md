@@ -7,7 +7,7 @@ date: 2018-12-08 20:55:11
 不过最好的办法还是直接在idea中：
 file->export setting
 
-### 1.注释模板
+# 注释模板
 1.类注释模板
 `File ---> Setting ---> Editor ---> File and Code Templates ---> Includes --->File Header`
 ```
@@ -47,11 +47,11 @@ ps:为了只按/+自定义的快捷键，我们可以在模板的顶端，注意
  */ 
 ```
 
-### 2. 窗口开多后自动关闭
+# 窗口开多后自动关闭
 idea 默认的窗口数量只有10个。
 ![tablimit](https://user-images.githubusercontent.com/21356733/47202544-13852d80-d3b0-11e8-9619-62698e96dc34.png)
 
-### 3.idea输入法不跟随
+# idea输入法不跟随
 jetbrains官方已经在2018.2版本修复了这个问题。但是还是需要新版jdk的加持。
 目前可以确定，idea--2018.3版本+jdk1.8.0_191没有问题。
 win10自带的输入法也是没有问题的。
@@ -68,3 +68,4 @@ idea界面按ctrl+shift+a，输入switch IDE Boot JDK，选择自己安装的jdk
 
 比较靠谱的就这两种，还有很多说jdk降级，输入法降级的，不建议。
 
+# 去掉重复代码检查
