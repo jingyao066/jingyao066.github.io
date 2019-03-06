@@ -29,6 +29,17 @@ Docker 对系统资源的利用率很高，一台主机上可以同时运行数�
 * 更简单的管理
 使用 Docker，只需要小小的修改，就可以替代以往大量的更新工作。所有的修改都以增量的方式被分发和更新，从而实现自动化并且高效的管理。
 
+举个最简单的例子：
+传统的javaWeb应用是部署在tomcat中的，一个服务器可能运行多个tomcat，每个tomcat中有一个或多个web应用，那么此时docker就可以起到应用隔离和资源独立的作用。
+![](docker/7.png)
+
+- 如果不使用docker，一台服务器上多个tomcat，即A1，所有的应用共享服务器的CPU、内存等资源，这时如果一个应用出现问题，导致CPU爆满等等，其他应用也会无法运行。
+- 那么这时就需要做到资源独立，一个应用一份资源，即我们所说的传统的虚拟化方式，即A2，这样需要在服务器上安装数个虚拟机，每个虚拟机运行一个应用，这样的缺点是，重启虚拟机太麻烦，迁移应用需要重装虚拟机，配置环境等等。
+- A3即使用docker，此时服务器上运行多个容器，每个容器都拥有独立的CPU、内存等资源，完全满足了应用隔离的需求，重启容器只需要几秒，迁移应用也很方便，所有装了Docker的服务器，只需把镜像pull或者load进去，run，就可以了。
+
+![](docker/8.png)
+上图是docker的运行流程
+
 # docker引擎
 docker引擎是一个c/s结构的应用，主要组件见下图：
 ![](docker/2.png)
@@ -128,7 +139,7 @@ ubuntu                   latest              2fa927b5cdd3        9 weeks ago    
 
 ## 利用dockerfile来创建镜像
 `docker build`
-使用 docker commit 来扩展一个镜像比较简单，但是不方便在一个团队中分享。我们可以使用docker build 来创建一个新的镜像。为此，首先需要创建一个 Dockerfile，包含一些如何创建镜像的指令。新建一个目录和一个 Dockerfile。
+使用 docker commit 来扩展一个镜像比较简单，但是不方便在一个团队中分享。我们可以使用docker build 来创建一个新的镜像。为此，首先需要创建一个Dockerfile，包含一些如何创建镜像的指令。新建一个目录和一个Dockerfile。
 ```
 mkdir test_docker
 cd test_docker
@@ -146,11 +157,79 @@ EXPOSE 80
 CMD ["sh","-c","service httpd start;bash"]
 ```
 
-dockerfile的基本语法时：
-- #：注释
-- FROM：告诉Docker使用哪个镜像作为基础
-- 维护者的信息
-- RUN开头的指令会在创建中运行，比如安装一个软件，在这里使用yum安装了一些软件
+### dockerfile基本语法：
+Dockfile是一个用于编写docker镜像生成过程的文件，其有特定的语法。在一个文件夹中，如果有一个名字为Dockfile的文件，其内容满足语法要求，在这个文件夹路径下执行命令:docker build --tag name:tag .，就可以按照描述构建一个镜像了。name是镜像的名称，tag是镜像的版本或者是标签号，不写就是lastest。注意后面有一个空格和点。
+Dockerfile的基本指令有十三个，分别是：FROM、MAINTAINER、RUN、CMD、EXPOSE、ENV、ADD、COPY、ENTRYPOINT、VOLUME、USER、WORKDIR、ONBUILD。下面对这些指令的用法一一说明。
+#### FROM
+用法：FROM <image>
+说明：第一个指令必须是FROM了，其指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，可以出现多次，如果需要在一个Dockerfile中构建多个镜像。
+
+#### MAINTAINER
+用法：MAINTAINER <name> <email>
+说明：描述镜像的创建者，名称和邮箱
+
+#### RUN
+用法：RUN "command" "param1" "param2"
+说明：RUN命令是一个常用的命令，执行完成之后会成为一个新的镜像，这里也是指镜像的分层构建。一句RUN就是一层，也相当于一个版本。这就是之前说的缓存的原理。我们知道docker是镜像层是只读的，所以你如果第一句安装了软件，用完在后面一句删除是不可能的。所以这种情况要在一句RUN命令中完成，可以通过&符号连接多个RUN语句。RUN后面的必须是双引号不能是单引号（没引号貌似也不要紧），command是不会调用shell的，所以也不会继承相应变量，要查看输入RUN "sh" "-c" "echo" "$HOME"，而不是RUN "echo" "$HOME"。
+
+#### CMD
+用法：CMD command param1 param2
+说明：CMD在Dockerfile中只能出现一次，有多个，只有最后一个会有效。其作用是在启动容器的时候提供一个默认的命令项。如果用户执行docker run的时候提供了命令项，就会覆盖掉这个命令。没提供就会使用构建时的命令。
+
+#### EXPOSE
+用法：EXPOSE <port> [<port>...]
+说明：告诉Docker服务器容器对外映射的容器端口号，在docker run -p的时候生效。
+
+#### EVN
+用法：EVN <key> <value> 只能设置一个
+
+	  EVN <key>=<value>允许一次设置多个
+说明：设置容器的环境变量，可以让其后面的RUN命令使用，容器运行的时候这个变量也会保留。
+
+#### ADD
+用法：ADD <src>   <dest>
+说明：复制本机文件或目录或远程文件，添加到指定的容器目录，支持GO的正则模糊匹配。路径是绝对路径，不存在会自动创建。如果源是一个目录，只会复制目录下的内容，目录本身不会复制。ADD命令会将复制的压缩文件夹自动解压，这也是与COPY命令最大的不同。
+
+#### COPY
+用法：COPY <src> <dest>
+说明：COPY除了不能自动解压，也不能复制网络文件。其它功能和ADD相同。
+
+#### ENTRYPOINT
+用法：ENTRYPOINT "command" "param1" "param2"
+说明：这个命令和CMD命令一样，唯一的区别是不能被docker run命令的执行命令覆盖，如果要覆盖需要带上选项--entrypoint，如果有多个选项，只有最后一个会生效。
+
+#### VOLUME
+用法：VOLUME ["path"]
+说明：在主机上创建一个挂载，挂载到容器的指定路径。docker run -v命令也能完成这个操作，而且更强大。这个命令不能指定主机的需要挂载到容器的文件夹路径。但docker run -v可以，而且其还可以挂载数据容器。
+
+#### USER
+用法：USER daemon
+说明：指定运行容器时的用户名或UID，后续的RUN、CMD、ENTRYPOINT也会使用指定的用户运行命令。
+
+#### WORKDIR
+用法:WORKDIR path
+说明：为RUN、CMD、ENTRYPOINT指令配置工作目录。可以使用多个WORKDIR指令，后续参数如果是相对路径，则会基于之前的命令指定的路径。如：WORKDIR  /home　　WORKDIR test 。最终的路径就是/home/test。path路径也可以是环境变量，比如有环境变量HOME=/home，WORKDIR $HOME/test也就是/home/test。
+
+#### ONBUILD
+用法：ONBUILD [INSTRUCTION]
+说明：配置当前所创建的镜像作为其它新创建镜像的基础镜像时，所执行的操作指令。意思就是，这个镜像创建后，如果其它镜像以这个镜像为基础，会先执行这个镜像的ONBUILD命令。
+
+###	Dockerfile例子
+一个使用安装包安装的tomcat例子：
+```
+FROM centos
+MAINTAINER nobody "xx@qq.com"
+RUN mkdir -p /opt/jdk/
+RUN mkdir -p /opt/tomcat/
+ADD jdk1.7.0_79 /opt/jdk/
+ADD tomcat  /opt/tomcat/
+ENV CATALINA_HOME /opt/tomcat
+ENV JAVA_HOME /opt/jdk
+EXPOSE 8080
+ENV PATH $PATH:$JAVA_HOME/bin
+CMD ["/opt/tomcat/bin/catalina.sh","run"]
+```
+
 更详细的语法说明请参考 https://docs.docker.com/engine/reference/builder/
 
 编写完成 Dockerfile 后可以使用 docker build 来生成镜像。
@@ -295,27 +374,3 @@ $ docker save  -o centos_images.tar centos:centos6 > centos_images.tar
 ## inspect
 `docker inspect <container-id> or <image-id>`
 docker inspect命令会提取出容器或者镜像最顶层的元数据
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
