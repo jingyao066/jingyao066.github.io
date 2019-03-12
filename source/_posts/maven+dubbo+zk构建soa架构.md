@@ -1,37 +1,27 @@
 ---
 title: maven+dubbo+zk构建soa架构
-tags: 其他
+tags: 架构
 date: 2018-12-09 16:51:22
 ---
 
-## 概述
-dubbo是目前国内最广泛的rpc框架，官网：
-http://dubbo.apache.org/zh-cn/index.html
-dubbo常用于soa架构，soa架构和微服务架构均是分布式系统的两种实践，从某种程度而言，soa架构是微服务架构的超集，或者说微服务是soa的一个变种。
+# 概述
+dubbo是目前国内最广泛的rpc框架，官网：http://dubbo.apache.org/zh-cn/index.html
+本文只阐述框架的搭建过程，原理和区别对比(dubbo/cloud)会在另一篇文章中说明。
 
-SOA | 微服务
--- | --
-应用程序服务的可重用性的最大化 | 专注于解耦
-系统性的改变需要修改整体 | 系统性的改变是创建一个新的服务
-DevOps和持续交付正在变得流行，但还不是主流 | 强烈关注DevOps和持续交付
-专注于业务功能重用 | 更重视“上下文边界，服务粒度”的概念
-通信使用企业服务总线ESB | 对于通信而言，使用较少精细和简单的消息系统
-支持多种消息协议 | 使用轻量级协议，例如HTTP，REST或Thrift API
-对部署到它的所有服务使用通用平台 | 应用程序服务器不是真的被使用，通常使用云平台
-容器（如Docker）的使用不太受欢迎 | 容器在微服务方面效果很好
-SOA服务共享数据存储 | 每个微服务可以有一个独立的数据存储
-共同的治理和标准 | 轻松的治理，更加关注团队协作和选择自由
-
-### 项目搭建：准备工作
+# 准备工作
 1.idea
-2.jdk
+2.jdk_1.8
 
-
-dubbo 2.6.2 + spring boot 1.5.10.RELEASE
-#### 1.搭建父项目
+# 项目搭建
+## 搭建父项目
 File->New->Project
-类型选择maven，然后勾选Create from archetype，选择maven-archetype-quickstart，
-生成一个普通的maven项目，填写maven仓库坐标即可一路点击完成.
+类型选择maven，然后勾选Create from archetype，选择maven-archetype-quickstart，生成一个普通的maven项目。
+
+GroupID：GroupID是项目组织唯一的标识符，实际对应JAVA的包的结构，是main目录里java的目录结构。一般这样填写：com.companyName
+ArtifactID：是项目的唯一的标识符，实际对应项目的名称，就是项目根目录的名称。一般写为项目的具体名称，如：tomcat
+
+GroupId：com.wjy
+ArtifactID：testDubbo
 ![](maven+dubbo+zk构建soa架构/1.png)
 idea已经集成了maven的环境，默认的jar包存放目录在
 C:\Users\wjy\.m2
@@ -39,7 +29,27 @@ C:\Users\wjy\.m2
 如果有src目录，可以直接删除，因为我们搭建的是父项目，不需要存放源码。
 然后打开父项目的pom文件，新建packaging标签，内容为pom，表示父项目只提供pom依赖。
 
-#### 2.搭建spring boot子模块
+## 搭建spring boot子模块
+在父项目上右键
+New->module，选择spring initializer，点击next，
+在new module窗口上，Group需要与父项目的GroupId保持一致，artifact为项目名，即子模块的名字。
+
+子模块名字建议采用统一前缀，如项目名或项目名中的关键字。如：test_service_user
+并填写好name和packge(应该在填好artifact之后自动填好了，无需变更)，packaging根据需要可以填写jar、war等包类型，推荐使用jar包。全部填好后，点击next。
+
+然后无需勾选任何组件，因为我们的子模块是依赖父项目的，我们会将依赖配置在父项目的pom文件中。
+注意本页面右上角的spring boot的版本，目前最新版是2.1.0，这个版本后续可以在pom文件中修改。
+然后点击下一步，点击Finsh。
+
+自动生成的mvnw和mvnw.cmd：
+mvnw是一个maven wrapper script,它可以让你在没有安装maven或者maven版本不兼容的条件下运行maven的命令.
+原理:
+- 它会寻找maven在你电脑环境变量path中的路径
+- 如果没有找到这个路径它就会自动下载maven到一个默认的路径下,之后你就可以运行maven命令了
+- 有时你会碰到一些项目的peoject和你本地的maven不兼容,它会帮你下载合适的maven版本,然后运行
+
+因为本机已经安装了maven，所以把这两个文件删掉即可。
+
 注意：
 common模块：存放实体类、dao接口、mapper文件；
 service模块：存放service接口；
@@ -48,49 +58,67 @@ util模块：存放工具类；
 即New->module，选择Maven,勾选右侧的Create from archetype，选择maven-archetype-quickstart，artifactId填写子模块名称，然后一路next直到finsh。
 如果不小心建错了，需要将启动类和配置文件以及对应的文件夹，以及pom中的boot相关的jar包删除。
 
-在父项目上右键
-New->module，选择spring initializer，点击next，
-在new module窗口上，Group需要与父项目的groupId保持一致，artifact为项目名，即子模块的名字。
-并填写好name和packge(应该在填好artifact之后自动填好了，无需变更)，packaging根据需要可以填写jar、war等包类型，推荐使用jar包。全部填好后，点击next。
+## 父子关联
+重复第二步，创建自己需要的各个模块，结构如下：
 ![](maven+dubbo+zk构建soa架构/2.png)
 
-然后无需勾选任何组件，因为我们的子模块是依赖父项目的，我们会将依赖配置在父项目的pom文件中。
-注意本页面右上角的spring boot的版本，目前最新版是2.1.0，这个版本后续可以在pom文件中修改。
-![](maven+dubbo+zk构建soa架构/3.png)
-
-然后点击下一步，点击Finsh.
-
-
-#### 3.父子关联
-重复第二步，创建自己需要的各个模块，结构如下：
-![](maven+dubbo+zk构建soa架构/4.png)
-
 在父项目的pom文件中增加modules标签，然后将module与子项目的artifactId一一关联。
-![](maven+dubbo+zk构建soa架构/5.png)
+```
+<modules>
+	<module>tubitu_service_user</module>
+	<module>tubitu_service_api</module>
+	<module>tubitu_common</module>
+	<module>tubitu_util</module>
+	<module>tubitu_service</module>
+	<module>tubitu_service_business</module>
+	<module>tubitu_service_mall</module>
+	<module>tubitu_service_pay</module>
+	<module>tubitu_service_log</module>
+	<module>tubitu_service_monitor</module>
+	<module>tubitu_service_calculate</module>
+	<module>tubitu_service_task</module>
+	<module>tubitu_web_platform</module>
+	<module>tubitu_data_synchronous</module>
+	<module>tubitu_service_vouchers</module>
+</modules>
+```
 
 然后，分别在子模块的pom文件中，与父项目关联。
-![](maven+dubbo+zk构建soa架构/6.png)
+```
+<parent>
+	<groupId>tubitu_project</groupId>
+	<artifactId>tubitu_project</artifactId>
+	<version>1.0</version>
+</parent>
+```
 
-
-此时会发现，子模块的parent标签不再依赖spring boot的pom文件了，因为我们将依赖指向了父项目。
 原来的子模块pom文件依赖：
-![](maven+dubbo+zk构建soa架构/7.png)
+```
+<parent>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>2.1.3.RELEASE</version>
+	<relativePath/> <!-- lookup parent from repository -->
+</parent>
+```
+
+
 现在还需要在父项目的pom文件中，加入如下代码：
 ```
 <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>1.5.10.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+	<dependencies>
+	  <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-dependencies</artifactId>
+		<version>2.1.3.RELEASE</version>
+		<type>pom</type>
+		<scope>import</scope>
+	  </dependency>
+	</dependencies>
+</dependencyManagement>
 ```
 
-#### 4.依赖统一管理
+## 依赖统一管理
 在父项目的pom文件中定义公共jar包或框架的统一版本，只定义而不引入，在子模块中引入。
 例如：
 在父项目的pom文件中配置统一属性：
@@ -176,8 +204,8 @@ dependencies标签下
     </dependencies>
 ```
 
-### 集成dubbo或cloud
-#### dubbo集成
+## 集成dubbo或cloud
+### dubbo集成
 dubbo的配置方式有四种，分别是xml配置、api配置和注解配置，现简单介绍注解配置。
 使用方式请移步官网：http://dubbo.apache.org/zh-cn/docs/user/configuration/properties.html
 不推荐使用xml配置。
@@ -357,7 +385,7 @@ public class DubboConfig {
 要注意，我们的配置的具体参数是从ApolloConfig中拉取下来的。
 请参考博客中applo的文章。
 
-#### cloud集成
+### cloud集成
 首先在父项目pom中引入cloud，
 1.properties标签下指定版本号，截至2019/2/19，版本号为：Greenwich.RELEASE
 `<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>`
@@ -473,7 +501,7 @@ public class HelloController {
 
 11.Consul 消费者
 
-### 2.事务配置
+## 事务配置
 启用事务需要使用cglib的方式实现aop代理：
 `spring.aop.proxy-target-class=true`
 在启动类加入下面两个注解：
