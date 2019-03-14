@@ -65,29 +65,29 @@ util模块：存放工具类；
 在父项目的pom文件中增加modules标签，然后将module与子项目的artifactId一一关联。
 ```
 <modules>
-	<module>tubitu_service_user</module>
-	<module>tubitu_service_api</module>
-	<module>tubitu_common</module>
-	<module>tubitu_util</module>
-	<module>tubitu_service</module>
-	<module>tubitu_service_business</module>
-	<module>tubitu_service_mall</module>
-	<module>tubitu_service_pay</module>
-	<module>tubitu_service_log</module>
-	<module>tubitu_service_monitor</module>
-	<module>tubitu_service_calculate</module>
-	<module>tubitu_service_task</module>
-	<module>tubitu_web_platform</module>
-	<module>tubitu_data_synchronous</module>
-	<module>tubitu_service_vouchers</module>
+	<module>test_service_user</module>
+	<module>test_service_api</module>
+	<module>test_common</module>
+	<module>test_util</module>
+	<module>test_service</module>
+	<module>test_service_business</module>
+	<module>test_service_mall</module>
+	<module>test_service_pay</module>
+	<module>test_service_log</module>
+	<module>test_service_monitor</module>
+	<module>test_service_calculate</module>
+	<module>test_service_task</module>
+	<module>test_web_platform</module>
+	<module>test_data_synchronous</module>
+	<module>test_service_vouchers</module>
 </modules>
 ```
 
 然后，分别在子模块的pom文件中，与父项目关联。
 ```
 <parent>
-	<groupId>tubitu_project</groupId>
-	<artifactId>tubitu_project</artifactId>
+	<groupId>test_project</groupId>
+	<artifactId>test_project</artifactId>
 	<version>1.0</version>
 </parent>
 ```
@@ -125,58 +125,192 @@ util模块：存放工具类；
 properties标签下：
 ```
 <properties>
-        <tubitu.version>1.0</tubitu.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <mybatis.version>3.4.6</mybatis.version>
-        <spring.version>4.3.14.RELEASE</spring.version>
-        <!--项目基本依赖-->
-        <slf4j.version>1.7.7</slf4j.version>
-        <log4j.version>1.2.12</log4j.version>
-        <aspectj.version>1.7.2</aspectj.version>
-        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
-        <rocketmq.version>4.3.0</rocketmq.version>
-        <fasterxml.jackson.version>2.5.0</fasterxml.jackson.version>
-        <javax.servlet.version>3.1.0</javax.servlet.version>
-        <!--分布式配置中心-->
-        <apollo.client.version>1.0.0</apollo.client.version>
-        <!--dubbo依赖-->
-        <curator.version>2.12.0</curator.version>
-        <zookeeper.version>3.4.10</zookeeper.version>
-        <dubbo.version>2.6.2</dubbo.version>
-        <!--spring boot所需依赖-->
-        <mybatis.starter.version>1.3.2</mybatis.starter.version>
-        <pagehelper.starter.version>1.2.3</pagehelper.starter.version>
-        <druid.starter.version>1.1.0</druid.starter.version>
-        <spring.data.version>1.8.10.RELEASE</spring.data.version>
+	<test.version>1.0</test.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	<java.version>1.8</java.version>
+	<mybatis.version>3.4.6</mybatis.version>
+	<spring.version>4.3.14.RELEASE</spring.version>
+	<!--项目基本依赖-->
+	<slf4j.version>1.7.7</slf4j.version>
+	<log4j.version>1.2.12</log4j.version>
+	<aspectj.version>1.7.2</aspectj.version>
+	<mysql-connector-java.version>5.1.10</mysql-connector-java.version>
+	<rocketmq.version>4.3.0</rocketmq.version>
+	<fasterxml.jackson.version>2.9.0</fasterxml.jackson.version>
+	<!--<javax.servlet.version>3.1.0</javax.servlet.version>-->
+	<!--分布式配置中心-->
+	<!--<apollo.client.version>1.0.0</apollo.client.version>-->
+	<!--dubbo依赖-->
+	<curator.version>2.12.0</curator.version>
+	<zookeeper.version>3.4.10</zookeeper.version>
+	<dubbo.version>2.6.2</dubbo.version>
+	<!--spring boot所需依赖-->
+	<mybatis.starter.version>1.3.2</mybatis.starter.version>
+	<pagehelper.starter.version>1.2.3</pagehelper.starter.version>
+	<druid.starter.version>1.1.13</druid.starter.version>
+	<spring.data.version>2.1.5.RELEASE</spring.data.version>
 </properties>
 ```
 定义依赖：
 dependencyManagement标签下：
 ```
 <dependencyManagement>
-        <!--定义全局公用的一些依赖，此处只定义依赖而不引入-->
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.5.10.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+	<!--定义全局公用的一些依赖，此处只定义依赖而不引入-->
+	<dependencies>
+	
+		<!-- boot版本 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-dependencies</artifactId>
+			<version>2.1.3.RELEASE</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
 
+		<!-- boot整合mybatis(无需配置文件，全部注解) -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis.starter.version}</version>
+		</dependency>
 
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.starter.version}</version>
-            </dependency>
+		<!-- 日志 -->
+		<dependency>
+			<groupId>com.wjy</groupId>
+			<artifactId>test_util</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        </dependencies>
-    </dependencyManagement>
+		<!-- interface子模块依赖 -->
+		<dependency>
+			<groupId>com.wjy</groupId>
+			<artifactId>test_interface</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- common子模块依赖 -->
+		<dependency>
+			<groupId>com.wjy</groupId>
+			<artifactId>test_common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- AOP实现 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<!-- JDBC驱动 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- dubbo -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>${dubbo.version}</version>
+		</dependency>
+
+		<!-- 对zookeeper的底层api的一些封装 -->
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+			<version>${curator.version}</version>
+		</dependency>
+
+		<!--  -->
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>${zookeeper.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Druid连接池 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>${druid.starter.version}</version>
+		</dependency>
+		
+		<!-- servlet -->
+		<!--<dependency>-->
+			<!--<groupId>javax.servlet</groupId>-->
+			<!--<artifactId>javax.servlet-api</artifactId>-->
+			<!--<version>${javax.servlet.version}</version>-->
+			<!--<scope>compile</scope>-->
+		<!--</dependency>-->
+
+		<!-- boot整合pagehelper -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>${pagehelper.starter.version}</version>
+		</dependency>
+
+		<!-- 日志接入的接口 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- 链接slf4j-api和log4j中间的适配器 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- spring整合redis -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${spring.data.version}</version>
+		</dependency>
+
+		<!-- apollo配置中心 -->
+		<!--<dependency>-->
+			<!--<groupId>com.ctrip.framework.apollo</groupId>-->
+			<!--<artifactId>apollo-client</artifactId>-->
+			<!--<version>${apollo.client.version}</version>-->
+		<!--</dependency>-->
+
+	</dependencies>
+</dependencyManagement>
 ```
-在子模块中，直接引入，无需定义版本
+
+在子模块中，直接引入，无需定义版本。
 dependencies标签下
 ```
 <dependencies>
@@ -206,7 +340,7 @@ dependencies标签下
 
 ## 集成dubbo或cloud
 ### dubbo集成
-dubbo的配置方式有四种，分别是xml配置、api配置和注解配置，现简单介绍注解配置。
+dubbo的配置方式有四种，分别是xml配置、api配置和注解配置，只介绍注解配置。
 使用方式请移步官网：http://dubbo.apache.org/zh-cn/docs/user/configuration/properties.html
 不推荐使用xml配置。
 
@@ -222,6 +356,7 @@ dependencyManagement->dependencies
   <version>${dubbo.version}</version>
 </dependency>
 ```
+
 然后在子项目中具体引入
 ```
 <dependency>
@@ -229,6 +364,9 @@ dependencyManagement->dependencies
     <artifactId>dubbo</artifactId>
 </dependency>
 ```
+注：一些模块如：common、service、util 不需要引入dubbo
+
+然后在启动的同级目录新建config->dubbo目录，新建DubboConfig类，提供者(provider)和消费者(consumer)分别写入如下配置：
 
 提供者(provider)配置：
 ```
@@ -238,7 +376,7 @@ public class DubboConfig {
     private Config config;
 
     /**
-     *@Author: 刘会俊
+     *@Author: wjy
      *@Description: dubbo.application配置
      *@Params []
      *@Return com.alibaba.dubbo.config.ApplicationConfig
@@ -255,7 +393,7 @@ public class DubboConfig {
     }
 
     /**
-     *@Author: 刘会俊
+     *@Author: wjy
      *@Description: dubbo.registry配置
      *@Params []
      *@Return com.alibaba.dubbo.config.RegistryConfig
@@ -269,7 +407,7 @@ public class DubboConfig {
     }
 
     /**
-     *@Author: 刘会俊
+     *@Author: wjy
      *@Description: dubbo.protocol配置
      *@Params []
      *@Return com.alibaba.dubbo.config.ProtocolConfig
@@ -284,7 +422,7 @@ public class DubboConfig {
     }
 
     /**
-     *@Author: 刘会俊
+     *@Author: wjy
      *@Description: dubbo.provider配置
      *@Params []
      *@Return com.alibaba.dubbo.config.ProviderConfig
@@ -300,7 +438,7 @@ public class DubboConfig {
 ```
 同时修改启动类如下：
 ```
-@MapperScan("com.tubitu.mapper")
+@MapperScan("com.test.mapper")
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
@@ -319,7 +457,7 @@ public class DubboConfig {
     private Config config;
 
     /**
-     * @Author: 刘会俊
+     * @Author: wjy
      * @Description: dubbo.application配置
      * @Params []
      * @Return com.alibaba.dubbo.config.ApplicationConfig
@@ -336,7 +474,7 @@ public class DubboConfig {
     }
 
     /**
-     * @Author: 刘会俊
+     * @Author: wjy
      * @Description: dubbo.registry配置
      * @Params []
      * @Return com.alibaba.dubbo.config.RegistryConfig
@@ -350,7 +488,7 @@ public class DubboConfig {
     }
 
     /**
-     * @Author: 刘会俊
+     * @Author: wjy
      * @Description: dubbo.protocol配置
      * @Params []
      * @Return com.alibaba.dubbo.config.ProtocolConfig
@@ -365,7 +503,7 @@ public class DubboConfig {
     }
 
     /**
-     * @Author: 刘会俊
+     * @Author: wjy
      * @Description: dubbo.consumer配置
      * @Params []
      * @Return com.alibaba.dubbo.config.ConsumerConfig
@@ -383,7 +521,7 @@ public class DubboConfig {
 ```
 
 要注意，我们的配置的具体参数是从ApolloConfig中拉取下来的。
-请参考博客中applo的文章。
+请参考博客中applo配置中心。
 
 ### cloud集成
 首先在父项目pom中引入cloud，
