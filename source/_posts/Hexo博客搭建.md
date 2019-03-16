@@ -21,7 +21,7 @@ categories:
 11.写文章部分
 安装git、node.js，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。
 
-## 1.安装Hexo
+# 1.安装Hexo
 Hexo官网地址：
 https://hexo.io/zh-cn/docs/
 
@@ -44,7 +44,7 @@ npm install
 因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令报错。解决方法：
 ![](Hexo博客搭建/1.png)
 
-## 2.修改配置文件
+# 2.修改配置文件
 用Notepad++打开hexo安装目录下的_config.yml文件
 ```
 deploy:
@@ -72,7 +72,7 @@ http://localhost:4000
 就可以看到hexo的默认页面了
 注：关闭页面服务就会停止
 
-## 3.上传到github
+# 3.上传到github
 先安装：
 `npm install hexo-deployer-git --save`
 这样才能将你写好的文章部署到github服务器上并让别人浏览到。
@@ -106,7 +106,7 @@ https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/
 下载并安装第一个GCMW-1.18.3.exe文件(请注意版本迭代)。
 然后再deploy就可以了。
 
-## 4.修改及配置主题
+# 4.修改及配置主题
 官方主题地址：
 https://hexo.io/themes/
 
@@ -114,7 +114,7 @@ https://hexo.io/themes/
 http://theme-next.iissnan.com/
 官网说的非常简单明了，请自行参考。
 
-## 5.写文章
+# 5.写文章
 `hexo new 'blogName'`
 
 其他指令参考官网：
@@ -140,7 +140,7 @@ https://github.com/Edditoria/markdown-plus-plus
 下载之后解压缩，然后打开nodePad，选择语言->自定义语言格式->导入->选择到刚才解压的文件夹的四个theme文件夹中的任意一个，
 建议选择default，因为nodePad默认就是白底的，其他几个太扎眼。
 
-## 6.添加“分类”选项
+# 6.添加“分类”选项
 进入博客所在文件夹，打开gitbush,执行命令
 `$ hexo new page categories`
 成功后会提示：
@@ -163,7 +163,7 @@ type: "categories"
 ---
 ```
 
-### 给文章添加“categories”属性
+## 给文章添加“categories”属性
 打开需要添加分类的文章，为其添加categories属性。
 ```
 ---
@@ -177,7 +177,7 @@ categories: - java
 至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。
 当然，只有添加了categories: xxx的文章才会被收录到首页的“分类”中。
 
-## 创建“标签”选项
+# 创建“标签”选项
 进入博客所在文件夹，打开gitbush,执行命令
 `$ hexo new page tags`
 成功后会提示：
@@ -200,7 +200,7 @@ type: "tags"
 ```
 保存并关闭文件。
 
-### 给文章添加“tags”属性
+## 给文章添加“tags”属性
 打开需要添加标签的文章，为其添加tags属性。
 ```
 ---
@@ -223,11 +223,11 @@ tags:
 
 scaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。
 
-## 添加about标签
+# 添加about标签
 `hexo new page 'about'`
 在安装位置下的source文件夹下会有about文件夹，打开，编辑里面的index.md
 
-## 引用图片
+# 引用图片
 总体来说有两种引用方式：
 1.公网图片地址
 2.将图片引入项目内，使用相对路径
@@ -270,15 +270,15 @@ public/2016/3/9/本地图片测试
 而不是愚蠢的
 `<img src="本地图片测试/logo.jpg" alt="logo">`
 
-## 多台电脑操作hexo博客
+# 多台电脑操作hexo博客
 目的：在公司和家里都可以写博客。
 思路：git分支
 hexo生成的静态博客文件默认放在master分支上。
 hexo的源文件（部署环境文件）可以都放在hexo分支上（可以新创建一个hexo分支），换新电脑时，直接：
 `git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
 
-### 在已经安装好hexo博客的电脑上执行如下操作：
-#### 1.hexo搭建博客原理
+## 在已经安装好hexo博客的电脑上执行如下操作：
+### 1.hexo搭建博客原理
 参考hexo本机安装目录结构：
 ```
 .deploy_git：上传到github的文件
@@ -293,14 +293,14 @@ package.json：记录hexo需要的包信息
 hexo帮助把博客发送到github，同时把md文件转换成网页文件。
 hexo目录下的文件和github上的文件是不同的，public文件夹的文件通过hexo d 上传到github去了，其他的文件则留在本地目录下。
 
-#### 2.对username.github.io仓库新建hexo分支，并克隆
+### 2.对username.github.io仓库新建hexo分支，并克隆
 在Github的username.github.io仓库上新建一个xxx分支,并切换到该分支,并在该仓库
 Settings->Branches->Default branch中将默认分支设为xxx,save保存；
 然后将该仓库克隆到本地，进入该username.github.io文件目录。
 `git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
 完成上面步骤后，在当前目录使用Git Bash执行git branch命令查看当前所在分支，应为新建的分支xxx：
 
-#### 3.将本地博客的部署文件拷贝进username.github.io文件目录
+### 3.将本地博客的部署文件拷贝进username.github.io文件目录
 将本地博客的部署文件（Hexo目录下的全部文件）全部拷贝进username.github.io文件目录中去。
 接下来，进入username.github.io文件目录下，将该目录下的全部文件提交到xxx分支，提交之前需注意：
 ```
@@ -308,15 +308,15 @@ Settings->Branches->Default branch中将默认分支设为xxx,save保存；
 2.可能有人会问，删除了themes目录中的.git不就不能git pull更新主题了吗，很简单，需要更新主题时在另一个地方git clone下来该主题的最新版本，然后将内容拷到当前主题目录即可
 ```
 
-#### 4.提交hexo分支
+### 4.提交hexo分支
 执行git add .、git commit -m 'back up hexo files'（引号内容可改）、git push即可将博客的hexo部署环境提交到GitHub个人仓库的xxx分支。
 现在可以在GitHub上的username.github.io仓库看到两个分支的差异了。
 
 master分支和xxx分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问；
 xxx分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！
 
-### 在新电脑上执行下列操作：
-#### 至此，博客已经可以在其他电脑上进行同步更新和维护了。
+## 在新电脑上执行下列操作：
+### 至此，博客已经可以在其他电脑上进行同步更新和维护了。
 1.将新电脑的生成的ssh key添加到GitHub账户上
 2.在新电脑上克隆username.github.io仓库的xxx分支到本地，此时本地git仓库处于xxx分支
 `git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
@@ -324,20 +324,22 @@ xxx分支用于备份博客部署文件，供自己维护更新，两者在一�
 也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
 4.在新电脑上安装hexo命令
 `npm install -g hexo-cli`
+注意：linux安装hexo后，还需要把hexo的命令添加到全局，否则hexo的指令是无法使用的。
+`sudo ln -s /home/wjy/install/node-v10.15.3-linux-x64/lib/node_modules/hexo-cli/bin/hexo  /usr/local/bin/hexo`
 
 到这里了就可以开始在新的电脑上写博客了！
 1.编辑、撰写文章或其他博客更新改动
 2.依次执行git add .、git commit -m 'back up hexo files'（引号内容可改）、git push指令，保证xxx分支版本最新
 3.执行hexo d -g指令（在此之前，有时可能需要执行hexo clean），完成后就会发现，最新改动已经更新到master分支了，两个分支互不干扰！
 
-### 回到之前的电脑上更新并提交博客
+## 回到之前的电脑上更新并提交博客
 注：每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先git pull
 
 按照之前的方法写自己博客，
 然后将目录切换下username.github.io下，此时需要安装一下npm install，
 最后执行hexo g、hexo s、hexo d等命令即可提交成功
 
-## 使用LeanCloud统计文章访问次数
+# 使用LeanCloud统计文章访问次数
 官网：
 https://leancloud.cn/
 1.注册
@@ -361,7 +363,7 @@ enable改为true，然后写上LeanCloud的App ID,App Key
 
 然后即可执行正常的clean、g、d 操作
 
-## 不蒜子统计访问人数、访问总量
+# 不蒜子统计访问人数、访问总量
 官网：
 http://busuanzi.ibruce.info/
 
@@ -383,14 +385,14 @@ http://busuanzi.ibruce.info/
   page_pv_header: <i class="fa fa-file-o"></i> 浏览
   page_pv_footer: 次
 ```
-### 不蒜子统计无法显示问题
+## 不蒜子统计无法显示问题
 原因：不蒜子的域名过期
 解决：
 /theme/next/layout/_third-party/analytics/busuanzi-counter.swig
 按照上边路径找到该文件，修改域名为：
 https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js
 
-## 添加algolia搜索
+# 添加algolia搜索
 目前版本5.1.4已经集成algolia搜索，只需在next主题的配置文件中修改即可。但是首先需要到官网注册：
 https://www.algolia.com/
 1.注册成功后，进入到hashboard，点击左侧的Indices
@@ -427,7 +429,7 @@ hits_stats: "${hits} 相关记录，共耗时 ${time} ms"
 `hexo algolia`
 更新索引。
 
-### 遇到的坑
+## 遇到的坑
 1.数据上传到algolia后，发现搜索出来的文章地址是：
 `yoursite.com/2018/12/20/map`
 点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。
