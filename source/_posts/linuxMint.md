@@ -11,7 +11,7 @@ date: 2019-03-16 12:37:30
 `sudo apt-get install gedit`
 
 # 软件安装
-## 安装jdk
+## jdk
 首先卸载系统自带的jdk，查看安装的软件包
 sudo dpkg --list | grep -i jdk
 
@@ -138,12 +138,101 @@ http://mirror.bit.edu.cn/apache/zookeeper/
 
 将下载好的.gz解压并复制到想要的位置。/home/wjy/install
 
+到zk的bin目录下启动：
+`./zkServer.sh statr`
 
+查看状态
+```
+ZooKeeper JMX enabled by default
+Using config: /home/wjy/install/zookeeper-3.4.13/bin/../conf/zoo.cfg
+Mode: standalone
+```
+出现上边的状态说明启动成功。
 
 ## redis
+https://redis.io/
+官网下载，解压并复制到想要的位置 /home/wjy/install
+
+cd到目录下，执行
+`make`
+报错：
+```
+net.c:36:23: fatal error: sys/types.h: No such file or directory(没有那个文件或目录)
+...
+adlist.c:32:20: fatal error: stdlib.h: No such file or directory
+```
+原因是缺少文件，执行以下命令后再次make：
+`sudo apt-get install libc6-dev`
+
+还是报错:
+`zmalloc.h:50:31: fatal error: jemalloc/jemalloc.h: No such file or directory`
+
+原因是libc不是默认的分配器，在make后添加参数解决：
+`sudo make MALLOC=libc`
+
+等待执行完成，到redis/src目录下，执行
+`./redis-server`
+出现端口号和进程PID，证明启动成功。
+
+## postman
+https://www.getpostman.com/downloads/
+下载对应版本.gz,并解压到理想位置。
+
+创建全局变量，也就是在任何地方都可以执行postman，不用去到安装目录，执行
+`sudo ln -s /home/wjy/install/Postman/Postman  /usr/bin/postman`
+
+添加启动器应用图标，也就是可以从启动器快速启动，执行
+`vim /usr/share/applications/postman.desktop`
+填写如下内容：注意修改路径
+```
+[Desktop Entry]
+Encoding=UTF-8
+Name=Postman
+Exec=postman
+Icon=/home/wjy/install/Postman/resources/app/assets/icon.png
+Terminal=false
+Type=Application
+Categories=Development;
+```
+然后就可以在启动器搜索到postman，然后可以将该应用添加到桌面。
+
+## navicat
+官网下载：https://www.navicat.com.cn/download/navicat-premium
+直接下载试用版，解压到理想位置。
+进入到解压好的目录,启动
+`./start_navicat`
+启动成功。
+
+将navicat快捷方式添加到桌面
+`vim /usr/share/applications/navicat.desktop`
+填写如下内容：注意修改路径
+```
+[Desktop Entry]
+Encoding=UTF-8
+Name=Navicat Premium
+Comment=The Smarter Way to manage dadabase
+Exec=/bin/sh "/home/wjy/install/navicat121_premium_cs_x64/start_navicat"
+Icon=/home/wjy/install/navicat121_premium_cs_x64/navicat.png
+Categories=Application;Database;MySQL;navicat
+Version=1.0
+Type=Application
+Terminal=0
+```
+然后就可以在启动器搜索到navicat，然后可以将该应用添加到桌面。
 
 
 # 快捷键冲突问题
 - ctrl+alt+s
 这个快捷键是idea的setting的快捷键，但是在mint中被fcitx输入法占用了。
 右键右下角的输入法，选择配置fcitx->全局配置->显示高级选项,找到想修改的快捷键，建议直接置空(选中后，点击esc)。
+
+# VI模式中上下左右键和回退键出现字母
+`sudo vi /etc/vim/vimrc.tiny`
+上下左右字母：
+这个文件里面的倒数第二句话是“set compatible”改为“set nocompatible”
+
+
+回退健：
+在“set nocompatible”后面(下一行)加上
+set backspace=2
+
