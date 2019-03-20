@@ -220,11 +220,66 @@ Terminal=0
 ```
 然后就可以在启动器搜索到navicat，然后可以将该应用添加到桌面。
 
+编辑解压目录下的start_navicat文件，修改export LANG=”en_US.UTF-8”，改为export LANG=”zh_CN.UTF-8”。
+进入后发现还是部分乱码，这时需要打开navicat，点击上边选项卡的第五个，为工具，点击下拉选最后一个选项，然后将常规、编辑器、记录三个位置的字体改成能正常显示的字体。
+
+
+## mysql
+安装
+`sudo apt-get install mysql-server mysql-common mysql-client`
+`sudo /etc/init.d/mysql restart`
+
+设置初始密码：
+`sudo mysql_secure_installation`
+按照引导设置密码
+
+登录
+`sudo mysql -u root -p`
+必须带sudo，不然会出现`Access denied for user ‘root‘@‘localhost‘`
+然后输入刚才设置的密码。
+
+解决Access denied 问题：
+参考地址：https://www.cnblogs.com/cpl9412290130/p/9583868.html
+
+终端输入：
+`sudo gedit /etc/mysql/mysql.conf.d/mysqld.cnf`
+然后在这个配置文件中的[mysqld]这一块中加入skip-grant-tables这句话，位置随意，直接加在第一行即可。
+作用：就是让你可以不用密码登录进去mysql。
+重启mysql：`service mysql restart`
+
+在终端上输入mysql -u root -p，遇见输入密码的提示直接回车即可,进入mysql后，分别执行下面三句话：
+```
+use mysql;   然后敲回车
+update user set authentication_string=password("你的密码") where user="root";  然后敲回车
+flush privileges;  然后敲回车
+```
+然后输入quit，退出mysql。
+
+重新进入到mysqld.cnf文件中去把刚开始加的skip-grant-tables这条语句给注释掉。
+
+再返回终端输入mysql -u root -p，应该就可以进入数据库了。
+
+如果此时还是报出错误，那么就需要返回step3中，把注释掉的那条语句重新生效（就是删除#符号），重新进入mysql中，先选择一个数据库（use mysql;）,然后输入select user,plugin from user;
+可以看到在执行了select user,plugin from user;后，错误原因是因为plugin root的字段是auth_socket，那我们改掉它为下面的mysql_native_password就行了。输入：
+`update user set authentication_string=password("ln122920"),plugin='mysql_native_password' where user='root';`
+然后回车执行以下，再输入select user,plugin from user;回车，我们能看到root用户的字段改成功了。
+最后quit退出,再次mysql -u root -p，成功！
+
+重启服务：
+`service mysql restart`
+
+修改密码级别：
+`set global validate_password_policy=0;`
+`set global validate_password_length=4;`
+
 
 # 快捷键冲突问题
+在应用程序中搜索"窗口管理器"，然后点击键盘，将"工作区"和"移动窗口至工作去"等与ctrl和alt相关的快捷键全部清除。
+
 - ctrl+alt+s
 这个快捷键是idea的setting的快捷键，但是在mint中被fcitx输入法占用了。
 右键右下角的输入法，选择配置fcitx->全局配置->显示高级选项,找到想修改的快捷键，建议直接置空(选中后，点击esc)。
+
 
 # VI模式中上下左右键和回退键出现字母
 `sudo vi /etc/vim/vimrc.tiny`
