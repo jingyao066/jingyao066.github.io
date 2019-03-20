@@ -42,7 +42,7 @@ New->module，选择spring initializer，点击next，
 然后点击下一步，点击Finsh。
 
 自动生成的mvnw和mvnw.cmd：
-mvnw是一个maven wrapper script,它可以让你在没有安装maven或者maven版本不兼容的条件下运行maven的命令.
+mvnw是一个maven wrapper script,它可以让你在没有安装maven或者maven版本不兼容的条件下运行maven命令
 原理:
 - 它会寻找maven在你电脑环境变量path中的路径
 - 如果没有找到这个路径它就会自动下载maven到一个默认的路径下,之后你就可以运行maven命令了
@@ -338,8 +338,292 @@ dependencies标签下
     </dependencies>
 ```
 
-## 集成dubbo或cloud
-### dubbo集成
+## 项目结构
+### common
+common模块包结构如下：
+`src->main->java->com->wjy`
+
+wjy包下有：
+mapper包：放dao层借口(如：testMapper.java)
+model包：放实体类
+enum包：枚举类
+
+`src->main->resourse`
+resourse包下：
+mapper包：mybatis的xml文件
+
+### interface
+interface模块包结构如下：
+`src->main->java>com>wjy`
+
+wjy包下：
+service包：service接口
+
+### comsumer(消费者)
+`src->main->java->com->wjy`
+
+wjy包下：
+controller包：存放控制器
+config包：存放配置类，包括dubbo配置类就在这
+application.java：启动类
+
+### provider(提供者)
+`src->main->java->com->wjy`
+
+wjy包下：
+service->impl包：service接口的实现类
+config包：存放配置类，包括dubbo配置类就在这
+application.java：启动类
+
+## 配置文件
+通过spring initializer创建的模块，会在resourse目录下生成一个application.properties文件，该文件是当前模块的配置文件。
+我们使用.yml的配置方式，所以直接将后缀改成.yml。
+注意：使用spring cloud的maven进行构造的项目，在把properties换成yml后，一定要进行mvn clean insatll
+
+下面是dubbo_consumer(消费者)的配置：
+```
+# 当前服务端口号
+server:
+  port: 9000
+
+# Dubbo消费者配置
+dubbo:
+  # 当前应用信息
+  application:
+    id: test_api
+    name: test_api
+    # 动态控制服务qos配置
+    qos:
+      port: 22222
+      enable: true
+  # 协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 20880
+  # 消费方配置
+  consumer:
+    version: 1.0.0
+    timeout: 60000
+    check: false
+  # 注册中心配置
+  registry:
+    address: zookeeper://127.0.0.1:2188
+    check: false
+
+#日志打印级别
+logging:
+  level:
+    com:
+      testDubbo: info
+
+#Redis配置
+spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+# 文件上传
+multipart:
+  maxFileSize: 10MB
+  maxRequestSize: 50MB
+```
+
+comsumer(消费者)需要的jar包:
+```
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.zookeeper</groupId>
+        <artifactId>zookeeper</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+
+</dependencies>
+```
+
+提供者(provider)配置：
+```
+# 端口
+server:
+  port=9001
+
+#dubbo生产者配置
+dubbo:
+  # 当前应用信息
+  application:
+    id: test_service_user
+    name: test_service_user
+    # 动态控制服务qos配置
+    qos:
+      port: 22224
+      enable: true
+  # 协议配置，用于配置提供服务的协议信息，协议由提供方指定，消费方被动接受。
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 20885
+    status: server
+  # 注册中心配置
+  registry:
+    address: zookeeper://127.0.0.1:2188
+  scan:
+    basePackages: com.wjy.service
+  provider:
+    version: 1.0.0
+
+# mybatis xml文件所在以及实体类别名
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.wjy.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    callSettersOnNulls: true
+# 日志打印级别
+logging:
+  level:
+    com:
+      wjy: info
+# 分页
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countSql
+
+
+# 上传文件大小
+multipart:
+  maxFileSize: 10MB
+  maxRequestSize: 50MB
+
+# 数据库
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://120.27.22.226:3306/yuan_project?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+```
+注意区分comsumer(消费者)和provider(提供者)的配置区别。
+
+提供者(provider)需要jar包:
+```
+<dependencies>
+
+    <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid-spring-boot-starter</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.zookeeper</groupId>
+        <artifactId>zookeeper</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+
+</dependencies>
+```
+
+common、interface、util三个模块不需要配置文件。
+
+## dubbo集成
 dubbo的配置方式有四种，分别是xml配置、api配置和注解配置，只介绍注解配置。
 使用方式请移步官网：http://dubbo.apache.org/zh-cn/docs/user/configuration/properties.html
 不推荐使用xml配置。
@@ -372,80 +656,71 @@ dependencyManagement->dependencies
 ```
 @Configuration
 public class DubboConfig {
-    @ApolloConfig
-    private Config config;
-
+    
     /**
-     *@Author: wjy
-     *@Description: dubbo.application配置
-     *@Params []
-     *@Return com.alibaba.dubbo.config.ApplicationConfig
-     */
+     * @author: wjy 
+     * @description: dubbo.application配置
+     */ 
     @Bean
     public ApplicationConfig applicationConfig() {
         ApplicationConfig applicationConfig = new ApplicationConfig();
-        applicationConfig.setId(config.getProperty("dubbo.application.id","provider_mall"));
-        applicationConfig.setName(config.getProperty("dubbo.application.name","provider_mall"));
-        applicationConfig.setQosEnable(config.getBooleanProperty("dubbo.application.qos.enable",false));
-        applicationConfig.setQosPort(config.getIntProperty("dubbo.application.qos.port",22222));
+        applicationConfig.setId("provider_users");
+        applicationConfig.setName("provider_users");
+        applicationConfig.setQosEnable(false);
+        applicationConfig.setQosPort(22222);
         return applicationConfig;
-
     }
 
     /**
-     *@Author: wjy
-     *@Description: dubbo.registry配置
-     *@Params []
-     *@Return com.alibaba.dubbo.config.RegistryConfig
-     */
+     * @author: wjy 
+     * @description: dubbo.registry配置
+     */ 
     @Bean
     public RegistryConfig registryConfig() {
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress(config.getProperty("dubbo.registry.address","zookeeper://127.0.0.1:2181"));
-        registryConfig.setCheck(config.getBooleanProperty("dubbo.registry.check",true));
+        registryConfig.setAddress("zookeeper://127.0.0.1:2181");
+        registryConfig.setCheck(true);
         return registryConfig;
     }
 
     /**
-     *@Author: wjy
-     *@Description: dubbo.protocol配置
-     *@Params []
-     *@Return com.alibaba.dubbo.config.ProtocolConfig
-     */
+     * @author: wjy 
+     * @description: dubbo.protocol配置
+     */ 
     @Bean
     public ProtocolConfig protocolConfig() {
         ProtocolConfig protocolConfig = new ProtocolConfig();
-        protocolConfig.setId(config.getProperty("dubbo.protocol.id","dubbo"));
-        protocolConfig.setName(config.getProperty("dubbo.protocol.name","dubbo"));
-        protocolConfig.setPort(config.getIntProperty("dubbo.protocol.port",20880));
+        protocolConfig.setId("dubbo");
+        protocolConfig.setName("dubbo");
+        protocolConfig.setPort(20881);
         return protocolConfig;
     }
 
     /**
-     *@Author: wjy
-     *@Description: dubbo.provider配置
-     *@Params []
-     *@Return com.alibaba.dubbo.config.ProviderConfig
-     */
+     * @author: wjy 
+     * @description: dubbo.provider配置
+     */ 
     @Bean
     public ProviderConfig providerConfig(){
         ProviderConfig providerConfig = new ProviderConfig();
-        providerConfig.setVersion(config.getProperty("dubbo.provider.version", "1.0.0"));
+        providerConfig.setVersion("1.0.0");
         return providerConfig;
     }
     
 }
 ```
+
 同时修改启动类如下：
 ```
-@MapperScan("com.test.mapper")
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
-public class ProviderUserApplication {
-public static void main(String[] args) {
-new SpringApplicationBuilder(ProviderUserApplication.class).web(false).run(args);
-}
+@MapperScan("com.wjy.mapper")
+@DubboComponentScan("com.wjy.service")
+public class TestServiceUserApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(TestServiceUserApplication.class, args);
+    }
 }
 ```
 
@@ -453,77 +728,118 @@ new SpringApplicationBuilder(ProviderUserApplication.class).web(false).run(args)
 ```
 @Configuration
 public class DubboConfig {
-    @ApolloConfig
-    private Config config;
 
     /**
-     * @Author: wjy
-     * @Description: dubbo.application配置
-     * @Params []
-     * @Return com.alibaba.dubbo.config.ApplicationConfig
+     * @author: wjy
+     * @description: dubbo.application配置
      */
     @Bean
     public ApplicationConfig applicationConfig() {
         ApplicationConfig applicationConfig = new ApplicationConfig();
-        applicationConfig.setId(config.getProperty("dubbo.application.id", "consumer_api"));
-        applicationConfig.setName(config.getProperty("dubbo.application.name", "consumer_api"));
-        applicationConfig.setQosEnable(config.getBooleanProperty("dubbo.application.qos.enable", false));
-        applicationConfig.setQosPort(config.getIntProperty("dubbo.application.qos.port", 22222));
+        applicationConfig.setId("test_api");
+        applicationConfig.setName("test_api");
+        applicationConfig.setQosEnable(false);
+        applicationConfig.setQosPort(22222);
         return applicationConfig;
-
     }
 
     /**
-     * @Author: wjy
-     * @Description: dubbo.registry配置
-     * @Params []
-     * @Return com.alibaba.dubbo.config.RegistryConfig
-     */
+     * @author: wjy 
+     * @description: dubbo.registry配置
+     */ 
     @Bean
     public RegistryConfig registryConfig() {
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress(config.getProperty("dubbo.registry.address", "zookeeper://127.0.0.1:2181"));
-        registryConfig.setCheck(config.getBooleanProperty("dubbo.registry.check", true));
+        registryConfig.setAddress("zookeeper://127.0.0.1:2181");
+        registryConfig.setCheck(true);
         return registryConfig;
     }
 
     /**
-     * @Author: wjy
-     * @Description: dubbo.protocol配置
-     * @Params []
-     * @Return com.alibaba.dubbo.config.ProtocolConfig
-     */
+     * @author: wjy 
+     * @description: dubbo.protocol配置
+     */ 
     @Bean
     public ProtocolConfig protocolConfig() {
         ProtocolConfig protocolConfig = new ProtocolConfig();
-        protocolConfig.setId(config.getProperty("dubbo.protocol.id", "dubbo"));
-        protocolConfig.setName(config.getProperty("dubbo.protocol.name", "dubbo"));
-        protocolConfig.setPort(config.getIntProperty("dubbo.protocol.port", 20880));
+        protocolConfig.setId("dubbo");
+        protocolConfig.setName("dubbo");
+        protocolConfig.setPort(20880);
         return protocolConfig;
     }
 
     /**
-     * @Author: wjy
-     * @Description: dubbo.consumer配置
-     * @Params []
-     * @Return com.alibaba.dubbo.config.ConsumerConfig
-     */
+     * @author: wjy 
+     * @description: dubbo.consumer配置
+     */ 
     @Bean
     public ConsumerConfig consumerConfig() {
         ConsumerConfig consumerConfig = new ConsumerConfig();
-        consumerConfig.setTimeout(config.getIntProperty("dubbo.consumer.timeout", 3000));
-        consumerConfig.setCheck(config.getBooleanProperty("dubbo.consumer.check", true));
-        consumerConfig.setVersion(config.getProperty("dubbo.consumer.version", "1.0.0"));
+        consumerConfig.setTimeout(3000);
+        consumerConfig.setCheck(true);
+        consumerConfig.setVersion("1.0.0");
         return consumerConfig;
     }
 
 }
 ```
+同时修改启动类：
+```
+@SpringBootApplication
+public class TestApiApplication {
 
-要注意，我们的配置的具体参数是从ApolloConfig中拉取下来的。
-请参考博客中applo配置中心。
+    /**
+     * @author: wjy 
+     * @description: 跨域配置
+     */ 
+    @Bean
+    public CorsFilter corsFilter(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        source.registerCorsConfiguration("/**",configuration);
+        return new CorsFilter(source);
+    }
 
-### cloud集成
+    /**
+     * @author: wjy 
+     * @description: 设置上传文件的大小
+     */ 
+    @Bean
+    public MultipartConfigElement multipartConfigElement(
+            @Value("${multipart.maxFileSize}") String maxFileSize,
+            @Value("${multipart.maxRequestSize}") String maxRequestSize) {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        // 单个文件最大
+        factory.setMaxFileSize(maxFileSize);
+        // 设置总上传数据总大小
+        factory.setMaxRequestSize(maxRequestSize);
+        return factory.createMultipartConfig();
+    }
+
+    /**
+     * redis配置
+     */
+    @Bean(name = "redisTemplate")
+    public RedisTemplate getRedisTemplate(RedisConnectionFactory redisConnectionFactory){
+        RedisTemplate redisTemplate = new RedisTemplate();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        return redisTemplate;
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(TestApiApplication.class, args);
+    }
+
+}
+```
+
+
+## cloud集成
 首先在父项目pom中引入cloud，
 1.properties标签下指定版本号，截至2019/2/19，版本号为：Greenwich.RELEASE
 `<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>`
