@@ -21,7 +21,7 @@ categories:
 11.写文章部分
 安装git、node.js，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。
 
-# 1.安装Hexo
+# 安装Hexo
 Hexo官网地址：
 https://hexo.io/zh-cn/docs/
 
@@ -44,7 +44,7 @@ npm install
 因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令报错。解决方法：
 ![](Hexo博客搭建/1.png)
 
-# 2.修改配置文件
+# 修改配置文件
 用Notepad++打开hexo安装目录下的_config.yml文件
 ```
 deploy:
@@ -72,7 +72,7 @@ http://localhost:4000
 就可以看到hexo的默认页面了
 注：关闭页面服务就会停止
 
-# 3.上传到github
+# 上传到github
 先安装：
 `npm install hexo-deployer-git --save`
 这样才能将你写好的文章部署到github服务器上并让别人浏览到。
@@ -106,7 +106,7 @@ https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/
 下载并安装第一个GCMW-1.18.3.exe文件(请注意版本迭代)。
 然后再deploy就可以了。
 
-# 4.修改及配置主题
+# 修改及配置主题
 官方主题地址：
 https://hexo.io/themes/
 
@@ -114,7 +114,7 @@ https://hexo.io/themes/
 http://theme-next.iissnan.com/
 官网说的非常简单明了，请自行参考。
 
-# 5.写文章
+# 写文章
 `hexo new 'blogName'`
 
 其他指令参考官网：
@@ -140,7 +140,7 @@ https://github.com/Edditoria/markdown-plus-plus
 下载之后解压缩，然后打开nodePad，选择语言->自定义语言格式->导入->选择到刚才解压的文件夹的四个theme文件夹中的任意一个，
 建议选择default，因为nodePad默认就是白底的，其他几个太扎眼。
 
-# 6.添加“分类”选项
+# 添加“分类”选项
 进入博客所在文件夹，打开gitbush,执行命令
 `$ hexo new page categories`
 成功后会提示：
@@ -278,7 +278,7 @@ hexo的源文件（部署环境文件）可以都放在hexo分支上（可以新
 `git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
 
 ## 在已经安装好hexo博客的电脑上执行如下操作：
-### 1.hexo搭建博客原理
+### hexo搭建博客原理
 参考hexo本机安装目录结构：
 ```
 .deploy_git：上传到github的文件
@@ -293,14 +293,14 @@ package.json：记录hexo需要的包信息
 hexo帮助把博客发送到github，同时把md文件转换成网页文件。
 hexo目录下的文件和github上的文件是不同的，public文件夹的文件通过hexo d 上传到github去了，其他的文件则留在本地目录下。
 
-### 2.对username.github.io仓库新建hexo分支，并克隆
+### 对username.github.io仓库新建hexo分支，并克隆
 在Github的username.github.io仓库上新建一个xxx分支,并切换到该分支,并在该仓库
 Settings->Branches->Default branch中将默认分支设为xxx,save保存；
 然后将该仓库克隆到本地，进入该username.github.io文件目录。
 `git clone git@github.com:ayanamiq/ayanamiq.github.io.git`
 完成上面步骤后，在当前目录使用Git Bash执行git branch命令查看当前所在分支，应为新建的分支xxx：
 
-### 3.将本地博客的部署文件拷贝进username.github.io文件目录
+### 将本地博客的部署文件拷贝进username.github.io文件目录
 将本地博客的部署文件（Hexo目录下的全部文件）全部拷贝进username.github.io文件目录中去。
 接下来，进入username.github.io文件目录下，将该目录下的全部文件提交到xxx分支，提交之前需注意：
 ```
@@ -308,7 +308,7 @@ Settings->Branches->Default branch中将默认分支设为xxx,save保存；
 2.可能有人会问，删除了themes目录中的.git不就不能git pull更新主题了吗，很简单，需要更新主题时在另一个地方git clone下来该主题的最新版本，然后将内容拷到当前主题目录即可
 ```
 
-### 4.提交hexo分支
+### 提交hexo分支
 执行git add .、git commit -m 'back up hexo files'（引号内容可改）、git push即可将博客的hexo部署环境提交到GitHub个人仓库的xxx分支。
 现在可以在GitHub上的username.github.io仓库看到两个分支的差异了。
 

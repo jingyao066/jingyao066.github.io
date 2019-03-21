@@ -367,6 +367,9 @@ controller包：存放控制器
 config包：存放配置类，包括dubbo配置类就在这
 application.java：启动类
 
+如果没有包可以按照该结构创建，创建之后需要指定sources(源代码)包和resources(资源文件)
+File -> Project Structure -> Modules ->click your module -> Sources(Tab) -> 选择你的resource folder，点Resources
+
 ### provider(提供者)
 `src->main->java->com->wjy`
 
@@ -624,9 +627,9 @@ spring:
 common、interface、util三个模块不需要配置文件。
 
 ## dubbo集成
-dubbo的配置方式有四种，分别是xml配置、api配置和注解配置，只介绍注解配置。
-使用方式请移步官网：http://dubbo.apache.org/zh-cn/docs/user/configuration/properties.html
-不推荐使用xml配置。
+使用方式请移步官网：http://dubbo.apache.org/zh-cn/index.html
+dubbo的配置方式有四种：xml配置文件、api配置、properties配置文件和annotation(注解)配置。下边只介绍注解配置方式。
+
 
 首先在父项目pom中引入dubbo。
 properties
@@ -648,8 +651,9 @@ dependencyManagement->dependencies
     <artifactId>dubbo</artifactId>
 </dependency>
 ```
-注：一些模块如：common、service、util 不需要引入dubbo
+注：一些模块如：common、service、util不需要引入dubbo
 
+使用apollo后，发现apollo无法读取dubbo的配置，所以需要在项目中加入如下配置文件。
 然后在启动的同级目录新建config->dubbo目录，新建DubboConfig类，提供者(provider)和消费者(consumer)分别写入如下配置：
 
 提供者(provider)配置：

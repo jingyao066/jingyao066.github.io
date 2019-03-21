@@ -4,7 +4,7 @@ tags: 其他
 date: 2019-03-16 12:37:30
 ---
 
-以后办公的笔记本就用linux了。一直想用deepin，奈何挣扎了一天都没装上(笔记本的问题)，耗尽了我的耐心，然后安装了linuxMint。下面记录踩坑之路。
+一直想用deepin，奈何挣扎了一天都没装上(笔记本的问题)，耗尽了我的耐心，然后安装了linuxMint。下面记录踩坑之路。
 
 # 安装必要指令
 ## gedit
@@ -138,16 +138,32 @@ http://mirror.bit.edu.cn/apache/zookeeper/
 
 将下载好的.gz解压并复制到想要的位置。/home/wjy/install
 
+在zk的根目录创建两个文件夹data和data_log，分别用来存放zk的数据以及日志。然后进入到data目录，使用pwd指令查看并复制data目录的绝对路径。
+
+进入zookeeper的conf目录下，复制zoo_sample.cfg为zoo.cfg
+`cp zoo_sample.cfg zoo.cfg`
+
+然后编辑zoo.cfg，修改或新增下面两行配置：
+```
+dataDir=/home/wjy/install/zookeeper-3.4.13/data
+dataLogDir=/home/wjy/install/zookeeper-3.4.13/data_log
+```
+保存并退出。
+
+zoo.cfg只存放了单机的配置，想配置集群需要在最后面加上其他服务器的ip和端口。
+
 到zk的bin目录下启动：
-`./zkServer.sh statr`
+`./zkServer.sh start`
 
 查看状态
+`./zkServer.sh status`
 ```
 ZooKeeper JMX enabled by default
 Using config: /home/wjy/install/zookeeper-3.4.13/bin/../conf/zoo.cfg
 Mode: standalone
 ```
 出现上边的状态说明启动成功。
+standalone：单机
 
 ## redis
 https://redis.io/
@@ -290,4 +306,9 @@ flush privileges;  然后敲回车
 回退健：
 在“set nocompatible”后面(下一行)加上
 set backspace=2
+
+# ctrl+alt+f12
+不只是linuxmint，Ubuntu、deepin等按这组快捷键都会黑屏，不要害怕，不是黑屏，ctrl+alt+f7可以返回。
+ALT＋CTRL+F1——F6可进入6个终端，F7开始到F12有6个图形界面，f7是我们安装的图形界面，所以ctrl+alt+f7可以返回。
+参考地址：https://askubuntu.com/questions/277517/what-does-ctrl-alt-f12-do
 
