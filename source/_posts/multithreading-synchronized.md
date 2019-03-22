@@ -1,18 +1,18 @@
 ---
-title: multithreading-basic-synchronized
+title: multithreading-synchronized
 tags: multithreading
 date: 2019-02-15 17:44:00
 ---
 
-## synchronized原理
+# synchronized原理
 **在java中，每一个对象都有且仅有一个同步锁，这也意味着，同步锁是依赖对象而存在的。**
 当调用对象的synchronized方法时，就获取了该对象的同步锁。如：synchronized(obj)，就获取了obj这个对象的同步锁。
 
-不同线程对同步锁的访问时互斥的。即某个时间点，对象的同步锁只能被一个线程获取到。
+不同线程对同步锁的访问是互斥的。即某个时间点，对象的同步锁只能被一个线程获取到。
 通过同步锁，我们可以在多线程中实现对"对象/方法"的互斥访问。如：现在有两个线程a和b，它们都会访问对象obj的同步锁。
 假设，在某一时刻，线程A获取到“obj的同步锁”并在执行一些操作；而此时，线程B也企图获取“obj的同步锁” —— 线程B会获取失败，它必须等待，直到线程A释放了“该对象的同步锁”之后线程B才能获取到“obj的同步锁”从而才可以运行。
 
-## synchronized基本规则
+# synchronized基本规则
 现将synchronized的基本规则总结为下面3条，并通过实例对它们进行说明。
 第一条: 当一个线程访问“某对象”的“synchronized方法”或者“synchronized代码块”时，其他线程对“该对象”的该“synchronized方法”或者“synchronized代码块”的访问将被阻塞。
 第二条: 当一个线程访问“某对象”的“synchronized方法”或者“synchronized代码块”时，其他线程仍然可以访问“该对象”的非同步代码块。
@@ -23,32 +23,30 @@ date: 2019-02-15 17:44:00
 当一个线程访问“某对象”的“synchronized方法”或者“synchronized代码块”时，其他线程对“该对象”的该“synchronized方法”或者“synchronized代码块”的访问将被阻塞。
 下面是“synchronized代码块”对应的演示程序。
 ```
-class MyRunable implements Runnable {
-    
+public class MyRunable implements Runnable{
     @Override
     public void run() {
-        synchronized(this) {
-            try {  
+        synchronized (this){
+            try {
                 for (int i = 0; i < 5; i++) {
-                    Thread.sleep(100); // 休眠100ms
-                    System.out.println(Thread.currentThread().getName() + " loop " + i);  
+                    Thread.sleep(100);//休眠100ms
+                    System.out.println(Thread.currentThread().getName() + " loop " + i);
                 }
-            } catch (InterruptedException ie) {  
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }  
+        }
     }
 }
 
-public class Demo1_1 {
-
-    public static void main(String[] args) {  
-        Runnable demo = new MyRunable();     // 新建“Runnable对象”
-
+public class Demo1 {
+    public static void main(String[] args) {
+        Runnable demo = new MyRunable();
         Thread t1 = new Thread(demo, "t1");  // 新建“线程t1”, t1是基于demo这个Runnable对象
         Thread t2 = new Thread(demo, "t2");  // 新建“线程t2”, t2是基于demo这个Runnable对象
-        t1.start();                          // 启动“线程t1”
-        t2.start();                          // 启动“线程t2” 
-    } 
+        t1.start();                                // 启动“线程t1”
+        t2.start();                                //启动“线程t2”
+    }
 }
 ```
 结果：
@@ -64,7 +62,6 @@ t2 loop 2
 t2 loop 3
 t2 loop 4
 ```
-
 说明：
 run()方法中存在“synchronized(this)代码块”，而且t1和t2都是基于"demo这个Runnable对象"创建的线程。
 这就意味着，我们可以将synchronized(this)中的this看作是“demo这个Runnable对象”；因此，线程t1和t2共享“demo对象的同步锁”。

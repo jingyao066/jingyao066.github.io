@@ -302,7 +302,6 @@ flush privileges;  然后敲回车
 上下左右字母：
 这个文件里面的倒数第二句话是“set compatible”改为“set nocompatible”
 
-
 回退健：
 在“set nocompatible”后面(下一行)加上
 set backspace=2

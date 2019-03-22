@@ -4,8 +4,19 @@ tags: idea
 date: 2018-12-08 20:55:11
 ---
 记录自己idea的个性化设置。
-不过最好的办法还是直接在idea中：
+记得定期将自己的setting导出，新环境直接导入就好了。
 file->export setting
+
+# 插件安装
+## 热部署jRebel
+https://blog.csdn.net/xingbaozhen1210/article/details/81093041
+
+## Mybatis Plugin
+1.提供Mapper接口与配置文件中对应SQL的导航
+2.编辑XML文件时自动补全..等
+
+File->settings->左上角搜索plugin->选择marketplace->输入Mybatis Plugin，回车搜索。
+筛选结果有free mybatis plugin，和mybatis plugin。这里安装free的就好，免费版的已经可以满足日常使用需求。
 
 # 注释模板
 1.类注释模板
@@ -35,15 +46,15 @@ ps:为了只按/+自定义的快捷键，我们可以在模板的顶端，注意
 **
  * @author: wjy 
  * @description: 
- * @date: $date$ $time$  
- * @param: $params$  
- * @return: $returns$  
+ * @date: $date$ $time$
+ * @param: $params$
+ * @return: $returns$
  */ 
 ```
 ```
 **
  * @author: wjy 
- * @description:   
+ * @description:
  */ 
 ```
 
