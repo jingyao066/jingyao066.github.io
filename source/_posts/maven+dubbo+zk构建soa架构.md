@@ -118,7 +118,7 @@ util模块：存放工具类；
 </dependencyManagement>
 ```
 
-## 依赖统一管理
+## 依赖统一管理(maven)
 在父项目的pom文件中定义公共jar包或框架的统一版本，只定义而不引入，在子模块中引入。
 例如：
 在父项目的pom文件中配置统一属性：
@@ -239,7 +239,7 @@ dependencyManagement标签下：
 			<version>${curator.version}</version>
 		</dependency>
 
-		<!--  -->
+		<!-- zookeeper -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
@@ -337,6 +337,16 @@ dependencies标签下
 
     </dependencies>
 ```
+
+除了父子模块之间的maven依赖，还需要注意各个子模块之间的依赖。例如：
+api(cunsumer)模块，因为需要注入service接口，即interface模块，所以需要在maven中引入interface才可以。
+```
+<dependency>
+    <groupId>com.wjy</groupId>
+    <artifactId>test_interface</artifactId>
+</dependency>
+```
+
 
 ## 项目结构
 ### common
@@ -630,7 +640,6 @@ common、interface、util三个模块不需要配置文件。
 使用方式请移步官网：http://dubbo.apache.org/zh-cn/index.html
 dubbo的配置方式有四种：xml配置文件、api配置、properties配置文件和annotation(注解)配置。下边只介绍注解配置方式。
 
-
 首先在父项目pom中引入dubbo。
 properties
 `<dubbo.version>2.6.2</dubbo.version>`
@@ -841,7 +850,42 @@ public class TestApiApplication {
 
 }
 ```
+### 测试
+1.在interface模块创建TestService接口。
+```
+public interface TestService {
+    String testFunction();
+}
+```
+2.在provider_user中创建接口的实现类：
+```
+@Service(version = "1.0.0")
+public class TestServiceImpl implements TestService {
+    @Override
+    public String testFunction() {
+        return "hello dubbo";
+    }
+}
+```
+3.在cunsumer_api中创建controller，注入service接口
+```
+@RequestMapping("/test")
+@Controller
+public class TestController {
+    @Reference(version = "1.0.0",timeout = 60000)
+    private TestService testService;
 
+    @ResponseBody
+    @RequestMapping("/getStr")
+    public String test(){
+        return testService.testFunction();
+    }
+}
+```
+4.打开postMan，直接get请求我们的接口：
+`localhost:9000/test/getStr`
+
+发现返回了实现类中写的字符串，说明成功。
 
 ## cloud集成
 首先在父项目pom中引入cloud，
