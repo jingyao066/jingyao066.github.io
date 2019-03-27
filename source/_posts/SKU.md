@@ -1,20 +1,20 @@
 ---
-title: 商品sku功能设计
-tags: 其他
+title: SKU
+tags: 设计思路
 date: 2018-12-09 22:52:56
 ---
 
-### SKU
-![](商品sku功能设计/1.png)
+# SKU
+![](SKU/1.jpg)
 淘宝购买商品时，商品有很多不同的属性和属性值，如：
 颜色：白色、黑色、蓝色、紫色...
 尺寸：170、175、180、185...
 买衣服时，通常会发现，白色-175库存20件，但是白色-180有30件，
 而且价格可能还不同，这是因为后台sku设置的价格和库存。
 后台设置SKU的界面
-![](商品sku功能设计/2.png)
+![](SKU/2.png)
 
-### 1.sku相关表设计
+# SKU相关表设计
 商品表 goods
 ```
 CREATE TABLE `goods` (
@@ -96,21 +96,21 @@ CREATE TABLE `goods_pro_val` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6775 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='商品-属性-属性值>中间表';
 ```
 
-### 2.后台操作流程
+# 后台操作流程
 添加sku之前，需要先添加属性和属性值，因为sku是根据多种属性值组合构成的。
 添加商品属性作为单独的模块，在此不在赘述。
 
 1.选择属性
-![](商品sku功能设计/3.png)
+![](SKU/3.png)
 2.已选属性
-![](商品sku功能设计/4.png)
+![](SKU/4.png)
 3.生成sku
-![](商品sku功能设计/5.png)
+![](SKU/5.png)
 
 4.提交
 
-### 3.最难的地方在于，js代码，下面一步一步讲解
-定义全局下标
+# JS代码
+## 定义全局下标
 ```
 //所有已经存在的属性和属性值json
 var propertyJson;
@@ -123,7 +123,8 @@ var skuIndex = 0;
 //拼接后的SKU最终结果,以数组形式保存
 var skuArr = [];
 ```
-1.选择属性代码
+
+## 选择属性
 ```
 //选择属性
 function choosePro(propertyId, propertyName, onOff,isFirst) {
@@ -222,7 +223,8 @@ function searchProperty() {
     })
 }
 ```
-2.点击属性生成sku
+
+## 点击属性生成SKU
 ```
 //根据选择的属性值生成SKU
 function createSku() {
@@ -284,6 +286,7 @@ function createSku() {
 
 }
 ```
+
 ```
 //拼接属性值
 //forArray 上一次循环的结果数组（已拼接好的）
@@ -329,19 +332,20 @@ function concatSku(forArray, forIndex) {
     }
 }
 ```
-因为属性是pojo，级联的name属性，
-属性级联
-name='proList[" + attrNameIndex + "].proValList[" + attrValueIndex + "].propertyVal'
-sku级联
-name='goodsSkuList[" + skuIndex + "].skuName'
-所以ajax提交一定要
-```
-var dataParam = $("#addForm").serializeArray();
-```
-级联提交的难点在于，数组下标的控制。如果只是生成的话，还可以，但是如果涉及到回显后修改，以及删除，下标就不好玩了。注意吧
-自己组装数据非常麻烦。
 
-这是生成sku的代码，还有回显代码
+属性是pojo，级联的name属性。
+属性级联
+`name='proList[" + attrNameIndex + "].proValList[" + attrValueIndex + "].propertyVal'`
+
+sku级联
+`name='goodsSkuList[" + skuIndex + "].skuName'`
+
+所以ajax提交一定要
+`var dataParam = $("#addForm").serializeArray();`
+
+级联提交的难点在于，数组下标的控制。如果只是生成的话，还可以，但是如果涉及到回显后修改，以及删除，下标就不好玩了。注意吧，自己组装数据非常麻烦。
+
+## 生成sku的代码，还有回显代码
 ```
 function initGoods() {
     //获取商品id
@@ -395,4 +399,5 @@ $(document).ready(function () {
         initGoods();
     });
 ```
-完~~~
+发现类似实现方式，可做参考：
+https://www.cnblogs.com/purediy/archive/2012/12/02/2798454.html
