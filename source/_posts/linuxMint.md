@@ -288,8 +288,20 @@ flush privileges;  然后敲回车
 `set global validate_password_policy=0;`
 `set global validate_password_length=4;`
 
+## beyond compare
+https://www.scootersoftware.com/download.php?zz=kb_linux_install
+查看官网，通过官网提示安装
+```
+wget https://www.scootersoftware.com/bcompare-4.2.9.23626_amd64.deb
+sudo apt-get update
+sudo apt-get install gdebi-core
+sudo gdebi bcompare-4.2.9.23626_amd64.deb
+```
+卸载
+`sudo apt-get remove bcompare`
 
-# 快捷键冲突问题
+# 一些问题
+## 快捷键冲突问题
 在应用程序中搜索"窗口管理器"，然后点击键盘，将"工作区"和"移动窗口至工作去"等与ctrl和alt相关的快捷键全部清除。
 
 - ctrl+alt+s
@@ -297,7 +309,7 @@ flush privileges;  然后敲回车
 右键右下角的输入法，选择配置fcitx->全局配置->显示高级选项,找到想修改的快捷键，建议直接置空(选中后，点击esc)。
 
 
-# VI模式中上下左右键和回退键出现字母
+## VI模式中上下左右键和回退键出现字母
 `sudo vi /etc/vim/vimrc.tiny`
 上下左右字母：
 这个文件里面的倒数第二句话是“set compatible”改为“set nocompatible”
@@ -306,7 +318,7 @@ flush privileges;  然后敲回车
 在“set nocompatible”后面(下一行)加上
 set backspace=2
 
-# ctrl+alt+f12
+## ctrl+alt+f12
 不只是linuxmint，Ubuntu、deepin等按这组快捷键都会黑屏，不要害怕，不是黑屏，ctrl+alt+f7可以返回。
 ALT＋CTRL+F1——F6可进入6个终端，F7开始到F12有6个图形界面，f7是我们安装的图形界面，所以ctrl+alt+f7可以返回。
 参考地址：https://askubuntu.com/questions/277517/what-does-ctrl-alt-f12-do
