@@ -1,6 +1,6 @@
 ---
 title: linuxMint
-tags: 其他
+tags: linux
 date: 2019-03-16 12:37:30
 ---
 
@@ -322,4 +322,16 @@ set backspace=2
 不只是linuxmint，Ubuntu、deepin等按这组快捷键都会黑屏，不要害怕，不是黑屏，ctrl+alt+f7可以返回。
 ALT＋CTRL+F1——F6可进入6个终端，F7开始到F12有6个图形界面，f7是我们安装的图形界面，所以ctrl+alt+f7可以返回。
 参考地址：https://askubuntu.com/questions/277517/what-does-ctrl-alt-f12-do
+
+## 主文件夹的中文文件夹改为英文
+因为是中文版，/home/wjy 下的用户目录都是中文的，在终端操作很不方便，需要切换输入法。而且纯命令行界面，中文文件夹会乱码，根本不知道是哪个是哪个。
+打开终端，在终端中输入命令：
+```
+export LANG=en_US
+xdg-user-dirs-gtk-update
+```
+跳出对话框询问是否将目录转化为英文路径，同意并关闭。
+在终端中输入命令：
+`export LANG=zh_CN`
+关闭终端，重启系统。下次进入系统，系统会提示是否把转化好的目录改回中文，选择不再提示，并取消修改(保留旧的，旧的就是重启之前改好的英文文件夹)。这样就完成了
 

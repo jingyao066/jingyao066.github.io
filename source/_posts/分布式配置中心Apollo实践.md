@@ -4,11 +4,11 @@ tags: 其他
 date: 2018-12-09 12:50:32
 ---
 
-### 一、描述
+# 描述
 Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。官网传送门：
 https://apollo.github
 
-### 二、安装实践
+# 安装实践
 当前版本apollo(包括config server、admin server、portal server)是基于spring boot 1.3.x所开发，因此无需依赖tomcat容器，可以直接通过java -jar 启动。meta是注册中心地址，以eureka为注册中心，默认情况下，config server自己本身就是一个eureka服务，所以config server和admin server都会注册到config server的eureka上。
 
 aopllo官方有两种配置方案：
@@ -64,7 +64,7 @@ eureka:
 需要记住，在scripts/start.sh文件里还需要修改JAVA_OPTS里的jvm参数，如果服务器内存足够（8G以上），那么无需更改，如果不足，请适当按比例缩小,本文机器是4C8G，配置为﻿：
 `export JAVA_OPTS="-Xms1024m -Xmx1024m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:NewSize=614m -XX:MaxNewSize=614m -XX:SurvivorRatio=8"：`
 
-### 三、项目配置
+# 项目配置
 项目概况：spring boot 1.5.10.RELEASE+dubbo 2.6.2
 由于dubbo-qos等的启动配置可能早于spring初始化完成，所以推荐使用注解式配置。
 

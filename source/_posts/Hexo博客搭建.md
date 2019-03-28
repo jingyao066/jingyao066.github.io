@@ -332,6 +332,13 @@ xxx分支用于备份博客部署文件，供自己维护更新，两者在一�
 2.依次执行git add .、git commit -m 'back up hexo files'（引号内容可改）、git push指令，保证xxx分支版本最新
 3.执行hexo d -g指令（在此之前，有时可能需要执行hexo clean），完成后就会发现，最新改动已经更新到master分支了，两个分支互不干扰！
 
+如果使用了algolia，还需要在新电脑上安装并配置API-KEY
+```
+npm install --save hexo-algolia
+export HEXO_ALGOLIA_INDEXING_KEY=你的API Key
+hexo algolia
+```
+
 ## 回到之前的电脑上更新并提交博客
 注：每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先git pull
 

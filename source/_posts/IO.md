@@ -4,13 +4,12 @@ tags: java基础
 date: 2018-12-09 22:46:16
 ---
 
-### IO流总结
-
+# IO
 所有的IO操作都在java.io包之中进行定义，而且整个java.io包实际上就是五个类和一个接口：
 • 五个类：File、InputStream、OutputStream、Reader、Wirter；
 • 一个接口：Serializable。
 
-###  文件操作类:File
+#  文件操作类:File
 ```
 File file = new File("D:/demo.txt"); // 文件的路径
     if (file.exists()) { // 文件存在
@@ -59,7 +58,7 @@ mkdirs()
 	1.文件重命名
 	2.列出指定目录内容
 
-### 二、字节流和字符流
+# 字节流和字符流
 使用File类执行的所有操作都是针对于文件本身，但是却没有针对于文件的内容,要针对文件内容
 字节操作流：OutputStream、InputStream
 字符操作流：Writer、Reader
@@ -117,7 +116,7 @@ File file = new File("D:"+File.separator+"test.txt");
 }
 ```
 		
-### 字节流和字符流的区别:
+# 字节流和字符流的区别:
 ```
 对于电脑磁盘或者是网络数据传输上，使用最多的数据类型都是字节数据，
 包括图片、音乐、各种可执行程序也都是字节数据，很明显，字节数据要比字符数据更加的广泛，
@@ -130,13 +129,13 @@ File file = new File("D:"+File.separator+"test.txt");
    • 处理各种数据都可以通过字节流完成，而在处理中文的时候使用字符流会更好。
 ```
 
-### IO流分类
+# IO流分类
 ```
 根据处理数据类型的不同分为：字符流和字节流
 根据数据流向不同分为：输入流和输出流
 ```
 
-### 字符流和字节流
+# 字符流和字节流
 字符流的由来:因为数据编码的不同，而有了对数据进行高效操作的流对象，本质就是基于字节流读取时，去查了指定的码表。
 
 区别:
@@ -148,13 +147,13 @@ File file = new File("D:"+File.separator+"test.txt");
 输入流和输出流：
 对输入流只能进行读操作，对输出流只能进行写操作，需要根据传输数据的不同特性而使用不通过的流
 
-### java IO流对象
+# java IO流对象
 ```
 1.字节输入流：InputStream
 	.InputStream是所有输入字节流的父类，它是一个抽象类
 	.ByteArrayInputStream	-->byte[]数组
 	.StringBufferInputStream-->StringBuffer
-	.FileInputStream 		--->本地文件		
+	.FileInputStream 		--->本地文件
 	.ObjectInputStream 和所有FilterInputStream 的子类都是装饰流（装饰器模式的主角）
 ```
 ```
@@ -173,7 +172,7 @@ File file = new File("D:"+File.separator+"test.txt");
 	.InputStreamReader 用于连接字节流和字符流，它将字节流转变为
 ```
 
-### 字符流 
+# 字符流 
 ```
 字符输出流:Writer
 	.Writer是所有输出字符流的父类，是一个抽象类
@@ -184,29 +183,29 @@ File file = new File("D:"+File.separator+"test.txt");
 
 1、判断文件是否存在，不存在创建文件
 ```
-File file=new File("C:\\Users\\wangmeng\\Desktop\\1.txt");    
-if(!file.exists())    
-{    
-    try {    
+File file=new File("C:\\Users\\wangmeng\\Desktop\\1.txt"); 
+if(!file.exists())
+{
+    try {
         file.createNewFile();    
-    } catch (IOException e) {    
+    } catch (IOException e) 
         // TODO Auto-generated catch block    
         e.printStackTrace();    
-    }    
+    }
 } 
 ```	
 
 2、判断文件夹是否存在，不存在创建文件夹
 ```
-File file =new File("C:\\Users\\wangmeng\\Desktop\\Dir");    
-//如果文件夹不存在则创建    
-if  (!file .exists()  && !file .isDirectory())      
-{       
-    System.out.println("//不存在");  
-    file .mkdir();    
-} else   
-{  
-    System.out.println("//目录存在");  
+File file =new File("C:\\Users\\wangmeng\\Desktop\\Dir");
+//如果文件夹不存在则创建
+if  (!file .exists()  && !file .isDirectory())
+{
+    System.out.println("//不存在");
+    file .mkdir();
+} else 
+{
+    System.out.println("//目录存在");
 }
 ```
 
@@ -231,7 +230,7 @@ int num= inputStream2.read(bytes);
 System.out.println(num+"~~~"+Arrays.toString(bytes));
 ```
 
-### 字符流读取数据
+# 字符流读取数据
 ```
 FileReader fileReader = new FileReader("/Users/zhangcheng/Desktop/12.txt");
 int num = 0;
@@ -243,34 +242,34 @@ int num = 0;
 fileReader.close();
 ```
 
-### 字符流写入数据
+# 字符流写入数据
 ```
 FileWriter fileWriter = new FileWriter("/Users/zhangcheng/Desktop/12.txt", true);
 fileWriter.write("今天雾霾很重，请大家注意健康\r\n");
 fileWriter.close();
 ```
 
-### 通过javaHttp链接将网络上的图片下载到本地
+# 通过javaHttp链接将网络上的图片下载到本地
 ```
-import java.io.ByteArrayOutputStream;  
-import java.io.File;  
-import java.io.FileOutputStream;  
-import java.io.InputStream;  
-import java.net.HttpURLConnection;  
-import java.net.URL;  
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 /** 
  * @说明 从网络获取图片到本地 
  * 
  * @version 1.0 
  * @since 
- */  
-public class GetImage {  
+ */
+public class GetImage {
 
     /** 
      * 测试 
      * @param args 
-     */  
-    public static void main(String[] args) {  
+     */
+    public static void main(String[] args) {
         String url = "http://www.baidu.com/img/baidu_sylogo1.gif";  
         byte[] btImg = getImageFromNetByUrl(url);  
         if(null != btImg && btImg.length > 0){  
@@ -280,13 +279,13 @@ public class GetImage {
         }else{  
             System.out.println("没有从该连接获得内容");  
         }  
-    }  
+    }
     /** 
      * 将图片写入到磁盘 
      * @param img 图片数据流 
      * @param fileName 文件保存时的名称 
-     */  
-    public static void writeImageToDisk(byte[] img, String fileName){  
+     */
+    public static void writeImageToDisk(byte[] img, String fileName){
         try {  
             File file = new File("D:\\test\\" + fileName);
             FileOutputStream fops = new FileOutputStream(file);  
@@ -297,13 +296,13 @@ public class GetImage {
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
-    }  
+    }
     /** 
      * 根据地址获得数据的字节流 
      * @param strUrl 网络连接地址 
      * @return 
-     */  
-    public static byte[] getImageFromNetByUrl(String strUrl){  
+     */
+    public static byte[] getImageFromNetByUrl(String strUrl){
         try {  
             URL url = new URL(strUrl);  
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();  
@@ -317,14 +316,14 @@ public class GetImage {
             e.printStackTrace();  
         }  
         return null;  
-    }  
+    }
     /** 
      * 从输入流中获取数据 
      * @param inStream 输入流 
      * @return 
      * @throws Exception 
-     */  
-    public static byte[] readInputStream(InputStream inStream) throws Exception{  
+     */
+    public static byte[] readInputStream(InputStream inStream) throws Exception{
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();  
         byte[] buffer = new byte[1024*1024];  
         int len = 0;  
@@ -333,6 +332,6 @@ public class GetImage {
         }  
         inStream.close();  
         return outStream.toByteArray();  
-    }  
-}  
+    }
+}
 ```

@@ -4,7 +4,7 @@ tags: collection
 date: 2018-12-16 22:01:24
 ---
 
-## ArrayList概述
+# ArrayList概述
 ArrayList是一个数组队列，相当于动态数组。它继承于AbstractList，实现了List, RandomAccess, Cloneable, java.io.Serializable这些接口。
 1.ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。
 2.ArrayList 实现了RandmoAccess接口，即提供了随机访问功能。可以通过元素的序号快速获取元素对象，这就是快速随机访问。
@@ -16,7 +16,7 @@ ArrayList是一个数组队列，相当于动态数组。它继承于AbstractLis
 
 注：建议在单线程中才使用ArrayList，而在多线程中可以选择Vector或者CopyOnWriteArrayList。
 
-## API
+# API
 ```
 // Collection中定义的API
 boolean             add(E object)
@@ -52,7 +52,7 @@ void                 trimToSize()
 void                 removeRange(int fromIndex, int toIndex)
 ```
 
-## ArrayList源码解析
+# ArrayList源码解析
 1.类结构
 ```
 //通过ArrayList实现的接口可知，其支持随机访问，能被克隆，支持序列化
@@ -81,7 +81,7 @@ public class ArrayList<E> extends AbstractList<E>
     // ArrayList的大小（指其所含的元素个数）
     private int size;
 
-    ......  
+    ...... 
 
 }
 ```
@@ -93,7 +93,7 @@ ArrayList包含了两个重要的对象：elementData 和 size。
 
 2.size 则是动态数组的实际大小。
 
-## 构造函数
+# 构造函数
 ArrayList提供了三种方式的构造器，可以构造一个默认初始容量为10的空列表、构造一个指定初始容量的空列表以及构造一个包含指定collection的元素的列表，这些元素按照该collection的迭代器返回的顺序排列的。
 ```
 /**
@@ -142,7 +142,7 @@ ArrayList构造一个默认初始容量为10的空列表：
 3) 在ensureCapacityInternal(int minCapacity)方法中，可得的minCapacity=DEFAULT_CAPACITY=10，然后再调用ensureExplicitCapacity(minCapacity)方法，即ensureExplicitCapacity(10)；
 4) 在ensureExplicitCapacity(minCapacity)方法中调用grow(minCapacity)方法，即grow(10)，此处为真正具体的数组扩容的算法，在此方法中，通过elementData = Arrays.copyOf(elementData, 10)具体实现了elementData数组初始容量为10的构造。
 
-## 调整数组的容量 jdk1.8
+# 调整数组的容量 jdk1.8
 从add()与addAll()方法中可以看出，每当向数组中添加元素时，都要去检查添加元素后的个数是否会超出当前数组的长度，如果超出，数组将会进行扩容，以满足添加数据的需求。
 数组扩容实质上是通过私有的方法ensureCapacityInternal(int minCapacity) -> ensureExplicitCapacity(int minCapacity) -> grow(int minCapacity)来实现的，但在jdk1.8中，
 向用户提供了一个public的方法ensureCapacity(int minCapacity)使用户可以手动的设置ArrayList实例的容量，以减少递增式再分配的数量。
@@ -209,10 +209,10 @@ ArrayList构造一个默认初始容量为10的空列表：
     }
 ```
 
-### 为什么ArrayList自动容量扩充选择扩充1.5倍？
+## 为什么ArrayList自动容量扩充选择扩充1.5倍？
 这种算法构造出来的新的数组长度的增量都会比上一次大( 而且是越来越大) ，即认为客户需要增加的数据很多，而避免频繁newInstance 的情况。
 
-## 添加元素
+# 添加元素
 ArrayList提供了add(E e)、add(int index, E element)、addAll(Collection<? extends E> c)、addAll(int index, Collection<? extends E> c)这些添加元素的方法。
 ```
 //将指定的元素(E e)添加到此列表的尾部
@@ -272,7 +272,7 @@ ArrayList提供了add(E e)、add(int index, E element)、addAll(Collection<? ext
     }
 ```
 
-## 删除元素
+# 删除元素
 ArrayList提供了remove(int index)、remove(Object o)、clear()、removeRange(int fromIndex, int toIndex)、removeAll(Collection<?> c)、retainAll(Collection<?> c)这些删除元素的方法。
 ```
 /**
@@ -393,7 +393,7 @@ ArrayList提供了remove(int index)、remove(Object o)、clear()、removeRange(i
     }
 ```
 
-## 修改元素
+# 修改元素
 ArrayList提供了set(int index, E element)方法来修改指定索引上的值。
 ```
 //将指定索引上的值替换为新值，并返回旧值
@@ -406,7 +406,7 @@ ArrayList提供了set(int index, E element)方法来修改指定索引上的值�
     }
 ```
 
-## 查找元素
+# 查找元素
 ArrayList提供了get(int index)、contains(Object o)、indexOf(Object o)、lastIndexOf(Object o)、get(int index)这些查找元素的方法。
 ```
 //判断ArrayList中是否包含Object(o)
@@ -455,7 +455,7 @@ ArrayList提供了get(int index)、contains(Object o)、indexOf(Object o)、last
     }
 ```
 
-## 其他public方法
+# 其他public方法
 trimToSize()、size()、isEmpty()、clone()、toArray()、toArray(T[] a)
 
 ```
@@ -557,8 +557,8 @@ trimToSize()、size()、isEmpty()、clone()、toArray()、toArray(T[] a)
     }
 ```
 
-## ArrayList的四种遍历方式
-1.通过迭代器Iterator遍历：
+# ArrayList的四种遍历方式
+## 通过迭代器Iterator遍历：
 ```
 Iterator iter = list.iterator();
     while (iter.hasNext())
@@ -566,7 +566,7 @@ Iterator iter = list.iterator();
         System.out.println(iter.next());
     }
 ```
-2.通过迭代器ListIterator遍历：
+## 通过迭代器ListIterator遍历：
 ```
 ListIterator<String> lIter = list.listIterator();
 　　//顺向遍历
@@ -586,7 +586,7 @@ ListIterator<String> lIter = list.listIterator();
 
 ③Iterator只能实现remove操作，ListIterator可以实现remove操作，add操作，set操作。
 
-3.随机访问，通过索引值去遍历，由于ArrayList实现了RandomAccess接口
+## 随机访问，通过索引值去遍历，由于ArrayList实现了RandomAccess接口
 ```
 int size = list.size();
     for (int i=0; i<size; i++) 
@@ -595,7 +595,7 @@ int size = list.size();
     }
 ```
 
-4.foreach循环遍历
+## foreach循环遍历
 ```
  for(String str:list)
     {
@@ -603,7 +603,7 @@ int size = list.size();
     }
 ```
 
-### 效率比对
+## 效率比对
 验证代码...略
 1.迭代器iterator：8ms
 2.for循环RandomAccess：3ms
@@ -614,7 +614,7 @@ foreach与迭代器：
 在Java SE5引入了新的被称为Iterable接口，该接口包含一个能够产生Iterator的Iterator()方法，并且Iterable接口被foreach用来在序列中移动。
 因此如果你创建了任何实现Iterable的类，都可以将它用于foreach语句中。
 
-## toArray()异常
+# toArray()异常
 当我们调用ArrayList中的 toArray()，可能遇到过抛出“java.lang.ClassCastException”异常的情况。
 ArrayList提供了2个toArray()函数：
 ```
@@ -646,7 +646,7 @@ public static Integer[] vectorToArray3(ArrayList<Integer> v) {
 }
 ```
 
-## Arraylist 代码示例
+# Arraylist 代码示例
 ```
 import java.util.*;
 
@@ -699,11 +699,11 @@ public class ArrayListTest {
 }
 ```
 
-## Fail-Fast机制
+# Fail-Fast机制
 fail-fast 机制是java集合(Collection)中的一种错误机制。当多个线程对同一个集合的内容进行操作时，就可能会产生fail-fast事件。
 例如：当某一个线程A通过iterator去遍历某集合的过程中，若该集合的内容被其他线程所改变了；那么线程A访问集合时，就会抛出ConcurrentModificationException异常，产生fail-fast事件。
 
-### fail-fast示例
+## fail-fast示例
 ```
 import java.util.*;
 import java.util.concurrent.*;
@@ -781,7 +781,7 @@ public class FastFailTest {
     ThreadTwo线程：向list中依次添加10,11,12,13,14,15。每添加一个数之后，就通过printAll()遍历整个list。
 (02) 当某一个线程遍历list的过程中，list的内容被另外一个线程所改变了；就会抛出ConcurrentModificationException异常，产生fail-fast事件。
 
-### fail-fast解决办法
+## fail-fast解决办法
 fail-fast机制，是一种错误检测机制。它只能被用来检测错误，因为JDK并不保证fail-fast机制一定会发生。若在多线程环境下使用fail-fast机制的集合，建议使用“java.util.concurrent包下的类”去取代“java.util包下的类”。
 所以，本例中只需要将ArrayList替换成java.util.concurrent包下对应的类即可。
 即，将代码
@@ -790,7 +790,7 @@ fail-fast机制，是一种错误检测机制。它只能被用来检测错误�
 `List<String> cList = new CopyOnWriteArrayList<>();`
 即可解决
 
-### fail-fast原理
+## fail-fast原理
 产生fail-fast事件，是通过抛出ConcurrentModificationException异常来触发的。那么，ArrayList是如何抛出ConcurrentModificationException异常的呢?
 我们知道，ConcurrentModificationException是在操作Iterator时抛出的异常。通过查看Iterator的源码(ArrayList的Iterator是在父类AbstractList.java中实现的)
 ```
@@ -986,7 +986,7 @@ public class ArrayList<E> extends AbstractList<E>
 至此，我们就完全了解了fail-fast是如何产生的！
 即，当多个线程对同一个集合进行操作的时候，某线程访问集合的过程中，该集合的内容被其他线程所改变(即其它线程通过add、remove、clear等方法，改变了modCount的值)；这时，就会抛出ConcurrentModificationException异常，产生fail-fast事件。
 
-### 解决fail-fast的原理
+## 解决fail-fast的原理
 上面，说明了“解决fail-fast机制的办法”，也知道了“fail-fast产生的根本原因”。接下来，我们再进一步谈谈java.util.concurrent包中是如何解决fail-fast事件的。
 还是以和ArrayList对应的CopyOnWriteArrayList进行说明。我们先看看CopyOnWriteArrayList的源码：
 ```

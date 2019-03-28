@@ -4,7 +4,7 @@ tags: collection
 date: 2018-12-19 13:44:51
 ---
 
-## LinkedList概述
+# LinkedList概述
 LinkedList 是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
 LinkedList 实现 List 接口，能对它进行队列操作。
 LinkedList 实现 Deque 接口，即能将LinkedList当作双端队列使用。
@@ -12,7 +12,7 @@ LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。
 LinkedList 实现java.io.Serializable接口，这意味着LinkedList支持序列化，能通过序列化去传输。
 LinkedList 是非同步的。
 
-## 构造函数
+# 构造函数
 ```
 // 默认构造函数
 LinkedList()
@@ -21,7 +21,7 @@ LinkedList()
 LinkedList(Collection<? extends E> collection)
 ```
 
-## API
+# API
 ```
 LinkedList的API
 boolean       add(E object)
@@ -65,14 +65,14 @@ int           size()
 Object[]     toArray()
 ```
 
-## AbstractSequentialList简介
+# AbstractSequentialList简介
 AbstractSequentialList 实现了get(int index)、set(int index, E element)、add(int index, E element) 和 remove(int index)这些函数。
 这些接口都是随机访问List的，LinkedList是双向链表；既然它继承于AbstractSequentialList，就相当于已经实现了“get(int index)这些接口”。
 
 此外，我们若需要通过AbstractSequentialList自己实现一个列表，只需要扩展此类，并提供 listIterator() 和 size() 方法的实现即可。若要实现不可修改的列表，
 则需要实现列表迭代器的 hasNext、next、hasPrevious、previous 和 index 方法即可。
 
-## LinkedList数据结构
+# LinkedList数据结构
 ```
 java.lang.Object
    ↳     java.util.AbstractCollection<E>
@@ -94,7 +94,7 @@ LinkedList的本质是双向链表。
 　　header是双向链表的表头，它是双向链表节点所对应的类Entry的实例。Entry中包含成员变量： previous, next, element。其中，previous是该节点的上一个节点，next是该节点的下一个节点，element是该节点所包含的值。 
 　　size是双向链表中节点的个数。
 
-## LinkedList源码解析
+# LinkedList源码解析
 LinkedList实际上是通过双向链表去实现的。既然是双向链表，那么它的顺序访问会非常高效，而随机访问效率比较低。
 既然LinkedList是通过双向链表的，但是它也实现了List接口{也就是说，它实现了get(int location)、remove(int location)等“根据索引值来获取、删除节点的函数”}。LinkedList是如何实现List的这些接口的，如何将“双向链表和索引值联系起来的”？
 实际原理非常简单，它就是通过一个计数索引值来实现的。例如，当我们调用get(int location)时，首先会比较“location”和“双向链表长度的1/2”；若前者大，则从链表头开始往后查找，直到location位置；否则，从链表末尾开始先前查找，直到location位置。
@@ -775,7 +775,7 @@ pop()        removeFirst()
 peek()       peekFirst()
 ```
 
-## LinkedList的遍历方式
+# LinkedList的遍历方式
 LinkedList支持多种遍历方式。建议不要采用随机访问的方式去遍历LinkedList，而采用逐个遍历的方式。
 (01) 第一种，通过迭代器遍历。即通过Iterator去遍历。
 ```
@@ -786,7 +786,7 @@ for(Iterator iter = list.iterator(); iter.hasNext();)
 ```
 int size = list.size();
 for (int i=0; i<size; i++) {
-    list.get(i);        
+    list.get(i); 
 }
 ```
 (03) 通过另外一种for循环来遍历LinkedList
@@ -812,7 +812,7 @@ try {
 }
 ```
 
-### 效率对比
+## 效率对比
 通过
 ```
 long start = System.currentTimeMillis();
@@ -833,7 +833,7 @@ iteratorThroughRemoveLast：2 ms
 由此可见，遍历LinkedList时，使用removeFist()或removeLast()效率最高。但用它们遍历时，会删除原始数据；若单纯只读取，而不删除，应该使用foreach的方式。
 无论如何，千万不要通过随机访问(普通for循环)去遍历LinkedList！
 
-## LinkedList代码示例
+# LinkedList代码示例
 
 ```
 import java.util.List;
@@ -996,5 +996,4 @@ public class LinkedListTest {
 ```
 
 运行结果...略
-
 至此，关于LinkedList的全部内容总结完毕。

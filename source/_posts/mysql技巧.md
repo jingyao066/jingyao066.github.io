@@ -4,7 +4,7 @@ tags: mysql
 date: 2018-12-06 18:13:55
 ---
 
-#@  数据库三大范式
+# 数据库三大范式
 1.1NF
 即第一范式,指同一列中不能有多个值,(即实体中的某个属性不能有多个值,或者不能有重复的属性),简而言之，第一范式就是无重复的列
 2.2NF
@@ -12,12 +12,12 @@ date: 2018-12-06 18:13:55
 3.3NF
 第三范式,要求一个表中,不包含,已在其他表中,已包含的,非主关键字信息
 
-## 1. left join和 inner join 区别
+# left join和 inner join 区别
 left以 left join 左侧的表为主表
 right 以 right join 右侧表为主表
 inner join 查找的数据是左右两张表共有的
 
-## 2.查找一个表中存在而另一个表中不存在的记录
+# 查找一个表中存在而另一个表中不存在的记录
 ```
 select j.id,j.job_name,c.member_name as company_id,j.job_address,j.salary,j.flush_time
 from hr_job j
@@ -28,7 +28,7 @@ where not exists (select ja.id from HR_JOB_APPLY where ja.job_id = j.id)
 select * from t1
 where id not in(select id from t2)
 ```
-## 3.时间相关 
+# 时间相关 
 ```
 获取今天到明天的数据
 where date_format(create_date,'%y-%m-%d') 
@@ -95,7 +95,7 @@ select name,submittime from enterprise   where date_format(submittime,'%Y-%m')=d
 select name,submittime from enterprise where submittime between date_sub(now(),interval 6 month) and now();
 ```
 
-## 4.几种case-when的形式
+# 几种case-when的形式
 ```
 CASE b.check_type
 when '1' then b.real_name
@@ -126,11 +126,11 @@ case a.exh_type
 )
 ```
 	
-## 5.rand()
+# rand()
 	随机函数效率很低
 	order by RAND() ：随机返回结果
 
-## 6.REGEXP
+# REGEXP
 	单字匹配多字，或反之
 	例如：木雕中，标签
 	活动,展讯,文化弘扬 为一条数据的标签，要求，可以匹配到标签为展讯的内容
@@ -146,7 +146,7 @@ AND x.label REGEXP
 )
 ```
 
-## 7.并发插入、存在不插入，存在更新操作
+# 并发插入、存在不插入，存在更新操作
 方法1：通常会，先查再插，但是这样无法避免并发问题，不用考虑了。
 
 2.存在即更新，不存在即插入
@@ -172,7 +172,7 @@ WHERE NOT EXISTS(SELECT c FROM demo_in WHERE c = 4);
 用临时表DUAL来标记数据，然后插入到demo_in表中。
 条件是c=4，并且not exists，也就是当c=4条件满足，则不插入。
 
-## 8.视哪张表为主表，哪张为子表
+# 视哪张表为主表，哪张为子表
 对比两条SQL
 
 SQL 1:
@@ -216,15 +216,15 @@ SELECT
 以上两条sql查出的结果是一样的。
 目前，我认为：无论以哪张表为主表都可以。
 
-## 9.union和union all 区别
+# union和union all 区别
 1.union 操作符会选取不同的值
    UNION ALL 允许重复的值(会将所有的值列出)
 
-## 10.union(union all)和order by 
+# union(union all)和order by 
 1.每一个子句可以使用()包围，但是当第一个子句使用了()时，其它的子句都必须使用括号包围。
 2. 每一个字句可以包含WHERE，GROUP BY，HAVING，JOIN，LIMIT，但是不能使用ORDER BY，如果需要使用ORDER BY，必须使用()包围子句。
 
-## 11.给查询记录添加自然序号
+# 给查询记录添加自然序号
 表a，数据：
 id name
 12 张三
@@ -245,7 +245,7 @@ FROM
 table a;
 ```
 
-## MySQL单表多次查询和多表联合查询，哪个效率高？
+# MySQL单表多次查询和多表联合查询，哪个效率高？
 很多高性能的应用都会对关联查询进行分解。
 简单地，可以对每个表进行一次单表查询，然后将结果在应用程序中进行关联。例如，下面这个查询：
 ```
@@ -277,4 +277,3 @@ select * from tableC where id in (结果B)
 5.可以减少冗余记录的查询。
 
 6.更进一步，这样做相当于在应用中实现了哈希关联，而不是使用MySQL的嵌套环关联，某些场景哈希关联的效率更高很多。
-
