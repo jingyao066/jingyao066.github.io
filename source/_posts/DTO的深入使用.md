@@ -1,9 +1,10 @@
 ---
 title: DTO的深入使用
-tags: 杂谈
+tags: java
 date: 2018-12-09 00:44:08
 ---
-#### 前言
+
+# 前言
 在写接口的时候，如果返回实体类，会返回一些前端并不需要的参数，例如：
 学生和班级是一对一，我们会在学生类中，加入班级的实体类，构成一对一关系；
 部门和员工是一对多，我们会在部门类中，加入List<Employee>，list泛型实体类，构成一对多关系。
@@ -42,7 +43,7 @@ public class BusinessDto extends Business {
 这样接口需要什么样的数据，我们就可以组装什么样的dto，灰常的清晰。
 
 顺便记录一下分页接口的写法
-#### Controller
+# Controller
 ```
 **
      * @author: wjy
@@ -86,12 +87,12 @@ public class BusinessDto extends Business {
 大部分方法都需要token，增加了接口的安全性，即必须登陆后，才可以请求数据，
 5.不要再controller里写逻辑，controller只负责收发参数，跳转页面等，业务逻辑全部卸载接口的实现类中。
 ```
-#### service
+# service
 ```
 ResponseResultUtil explodeOrderList(Map<String, String> paramMap,ResponseResultUtil responseResultUtil,Integer userId);
 ```
 
-### serviceImpl
+# serviceImpl
 ```
 @Override
     public ResponseResultUtil explodeOrderList(Map<String, String> paramMap,ResponseResultUtil result,Integer userId) {
@@ -112,12 +113,12 @@ ResponseResultUtil explodeOrderList(Map<String, String> paramMap,ResponseResultU
     }
 ```
 
-#### mapper
+# mapper
 ```
 List<ExplodeOrderDto> explodeOrderList(Map<String,String> map);
 ```
 
-#### xml
+# xml
 ```
 <!--运营合伙人-爆品订单列表-->
   <select id="explodeOrderList" resultMap="ExplodeOrderMap" parameterType="map">

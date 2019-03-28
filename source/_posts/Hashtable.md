@@ -4,14 +4,14 @@ tags: Map
 date: 2018-12-21 10:35:10
 ---
 
-## 概述
+# 概述
 和HashMap一样，Hashtable 也是一个散列表，它存储的内容是键值对(key-value)映射。
 Hashtable 继承于Dictionary，实现了Map、Cloneable、java.io.Serializable接口。
 Hashtable 的函数都是同步的，这意味着它是线程安全的。它的key、value都不可以为null。此外，Hashtable中的映射不是有序的。
 Hashtable 的实例有两个参数影响其性能：初始容量 和 加载因子。容量 是哈希表中桶 的数量，初始容量 就是哈希表创建时的容量。注意，哈希表的状态为 open：在发生“哈希冲突”的情况下，单个桶会存储多个条目，这些条目必须按顺序搜索。加载因子 是对哈希表在其容量自动增加之前可以达到多满的一个尺度。初始容量和加载因子这两个参数只是对该实现的提示。关于何时以及是否调用 rehash 方法的具体细节则依赖于该实现。
 通常，默认加载因子是 0.75, 这是在时间和空间成本上寻求一种折衷。加载因子过高虽然减少了空间开销，但同时也增加了查找某个条目的时间（在大多数 Hashtable 操作中，包括 get 和 put 操作，都反映了这一点）。
 
-## 构造函数
+# 构造函数
 ```
 // 默认构造函数。
 public Hashtable() 
@@ -23,7 +23,7 @@ public Hashtable(int initialCapacity, float loadFactor)
 public Hashtable(Map<? extends K, ? extends V> t)
 ```
 
-## 数据结构
+# 数据结构
 继承关系：
 ```
 java.lang.Object
@@ -46,7 +46,7 @@ table是一个Entry[]数组类型，而Entry实际上就是一个单向链表。
 　　loadFactor就是加载因子。 
 　　modCount是用来实现fail-fast机制的
 
-## 源码解析
+# 源码解析
 ```
 package java.util;
 import java.io.*;
@@ -842,12 +842,12 @@ public class Hashtable<K,V>
 }
 ```
 
-## Hashtable的“拉链法”相关内容
-### Hashtable的数据存储数组
+# Hashtable的“拉链法”相关内容
+## Hashtable的数据存储数组
 `private transient Entry<?,?>[] table`
 Hashtable的key-value都是存储在table数组中的。
 
-### 数据节点Entry的数据结构
+## 数据节点Entry的数据结构
 ```
 private static class Entry<K,V> implements Map.Entry<K,V> {
     // 哈希值
@@ -912,7 +912,7 @@ private static class Entry<K,V> implements Map.Entry<K,V> {
 从中，我们可以看出 Entry 实际上就是一个单向链表。这也是为什么我们说Hashtable是通过拉链法解决哈希冲突的。
 Entry 实现了Map.Entry 接口，即实现getKey(), getValue(), setValue(V value), equals(Object o), hashCode()这些函数。这些都是基本的读取/修改key、value值的函数。
 
-### 构造函数
+## 构造函数
 ```
 // 默认构造函数。
 public Hashtable() {
@@ -948,9 +948,9 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 }
 ```
 
-### 主要对外接口
+## 主要对外接口
 
-#### clear()
+### clear()
 clear() 的作用是清空Hashtable。它是将Hashtable的table数组的值全部设为null
 ```
 public synchronized void clear() {
@@ -962,7 +962,7 @@ public synchronized void clear() {
 }
 ```
 
-#### contails()
+### contails()
 ```
 public boolean containsValue(Object value) {
     return contains(value);
@@ -989,7 +989,7 @@ public synchronized boolean contains(Object value) {
 }
 ```
 
-#### contailsKey()
+### contailsKey()
 判断Hashtable是否包含key
 ```
 public synchronized boolean containsKey(Object key) {
@@ -1008,7 +1008,7 @@ public synchronized boolean containsKey(Object key) {
 }
 ```
 
-#### elements()
+### elements()
 ```
 public synchronized Enumeration<V> elements() {
     return this.<V>getEnumeration(VALUES);
@@ -1161,7 +1161,7 @@ private class Enumerator<T> implements Enumeration<T>, Iterator<T> {
 ```
 entrySet(), keySet(), keys(), values()的实现方法和elements()差不多，而且源码中已经明确的给出了注释。这里就不再做过多说明了。
 
-#### get()
+### get()
 获取key对应的value，没有就返回null
 ```
 public synchronized V get(Object key) {
@@ -1179,7 +1179,7 @@ public synchronized V get(Object key) {
 }
 ```
 
-#### put()
+### put()
 put() 的作用是对外提供接口，让Hashtable对象可以通过put()将“key-value”添加到Hashtable中。
 ```
 public synchronized V put(K key, V value) {
@@ -1216,7 +1216,7 @@ public synchronized V put(K key, V value) {
 
     // (03) 将“Hashtable中index”位置的Entry(链表)保存到e中
     Entry<K,V> e = tab[index];
-    // (04) 创建“新的Entry节点”，并将“新的Entry”插入“Hashtable的index位置”，并设置e为“新的Entry”的下一个元素(即“新Entry”为链表表头)。        
+    // (04) 创建“新的Entry节点”，并将“新的Entry”插入“Hashtable的index位置”，并设置e为“新的Entry”的下一个元素(即“新Entry”为链表表头)。
     tab[index] = new Entry<K,V>(hash, key, value, e);
     // (05) 将“Hashtable的实际容量”+1
     count++;
@@ -1224,7 +1224,7 @@ public synchronized V put(K key, V value) {
 }
 ```
 
-#### putAll()
+### putAll()
 putAll()的作用是将Map<T>中的元素注意添加到Hashtable中。
 ```
 public synchronized void putAll(Map<? extends K, ? extends V> t) {
@@ -1233,7 +1233,7 @@ public synchronized void putAll(Map<? extends K, ? extends V> t) {
 }
 ```
 
-#### remove()
+### remove()
 ```
 public boolean remove(Object o) {
 	if (!(o instanceof Map.Entry))
@@ -1265,8 +1265,8 @@ public boolean remove(Object o) {
 }
 ```
 
-## Hashtable的遍历方式
-### 遍历键值对
+# Hashtable的遍历方式
+## 遍历键值对
 1.根据EntrySet()获取Hashtable的键值对Set集合
 2.通过Iterator遍历第一步得到的集合
 ```
@@ -1283,7 +1283,7 @@ while(iter.hasNext()) {
 }
 ```
 
-### 遍历键
+## 遍历键
 1.根据keySet()获取Hashtable的“键”的Set集合。
 2.通过Iterator迭代器遍历上一步得到的集合。
 ```
@@ -1300,7 +1300,7 @@ while (iter.hasNext()) {
 }
 ```
 
-### 遍历值
+## 遍历值
 1.根据value()获取Hashtable的“值”的集合。
 2.通过Iterator迭代器遍历上一步得到的集合。
 ```
@@ -1314,7 +1314,7 @@ while (iter.hasNext()) {
 }
 ```
 
-### 通过Enumeration遍历Hashtable的键
+## 通过Enumeration遍历Hashtable的键
 1.根据keys()获取Hashtable的集合。
 2.通过Enumeration遍历上一步得到的集合。
 
@@ -1325,7 +1325,7 @@ while(enu.hasMoreElements()) {
 }
 ```
 
-### 通过Enumeration遍历Hashtable的值
+## 通过Enumeration遍历Hashtable的值
 
 1.根据elements()获取Hashtable的集合。
 2.通过Enumeration遍历上一步得到的集合。
@@ -1336,7 +1336,7 @@ while(enu.hasMoreElements()) {
 }
 ```
 
-## Hashtable代码示例
+# Hashtable代码示例
 ```
 import java.util.*;
 
@@ -1394,5 +1394,3 @@ public class HashtableTest {
 
 }
 ```
-
-

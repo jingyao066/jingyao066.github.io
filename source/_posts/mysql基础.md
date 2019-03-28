@@ -4,9 +4,7 @@ tags: mysql
 date: 2018-12-06 18:12:58
 ---
 
-MySQL基础
-
-## 1.增删改查
+# 增删改查
 ```
 插入(增)：
 insert into 表名字(列名1，列名2...) values(值1，值2...)
@@ -17,13 +15,13 @@ insert into 表名字 values(值1，值2...)
 
 ```
 删除：
-delete from 表名字
+delete from 表名字 where id = 1
 若不加where条件，则删除数据表中所有数据
 ```
 
 ```
 修改：
-update 表名字 set 列1=值1，列2=值2...
+update 表名字 set 列1=值1，列2=值2... where id = 1
 若不加where条件，则更新数据表中所有数据
 ```
 
@@ -35,19 +33,15 @@ select id,stu_name,age, from 表名字
 查询多个字段，用逗号进行分割
 ```
 
-## 数据类型
+# 数据类型
 主要包括以下五大类：
-
-```
 整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT
 浮点数类型：FLOAT、DOUBLE、DECIMAL
 字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB
 日期类型：Date、DateTime、TimeStamp、Time、Year
 其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等
-```
-具体请参考另一篇文章：mysql数据类型
 
-## 库相关
+# 库相关
 1.创建数据库:
 `create database[if not exists] db_name`
 
@@ -58,14 +52,11 @@ select id,stu_name,age, from 表名字
 `show databases`
 
 注：需要将`if exists`旁边的括号去掉，中括号表示可选参数。
-```
 if not exists：如果不存在
 if exists：如果存在
-```
 加入这个参数可以避免sql报错。
 
-## 表相关
-
+# 表相关
 1.创建数据表:
 ```
 create table[if not exists] table_name(
@@ -103,14 +94,6 @@ ALTER TABLE <表名>
 |[DROP [constraint] 约束名]
 ```
 
-```
-create table test(
-	id int PRIMARY key auto_increment, //创建id列，规定为主键列，自增
-	test_name varchar(20),
-	test2_id int
-)
-```
-
 6.新增字段
 `alter table table_name add column_name varchar(200) not null default 0;`
 
@@ -129,18 +112,18 @@ create table test(
 10.a表数据导入b表：
 `INSERT INTO 表名 SELECT * FROM 带数据的表`
 
-## 主外键
+# 主外键
 主键：primary_key
-	1.保证数据唯一性
-	2.一个数据表只能有一个主键
-	3.主键不可以为空，并且不可以重复
+1.保证数据唯一性
+2.一个数据表只能有一个主键
+3.主键不可以为空，并且不可以重复
 	
-  外键:
-	1.保证数据的完整性，一致性
-	2.外键列和参照列的数据类型必须一致
-	3.参照列的表为父表，外键列的表为子表
-	4.实现一对多，多对一的关系
-	5.外键列和参照列必须创建索引，如不创建，mySQL会自动创建
+  外键：
+1.保证数据的完整性，一致性
+2.外键列和参照列的数据类型必须一致
+3.参照列的表为父表，外键列的表为子表
+4.实现一对多，多对一的关系
+5.外键列和参照列必须创建索引，如不创建，mySQL会自动创建
 ```
 create table test(
 	id int primary_key auto_increment,
@@ -152,7 +135,7 @@ create table test(
 班级表class为主表，在学生表student中加入class_id字段，表示班级id，这样就人为的认为student为class的字表，两张表就关联起来了。
 使用外键在删除表或修改表结构时，会造成很大麻烦。
 
-## where条件
+# where条件
 可以跟在select/update/delete后
 多个where条件，并且的关系，用and链接，或者的关系，用or链接
 
@@ -177,7 +160,7 @@ select * from 表名字
 ```
 关键字顺序不可以颠倒
 
-### where条件参数介绍
+## where条件参数介绍
 以下参数必须跟在where关键字后面，作为where的修饰
 ```
 =：相等
@@ -189,11 +172,11 @@ is [not] null：为null(不为null)
 [not] in：包含在指定范围值内
 ```
 
-#### null
+## null
 使用NULL条件检索时不能使用=号，必须使用is
 `is null`，不能是`= null`
 
-#### like(模糊查询)
+## like(模糊查询)
 ```
 select * from student where stu_name like '%小%';
 %表示可随意替换
@@ -201,21 +184,21 @@ select * from student where stu_name like '%小%';
 %小  表示必须以小结尾，前边随意
 %小% 表示前后都随意，中间包含小
 ```
-#### [not]between ... and ... 
+## [not]between ... and ... 
 范围获取值：
 `select * from user where id between 1 and 15 ;`
 属于where关键字,可用大于号和小于号来实现相同的功能
 
-#### [not]in
+## [not]in
 判断一个字段的值是否与括号内的值相同，括号内是or的关系，即满足任何一个条件，都会显示出来
 `select * from user where id in(1,2,3) ;`
 
-## 多条件组合AND 和 OR 操作符
+# 多条件组合AND 和 OR 操作符
 查询中使用多个条件组合时，可以使用AND 或者 OR
 and：且(必须全部满足)
 or：或(只需满足一个)
 
-## 字符函数
+# 字符函数
  以下字符函数都必须跟在select语句后面
 `concat(str1,str2,...)：拼接字符串`
 
@@ -245,7 +228,7 @@ update 表名字 set num = right(concat('000000',num),10);
 解:因为最短有4位，在每个字符串左侧都拼接6个0，然后从右侧开始截取10个字符
 
 
-## 聚合函数
+# 聚合函数
 聚合函数必须跟在select语句后面
 ```
 一列的和：select sum(列名) from 表名 where ...条件
@@ -255,7 +238,7 @@ update 表名字 set num = right(concat('000000',num),10);
 一列的平均值：select avg(列名) from 表名 where ...条件
 ```
 
-## 数值函数
+# 数值函数
 ```
 ceil():向上取整
 floor():向下取整
@@ -263,7 +246,7 @@ round():四舍五入
 power():幂运算
 ```
 
-## 日期时间函数
+# 日期时间函数
 ```
 now()：当前时间(年月日  时分秒)
 curdate()：当前日期(年月日)
@@ -284,7 +267,7 @@ date_format():日期格式化
 date_format('2017-1-1','%y/%m/%d/')--->2017/1/1
 注：该函数会导致索引失效
 
-## case when
+# case when
 ```
 select case(
 	when sex='0' then '女'
@@ -298,14 +281,14 @@ case when方法，该方法用于查询时替换表中数据，
 如性别字段，里面有0和1，
 查询时可分别把0和1替换成女和男
 
-## 表连接
+# 表连接
 需要注意的点：
 1.查询结果在哪个表
 2.链接哪个表
 3.链接条件
 4.where条件
 
-### 表连接类型
+## 表连接类型
 ```
 mysql中有多种表连接方式：
 1.交叉连接：cross join
@@ -347,7 +330,7 @@ INSERT INTO test.t2(id,t2_str) VALUES (2, 'a');
 INSERT INTO test.t2(id,t2_str) VALUES (3, 'b');
 ```
 
-### 交叉连接
+## 交叉连接
 语法：
 `select * from t1 cross join t2;`
 在mysql中，上述查询语句查询出的结果与如下语句相同:
@@ -369,7 +352,7 @@ t1表的每一行记录，都与t2表中的任意一条数据关联，反之，t
 
 不难发现，使用交叉连接时，任意一张表中的记录多出一行，"交叉连接"的数量都会增长很多，而且得到的数据没有意义，所以通过交叉连接进行多表查询这种方法，应尽量避免使用。
 
-### 内连接
+## 内连接
 概念：
 两张表中同时符合某种条件的数据的组合。
 
@@ -409,7 +392,7 @@ t1_id	t1_str	t2_id	t2_str
 但上面结果中，id号为1的数据只属于t1表，t2表中不存在。所以内连接定义为：
 **同时满足条件的数据的组合**
 
-### 外链接：left join , right join
+## 外链接：left join , right join
 外链接分为两种，左外连接和右外链接。
 
 语法：
@@ -420,7 +403,7 @@ t1_id	t1_str	t2_id	t2_str
 t1_id	t1_str	t2_id	t2_str
 2	2	2	a
 3	3	3	b
-1	1		
+1	1
 ```
 
 通过与内连接的查询结果对比，发现左外连接查出的数据更多一些，多出的一行记录由t1表中的id号为1的记录和一条"空记录"组成。
@@ -435,7 +418,7 @@ t1_id	t1_str	t2_id	t2_str
 
 其实，左外连接一般简称为左连接，left outer join 简写为 left join，右外链接简称为右连接。简写为 right join。
 
-### 联合查询：union 和 union all
+## 联合查询：union 和 union all
 语法：
 `select column_name(s) from table_name1 union select column_name(s) from table_name2`
 
@@ -453,7 +436,7 @@ t1_id	t1_str
 
 使用union将两个结果集集中显示时，重复的数据会被合并为一条，如果想显示全部数据，请使用union all，这也是union和union all的唯一区别。
 
-### 全连接：full join
+## 全连接：full join
 在sql标准中，有一种被称为"全连接"的多表查询方式，但是mysql并不支持全连接。
 不过，我们可以变相的实现"全连接",在mysql中，我们可以使用"left join"、"union"、"right join"的组合实现所谓的"全连接"。
 
@@ -469,10 +452,10 @@ SELECT * FROM t1 right outer join t2 on t1.t1_id = t2.t2_id
 t1_id	t1_str	t2_id	t2_str
 2	2	2	a
 3	3	3	b
-1	1		
+1	1
 ```
 
-## 子查询
+# 子查询
 语法：
 ```
 select column_name from table_name

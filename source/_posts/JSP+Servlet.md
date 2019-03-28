@@ -1,12 +1,12 @@
 ---
-title: JSP+Servlet知识点
+title: JSP+Servlet
 tags: 
 - jsp
 - servlet
 date: 2018-12-06 18:14:43
 ---
 
-### 1.1web应用服务器
+# web应用服务器
 目前较为主流的Web应用服务器
 Tomcat  ------  Apache软件基金会
 Jboss  -------  JBOSS公司
@@ -15,7 +15,7 @@ Websphere -----  IBM公司
 IIS  ------ 微软  支持ASP语言
 Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。
 
-### 1.2 Tomcat目录结构
+## Tomcat目录结构
 bin目录：存放tomcat启动和关闭的脚本文件
 conf目录：存放tomcat各种配置文件
 lib目录：存放tomcat的jar文件
@@ -27,14 +27,14 @@ temp目录：存放临时文件
 Eclipse:右键项目，export，选定路径生成war包，放入Tomcat的webapps目录下
 idea：maven-package
 
-### 1.3tomcat启动与停止
+## tomcat启动与停止
 启动服务：双击tomcat   bin目录下的startup.bat
 最后一行显示：server startup in 1234 ms
 证明启动成功
 打开浏览器，输入localhost:8080，可以看到tomcat默认页面
 停止服务：双击tomcat   bin目录下的shutdown.bat 或直接闭窗口
 
-### 1.4 Tomcat端口设置
+## Tomcat端口设置
 conf目录下server.xml文件进行修改
 在server.xml中找到<Connector></Connector>标签，修改port中的端口号
 注：端口范围：0--65535，其中0--1023，这些端口，一般固定分配给一些服务，
@@ -45,18 +45,19 @@ conf目录下server.xml文件进行修改
 
 动态端口范围：1024 -- 65535  ,尽量不要占用系统端口
 
-### 1.5 Tomcat启动失败常见问题
+## Tomcat启动失败常见问题
 1.JAVA环境变量配置有问题为导致tomcat启动时一闪而过，启动不成功。
 2.tomcat端口被其他程序占用，尝试关闭占用端口的程序或修改tomcat端口
 
-### 1.6 访问Tomcat中的项目
+## 访问Tomcat中的项目
 IP地址:端口号/项目名字
 
-### 1.7 Web项目结构
+## Web项目结构
 在WEB-INF 之外，存放静态资源，可以通过浏览器访问
 WEB-INF中的文件受保护，无法通过浏览器直接访问
 
-### 2.1JSP语法
+# JSP
+## JSP语法
 JSP中可以写JAVA代码
 ```
 <body>
@@ -68,10 +69,10 @@ System.out.print("Hello world");
 <%  JAVA代码  %>
 **单个脚本片段可以是不完整的，但是多个脚本片段整合的结果必须是完整的JAVA语句**
 JSP脚本表达式
-<h1><%=userName%></h1>
-<%=  变量名 %>
+`<h1><%=userName%></h1>`
+`<%=  变量名 %>`
 
-### 2.2JSP对象作用域
+## JSP对象作用域
 作用域：即"信息共享的范围"，就是说一个信息能够在多大范围内有效。
 从大到小排列
 1.Application 在所有应用程序中有效
@@ -87,7 +88,7 @@ JSP脚本表达式
 
 4.Page 当前页面有效
 
-### 2.3JSP内置对象
+## JSP内置对象
 Web服务器(Tomcat)启动后创建的一组对象，不需要使用new关键字直接可以使用该对象。
 内置对象只存在于JSP中
 JSP九大内置对象
@@ -106,7 +107,7 @@ session.setAttribute(key,object);
 参数 key---键、标识，可理解为该属性的名字，
 Session中相同的key所对应的值会覆盖。
 参数 object---该属性的值，可以是任意类型的JAVA对象。
-session.getAttribute(key);  
+session.getAttribute(key);
 获取Session中的一个属性。
 参数key --- 键、标识、可理解为属性名字。
 通过session.setAttribute方法所设置的key来获取对应的值。
@@ -193,7 +194,6 @@ application 对象可将信息保存在服务器中，直到服务器关闭，�
 通过PageContext上下文对象获取当前页面的其他内置对象。
 pageContext.getRequest();获取Request对象。
 pageContext.getResponse();获取Response对象。
-
 ```
 
 8.exception对象
@@ -219,7 +219,7 @@ page 页面对象   作用域 Page
 exception  异常对象  作用域 page
 ```
 
-### 2.4 JSP基本指令
+## JSP基本指令
 1.指令用于对JSP一些设置
 `指令语法  <%@  指令名  属性名 = 值  %>`
 一个指令作用于整个JSP文件
@@ -231,11 +231,11 @@ exception  异常对象  作用域 page
 1.3 tablib指令
 `<%@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>`
 
-### 2.5JSP动作
+## JSP动作
 略
 违反了前后端分离的思想
 
-### 2.6<jsp:include>与<%@include%>区别
+## <jsp:include>与<%@include%>区别
 1.<%@include%>嵌入代码，先合并后编译，把代码原封不动的附加过来
 如页面a.jsp中 有变量 stuName，b.jsp 中同样存在变量 stuName
 使用<%@include%> 将报错，变量名重复
@@ -244,7 +244,7 @@ exception  异常对象  作用域 page
 先编译后合并，合并的是编译后的结果。
 上述情况如使用<jsp:include>则不会报错。
 
-### 3.1 Servlet生命周期
+# Servlet生命周期
 1.装载并创建该Servlet的一个实例对象(实例化)
 2.调用Servlet实例对象的init()方法(初始化)
 3.创建了一个用于封装HTTP请求消息的HttpServletRequest对象和一个代表HTTP响应消息的
@@ -255,7 +255,7 @@ destroy()方法)  (销毁)
 
 实例化 --- 初始化 ---  服务 ---  销毁
 
-### 3.2 转发和重定向的区别
+# 转发和重定向的区别
 重定向(redirect)
 1.发送请求
 2.服务器响应请求，返回给浏览器一个新的地址和响应
@@ -280,7 +280,7 @@ forward:之前request中的变量不会失效，就像把两个页面拼到了�
 3.变不变址
 4.一次两次
 
-### 3.3 JavaBean
+# JavaBean
 特征：
 1.提供了一个默认的无参构造函数
 2.需要被序列化并且实现了Serializanle接口
@@ -295,37 +295,76 @@ forward:之前request中的变量不会失效，就像把两个页面拼到了�
 通过JavaBean可实现数据表之间的关系。
 使用JavaBean可保证开发时的效率以及数据类型的检查。
 
-### 3.4  JSTL标签及EL表达式 
-1.JSTL标签：
+# JSTL标签及EL表达式
+## JSTL标签：
 JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。
 使用方法：
 1.导入JAR包，jstl-1.2.jar。
 2.在JSP页面中导入标签库
 <% tablib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-2.EL表达式
-语法结构:${expression}
-可获取Page,Request,Session,Application作用域中的对象。
-根据setAttribute的key来获取。
-获取request中的student对象：
-${requestScope.student}
-获取request中的student对象的name属性
-${requestScope.student.name}
+## EL表达式
+语法结构:
+`${expression}`
+可获取Page,Request,Session,Application作用域中的对象，根据setAttribute的key来获取。
+获取request中的student对象：`${requestScope.student}`
+获取request中的student对象的name属性：`${requestScope.student.name}`
 
-![](https://github.com/ayanamiq/images/blob/master/images/%E5%B8%B8%E7%94%A8JSTL%E6%A0%87%E7%AD%BE.png?raw=true)
+常用的JSTL标签：
+JSTL可嵌套EL表达式：
+### <c:if>
+```
+<c:if test="${requestScope.student != null}"
+    <p>request中的student对象不为空</p>
+</c:if>
+```
+注意：只有if标签，没有else标签
 
-3.jstl实战
-![](https://github.com/ayanamiq/images/blob/master/images/jstl%E5%AE%9E%E6%88%98.png?raw=true)
-![](https://github.com/ayanamiq/images/blob/master/images/jstl%E5%AE%9E%E6%88%981.png?raw=true)
+### <c:choose>
+<c:choose>本身只当做<c:when>和<c:otherwise>的父标签，不能单独使用。配套使用替代if/else结构
+```
+<c:choose>
+    <c:when test="${requestScope.student != null}">
+        <p>request中的student对象不为空</p>
+    </c:when>
+    <c:otherwise>
+        <p>request中的student对象为空</p>
+    </c:otherwise>
+</c:choose>
+```
+### <c:forEach>
+用于遍历集合中的数据
+<c:forEach var="i" items="${requestScope.list}">
+    <p>${i.name}</p>
+</c:forEach>
+假设后台代码 request.setAttribute(“list”,list);
+那么每一次循环标识“i”都代表了一个student对象。
+通过“i” 可以获取到student中的所有属性。
 
-### 3.6 MVC模式 
+## jstl实战
+### 判断选中了哪一个下拉选的值
+方法1：
+![](JSP+Servlet/1.png)
+方法2：
+![](JSP+Servlet/2.png)
+
+### 单选框
+![](JSP+Servlet/3.jpg)
+
+### 复选框
+需要引入另外一个标签库：
+`<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>`
+调用方法`fn.contains`判断是否包含
+![](JSP+Servlet/4.png)
+
+# MVC模式 
 MVC全名是Model View Controller
 模型(model)－视图(view)－控制器(controller)
 MVC是一个框架模式，它强制性的使应用程序的输入、处理和输出分开。使用MVC应用程序被分成三个核心部件：模型、视图、控制器。它们各自处理自己的任务。最典型的MVC就是JSP + servlet + javabean的模式。
 MVC工作原理
 用户发送一个请求到控制器，控制器处理业务逻辑，如需要与数据库交互会用到相应的模型，业务逻辑处理完毕后返回一个结果（视图）给用户。
 
-### 3.7 项目开发三层模式
+# 项目开发三层模式
 数据访问层（最下层）
 		主要负责数据库的访问，与数据进行交互，增删改查代码。
 	业务逻辑层（中间层）
@@ -341,23 +380,19 @@ MVC工作原理
 	缺点：
 1. 降低了系统的性能。这是不言而喻的。如果不采用分层式结构，很多业务可以直接造访数据库，以此获取相应的数据，如今却必须通过中间层来完成。
 2. 有时会导致级联的修改。这种修改尤其体现在自上而下的方向。如果在表示层中需要增加一个功能，为保证其设计符合分层式结构，可能需要在相应的业务逻辑层和数据访问层中都增加相应的代码。
-![](https://github.com/ayanamiq/images/blob/master/images/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%89%E5%B1%82%E6%A8%A1%E5%BC%8F.png?raw=true)
+![](JSP+Servlet/5.png)
+
 注意：代码不可跨层调用。
-与MVC模式不用,MVC属于程序语言的设计模式。
-三层模式为实际开发模式。
+与MVC模式不用，MVC属于程序语言的设计模式。三层模式为实际开发模式。
 
-### 3.8 分页
+# 分页
 分页所需条件
-		1.每页显示数（自定义）
-		2.当前页面，初识为1，第一页（通过页面JSP传递得到）
-	   3.总页数（计算得到）
-			总页数 = 总条数/每页显示数
-			如果总条数/每页显示数为整数 那么页数刚好
-			如果不为整数 需要页数+1  如果总条数/每页显示 +1
-		4.总条数（查询数据库得到）
-		5.获取数据起始位置，用作LIMIT 关键字的第一个参数（计算得到）
-		公式 ： （ 当前页数 - 1 ） *  每页显示数
-
-### 4.1
-Servlet 文件上传
-略
+1.每页显示数（自定义）
+2.当前页面，初识为1，第一页（通过页面JSP传递得到）
+3.总页数（计算得到）
+	总页数 = 总条数/每页显示数
+	如果总条数/每页显示数为整数 那么页数刚好
+	如果不为整数 需要页数+1  如果总条数/每页显示 +1
+4.总条数（查询数据库得到）
+5.获取数据起始位置，用作LIMIT 关键字的第一个参数（计算得到）
+公式 ： （ 当前页数 - 1 ） *  每页显示数

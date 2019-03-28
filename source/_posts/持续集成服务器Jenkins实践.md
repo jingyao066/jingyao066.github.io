@@ -4,15 +4,15 @@ tags: 其他
 date: 2018-12-09 16:54:53
 ---
 
-### 一、简介
+# 简介
 Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。
 本文描述的是Jenkins本地部署以及远程部署等功能的实现。
 
-### 二、安装部署
+# 安装部署
 Jenkins几乎可以在任何平台（包括docker）上运行，我们采用比较熟悉的方式进行安装，即将Jenkins部署在Tomcat容器中，使用默认的8080端口，无需任何配置，直接启动tomcat即可。
 下载步骤，请参考：http://www.jenkins.org.cn/821.html
 
-### 三、Jenkins配置
+# Jenkins配置
 访问Jenkins地址，初次进入会要求输入密码，密码已经显示在页面中。
 一般情况下，Linux上的位置：
 /root/.jenkins/secrets/initialAdminPassword
@@ -41,7 +41,7 @@ Install suggested plugins
 ![](持续集成服务器Jenkins实践/4.png)
 简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。
 
-### 四、持续集成配置
+# 持续集成配置
 首先需要进行一系列环境的安装或配置，例如git/svn，maven，jdk，远程server等，本文默认以上环境都是安装好的。
 
 进入系统设置，选择全局工具配置，填入本机相关安装路径：
@@ -54,7 +54,7 @@ git:
 maven:
 ![](持续集成服务器Jenkins实践/7.png)
 
-#### 1.本地部署
+## 本地部署
 本地部署是指：部署运行在本机的服务，若项目部署在其他服务器，则需要远程部署。
 
 在Jenkins主页选择新建任务，选择构建一个maven项目。需要说明的是，由于公司项目结构为父子项目
@@ -119,7 +119,7 @@ W下有天气图标，代表近期构建状态：
 多云：少数失败，以此类推
 
 
-#### 2.远程部署
+## 远程部署
 远程部署是由于项目所有的服务并不都部署在本机，有可能部署在其他服务器，所以需要远程部署。
 
 远程部署需要配置远程服务器的ip地址和用户凭证。
@@ -183,7 +183,7 @@ done
 ![](持续集成服务器Jenkins实践/15.png)
 ![](持续集成服务器Jenkins实践/16.png)
 
-### 4.权限分配
+# 权限分配
 考虑到Jenkins中的模块可能需要交给不同的人去维护，例如h5、后台系统、api等等，我们可以给不同的账号分配不同的角色，实现权限分配。
 
 安装插件：Role-based Authorization Strategy

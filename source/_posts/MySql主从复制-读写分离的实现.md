@@ -4,53 +4,51 @@ tags: mysql
 date: 2018-12-06 18:09:14
 ---
 
-### 准备
-1.本机，安装mysql
-2.一台虚拟机，或内网中的另一台主机，安装mysql 需要两台机器互相可以ping通
+# 准备
+- 本机，安装mysql
+- 一台虚拟机，或内网中的另一台主机，安装mysql 需要两台机器互相可以ping通
 
-### 主数据库配置
-1.打开my.ini    (linux下为 /etc/my.cnf)
-2.在mysqld下增加如下配置
+# 主数据库配置
+- 打开my.ini    (linux下为 /etc/my.cnf)
+- 在mysqld下增加如下配置
+```
 log-bin=mysql-bin #slave会基于此log-bin来做replication
 server-id=1 #master的标示
 binlog-do-db = ms_test #用于master-slave的具体数据库
-3.进入mysql
-增加一个从数据库连接主数据库的用户名和密码
-repl为用户名   10.20.147.111 为 从数据库IP，111111为密码
-`
-GRANT REPLICATION SLAVE ON *.* TO repl@10.20.147.111 IDENTIFIED BY '111111';
-`
-4.重启mysql
-5.进行mysql  输入 show master status
-查看主数据库状态
-![](https://github.com/ayanamiq/images/blob/master/images/master_status.png?raw=true)
-### 配置从数据库
-1.编辑 mysql配置文件  /etc/my.cnf
-2.在文件最后 增加一行
-server-id=2   #slave 从数据库标识
-保存退出 并且重启mysql
-3.进入数据库
- 输入
-10.20.147.110 为主数据库IP
-repl 连接主数据库的用户名
-111111 连接主数据库的密码
-mysql-bin.000003 是 show master status 中file字段的值
-161261 是show master status 中position字段的值
+```
+
+- 进入mysql，增加一个从数据库连接主数据库的用户名和密码，repl为用户名，10.20.147.111为从数据库IP，111111为密码。
+`GRANT REPLICATION SLAVE ON *.* TO repl@10.20.147.111 IDENTIFIED BY '111111';`
+
+- 重启mysql
+- 进行mysql  输入`show master status`，查看主数据库状态
+
+# 配置从数据库
+- 编辑 mysql配置文件  /etc/my.cnf
+- 在文件最后 增加一行`server-id=2   #slave 从数据库标识`，保存退出 并且重启mysql
+- 进入数据库，输入：
+10.20.147.110 为主数据库IP，
+repl 连接主数据库的用户名，
+111111 连接主数据库的密码，
+mysql-bin.000003 是 show master status 中file字段的值，
+161261 是show master status 中position字段的值。
+```
 CHANGE MASTER TO
-MASTER_HOST='10.20.147.110',   
+MASTER_HOST='10.20.147.110', 
 MASTER_USER='repl',
 MASTER_PASSWORD='111111',
 MASTER_LOG_FILE='mysql-bin.000003',
 MASTER_LOG_POS=161261;
-4.启动从数据库
-start slave;
-5.查看从数据库状态
-show slave status \G;
+```
+- 启动从数据库
+`start slave;`
 
-以上，实现了，主从复制，主数据库改变后，从数据库内容也会随之改变。反之亦然。
-读写分离，需要借助代理来实现 
+- 查看从数据库状态
+`show slave status \G;`
 
-### 安装amoeba 代理数据库
+以上，实现了主从复制，主数据库改变后，从数据库内容也会随之改变，反之亦然。
+
+# 安装amoeba 代理数据库
 1.下载压缩包
 2.解压到本地
 3.进入conf文件夹，编辑amoeba.xml配置文件
@@ -60,7 +58,6 @@ show slave status \G;
 
 <!DOCTYPE amoeba:configuration SYSTEM "amoeba.dtd">
 <amoeba:configuration xmlns:amoeba="http://amoeba.meidusa.com/">
-
 	<server>
 		<!-- proxy server绑定的端口 -->
 		<property name="port">8066</property>
@@ -141,7 +138,6 @@ show slave status \G;
 				<!--主数据库密码 -->				
 				<property name="password">root</property>
 				
-				
 			</factoryConfig>
 			
 			<!-- ObjectPool实现类 -->
@@ -155,7 +151,6 @@ show slave status \G;
 				<property name="testWhileIdle">true</property>
 			</poolConfig>
 		</dbServer>
-		
 		
 		<!--从数据库配置-->
 		<dbServer name="server2">
@@ -231,20 +226,23 @@ show slave status \G;
 
 ```
 
-5.进入amoeba  bin文件夹
-双击amoeba.bat启动
-显示
-![](https://github.com/ayanamiq/images/blob/master/images/amoeba.png?raw=true)
-### 测试
+5.进入amoeba  bin文件夹，双击amoeba.bat启动，显示：
+```
+log4f config load completed from file ....
+Server listening...
+```
+证明启动成功。
+
+# 测试
 1.在主数据库建立一个表，从数据库无需建立表
 2.编写一段JDBC代码测试
+
 ```
-3. package msTest.test;
+package msTest.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-
 
 /**
  * 数据库工具类
@@ -301,8 +299,4 @@ public class DBUtil {
 }
 
 ```
-
 4.执行代码，查看主数据库和从数据库，数据相同则证明配置成功
-
-
-

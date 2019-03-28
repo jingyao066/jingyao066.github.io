@@ -222,4 +222,3 @@ MultiPoint |   |  
 MultiLineString |   |  
 MultiPolygon |   |  
 GeometryCollection |   |  
-

@@ -4,7 +4,7 @@ tags: Map
 date: 2018-12-20 14:49:20
 ---
 
-## 概述
+# 概述
 HashMap是一个散列表，它存储的内容是键值对(key-value)映射。
 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。
@@ -16,7 +16,7 @@ HashMap的实例有两个参数影响其性能：**初始容量和加载因子**
 通常，**默认加载因子是0.75**， 这是在时间和空间成本上寻求一种折中。加载因子过高虽然减少了空间开销，但是也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。
 在设置初始容量时应该考虑到映射中所需的条目数及其加载因子，以便最大限度地减少 rehash 操作次数。如果初始容量大于最大条目数除以加载因子，则不会发生 rehash 操作。
 
-## 构造函数
+# 构造函数
 ```
 // 默认构造函数。
 HashMap()
@@ -28,7 +28,7 @@ HashMap(int capacity, float loadFactor)
 HashMap(Map<? extends K, ? extends V> map)
 ```
 
-## API
+# API
 ```
 void                 clear()
 Object               clone()
@@ -45,7 +45,7 @@ int                  size()
 Collection<V>        values()
 ```
 
-## 数据结构
+# 数据结构
 ```
 java.lang.Object
    ↳     java.util.AbstractMap<K, V>
@@ -66,7 +66,7 @@ public class HashMap<K,V>
 　　loadFactor就是加载因子。 
 　　modCount是用来实现fail-fast机制的。
 
-## 源码解析
+# 源码解析
 ```
 package java.util;
 import java.io.*;
@@ -913,13 +913,13 @@ static class Entry<K,V> implements Map.Entry<K,V> {
 从中，我们可以看出 Entry 实际上就是一个单向链表。这也是为什么我们说HashMap是通过拉链法解决哈希冲突的。
 Entry 实现了Map.Entry 接口，即实现getKey(), getValue(), setValue(V value), equals(Object o), hashCode()这些函数。这些都是基本的读取/修改key、value值的函数。
 
-### HashMap中的属性
+# HashMap中的属性
 ```
 public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, Serializable {
     // 序列号
-    private static final long serialVersionUID = 362498820763181265L;    
+    private static final long serialVersionUID = 362498820763181265L;
     // 默认的初始容量是16
-    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;   
+    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
     // 最大容量
     static final int MAXIMUM_CAPACITY = 1 << 30; 
     // 默认的填充因子
@@ -937,7 +937,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     // 存放元素的个数，注意这个不等于数组的长度。
     transient int size;
     // 每次扩容和更改map结构的计数器
-    transient int modCount;   
+    transient int modCount;
     // 临界值 当实际大小(容量*填充因子)超过临界值时，会进行扩容
     int threshold;
     // 填充因子
@@ -945,7 +945,7 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
 }
 ```
 
-### HashMap构造函数
+# HashMap构造函数
 ```
 // 默认构造函数。
 public HashMap() {
@@ -998,8 +998,8 @@ public HashMap(Map<? extends K, ? extends V> m) {
 }
 ```
 
-### HashMap的主要对外接口
-#### clear()
+# HashMap的主要对外接口
+## clear()
 clear()的作用是清空HashMap(),他是通过将所有元素设为null来实现的
 JDK1.6实现方式：
 ```
@@ -1023,7 +1023,7 @@ public void clear() {
 	}
 }
 ```
-#### containsKey()
+## containsKey()
 containsKey() 的作用是判断HashMap是否包含key。
 ```
 public boolean containsKey(Object key) {
@@ -1078,7 +1078,7 @@ final Node<K,V> getNode(int hash, Object key) {
 }
 ```
 
-#### containsValue()
+## containsValue()
 containsValue() 的作用是判断HashMap是否包含“值为value”的元素。
 ```
 public boolean containsValue(Object value) {
@@ -1126,7 +1126,7 @@ public boolean containsValue(Object value) {
     }
 ```
 
-#### entrySet()、values()、keySet()
+## entrySet()、values()、keySet()
 它们3个的原理类似，这里以entrySet()为例来说明。
 entrySet()的作用是返回“HashMap中所有Entry的集合”，它是一个集合。实现代码如下：
 ```
@@ -1245,7 +1245,7 @@ private abstract class HashIterator<E> implements Iterator<E> {
 ```
 当我们通过entrySet()获取到的Iterator的next()方法去遍历HashMap时，实际上调用的是 nextEntry() 。而nextEntry()的实现方式，先遍历Entry(根据Entry在table中的序号，从小到大的遍历)；然后对每个Entry(即每个单向链表)，逐个遍历。
 
-#### get()
+## get()
 get() 的作用是获取key对应的value，它的实现代码如下：
 1.6
 ```
@@ -1301,7 +1301,7 @@ final Node<K,V> getNode(int hash, Object key) {
 }
 ```
 
-#### put()
+## put()
 put() 的作用是对外提供接口，让HashMap对象可以通过put()将“key-value”添加到HashMap中。
 ```
 public V put(K key, V value) {
@@ -1316,7 +1316,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
     // table未初始化或者长度为0，进行扩容
     if ((tab = table) == null || (n = tab.length) == 0)
         n = (tab = resize()).length;
-    // 步骤②：计算index，并对null做处理  
+    // 步骤②：计算index，并对null做处理
     // (n - 1) & hash 确定元素存放在哪个桶中，桶为空，新生成结点放入桶中(此时，这个结点是放在数组中)
     if ((p = tab[i = (n - 1) & hash]) == null)
         tab[i] = newNode(hash, key, value, null);
@@ -1402,7 +1402,7 @@ System.out.println(map.put("a", "AA")); // 打印A
 System.out.println(map.put("a", "AB")); // 打印AA
 ```
 
-#### resize()
+## resize()
 1.在jdk1.8中，resize方法是在hashmap中的键值对大于阀值时或者初始化时，就调用resize方法进行扩容；
 2.每次扩展的时候，都是扩展2倍；
 3.扩展后Node对象的位置要么在原位置，要么移动到原偏移量两倍的位置。
@@ -1482,7 +1482,7 @@ final Node<K,V>[] resize() {
 }
 ```
 
-###  HashMap实现的Cloneable接口
+#  HashMap实现的Cloneable接口
 HashMap实现了Cloneable接口，即实现了clone()方法。
 clone()方法的作用很简单，就是克隆一个HashMap对象并返回。
 ```
@@ -1500,8 +1500,8 @@ public Object clone() {
     }
 ```
 
-## HashMap遍历方式
-### 遍历键值对
+# HashMap遍历方式
+## 遍历键值对
 1.根据entrySet()获取HashMap的“键值对”的Set集合。
 2.通过Iterator迭代器遍历“第一步”得到的集合。
 ```
@@ -1518,7 +1518,7 @@ while(iter.hasNext()) {
 }
 ```
 
-### 遍历键
+## 遍历键
 1.根据keySet()获取HashMap的“键”的Set集合。
 2.通过Iterator迭代器遍历“第一步”得到的集合。
 ```
@@ -1535,7 +1535,7 @@ while (iter.hasNext()) {
 }
 ```
 
-### 遍历值
+## 遍历值
 1.根据value()获取HashMap的“值”的集合。
 2.过Iterator迭代器遍历“第一步”得到的集合。
 ```
@@ -1549,7 +1549,7 @@ while (iter.hasNext()) {
 }
 ```
 
-## HashMap代码示例
+# HashMap代码示例
 ```
 import java.util.Map;
 import java.util.Random;
@@ -1616,4 +1616,3 @@ public class HashMapTest {
 
 至此，HashMap内容总结完毕，有待完善，其中很多源码都是JDK1.6版本的，Java8的HashMap相比之前有较大的优化，
 其中最重要的一个优化就是桶中的元素不再唯一按照链表组合，也可以使用红黑树进行存储，总之，目标只有一个，那就是在安全和功能性完备的情况下让其速度更快，提升性能。
-

@@ -4,6 +4,7 @@ tags: springMVC
 date: 2018-12-08 23:35:36
 ---
 
+# 注解
 ## @Controller
 在SpringMVC中，控制器Controller 负责处理由DispatcherServlet 分发的请求，它把用户请求的数据经过业务处理层处理之后封装成一个Model ，然后再把该Model 返回给对应的View 进行展示。
 
@@ -15,8 +16,8 @@ date: 2018-12-08 23:35:36
 分发处理器将会扫描使用了该注解的类的方法，并检测该方法是否使用了@RequestMapping 注解。
 @Controller 只是定义了一个控制器类，而使用@RequestMapping 注解的方法才是真正处理请求的处理器。
 单单使用@Controller 标记在一个类上还不能真正意义上的说它就是SpringMVC 的一个控制器类，因为这个时候Spring 还不认识它。那么要如何做Spring 才能认识它呢？这个时候就需要我们把这个控制器类交给Spring 来管理。有两种方式：
-（1）在SpringMVC 的配置文件中定义MyController 的bean 对象。
-（2）在SpringMVC 的配置文件中告诉Spring 该到哪里去找标记为@Controller 的Controller 控制器。
+- 在SpringMVC 的配置文件中定义MyController 的bean 对象。
+- 在SpringMVC 的配置文件中告诉Spring 该到哪里去找标记为@Controller 的Controller 控制器。
 
 ```
 <!--方式一-->
@@ -140,7 +141,6 @@ public String testPathVariable(@PathVariable("id")Integer id,
 }
 ```
 
-
 ## @requestParam
 获取请求参数，要写在方法的括号内，两个属性
 ```
@@ -166,7 +166,7 @@ public String testRequestParam(
 
 ## 绑定POJO类型参数（实体类）
 需要将页面元素的name属性与实体类对象属性保持一致，区分大小写，支持级联属性
-![pojo](springMVC基础/1.png)
+![](springMVC基础/1.png)
 
 ## ModelAndView
 如果方法的返回值为ModelAndView，那么可返回页面或数据模型
@@ -205,7 +205,7 @@ public String testMap(Map<String,Object> map){
 }
 ```
 
-## 可接受Servlet API的参数
+## 可接收Servlet API的参数
 ```
 @RequestMapping("/testServletAPI")
 public String testServletAPI(HttpServletRequest request,HttpServletResponse response){
@@ -272,9 +272,9 @@ getContentType方法为视图类型
 render方法为视图内容
 
 4.修改springmvc配置文件，保证包扫描时可以扫描到自定义视图
+配置自动扫描包
 ```
-<!-- 配置自动扫描包>
-<context:component-scan bese-package="com.*" />
+<context:component-scan bese-package="com.*"/>
 ```
 
 5.编写测试方法
@@ -303,9 +303,8 @@ public String testRedirect(){
 }
 ```
 
-
 ## 文件上传
-![pojo](springMVC基础/2.png)
+![](springMVC基础/2.png)
 
 ## SpringMVC拦截器
 拦截器中有三个执行方法：
@@ -321,7 +320,7 @@ public String testRedirect(){
 3.然后倒序执行所有拦截器的postHandle方法和afterCompletion方法
 4.如果第一个拦截器的preHandle方法返回false，那么后续方法都不执行，只执行第一个拦截器的afterCompletion方法
 
-![pojo](springMVC基础/3.png)
+![](springMVC基础/3.png)
 
 ## SpringMVC运行流程(熟记)
 1.用户向服务器发送请求，被DispatcherServlet捕获
@@ -340,4 +339,3 @@ public String testRedirect(){
 7.ViewResolver结合ModelAndView，来渲染视图
 
 8.将渲染结果返回给客户端
-

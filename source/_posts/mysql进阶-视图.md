@@ -4,27 +4,26 @@ tags: mysql
 date: 2018-12-26 18:27:30
 ---
 
-## 视图
+# 视图
 概念：
 视图就是一条SELECT语句执行后返回的结果集。
 视图（view）是一种虚拟存在的表，是一个逻辑表，本身并不包含数据。作为一个select语句保存在数据字典中的。
-
 所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。
 
-### 特性
+# 特性
 视图是对若干张基本表的引用，一张虚表，查询语句执行的结果，不存储具体的数据(基本表数据发生了改变，视图也会跟着改变)
 可以跟基本表一样，进行增删改查操作(ps:增删改操作有条件限制)；
 
-### 作用
+# 作用
 1.方便操作，特别是查询操作，减少复杂的sql语句，增强可读性。
 2.更加安全，数据库授权命令不能限定到特定行和特定列，但是通过合理创建视图，就可以把权限限定到行列级别。
 总而言之，使用视图的大部分情况是为了保障数据安全性，提高查询效率。
 
-### 使用场景
+# 使用场景
 1.权限控制的时候，不希望用户访问表中某些包含敏感信息的列，如salary...
 2.信息来源于多张表关联，可以创建视图获取信息，省的每次都得重新写sql。
 
-### 语法
+# 语法
 语法：
 ```
 CREATE [OR REPLACE] [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
@@ -48,7 +47,7 @@ create view <视图名称>[(column_list)]
 with check option;
 ```
 
-### 创建单表视图
+# 创建单表视图
 ```
 mysql> create view v_F_players(编号,名字,性别,电话)
     -> as
@@ -81,7 +80,7 @@ mysql> select * from  v_F_players;
 5 rows in set (0.02 sec)
 ```
 
-### 创建多表视图
+# 创建多表视图
 ```
 mysql> create view v_match
     -> as 
@@ -107,7 +106,7 @@ mysql> select * from v_match;
 2.如果显式的指定视图的列名就按照指定的列名。
 注意：显示指定视图列名，要求视图名后面的列的数量必须匹配select子句中的列的数量。
 
-### 查看视图
+# 查看视图
 语法：
 `show create view`
 
@@ -119,8 +118,8 @@ mysql> select * from v_match;
 select * from information_schema.views where TABLE_NAME='v_F_players';
 ```
 
-### 视图的更改
-#### 语法：
+# 视图的更改
+## 语法：
 `CREATE OR REPLACE VIEW`
 
 基本格式：
@@ -139,7 +138,7 @@ AS select_statement
 ```
 注意：修改视图是指修改数据库中已存在的表的定义，当基表的某些字段发生改变时，可以通过修改视图来保持视图和基本表之间一致
 
-#### DML操作更新视图
+## DML操作更新视图
 DML：Data Manipulation Language，数据操纵语言，以INSERT、UPDATE、DELETE三种指令为核心，通常也会加上select指令。
 因为视图本身没有数据，因此对视图进行的dml操作最终都体现在基表中。
 ```
@@ -187,10 +186,10 @@ mysql> select * from student;
 ⑨如果基表中有某个具有非空约束的列未出现在视图定义中，则不能做insert操作
 ```
 
-#### 删除视图
+## 删除视图
 删除视图是指删除数据库中已存在的视图，删除视图时，只能删除视图的定义，不会删除数据，也就是说不动基表，语法如下：
 ```
-DROP VIEW [IF EXISTS]   
+DROP VIEW [IF EXISTS]
 view_name [, view_name] ...
 ```
 
@@ -198,7 +197,7 @@ view_name [, view_name] ...
 ` drop view v_student;`
 如果视图不存在，则抛出异常；使用IF EXISTS选项使得删除不存在的视图时不抛出异常。
 
-### 使用WITH CHECK OPTION约束 
+# 使用WITH CHECK OPTION约束 
 对于可以执行DML操作的视图，定义时可以带上WITH CHECK OPTION约束
 
 作用：
@@ -235,7 +234,7 @@ ERROR 1369 (HY000): CHECK OPTION failed 'TENNIS.v_veterans'
 
 利用with check option约束限制，保证更新视图是在该视图的权限范围之内。
 
-#### 嵌套视图
+# 嵌套视图
 定义在另一个视图的上面的视图
 ```
 mysql> create view v_ear_veterans
@@ -255,14 +254,14 @@ mysql> create view v_ear_veterans
 
 　　　　对嵌套视图不检查其底层的视图　
 
-### 定义视图时的其他选项
+# 定义视图时的其他选项
 ```
-CREATE [OR REPLACE]   
-　　[ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]  
-　　[DEFINER = { user | CURRENT_USER }]  
+CREATE [OR REPLACE]
+　　[ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+　　[DEFINER = { user | CURRENT_USER }]
 　　[SQL SECURITY { DEFINER | INVOKER }]
-VIEW view_name [(column_list)]  
-AS select_statement  
+VIEW view_name [(column_list)]
+AS select_statement
 　　[WITH [CASCADED | LOCAL] CHECK OPTION]
 ```
 
@@ -300,7 +299,7 @@ SQL SECURITY选项决定执行的结果：
 
 2）u1作为定义者定义一个视图，u1对基表没有select权限，u2对视图有访问权限，u2对基表有select权限：u2访问视图的时候是以调用者的身份，此时调用者是u2，可以查询到基表的内容。
 
-### 视图查询语句的处理
+# 视图查询语句的处理
 示例：所有有罚款的球员的信息
 
 创建视图：

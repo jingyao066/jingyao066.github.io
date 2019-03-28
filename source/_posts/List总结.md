@@ -4,7 +4,7 @@ tags: collection
 date: 2018-12-19 16:01:54
 ---
 
-## List概括
+# List概括
 List的框架图
 ![](List总结/1.jpg)
 
@@ -17,7 +17,7 @@ LinkedList 是一个双向链表。它也可以被当作堆栈、队列或双端
 Vector 是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。
 Stack 是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out)。
 
-## 使用场景
+# 使用场景
 如果涉及到“栈”、“队列”、“链表”等操作，应该考虑用List，具体的选择哪个List，根据下面的标准来取舍。
 (01) 对于需要快速插入，删除元素，应该使用LinkedList。
 (02) 对于需要快速随机访问元素，应该使用ArrayList。
@@ -153,9 +153,9 @@ ArrayList : delete 100000 elements from the 1st position use time：1909 ms
 (02) 对于需要快速随机访问元素，应该使用ArrayList。
 (03) 对于“单线程环境” 或者 “多线程环境，但List仅仅只会被单个线程操作”，此时应该使用非同步的类。
 
-## LinkedList和ArrayList性能差异分析
+# LinkedList和ArrayList性能差异分析
 通过查看源码，看看为什么LinkedList插入元素快，ArrayList插入慢。
-### LinkedList.java中向指定位置插入元素的代码如下：
+## LinkedList.java中向指定位置插入元素的代码如下：
 ```
 // 在index前添加节点，且节点的值为element
 public void add(int index, E element) {
@@ -197,7 +197,7 @@ private Entry<E> addBefore(E e, Entry<E> entry) {
 从中，我们可以看出：通过add(int index, E element)向LinkedList插入元素时。先是在双向链表中找到要插入节点的位置index；找到之后，再插入一个新节点。
 双向链表查找index位置的节点时，有一个加速动作：若index < 双向链表长度的1/2，则从前向后查找; 否则，从后向前查找。
 
-### ArrayList.java中向指定位置插入元素的代码。如下：
+## ArrayList.java中向指定位置插入元素的代码。如下：
 ```
 // 将e添加到ArrayList的指定位置
 public void add(int index, E element) {
@@ -272,8 +272,8 @@ private void RangeCheck(int index) {
 ```
 从中，我们可以看出：通过get(int index)获取ArrayList第index个元素时。直接返回数组中index位置的元素，而不需要像LinkedList一样进行查找。
 
-## Vector和ArrayList比较
-### 相同之处
+# Vector和ArrayList比较
+## 相同之处
 1.都是List
 它们都继承于AbstractList，并且实现List接口。ArrayList和Vector的类定义如下：
 ```
@@ -325,7 +325,7 @@ public Vector() {
 
 6.都支持序列化，即可以通过序列化的方式传输
 
-### 不同之处
+## 不同之处
 1.线程安全性不一样
 ArrayList是非线程安全，而Vector是线程安全的，它的函数都是synchronized的，即都是支持同步的。
 ArrayList适用于单线程，Vector适用于多线程。

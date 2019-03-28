@@ -4,12 +4,12 @@ tags: collection
 date: 2018-12-19 15:12:52
 ---
 
-## Stack概述
+# Stack概述
 Stack是栈。它的特性是：先进后出(FILO, First In Last Out)。
 Stack是继承于Vector(矢量队列)的，由于Vector是通过数组实现的，这就意味着，Stack也是通过数组实现的，而非链表。当然，我们也可以将LinkedList当作栈来使用！
 Vector中已经详细介绍过Vector的数据结构，这里就不再对Stack的数据结构进行说明了。
 
-## Stack的继承关系
+# Stack的继承关系
 ```
 java.lang.Object
 ↳     java.util.AbstractCollection<E>
@@ -20,10 +20,10 @@ java.lang.Object
 public class Stack<E> extends Vector<E> {}
 ```
 
-## 构造函数
+# 构造函数
 `Stack()`
 
-### API
+# API
 ```
              boolean       empty()
 synchronized E             peek()
@@ -33,7 +33,7 @@ synchronized int           search(Object o)
 ```
 由于Stack和继承于Vector，因此它也包含Vector中的全部API。
 
-## Stack源码解析
+# Stack源码解析
 ```
 package java.util;
 
@@ -102,7 +102,7 @@ class Stack<E> extends Vector<E> {
        执行pop时(即，取出栈顶元素，并将该元素从栈中删除)，是取出数组末尾的元素，然后将该元素从数组中删除。
 (02) Stack继承于Vector，意味着Vector拥有的属性和功能，Stack都拥有。
 
-## Stack代码示例
+# Stack代码示例
 ```
 import java.util.Stack;
 import java.util.Iterator;
