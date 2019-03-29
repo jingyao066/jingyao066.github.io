@@ -1,7 +1,6 @@
 ---
 title: Collection
 tags: 
-- java
 - collection
 date: 2018-12-06 18:21:41
 ---
