@@ -5,98 +5,21 @@ date: 2018-12-16 22:01:24
 ---
 
 # ArrayList概述
-ArrayList是一个数组队列，相当于动态数组。它继承于AbstractList，实现了List, RandomAccess, Cloneable, java.io.Serializable这些接口。
-1.ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。
-2.ArrayList 实现了RandmoAccess接口，即提供了随机访问功能。可以通过元素的序号快速获取元素对象，这就是快速随机访问。
-3.ArrayList 实现了Cloneable接口，即覆盖了函数clone()，能被克隆。
-4.ArrayList 实现java.io.Serializable接口，这意味着ArrayList支持序列化，能通过序列化去传输。
+ArrayList是一个数组队列，相当于动态数组。它继承于AbstractList，实现了List， RandomAccess， Cloneable， java.io.Serializable这些接口。
+- ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。
+- ArrayList 实现了RandmoAccess接口，即提供了随机访问功能。可以通过元素的序号快速获取元素对象，这就是快速随机访问。
+- ArrayList 实现了Cloneable接口，即覆盖了函数clone()，能被克隆。
+- ArrayList 实现java.io.Serializable接口，这意味着ArrayList支持序列化，能通过序列化去传输。
 
-每个ArrayList实例都有一个容量，该容量是指用来存储列表元素的数组的大小。它总是至少等于列表的大小。随着向ArrayList中不断添加元素，其容量也自动增长。自动增长会带来数据向新数组的重新拷贝，
-因此，如果可预知数据量的多少，可在构造ArrayList时指定其容量。在添加大量元素前，应用程序也可以使用ensureCapacity操作来增加ArrayList实例的容量，这可以减少递增式再分配的数量。 
-
+每个ArrayList实例都有一个容量，该容量是指用来存储列表元素的数组的大小，它总是至少等于列表的大小。
+随着向ArrayList中不断添加元素，其容量也自动增长。自动增长会带来数据向新数组的重新拷贝，因此，如果可预知数据量的多少，可在构造ArrayList时指定其容量。
+在添加大量元素前，应用程序也可以使用ensureCapacity操作来增加ArrayList实例的容量，这可以减少递增式再分配的数量。 
 注：建议在单线程中才使用ArrayList，而在多线程中可以选择Vector或者CopyOnWriteArrayList。
 
-# API
-```
-// Collection中定义的API
-boolean             add(E object)
-boolean             addAll(Collection<? extends E> collection)
-void                clear()
-boolean             contains(Object object)
-boolean             containsAll(Collection<?> collection)
-boolean             equals(Object object)
-int                 hashCode()
-boolean             isEmpty()
-Iterator<E>         iterator()
-boolean             remove(Object object)
-boolean             removeAll(Collection<?> collection)
-boolean             retainAll(Collection<?> collection)
-int                 size()
-<T> T[]             toArray(T[] array)
-Object[]            toArray()
-// AbstractCollection中定义的API
-void                add(int location, E object)
-boolean             addAll(int location, Collection<? extends E> collection)
-E                   get(int location)
-int                 indexOf(Object object)
-int                 lastIndexOf(Object object)
-ListIterator<E>     listIterator(int location)
-ListIterator<E>     listIterator()
-E                   remove(int location)
-E                   set(int location, E object)
-List<E>             subList(int start, int end)
-// ArrayList新增的API
-Object               clone()
-void                 ensureCapacity(int minimumCapacity)
-void                 trimToSize()
-void                 removeRange(int fromIndex, int toIndex)
-```
-
-# ArrayList源码解析
-1.类结构
-```
-//通过ArrayList实现的接口可知，其支持随机访问，能被克隆，支持序列化
-public class ArrayList<E> extends AbstractList<E>
-        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
-{
-    //序列版本号
-    private static final long serialVersionUID = 8683452581122892189L;
-
-　　//默认初始容量
-    private static final int DEFAULT_CAPACITY = 10;
-
-    //被用于空实例的共享空数组实例
-    private static final Object[] EMPTY_ELEMENTDATA = {};
-
-    //被用于默认大小的空实例的共享数组实例。其与EMPTY_ELEMENTDATA的区别是：当我们向数组中添加第一个元素时，知道数组该扩充多少。
-    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
-
-    /**
-     * Object[]类型的数组，保存了添加到ArrayList中的元素。ArrayList的容量是该Object[]类型数组的长度
-     * 当第一个元素被添加时，任何空ArrayList中的elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA将会被
-     * 扩充到DEFAULT_CAPACITY（默认容量）。
-     */
-    transient Object[] elementData; //非private是为了方便嵌套类的访问
-
-    // ArrayList的大小（指其所含的元素个数）
-    private int size;
-
-    ...... 
-
-}
-```
-
-ArrayList包含了两个重要的对象：elementData 和 size。
-1.elementData 是"Object[] 类型的数组"，它保存了添加到ArrayList中的元素。实际上，elementData是个动态数组，
-我们能通过构造函数 ArrayList(int initialCapacity)来执行它的初始容量为initialCapacity；如果通过不含参数的构造函数ArrayList()来创建 ArrayList，
-则elementData的容量默认是10。elementData数组的大小会根据ArrayList容量的增长而动态的增长，具 体的增长方式，请参考源码分析中的ensureCapacity()函数。
-
-2.size 则是动态数组的实际大小。
-
-# 构造函数
+# ArrayList构造函数
 ArrayList提供了三种方式的构造器，可以构造一个默认初始容量为10的空列表、构造一个指定初始容量的空列表以及构造一个包含指定collection的元素的列表，这些元素按照该collection的迭代器返回的顺序排列的。
 ```
-/**
+    /**
      * 构造一个指定初始容量的空列表
      * @param  initialCapacity  ArrayList的初始容量
      * @throws IllegalArgumentException 如果给定的初始容量为负值
@@ -136,19 +59,115 @@ ArrayList提供了三种方式的构造器，可以构造一个默认初始容�
     }
 ```
 
-ArrayList构造一个默认初始容量为10的空列表：
-1) 初始情况：elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}； size = 0;
-2) 当向数组中添加第一个元素时，通过add(E e)方法中调用的ensureCapacityInternal(size + 1)方法，即ensureCapacityInternal(1)；
-3) 在ensureCapacityInternal(int minCapacity)方法中，可得的minCapacity=DEFAULT_CAPACITY=10，然后再调用ensureExplicitCapacity(minCapacity)方法，即ensureExplicitCapacity(10)；
-4) 在ensureExplicitCapacity(minCapacity)方法中调用grow(minCapacity)方法，即grow(10)，此处为真正具体的数组扩容的算法，在此方法中，通过elementData = Arrays.copyOf(elementData, 10)具体实现了elementData数组初始容量为10的构造。
+ArrayList构造一个默认初始容量为10的空列表过程：
+- 初始情况：elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}； size = 0;
+- 当向数组中添加第一个元素时，通过add(E e)方法中调用的ensureCapacityInternal(size + 1)方法，即ensureCapacityInternal(1)；
+- 在ensureCapacityInternal(int minCapacity)方法中，可得的minCapacity=DEFAULT_CAPACITY=10，然后再调用ensureExplicitCapacity(minCapacity)方法，即ensureExplicitCapacity(10)；
+- 在ensureExplicitCapacity(minCapacity)方法中调用grow(minCapacity)方法，即grow(10)，此处为真正具体的数组扩容的算法，在此方法中，通过elementData = Arrays.copyOf(elementData, 10)具体实现了elementData数组初始容量为10的构造。
+
+# API
+```
+// Collection中定义的API
+boolean             add(E object)
+boolean             addAll(Collection<? extends E> collection)
+void                clear()
+boolean             contains(Object object)
+boolean             containsAll(Collection<?> collection)
+boolean             equals(Object object)
+int                 hashCode()
+boolean             isEmpty()
+Iterator<E>         iterator()
+boolean             remove(Object object)
+boolean             removeAll(Collection<?> collection)
+boolean             retainAll(Collection<?> collection)
+int                 size()
+<T> T[]             toArray(T[] array)
+Object[]            toArray()
+// AbstractCollection中定义的API
+void                add(int location, E object)
+boolean             addAll(int location, Collection<? extends E> collection)
+E                   get(int location)
+int                 indexOf(Object object)
+int                 lastIndexOf(Object object)
+ListIterator<E>     listIterator(int location)
+ListIterator<E>     listIterator()
+E                   remove(int location)
+E                   set(int location, E object)
+List<E>             subList(int start, int end)
+// ArrayList新增的API
+Object               clone()
+void                 ensureCapacity(int minimumCapacity)
+void                 trimToSize()
+void                 removeRange(int fromIndex, int toIndex)
+```
+
+# ArrayList数据结构
+## ArrayList的继承关系
+```
+java.lang.Object
+   ↳     java.util.AbstractCollection<E>
+         ↳     java.util.AbstractList<E>
+               ↳     java.util.ArrayList<E>
+
+public class ArrayList<E> extends AbstractList<E>
+        implements List<E>, RandomAccess, Cloneable, java.io.Serializable {}
+```
+
+## ArrayList与Collection的关系图
+![](ArrayList/1.jpg)
+
+ArrayList包含了两个重要的对象：elementData 和 size。
+- elementData是"Object[]类型的数组"，它保存了添加到ArrayList中的元素。
+实际上，elementData是个动态数组，我们能通过构造函数ArrayList(int initialCapacity)来确保它的初始容量为initialCapacity。
+如果通过不含参数的构造函数ArrayList()来创建 ArrayList，则elementData的容量默认是10。
+elementData数组的大小会根据ArrayList容量的增长而动态的增长，具体的增长方式，请参考源码分析中的ensureCapacity()函数。
+- size 则是动态数组的实际大小。
+
+除此之外还有一个经常用到的属性就是从AbstractList继承过来的modCount属性，代表ArrayList集合的修改次数。
+
+# ArrayList源码解析
+```
+//通过ArrayList实现的接口可知，其支持随机访问，能被克隆，支持序列化
+public class ArrayList<E> extends AbstractList<E>
+        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+{
+    //序列版本号
+    private static final long serialVersionUID = 8683452581122892189L;
+
+    //默认初始容量
+    private static final int DEFAULT_CAPACITY = 10;
+
+    //被用于空实例的共享空数组实例
+    private static final Object[] EMPTY_ELEMENTDATA = {};
+
+    //被用于默认大小的空实例的共享数组实例。其与EMPTY_ELEMENTDATA的区别是：当我们向数组中添加第一个元素时，知道数组该扩充多少。
+    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
+
+    /**
+     * Object[]类型的数组，保存了添加到ArrayList中的元素。ArrayList的容量是该Object[]类型数组的长度
+     * 当第一个元素被添加时，任何空ArrayList中的elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA将会被
+     * 扩充到DEFAULT_CAPACITY（默认容量）。
+     */
+    transient Object[] elementData; //非private是为了方便嵌套类的访问
+
+    // ArrayList的大小（指其所含的元素个数）
+    private int size;
+
+    ...... 
+
+}
+```
+总结：
+ArrayList 实际上是**通过一个数组去保存数据的**。当我们构造ArrayList时；若使用默认构造函数，则ArrayList的**默认容量大小是10**。
 
 # 调整数组的容量 jdk1.8
 从add()与addAll()方法中可以看出，每当向数组中添加元素时，都要去检查添加元素后的个数是否会超出当前数组的长度，如果超出，数组将会进行扩容，以满足添加数据的需求。
 数组扩容实质上是通过私有的方法ensureCapacityInternal(int minCapacity) -> ensureExplicitCapacity(int minCapacity) -> grow(int minCapacity)来实现的，但在jdk1.8中，
 向用户提供了一个public的方法ensureCapacity(int minCapacity)使用户可以手动的设置ArrayList实例的容量，以减少递增式再分配的数量。
 此处与jdk1.6中直接通过一个公开的方法ensureCapacity(int minCapacity)来实现数组容量的调整有区别。
+
 ```
-/**
+    /**
      * public方法，让用户能手动设置ArrayList的容量
      * @param   minCapacity 期望的最小容量
      */
@@ -210,7 +229,7 @@ ArrayList构造一个默认初始容量为10的空列表：
 ```
 
 ## 为什么ArrayList自动容量扩充选择扩充1.5倍？
-这种算法构造出来的新的数组长度的增量都会比上一次大( 而且是越来越大) ，即认为客户需要增加的数据很多，而避免频繁newInstance 的情况。
+这种算法构造出来的新的数组长度的增量都会比上一次大( 而且是越来越大) ，即认为用户需要增加的数据很多，而避免频繁newInstance的情况。
 
 # 添加元素
 ArrayList提供了add(E e)、add(int index, E element)、addAll(Collection<? extends E> c)、addAll(int index, Collection<? extends E> c)这些添加元素的方法。
@@ -511,7 +530,8 @@ trimToSize()、size()、isEmpty()、clone()、toArray()、toArray(T[] a)
     }
 ```
 
-支持序列化的写入函数writeObject(java.io.ObjectOutputStream s)和读取函数readObject(java.io.ObjectInputStream s)
+支持序列化的写入函数：writeObject(java.io.ObjectOutputStream s)
+读取函数：readObject(java.io.ObjectInputStream s)
 ```
 //序列化：将ArrayList的“大小，所有的元素值”都写入到输出流中
     private void writeObject(java.io.ObjectOutputStream s)
@@ -578,20 +598,17 @@ ListIterator<String> lIter = list.listIterator();
     　　System.out.println(lIter.previous());
 　　}
 ```
-
-**Iterator与ListIterator主要的区别：**
-①Iterator可以应用于所有的集合，Set、List和Map和这些集合的子类型。而ListIterator只能用于List及其子类型；
-
-②Iterator只能实现顺序向后遍历，ListIterator可实现顺序向后遍历和逆向（顺序向前）遍历；
-
-③Iterator只能实现remove操作，ListIterator可以实现remove操作，add操作，set操作。
+Iterator与ListIterator主要的区别：
+- Iterator可以应用于所有的集合，Set、List和Map和这些集合的子类型。而ListIterator只能用于List及其子类型；
+- Iterator只能实现顺序向后遍历，ListIterator可实现顺序向后遍历和逆向（顺序向前）遍历；
+- Iterator只能实现remove操作，ListIterator可以实现remove操作，add操作，set操作。
 
 ## 随机访问，通过索引值去遍历，由于ArrayList实现了RandomAccess接口
 ```
 int size = list.size();
     for (int i=0; i<size; i++) 
     {
-        System.out.println(list.get(i));        
+        System.out.println(list.get(i));
     }
 ```
 

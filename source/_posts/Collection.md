@@ -13,29 +13,31 @@ Java集合工具包框架图(如下)：
 
 # 大致说明
 看上面的框架图，先抓住它的主干，即Collection和Map。
-1.Collection是一个接口，是高度抽象出来的集合，它包含了集合的基本操作和属性。
+1. Collection是一个接口，是高度抽象出来的集合，它包含了集合的基本操作和属性。
 Collection包含了List和Set两大分支。
-  (01) List是一个有序的队列，每一个元素都有它的索引。第一个元素的索引值是0。
-          List的实现类有LinkedList, ArrayList, Vector, Stack。
+-  List是一个有序的队列，每一个元素都有它的索引。第一个元素的索引值是0。
+    List的实现类有LinkedList, ArrayList, Vector, Stack。
 
-  (02) Set是一个不允许有重复元素的集合。
-          Set的实现类有HastSet和TreeSet。HashSet依赖于HashMap，它实际上是通过HashMap实现的；TreeSet依赖于TreeMap，它实际上是通过TreeMap实现的。
-2.Map是一个映射接口，即key-value键值对。Map中的每一个元素包含“一个key”和“key对应的value”。
-AbstractMap是个抽象类，它实现了Map接口中的大部分API。而HashMap，TreeMap，WeakHashMap都是继承于AbstractMap。
+-  Set是一个不允许有重复元素的集合。
+    Set的实现类有HastSet和TreeSet。
+    HashSet依赖于HashMap，它实际上是通过HashMap实现的；
+    TreeSet依赖于TreeMap，它实际上是通过TreeMap实现的。
+2. Map是一个映射接口，即key-value键值对。Map中的每一个元素包含“一个key”和“key对应的value”。
+    AbstractMap是个抽象类，它实现了Map接口中的大部分API。而HashMap，TreeMap，WeakHashMap都是继承于AbstractMap。
    Hashtable虽然继承于Dictionary，但它实现了Map接口。
    
-3.接下来，再看Iterator。
+3. 接下来，再看Iterator。
 它是遍历集合的工具，即我们通常通过Iterator迭代器来遍历集合。我们说Collection依赖于Iterator，是因为Collection的实现类都要实现iterator()函数，返回一个Iterator对象。ListIterator是专门为遍历List而存在的
 
-4.再看Enumeration
+4. 再看Enumeration
 它是JDK 1.0引入的抽象类。作用和Iterator一样，也是遍历集合；但是Enumeration的功能要比Iterator少。在上面的框图中，Enumeration只能在Hashtable, Vector, Stack中使用。
 
-5.最后，看Arrays和Collections。
+5. 最后，看Arrays和Collections。
 它们是操作数组、集合的两个工具类。
 		  
 # 集合(Collection)
 Collection是一个接口，它主要的两个分支是：List 和 Set。
-List和Set都是接口，它们继承于Collection。List是有序的队列，List中可以有重复的元素；而Set是数学概念中的集合，Set中没有重复元素！
+List和Set都是接口，它们继承于Collection。List是有序的队列，List中可以有重复的元素；而Set是数学概念中的集合，Set中没有重复元素。
 List和Set都有它们各自的实现类。
 为了方便，我们抽象出了AbstractCollection抽象类，它实现了Collection中的绝大部分函数；这样，在Collection的实现类中，我们就可以通过继承AbstractCollection省去重复编码。AbstractList和AbstractSet都继承于AbstractCollection，具体的List实现类继承于AbstractList，而Set的实现类则继承于AbstractSet。
 另外，Collection中有一个iterator()函数，它的作用是返回一个Iterator接口。通常，我们通过Iterator迭代器来遍历集合。ListIterator是List接口所特有的，在List接口中，通过ListIterator()返回一个ListIterator对象。
@@ -43,10 +45,10 @@ List和Set都有它们各自的实现类。
 为了方便对多个对象进行操作，集合是存储对象的最常用的一种方式
 集合的出现就是为了存储对象，可以存储任意类型的对象，而且长度可变。
 集合和数组的区别?
-.都是容器
-.数组长度固定，集合长度可变
-.数组可以存储基本数据类型，集合只能存对象
-.数组存储的数据类型是单一的，集合可以存储任意类型的对象
+- 都是容器
+- 数组长度固定，集合长度可变
+- 数组可以存储基本数据类型，集合只能存对象
+- 数组存储的数据类型是单一的，集合可以存储任意类型的对象
 
 # Collection简介
 定义如下：
@@ -94,11 +96,11 @@ AbstractSet的主要作用：它实现了Set接口中的大部分函数。从而
 `public interface Iterator<E> {}`
 
 Iterator是一个接口，它是集合的迭代器。集合可以通过Iterator去遍历集合中的元素。Iterator提供的API接口，包括：
-1.是否存在下一个元素 `boolean hasNext();    //每次next之前，先调用此方法探测是否迭代到终点`
-2.获取下一个元素   `E next();            //返回当前迭代元素 ，同时，迭代游标后移`
-3.删除当前元素 void remove();
+1. 是否存在下一个元素 `boolean hasNext();    //每次next之前，先调用此方法探测是否迭代到终点`
+2. 获取下一个元素   `E next();            //返回当前迭代元素 ，同时，迭代游标后移`
+3. 删除当前元素 void remove();
 ```
-/*删除最近一次已近迭代出出去的那个元素。
+    /*删除最近一次已近迭代出出去的那个元素。
      只有当next执行完后，才能调用remove函数。
      比如你要删除第一个元素，不能直接调用 remove()   而要先next一下( );
      在没有先调用next 就调用remove方法是会抛出异常的。
@@ -119,7 +121,7 @@ while(iter.hashNext()) {
   String s = iter.next(); 
 } 
 ```
-# 手动迭代list，和foreach原理是一样的
+## 手动迭代list，和foreach原理是一样的
 ```
  List<Integer> li = new ArrayList<>();
 	li.add(1);
@@ -134,7 +136,7 @@ while(iter.hashNext()) {
 	}
 ```
 
-# AbstractList中实现的迭代器类解读：
+## AbstractList中实现的迭代器类解读：
 ```
 private class Itr implements Iterator<E> {
     //AbstractList 中实现的迭代器，删除了一些细节。不影响理解,Itr为一个priavate成员内部类
@@ -196,7 +198,7 @@ public class Main {
         }
     }
 ```
-# 自己实现迭代器
+## 自己实现迭代器
 ```
 public class Main {
         public static void main(String[] args) {
@@ -242,25 +244,25 @@ public class Main {
 # Iterable
 `public interface Iterable<T>`
 Iterable是一个接口，Collection接口继承了Iterable(接口扩展)，Iterable中包含
-1.iterator 方法的显示调用，
-2.forEach方法，
-3.spliterator方法
+1. iterator方法的显式调用
+2. forEach方法
+3. spliterator方法
 
 # Iterator和Iterable 区别
 从英文意思去理解：
-Iterable ：故名思议，实现了这个接口的集合对象支持迭代，是可迭代的。able结尾的表示 能...样，可以做...。
-Iterator:   在英语中or 结尾是都是表示 ...样的人 or ... 者。如creator就是创作者的意思。这里也是一样：iterator就是迭代者，我们一般叫迭代器，它就是提供迭代机制的对象，具体如何迭代，都是Iterator接口规范的。
+Iterable：故名思议，实现了这个接口的集合对象支持迭代，是可迭代的。able结尾的表示 **能...样**，**可以做...。**
+Iterator：在英语中or 结尾是都是表示 **...样的人** 或 **... 者**。如creator就是创作者的意思。这里也是一样：iterator就是迭代者，我们一般叫迭代器，它就是提供迭代机制的对象，具体如何迭代，都是Iterator接口规范的。
 
 ## Iterable
 一个集合对象要表明自己支持迭代，能有使用foreach语句的特权，就必须实现Iterable接口，表明我是可迭代的，然而实现Iterable接口，就必需为foreach语句提供一个迭代器。
 这个迭代器是用接口定义的 iterator方法提供的。也就是iterator方法需要返回一个Iterator对象。
 
 ## Iterator
-1.每次在迭代前   ，先调用hasNext()探测是否迭代到终点（本次还能再迭代吗？）。
-2.next方法不仅要返回当前元素，还要后移游标cursor
-3.remove()方法用来删除最近一次已经迭代出的元素
-4.迭代出的元素是原集合中元素的拷贝（重要）
-5.配合foreach使用
+1. 每次在迭代前，先调用hasNext()探测是否迭代到终点（本次还能再迭代吗？）。
+2. next方法不仅要返回当前元素，还要后移游标cursor
+3. remove()方法用来删除最近一次已经迭代出的元素
+4. 迭代出的元素是原集合中元素的拷贝（重要）
+5. 配合foreach使用
 
 为什么一定要实现Iterable接口，为什么不直接实现Iterator接口呢？
 答：看一下JDK中的集合类，比如List一族或者Set一族，都是实现了Iterable接口，但并不直接实现Iterator接口。 仔细想一下这么做是有道理的。 
@@ -288,10 +290,11 @@ abstract int previousIndex()
 abstract void set(E object)
 ```
 
-# 集合的三个特点：
-1.用于存储对象
-2.长度可变
-3.可以存储不同类型的对象
+# 集合的特点
+1. 用于存储对象
+2. 长度可变
+3. 可以存储不同类型的对象
+
 ```
 ---|Collection:(包含list和set子接口)
 	---|List: 有存储顺序, 可重复
@@ -322,58 +325,49 @@ abstract void set(E object)
 ```
 
 # 问题
-1.list和set的区别
+1. list和set的区别
 list允许重复对象，set不允许重复对象
-list是有序容器，保留了每个元素的插入顺序，输出顺序就是插入顺序。
-set是无序容器，无法保证每个元素的存储顺序.
-list可以插入多个null元素，set只允许一个null元素.
+list是有序容器，保留了每个元素的插入顺序，输出顺序就是插入顺序
+set是无序容器，无法保证每个元素的存储顺序
+list可以插入多个null元素，set只允许一个null元素
 
-什么时候该使用什么样的集合
-Collection	我们需要保存若干个对象的时候使用集合。
-List
-如果我们需要保留存储顺序, 并且保留重复元素, 使用List.
-	如果查询较多, 那么使用ArrayList
-	如果存取较多, 那么使用LinkedList
-	如果需要线程安全, 那么使用Vector
+2. 什么时候该使用什么样的集合：
+- List：如果我们需要保留存储顺序, 并且保留重复元素, 使用List
+    + 如果查询较多, 那么使用ArrayList
+    + 如果存取较多, 那么使用LinkedList
+    + 如果需要线程安全, 那么使用Vector
+- Set：如果我们不需要保留存储顺序, 并且需要去掉重复元素, 使用Set
+    + 如果我们需要将元素排序， 那么使用TreeSet
+    + 如果我们不需要排序， 使用HashSet， HashSet比TreeSet效率高
+    + 如果我们需要保留存储顺序，又要过滤重复元素，那么使用LinkedHashSet
 
-Set
-如果我们不需要保留存储顺序, 并且需要去掉重复元素, 使用Set.
-	如果我们需要将元素排序, 那么使用TreeSet
-	如果我们不需要排序, 使用HashSet, HashSet比TreeSet效率高.
-	如果我们需要保留存储顺序, 又要过滤重复元素, 那么使用LinkedHashSet
-
+3. 用什么方法
 看到array，就要想到角标。
 看到link，就要想到first，last。
-看到hash，就要想到hashCode,equals.
-看到tree，就要想到两个接口。Comparable，Comparator。
+看到hash，就要想到hashCode，equals
+看到tree，就要想到两个接口：Comparable，Comparator。
 
-集合方法
-Collection接口的共性方法
-1.add():将指定对象存储到容器中
-  addAll():直接添加一整个集合 
+4. Collection接口的方法：
+- add()：将指定对象存储到容器中
+- addAll()：直接添加一整个集合 
+- remove()：将指定对象从集合中删除
+- removeAll()：直接删除一个集合
+- clear()：清空集合中的所有元素
+- contains()：判断集合中是否包含指定对象
+- collection.size()：返回集合的大小
+- toArray()：集合转换成数组
 
-2.remove():将指定对象从集合中删除
-  removeAll():直接删除一个集合
+5. List特有的方法
+- 增加：List.add(1,"指定元素")，在指定位置添加元素
+- 删除：List.remove(1,"指定元素")，删除指定位置的元素
+- 修改：List.set(1,"指定元素")，修改指定位置的元素
+- 查找：List.get(1,"指定元素")，查找指定位置的元素
+- 求子集合:List<E> subList(int fromIndex, int toIndex) // 不包含toIndex
 
-3.clear():清空集合中的所有元素
-
-4.contains():判断集合中是否包含指定对象
-
-5.collection.size():返回集合的大小
-
-6.toArray():集合转换成数组
-
-List特有的方法：
-1.增加：List.add(1,"指定元素");在指定位置添加元素
-2.删除：List.remove(1,"指定元素");删除指定位置的元素
-3.修改：List.set(1,"指定元素");修改指定位置的元素
-4.查找：List.get(1,"指定元素");查找指定位置的元素
-5.求子集合:List<E> subList(int fromIndex, int toIndex) // 不包含toIndex
-
-LinkedList特有方法：
-1.addFirst():在集合的第一个位置添加元素
-  addLast(): 最后
-2.getFirst():返回此集合的第一个元素
-  getLast():最后	
-3.removeFirst():移除集合的第一个元素
-  removeLast():最后
+6. LinkedList特有方法
+- addFirst()：在集合的第一个位置添加元素
+- addLast()：最后
+- getFirst()：返回此集合的第一个元素
+- getLast()：最后	
+- removeFirst()：移除集合的第一个元素
+- removeLast()：最后
