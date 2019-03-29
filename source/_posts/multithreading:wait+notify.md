@@ -1,5 +1,5 @@
 ---
-title: multithreading:wait+notify
+title: multithreading_wait+notify
 tags: multithreading
 date: 2019-03-25 15:04:27
 ---
