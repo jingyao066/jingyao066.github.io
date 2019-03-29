@@ -437,13 +437,13 @@ hits_stats: "${hits} 相关记录，共耗时 ${time} ms"
 更新索引。
 
 ## 遇到的坑
-1.数据上传到algolia后，发现搜索出来的文章地址是：
+1. 数据上传到algolia后，发现搜索出来的文章地址是：
 `yoursite.com/2018/12/20/map`
 点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。
 解决：
 找到根目录的站点配置文件_config.yml，将url：yoursite.com，替换成自己的站点地址。
 
-2.Please provide an Algolia index name in your hexo _config.yml flle
+2. Please provide an Algolia index name in your hexo _config.yml flle
 根目录的站点配置文件中加入的内容 apiKey/adminApiKey 等等没有缩进，然后一直报上面这个错误...注意缩进,一个tab或四个空格
 
 3.
