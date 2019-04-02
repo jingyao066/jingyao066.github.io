@@ -455,3 +455,7 @@ ERROR >> Read https://npmjs.com/hexo-algolia#api-key for more informations.
 在执行`hexo algolia`前，先在git bush下执行：
 `export HEXO_ALGOLIA_INDEXING_KEY=你的API Key`
 就是你的  Search-Only API Key，网上一堆说在windows cmd下或powershell下执行set或export，然而都不行，必须在git bush下执行。
+
+#  需要注意
+- 文章名不要使用特殊符号，如冒号、下划线、逗号、问号、大于小于( /、\、？、*、:、""、| )等等
+因为创建文章时，会创建同名的文件夹，linux文件夹、文件可以使用一些特殊符号，而windows中就不可以，这样会造成：在linux(我的公司电脑)写的文章，windows(家中电脑)无法拉取代码，因为windows无法创建带特殊符号的文件夹、文件，一定要注意。

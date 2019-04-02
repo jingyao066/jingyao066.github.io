@@ -1,6 +1,8 @@
 ---
 title: HashMap
-tags: Map
+tags: 
+    - Map
+    - 集合
 date: 2018-12-20 14:49:20
 ---
 
@@ -9,7 +11,7 @@ HashMap是一个散列表，它存储的内容是键值对(key-value)映射。
 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。
 
-HashMap的实例有两个参数影响其性能：**初始容量和加载因子**
+HashMap的实例有两个参数影响其性能：**初始容量**和**加载因子**
 容量是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。
 加载因子是哈希表在其容量自动增长之前，可以达到多满的一种尺度。
 当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行rehash操作(即重建内部结构)，从而哈希表将具有两倍的桶数。
@@ -58,13 +60,13 @@ public class HashMap<K,V>
 
 ![](HashMap/1.jpg)
 从图中可以看出： 
-(01) HashMap继承于AbstractMap类，实现了Map接口。Map是"key-value键值对"接口，AbstractMap实现了"键值对"的通用函数接口。 
-(02) HashMap是通过"拉链法"实现的哈希表。它包括几个重要的成员变量：table, size, threshold, loadFactor, modCount。
-　　table是一个Entry[]数组类型，而Entry实际上就是一个单向链表。哈希表的"key-value键值对"都是存储在Entry数组中的。 
-　　size是HashMap的大小，它是HashMap保存的键值对的数量。 
-　　threshold是HashMap的阈值，用于判断是否需要调整HashMap的容量。threshold的值="容量*加载因子"，当HashMap中存储数据的数量达到threshold时，就需要将HashMap的容量加倍。
-　　loadFactor就是加载因子。 
-　　modCount是用来实现fail-fast机制的。
+-  HashMap继承于AbstractMap类，实现了Map接口。Map是"key-value键值对"接口，AbstractMap实现了"键值对"的通用函数接口。 
+- HashMap是通过"拉链法"实现的哈希表。它包括几个重要的成员变量：table, size, threshold, loadFactor, modCount。
+    table是一个Entry[]数组类型，而Entry实际上就是一个单向链表。哈希表的"key-value键值对"都是存储在Entry数组中的。 
+    size是HashMap的大小，它是HashMap保存的键值对的数量。 
+    threshold是HashMap的阈值，用于判断是否需要调整HashMap的容量。threshold的值="容量*加载因子"，当HashMap中存储数据的数量达到threshold时，就需要将HashMap的容量加倍。
+    loadFactor就是加载因子。 
+    modCount是用来实现fail-fast机制的。
 
 # 源码解析
 ```
@@ -833,7 +835,7 @@ public class HashMap<K,V>
 在详细介绍HashMap的代码之前，我们需要了解：HashMap就是一个散列表，它是通过“拉链法”解决哈希冲突的。
 还需要再补充说明的一点是影响HashMap性能的有两个参数：初始容量(initialCapacity) 和加载因子(loadFactor)。容量 是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。加载因子 是哈希表在其容量自动增加之前可以达到多满的一种尺度。当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行 rehash 操作（即重建内部数据结构），从而哈希表将具有大约两倍的桶数。
 
-### HashMap的“拉链法”相关内容
+# HashMap的“拉链法”相关内容
 HashMap数据存储数组
 `transient Entry[] table;`
 HashMap中的key-value都是存储在Entry数组中的。
@@ -1000,7 +1002,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 
 # HashMap的主要对外接口
 ## clear()
-clear()的作用是清空HashMap(),他是通过将所有元素设为null来实现的
+clear()的作用是清空HashMap()，他是通过将所有元素设为null来实现的
 JDK1.6实现方式：
 ```
 public void clear() {
@@ -1384,16 +1386,12 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) {
 }
 ```
 HashMap的数据存储实现原理
-
 流程：
-1. 根据key计算得到key.hash = (h = k.hashCode()) ^ (h >>> 16)；
-
+1. 根据key计算得到key.hash = (h = k.hashCode()) ^ (h >>> 16)
 2. 根据key.hash计算得到桶数组的索引index = key.hash & (table.length - 1)，这样就找到该key的存放位置了：
-① 如果该位置没有数据，用该数据新生成一个节点保存新数据，返回null；
-② 如果该位置有数据是一个红黑树，那么执行相应的插入 / 更新操作；
-③ 如果该位置有数据是一个链表，分两种情况一是该链表没有这个节点，另一个是该链表上有这个节点，注意这里判断的依据是key.hash是否一样：
-
-如果该链表没有这个节点，那么采用尾插法新增节点保存新数据，返回null；如果该链表已经有这个节点了，那么找到该节点并更新新数据，返回老数据。
+    - 如果该位置没有数据，用该数据新生成一个节点保存新数据，返回null；
+    - 如果该位置有数据是一个红黑树，那么执行相应的插入 / 更新操作；
+    - 如果该位置有数据是一个链表，分两种情况一是该链表没有这个节点，另一个是该链表上有这个节点，注意这里判断的依据是key.hash是否一样，如果该链表没有这个节点，那么采用尾插法新增节点保存新数据，返回null；如果该链表已经有这个节点了，那么找到该节点并更新新数据，返回老数据。
 HashMap的put会返回key的上一次保存的数据，比如：
 ```
 HashMap<String, String> map = new HashMap<String, String>();
@@ -1502,8 +1500,8 @@ public Object clone() {
 
 # HashMap遍历方式
 ## 遍历键值对
-1.根据entrySet()获取HashMap的“键值对”的Set集合。
-2.通过Iterator迭代器遍历“第一步”得到的集合。
+1. 根据entrySet()获取HashMap的“键值对”的Set集合。
+2. 通过Iterator迭代器遍历“第一步”得到的集合。
 ```
 // 假设map是HashMap对象
 // map中的key是String类型，value是Integer类型
@@ -1519,8 +1517,8 @@ while(iter.hasNext()) {
 ```
 
 ## 遍历键
-1.根据keySet()获取HashMap的“键”的Set集合。
-2.通过Iterator迭代器遍历“第一步”得到的集合。
+1. 根据keySet()获取HashMap的“键”的Set集合。
+2. 通过Iterator迭代器遍历“第一步”得到的集合。
 ```
 // 假设map是HashMap对象
 // map中的key是String类型，value是Integer类型
@@ -1536,8 +1534,8 @@ while (iter.hasNext()) {
 ```
 
 ## 遍历值
-1.根据value()获取HashMap的“值”的集合。
-2.过Iterator迭代器遍历“第一步”得到的集合。
+1. 根据value()获取HashMap的“值”的集合。
+2. 过Iterator迭代器遍历“第一步”得到的集合。
 ```
 // 假设map是HashMap对象
 // map中的key是String类型，value是Integer类型

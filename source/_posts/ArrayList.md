@@ -1,6 +1,8 @@
 ---
 title: ArrayList
-tags: collection
+tags: 
+    - List
+    - 集合
 date: 2018-12-16 22:01:24
 ---
 

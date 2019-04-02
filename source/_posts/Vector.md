@@ -1,13 +1,15 @@
 ---
 title: Vector
-tags: collection
+tags: 
+    - List
+    - 集合
 date: 2018-12-19 14:38:20
 ---
 
 # Vector概述
 Vector是矢量队列，是JDK1.0版本添加的类，继承于AbstractList，实现了List,RandomAccess,Cloneable这些接口。
-Vector 继承了AbstractList，实现了List；所以，它是一个队列，支持相关的添加、删除、修改、遍历等功能。
-Vector 实现了RandmoAccess接口，即提供了随机访问功能。RandmoAccess是java中用来被List实现，为List提供快速访问功能的。在Vector中，我们即可以通过元素的序号快速获取元素对象；这就是快速随机访问。
+Vector继承了AbstractList，实现了List；所以，它是一个队列，支持相关的添加、删除、修改、遍历等功能。
+Vector实现了RandmoAccess接口，即提供了随机访问功能。RandmoAccess是java中用来被List实现，为List提供快速访问功能的。在Vector中，我们即可以通过元素的序号快速获取元素对象；这就是快速随机访问。
 Vector 实现了Cloneable接口，即实现clone()函数。它能被克隆。
 
 和ArrayList不同，Vector中的操作是线程安全的。
@@ -89,9 +91,9 @@ Vector和collection的关系如下：
 ![](Vector/1.jpg)
 
 Vector的数据结构和ArrayList差不多，它包含了3个成员变量：elementData , elementCount， capacityIncrement。
-(01) elementData 是"Object[]类型的数组"，它保存了添加到Vector中的元素。elementData是个动态数组，如果初始化Vector时，没指定动态数组的>大小，则使用默认大小10。随着Vector中元素的增加，Vector的容量也会动态增长，capacityIncrement是与容量增长相关的增长系数，具体的增长方式，请参考源码分析中的ensureCapacity()函数。
-(02) elementCount 是动态数组的实际大小。
-(03) capacityIncrement 是动态数组的增长系数。如果在创建Vector时，指定了capacityIncrement的大小；则，每次当Vector中动态数组容量增加时>，增加的大小都是capacityIncrement。
+- elementData是"Object[]类型的数组"，它保存了添加到Vector中的元素。elementData是个动态数组，如果初始化Vector时，没指定动态数组的>大小，则使用默认大小10。随着Vector中元素的增加，Vector的容量也会动态增长，capacityIncrement是与容量增长相关的增长系数，具体的增长方式，请参考源码分析中的ensureCapacity()函数。
+- elementCount是动态数组的实际大小。
+- capacityIncrement是动态数组的增长系数。如果在创建Vector时，指定了capacityIncrement的大小，则每次当Vector中动态数组容量增加时，增加的大小都是capacityIncrement。
 
 # Vector源码解析
 ```
@@ -574,33 +576,32 @@ public class Vector<E>
 (03) Vector的克隆函数，即是将全部元素克隆到一个数组中。
 
 # Vector遍历方式
-1.第一种，通过迭代器遍历。即通过Iterator去遍历。
+1. 通过迭代器遍历，即通过Iterator去遍历。
 ```
 Iterator iter = list.iterator();
-while (iter.hasNext())
-{
+while (iter.hasNext()){
 	System.out.println(iter.next());
 }
 ```
 
-2.第二种，随机访问，通过索引值去遍历。由于Vector实现了RandomAccess接口，它支持通过索引值去随机访问元素。
+2. 随机访问，通过索引值去遍历。由于Vector实现了RandomAccess接口，它支持通过索引值去随机访问元素。
 ```
 Integer value = null;
 int size = vec.size();
 for (int i=0; i<size; i++) {
-    value = (Integer)vec.get(i);        
+    value = (Integer)vec.get(i);
 }
 ```
 
-3.第三种，另一种for循环。如下：
+3. foreach
 ```
 Integer value = null;
-for (Integer integ:vec) {
-    value = integ;
+for (Integer i:vec) {
+    value = i;
 }
-``` 
+```
 
-4.第四种，Enumeration遍历。如下： 
+4. Enumeration遍历
 ```
 Integer value = null;
 Enumeration enu = vec.elements();
@@ -609,7 +610,6 @@ while (enu.hasMoreElements()) {
 }
 ```
 
-
 ## 效率对比
 通过
 ```
@@ -617,6 +617,7 @@ long start = System.currentTimeMillis();
 long end = System.currentTimeMillis();
 long interval = end - start;
 ```
+
 我们可以记录各种遍历方式消耗的时间，为节省篇幅，代码此处略过，执行结果如下：
 ```
 iteratorThroughRandomAccess：6 ms
@@ -700,5 +701,4 @@ public class VectorTest {
 }
 ```
 运行结果...略
-
 至此，Vector的全部内容总结完毕。

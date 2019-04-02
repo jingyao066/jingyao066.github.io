@@ -9,6 +9,7 @@ date: 2019-03-16 12:37:30
 # 安装必要指令
 ## gedit
 `sudo apt-get install gedit`
+文件编辑器，比vi、vim好用一些。
 
 # 软件安装
 ## jdk
@@ -301,13 +302,17 @@ sudo gdebi bcompare-4.2.9.23626_amd64.deb
 `sudo apt-get remove bcompare`
 
 # 一些问题
-## 快捷键冲突问题
-在应用程序中搜索"窗口管理器"，然后点击键盘，将"工作区"和"移动窗口至工作去"等与ctrl和alt相关的快捷键全部清除。
-
-- ctrl+alt+s
+## 快捷键
++ 在应用程序中搜索"窗口管理器"，然后点击键盘，将：
+    - "工作区"和"移动窗口至工作去"等与ctrl和alt相关的快捷键全部清除
+    - 在窗口管理器-键盘，找到"显示桌面"，将快捷键改为**super+D**(保持与windows一致)
++ 在应用程序中搜索"键盘"，应用程序和快捷键选项卡，找到：
+    - /usr/bin/xflock4，修改为Super+L
+    - xfce4-appfinder，保留原快捷键
+    - x-terminal-emulator，修改为Alt+/
++ ctrl+alt+s
 这个快捷键是idea的setting的快捷键，但是在mint中被fcitx输入法占用了。
-右键右下角的输入法，选择配置fcitx->全局配置->显示高级选项,找到想修改的快捷键，建议直接置空(选中后，点击esc)。
-
+右键右下角的输入法，选择配置fcitx->全局配置->显示高级选项，找到想修改的快捷键，建议直接置空(选中后，点击esc)。
 
 ## VI模式中上下左右键和回退键出现字母
 `sudo vi /etc/vim/vimrc.tiny`
