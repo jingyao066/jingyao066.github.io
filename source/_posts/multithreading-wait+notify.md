@@ -69,7 +69,7 @@ main continue
 (04) “线程t1”运行之后，通过synchronized(this)获取“当前对象的锁”；接着调用notify()唤醒“当前对象上的等待线程”，也就是唤醒“主线程”。
 (05) “线程t1”运行完毕之后，释放“当前对象的锁”。紧接着，“主线程”获取“t1对象的锁”，然后接着运行。
 
-![](multithreading:wait+notify/1.png)
+![](multithreading-wait+notify/1.png)
 
 t1.wait()应该是让“线程t1”等待；但是，为什么却是让“主线程main”等待了呢？请看jdk文档中关于wait的一段介绍：
 Causes the current thread to wait until another thread invokes the notify() method or the notifyAll() method for this object. 
@@ -135,7 +135,7 @@ main continue
 (04) “线程t1”运行之后，进入了死循环，一直不断的运行。
 (05) 超时3000ms之后，主线程main会进入到“就绪状态”，然后接着进入“运行状态”。
 
-![](multithreading:wait+notify/2.png)
+![](multithreading-wait+notify/2.png)
 
 # wait()和notifyAll()
 通过前面的示例，我们知道 notify() 可以唤醒在此对象监视器上等待的单个线程。
@@ -210,7 +210,7 @@ t1 continue
 (02) 主线程通过sleep(3000)休眠3秒。在主线程休眠3秒的过程中，我们假设"t1", "t2"和"t3"这3个线程都运行了。以"t1"为例，当它运行的时候，它会执行obj.wait()等待其它线程通过notify()或额nofityAll()来唤醒它；相同的道理，"t2"和"t3"也会等待其它线程通过nofity()或nofityAll()来唤醒它们。
 (03) 主线程休眠3秒之后，接着运行。执行 obj.notifyAll() 唤醒obj上的等待线程，即唤醒"t1", "t2"和"t3"这3个线程。 紧接着，主线程的synchronized(obj)运行完毕之后，主线程释放“obj锁”。这样，"t1", "t2"和"t3"就可以获取“obj锁”而继续运行了！
 
-![](multithreading:wait+notify/3.png)
+![](multithreading-wait+notify/3.png)
 
 # 为什么notify(), wait()等函数定义在Object中，而不是Thread中
 Object中的wait()和notify()等函数，和synchronized一样，会对"对象的同步锁"进行操作。

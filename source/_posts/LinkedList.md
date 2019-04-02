@@ -1,16 +1,18 @@
 ---
 title: LinkedList
-tags: collection
+tags: 
+    - List
+    - 集合
 date: 2018-12-19 13:44:51
 ---
 
 # LinkedList概述
-LinkedList 是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
-LinkedList 实现 List 接口，能对它进行队列操作。
-LinkedList 实现 Deque 接口，即能将LinkedList当作双端队列使用。
-LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。
-LinkedList 实现java.io.Serializable接口，这意味着LinkedList支持序列化，能通过序列化去传输。
-LinkedList 是非同步的。
+LinkedList是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
+LinkedList实现List 接口，能对它进行队列操作。
+LinkedList实现Deque 接口，即能将LinkedList当作双端队列使用。
+LinkedList实现了Cloneable接口，即覆盖了函数clone()，能克隆。
+LinkedList实现java.io.Serializable接口，这意味着LinkedList支持序列化，能通过序列化去传输。
+LinkedList是非同步的。
 
 # 构造函数
 ```
@@ -89,17 +91,16 @@ LinkedList和collection的关系如下图：
 ![](LinkedList/1.jpg)
 
 LinkedList的本质是双向链表。
-(01) LinkedList继承于AbstractSequentialList，并且实现了Dequeue接口。 
-(02) LinkedList包含两个重要的成员：header 和 size。
-　　header是双向链表的表头，它是双向链表节点所对应的类Entry的实例。Entry中包含成员变量： previous, next, element。其中，previous是该节点的上一个节点，next是该节点的下一个节点，element是该节点所包含的值。 
-　　size是双向链表中节点的个数。
+- LinkedList继承于AbstractSequentialList，并且实现了Dequeue接口。 
+- LinkedList包含两个重要的成员：header 和 size。
+header是双向链表的表头，它是双向链表节点所对应的类Entry的实例。Entry中包含成员变量： previous, next, element。其中，previous是该节点的上一个节点，next是该节点的下一个节点，element是该节点所包含的值。 
+size是双向链表中节点的个数。
 
 # LinkedList源码解析
 LinkedList实际上是通过双向链表去实现的。既然是双向链表，那么它的顺序访问会非常高效，而随机访问效率比较低。
-既然LinkedList是通过双向链表的，但是它也实现了List接口{也就是说，它实现了get(int location)、remove(int location)等“根据索引值来获取、删除节点的函数”}。LinkedList是如何实现List的这些接口的，如何将“双向链表和索引值联系起来的”？
+既然LinkedList是通过双向链表的，但是它也实现了List接口，也就是说它实现了get(int location)、remove(int location)等"根据索引值来获取、删除节点的函数"。LinkedList是如何实现List的这些接口的，如何将双向链表和索引值联系起来的？
 实际原理非常简单，它就是通过一个计数索引值来实现的。例如，当我们调用get(int location)时，首先会比较“location”和“双向链表长度的1/2”；若前者大，则从链表头开始往后查找，直到location位置；否则，从链表末尾开始先前查找，直到location位置。
 这就是“双线链表和索引值联系起来”的方法。
-
 ```
 package java.util;
 
@@ -742,21 +743,31 @@ public class LinkedList<E>
 }
 ```
 总结：
-(01) LinkedList 实际上是通过双向链表去实现的。
-        它包含一个非常重要的内部类：Entry。Entry是双向链表节点所对应的数据结构，它包括的属性有：当前节点所包含的值，上一个节点，下一个节点。
-(02) 从LinkedList的实现方式中可以发现，它不存在LinkedList容量不足的问题。
-(03) LinkedList的克隆函数，即是将全部元素克隆到一个新的LinkedList对象中。
-(04) LinkedList实现java.io.Serializable。当写入到输出流时，先写入“容量”，再依次写入“每一个节点保护的值”；当读出输入流时，先读取“容量”，再依次读取“每一个元素”。
-(05) 由于LinkedList实现了Deque，而Deque接口定义了在双端队列两端访问元素的方法。提供插入、移除和检查元素的方法。每种方法都存在两种形式：一种形式在操作失败时抛出异常，另一种形式返回一个特殊值（null 或 false，具体取决于操作）。
+- LinkedList 实际上是通过双向链表去实现的。
+它包含一个非常重要的内部类：Entry。Entry是双向链表节点所对应的数据结构，它包括的属性有：当前节点所包含的值，上一个节点，下一个节点。
+- 从LinkedList的实现方式中可以发现，它不存在LinkedList容量不足的问题。
+- LinkedList的克隆函数，即是将全部元素克隆到一个新的LinkedList对象中。
+- LinkedList实现java.io.Serializable。当写入到输出流时，先写入“容量”，再依次写入“每一个节点保护的值”；当读出输入流时，先读取“容量”，再依次读取“每一个元素”。
+- 由于LinkedList实现了Deque，而Deque接口定义了在双端队列两端访问元素的方法。提供插入、移除和检查元素的方法。每种方法都存在两种形式：一种形式在操作失败时抛出异常，另一种形式返回一个特殊值（null 或 false，具体取决于操作）。
 
-总结起来如下表格：
-        第一个元素（头部）                 最后一个元素（尾部）
-        抛出异常        特殊值            抛出异常        特殊值
-插入    addFirst(e)    offerFirst(e)    addLast(e)        offerLast(e)
-移除    removeFirst()  pollFirst()      removeLast()    pollLast()
-检查    getFirst()     peekFirst()      getLast()        peekLast()
+总结起来如下：
+- 第一个元素（头部）
 
-(06) LinkedList可以作为FIFO(先进先出)的队列，作为FIFO的队列时，下表的方法等价：
+操作 | 抛出异常 | 特殊值
+--|--|--
+插入：| addFirst(e) | offerFirst(e)
+移除：| removeFirst() | pollFirst()
+检查：| getFirst() | peekFirst()
+
+- 最后一个元素（尾部）
+
+操作 | 抛出异常 | 特殊值
+--|--|--
+插入：| addLast(e) | offerLast(e)
+移除：| removeLast() | pollLast()
+检查：| getLast() | peekLast()
+
+- LinkedList可以作为FIFO(先进先出)的队列，作为FIFO的队列时，下表的方法等价：
 ```
 队列方法       等效方法
 add(e)        addLast(e)
@@ -767,7 +778,7 @@ element()     getFirst()
 peek()        peekFirst()
 ```
 
-(07) LinkedList可以作为LIFO(后进先出)的栈，作为LIFO的栈时，下表的方法等价：
+- LinkedList可以作为LIFO(后进先出)的栈，作为LIFO的栈时，下表的方法等价：
 ```
 栈方法        等效方法
 push(e)      addFirst(e)
@@ -777,37 +788,38 @@ peek()       peekFirst()
 
 # LinkedList的遍历方式
 LinkedList支持多种遍历方式。建议不要采用随机访问的方式去遍历LinkedList，而采用逐个遍历的方式。
-(01) 第一种，通过迭代器遍历。即通过Iterator去遍历。
+- 第一种，通过迭代器遍历。即通过Iterator去遍历。
 ```
 for(Iterator iter = list.iterator(); iter.hasNext();)
     iter.next();
 ```
-(02) 通过快速随机访问遍历LinkedList
+- 通过快速随机访问遍历LinkedList
 ```
 int size = list.size();
 for (int i=0; i<size; i++) {
     list.get(i); 
 }
 ```
-(03) 通过另外一种for循环来遍历LinkedList
+- 通过foreach来遍历LinkedList
 `for (Integer integ:list);`
-(04) 通过pollFirst()来遍历LinkedList
+
+- 通过pollFirst()来遍历LinkedList
 `while(list.pollFirst() != null);`
-(05) 通过pollLast()来遍历LinkedList
+
+- 通过pollLast()来遍历LinkedList
 `while(list.pollLast() != null);`
-(06) 通过removeFirst()来遍历LinkedList
+
+- 通过removeFirst()来遍历LinkedList
 ```
 try {
-    while(list.removeFirst() != null)
-        ;
+    while(list.removeFirst() != null);
 } catch (NoSuchElementException e) {
 }
 ```
-(07) 通过removeLast()来遍历LinkedList
+- 通过removeLast()来遍历LinkedList
 ```
 try {
-    while(list.removeLast() != null)
-        ;
+    while(list.removeLast() != null);
 } catch (NoSuchElementException e) {
 }
 ```

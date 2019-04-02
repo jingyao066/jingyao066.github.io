@@ -375,4 +375,4 @@ main finish
 (01) 在“主线程main”中通过 new ThreadA("t1") 新建“线程t1”。 接着，通过 t1.start() 启动“线程t1”，并执行t1.join()。
 (02) 执行t1.join()之后，“主线程main”会进入“阻塞状态”等待t1运行结束。“子线程t1”结束之后，会唤醒“主线程main”，“主线程”重新获取cpu执行权，继续运行。
 
-![](multithreading:yield+sleep+join/1.png)
+![](multithreading-yield+sleep+join/1.png)
