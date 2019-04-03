@@ -1,5 +1,5 @@
 ---
-title: 'multithreading:interrupt'
+title: 'multithreading-interrupt'
 tags: multithreading
 date: 2019-03-26 16:50:17
 ---
