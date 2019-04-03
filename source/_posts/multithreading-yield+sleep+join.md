@@ -1,5 +1,5 @@
 ---
-title: 'multithreading:yield+sleep+join'
+title: 'multithreading-yield+sleep+join'
 tags: multithreading
 date: 2019-03-26 15:07:56
 ---

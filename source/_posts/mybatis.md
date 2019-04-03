@@ -87,3 +87,39 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
  </select>
 ```
 
+# 实体类中有内部类
+因为涉及到一对一和一对多，而且是内部类，需要注意写法：
+```
+<resultMap id="ExplodeOrderMap" type="com.tubitu.model.apiDto.ExplodeOrderDto">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  <!--一对一-->
+    <association property="wxGroup" javaType="com.tubitu.model.apiDto.ExplodeOrderDto$WxGroup">
+      <id column="groupId" property="groupId" jdbcType="INTEGER" />
+      <result column="group_name" property="groupName" />
+     <!--一对一对一-->
+      <association property="store" javaType="com.tubitu.model.apiDto.ExplodeOrderDto$InnerStore">
+        <id column="storeId" property="storeId" jdbcType="INTEGER" />
+        <result column="store_name" property="storeName"/>
+        <result column="contacts" property="contacts"/>
+        <result column="mobile" property="mobile"/>
+      </association>
+    </association>
+   <!--一对多-->
+    <collection property="detailList" ofType="com.tubitu.model.apiDto.ExplodeOrderDto$DetailInnerDto">
+      <id column="detailId" property="detailId" jdbcType="INTEGER" />
+      <result column="goods_name" property="goodsName"/>
+      <result column="goods_img" property="goodsImg"/>
+      <result column="goods_price" property="goodsPrice"/>
+      <result column="goods_num" property="goodsNum"/>
+    </collection>
+  </resultMap>
+```
+
+# 映射枚举类
+
