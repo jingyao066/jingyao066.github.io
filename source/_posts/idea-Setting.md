@@ -18,6 +18,9 @@ https://blog.csdn.net/xingbaozhen1210/article/details/81093041
 File->settings->左上角搜索plugin->选择marketplace->输入Mybatis Plugin，回车搜索。
 筛选结果有free mybatis plugin，和mybatis plugin。这里安装free的就好，免费版的已经可以满足日常使用需求。
 
+## 彩色进度条
+Plugins->Marketplace，搜索`Nyan Progress Bar`，一个彩色的进度条。
+
 # 注释模板
 1.类注释模板
 `File ---> Setting ---> Editor ---> File and Code Templates ---> Includes --->File Header`
@@ -34,7 +37,7 @@ idea设置页的下边，有变量的解释
 File ---> Setting ---> Editor ---> LiveTemplates
 点击右边上面那个绿色的+号，选择Template Group双击，然后弹出一个窗口，起名，然后点击ok
 然后在列表中，选择刚才新建的Template Group，再次点击右上角的绿色加号，选择第一个选项 live Template
-![idea-1](https://user-images.githubusercontent.com/21356733/46934277-c0e30300-d089-11e8-81e6-933179e7066b.png)
+![](idea-Setting/1.png)
 注释模板中$...$中间的参数要与你刚才设置的参数名一一对应
 按下 /* 加上你定义的快捷键，再按tab就能生成方法模板了~
 ps:为了只按/+自定义的快捷键，我们可以在模板的顶端，注意要顶格，
@@ -59,8 +62,9 @@ ps:为了只按/+自定义的快捷键，我们可以在模板的顶端，注意
 ```
 
 # 窗口开多后自动关闭
-idea 默认的窗口数量只有10个。
-![tablimit](https://user-images.githubusercontent.com/21356733/47202544-13852d80-d3b0-11e8-9619-62698e96dc34.png)
+idea 默认的窗口数量只有10个，开多了会自动把前边的关掉，可以将多开数量设置wier30。
+File->Settings->Editor->General->Editor Tabs，找到Tab limit，将值设置为30。
+
 
 # idea输入法不跟随
 jetbrains官方已经在2018.2版本修复了这个问题。但是还是需要新版jdk的加持。
@@ -80,3 +84,25 @@ idea界面按ctrl+shift+a，输入switch IDE Boot JDK，选择自己安装的jdk
 比较靠谱的就这两种，还有很多说jdk降级，输入法降级的，不建议。
 
 # 去掉重复代码检查
+
+# 将项目上传到Coding
+- https://coding.net/user
+通过上面地址登陆自己的Coding，鼠标移到右上角的加号，点击项目
+https://coding.net/user/projects/create(或访问该地址，进入到新建项目界面)
+- 输入必填的项目名称和项目地址，拉到最下面添加项目成员，其他全部默认，点击新建项目，然后进入到项目管理界面。
+- 找到右侧的项目地址，复制。
+
+## 将Idea中的项目上传
+- 回到Idea，点击工具栏的VCS，选择`Import into Version Control`，选择`Create Git Repository`，选择想要上传到Coding的项目。
+- 选择到项目根目录(项目名位置)，右键选择Git，选择+ Add。
+- 再次右键项目，选择Git->Repository->remotes，点击加号，name为origin，URL为刚才复制的Coding项目地址。
+- 然后进行第一次提交。点击工具栏的VCS->Commit(Ctrl+T)，输入Commit Message，点击右下角Commit位置的下拉选，选择Commit and push(Ctrl+Alt+K)，然后点击Push。
+然后就其他人就可以拉取代码了。
+
+## 通过命令行上传
+- 在本地项目的根目录打开git bush或Terminal，输入`git init`，初始化仓库。
+- 然后执行`git add .`、`git commit -m 'first commit'`，将项目添加并提交的本地缓存区。
+- 执行`git remote add origin https://git.coding.net/jingyao/123.git`，将本地仓库和远程仓库关联。
+- 然后可以把本地仓库的内容推送到远程仓库上`git push -u origin master`，推送需要输入Coding的用户名和密码。
+- 如果想不是每次推送都输入账号密码，可以添加SSH公钥，参考：https://coding.net/help/doc/git/ssh-key.html
+
