@@ -1,12 +1,15 @@
 ---
-title: gitException
+title: git
 tags: git
 date: 2018-12-25 10:14:46
 ---
 
 记录一些git的异常，以及解决方式
 
-# Please make sure you have the correct access rights and the repository exists.
+# 常用命令
+![](git/git命令.jpg)
+
+# Please make sure you have the correct access rights and the repository exists
 1.重新设置git的名字和邮箱
 ```
 git config --global user.name "yourname"
