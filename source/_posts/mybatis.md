@@ -123,3 +123,53 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
 
 # 映射枚举类
 
+# 简单的SQL注入
+登录界面用户名输入：`or 1=1#`，密码随便输入，密码随便输，有可能进入系统。
+通常我们的登录语句是这样的
+`select * from users where username = '' and password = ''`
+而#在mysql中是注释符，#号后面的内容将呗Mysql视为注释内容，上边的sql会变成这样：
+`select * from users where username = '' or 1=1`
+
+
+# 一些问题
+- #{}和${}的区别是什么
+	`#{}`是预编译处理，`${}`是字符串替换。
+	mybatis在处理`#{}`时，会将sql中的`#{}`替换为?号，然后调用PreparedStatement的set方法来赋值。
+	mybatis在处理`${}`时，就是把`${}`替换成变量的值。
+	使用`#{}`可以有效的防止SQL注入，提高系统安全性。原因在于：预编译机制。预编译完成之后，SQL的结构已经固定，即便用户输入非法参数，也不会对SQL的结构产生影响，从而避免了潜在的安全风险。
+	简单来说，#会给传入的参数加上引号，$会被直接替换成传入的参数。
+
+- 最佳实践中，通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？
+Dao接口，就是人们常说的Mapper接口，接口的全名，就是映射文件中的namespace的值，接口的方法名，就是映射文件中MappedStatement的id值，接口方法内的参数，就是传递给sql的参数。
+Mapper接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为key值，可唯一定位一个MappedStatement，
+举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面id = findStudentById的MappedStatement。
+在Mybatis中，每一个<select>、<insert>、<update>、<delete>标签，都会被解析为一个MappedStatement对象。
+Dao接口里的方法，是不能重载的，因为是全限名+方法名的保存和寻找策略。
+Dao接口的工作原理是JDK动态代理，Mybatis运行时会使用JDK动态代理为Dao接口生成代理proxy对象，代理对象proxy会拦截接口方法，转而执行MappedStatement所代表的sql，然后将sql执行结果返回。
+
+
+- Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？
+第一种是使用<resultMap>标签，逐一定义列名和对象属性名之间的映射关系。
+第二种是使用sql列的别名功能，将列别名书写为对象属性名，比如T_NAME AS NAME，对象属性名一般是name，小写，但是列名不区分大小写，Mybatis会忽略列名大小写，智能找到与之对应对象属性名，
+你甚至可以写成T_NAME AS NaMe，Mybatis一样可以正常工作。有了列名与属性名的映射关系后，Mybatis通过反射创建对象，同时使用反射给对象的属性逐一赋值并返回，那些找不到映射关系的属性，是无法完成赋值的。
+
+- Mybatis是否支持延迟加载？如果支持，它的实现原理是什么？
+Mybatis仅支持association关联对象和collection关联集合对象的延迟加载，association指的就是一对一，collection指的就是一对多查询。
+在Mybatis配置文件中，可以配置是否启用延迟加载lazyLoadingEnabled=true|false。
+它的原理是，使用cglib创建目标对象的代理对象，当调用目标方法时，进入拦截器方法，比如调用a.getB().getName()，拦截器invoke()方法发现a.getB()是null值，
+那么就会单独发送事先保存好的查询关联B对象的sql，把B查询上来，然后调用a.setB(b)，于是a的对象b属性就有值了，接着完成a.getB().getName()方法的调用。这就是延迟加载的基本原理。
+当然了，不光是Mybatis，几乎所有的包括Hibernate，支持延迟加载的原理都是一样的。
+
+- Mybatis的Xml映射文件中，不同的Xml映射文件，id是否可以重复？
+不同的Xml映射文件，如果配置了namespace，那么id可以重复；如果没有配置namespace，那么id不能重复；毕竟namespace不是必须的，只是最佳实践而已。
+原因就是namespace+id是作为Map<String, MappedStatement>的key使用的，如果没有namespace，就剩下id，那么，id重复会导致数据互相覆盖。
+有了namespace，自然id就可以重复，namespace不同，namespace+id自然也就不同。
+
+- Mybatis都有哪些Executor执行器？它们之间的区别是什么？
+Mybatis有三种基本的Executor执行器，SimpleExecutor、ReuseExecutor、BatchExecutor。
+SimpleExecutor：每执行一次update或select，就开启一个Statement对象，用完立刻关闭Statement对象。
+ReuseExecutor：执行update或select，以sql作为key查找Statement对象，存在就使用，不存在就创建，
+用完后，不关闭Statement对象，而是放置于Map<String, Statement>内，供下一次使用。简言之，就是重复使用Statement对象。
+BatchExecutor：执行update（没有select，JDBC批处理不支持select），将所有sql都添加到批处理中（addBatch()），
+等待统一执行（executeBatch()），它缓存了多个Statement对象，每个Statement对象都是addBatch()完毕后，等待逐一执行executeBatch()批处理。与JDBC批处理相同。
+作用范围：Executor的这些特点，都严格限制在SqlSession生命周期范围内。
