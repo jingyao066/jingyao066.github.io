@@ -235,11 +235,15 @@ Version=1.0
 Type=Application
 Terminal=0
 ```
-然后就可以在启动器搜索到navicat，然后可以将该应用添加到桌面。
+然后就可以在启动器搜索到navicat，可以将该应用添加到桌面。
 
 编辑解压目录下的start_navicat文件，修改export LANG=”en_US.UTF-8”，改为export LANG=”zh_CN.UTF-8”。
 进入后发现还是部分乱码，这时需要打开navicat，点击上边选项卡的第五个，为工具，点击下拉选最后一个选项，然后将常规、编辑器、记录三个位置的字体改成能正常显示的字体。
 
+破解：
+在windows破解好后，linux上安装相同版本，然后将windows，Navicat Premium目录下所有文件拷贝到linux，navicat121_premium_cs_x64中的Navicat目录。
+其实就是在windows破解好后，再整体复制到linux替换原文件。不是非要自己的电脑是双系统，可以用别的windows电脑破解再copy。
+可以直接下载如下windows破解版：https://pan.baidu.com/s/10z5Ozjqdhar1bj0YVR0GMA，提取码：z86k，不过这个是Navicat_11版本的。
 
 ## mysql
 安装
