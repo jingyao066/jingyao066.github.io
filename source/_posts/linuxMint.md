@@ -293,6 +293,27 @@ flush privileges;  然后敲回车
 `set global validate_password_policy=0;`
 `set global validate_password_length=4;`
 
+### 配置远程连接
+1. 修改配置文件
+`sudo gedit /etc/mysql/mysql.conf.d/mysqld.cnf`
+找到`bind-address = 127.0.0.1`，将后边的ip修改为：`0.0.0.0`
+
+2. 为需要远程登录的用户赋予权限
+为root用户赋予权限：
+`grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;`
+注意修改`identified by`后边的密码。
+可能会报错：
+` Your password does not satisfy the current policy requirements`
+这时修改密码级别：
+`set global validate_password_policy=0;`
+`set global validate_password_length=4;`
+
+然后执行赋权语句成功，刷新权限：
+`flush privileges;`
+
+重启mysql服务：
+`service mysql restart`
+
 ## beyond compare
 https://www.scootersoftware.com/download.php?zz=kb_linux_install
 查看官网，通过官网提示安装
@@ -304,6 +325,29 @@ sudo gdebi bcompare-4.2.9.23626_amd64.deb
 ```
 卸载
 `sudo apt-get remove bcompare`
+
+## xmind
+官网下载linux客户端：
+https://www.xmind.cn/download/xmind8/
+一定要下载zip版的。
+
+下载破解文件：
+https://pan.baidu.com/s/1DOYU_OuOrIUPJoywsQswVA
+提取码：f3jj
+
+将`XMind_amd64.tar.gz`下的两个文件`XMind.ini`和`XMindCrack.jar`放到`XMind_amd64`目录下。
+
+通过如下命令修改hosts文件：
+`sudo vi /etc/hosts`
+在文件的末尾添加：
+`127.0.0.1 www.xmind.net`
+
+回到解压后的文件夹的根目录，运行`./setup.sh.`，安装好依赖库之后，再次进入XMind_amd64，双击运行XMind文件。
+在XMind主界面依次：`Help(帮助) -> License(序列号)`，复制以下license key填入，邮箱随便填：
+```
+XAka34A2rVRYJ4XBIU35UZMUEEF64CMMIYZCK2FZZUQNODEKUHGJLFMSLIQMQUCUBXRENLK6NZL37JXP4PZXQFILMQ2RG5R7G4QNDO3PSOEUBOCDRYSSXZGRARV6MGA33TN2AMUBHEL4FXMWYTTJDEINJXUAV4BAYKBDCZQWVF3LWYXSDCXY546U3NBGOI3ZPAP2SO3CSQFNB7VVIY123456789012345
+```
+然后激活成功。
 
 # 一些问题
 ## 快捷键
