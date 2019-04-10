@@ -245,3 +245,5 @@ push成功，然后就可以通过idea`ctrl+K`上传，`ctrl+T`拉取代码了�
 - 然后可以把本地仓库的内容推送到远程仓库上`git push -u origin master`，推送需要输入Coding的用户名和密码。
 - 如果想不是每次推送都输入账号密码，可以添加SSH公钥，参考：https://coding.net/help/doc/git/ssh-key.html
 
+# 中文乱码
+
