@@ -220,6 +220,24 @@ https://coding.net/user/projects/create(或访问该地址，进入到新建项�
 - 然后进行第一次提交。点击工具栏的VCS->Commit(Ctrl+T)，输入Commit Message，点击右下角Commit位置的下拉选，选择Commit and push(Ctrl+Alt+K)，然后点击Push。
 然后就其他人就可以拉取代码了。
 
+提交时报错：
+```
+Can't update: no tracked branch
+No tracked branch configured for branch master.
+To make your branch track a remote branch call, for example,
+git branch --set-upstream master origin/master
+```
+尝试建议的指令：
+`git branch --set-upstream master origin/master`
+无果。
+
+解决：
+到项目的根目录，以此执行：
+`git add .`
+`git commit -m 'first commit'`
+`git push -u origin master`
+push成功，然后就可以通过idea`ctrl+K`上传，`ctrl+T`拉取代码了。
+
 ## 通过命令行上传
 - 在本地项目的根目录打开git bush或Terminal，输入`git init`，初始化仓库。
 - 然后执行`git add .`、`git commit -m 'first commit'`，将项目添加并提交的本地缓存区。
