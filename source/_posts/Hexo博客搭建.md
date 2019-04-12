@@ -114,6 +114,70 @@ https://hexo.io/themes/
 http://theme-next.iissnan.com/
 官网说的非常简单明了，请自行参考。
 
+## 切换主题样式
+```
+# Schemes
+scheme: Muse  //默认主题
+#scheme: Mist
+#scheme: Pisces
+#scheme: Gemini
+```
+我比较喜欢MIst
+
+## 设置Menu
+默认只有两个首页和归档，还可以添加`关于、标签、搜索`
+在主题配置文件_config.yml中搜索menu。
+```
+menu:
+  home: / || home  //首页
+  about: /about/ || user  //关于
+  tags: /tags/ || tags  //标签
+  categories: /categories/ || th   //分类
+  archives: /archives/ || archive //归档
+  schedule: /schedule/ || calendar   //日程表
+  sitemap: /sitemap.xml || sitemap   //站点地图
+```
+将需要的标签前边的#号去掉。
+需要的标签页tags、about、categories需要通过hexo指令单独创建。
+
+## 设置动态背景
+搜索`canvas_nest`，将flase改为ture
+
+## 底部隐藏由Hexo强力驱动、主题--NexT.Mist
+主题_config.yml中搜索`power`和`theme`，将下边的`enable`和`version`都改成false
+
+## 更改底部图标
+https://fontawesome.com/v4.7.0/icons/
+在上边的地址找到喜欢的图标。
+主题_config.yml中搜索`footer`，找到下面的icon，替换成自己想要的。
+推荐`snowflake-o`和`heart`
+
+## 修改动画速度
+themes/next/source/js/src/motion.js
+打开上边的js，搜索`duration`，动画速度，值越大速度越慢。
+默认的都是200，建议修改为100，值太低会显得太突兀。
+
+## 阅读全文
+next默认将文章全部现实出来，可以添加阅读全文功能。
+主题_config.yml中搜索`auto_excerpt`，改为true
+
+
+## next主题版本升级(5.1.x-6.x)
+参考官方文档：
+https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/UPDATE-FROM-5.1.X.md
+
+https://github.com/theme-next/hexo-theme-next
+上边的新版本的仓库地址，将源码下载解压到hexo的thems文件夹下，将之改名为`next-reloaded`
+注意：之前的next文件夹不要删除，里面还留了很多需要的配置，而且如果新的主题出现问题，还可以及时切换回就版本。
+
+在Hexo的_config.yml中配置新的主题：
+`theme: next-reloaded`
+
+更新语言配置：
+从 v6.0.3版本起，zh-Hans改名为zh-CN，新版本需要显式修改_config.xml里的language配置，否则语言显示不正确。
+
+然后可以参照之前配置好的next配置文件_config.xml，来配置新的_config.xml。
+
 # 写文章
 `hexo new 'blogName'`
 
