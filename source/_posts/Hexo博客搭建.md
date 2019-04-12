@@ -500,7 +500,11 @@ hits_stats: "${hits} 相关记录，共耗时 ${time} ms"
 `hexo algolia`
 更新索引。
 
-## 遇到的坑
+## next升级6.0导致的问题
+next6.0之后，algolia需要其他配置。
+https://github.com/theme-next/theme-next-algolia-instant-search
+
+## 遇到的问题
 1. 数据上传到algolia后，发现搜索出来的文章地址是：
 `yoursite.com/2018/12/20/map`
 点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。
