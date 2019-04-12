@@ -150,7 +150,7 @@ arguments：命令的参数，有时候选项也带参数。有的命令有参�
 `rm -f myfile.txt`
 此处的-f 就是选项，作用是进行强制删除，也就是没有确认提示。
 
-## 文件和目录操作命令
+## 文件和目录操作
 需掌握的常用命令：cd, ls, locate, less, grep, chmod, cp, mv, mkdir, rm。
 Linux不像 Windows有C盘、D盘这么一说，它只有一个根目录“/”。
 
@@ -390,15 +390,27 @@ rm命令用于将文件或目录删除。如果是链接文件，只是删除了
 如果要删除目录，命令如下：`rm -r 目录名`
 强制删除目录及以下文件：`rm -rf 目录名`
 
-## 文件归档和压缩命令
+## 文件归档和压缩
 需掌握的常用命令：tar，zip，unzip，gzip，gunzip。
 
-### zip/unzip
-zip命令用于打包和压缩文件。
-压缩例子：`zip -r myfile.zip /*`
-当前目录下的所有文件和文件夹全部压缩成myfile，zip文件,－r表示递归压缩子目录下所有文件。
-unzip命令用于解压缩扩展名为.zip的文件。可以在Linux下解压Windows中用WinZip压缩的文件。
-解压例子：`unzip myfile.zip`
+### zip和unzip
+`zip`命令用于打包和压缩文件。
+压缩示例：`zip -r data.zip data`
+将当前目录下的data文件夹和内部文件全部压缩成`data.zip`文件，`-r`表示递归压缩子目录下所有文件。
+`zip -r data.zip *`
+将当前目录下所有文件夹和文件全部压缩成data.zip文件。
+`zip -r data.zip /home/data`
+将/home/data这个目录下的所有文件夹和文件压缩为当前目录下的data.zip
+
+如果现在在/home 这个目录下：
+`zip -r data.zip data`
+
+`unzip`命令用于解压扩展名为`.zip`的文件。
+解压到当前目录：
+`unzip data.zip`
+
+解压到指定目录：
+`unzip data.zip -d /home/wjy/Desktop/`
 
 ### gzip/gunzip
 gzip命令用于压缩".gz"文件，gunzip用于解开被gzip压缩过的文件，这些压缩文件预设最后的扩展名为".gz"。
@@ -418,7 +430,7 @@ tar命令常用选项：
 `-f`：指定的文件名
 `-z`：与-x 联用时调用gzip完成对gz文件的解压
 
-## 系统管理命令
+## 系统管理
 需掌握的常用命令：free, top, shutdown。
 
 ### free
@@ -544,7 +556,7 @@ Flags：任务标志,参考 sched.h
 按o键可以改变列的显示顺序（按小写的a-z可以将相应的列向右移动，而大写的A-Z可以将相应的列向左移动，最后按回车键确定）
 按大写的F或O键，然后按a-z可以将进程按照相应的列进行排序，而大写的R键可以将当前的排序倒转。
  
-## 用户管理命令
+## 用户管理
 要掌握的常用命令：useradd, passwd, su。
 
 ### groupadd
@@ -602,10 +614,10 @@ usermod可用来修改用户帐号的各项设定。可以用来设定用户归�
 ### whoami
 查看当前用户的登录名。
 
-## 网络管理命令
+## 网络管理
 需掌握的常用命令：ping, netstat, ftp,ssh, telnet, wget
 
-### finger (需要安装才可以)
+### finger (需要安装)
 finger需要安装才可以使用
 `yum install finger`
 finger用来查询一台主机上的登录账号的信息，通常会显示用户名、主目录、 停滞时间、登录时间、登录Shell等信息，使用权限为所有用户。
@@ -675,7 +687,7 @@ wget命令用于Linux环境下从www上下载文件，支持 HTTP和FTP协议，
 例如：`[root@localhost]# ifconfig`
 也可以临时修改IP，重启系统后，恢复原始IP。
 
-## 进程管理命令
+## 进程管理
 常用命令：ps, kill。
 
 ### ps
@@ -732,7 +744,7 @@ SIGTERM-15：程序结束(terminate)信号, 与SIGKILL不同的是该信号可�
 一般情况下使用最多的是强杀：
 `kill -9 2629`
 
-## 服务管理命令
+## 服务管理
 ### service
 Service命令用于启动、停止、重启服务程序。
 启动服务命令：`service 服务名 start `
