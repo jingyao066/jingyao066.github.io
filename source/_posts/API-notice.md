@@ -9,56 +9,54 @@ date: 2019-04-03 09:54:28
 - 入参使用`@RequestBody Map<String,String> map`，返回数据使用`@ResponseBody`
 - 规范的使用restful
 - 使用LOGGER.info()打印入参，方便线上调试。
-- 使用ResponseResultUtil返回数据、code码和message。
-    通过code码和message来向前端反馈信息，例如：10000代表成功，message为“请求成功”，20000代表失败，message为“请求失败”，其他自行定义。
+- 使用ResponseUtil返回数据、code码和message。
+    通过code码和message来向前端反馈信息，例如：1000代表成功，message为“请求成功”，2000代表失败，message为“请求失败”，其他自行定义。
 - 使用断言验证参数：`Assert.isTrue()`
-- 大部分方法都需要token，增加了接口的安全性，即必须登陆后，才可以请求数据，token需要前端通过header传递。
+- 用户相关的接口都需要token，token需要前端通过header传递。
 
 示例：
 ```
-    @ResponseBody
-    @PostMapping(value = "getUserInfo")
-    public ResponseResultUtil getUserInfo(@RequestBody Map<String,String> paramMap){
-        LOGGER.info("\n***************\n start getUserinfo\n 获取个人信息 \n paramMap " + paramMap + "\n***************");
-        ResponseResultUtil result = ResponseResultUtil.responseSuccess();
+@ResponseBody
+@PostMapping("/login")
+    public ResponseUtil login(@RequestBody Map<String,String> paramMap){
+        LOGGER.info(
+        "\n***************************************" + "\n" +
+                "start login" + "\n" +
+                "登录" + "\n" +
+                "paramMap = " + paramMap + "\n" +
+                "\n********************************************"
+        );
+        ResponseUtil response = ResponseUtil.success();
+        CodeEnum code = CodeEnum.FAIL;
         try {
             Token token = TokenUtil.getToken(request.getHeader("token"));
             Assert.isTrue(token != null, "token解密失败");
+            
+            code = CodeEnum.ERROR_2001;
+            Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号不可为空");
 
-            UserInfo searchUserInfo = new UserInfo();
-            searchUserInfo.setUserId(token.getId());
-            searchUserInfo = userInfoService.getUserInfo(searchUserInfo);
-            result.setMessage("请求成功");
-            result.setData(userInfo);
-        }catch (Exception e){
+            response = usersService.login(paramMap,response,token);
+        } catch (Exception e) {
             e.printStackTrace();
-            result.setCode(code);
-            result.setMessage(e.getMessage());
+            response.setCode(code);
+            response.setMessage(e.getMessage());
         }
-        LOGGER.info("\n***************\n end getUserinfo\n 返回个人信息 \n result " + result.getData() + "\n***************");
-        return result;
+        LOGGER.info(
+        "\n***************************************" + "\n" +
+                "end getUserInfo" + "\n" +
+                "返回个人信息" + "\n" +
+                "result = " + result.getData() + "\n" +
+                "\n********************************************"
+        );
+        return response;
     }
 ```
 还有另一种打印日志的样式：
 ```
-LOGGER.info(
-"\n***************************************" + "\n" +
-        "start getUserInfo" + "\n" +
-        "获取个人信息" + "\n" +
-        "paramMap = " + paramMap + "\n" +
-        "\n********************************************"
-);
+LOGGER.info("\n***************\n start getUserinfo\n 获取个人信息 \n paramMap " + paramMap + "\n***************");
+LOGGER.info("\n***************\n end getUserinfo\n 返回个人信息 \n result " + result.getData() + "\n***************");
 ```
-```
-LOGGER.info(
-"\n***************************************" + "\n" +
-        "end getUserInfo" + "\n" +
-        "返回个人信息" + "\n" +
-        "result = " + result.getData() + "\n" +
-        "\n********************************************"
-);
-```
-这种样式在填写数据时，比较好分辨，每行都代表一些信息。缺点是占用的篇幅太多。
+两种样式二选一
 
 运行异常时，可以使用logger打印：
 `LOGGER.error("\n********************运行异常********************", e);`
@@ -72,7 +70,6 @@ LOGGER.info(
 protected HttpServletRequest request;
 protected HttpServletResponse response;
 protected HttpSession session;
-
 //初始化
 @ModelAttribute
     public void init(HttpServletRequest request, HttpServletResponse response) {
@@ -82,44 +79,36 @@ protected HttpSession session;
     }
 ```
 
-# ResponseResultUtil
+# ResponseUtil
 ```
-public class ResponseResultUtil<T> implements Serializable {
+public class ResponseUtil<T> implements Serializable {
     private int code;
     private String message;
     private T data;
 
-    public ResponseResultUtil(T data) {
-        this.code = ErrorEnum.ERROR_100000.getCode();
-        this.message = ErrorEnum.ERROR_100000.getMessage();
-        this.data = data;
+    public ResponseUtil() {
+
     }
 
-    public ResponseResultUtil(ErrorEnum error) {
-        this.code = error.getCode();
-        this.message = error.getMessage();
+    public ResponseUtil(CodeEnum code) {
+        this.code = code.getCode();
+        this.message = code.getMessage();
     }
 
-    public ResponseResultUtil(ErrorEnum error, T data) {
-        this.code = error.getCode();
-        this.message = error.getMessage();
-        this.data = data;
+    public static ResponseUtil success() {
+        return new ResponseUtil(CodeEnum.SUCCESS);
     }
 
-    public static ResponseResultUtil responseSuccess() {
-        return new ResponseResultUtil(ErrorEnum.ERROR_100000);
-    }
-
-    public static ResponseResultUtil responseFail() {
-        return new ResponseResultUtil(ErrorEnum.ERROR_200000);
+    public static ResponseUtil fail() {
+        return new ResponseUtil(CodeEnum.FAIL);
     }
 
     public int getCode() {
         return code;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setCode(CodeEnum code) {
+        this.code = code.getCode();
     }
 
     public String getMessage() {
@@ -139,53 +128,39 @@ public class ResponseResultUtil<T> implements Serializable {
     }
 }
 ```
-一般搭配ErrorEnum错误枚举类使用，错误码可自行定义：
+一般搭配CodeEnum状态码枚举类使用，错误码可自行定义：
 ```
-/**
-* 标准错误码枚举
-* 格式 ERROR_ABBCCC
-* A、B、C代表数字
-* A为1 成功   A为2 失败
-* BB 代表错误板块  暂定 00为通用  01为管理后台  02为用户板块   03为家厨板块  04为配送板块
-* CCC 代表具体唯一错误码
-* message作为前台显示
-* desc作为后台日志打印跟踪 如果有参数 用MessageFormat.format(desc,arg1,arg2……)的方式注入
-*/
-public enum ErrorEnum {
+public enum CodeEnum {
 
     //请求成功
-    ERROR_100000(100000, "请求成功"),
+    SUCCESS(1000,"请求成功"),
 
     //请求失败
-    ERROR_200000(200000, "请求失败"),
+    FAIL(2000,"请求失败"),
 
-    //通用错误码
-    ERROR_200001(200001, "全局异常"),
-    ERROR_200002(200002, "全局错误"),
-    //商城错误码
-    ERROR_200020(200020, "库存不足"),
-    //管理后台板块 错误码
-    ERROR_201001(201001, "您的权限不足，请与管理员联系", "后台管理用户{0}执行{1}操作失败"),
-
-    ERROR_200100(200100, "调用api未传token。请先调用登陆接口获取token，然后在http header加入参数token，再调用api"),
-    ERROR_200200(200200, "用户未登陆或者登陆已超时"),
-    ERROR_200300(200300, "token不正确"),
-    ERROR_200400(200400, "已在另一设备登录，请重新登录");
+    //其他错误码
+    ERROR_2001(2001),
+    ERROR_2002(2002),
+    ERROR_2003(2003),
+    ERROR_2004(2004),
+    ERROR_2005(2005),
+    ERROR_2006(2006),
+    ERROR_2007(2007),
+    ERROR_2008(2008),
+    ERROR_2009(2009),
+    ERROR_2010(2010);
 
     private int code;
     private String message;
     private String desc;
 
-    private ErrorEnum(int code, String message) {
+    private CodeEnum(int code){
         this.code = code;
-        this.message = message;
-        this.desc = message;
     }
 
-    private ErrorEnum(int code, String message, String desc) {
+    private CodeEnum(int code, String msg) {
         this.code = code;
-        this.message = message;
-        this.desc = desc;
+        this.message = msg;
     }
 
     public int getCode() {
@@ -208,13 +183,17 @@ public enum ErrorEnum {
     }
 }
 ```
+这个枚举类只定义了10个错误码，这里一码对应多种信息，只是从枚举类中获取状态码，具体信息从接口中定义。
+状态码枚举类还有一种使用方法。就是在类中的每个枚举值定义到具体的信息，即一码对一信息。如：
+`ERROR_2020(2020,"一些具体的错误信息"),`
+这么写的缺点就是后期该类会变得非常长，不便于维护，而且本来可以用一种码表示多种信息，但是因为枚举值是别人写的，乱改可能会引起问题，也不该乱改，只能在后边加新的枚举值，这样枚举类会变的很长...
 
 # 典型接口示例
 ## 分页接口
 - controller
 ```
 @PostMapping("/getGoodsList")
-public ResponseResultUtil getGoodsList(@RequestBody Map<String, Object> paramMap) {
+public ResponseUtil getGoodsList(@RequestBody Map<String, Object> paramMap) {
     LOGGER.info(
             "\n***************************************" + "\n" +
                     "start getGoodsList" + "\n" +
@@ -222,25 +201,24 @@ public ResponseResultUtil getGoodsList(@RequestBody Map<String, Object> paramMap
                     "paramMap = " + map + "\n" +
                     "\n********************************************"
     );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
     try {
-        Token token = TokenUtil.getToken(request.getHeader("token"));
-        Assert.isTrue(token != null, "token不能为空!");
-        map.put("userId", String.valueOf(token.getId()));
-        result = goodsService.getGoodsList(map);
+        
+        result = goodsService.getGoodsList(paramMap);
     } catch (Exception e) {
         e.printStackTrace();
-        result = ResponseResultUtil.responseFail();
-        result.setMessage(e.getMessage());
+        response.setCode(code);
+        response.setMessage(e.getMessage());
     }
     LOGGER.info(
             "\n***************************************" + "\n" +
                     "end getGoodsList" + "\n" +
                     "商品列表" + "\n" +
-                    " resultMap " + result.getData() + "\n" +
+                    " resultMap " + response.getData() + "\n" +
                     "\n********************************************"
     );
-    return result;
+    return response;
 }
 ```
 - service
@@ -285,108 +263,89 @@ public List<Goods> getGoodsList(Map<String, Object> map) {
 ## 注册接口
 - controller
 ```
-@ResponseBody
-@PostMapping(value = "/register")
-public ResponseResultUtil register(@RequestBody Map<String,String> paramMap){
+@PostMapping("/register")
+public ResponseUtil register(@RequestBody Map<String,String> paramMap){
     LOGGER.info(
-            "\n***************************************" + "\n" +
-                    "start register" + "\n" +
-                    "注册" + "\n" +
-                    "paramMap = " + paramMap + "\n" +
-                    "\n********************************************"
+    "\n***************************************" + "\n" +
+            "start register" + "\n" +
+            "注册" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n********************************************"
     );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum codeEnum = CodeEnum.FAIL;
     try {
         String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$";
-        code = 200001;
+        codeEnum = CodeEnum.ERROR_2002;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号码不能为空");
-
-        code = 200002;
+        codeEnum = CodeEnum.ERROR_2003;
         Assert.isTrue(paramMap.get("mobile").length() == 11, "手机号码长度不是11位");
-
-        code = 200003;
+        codeEnum = CodeEnum.ERROR_2004;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("password")), "密码不能为空");
-
-        code = 200004;
-        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("twoPassword")), "确认密码不能为空");
-        code = 200005;
-        Assert.isTrue(paramMap.get("password").equals(paramMap.get("twoPassword")), "两次密码不一致");
-        code = 200007;
+        codeEnum = CodeEnum.ERROR_2005;
+        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("confirmPassword")), "确认密码不能为空");
+        codeEnum = CodeEnum.ERROR_2006;
+        Assert.isTrue(paramMap.get("password").equals(paramMap.get("confirmPassword")), "两次密码不一致");
+        codeEnum = CodeEnum.ERROR_2007;
         Assert.isTrue(paramMap.get("password").matches(regex), "请输入6-8位的数字与字母组合");
 
-        paramMap.put("ip",PayUtil.getIpAddr(request));
-        result = userInfoService.register(paramMap,result);
-
+        paramMap.put("ip", HttpUtil.getIpAddr(request));
+        response = usersService.register(paramMap,response);
         //删除redis中验证码
-        redisTemplate.delete(RedisKey.MOBILE_SMSCODE+paramMap.get("mobile"));
-    }catch (Exception e){
+        redisTemplate.delete(RedisKeyEnum.MOBILE_SMSCODE.getValue() +paramMap.get("mobile"));
+    } catch (Exception e) {
         e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+        response.setCode(codeEnum);
+        response.setMessage(e.getMessage());
     }
-    return result;
+
+    return response;
 }
 ```
 - service
-`ResponseResultUtil register(Map<String,String> paramMap, ResponseResultUtil result);`
+`ResponseUtil register(Map<String,String> paramMap, ResponseUtil response);`
+
 - serviceIMpl
 ```
 @Override
-    public ResponseResultUtil register(Map<String,String> paramMap, ResponseResultUtil result) {
-
-        UserInfo userInfo = new UserInfo();
-        userInfo.setMobile(paramMap.get("mobile"));
-
-        //检查是否已经注册过了
-        List<UserInfo> userInfoList = selectByCondition(userInfo);
-        if(userInfoList.size() > 0){
-            result.setMessage("该手机号已注册，请直接登录");
-            result.setCode(200006);
-            return result;
-        }
-
-        userInfo = insertUserInfo(paramMap);
-
-        Map dataMap = new HashMap();
-        dataMap.put("token",userInfo.getToken());
-
-        result.setMessage("注册成功");
-        result.setData(dataMap);
-        return result;
+public ResponseUtil register(Map<String, String> paramMap, ResponseUtil response) {
+    Users user = new Users();
+    user.setMobile(paramMap.get("mobile"));
+    List<Users> userLIst = usersMapper.getUserByCondition(user);
+    //是否已注册
+    if (userLIst.size() > 0) {
+        response.setMessage("该手机号已注册，请直接登录");
+        response.setCode(CodeEnum.ERROR_2001);
+        return response;
     }
+
+    user = insertUser(paramMap);
+    Map<String,Object> resultMap = new HashedMap();
+    resultMap.put("token",user.getToken());
+
+    response.setMessage("注册成功");
+    response.setData(resultMap);
+    return response;
+}
 ```
 - 因为注册的具体流程还有其他接口需要，所以此处将该方法抽象出来。
 ```
-@Override
-    public UserInfo insertUserInfo(Map<String,String> paramMap){
-        String invitationCode = paramMap.get("invitationCode");
-        UserInfo userInfo = new UserInfo();
-        userInfo.setMobile(paramMap.get("mobile"));
-        userInfo.setPassword(MD5Util.MD5Encode(StringUtils.isEmpty(invitationCode) ? paramMap.get("password") : invitationCode));
-        userInfo.setSeriousStatus(1);
-        userInfo.setDeviceCode(StringUtils.isEmpty(paramMap.get("deviceCode")) ? "" : paramMap.get("deviceCode"));
-        userInfo.setPlatfrom(StringUtils.isEmpty(paramMap.get("platfrom")) ? null : Integer.parseInt(paramMap.get("platfrom")));
-        userInfo.setPersonalizedSignature("编辑个性签名");
-        userInfo.setNickname(paramMap.get("nickname")==null?userInfo.getMobile().replaceAll(userInfo.getMobile().substring(3, 7), "****"):paramMap.get("nickname"));
-        userInfo.setHeadImage(userDefaultImage);//注册时添加黙认头像
-        userInfo.setRole(paramMap.get("role")==null?1:Integer.parseInt(paramMap.get("role")));
-        userInfo.setGender(1);
-        //邀请码
-        userInfo.setInvitationCode(StringUtils.isEmpty(invitationCode) ?  AESEncrypt.randomStr(6) : invitationCode);
-        userInfo.setInvitationCodeEr(paramMap.get("invitationCodeEr"));
-        userInfo.setUserName(userInfo.getMobile());
-        userInfo.setCreateTime(new Date());
-        userInfo.setUpdateTime(new Date());
-        userInfo.setStatus(1);
-        //新增用户
-        userInfoMapper.insertSelective(userInfo);
-        userInfo.setToken(TokenUtil.makeToken("token",userInfo.getUserId(),userInfo.getMobile(),paramMap.get("ip")));
-        
-        //其他业务逻辑
+public Users insertUser(Map<String, String> paramMap) {
+    Users newUser = new Users();
+    newUser.setMobile(paramMap.get("mobile"));
+    newUser.setPassword(MD5Util.MD5Encode(paramMap.get("password")));
+    newUser.setPlatform(StringUtils.isEmpty(paramMap.get("platfrom")) ? null : Byte.parseByte(paramMap.get("platfrom")));
+    newUser.setNickname(paramMap.get("nickname") == null ? newUser.getMobile().replaceAll(newUser.getMobile().substring(3, 7), "****") : paramMap.get("nickname"));
+    newUser.setDeviceCode(paramMap.get("deviceCode"));
 
-        return userInfo;
-    }
+    //执行新增用户
+    usersMapper.insertSelective(newUser);
+    newUser.setToken(TokenUtil.makeToken("token",newUser.getId(),newUser.getMobile(),paramMap.get("ip")));
+
+    //其他业务逻辑
+
+    return newUser;
+}
 ```
 mapper和xml都是自动生成的，这里就不贴了。
 
@@ -394,251 +353,178 @@ mapper和xml都是自动生成的，这里就不贴了。
 ### 验证码登录
 - controller
 ```
-@PostMapping(value = "jSmscodeLogin")
-@ResponseBody
-public ResponseResultUtil jSmscodeLogin(@RequestBody Map<String,String> paramMap){
+@PostMapping("/smsCodeLogin")
+public ResponseUtil smsCodeLogin(@RequestBody Map<String,String> paramMap){
     LOGGER.info(
-            "\n***************************************" + "\n" +
-                    "start jSmscodeLogin" + "\n" +
-                    "验证码登录" + "\n" +
-                    "paramMap = " + paramMap + "\n" +
-                    "\n********************************************"
+    "\n***************************************" + "\n" +
+            "start smsCodeLogin" + "\n" +
+            "验证码登录" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n********************************************"
     );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
     try {
         // 获取手机验证码
-        code = 200001;
-        String 	smsCode = redisTemplate.opsForValue().get(RedisKey.MOBILE_SMSCODE + paramMap.get("mobile"));
+        code = CodeEnum.ERROR_2001;
+        String 	smsCode = redisTemplate.opsForValue().get(RedisKeyEnum.MOBILE_SMSCODE.getValue() + paramMap.get("mobile"));
         Assert.notNull(smsCode, "未获取验证码或验证码已超时，请先获取验证码");
-
-        code = 200002;
+        code = CodeEnum.ERROR_2002;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号码不能为空");
-
-        code = 200003;
+        code = CodeEnum.ERROR_2003;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("smscode")), "验证码不能为空");
-
-        code = 200005;
+        code = CodeEnum.ERROR_2004;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("platfrom")), "设备平台不可为空");
-
-        code = 200006;
+        code = CodeEnum.ERROR_2005;
         Assert.isTrue(smsCode.equals(paramMap.get("smscode")), "验证码错误");
 
-        paramMap.put("ip",PayUtil.getIpAddr(request));
+        paramMap.put("ip",HttpUtil.getIpAddr(request));
+
         if(smsCode.equals(paramMap.get("smscode"))){
-            //注册或登录
-            result = userInfoService.registerOrLogin(paramMap,result);
-            if(result.getCode() == ErrorEnum.ERROR_100000.getCode()){
-                redisTemplate.delete(RedisKey.MOBILE_SMSCODE+paramMap.get("mobile"));
+            response = usersService.login(paramMap,response);
+            //登录成功，删除redis中的验证码
+            if(response.getCode() == CodeEnum.SUCCESS.getCode()){
+                redisTemplate.delete(RedisKeyEnum.MOBILE_SMSCODE.getValue() + paramMap.get("mobile"));
             }
         }else{
-            result.setCode(code);
-            result.setMessage("验证码错误");
+            response.setCode(code);
+            response.setMessage("验证码错误");
         }
-    }catch (Exception e){
+    } catch (Exception e) {
         e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+        response.setCode(code);
+        response.setMessage(e.getMessage());
     }
-    return result;
+    return response;
 }
 ```
 - service
-`ResponseResultUtil registerOrLogin(Map<String,String> paramMap,ResponseResultUtil responseResultUtil);`
+`ResponseUtil login(Map<String,String> paramMap, ResponseUtil response);`
 
 - serviceImpl
 ```
 @Override
-public ResponseResultUtil registerOrLogin(Map<String, String> paramMap,ResponseResultUtil responseResultUtil) {
-    //登录类型
-    Integer loginType = StringUtils.isEmpty(paramMap.get("loginType")) ? 1 : Integer.parseInt(paramMap.get("loginType"));
-    UserInfo searchUserInfo = new UserInfo();
-    searchUserInfo.setMobile(paramMap.get("mobile"));
-    List<UserInfo> userInfoList = userInfoMapper.selectByCondition(searchUserInfo);
-    UserInfo userInfo = null;
-    if(userInfoList.size() > 0){
-        userInfo = userInfoList.get(0);
-        if(userInfo.getStatus() == 0){
-            responseResultUtil.setCode(200000);
-            responseResultUtil.setMessage("该账户违规,已被禁用");
+public ResponseUtil login(Map<String, String> paramMap, ResponseUtil response) {
+    Users user = new Users();
+    user.setMobile(paramMap.get("mobile"));
+    //密码登录用
+    String password = paramMap.get("password");
+    if(!StringUtils.isEmpty(password)){
+        user.setPassword(MD5Util.MD5Encode(paramMap.get("password")));
+    }
+    List<Users> userList = usersMapper.getUserByCondition(user);
+    if(userList.size() > 0){
+        user = userList.get(0);
+        if(user.getStatus() == 1){
+            response.setCode(CodeEnum.ERROR_2006);
+            response.setMessage("该账户已被禁用");
         }else{
-            if(loginType == 1 || userInfo.getRole().equals(loginType)){
-                String token = TokenUtil.makeToken("token",userInfo.getUserId(),userInfo.getMobile(),paramMap.get("ip"));
-                userInfo.setToken(token);
-                //设置认证状态
-                userInfo =  setUserSeriousStatus(userInfo);
-                //更新设备码
-                paramMap.put("userId",userInfo.getUserId().toString());
-                paramMap.put("token",token);
-                updateUserDeviceCode(paramMap);
-                responseResultUtil.setCode(100000);
-                responseResultUtil.setMessage("登录成功");
-            }else{
-                responseResultUtil.setCode(200000);
-                responseResultUtil.setMessage("用户角色错误");
-            }
+            String token = TokenUtil.makeToken("token",user.getId(),user.getMobile(),paramMap.get("ip"));
+            user.setToken(token);
+            paramMap.put("id",user.getId().toString());
+            paramMap.put("token",token);
+            //更新设备码、token
+            updateUserInfo(paramMap);
+            response.setMessage("登录成功");
         }
     }else{
-        //注册
-        String invitationCode = AESEncrypt.randomStr(6);
-        paramMap.put("invitationCode",invitationCode);
-        paramMap.put("role",loginType.toString());
-        userInfo = insertUserInfo(paramMap);
-        //刚注册为未认证
-        userInfo.setSeriousStatus(-1);
-        //注册成功后通知用户
-        String msg= "您已完成注册. 初始密码为: " + userInfo.getInvitationCode() + " ;请您尽快进入App,进行密码修改.";//短信内容
-        ChuangLanSmsUtil.sendSmsByPostSimple(paramMap.get("mobile"),msg);
-        responseResultUtil.setCode(100000);
-        responseResultUtil.setMessage("注册成功");
+        response.setCode(CodeEnum.ERROR_2007);
+        if(!StringUtils.isEmpty(password)){
+            response.setMessage("手机号或密码错误");
+        }else{
+            response.setMessage("请先注册");
+        }
+        return response;
     }
-
-    Map userInfoMap = BeanUtil.beanToMap(userInfo);
-    userInfoMap.put("gender",userInfoMap.get("gender").equals(1) ? "男":"女");
-    responseResultUtil.setData(userInfoMap);
-
-    return responseResultUtil;
+    Map<String,Object> resultMap = BeanUtil.beanToMap(user);
+    response.setData(resultMap);
+    return response;
 }
 ```
-如果没有注册，就注册，否则登录。
+验证码登录和用户名密码登录业务逻辑十分相似，这里共用了一个service，有需要可以将这两个方法拆分开。
 
 ### 账号密码登录
 - controller
 ```
-@PostMapping(value = "login")
-@ResponseBody
-public ResponseResultUtil login(@RequestBody Map<String,String> paramMap){
+@PostMapping("/login")
+public ResponseUtil login(@RequestBody Map<String,String> paramMap){
     LOGGER.info(
-            "\n***************************************" + "\n" +
-                    "start login" + "\n" +
-                    "账号密码登录" + "\n" +
-                    "paramMap = " + paramMap + "\n" +
-                    "\n********************************************"
+    "\n***************************************" + "\n" +
+            "start login" + "\n" +
+            "手机号密码登录" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n********************************************"
     );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
     try {
-        code = 200001;
-        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "登录账号不能为空");
-
-        code = 200003;
-        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("password")), "登陆密码不可为空");
-
-        code = 200005;
+        code = CodeEnum.ERROR_2002;
+        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号不能为空");
+        code = CodeEnum.ERROR_2003;
+        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("password")), "密码不能为空");
+        code = CodeEnum.ERROR_2004;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("platfrom")), "设备平台不可为空");
-
-        paramMap.put("ip",PayUtil.getIpAddr(request));
-        result = userInfoService.registerOrLogin(paramMap,result);
-
-    }catch (Exception e){
+        paramMap.put("ip",HttpUtil.getIpAddr(request));
+        response = usersService.login(paramMap,response);
+    } catch (Exception e) {
         e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+        response.setCode(code);
+        response.setMessage(e.getMessage());
     }
-    return result;
+    return response;
 }
 ```
-- service
-`ResponseResultUtil login(Map<String,String> paramMap,ResponseResultUtil result);`
-
-- serviceImpl
-```
-@Override
-public Map<String,Object> login(Map<String, String> paramMap,ResponseResultUtil result) {
-    UserInfo searchUserInfo = new UserInfo();
-    searchUserInfo.setMobile(paramMap.get("mobile"));
-    searchUserInfo.setPassword(MD5Util.MD5Encode(paramMap.get("password")));
-    List<UserInfo> userInfoList = selectByCondition(searchUserInfo);
-
-    UserInfo userInfo = null;
-    if(userInfoList.size() > 0){
-        userInfo = userInfoList.get(0);
-        if(userInfo.getStatus() == 0){
-            result.setCode(200000);
-            result.setMessage("该账户违规,已被禁用");
-        }else{
-            if(loginType == 1 || userInfo.getRole().equals(loginType)){
-                String token = TokenUtil.makeToken("token",userInfo.getUserId(),userInfo.getMobile(),paramMap.get("ip"));
-                userInfo.setToken(token);
-                //设置认证状态
-                userInfo =  setUserSeriousStatus(userInfo);
-                //更新设备码和Token
-                paramMap.put("userId",userInfo.getUserId().toString());
-                paramMap.put("token",token);
-                updateUserDeviceCode(paramMap);
-
-                result.setCode(100000);
-                result.setMessage("登录成功");
-            }else{
-                result.setCode(200000);
-                result.setMessage("用户角色错误");
-            }
-        }
-    }else{
-        result.setCode(200000);
-        result.setMessage("手机号或密码错误!");
-    }
-
-    Map userInfoMap = BeanUtil.beanToMap(userInfo);
-    userInfoMap.put("gender",userInfoMap.get("gender").equals(1) ? "男":"女");
-    responseResultUtil.setData(userInfoMap);
-
-    return result;
-}
-```
+和上边的验证码登录共用一套service，有需要可以拆分开。
 
 ## 获取验证码
 - controller
 ```
-@ResponseBody
-@PostMapping(value = "getSmsCode")
-public ResponseResultUtil getSmsCode(@RequestBody Map<String,String> paramMap){
-    LOGGER.info(
-            "\n***************************************" + "\n" +
-                    "start getSmsCode" + "\n" +
-                    "获取短信验证码" + "\n" +
-                    "paramMap = " + paramMap + "\n" +
-                    "\n********************************************"
-    );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
-    try {
-        String mobile = paramMap.get("mobile");
-        code = 202001;
-        Assert.isTrue(StringUtils.isNotEmpty(mobile), "手机号码不能为空");
-        code = 202002;
-        Assert.isTrue(mobile.length() == 11, "手机号码长度不是11位");
+@PostMapping("/getSmsCode")
+    public ResponseUtil getSmsCode(@RequestBody Map<String,String> paramMap){
+        LOGGER.info(
+        "\n***************************************" + "\n" +
+                "start getSmsCode" + "\n" +
+                "获取验证码" + "\n" +
+                "paramMap = " + paramMap + "\n" +
+                "\n********************************************"
+        );
+        ResponseUtil response = ResponseUtil.success();
+        CodeEnum codeEnum = CodeEnum.FAIL;
+        try {
+            String mobile = paramMap.get("mobile");
+            codeEnum = codeEnum.ERROR_2001;
+            Assert.isTrue(StringUtils.isNotEmpty(mobile), "手机号码不能为空");
+            codeEnum = codeEnum.ERROR_2002;
+            Assert.isTrue(mobile.length() == 11, "手机号码长度不是11位");
 
-        String str =  sendSmsCode(mobile);
-        if(StringUtils.isNotEmpty(str)){
-            result.setCode(200000);
-            result.setMessage(str);
+            String msg = sendSmsCode(mobile);
+            //1分钟只能获取一次验证码
+            if(StringUtils.isNotEmpty(msg)){
+                response.setCode(CodeEnum.ERROR_2003);
+                response.setMessage(msg);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setCode(codeEnum);
+            response.setMessage(e.getMessage());
         }
-
-    }catch (Exception e){
-        e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+        return response;
     }
-    return result;
-}
 ```
 - 发送验证码具体方法，注意redis
 ```
 private String sendSmsCode(String mobile){
     Random random = new Random();
     String smsCode = String.valueOf(1000 + random.nextInt(8999));
-    String key = RedisKey.MOBILE_SMSCODE + mobile;
-
-    if(redisTemplate.opsForValue().get(RedisKey.MOBILE_SMSCODE+mobile) == null){
-        //短信内容
-        String msg= "您的短信验证码是"+smsCode+",请勿告他人,五分钟内有效。";
-        LOGGER.debug(msg);
+    String key = RedisKeyEnum.MOBILE_SMSCODE.getValue() + mobile;
+    //检查redis中是否有验证码
+    if(redisTemplate.opsForValue().get(key) == null){
+        String msg= "您的短信验证码是" + smsCode + "，打死也不能告诉别人，五分钟内有效。";
+        LOGGER.info("验证码是："+msg);
         ChuangLanSmsUtil.sendSmsByPostSimple(mobile,msg);
-        //验证码有效期300秒(5分钟)
-        redisTemplate.opsForValue().set(key, smsCode, 300,TimeUnit.SECONDS);
-        //一个手机号请求接口需要间隔1分钟(过期时间1分钟)
-        redisTemplate.opsForValue().set(RedisKey.MOBILE_SMSCODE+mobile,smsCode,60,TimeUnit.SECONDS);
+        //1分钟只能请求一次
+        redisTemplate.opsForValue().set(key,smsCode,60,TimeUnit.SECONDS);
     }else{
         return "1分钟内只能获取一次验证码";
     }
@@ -649,204 +535,223 @@ private String sendSmsCode(String mobile){
 ## 判断验证码是否正确
 - controller
 ```
-@ResponseBody
-@PostMapping(value = "/jSmscodeRegister")
-public ResponseResultUtil jSmscodeRegister(@RequestBody Map<String,String> paramMap){
-    LOGGER.info("\n***************************************start jSmscodeRegist() 判断验证码是否正确 ***************************************\n");
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
+@PostMapping("/checkSmsCode")
+public ResponseUtil checkSmsCode(@RequestBody HashMap<String,String> paramMap){
+    LOGGER.info(
+    "\n***************************************" + "\n" +
+            "start checkSmsCode" + "\n" +
+            "判断验证码是否正确" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n********************************************"
+    );
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
     try {
-        String smsCode = redisTemplate.opsForValue().get(RedisKey.MOBILE_SMSCODE + paramMap.get("mobile"));
-        code = 200001;
+        String smsCode = redisTemplate.opsForValue().get(RedisKeyEnum.MOBILE_SMSCODE.getValue() + paramMap.get("mobile"));
+        code = CodeEnum.ERROR_2001;
         Assert.notNull(smsCode, "未获取验证码或验证码已超时，请先获取验证码");
-        code = 200003;
+        code = CodeEnum.ERROR_2002;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号不能为空");
-        code = 200002;
+        code = CodeEnum.ERROR_2003;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("smscode")), "验证码不能为空");
 
-
-        UserInfo userInfo = new UserInfo();
-        userInfo.setMobile(paramMap.get("mobile"));
-        List<UserInfo> userInfoList =  userInfoService.selectByCondition(userInfo);
-        if(userInfoList.size() > 0){
-            code = 202004;
-            result.setMessage("该手机号已注册，请直接登录");
+        Users user = new Users();
+        user.setMobile(paramMap.get("mobile"));
+        List<Users> userList =  usersService.getUserByCondition(user);
+        if(userList.size() > 0){
+            code = CodeEnum.ERROR_2004;
+            response.setCode(code);
+            response.setMessage("该手机号已注册，请直接登录");
         }else{
-            result = checkSmsCode(smsCode,paramMap.get("smscode"),paramMap.get("mobile"),result);
+            response = checkSmsCode(smsCode,paramMap.get("smscode"),paramMap.get("mobile"));
         }
-        result.setCode(code);
-    }catch (Exception e){
+    } catch (Exception e) {
         e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+        response.setCode(code);
+        response.setMessage(e.getMessage());
     }
-    return result;
+    return response;
 }
 ```
 - checkSmsCode方法，判断验证码是否正确
 ```
-private ResponseResultUtil checkSmsCode(Object smsCode,String smsCodeParam,String mobile,ResponseResultUtil result){
-    if(smsCode.equals(smsCodeParam)){
-        result.setCode(100000);
-        result.setMessage("验证码正确");
-//            redisTemplate.delete("smsCode" + mobile);
-        redisTemplate.delete(RedisKey.MOBILE_SMSCODE + mobile);
+private ResponseUtil checkSmsCode(String redisSmsCode,String ParamSmsCode,String mobile){
+    ResponseUtil response = ResponseUtil.success();
+    if(redisSmsCode.equals(ParamSmsCode)){
+        response.setCode(CodeEnum.SUCCESS);
+        response.setMessage("验证码正确");
+        //验证成功后，删除redis中的验证码
+        redisTemplate.delete(RedisKeyEnum.MOBILE_SMSCODE.getValue() + mobile);
     }else{
-        result.setCode(200004);
-        result.setMessage("验证码错误");
+        response.setCode(CodeEnum.ERROR_2010);
+        response.setMessage("验证码错误");
     }
-    return result;
+    return response;
 }
 ```
 
-## 判断密码是否正确
+## 检查密码是否正确
 - controller
 ```
-@ResponseBody
-@PostMapping(value = "judgePassword")
-public ResponseResultUtil judgePassword(@RequestBody Map<String,String> paramMap){
+@PostMapping("/checkPassword")
+public ResponseUtil checkPassword(@RequestBody Map<String,String> paramMap){
     LOGGER.info(
-            "\n***************************************" + "\n" +
-                    "start judgePassword" + "\n" +
-                    "判断密码是否正确" + "\n" +
-                    "paramMap = " + paramMap + "\n" +
-                    "\n********************************************"
+    "\n***************************************" + "\n" +
+            "start checkPassword" + "\n" +
+            "检查密码是否正确" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n****************************************"
     );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
     try {
-
         Token token = TokenUtil.getToken(request.getHeader("token"));
         Assert.isTrue(token != null, "token解密失败");
-        code = 200001;
+        code = CodeEnum.ERROR_2001;
         Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("password")), "密码不可为空");
-
-        Integer userId =  token.getId();
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserId(userId);
-        userInfo =  userInfoService.selectByCondition(userInfo).get(0);
-        String password=MD5Util.MD5Encode(paramMap.get("password"));
-        if(!userInfo.getPassword().equals(password)){
-            result.setCode(200002);
-            result.setMessage("密码错误");
-        }else{
-            result.setCode(100000);
-            result.setMessage("密码正确");
-        }
-    }catch (Exception e){
+        response = usersService.checkPassword(paramMap,response,token);
+    } catch (Exception e) {
         e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+        response.setCode(code);
+        response.setMessage(e.getMessage());
     }
-    return result;
+    return response;
+}
+```
+- serviceImpl
+```
+@Override
+public ResponseUtil checkPassword(Map<String, String> paramMap, ResponseUtil response, Token token) {
+    Integer id =  token.getId();
+    Users user = new Users();
+    user.setId(id);
+    user = usersMapper.getUserByCondition(user).get(0);
+    String password=MD5Util.MD5Encode(paramMap.get("password"));
+    if(!user.getPassword().equals(password)){
+        response.setCode(CodeEnum.ERROR_2002);
+        response.setMessage("密码错误");
+    }else{
+        response.setCode(CodeEnum.SUCCESS);
+        response.setMessage("密码正确");
+    }
+    return response;
 }
 ```
 
 ## 修改密码
 - controller
 ```
-@PostMapping(value = "updatePassword")
-@ResponseBody
-public ResponseResultUtil updatePassword(@RequestBody Map<String,String> paramMap){
+@PostMapping("/updatePassword")
+public ResponseUtil updatePassword(@RequestBody Map<String,String> paramMap){
     LOGGER.info(
-            "\n***************************************" + "\n" +
-                    "start updatePassword" + "\n" +
-                    "修改密码" + "\n" +
-                    "paramMap = " + paramMap + "\n" +
-                    "\n********************************************"
+    "\n***************************************" + "\n" +
+            "start updatePassword" + "\n" +
+            "修改密码" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n********************************************"
     );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
     try {
         Token token = TokenUtil.getToken(request.getHeader("token"));
         String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$";
-
         Assert.isTrue(token != null, "token解密失败");
-
-//            code = 200001;
-//            Assert.isTrue(paramMap.get("password") != null, "旧密码不可为空");
-
-        code = 200002;
+        code = CodeEnum.ERROR_2001;
         Assert.isTrue(paramMap.get("newPassword")!= null, "新密码不可为空");
-
-        code = 200007;
+        code = CodeEnum.ERROR_2002;
         Assert.isTrue(paramMap.get("newPassword").matches(regex), "请输入6-8位的数字与字母组合");
+        code = CodeEnum.ERROR_2003;
+        Assert.isTrue(paramMap.get("confirmPassword")!= null, "确认新密码不可为空");
+        code = CodeEnum.ERROR_2004;
+        Assert.isTrue(paramMap.get("newPassword").equals(paramMap.get("confirmPassword")), "两次密码不一致");
 
-        code = 200003;
-        Assert.isTrue(paramMap.get("twoPassword")!= null, "确认新密码不可为空");
-
-        code = 200004;
-        Assert.isTrue(paramMap.get("newPassword").equals(paramMap.get("twoPassword")), "两次密码不一致");
-
-        paramMap.put("userId",token.getId().toString());
-        result =  userInfoService.updatePassword(paramMap,result);
-
-    }catch (Exception e){
+        response = usersService.updatePassword(paramMap,response,token);
+    } catch (Exception e) {
         e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+        response.setCode(code);
+        response.setMessage(e.getMessage());
     }
-    return result;
+    return response;
 }
 ```
-
-## 忘记密码
-- controller
+- serviceImpl
 ```
-@PostMapping(value = "forGotPassword")
-@ResponseBody
-public ResponseResultUtil forGotPassword(@RequestBody Map<String,String> paramMap){
-    LOGGER.info(
-            "\n***************************************" + "\n" +
-                    "start forGotPassword" + "\n" +
-                    "忘记密码" + "\n" +
-                    "paramMap = " + paramMap + "\n" +
-                    "\n********************************************"
-    );
-    ResponseResultUtil result = ResponseResultUtil.responseSuccess();
-    int code = ErrorEnum.ERROR_200000.getCode();
-    try {
-        code = 202001;
-        Assert.isTrue(paramMap.get("mobile")!= null, "手机号码不能为空");
-
-        code = 200002;
-        Assert.isTrue(paramMap.get("newPassword")!= null, "新密码不可为空");
-
-        String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$";
-        code = 200007;
-        Assert.isTrue(paramMap.get("newPassword").matches(regex), "请输入6-8位的数字与字母组合");
-
-        code = 200003;
-        Assert.isTrue(paramMap.get("twoPassword")!= null, "确认新密码不可为空");
-
-        code = 200004;
-        Assert.isTrue(paramMap.get("newPassword").equals(paramMap.get("twoPassword")), "两次密码不一致");
-
-        UserInfo searchUserInfo = new UserInfo();
-        searchUserInfo.setMobile(paramMap.get("mobile"));
-        List<UserInfo> userInfoList = userInfoService.selectByCondition(searchUserInfo);
-
-        if(userInfoList.size() > 0){
-            UserInfo userInfo = userInfoList.get(0);
-            userInfo.setPassword(MD5Util.MD5Encode(paramMap.get("twoPassword")));
-            if(userInfoService.updateUserInfo(userInfo)){
-                result.setCode(100000);
-                result.setMessage("修改成功");
-            }else{
-                result.setCode(200000);
-                result.setMessage("修改失败，请重试");
-            }
+@Override
+public ResponseUtil updatePassword(Map<String, String> paramMap, ResponseUtil response, Token token) {
+    Users user = usersMapper.selectByPrimaryKey(token.getId());
+    if(null != user){
+        user.setPassword(MD5Util.MD5Encode(paramMap.get("confirmPassword")));
+        int i = usersMapper.updateByPrimaryKeySelective(user);
+        if(i == 1){
+            response.setMessage("修改密码成功");
         }else{
-            result.setCode(200001);
-            result.setMessage("没有该账号");
+            response.setCode(CodeEnum.ERROR_2005);
+            response.setMessage("修改密码失败");
         }
-
-    }catch (Exception e){
-        e.printStackTrace();
-        result.setCode(code);
-        result.setMessage(e.getMessage());
+    }else{
+        response.setCode(CodeEnum.ERROR_2006);
+        response.setMessage("该用户不存在");
     }
-    return result;
+    return response;
 }
 ```
-service、mapper、xml很简单，就不贴了。
+
+## 修改手机号
+```
+@PostMapping("/modifyMobile")
+public ResponseUtil modifyMobile(@RequestBody Map<String,String> paramMap){
+    LOGGER.info(
+    "\n***************************************" + "\n" +
+            "start modifyMobile" + "\n" +
+            "修改手机号" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n********************************************"
+    );
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
+    try {
+        Token token = TokenUtil.getToken(request.getHeader("token"));
+        Assert.isTrue(token != null, "token解密失败");
+        // 获取手机验证码
+        code = CodeEnum.ERROR_2001;
+        String 	smsCode = redisTemplate.opsForValue().get(RedisKeyEnum.MOBILE_SMSCODE.getValue() + paramMap.get("newMobile"));
+        Assert.notNull(smsCode, "未获取验证码或验证码已超时，请先获取验证码");
+        code = CodeEnum.ERROR_2002;
+        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("smsCode")), "验证码不能为空");
+        code = CodeEnum.ERROR_2003;
+        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("newMobile")), "手机号不可为空");
+        code = CodeEnum.ERROR_2004;
+        Assert.isTrue(smsCode.equals(paramMap.get("smsCode")), "验证码错误");
+        response = usersService.modifyMobile(paramMap,response,token);
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.setCode(code);
+        response.setMessage(e.getMessage());
+    }
+    return response;
+}
+```
+- serviceImpl
+```
+@Override
+public ResponseUtil modifyMobile(Map<String, String> paramMap, ResponseUtil response, Token token) {
+    Users oldUser = usersMapper.selectByPrimaryKey(token.getId());
+    if(null != oldUser){
+        Users user = new Users();
+        user.setMobile(paramMap.get("newMobile"));
+        List<Users> userList = usersMapper.getUserByCondition(user);
+        if(userList.isEmpty()){
+            oldUser.setMobile(paramMap.get("newMobile"));
+            usersMapper.updateByPrimaryKeySelective(oldUser);
+            response.setMessage("手机号修改成功");
+        }else{
+            response.setCode(CodeEnum.ERROR_2006);
+            response.setMessage("该手机号已被占用");
+        }
+    }else{
+        response.setCode(CodeEnum.ERROR_2005);
+        response.setMessage("用户不存在");
+    }
+    return response;
+}
+```
