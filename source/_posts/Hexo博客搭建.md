@@ -3,8 +3,6 @@ title: Hexo博客搭建
 date: 2018-12-05 13:54:31
 tags:
 - 建站
-categories: 
-- 建站
 ---
 
 总体步骤：
@@ -470,6 +468,7 @@ https://www.algolia.com/
 2.点击create index，名字随便起。
 3.点击左侧的API keys，在根目录的站点配置文件_config.yml中加入如下配置，参照官网中的各种key值
 ```
+
 #添加搜索
 algolia:
     applicationID: '你的applicationID'
@@ -527,3 +526,10 @@ ERROR >> Read https://npmjs.com/hexo-algolia#api-key for more informations.
 #  需要注意
 - 文章名不要使用特殊符号，如冒号、下划线、逗号、问号、大于小于( /、\、？、*、:、""、| )等等
 因为创建文章时，会创建同名的文件夹，linux文件夹、文件可以使用一些特殊符号，而windows中就不可以，这样会造成：在linux(我的公司电脑)写的文章，windows(家中电脑)无法拉取代码，因为windows无法创建带特殊符号的文件夹、文件，一定要注意。
+
+#  在文章中引入视频
+```
+{% raw %}
+<video src='https://liaoxuefeng.gitee.io/git-resources/master-branch-forward.mp4' type='video/mp4' controls='controls'  width='100%' height='100%'></video>
+{% endraw%}
+```
