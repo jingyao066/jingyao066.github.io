@@ -9,7 +9,387 @@ redis是一个开源的，使用C语言编写的，支持网络交互的、可�
 
 # 安装过程
 
-# 基本使用
+# linux操作redis
+## 启动redis
+`cd src`
+`./redis-server`
+上面这种启动 redis使用的是默认配置，也可以通过启动参数告诉redis使用指定配置
+`./redis-server ../redis.conf`
+
+## 连接redis
+`./redis-cli`
+`127.0.0.1:6379>`
+
+## 配置redis
+redis的配置文件位于Redis安装目录下，文件名为 redis.conf，可以通过CONFIG命令查看或者设置配置项。
+```
+127.0.0.1:6379> config get loglevel
+1) "loglevel"
+2) "notice"
+```
+使用 * 获取所有配置项
+`config get *`
+很多配置，这里就不贴了。参考：https://www.cnblogs.com/ruanraun/p/redis.html
+可以通过修改redis.conf文件或者使用config set 命令来修改配置
+```
+127.0.0.1:6379> config set loglevel 'notice'
+OK
+```
+
+## 如何停止/启动/重启redis服务
+如果是用apt-get或者yum install安装的redis，可以直接通过下面的命令停止/启动/重启redis
+```
+/etc/init.d/redis-server stop
+/etc/init.d/redis-server start
+/etc/init.d/redis-server restart
+```
+如果是通过源码安装的redis，则可以通过redis的客户端程序redis-cli的shutdown命令来重启redis
+
+`redis-cli -h 127.0.0.1 -p 6379 shutdown`
+`./redis-cli shutdown`
+如果上述方式都没有成功停止redis，则可以使用终极武器 kill -9
+
+# redis命令
+中文官网地址：
+http://www.redis.net.cn/order/
+
+## key
+### del
+del用于删除已存在的键，不存在的 key 会被忽略
+`del key_name`
+返回被删除key的数量
+
+### dump
+DUMP 命令用于序列化给定 key ，并返回被序列化的值
+`DUMP KEY_NAME`
+如果 key 不存在，那么返回 nil 。 否则，返回序列化之后的值。
+
+### exist
+EXISTS 命令用于检查给定 key 是否存在。
+`EXISTS KEY_NAME`
+若 key 存在返回 1 ，否则返回 0 。
+
+### expire
+Expire 命令用于设置 key 的过期时间。key 过期后将不再可用。
+`Expire KEY_NAME TIME_IN_SECONDS`
+设置成功返回1， 当key不存在或者不能为key设置过期时间时返回0。
+
+### expireat
+Expireat 命令用于以 UNIX 时间戳(unix timestamp)格式设置 key 的过期时间。key 过期后将不再可用。
+`Expireat KEY_NAME TIME_IN_UNIX_TIMESTAMP`
+设置成功返回1，不成功或不存在返回0。
+示例：
+`EXPIREAT w3ckey 1293840000`
+
+### keys
+Keys 命令用于查找所有符合给定模式 pattern 的 key
+`KEYS PATTERN`
+返回符合给定模式的 key 列表 (Array)。
+
+查找以w3c开头的key：
+`keys w3c*`
+查找所有的key
+`keys *`
+
+### move
+move命令用于将当前数据库的key移动到给定的数据库db当中。
+`MOVE KEY_NAME DESTINATION_DATABASE`
+移动成功返回 1 ，失败则返回 0 。
+
+示例：
+```
+SELECT 0     # redis默认使用数据库 0，为了清晰起见，这里再显式指定一次。
+set w3c redis  #设置一个key
+move w3c 1   #转移到1库
+exist w3c  #发现w3c已经没有了
+select 1 #选择1库
+exist w3c #发现w3c已经转移到1库中
+```
+1. 不存在的key无法转移
+2. 当源数据库和目标数据库有相同的 key 时，key无法转移。
+
+### persist
+persist命令用于移除给定 key 的过期时间，使得 key 永不过期。
+`PERSIST KEY_NAME`
+当过期时间移除成功时，返回 1 。 如果 key 不存在或 key 没有设置过期时间，返回 0 。
+
+### pttl
+Pttl 命令以毫秒为单位返回 key 的剩余过期时间。
+`PTTL KEY_NAME`
+当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间。
+
+### TTL
+TTL 命令以秒为单位返回 key 的剩余过期时间。
+`TTL KEY_NAME`
+当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以秒为单位，返回 key 的剩余生存时间。
+
+### randomkey
+RANDOMKEY 命令从当前数据库中随机返回一个 key 。
+`randomkey`
+当数据库不为空时，返回一个 key 。 当数据库为空时，返回 nil 。
+
+### rename
+Rename 命令用于修改 key 的名称 。
+`RENAME OLD_KEY_NAME NEW_KEY_NAME`
+改名成功时提示 OK ，失败时候返回一个错误。
+当 OLD_KEY_NAME 和 NEW_KEY_NAME 相同，或者 OLD_KEY_NAME 不存在时，返回一个错误。 
+当 NEW_KEY_NAME 已经存在时， RENAME 命令将覆盖旧值。
+
+### renamenx
+Renamenx 命令用于在新的 key 不存在时修改 key 的名称 。
+`RENAMENX OLD_KEY_NAME NEW_KEY_NAME`
+修改成功时，返回 1 。 如果 NEW_KEY_NAME 已经存在，返回 0 。
+
+### type
+Type 命令用于返回 key 所储存的值的类型。
+`TYPE KEY_NAME `
+返回 key 的数据类型，数据类型有：
+```
+none (key不存在)
+string (字符串)
+list (列表)
+set (集合)
+zset (有序集)
+hash (哈希表)
+```
+
+## string
+### set
+SET 命令用于设置给定 key 的值。如果 key 已经存储其他值， SET 就覆写旧值，且无视类型。
+`SET KEY_NAME VALUE`
+从 Redis 2.6.12 版本开始， SET 在设置操作成功完成时，才返回 OK 。
+
+### get
+Get 命令用于获取指定 key 的值。
+`GET KEY_NAME`
+如果 key 不存在，返回 nil 。如果key 储存的值不是字符串类型，返回一个错误。
+
+### getrange
+getrange命令用于获取存储在指定 key 中字符串的子字符串。字符串的截取范围由 start 和 end 两个偏移量决定(包括 start 和 end 在内)。
+`getrange KEY_NAME start end`
+
+示例：首先，设置 mykey 的值并截取字符串。
+```
+redis 127.0.0.1:6379> SET mykey "This is my test key"
+OK
+redis 127.0.0.1:6379> GETRANGE mykey 0 3
+"This"
+redis 127.0.0.1:6379> GETRANGE mykey 0 -1
+"This is my test key"
+```
+
+### getset
+getset 命令用于设置指定 key 的值，并返回 key 旧的值。
+`getset key_name value`
+返回给定 key 的旧值。 当 key 没有旧值时，即 key 不存在时，返回 nil 。
+当 key 存在但不是字符串类型时，返回一个错误。
+示例：首先，设置 mykey 的值并截取字符串。
+```
+redis 127.0.0.1:6379> GETSET mynewkey "This is my test key"
+(nil)
+redis 127.0.0.1:6379> GETSET mynewkey "This is my new value to test getset"
+"This is my test key"
+```
+
+### getbit
+getbit 命令用于对 key 所储存的字符串值，获取指定偏移量上的位(bit)。
+`getbit key_name offset`
+返回字符串值指定偏移量上的位(bit)。
+当偏移量 OFFSET 比字符串值的长度大，或者 key 不存在时，返回 0 。
+
+### setbit
+setbit命令用于对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。
+`setbit key_name offset`
+返回指定偏移量原来储存的位。
+
+### mget
+mget命令返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil 。
+`MGET KEY1 KEY2 .. KEYN`
+
+### setex
+setex 命令为指定的 key 设置值及其过期时间。如果 key 已经存在， SETEX 命令将会替换旧的值。
+`setex key_name timeout value`
+设置成功时返回 OK 。
+说白了就是在设置一个值的时候直接就指定了过期时间。
+
+### setnx
+setnx(SET if Not eXists)命令在指定的 key 不存在时，为 key 设置指定的值。
+`setnx key_name value`
+设置成功，返回 1 。 设置失败，返回 0 。
+```
+redis> EXISTS job                # job 不存在
+(integer) 0
+redis> SETNX job "programmer"    # job 设置成功
+(integer) 1
+redis> SETNX job "code-farmer"   # 尝试覆盖 job ，失败
+(integer) 0
+redis> GET job                   # 没有被覆盖
+"programmer"
+```
+
+### setrange
+setrange 命令用指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量 offset 开始。
+`SETRANGE KEY_NAME OFFSET VALUE`
+返回被修改后的字符串长度。
+就是从指定位置修改字符串的内容。
+
+### strlen
+strlen 命令用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误。
+`strlen key_name`
+返回字符串值的长度。 当 key 不存在时，返回 0。
+
+### mset
+mset 命令用于同时设置一个或多个 key-value 对。
+`MSET key1 value1 key2 value2 .. keyN valueN `
+总是返回OK
+
+### msetnx
+msetnx 命令用于所有给定 key 都不存在时，同时设置一个或多个 key-value 对。
+`MSETNX key1 value1 key2 value2 .. keyN valueN `
+当所有 key 都成功设置，返回 1 。 如果所有给定 key 都设置失败(至少有一个 key 已经存在)，那么返回 0 。
+
+msetnx是原子性操作，只要有一个值失败，所有的值都不会被设置。
+
+### psetex
+psetex 命令以毫秒为单位设置 key 的生存时间。
+`PSETEX key1 EXPIRY_IN_MILLISECONDS value1 `
+设置成功时返回 OK 。
+
+### incr
+incr 命令将 key 中储存的数字值增一。
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+`incr key_name`
+返回执行incr命令之后 key 的值。
+
+### incrby
+incrby命令将 key 中储存的数字加上指定的增量值。
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCRBY 命令。
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+`incr key_name incr_amount`
+返回加上指定的增量值之后， key 的值。
+
+### incrbyfloat
+incrbyfloat命令为 key 中所储存的值加上指定的浮点数增量值。
+`incrbyfloat key_name incr_amount`
+返回执行命令之后 key 的值。
+
+用 SET 设置的值可以是指数符号`314e-2`，但执行 INCRBYFLOAT 之后格式会被改成非指数符号`3.14`
+SET 设置的值小数部分可以是 0`3.0`，但 INCRBYFLOAT 会将无用的 0 忽略掉，有需要的话，将浮点变为整数`4`
+
+### decr
+decr 命令将 key 中储存的数字值减一。
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECR 操作。
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+`decr key_name`
+返回执行命令之后 key 的值。
+
+### decrby
+decrby 命令将 key 所储存的值减去指定的减量值。
+如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECRBY 操作。
+如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。
+本操作的值限制在 64 位(bit)有符号数字表示之内。
+`decrby key_name decrement_amount`
+返回减去指定减量值之后， key 的值。
+
+### append
+append 命令用于为指定的 key 追加值。
+如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾。
+如果 key 不存在， APPEND 就简单地将给定 key 设为 value ，就像执行 SET key value 一样。
+`append key_name new_value`
+返回追加指定值之后， key 中字符串的长度。
+
+## hash
+### hdel
+hdel 命令用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略。
+`HDEL KEY_NAME FIELD1.. FIELDN `
+被成功删除字段的数量，不包括被忽略的字段。
+
+### hexists
+hexists 命令用于查看哈希表的指定字段是否存在。
+`HEXISTS KEY_NAME FIELD_NAME `
+如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 。
+
+### hget
+hget 命令用于返回哈希表中指定字段的值。
+`HGET KEY_NAME FIELD_NAME `
+返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 。
+
+### hgetall
+hgetall 命令用于返回哈希表中，所有的字段和值。
+在返回值里，紧跟每个字段名(field name)之后是字段的值(value)，所以返回值的长度是哈希表大小的两倍。
+`HGETALL KEY_NAME `
+以列表形式返回哈希表的字段及字段值。 若 key 不存在，返回空列表。
+
+### hincrby
+hincrby 命令用于为哈希表中的字段值加上指定增量值。
+增量也可以为负数，相当于对指定字段进行减法操作。
+如果哈希表的 key 不存在，一个新的哈希表被创建并执行 HINCRBY 命令。
+如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0 。
+对一个储存字符串值的字段执行 HINCRBY 命令将造成一个错误。
+本操作的值被限制在 64 位(bit)有符号数字表示之内。
+`HINCRBY KEY_NAME FIELD_NAME INCR_BY_NUMBER `
+
+### hincrbyfloat
+hincrbyfloat 命令用于为哈希表中的字段值加上指定浮点数增量值。
+如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0 。
+`HINCRBYFLOAT KEY_NAME FIELD_NAME INCR_BY_NUMBER `
+返回执行 Hincrbyfloat 命令之后，哈希表中字段的值。
+
+### hkeys
+hkeys 命令用于获取哈希表中的所有字段名。
+`HKEYS KEY_NAME FIELD_NAME INCR_BY_NUMBER `
+包含哈希表中所有字段的列表。 当 key 不存在时，返回一个空列表。
+
+### hlen
+hlen 命令用于获取哈希表中字段的数量。
+`HLEN KEY_NAME `
+返回哈希表中字段的数量。 当 key 不存在时，返回 0 。
+
+### hmget
+hmget 命令用于返回哈希表中，一个或多个给定字段的值。
+如果指定的字段不存在于哈希表，那么返回一个 nil 值。
+`HMGET KEY_NAME FIELD1...FIELDN `
+返回一个包含多个给定字段关联值的表，表值的排列顺序和指定字段的请求顺序一样。
+
+### hmset
+hmset 命令用于同时将多个 field-value (字段-值)对设置到哈希表中。
+此命令会覆盖哈希表中已存在的字段。
+如果哈希表不存在，会创建一个空哈希表，并执行 HMSET 操作。
+`HMSET KEY_NAME FIELD1 VALUE1 ...FIELDN VALUEN`
+
+### hset
+hset 命令用于为哈希表中的字段赋值 。
+如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。
+如果字段已经存在于哈希表中，旧值将被覆盖。
+`HSET KEY_NAME FIELD VALUE`
+返回如果字段是哈希表中的一个新建字段，并且值设置成功，返回 1 。 如果哈希表中域字段已经存在且旧值已被新值覆盖，返回 0 。
+
+
+### hsetnx
+hsetnx 命令用于为哈希表中不存在的的字段赋值 。
+如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。
+如果字段已经存在于哈希表中，操作无效。
+如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令。
+`HSETNX KEY_NAME FIELD VALUE`
+设置成功，返回 1 。 如果给定字段已经存在且没有操作被执行，返回 0 。
+
+### hvals
+hvals 命令返回哈希表所有字段的值。
+`HVALS KEY_NAME FIELD VALUE`
+返回一个包含哈希表中所有值的表。 当 key 不存在时，返回一个空表。
+
+## list
+
+## set
+
+## sorted set
+
+
+# JAVA操作redis基本使用
 ## 初始化
 ```
 public class RedisClient {

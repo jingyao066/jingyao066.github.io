@@ -350,6 +350,10 @@ XAka34A2rVRYJ4XBIU35UZMUEEF64CMMIYZCK2FZZUQNODEKUHGJLFMSLIQMQUCUBXRENLK6NZL37JXP
 然后激活成功。
 
 # 一些问题
+## 字体
+- 终端字体
+文泉驿等宽微米黑 Bold
+
 ## 快捷键
 + 在应用程序中搜索"窗口管理器"，然后点击键盘，将：
     - "工作区"和"移动窗口至工作去"等与ctrl和alt相关的快捷键全部清除

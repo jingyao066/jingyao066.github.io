@@ -121,6 +121,8 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
   </resultMap>
 ```
 
+# mybatis-Generator
+
 # 映射枚举类
 
 # 简单的SQL注入
