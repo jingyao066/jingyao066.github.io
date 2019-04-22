@@ -20,7 +20,7 @@ ArrayList是一个数组队列，相当于动态数组。它继承于AbstractLis
 
 # ArrayList构造函数
 ArrayList提供了三种方式的构造器，可以构造一个默认初始容量为10的空列表、构造一个指定初始容量的空列表以及构造一个包含指定collection的元素的列表，这些元素按照该collection的迭代器返回的顺序排列的。
-```
+```java
     /**
      * 构造一个指定初始容量的空列表
      * @param  initialCapacity  ArrayList的初始容量
