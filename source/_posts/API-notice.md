@@ -4,6 +4,35 @@ tags: java
 date: 2019-04-03 09:54:28
 ---
 
+# 模板
+```java
+@PostMapping("/login")
+    public ResponseUtil login(@RequestBody Map<String,String> paramMap){
+        LOGGER.info(
+        "\n***************************************" + "\n" +
+                "start login" + "\n" +
+                "登录" + "\n" +
+                "paramMap = " + paramMap + "\n" +
+                "\n********************************************"
+        );
+        ResponseUtil response = ResponseUtil.success();
+        CodeEnum code = CodeEnum.FAIL;
+        try {
+            Token token = TokenUtil.getToken(request.getHeader("token"));
+            Assert.isTrue(token != null, "token解密失败");
+
+            code = CodeEnum.ERROR_2001;
+            Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号不可为空");
+            response = usersService.login(paramMap,response,token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setCode(code);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+    }
+```
+
 # Controller
 - controller只负责收发参数、跳转页面等，不要在controller里写业务逻辑，业务逻辑全部写在接口实现类(serviceImpl)中。
 - 入参使用`@RequestBody Map<String,String> map`，返回数据使用`@ResponseBody`
@@ -15,7 +44,7 @@ date: 2019-04-03 09:54:28
 - 用户相关的接口都需要token，token需要前端通过header传递。
 
 示例：
-```
+```java
 @ResponseBody
 @PostMapping("/login")
     public ResponseUtil login(@RequestBody Map<String,String> paramMap){
@@ -66,7 +95,7 @@ LOGGER.info("\n***************\n end getUserinfo\n 返回个人信息 \n result 
 `private final static Logger LOGGER = LoggerFactory.getLogger(UserInfoController.class);`
 
 需要的request、response、session需要在类头部定义：
-```
+```java
 protected HttpServletRequest request;
 protected HttpServletResponse response;
 protected HttpSession session;
@@ -80,7 +109,7 @@ protected HttpSession session;
 ```
 
 # ResponseUtil
-```
+```java
 public class ResponseUtil<T> implements Serializable {
     private int code;
     private String message;
@@ -191,7 +220,7 @@ public enum CodeEnum {
 # 典型接口示例
 ## 分页接口
 - controller
-```
+```java
 @PostMapping("/getGoodsList")
 public ResponseUtil getGoodsList(@RequestBody Map<String, Object> paramMap) {
     LOGGER.info(
@@ -222,17 +251,17 @@ public ResponseUtil getGoodsList(@RequestBody Map<String, Object> paramMap) {
 }
 ```
 - service
-`List<Goods> getGoodsList(Map<String, Object> map);`
+`List<Goods> getGoodsList(Map<String, Object> paramMap);`
 或
-`List<Map<String, Object>> getGoodsList(Map<String, Object> map);`
+`List<Map<String, Object>> getGoodsList(Map<String, Object> paramMap);`
 
 - serviceImpl
 ```
-public List<Goods> getGoodsList(Map<String, Object> map) {
+public List<Goods> getGoodsList(Map<String, Object> paramMap) {
     PageHelper.startPage(
-            map.get("pageNum") == null ? 1 : Integer.parseInt(map.get("pageNum")),
-            map.get("pageSize") == null ? 10 : Integer.parseInt(map.get("pageSize")));
-    List<Goods> list = goodsMapper.getGoodsList(map);
+            paramMap.get("pageNum") == null ? 1 : Integer.parseInt(paramMap.get("pageNum")),
+            paramMap.get("pageSize") == null ? 10 : Integer.parseInt(paramMap.get("pageSize")));
+    List<Goods> list = goodsMapper.getGoodsList(paramMap);
     return list;
 }
 ```
