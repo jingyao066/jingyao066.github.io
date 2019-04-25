@@ -7,30 +7,30 @@ date: 2019-04-03 09:54:28
 # 模板
 ```java
 @PostMapping("/login")
-    public ResponseUtil login(@RequestBody Map<String,String> paramMap){
-        LOGGER.info(
-        "\n***************************************" + "\n" +
-                "start login" + "\n" +
-                "登录" + "\n" +
-                "paramMap = " + paramMap + "\n" +
-                "\n********************************************"
-        );
-        ResponseUtil response = ResponseUtil.success();
-        CodeEnum code = CodeEnum.FAIL;
-        try {
-            Token token = TokenUtil.getToken(request.getHeader("token"));
-            Assert.isTrue(token != null, "token解密失败");
+public ResponseUtil login(@RequestBody Map<String,String> paramMap){
+    LOGGER.info(
+    "\n***************************************" + "\n" +
+            "start login" + "\n" +
+            "登录" + "\n" +
+            "paramMap = " + paramMap + "\n" +
+            "\n********************************************"
+    );
+    ResponseUtil response = ResponseUtil.success();
+    CodeEnum code = CodeEnum.FAIL;
+    try {
+        Token token = TokenUtil.getToken(request.getHeader("token"));
+        Assert.isTrue(token != null, "token解密失败");
 
-            code = CodeEnum.ERROR_2001;
-            Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号不可为空");
-            response = usersService.login(paramMap,response,token);
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setCode(code);
-            response.setMessage(e.getMessage());
-        }
-        return response;
+        code = CodeEnum.ERROR_2001;
+        Assert.isTrue(StringUtils.isNotEmpty(paramMap.get("mobile")), "手机号不可为空");
+        response = usersService.login(paramMap,response,token);
+    } catch (Exception e) {
+        e.printStackTrace();
+        response.setCode(code);
+        response.setMessage(e.getMessage());
     }
+    return response;
+}
 ```
 
 # Controller
@@ -222,7 +222,7 @@ public enum CodeEnum {
 - controller
 ```java
 @PostMapping("/getGoodsList")
-public ResponseUtil getGoodsList(@RequestBody Map<String, Object> paramMap) {
+public ResponseUtil getGoodsList(@RequestBody Map<String, String> paramMap) {
     LOGGER.info(
             "\n***************************************" + "\n" +
                     "start getGoodsList" + "\n" +
@@ -233,7 +233,6 @@ public ResponseUtil getGoodsList(@RequestBody Map<String, Object> paramMap) {
     ResponseUtil response = ResponseUtil.success();
     CodeEnum code = CodeEnum.FAIL;
     try {
-        
         result = goodsService.getGoodsList(paramMap);
     } catch (Exception e) {
         e.printStackTrace();
@@ -251,13 +250,13 @@ public ResponseUtil getGoodsList(@RequestBody Map<String, Object> paramMap) {
 }
 ```
 - service
-`List<Goods> getGoodsList(Map<String, Object> paramMap);`
+`List<Goods> getGoodsList(Map<String, String> paramMap);`
 或
-`List<Map<String, Object>> getGoodsList(Map<String, Object> paramMap);`
+`List<Map<String, Object>> getGoodsList(Map<String, String> paramMap);`
 
 - serviceImpl
 ```
-public List<Goods> getGoodsList(Map<String, Object> paramMap) {
+public List<Goods> getGoodsList(Map<String, String> paramMap) {
     PageHelper.startPage(
             paramMap.get("pageNum") == null ? 1 : Integer.parseInt(paramMap.get("pageNum")),
             paramMap.get("pageSize") == null ? 10 : Integer.parseInt(paramMap.get("pageSize")));
@@ -267,7 +266,7 @@ public List<Goods> getGoodsList(Map<String, Object> paramMap) {
 ```
 
 - mapper
-`List<Goods> getGoodsList(Map<String,Object> map);`
+`List<Goods> getGoodsList(Map<String,String> map);`
 - mapper.xml
 ```
 <select id="getGoodsList" resultMap="BaseResultMap" parameterType="map">
