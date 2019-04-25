@@ -151,4 +151,48 @@ from city;
 前缀索引是一种能是索引更小、更快的办法，另一方面也有缺点：mysql无法使用前缀索引做order by 和 group by，也无法使用前缀索引做覆盖扫描。
 
 ## 多列索引
+关于多列索引常见的错误：
+1. 为每个列创建独立的索引；
+2. 按照错误的顺序创建多列索引。
+
+为每个列创建独立的索引：
+```
+create table t{
+    c1 int,
+    c2 int,
+    c3 int,
+    key(c1),
+    key(c2),
+    key(c3)
+}
+```
+这种索引策略，一般是听到"把where条件里的列都加上索引"这种模糊的建议导致的。实际上这个建议是非常错误的。
+在多个列上建立独立的单列索引大部分情况并不能提高mysql的查询性能。mysql5.0开始引入一种叫"索引合并(index nerge)"的策略，一定程度可以使用表上的多个单列索引来定位指定的行。
+
+## 选择合适的索引列顺序
+正确的索引顺序依赖于使用该索引的查询，并且需要考虑满足排序和分组的需要。
+在一个多列B-Tree索引中，索引列的顺序意味着索引优先按照最做列进行排序，所以索引可以按照升序或降序进行扫描，以满足精确符合列顺序的order by 、group by 和distinct等字句的查询需求，所以多列索引的列顺序至关重要。
+
+当不需要考虑排序和分组时，将**选择性最高的列放在前面**通常是很好的，这时索引的作用只是优化where条件的查找。对于在where子句中只使用了索引部分前缀列的查询来说选择性也更高。然而，性能不只是依赖于所有索引列的选择性(整体基数)，也和查询条件的具体值有关，也就是和值的分布有关。可能需要根据那些运行频率最高的查询来调整索引列的顺序。
+
+对于下面一条查询：
+`select * from payment where staff_id = 2 and customer_id = 573`
+
+因为经验法则考虑的是全局基数和选择性，而不是某个具体的查询，所以按照经验法：
+```
+select 
+    count(distinct staff_id)/count(*) as staff_id_selectivity,
+    count(distinct customer_id)/count(*) as customer_id_selectivity,
+    count(*)
+from payment
+```
+运行结果：
+```
+staff_id_selectivity：0.0001
+customer_id_selectivity：0.0373
+count(*)：16049
+```
+customer_id的选择性更高，所以将其作为索引列的第一列。
+
+## 聚簇索引
 

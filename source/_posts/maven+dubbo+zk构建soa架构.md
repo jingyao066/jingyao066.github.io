@@ -1014,3 +1014,48 @@ public class HelloController {
 在实现类上加上注解：
 `@Transactional(rollbackFor = Exception.class)`
 
+## 打包配置
+对于tubitu_common、tubitu_util和tubitu_service这几个项目，第一个和第二个分别为实体类以及工具类所在项目，而tubitu_service是作为dubbo提供父和调用方的一个公共接口。这三个项目均可以打成单独的jar包作为其他项目依赖而存在，所以可以指定maven编译插件和源码版本。
+```
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5.1</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+                <encoding>UTF-8</encoding>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+但是对于spring boot项目，由于父项目不再是spring boot的官方父pom，因此需要再上述的基础上，配置repackage
+```
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+                <encoding>UTF-8</encoding>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+

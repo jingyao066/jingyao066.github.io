@@ -15,20 +15,22 @@ If none of the previous conditions hold then this thread's interrupt status will
 Interrupting a thread that is not alive need not have any effect.
 
 interrupt()的作用是中断本线程。
-本线程中断自己是被允许的；其它线程调用本线程的interrupt()方法时，会通过checkAccess()检查权限。这有可能抛出SecurityException异常。
-如果本线程是处于阻塞状态：调用线程的wait(), wait(long)或wait(long, int)会让它进入等待(阻塞)状态，或者调用线程的join(), join(long), join(long, int), sleep(long), sleep(long, int)也会让它进入阻塞状态。若线程在阻塞状态时，调用了它的interrupt()方法，那么它的“中断状态”会被清除并且会收到一个InterruptedException异常。例如，线程通过wait()进入阻塞状态，此时通过interrupt()中断该线程；调用interrupt()会立即将线程的中断标记设为“true”，但是由于线程处于阻塞状态，所以该“中断标记”会立即被清除为“false”，同时，会产生一个InterruptedException的异常。
-如果线程被阻塞在一个Selector选择器中，那么通过interrupt()中断它时；线程的中断标记会被设置为true，并且它会立即从选择操作中返回。
-如果不属于前面所说的情况，那么通过interrupt()中断线程时，它的中断标记会被设置为“true”。
-中断一个“已终止的线程”不会产生任何操作。
+本线程中断自己是被允许的，其它线程调用本线程的interrupt()方法时，会通过checkAccess()检查权限。这有可能抛出SecurityException异常。
+如果本线程是处于阻塞状态，调用线程的`wait(), wait(long)或wait(long, int)`、`join(), join(long), join(long, int)`、`sleep(long), sleep(long, int)`，都会让它进入阻塞状态。
+若线程在阻塞状态时，调用了它的`interrupt()`方法，那么它的`中断状态`会被清除并且会收到一个`InterruptedException`异常。
+例如，线程通过`wait()`进入阻塞状态，此时通过`interrupt()`中断该线程；调用`interrupt()`会立即将线程的中断标记设为`true`，但是由于线程处于阻塞状态，所以该`中断标记`会立即被清除为`false`，同时，会产生一个`InterruptedException`的异常。
+如果线程被阻塞在一个`Selector选择器`中，那么通过`interrupt()`中断它时；线程的中断标记会被设置为`interrupt()`，并且它会立即从选择操作中返回。
+如果不属于前面所说的情况，那么通过`interrupt()`中断线程时，它的中断标记会被设置为`true`。
+中断一个`已终止的线程`不会产生任何操作。
 
 # 终止线程的方式
 Thread中的stop()和suspend()方法，由于固有的不安全性，已经建议不再使用。
-下面，我先分别讨论线程在“阻塞状态”和“运行状态”的终止方式，然后再总结出一个通用的方式。
+下面，我先分别讨论线程在`阻塞状态`和`运行状态`的终止方式，然后再总结出一个通用的方式。
 
-## 终止处于“阻塞状态”的线程
-通常，我们通过“中断”方式终止处于“阻塞状态”的线程。
-当线程由于被调用了sleep(), wait(), join()等方法而进入阻塞状态；若此时调用线程的interrupt()将线程的中断标记设为true。由于处于阻塞状态，中断标记会被清除，同时产生一个InterruptedException异常。将InterruptedException放在适当的为止就能终止线程，形式如下：
-```
+## 终止处于`阻塞状态`的线程
+通常，我们通过`中断`方式终止处于`阻塞状态`的线程。
+当线程由于被调用了`sleep()、wait()、join()`等方法而进入阻塞状态；若此时调用线程的`interrupt()`将线程的中断标记设为`true`。由于处于阻塞状态，中断标记会被清除，同时产生一个`InterruptedException`异常。将`InterruptedException`放在适当的为止就能终止线程，形式如下：
+```java
 @Override
 public void run() {
     try {
@@ -40,9 +42,9 @@ public void run() {
     }
 }
 ```
-说明：在while(true)中不断的执行任务，当线程处于阻塞状态时，调用线程的interrupt()产生InterruptedException中断。中断的捕获在while(true)之外，这样就退出了while(true)循环！
-注意：对InterruptedException的捕获务一般放在while(true)循环体的外面，这样，在产生异常时就退出了while(true)循环。否则，InterruptedException在while(true)循环体之内，就需要额外的添加退出处理。形式如下：
-```
+说明：在`while(true)`中不断的执行任务，当线程处于阻塞状态时，调用线程的`interrupt()`产生`InterruptedException`中断。中断的捕获在`while(true)`之外，这样就退出了`while(true)`循环。
+注意：对`InterruptedException`的捕获务一般放在`while(true)`循环体的外面，这样，在产生异常时就退出了`while(true)`循环。否则，`InterruptedException`在`while(true)`循环体之内，就需要额外的添加退出处理。形式如下：
+```java
 @Override
 public void run() {
     while (true) {
@@ -56,13 +58,13 @@ public void run() {
     }
 }
 ```
-说明：上面的InterruptedException异常的捕获在whle(true)之内。当产生InterruptedException异常时，被catch处理之外，仍然在while(true)循环体内；要退出while(true)循环体，需要额外的执行退出while(true)的操作。
+说明：上面的`InterruptedException`异常的捕获在`whle(true)`之内。当产生`InterruptedException`异常时，被catch处理之外，仍然在`while(true)`循环体内；要退出`while(true)`循环体，需要额外的执行退出`while(true)`的操作。
 
-## 终止处于“运行状态”的线程
-通常，我们通过“标记”方式终止处于“运行状态”的线程。其中，包括“中断标记”和“额外添加标记”。
-(01) 通过“中断标记”终止线程。
+## 终止处于`运行状态`的线程
+通常，我们通过`标记`方式终止处于`运行状态`的线程。其中，包括`中断标记`和`额外添加标记`。
+1. 通过`中断标记`终止线程。
 形式如下：
-```
+```java
 @Override
 public void run() {
     while (!isInterrupted()) {
@@ -70,11 +72,12 @@ public void run() {
     }
 }
 ```
-说明：isInterrupted()是判断线程的中断标记是不是为true。当线程处于运行状态，并且我们需要终止它时；可以调用线程的interrupt()方法，使用线程的中断标记为true，即isInterrupted()会返回true。此时，就会退出while循环。
-注意：interrupt()并不会终止处于“运行状态”的线程！它会将线程的中断标记设为true。
-(02) 通过“额外添加标记”。
+    说明：`isInterrupted()`是判断线程的中断标记是不是为`true`。当线程处于运行状态，并且我们需要终止它时；可以调用线程的`interrupt()`方法，使用线程的中断标记为`true`，即`isInterrupted()`会返回`true`。此时，就会退出`while`循环。
+注意：`interrupt()`并不会终止处于`运行状态`的线程！它会将线程的中断标记设为true。
+
+2. 额外添加标记
 形式如下：
-```
+```java
 private volatile boolean flag= true;
 protected void stopTask() {
     flag = false;
@@ -87,11 +90,12 @@ public void run() {
     }
 }
 ```
-说明：线程中有一个flag标记，它的默认值是true；并且我们提供stopTask()来设置flag标记。当我们需要终止该线程时，调用该线程的stopTask()方法就可以让线程退出while循环。
-注意：将flag定义为volatile类型，是为了保证flag的可见性。即其它线程通过stopTask()修改了flag之后，本线程能看到修改后的flag的值。
+    说明：线程中有一个flag标记，它的默认值是true；并且我们提供`stopTask()`来设置flag标记。当我们需要终止该线程时，调用该线程的`stopTask()`方法就可以让线程退出while循环。
+    注意：将flag定义为`volatile`类型，是为了保证flag的可见性。即其它线程通过`stopTask()`修改了flag之后，本线程能看到修改后的flag的值。
 
-综合线程处于“阻塞状态”和“运行状态”的终止方式，比较通用的终止线程的形式如下：
-```
+## 通用终止线程方式
+综合线程处于`阻塞状态`和`运行状态`的终止方式，比较通用的终止线程的形式如下：
+```java
 @Override
 public void run() {
     try {
@@ -106,8 +110,8 @@ public void run() {
 ```
 
 # 终止线程示例
-interrupt()常常被用来终止“阻塞状态”线程。参考下面示例：
-```
+`interrupt()`常常被用来终止`阻塞状态`线程。参考下面示例：
+```java
 // Demo1.java的源码
 class MyThread extends Thread {
     
@@ -165,12 +169,12 @@ t1 (RUNNABLE) catch InterruptedException.
 t1 (TERMINATED) is interrupted now.
 ```
 结果说明：
-(01) 主线程main中通过new MyThread("t1")创建线程t1，之后通过t1.start()启动线程t1。
-(02) t1启动之后，会不断的检查它的中断标记，如果中断标记为“false”；则休眠100ms。
-(03) t1休眠之后，会切换到主线程main；主线程再次运行时，会执行t1.interrupt()中断线程t1。t1收到中断指令之后，会将t1的中断标记设置“false”，而且会抛出InterruptedException异常。在t1的run()方法中，是在循环体while之外捕获的异常；因此循环被终止。
+- 主线程main中通过new MyThread("t1")创建线程t1，之后通过t1.start()启动线程t1。
+- t1启动之后，会不断的检查它的中断标记，如果中断标记为“false”；则休眠100ms。
+- t1休眠之后，会切换到主线程main；主线程再次运行时，会执行t1.interrupt()中断线程t1。t1收到中断指令之后，会将t1的中断标记设置“false”，而且会抛出InterruptedException异常。在t1的run()方法中，是在循环体while之外捕获的异常；因此循环被终止。
 
 我们对上面的结果进行小小的修改，将run()方法中捕获InterruptedException异常的代码块移到while循环体内。
-```
+```java
 // Demo2.java的源码
 class MyThread extends Thread {
     
@@ -236,11 +240,12 @@ t1 (RUNNABLE) loop 9
 ```
 结果说明：
 程序进入了死循环！
-为什么会这样呢？这是因为，t1在“等待(阻塞)状态”时，被interrupt()中断；此时，会清除中断标记[即isInterrupted()会返回false]，而且会抛出InterruptedException异常[该异常在while循环体内被捕获]。因此，t1理所当然的会进入死循环了。
-解决该问题，需要我们在捕获异常时，额外的进行退出while循环的处理。例如，在MyThread的catch(InterruptedException)中添加break 或 return就能解决该问题。
+为什么会这样呢？这是因为，t1在`等待(阻塞)状态`时，被`interrupt()`中断；此时，会清除中断标记(即`isInterrupted()`会返回false)，而且会抛出`InterruptedException`异常(该异常在while循环体内被捕获)。因此，t1理所当然的会进入死循环了。
+解决该问题，需要我们在捕获异常时，额外的进行退出while循环的处理。
+例如，在`MyThread的catch(InterruptedException)`中添加`break`或`return`就能解决该问题。
 
-下面是通过“额外添加标记”的方式终止“状态状态”的线程的示例：
-```
+下面是通过`额外添加标记`的方式终止`运行状态`的线程的示例：
+```java
 // Demo3.java的源码
 class MyThread extends Thread {
 
@@ -306,6 +311,5 @@ t1 (TERMINATED) is interrupted now.
 ```
 
 # interrupted() 和 isInterrupted()的区别
-最后谈谈 interrupted() 和 isInterrupted()。
-interrupted() 和 isInterrupted()都能够用于检测对象的“中断标记”。
-区别是，interrupted()除了返回中断标记之外，它还会清除中断标记(即将中断标记设为false)；而isInterrupted()仅仅返回中断标记。
+`interrupted()`和`isInterrupted()`都能够用于检测对象的`中断标记`。
+区别是，`interrupted()`除了返回中断标记之外，它还会清除中断标记(即将中断标记设为false)；而`isInterrupted()`仅仅返回中断标记。
