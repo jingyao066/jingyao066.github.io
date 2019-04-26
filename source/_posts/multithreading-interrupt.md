@@ -93,7 +93,7 @@ public void run() {
     说明：线程中有一个flag标记，它的默认值是true；并且我们提供`stopTask()`来设置flag标记。当我们需要终止该线程时，调用该线程的`stopTask()`方法就可以让线程退出while循环。
     注意：将flag定义为`volatile`类型，是为了保证flag的可见性。即其它线程通过`stopTask()`修改了flag之后，本线程能看到修改后的flag的值。
 
-## 通用终止线程方式
+## 通用的终止线程方式
 综合线程处于`阻塞状态`和`运行状态`的终止方式，比较通用的终止线程的形式如下：
 ```java
 @Override
