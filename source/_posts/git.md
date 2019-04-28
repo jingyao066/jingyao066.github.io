@@ -1026,6 +1026,11 @@ Dropped refs/stash@{0} (5d677e2ee266f39ea296182fb2354265b91b3b2a)
 你可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：
 `$ git stash apply stash@{0}`
 
+清除所有的stash：
+先查看所有的stash：`git stash list`
+清楚所有stash：`git stash clear`
+选择清除：`git stash drop stash@{0}`这是删除第一个队列
+
 {% raw %}
 <video src='
 http://liaoxuefeng.gitee.io/git-resources/15-git-stash.mp4
