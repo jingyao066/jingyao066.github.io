@@ -4,10 +4,122 @@ tags: mybatis
 date: 2019-03-27 15:07:56
 ---
 
+# 基础
+## 面向接口编程
+1. `Mapper`文件的`namespace`要和接口的完整路径对应
+`<mapper namespace="com.wjy.mapper.TestMapper">`
+
+2. 接口中的方法名字 要和 Mapper文件中SQL语句的ID对应
+dao层接口
+`xxxBean selectByPrimaryKey(Integer id);`
+```xml
+<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from unit
+    where id = #{id,jdbcType=INTEGER}
+</select>
+```
+
+3. 接口中方法的返回值要和Mapper文件中的resultType对应
+4. 接口中方法的参数 要和Mapper文件中的parameterType对应
+
+## 简单的ResultMap
+```xml
+<!-- 
+    type：返回类型  
+    id：唯一标识 
+-->
+<resultMap type = "EmpBean" id = "selectAllMap">
+    <!-- 
+        id标签是主键
+        column：sql查询结果的字段，需要和查询结果的表头字段一致，即如果用了as，需要和as后边的别名一致
+        property：对应的java实体类属性
+        javaType：property对应的数据类型
+        jdbcType：column对应的数据类型
+    -->
+    <id column="id" property="id" />
+    <!-- 普通字段 -->
+    <result column="name" property="name" />
+</resultMap>
+
+<!-- 此处的resultMap需要和上边resultMap标签的id相对应 -->
+<select id = "selectAll" resultMap="selectAllMap">
+    select * from emp
+</select>
+```
+
+## resultMap一对一
+在`ResultMap`中使用`association`标签
+
+EmpBean 实体类中存在一对一关系：
+`private DeptBean deptBean`
+
+定义sql语句：
+```xml
+<select id = "selectEmpResultMap" resultMap="selectEmpMap">
+    select
+        e.*,
+        d.dept_name,
+        d.id as dept_id
+    from emp e
+    left join dept d 
+    on d.id = e.dept_id
+</select>
+
+<!-- 
+    column为数据库字段，property为实体类的属性
+    Bean模型属性与数据库字段不相同的，需要写一下result标签，其他的可以用自动映射automapping，也可以全部写上
+ -->
+<resultMap type = "EmpBean" id = "selectAllMap">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <!-- 一对一关系 -->
+    <association property = "deptBean" javaType = "DeptBean">
+        <id column = "dept_id" property = "id" />
+        <result column = "dept_name" property = "deptName" />
+    </association>
+</resultMap>
+```
+
+## resultMap一对多
+在`resultMap`中使用`collection`标签
+`DeptBean`实体类中存在一对多关系，站在部门的角度，部门和员工是一对多关系(一个部门对应多个员工)
+`private List<Emp> empList`
+
+编写sql
+```xml
+<select>
+    select
+        d.*,
+        e.*,
+        e.id as e_id
+    from dept d
+    left join emp e on e.dept_id = d.id
+</select>
+```
+编写resultMap映射结果集
+```xml
+<resultMap id="selectAllMap" type="DeptBean">
+    <id column="id" property="id" />
+    <result column="dept_name" property="deptName" />
+    <collection>
+        <!-- 
+            一对多使用collection
+            property：实体类中list属性的名字
+            ofType：list中的对象类型List<EmpBean>
+            若使用自动映射automapping，需要为使用as别名的字段单独使用result标签
+         -->
+        <id column="id" property="id" />
+        <result column = "emp_name" property = "empName" />
+    </collection>
+</resultMap>
+```
+
 # MyBatis传入多个参数
 ## 单个参数
 `public List<XXBean> getXXBeanList(String xxCode);`
-```
+```xml
 <select id="getXXXBeanList" parameterType="java.lang.String" resultType="XXBean">
 　　select t.* from tableName t where t.id= #{id}
 </select>
@@ -17,7 +129,7 @@ select 后的字段列表要和bean中的属性名一致， 如果不一致的�
 
 ## 多参数
 `public List<XXXBean> getXXXBeanList(String xxId, String xxCode);`
-```
+```xml
 <select id="getXXXBeanList" resultType="XXBean">
 　　select t.* from tableName where id = #{0} and name = #{1}
 </select>
@@ -26,7 +138,7 @@ select 后的字段列表要和bean中的属性名一致， 如果不一致的�
 
 ## Map封装多参数
 `public List<XXXBean> getXXXBeanList(HashMap map);`
-```
+```xml
 <select id="getXXXBeanList" parameterType="hashmap" resultType="XXBean">
 　　select 字段... from XXX where id=#{xxId} code = #{xxCode}
 </select>
@@ -35,8 +147,7 @@ select 后的字段列表要和bean中的属性名一致， 如果不一致的�
 
 ## List封装in
 `public List<XXXBean> getXXXBeanList(List<String> list);`
-
-```
+```xml
 <select id="getXXXBeanList" resultType="XXBean">
 　　select 字段... from XXX where id in
 　　<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
@@ -50,18 +161,18 @@ foreach 最后的效果是select 字段... from XXX where id in ('1','2','3','4'
 例子：
  `public AddrInfo getAddrInfo(@Param("corpId")int corpId, @Param("addrId")int addrId);`
  xml配置这样写：
-```
+```xml
 <select id="getAddrInfo"  resultMap="com.xxx.xxx.AddrInfo">
        SELECT * FROM addr__info 
 　　　　where addr_id=#{addrId} and corp_id=#{corpId}
 </select>
-``` 
- 以前在<select>语句中要带parameterType的，现在可以不要这样写。
+```
+ 以前在`<select>`语句中要带parameterType的，现在可以不要这样写。
 
 ## 复杂参数类型
-selectList()只能传递一个参数，但实际所需参数既要包含String类型，又要包含List类型时的处理方法
+`selectList()`只能传递一个参数，但实际所需参数既要包含String类型，又要包含List类型时的处理方法
 将参数放入Map，再取出Map中的List遍历。如下：
-```
+```java
 List<String> list_3 = new ArrayList<String>();
 Map<String, Object> map2 = new HashMap<String, Object>();
 list.add("1");
@@ -69,27 +180,27 @@ list.add("2");
 map2.put("list", list); //网址id
 map2.put("siteTag", "0");//网址类型
 ```
-```
+```java
 public List<SysWeb> getSysInfo(Map<String, Object> map2) {
 　　return getSqlSession().selectList("sysweb.getSysInfo", map2);
 }
 ```
-```
+```xml
 <select id="getSysInfo" parameterType="java.util.Map" resultType="SysWeb">
-　　select t.sysSiteId, t.siteName, t1.mzNum as siteTagNum, t1.mzName as siteTag, t.url, t.iconPath
-   from TD_WEB_SYSSITE t
-   left join TD_MZ_MZDY t1 on t1.mzNum = t.siteTag and t1.mzType = 10
-   WHERE t.siteTag = #{siteTag } 
-   and t.sysSiteId not in 
-   <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+    select t.sysSiteId, t.siteName, t1.mzNum as siteTagNum, t1.mzName as siteTag, t.url, t.iconPath
+    from TD_WEB_SYSSITE t
+    left join TD_MZ_MZDY t1 on t1.mzNum = t.siteTag and t1.mzType = 10
+    WHERE t.siteTag = #{siteTag } 
+    and t.sysSiteId not in 
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
        #{item}
-   </foreach>
- </select>
+    </foreach>
+</select>
 ```
 
 # 实体类中有内部类
 因为涉及到一对一和一对多，而且是内部类，需要注意写法：
-```
+```xml
 <resultMap id="ExplodeOrderMap" type="com.tubitu.model.apiDto.ExplodeOrderDto">
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
@@ -124,7 +235,7 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
 # mybatis-Generator
 推荐使用maven-plugin的方式，直接把配置文件放到项目中。
 将下面的配置文件放到合适的位置。分布式项目可以放到common模块下，`src->main->resources`，路径下新建`MGB`包，包内放下面的xml配置文件。
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
@@ -199,7 +310,7 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
 </generatorConfiguration>
 ```
 然后在模块的pom文件中加入如下plugin：
-```
+```xml
 <build>
     <plugins>
         <plugin>
@@ -246,7 +357,7 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
 Dao接口，就是人们常说的Mapper接口，接口的全名，就是映射文件中的namespace的值，接口的方法名，就是映射文件中MappedStatement的id值，接口方法内的参数，就是传递给sql的参数。
 Mapper接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为key值，可唯一定位一个MappedStatement，
 举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面id = findStudentById的MappedStatement。
-在Mybatis中，每一个<select>、<insert>、<update>、<delete>标签，都会被解析为一个MappedStatement对象。
+在Mybatis中，每一个`<select>、<insert>、<update>、<delete>`标签，都会被解析为一个MappedStatement对象。
 Dao接口里的方法，是不能重载的，因为是全限名+方法名的保存和寻找策略。
 Dao接口的工作原理是JDK动态代理，Mybatis运行时会使用JDK动态代理为Dao接口生成代理proxy对象，代理对象proxy会拦截接口方法，转而执行MappedStatement所代表的sql，然后将sql执行结果返回。
 
