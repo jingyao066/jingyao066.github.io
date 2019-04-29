@@ -6,10 +6,10 @@ date: 2019-03-27 15:07:56
 
 # 基础
 ## 面向接口编程
-1. `Mapper`文件的`namespace`要和接口的完整路径对应
+1. `Mapper`文件的`namespace`要和`dao层接口`的完整路径对应
 `<mapper namespace="com.wjy.mapper.TestMapper">`
 
-2. 接口中的方法名字 要和 Mapper文件中SQL语句的ID对应
+2. 接口中的方法名字要和Mapper文件中SQL语句的ID对应
 dao层接口
 `xxxBean selectByPrimaryKey(Integer id);`
 ```xml
@@ -22,7 +22,7 @@ dao层接口
 ```
 
 3. 接口中方法的返回值要和Mapper文件中的resultType对应
-4. 接口中方法的参数 要和Mapper文件中的parameterType对应
+4. 接口中方法的参数要和Mapper文件中的parameterType对应
 
 ## 简单的ResultMap
 ```xml
