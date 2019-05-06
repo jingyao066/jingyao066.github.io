@@ -2,22 +2,21 @@
 title: Hexo博客搭建
 date: 2018-12-05 13:54:31
 tags:
-- 建站
+- hexo
 ---
 
 总体步骤：
-1.安装Git Bash
-2.安装NodeJs
-3.安装hexo
-4.生成SSH并添加到github
-5.部署项目
-6.上传到github
-7.绑定个人域名
-8.修改及配置主题
-9.添加RSS
-10.添加评论
-11.写文章部分
-安装git、node.js，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。
+- 安装Git Bash
+- 安装NodeJs
+- 安装hexo
+- 生成SSH并添加到github
+- 部署项目
+- 上传到github
+- 绑定个人域名
+- 修改及配置主题
+- 写文章部分
+
+安装git、NodeJs，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。
 
 # 安装Hexo
 Hexo官网地址：
@@ -502,6 +501,24 @@ hits_stats: "${hits} 相关记录，共耗时 ${time} ms"
 ## next升级6.0导致的问题
 next6.0之后，algolia需要其他配置。
 https://github.com/theme-next/theme-next-algolia-instant-search
+
+还有其他问题，如:
+```
+Refused to apply style from 'http://localhost:4000/lib/font-awesome/css/font-awesome.min.css?v=4.6.2' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+localhost/:1 Refused to apply style from 'http://localhost:4000/lib/algolia-instant-search/instantsearch.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+(index):2462 GET http://localhost:4000/lib/algolia-instant-search/instantsearch.min.js net::ERR_ABORTED 404 (Not Found)
+(index):1 Refused to apply style from 'http://localhost:4000/lib/algolia-instant-search/instantsearch.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+(index):2462 GET http://localhost:4000/lib/algolia-instant-search/instantsearch.min.js net::ERR_ABORTED 404 (Not Found)
+algolia-search.js?v=7.1.0:14 Uncaught ReferenceError: instantsearch is not defined
+    at HTMLDocument.<anonymous> (algolia-search.js?v=7.1.0:14)
+    at j (index.js?v=2.1.3:2)
+    at Object.fireWith [as resolveWith] (index.js?v=2.1.3:2)
+    at Function.ready (index.js?v=2.1.3:2)
+    at HTMLDocument.I (index.js?v=2.1.3:2)
+```
+
+参考官网解决问题：
+https://theme-next.org/docs/third-party-services/search-services
 
 ## 遇到的问题
 1. 数据上传到algolia后，发现搜索出来的文章地址是：

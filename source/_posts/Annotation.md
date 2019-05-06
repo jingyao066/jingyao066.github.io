@@ -6,6 +6,7 @@ date: 2019-04-30 16:36:38
 ---
 
 # Annotation架构
+Java Annotation是JDK5.0引入的一种注释机制。
 ![](Annotation/1.jpg)
 从中，我们可以看出：
 - 1个Annotation 和 1个RetentionPolicy关联。
@@ -194,7 +195,6 @@ public class DeprecatedTest {
 }
 ```
 说明：
-说明：
 上面是eclipse中的截图，比较类中getString1() 和 getString2()以及testDate() 和 testCalendar()。
 - getString1() 被@Deprecated标注，意味着建议不再使用getString1()；所以getString1()的定义和调用时，都会一横线。这一横线是eclipse()对@Deprecated方法的处理。
 getString2() 没有被@Deprecated标注，它的显示正常。
@@ -348,4 +348,218 @@ public @interface SuppressWarnings {
 
 }
 ```
+说明：
+- `@interface`：它的用来修饰SuppressWarnings，意味着SuppressWarnings实现了java.lang.annotation.Annotation接口；即SuppressWarnings就是一个注解。
+- `@Retention(RetentionPolicy.SOURCE)`：它的作用是指定SuppressWarnings的策略是RetentionPolicy.SOURCE。这就意味着，SuppressWarnings信息仅存在于编译器处理期间，编译器处理完之后SuppressWarnings就没有作用了。
+- `@Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})`：它的作用是指定SuppressWarnings的类型同时包括TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE。
+       TYPE意味着，它能标注“类、接口（包括注释类型）或枚举声明”。
+       FIELD意味着，它能标注“字段声明”。
+       METHOD意味着，它能标注“方法”。
+       PARAMETER意味着，它能标注“参数”。
+       CONSTRUCTOR意味着，它能标注“构造方法”。
+       LOCAL_VARIABLE意味着，它能标注“局部变量”。
+- String[] value(); 意味着，SuppressWarnings能指定参数
+- SuppressWarnings 的作用是，让编译器对“它所标注的内容”的某些警告保持静默。例如，"@SuppressWarnings(value={"deprecation", "unchecked"})" 表示对“它所标注的内容”中的 “SuppressWarnings不再建议使用警告”和“未检查的转换时的警告”保持沉默。示例如下：
 
+![](Annotation/3.jpg)
+![](Annotation/4.jpg)
+
+源码如下(SuppressWarningTest.java)：
+```java
+package com.skywang.annotation;
+
+import java.util.Date;
+
+public class SuppressWarningTest {
+
+    //@SuppressWarnings(value={"deprecation"})
+    public static void doSomething(){
+        Date date = new Date(113, 8, 26);
+        System.out.println(date);
+    }
+
+    public static void main(String[] args) {
+        doSomething();
+    }
+}
+```
+
+说明：
+上边的图中，没有使用`@SuppressWarnings(value={"deprecation"})`，而Date属于java不再建议使用的类。因此，调用Date的API时，会产生警告。
+而右边的图中，使用了`@SuppressWarnings(value={"deprecation"})`。因此，编译器对`调用Date的API产生的警告`保持沉默。
+
+补充：SuppressWarnings 常用的关键字的表格
+```
+deprecation  -- 使用了不赞成使用的类或方法时的警告
+unchecked    -- 执行了未检查的转换时的警告，例如当使用集合时没有用泛型 (Generics) 来指定集合保存的类型。
+fallthrough  -- 当 Switch 程序块直接通往下一种情况而没有 Break 时的警告。
+path         -- 在类路径、源文件路径等中有不存在的路径时的警告。
+serial       -- 当在可序列化的类上缺少 serialVersionUID 定义时的警告。
+finally      -- 任何 finally 子句不能正常完成时的警告。
+all          -- 关于以上所有情况的警告。
+```
+
+# Annotation 的作用
+Annotation 是一个辅助类，它在Junit、Struts、Spring等工具框架中被广泛使用。
+
+我们在编程中经常会使用到的Annotation作用有：
+
+1. 编译检查
+Annotation具有“让编译器进行编译检查的作用”。
+
+例如，@SuppressWarnings, @Deprecated和@Override都具有编译检查作用。
+- 关于@SuppressWarnings和@Deprecated，已经在“第3部分”中详细介绍过了。这里就不再举例说明了。
+- 若某个方法被 @Override的 标注，则意味着该方法会覆盖父类中的同名方法。如果有方法被@Override标示，但父类中却没有“被@Override标注”的同名方法，则编译器会报错。示例如下：
+![](Annotation/5.jpg)
+
+源码(OverrideTest.java):
+```java
+package com.skywang.annotation;
+
+/**
+ * @Override测试程序
+ * 
+ * @author skywang
+ * @email kuiwu-wang@163.com
+ */
+public class OverrideTest {
+
+    /**
+     * toString() 在java.lang.Object中定义；
+     * 因此，这里用 @Override 标注是对的。
+     */
+    @Override
+    public String toString(){
+        return "Override toString";
+    }
+
+    /**
+     * getString() 没有在OverrideTest的任何父类中定义；
+     * 但是，这里却用 @Override 标注，因此会产生编译错误！
+     */
+    @Override
+    public String getString(){
+        return "get toString";
+    }
+    
+    public static void main(String[] args) {
+    }
+}
+```
+上面是该程序在eclipse中的截图。从中，我们可以发现`getString()`函数会报错。这是因为“getString() 被@Override所标注，但在OverrideTest的任何父类中都没有定义getString1()函数”。
+“将getString() 上面的@Override注释掉”，即可解决该错误。
+
+2. 在反射中使用Annotation
+在反射的Class, Method, Field等函数中，有许多于Annotation相关的接口。
+这也意味着，我们可以在反射中解析并使用Annotation。
+源码如下(AnnotationTest.java)：
+```java
+package com.skywang.annotation;
+
+import java.lang.annotation.Annotation;
+import java.lang.annotation.Target;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Inherited;
+import java.lang.reflect.Method;
+
+/**
+ * Annotation在反射函数中的使用示例
+ * 
+ * @author skywang
+ * @email kuiwu-wang@163.com
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyAnnotation {
+    String[] value() default "unknown";
+}
+
+/**
+ * Person类。它会使用MyAnnotation注解。
+ */
+class Person {
+    
+    /**
+     * empty()方法同时被 "@Deprecated" 和 “@MyAnnotation(value={"a","b"})”所标注 
+     * (01) @Deprecated，意味着empty()方法，不再被建议使用
+     * (02) @MyAnnotation, 意味着empty() 方法对应的MyAnnotation的value值是默认值"unknown"
+     */
+    @MyAnnotation
+    @Deprecated
+    public void empty(){
+        System.out.println("\nempty");
+    }
+    
+    /**
+     * sombody() 被 @MyAnnotation(value={"girl","boy"}) 所标注，
+     * @MyAnnotation(value={"girl","boy"}), 意味着MyAnnotation的value值是{"girl","boy"}
+     */
+    @MyAnnotation(value={"girl","boy"})
+    public void somebody(String name, int age){
+        System.out.println("\nsomebody: "+name+", "+age);
+    }
+}
+
+public class AnnotationTest {
+
+    public static void main(String[] args) throws Exception {
+        
+        // 新建Person
+        Person person = new Person();
+        // 获取Person的Class实例
+        Class<Person> c = Person.class;
+        // 获取 somebody() 方法的Method实例
+        Method mSomebody = c.getMethod("somebody", new Class[]{String.class, int.class});
+        // 执行该方法
+        mSomebody.invoke(person, new Object[]{"lily", 18});
+        iteratorAnnotations(mSomebody);
+        
+
+        // 获取 somebody() 方法的Method实例
+        Method mEmpty = c.getMethod("empty", new Class[]{});
+        // 执行该方法
+        mEmpty.invoke(person, new Object[]{});        
+        iteratorAnnotations(mEmpty);
+    }
+    
+    public static void iteratorAnnotations(Method method) {
+
+        // 判断 somebody() 方法是否包含MyAnnotation注解
+        if(method.isAnnotationPresent(MyAnnotation.class)){
+            // 获取该方法的MyAnnotation注解实例
+            MyAnnotation myAnnotation = method.getAnnotation(MyAnnotation.class);
+            // 获取 myAnnotation的值，并打印出来
+            String[] values = myAnnotation.value();
+            for (String str:values)
+                System.out.printf(str+", ");
+            System.out.println();
+        }
+        
+        // 获取方法上的所有注解，并打印出来
+        Annotation[] annotations = method.getAnnotations();
+        for(Annotation annotation : annotations){
+            System.out.println(annotation);
+        }
+    }
+}
+```
+
+运行结果：
+```
+somebody: lily, 18
+girl, boy, 
+@com.skywang.annotation.MyAnnotation(value=[girl, boy])
+
+empty
+unknown, 
+@com.skywang.annotation.MyAnnotation(value=[unknown])
+@java.lang.Deprecated()
+```
+
+3. 根据Annotation生成帮助文档
+通过给Annotation注解加上@Documented标签，能使该Annotation标签出现在javadoc中。
+
+4. 能够帮忙查看查看代码
+通过@Override, @Deprecated等，我们能很方便的了解程序的大致结构。
+另外，我们也可以通过自定义Annotation来实现一些功能。
