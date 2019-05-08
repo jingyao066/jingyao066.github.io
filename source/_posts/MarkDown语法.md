@@ -95,6 +95,14 @@ content1 | content2
 content3 | content4
 content5 | content6
 
+```
+title1 | title1
+-- | --
+content1 | content2
+content3 | content4
+content5 | content6
+```
+
 表头必须和内容间隔一行，表头和内容之间由
 -- | --
 分隔，一个 -- 表示一个表头，中间由竖线分隔，不需要加空格。如果表头有四个，
