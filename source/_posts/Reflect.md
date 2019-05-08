@@ -193,3 +193,758 @@ public Constructor[]    getDeclaredConstructors()
 public Constructor    getEnclosingConstructor()
 ```
 
+接下来，我们通过示例对这些API进行说明。示例代码(DemoClassContructor.java)如下：
+```java
+package com.skywang.test;
+
+import java.lang.Class;
+import java.lang.reflect.Constructor;
+
+/**
+ * java Class类的Constructor相关API的测试函数
+ *
+ * @author skywang
+ */
+public class DemoClassContructor {
+
+    public static void main(String[] args) {
+
+        // getDeclaredConstructor() 的测试函数
+        testGetDeclaredConstructor() ;
+
+        // getConstructor() 的测试函数
+        testGetConstructor() ;
+
+        // getEnclosingConstructor() 的测试函数
+        testGetEnclosingConstructor() ;
+    }
+
+    /**
+     * getDeclaredConstructor() 的测试函数
+     */
+    public static void testGetDeclaredConstructor() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+
+            // 根据class，获取构造函数
+            Constructor cst1 = cls.getDeclaredConstructor();
+            Constructor cst2 = cls.getDeclaredConstructor(new Class[]{String.class});
+            Constructor cst3 = cls.getDeclaredConstructor(new Class[]{String.class, int.class, Gender.class});
+
+            // 根据构造函数，创建相应的对象
+            cst1.setAccessible(true); // 因为Person中Person()是private的，所以这里要设置为可访问
+            Object p1 = cst1.newInstance();
+            Object p2 = cst2.newInstance("Juce");
+            Object p3 = cst3.newInstance("Jody", 34, Gender.MALE);
+
+            System.out.printf("%-30s: p1=%s, p2=%s, p3=%s\n", 
+                    "getConstructor()", p1, p2, p3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * getConstructor() 的测试函数
+     */
+    public static void testGetConstructor() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+
+            // 根据class，获取构造函数
+            //Constructor cst1 = cls.getConstructor(); // 抛出异常，因为默认构造函数是private权限。
+            //Constructor cst2 = cls.getConstructor(new Class[]{String.class});// 抛出异常，因为该构造函数是protected权限。
+            Constructor cst3 = cls.getConstructor(new Class[]{String.class, int.class, Gender.class});
+
+            // 根据构造函数，创建相应的对象
+            //Object p1 = cst1.newInstance();
+            //cst1.setAccessible(true); // 因为Person中Person()是private的，所以这里要设置为可访问
+            //Object p1 = cst1.newInstance();
+            //Object p2 = cst2.newInstance("Kim");
+            Object p3 = cst3.newInstance("Katter", 36, Gender.MALE);
+
+            System.out.printf("%-30s: p3=%s\n", 
+                    "getConstructor()", p3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * getEnclosingConstructor() 的测试函数
+     */
+    public static void testGetEnclosingConstructor() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+
+            // 根据class，调用Person类中有内部类InnerA的构造函数
+            Constructor cst = cls.getDeclaredConstructor(new Class[]{String.class, int.class});
+
+            // 根据构造函数，创建相应的对象
+            Object obj = cst.newInstance("Ammy", 18);
+
+            System.out.printf("%-30s: obj=%s\n", 
+                    "getEnclosingConstructor()", obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+// 枚举类型。表示“性别”
+enum Gender{  
+    MALE, FEMALE
+} 
+// 人
+class Person {
+    private Gender gender;  // 性别
+    private int age;        // 年龄
+    private String name;    // 姓名
+
+    private Person() {
+        this.name = "unknown";
+        this.age = 0;
+        this.gender = Gender.FEMALE;
+        System.out.println("call--\"private Person()\"");
+    }
+    protected Person(String name) {
+        this.name = name;
+        this.age = 0;
+        this.gender = Gender.FEMALE;
+        System.out.println("call--\"protected Person(String name)\"");
+    }
+    public Person(String name, int age, Gender gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        System.out.println("call--\"public Person(String name, int age, Gender gender)\"");
+    }
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+        this.gender = Gender.FEMALE;
+        //内部类在构造方法中
+        class InnerA{
+        }
+        // 获取InnerA的Class对象
+        Class cls = InnerA.class;
+
+        // 获取“封闭该内部类(InnerA)”的构造方法
+        Constructor cst = cls.getEnclosingConstructor();
+        
+        System.out.println("call--\"public Person(String name, int age)\" cst="+cst);
+    }
+    @Override
+    public String toString() {
+        return "("+name+", "+age+", "+gender+")";
+    }
+}
+```
+注意：若程序无法运行，请检查“forName()”中的包名是否正确！forName()的参数必须是，Person类的完整包名。
+
+运行结果：
+```
+call--"private Person()"
+call--"protected Person(String name)"
+call--"public Person(String name, int age, Gender gender)"
+getConstructor() : p1=(unknown, 0, FEMALE), p2=(Juce, 0, FEMALE), p3=(Jody, 34, MALE)
+call--"public Person(String name, int age, Gender gender)"
+getConstructor() : p3=(Katter, 36, MALE)
+call--"public Person(String name, int age)" cst=public com.skywang.test.Person(java.lang.String,int)
+getEnclosingConstructor() : obj=(Ammy, 18, FEMALE)
+```
+
+说明：
+- 首先，要搞清楚Person类，它是我们自定义的类。专门用来测试这些API的。Person中有一个成员变量gender；它是Gender对象，Gender是一个枚举类。取值可以是MALE或者FEMALE。
+- testGetDeclaredConstructor() 是“getDeclaredConstructor() 的测试函数”。getDeclaredConstructor()可以“获取类中任意的构造函数，包含public、protected和private方法”。
+- testGetConstructor() 是“getConstructor() 的测试函数”。getConstructor()只能“获取类中public的构造函数”。
+- testGetEnclosingConstructor() 是“getEnclosingConstructor() 的测试函数”。关于getEnclosingConstructor()的介绍，官方说法是“如果该 Class 对象表示构造方法中的一个本地或匿名类，则返回 Constructor 对象，它表示底层类的立即封闭构造方法。否则返回 null。” 通俗点来说，就是“如果一个类A的构造函数中定义了一个内部类InnerA，则通过InnerA的Class对象调用getEnclosingConstructor()方法，可以获取类A的这个构造函数”。
+
+### 成员方法
+```java
+// 获取“名称是name，参数是parameterTypes”的public的函数(包括从基类继承的、从接口实现的所有public函数)
+public Method    getMethod(String name, Class[] parameterTypes)
+// 获取全部的public的函数(包括从基类继承的、从接口实现的所有public函数)
+public Method[]    getMethods()
+// 获取“名称是name，参数是parameterTypes”，并且是类自身声明的函数，包含public、protected和private方法。
+public Method    getDeclaredMethod(String name, Class[] parameterTypes)
+// 获取全部的类自身声明的函数，包含public、protected和private方法。
+public Method[]    getDeclaredMethods()
+// 如果这个类是“其它类中某个方法的内部类”，调用getEnclosingMethod()就是这个类所在的方法；若不存在，返回null。
+public Method    getEnclosingMethod()
+```
+
+接下来，我们通过示例对这些API进行说明。示例代码(DemoClassMethod.java)如下：
+```java
+package com.skywang.test;
+
+import java.lang.Class;
+import java.lang.reflect.Method;
+
+/**
+ * java Class类的Method相关API的测试函数
+ *
+ * @author skywang
+ */
+public class DemoClassMethod {
+
+    public static void main(String[] args) {
+
+            // getDeclaredMethod() 的测试函数
+            testGetDeclaredMethod() ;
+
+            // getMethod() 的测试函数
+            testGetMethod() ;
+
+            // getEnclosingMethod() 的测试函数
+            testGetEnclosingMethod() ;
+    }
+
+    /**
+     * getDeclaredMethod() 的测试函数
+     */
+    public static void testGetDeclaredMethod() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+            // 根据class，调用类的默认构造函数(不带参数)
+            Object person = cls.newInstance();
+
+            // 获取Person中的方法
+            Method mSetName = cls.getDeclaredMethod("setName", new Class[]{String.class});
+            Method mGetName = cls.getDeclaredMethod("getName", new Class[]{});
+            Method mSetAge  = cls.getDeclaredMethod("setAge", new Class[]{int.class});
+            Method mGetAge  = cls.getDeclaredMethod("getAge", new Class[]{});
+            Method mSetGender = cls.getDeclaredMethod("setGender", new Class[]{Gender.class});
+            Method mGetGender = cls.getDeclaredMethod("getGender", new Class[]{});
+
+            // 调用获取的方法
+            mSetName.invoke(person, new Object[]{"Jimmy"});
+            mSetAge.invoke(person, new Object[]{30});
+            mSetGender.setAccessible(true);    // 因为Person中setGender()是private的，所以这里要设置为可访问
+            mSetGender.invoke(person, new Object[]{Gender.MALE});
+            String name = (String)mGetName.invoke(person, new Object[]{});
+            Integer age = (Integer)mGetAge.invoke(person, new Object[]{});
+            mGetGender.setAccessible(true);    // 因为Person中getGender()是private的，所以这里要设置为可访问
+            Gender gender = (Gender)mGetGender.invoke(person, new Object[]{});
+
+            // 打印输出
+            System.out.printf("%-30s: person=%s, name=%s, age=%s, gender=%s\n", 
+                    "getDeclaredMethod()", person, name, age, gender);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * getMethod() 的测试函数
+     */
+    public static void testGetMethod() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+            // 根据class，调用类的默认构造函数(不带参数)
+            Object person = cls.newInstance();
+
+            // 获取Person中的方法
+            Method mSetName = cls.getMethod("setName", new Class[]{String.class});
+            Method mGetName = cls.getMethod("getName", new Class[]{});
+            //Method mSetAge  = cls.getMethod("setAge", new Class[]{int.class});         // 抛出异常，因为setAge()是protected权限。
+            //Method mGetAge  = cls.getMethod("getAge", new Class[]{});                  // 抛出异常，因为getAge()是protected权限。
+            //Method mSetGender = cls.getMethod("setGender", new Class[]{Gender.class}); // 抛出异常，因为setGender()是private权限。
+            //Method mGetGender = cls.getMethod("getGender", new Class[]{});             // 抛出异常，因为getGender()是private权限。
+
+            // 调用获取的方法
+            mSetName.invoke(person, new Object[]{"Phobe"});
+            //mSetAge.invoke(person, new Object[]{38});
+            //mSetGender.invoke(person, new Object[]{Gender.FEMALE});
+            String name = (String)mGetName.invoke(person, new Object[]{});
+            //Integer age = (Integer)mGetAge.invoke(person, new Object[]{});
+            //Gender gender = (Gender)mGetGender.invoke(person, new Object[]{});
+
+            // 打印输出
+            System.out.printf("%-30s: person=%s\n", 
+                    "getMethod()", person);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * getEnclosingMethod() 的测试函数
+     */
+    public static void testGetEnclosingMethod() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+            // 根据class，调用类的默认构造函数(不带参数)
+            Object person = cls.newInstance();
+
+            // 根据class，调用Person类中有内部类InnerB的函数
+            Method mGetInner = cls.getDeclaredMethod("getInner", new Class[]{});
+
+            // 根据构造函数，创建相应的对象
+            mGetInner.invoke(person, new Object[]{});
+
+            System.out.printf("%-30s: person=%s\n",
+                       "getEnclosingMethod", person);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+}
+
+enum Gender{  
+    MALE, FEMALE
+} 
+class Person {
+    private Gender gender;  // 性别
+    private int age;        // 年龄
+    private String name;    // 姓名
+
+    public Person() {
+        this("unknown", 0, Gender.FEMALE);
+    }
+    public Person(String name, int age, Gender gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    // 获取”姓名“。权限是 public
+    public String getName() {
+        return name;
+    }
+    // 设置”姓名“。权限是 public
+    public void setName(String name) {
+        this.name = name;
+    }
+    // 获取”年龄“。权限是 protected
+    protected int getAge() {
+        return age;
+    }
+    // 设置”年龄“。权限是 protected
+    protected void setAge(int age) {
+        this.age = age;
+    }
+    // 获取“性别”。权限是 private
+    private Gender getGender() {
+        return gender;
+    }
+    // 设置“性别”。权限是 private
+    private void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+
+    // getInner() 中有内部类InnerB，用来测试getEnclosingMethod()
+    public void getInner() {
+        // 内部类
+        class InnerB{
+        }
+        // 获取InnerB的Class对象
+        Class cls = InnerB.class;
+
+        // 获取“封闭该内部类(InnerB)”的构造方法
+        Method cst = cls.getEnclosingMethod();
+        
+        System.out.println("call--\"getInner()\" cst="+cst);
+    }
+
+
+    @Override
+    public String toString() {
+        return "("+name+", "+age+", "+gender+")";
+    }
+}
+```
+
+注意：若程序无法运行，请检查“forName()”中的包名是否正确！forName()的参数必须是，Person类的完整包名。
+
+运行结果：
+```
+getDeclaredMethod() : person=(Jimmy, 30, MALE), name=Jimmy, age=30, gender=MALE
+getMethod() : person=(Phobe, 0, FEMALE)
+call--"getInner()" cst=public void com.skywang.test.Person.getInner()
+getEnclosingMethod : person=(unknown, 0, FEMALE)
+```
+
+### 成员变量
+```java
+// 获取“名称是name”的public的成员变量(包括从基类继承的、从接口实现的所有public成员变量)
+public Field    getField(String name)
+// 获取全部的public成员变量(包括从基类继承的、从接口实现的所有public成员变量)
+public Field[]    getFields()
+// 获取“名称是name”，并且是类自身声明的成员变量，包含public、protected和private成员变量。
+public Field    getDeclaredField(String name)
+// 获取全部的类自身声明的成员变量，包含public、protected和private成员变量。
+public Field[]    getDeclaredFields()
+```
+
+接下来，我们通过示例对这些API进行说明。示例代码(DemoClassField.java)如下：
+```java
+package com.skywang.test;
+
+import java.lang.Class;
+import java.lang.reflect.Field;
+
+/**
+ * java Class类的"成员变量"相关API的测试函数
+ *
+ * @author skywang
+ */
+public class DemoClassField {
+
+    public static void main(String[] args) {
+        // getDeclaredField() 的测试函数
+        testGetDeclaredField() ;
+
+        // getField() 的测试函数
+        testGetField() ;
+    }
+
+    /**
+     * getDeclaredField() 的测试函数
+     * getDeclaredField() 用于获取的是类自身声明的所有成员遍历，包含public、protected和private方法。
+     */
+    public static void testGetDeclaredField() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+            // 根据class，调用类的默认构造函数(不带参数)
+            Object person = cls.newInstance();
+
+            // 根据class，获取Filed
+            Field fName = cls.getDeclaredField("name");
+            Field fAge = cls.getDeclaredField("age");
+            Field fGender = cls.getDeclaredField("gender");
+
+            // 根据构造函数，创建相应的对象
+            fName.set(person, "Hamier");
+            fAge.set(person, 31);
+            fGender.setAccessible(true);  // 因为"flag"是private权限，所以要设置访问权限为true；否则，会抛出异常。
+            fGender.set(person, Gender.FEMALE);
+
+            System.out.printf("%-30s: person=%s\n", 
+                    "getDeclaredField()", person);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * getField() 的测试函数
+     * getField() 用于获取的是public的“成员”
+     */
+    public static void testGetField() {
+        try {
+            // 获取Person类的Class
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+            // 根据class，调用类的默认构造函数(不带参数)
+            Object person = cls.newInstance();
+
+            // 根据class，获取Filed
+            Field fName = cls.getField("name");
+            Field fAge = cls.getDeclaredField("age");       // 抛出异常，因为Person中age是protected权限。 
+            Field fGender = cls.getDeclaredField("gender"); // 抛出异常，因为Person中gender是private权限。 
+
+            // 根据构造函数，创建相应的对象
+            fName.set(person, "Grace");
+            //fAge.set(person, 26);
+            //fGender.set(person, Gender.FEMALE);
+
+            System.out.printf("%-30s: person=%s\n", 
+                    "getField()", person);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+// 枚举类型。表示“性别”
+enum Gender{  
+    MALE, FEMALE
+} 
+// 人
+class Person {
+    // private。性别
+    private Gender gender;
+    // protected。 年龄
+    protected int age;
+    // public。 姓名
+    public String name;
+
+    public Person() {
+        this("unknown", 0, Gender.FEMALE);
+    }
+
+    public Person(String name, int age, Gender gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "("+name+", "+age+", "+gender+")";
+    }
+}
+```
+
+注意：若程序无法运行，请检查“forName()”中的包名是否正确！forName()的参数必须是，Person类的完整包名。
+
+运行结果：
+```
+getDeclaredField() : person=(Hamier, 31, FEMALE)
+getField() : person=(Grace, 0, FEMALE)
+```
+
+### 类的其他信息
+```
+// 获取类的"annotationClass"类型的注解 (包括从基类继承的、从接口实现的所有public成员变量)
+public Annotation<A>    getAnnotation(Class annotationClass)
+// 获取类的全部注解 (包括从基类继承的、从接口实现的所有public成员变量)
+public Annotation[]    getAnnotations()
+// 获取类自身声明的全部注解 (包含public、protected和private成员变量)
+public Annotation[]    getDeclaredAnnotations()
+```
+
+接下来，我们通过示例对这些API进行说明。示例代码(DemoClassAnnotation.java)如下：
+```java
+package com.skywang.test;
+
+import java.lang.Class;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * java Class类getAnnotation()的测试程序
+ */
+public class DemoClassAnnotation {
+
+    public static void main(String[] args) {
+        try {
+            // 根据“类名”获取 对应的Class对象
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+
+            // 获取“Person类”的注解
+            MyAnnotation myann = cls.getAnnotation(MyAnnotation.class);
+
+            System.out.println("myann="+myann);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+/**
+ * MyAnnotation是自定义个一个Annotation
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@interface MyAnnotation {
+}
+
+/**
+ * MyAnnotation 是Person的注解。
+ */
+@MyAnnotation 
+class Person {
+}
+```
+
+注意：若程序无法运行，请检查“forName()”中的包名是否正确！forName()的参数必须是，Person类的完整包名。
+
+运行结果：
+`myann=@com.skywang.test.MyAnnotation()`
+
+说明：
+- MyAnnotation 是我们自定义个一个Annotation注解。若读者不明白“注解”，可以参考博文“”TODO
+- getAnnotation()就是获取这个类的注解。
+
+###  `父类`和`接口`相关的API
+```java
+// 获取实现的全部接口
+public Type[]    getGenericInterfaces()
+// 获取父类
+public Type    getGenericSuperclass()
+```
+
+示例代码(DemoClassInterface.java)如下：
+```java
+package com.skywang.test;
+
+import java.io.Serializable;
+import java.lang.Runnable;
+import java.lang.Thread;
+import java.lang.Class;
+import java.lang.reflect.Type;
+
+/**
+ * java Class类的有关父类和接口的测试
+ */
+public class DemoClassInterface {
+
+    public static void main(String[] args) {
+
+        try {
+            // 根据“类名”获取 对应的Class对象
+            Class<?> cls = Class.forName("com.skywang.test.Person");
+
+            // 获取“Person”的父类
+            Type father = cls.getGenericSuperclass();
+            // 获取“Person”实现的全部接口
+            Type[] intfs = cls.getGenericInterfaces();
+
+            System.out.println("father="+father);
+            for (Type t:intfs)
+                System.out.println("t="+t);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+/**
+ * Person 继承于 Object，并且实现了Serializable和Runnable接口
+ */
+class Person extends Object implements Serializable, Runnable{
+
+    @Override
+    public void run() {
+    }
+
+}
+```
+注意：若程序无法运行，请检查“forName()”中的包名是否正确！forName()的参数必须是，Person类的完整包名。
+
+运行结果：
+```
+father=class java.lang.Object
+t=interface java.io.Serializable
+t=interface java.lang.Runnable
+```
+
+### 剩余的API
+```java
+// 获取“类名”
+public String    getSimpleName()
+// 获取“完整类名”
+public String    getName()
+// 类是不是“枚举类”
+public boolean    isEnum()
+// obj是不是类的对象
+public boolean    isInstance(Object obj)
+// 类是不是“接口”
+public boolean    isInterface()
+// 类是不是“本地类”。本地类,就是定义在方法内部的类。
+public boolean    isLocalClass()
+// 类是不是“成员类”。成员类,是内部类的一种，但是它不是“内部类”或“匿名类”。
+public boolean    isMemberClass()
+// 类是不是“基本类型”。 基本类型，包括void和boolean、byte、char、short、int、long、float 和 double这几种类型。
+public boolean    isPrimitive()
+// 类是不是“复合类”。 JVM中才会产生复合类，在java应用程序中不存在“复合类”！
+public boolean    isSynthetic()
+```
+
+示例代码(DemoClassOtherAPIs.java)如下：
+```java
+package com.skywang.test;
+
+import java.lang.Class;
+import java.lang.Runnable;
+import java.lang.annotation.ElementType;
+import java.util.TreeMap;
+
+/**
+ * java Class类的getName(), isInterface()等测试程序
+ *
+ * @author skywang
+ */
+public class DemoClassOtherAPIs {
+    public static void main(String[] args) {
+
+        Class cls = DemoClassOtherAPIs.class;
+        // 获取“类名”
+        System.out.printf("%-50s:getSimpleName()=%s\n", cls, cls.getSimpleName());
+        // 获取“完整类名”
+        System.out.printf("%-50s:getName()=%s\n", cls, cls.getName());
+
+        // 测试其它的API
+        testOtherAPIs() ;
+    }
+
+    public static void testOtherAPIs() {
+        // 本地类
+        class LocalA {
+        }
+
+        // 测试枚举类型。ElementType是一个枚举类
+        Class elementtypeCls = ElementType.class;
+        System.out.printf("%-50s:isEnum()=%s\n", 
+                elementtypeCls, elementtypeCls.isEnum());
+
+        // 判断是不是类的对象
+        Class demoCls = DemoClassOtherAPIs.class;
+        DemoClassOtherAPIs demoObj = new DemoClassOtherAPIs();
+        System.out.printf("%-50s:isInstance(obj)=%s\n", 
+                demoCls, demoCls.isInstance(demoObj));
+
+        // 类是不是“接口”
+        Class runCls = Runnable.class;
+        System.out.printf("%-50s:isInterface()=%s\n", 
+                runCls, runCls.isInterface());
+
+        // 类是不是“本地类”。本地类,就是定义在方法内部的类。
+        Class localCls = LocalA.class;
+        System.out.printf("%-50s:isLocalClass()=%s\n", 
+                localCls, localCls.isLocalClass());
+
+        // 类是不是“成员类”。成员类,是内部类的一种，但是它不是“内部类”或“匿名类”。
+        Class memCls = MemberB.class;
+        System.out.printf("%-50s:isMemberClass()=%s\n", 
+                memCls, memCls.isMemberClass());
+
+        // 类是不是“基本类型”。 基本类型，包括void和boolean、byte、char、short、int、long、float 和 double这几种类型。
+        Class primCls = int.class;
+        System.out.printf("%-50s:isPrimitive()=%s\n", 
+                primCls, primCls.isPrimitive());
+
+        // 类是不是“复合类”。 JVM中才会产生复合类，在java应用程序中不存在“复合类”！
+        Class synCls = DemoClassOtherAPIs.class;
+        System.out.printf("%-50s:isSynthetic()=%s\n", 
+                synCls, synCls.isSynthetic());
+    }
+
+    // 内部成员类
+    class MemberB {
+    }
+}
+```
+
+注意：若程序无法运行，请检查“forName()”中的包名是否正确！forName()的参数必须是，Person类的完整包名。
+
+运行结果：
+```
+class com.skywang.test.DemoClassOtherAPIs :getSimpleName()=DemoClassOtherAPIs
+class com.skywang.test.DemoClassOtherAPIs :getName()=com.skywang.test.DemoClassOtherAPIs
+class java.lang.annotation.ElementType :isEnum()=true
+class com.skywang.test.DemoClassOtherAPIs :isInstance(obj)=true
+interface java.lang.Runnable :isInterface()=true
+class com.skywang.test.DemoClassOtherAPIs$1LocalA :isLocalClass()=true
+class com.skywang.test.DemoClassOtherAPIs$MemberB :isMemberClass()=true
+int :isPrimitive()=true
+class com.skywang.test.DemoClassOtherAPIs :isSynthetic()=false
+```
+
+说明：isSynthetic()是用来判断Class是不是“复合类”。这在java应用程序中只会返回false，不会返回true。因为，JVM中才会产生复合类，在java应用程序中不存在“复合类”！
