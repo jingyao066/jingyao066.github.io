@@ -8,10 +8,11 @@ date: 2019-03-28 17:14:01
 JDK1.5新增了`java.util.concurrent`包(简称JUC)，就是并发包，用于解决并发编程的一些问题。
 
 根据修改的数据类型，可以将JUC包中的原子操作类可以分为4类。
-1. 基本类型: AtomicInteger, AtomicLong, AtomicBoolean ;
-2. 数组类型: AtomicIntegerArray, AtomicLongArray, AtomicReferenceArray ;
-3. 引用类型: AtomicReference, AtomicStampedRerence, AtomicMarkableReference ;
-4. 对象的属性修改类型: AtomicIntegerFieldUpdater, AtomicLongFieldUpdater, AtomicReferenceFieldUpdater 
+1. 基本类型: AtomicInteger、AtomicLong、AtomicBoolean
+2. 数组类型: AtomicIntegerArray、AtomicLongArray、AtomicReferenceArray
+3. 引用类型: AtomicReference、AtomicStampedRerence、AtomicMarkableReference
+4. 对象的属性修改类型: 
+AtomicIntegerFieldUpdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater
 
 这些类存在的目的是对相应的数据进行原子操作。所谓原子操作，是指**操作过程不会被中断，保证数据操作是以原子方式进行的。**
 
@@ -21,13 +22,13 @@ AtomicLong是作用是对长整形进行原子操作。
 在32位操作系统中，64位的long 和 double 变量由于会被JVM当作两个分离的32位来进行操作，所以不具有原子性。而使用AtomicLong能让long的操作保持原子型。
 
 ## AtomicLong函数列表
-```
+```java
 // 构造函数
 AtomicLong()
 // 创建值为initialValue的AtomicLong对象
 AtomicLong(long initialValue)
 // 以原子方式设置当前值为newValue。
-final void set(long newValue) 
+final void set(long newValue)
 // 获取当前值
 final long get() 
 // 以原子方式将当前值减 1，并返回减1后的值。等价于“--num”
@@ -60,6 +61,40 @@ final void lazySet(long newValue)
 final boolean weakCompareAndSet(long expect, long update)
 ```
 ## AtomicLong源码解析
+AtomicLong的代码很简单，下面仅以incrementAndGet()为例，对AtomicLong的原理进行说明。
+incrementAndGet()源码如下：
+```java
+public final long incrementAndGet() {
+    for (;;) {
+        // 获取AtomicLong当前对应的long值
+        long current = get();
+        // 将current加1
+        long next = current + 1;
+        // 通过CAS函数，更新current的值
+        if (compareAndSet(current, next))
+            return next;
+    }
+}
+```
+说明：
+- incrementAndGet()首先会根据get()获取AtomicLong对应的long值。该值是volatile类型的变量，get()的源码如下：
+```java
+// value是AtomicLong对应的long值
+private volatile long value;
+// 返回AtomicLong对应的long值
+public final long get() {
+    return value;
+}
+```
+
+- incrementAndGet()接着将current加1,然后通过CAS函数，将新的值赋值给value。
+compareAndSet()的源码如下：
+```java
+public final boolean compareAndSet(long expect, long update) {
+    return unsafe.compareAndSwapLong(this, valueOffset, expect, update);
+}
+```
+compareAndSet()的作用是更新AtomicLong对应的long值。它会比较AtomicLong的原始值是否与expect相等，若相等的话，则设置AtomicLong的值为update。
 
 ## AtomicLong示例
 ```
@@ -154,6 +189,48 @@ String toString()
 // 如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。
 boolean    weakCompareAndSet(int i, long expect, long update)
 ```
+
+## AtomicLongArray源码解析
+AtomicLongArray的代码很简单，下面仅以incrementAndGet()为例，对AtomicLong的原理进行说明。
+incrementAndGet()源码如下：
+```java
+public final long incrementAndGet(int i) {
+    return addAndGet(i, 1);
+}
+```
+说明：incrementAndGet()的作用是以原子方式将long数组的索引 i 的元素加1，并返回加1之后的值。
+
+addAndGet()源码如下：
+```java
+public long addAndGet(int i, long delta) {
+    // 检查数组是否越界
+    long offset = checkedByteOffset(i);
+    while (true) {
+        // 获取long型数组的索引 offset 的原始值
+        long current = getRaw(offset);
+        // 修改long型值
+        long next = current + delta;
+        // 通过CAS更新long型数组的索引 offset的值。
+        if (compareAndSetRaw(offset, current, next))
+            return next;
+    }
+}
+```
+说明：addAndGet()首先检查数组是否越界。如果没有越界的话，则先获取数组索引i的值；然后通过CAS函数更新i的值。
+
+getRaw()源码如下：
+```java
+private long getRaw(long offset) {
+    return unsafe.getLongVolatile(array, offset);
+}
+```
+说明：unsafe是通过Unsafe.getUnsafe()返回的一个Unsafe对象。通过Unsafe的CAS函数对long型数组的元素进行原子操作。如compareAndSetRaw()就是调用Unsafe的CAS函数，它的源码如下：
+```java
+private boolean compareAndSetRaw(long offset, long expect, long update) {
+    return unsafe.compareAndSwapLong(array, offset, expect, update);
+}
+```
+
 ## AtomicLongArray使用示例
 ```
 // LongArrayTest.java的源码
@@ -227,6 +304,70 @@ String toString()
 boolean weakCompareAndSet(V expect, V update)
 ```
 
+## AtomicReference源码分析(基于JDK1.7.0_40)
+```java
+public class AtomicReference<V>  implements java.io.Serializable {
+    private static final long serialVersionUID = -1848883965231344442L;
+
+    // 获取Unsafe对象，Unsafe的作用是提供CAS操作
+    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    private static final long valueOffset;
+
+    static {
+      try {
+        valueOffset = unsafe.objectFieldOffset
+            (AtomicReference.class.getDeclaredField("value"));
+      } catch (Exception ex) { throw new Error(ex); }
+    }
+
+    // volatile类型
+    private volatile V value;
+
+    public AtomicReference(V initialValue) {
+        value = initialValue;
+    }
+
+    public AtomicReference() {
+    }
+
+    public final V get() {
+        return value;
+    }
+
+    public final void set(V newValue) {
+        value = newValue;
+    }
+
+    public final void lazySet(V newValue) {
+        unsafe.putOrderedObject(this, valueOffset, newValue);
+    }
+
+    public final boolean compareAndSet(V expect, V update) {
+        return unsafe.compareAndSwapObject(this, valueOffset, expect, update);
+    }
+
+    public final boolean weakCompareAndSet(V expect, V update) {
+        return unsafe.compareAndSwapObject(this, valueOffset, expect, update);
+    }
+
+    public final V getAndSet(V newValue) {
+        while (true) {
+            V x = get();
+            if (compareAndSet(x, newValue))
+                return x;
+        }
+    }
+
+    public String toString() {
+        return String.valueOf(get());
+    }
+}
+```
+说明：
+AtomicReference的源码比较简单。它是通过"volatile"和"Unsafe提供的CAS函数实现"原子操作。
+- value是volatile类型。这保证了：当某线程修改value的值时，其他线程看到的value值都是最新的value值，即修改之后的volatile的值。
+- 通过CAS设置value。这保证了：当某线程池通过CAS函数(如compareAndSet函数)设置value时，它的操作是原子的，即线程在操作value时不会被中断。
+
 ## AtomicReference示例
 ```
 // AtomicReferenceTest.java的源码
@@ -265,14 +406,14 @@ class Person {
 p3 is id:102
 p3.equals(p1)=false
 ```
-结果说明：
+
 结果说明：
 新建AtomicReference对象ar时，将它初始化为p1。
 紧接着，通过CAS函数对它进行设置。如果ar的值为p1的话，则将其设置为p2。
 最后，获取ar对应的对象，并打印结果。p3.equals(p1)的结果为false，这是因为Person并没有覆盖equals()方法，而是采用继承自Object.java的equals()方法；而Object.java中的equals()实际上是调用"=="去比较两个对象，即比较两个对象的地址是否相等。
 
 # AtomicLongFieldUpdater原子类
-AtomicIntegerFieldUpdater, AtomicLongFieldUpdater和AtomicReferenceFieldUpdater这3个修改类的成员的原子类型的原理和用法相似。
+AtomicIntegerFieldUpdater，AtomicLongFieldUpdater和AtomicReferenceFieldUpdater这3个修改类的成员的原子类型的原理和用法相似。
 AtomicLongFieldUpdater可以对指定"类的 'volatile long'类型的成员"进行原子更新。它是基于反射原理实现的。
 
 ## AtomicLongFieldUpdater函数列表
@@ -307,6 +448,8 @@ abstract void set(T obj, long newValue)
 // 如果当前值 == 预期值，则以原子方式将此更新器所管理的给定对象的字段设置为给定的更新值。
 abstract boolean weakCompareAndSet(T obj, long expect, long update)
 ```
+
+## AtomicLongFieldUpdater源码分析(基于JDK1.7.0_40)
 
 ## AtomicLongFieldUpdater示例
 ```
@@ -346,3 +489,26 @@ class Person {
 `id=100`
 
 
+## 下面分析LongFieldTest.java的流程。
+1. newUpdater()
+newUpdater()的源码如下：
+```java
+public static <U> AtomicLongFieldUpdater<U> newUpdater(Class<U> tclass, String fieldName) {
+    Class<?> caller = Reflection.getCallerClass();
+    if (AtomicLong.VM_SUPPORTS_LONG_CAS)
+        return new CASUpdater<U>(tclass, fieldName, caller);
+    else
+        return new LockedUpdater<U>(tclass, fieldName, caller);
+}
+```
+说明：newUpdater()的作用是获取一个AtomicIntegerFieldUpdater类型的对象。
+它实际上返回的是CASUpdater对象，或者LockedUpdater对象；具体返回哪一个类取决于JVM是否支持long类型的CAS函数。CASUpdater和LockedUpdater都是AtomicIntegerFieldUpdater的子类，它们的实现类似。下面以CASUpdater来进行说明。
+
+CASUpdater类的源码如下：
+```java
+public boolean compareAndSet(T obj, long expect, long update) {
+    if (obj == null || obj.getClass() != tclass || cclass != null) fullCheck(obj);
+    return unsafe.compareAndSwapLong(obj, offset, expect, update);
+}
+```
+说明：它实际上是通过CAS函数操作。如果类的long对象的值是expect，则设置它的值为update。 

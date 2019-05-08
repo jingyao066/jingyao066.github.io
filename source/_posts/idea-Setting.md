@@ -251,6 +251,12 @@ push成功，然后就可以通过idea`ctrl+K`上传，`ctrl+T`拉取代码了�
 打上勾，这时候，在javabean里面，就可以看到编辑器右边有黄色的提示了，可以点开看看，将光标放到类名上，按atl＋enter键，就会提示生成serialVersionUID了。
 
 # 字体
+## 修改菜单字体
+`settings->Appearence & Behavior->Appearence`，右侧找到`Use custom font`，修改右侧的字体和字号。
+
+## 修改java字体
+`settings->Color Scheme->Color Scheme font`，修改右侧的字体。
+
 WenQuanYi Micro Hei Mono
 
 # .gitignore
