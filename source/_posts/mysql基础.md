@@ -93,7 +93,7 @@ ALTER TABLE <表名>
 ```
 
 - 新增字段
-`alter table table_name add column_name varchar(200) not null default 0;`
+`alter table table_name add column_name varchar(200) not null default 0 COMMENT "描述";`
 
 - 修改字段
 `ALTER TABLE table_name MODIFY column_name VARCHAR(200) NULL DEFAULT null COMMENT '这是字段描述';`
