@@ -120,6 +120,54 @@ EmpBean 实体类中存在一对一关系：
 2. `多方的dept_id`必须被成功的映射，不是必须查询
 若不符合上方条件，会造成结果集的关系匹配不正确。
 
+## 批量插入
+批量插入大致有两种形式
+1. 复杂参数类型，传入参数为map
+`void bulkInsertImg(@Param("imgMap") Map<String,Object> map);`
+
+这里我们可以只传递一个map参数，也可以传入多个参数：
+`void insertBatch(@Param("skuList") List<GoodsSku> skuList,@Param("goodsId") Integer goodsId);`
+
+```xml
+<!--批量插入商品图片-->
+<insert id="bulkInsertImg">
+INSERT INTO
+goods_img
+(
+  goods_id,
+  goods_img
+)
+VALUES
+<foreach collection="imgMap.imgArr" separator="," item="i"  index="idx">
+  (
+  #{imgMap.goodsId},
+  #{i}
+  )
+</foreach>
+</insert>
+```
+
+需要注意foreach循环数组和list是有区别的：
+```xml
+<!-- 批量插入商品规格 -->
+<insert id="bulkInsert">
+INSERT INTO
+  goods_spec(
+	goods_id,
+	spec_name,
+	spec_val)
+VALUES
+<foreach collection="specMap.specName" separator="," item="i"  index="idx">
+  (
+	#{specMap.goodsId},
+	#{i},
+	${specMap.specVal[idx]}
+  )
+</foreach>
+</insert>
+```
+
+
 # MyBatis传入多个参数
 ## 单个参数
 `public List<XXBean> getXXBeanList(String xxCode);`
