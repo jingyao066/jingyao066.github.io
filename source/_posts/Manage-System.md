@@ -41,13 +41,64 @@ PageInfo<Tag> getTagList(int pageNum,int pageSize,Tag tag);
 
 Tag tagDetail(Integer id);
 
-int addTag(Tag tag);
-
-int modifyTag(Tag tag);
+int addOrModify(Tag tag);
 
 int delTag(Integer id);
 ```
-serviceImpl省略
+## serviceImpl
+```java
+@Override
+public PageInfo<Tag> getTagList(int pageNum,int pageSize, Tag tag) {
+	PageHelper.startPage(pageNum,pageSize);
+	return new PageInfo<Tag>(tagMapper.getTagList(tag));
+}
+
+/**
+ * @author: wjy
+ * @description: 获取所有tag 不分页
+ */
+@Override
+public List<Tag> getTagList(Tag tag) {
+	return tagMapper.getTagList(tag);
+}
+
+/**
+ * @author: wjy
+ * @description: tag详情
+ */
+@Override
+public Tag tagDetail(Integer id) {
+	return tagMapper.selectByPrimaryKey(id);
+}
+
+/**
+ * @author: wjy
+ * @description: 新增/修改
+ */
+@Override
+public int addTag(Tag tag) {
+	int r = 0;
+	if(null != tag.getId()){
+		r = tagMapper.updateByPrimaryKeySelective(tag);
+	}else{
+		r = tagMapper.insertSelective(tag);
+	}
+	//其他业务逻辑
+	
+	
+	return r;
+}
+
+
+/**
+ * @author: wjy
+ * @description: 删除tag
+ */
+@Override
+public int delTag(Integer id) {
+	return tagMapper.deleteByPrimaryKey(id);
+}
+```
 
 ## controller
 ```java
@@ -83,13 +134,7 @@ public ModelAndView detail(Flag flag){
 @ResponseBody
 @RequestMapping("/addOrModify")
 public int addOrModify(Flag flag){
-	int res = 0;
-	if(null != flag.getId()){
-		res = flagService.modifyFlag(flag);
-	}else{
-		res = flagService.addFlag(flag);
-	}
-	return res;
+	return tagManageService.addOrModify(flag);
 }
 
 /**
