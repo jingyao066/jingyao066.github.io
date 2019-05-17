@@ -396,6 +396,12 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
 而#在mysql中是注释符，#号后面的内容将呗Mysql视为注释内容，上边的sql会变成这样：
 `select * from users where username = '' or 1=1`
 
+# 批量新增返回id
+1. mybatis版本必须在3.3.1及以上
+2. dao层方法返回值依旧是int
+3. dao层接口如果只有一个参数，可以不用`@Param`注解，但是xml中`<foreach>`标签的`collection`参数名必须是`list`
+4. dao层接口如果多个参数，需要用到`@Param`注解，value值必须是`list`，与`<foreach>`标签的`collection`参数名对应。
+5. xml中insert方法的参数类型`parameterType="list"`可写可不写。
 
 # 一些问题
 - #{}和${}的区别是什么
