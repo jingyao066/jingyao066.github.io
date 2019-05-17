@@ -17,7 +17,7 @@ https://pay.weixin.qq.com/wiki/doc/api/index.html
 工厂方法可以创建默认商户的支付策略，也可以在工厂方法里再写一个使用指定商户id或第三方支付的沙箱环境的方法 ，payBaseModel为一些业务参数，例如标题，描述，回调接口以及支付完的跳转页面等。
 
 # maven依赖
-```
+```xml
 <dependency>
     <groupId>com.alipay.sdk</groupId>
     <artifactId>alipay-sdk-java</artifactId>
@@ -521,7 +521,6 @@ public enum PayAlgorithm {
     WX_WEB,
     //微信小程序
     WX_XCX;
-    
 }
 ```
 
