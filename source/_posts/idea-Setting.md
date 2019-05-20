@@ -259,9 +259,33 @@ push成功，然后就可以通过idea`ctrl+K`上传，`ctrl+T`拉取代码了�
 
 WenQuanYi Micro Hei Mono
 
-# .gitignore
+# `.gitignore`
 git忽略的原理： git设置本地忽略必须保证git的远程仓库分支上没有这个要忽略的文件，如果远程分支上存在这个文件，本地在设置ignore将不起作用。
 所以一般是在.gitignore 文件里面加入 .idea/ workspace.xml 即可
 但是如果你这样做之前已经将此文件提交到了git远程仓库，那就需要执行以下命令了：
 `git rm -r --cached .idea`
 
+# idea断点问题
+当前项目处于分布式环境，在其中一个服务 打上断点后，如果debug选项卡切换到其他提供者上，
+注意是debug的选项卡，会发现断点失效了，f8和f9都不好用。
+正常的断点标识是：一个小红圈，中间有个对勾，表明当前断点生效。
+失效后的断点:红圈内的对勾没有了。此时切回断点所在服务的debug选项卡即可。
+
+# IDEA自动重置LanguageLevel和JavaCompiler版本的问题
+一旦Maven项目有变化，发生自动的update时，IDEA会重置这些配置。
+解决办法就是在pom.xml中指定maven-compiler-plugin的版本，该版本会同时影响LanguageLevel和JavaCompiler，修改后默认就成了这里设置的版本。
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
