@@ -201,6 +201,7 @@ cd 命令来改变工作目录。
 `cd ..`
 回到上一级目录
 
+
 ### locate
 使用 locate 命令来搜寻文件或目录。locate 命令直接在文件索引数据库里查找， 所以搜索文件的速度很快。如果需要更新文件索引数据库，则使用 updatedb 命 令。例如，如果想搜寻所有名称中带有 finger 这个词的文件或目录，命令如下： `[root@localhost]# locate finger`
 locate 有一个十分有用的选项 -r，它可以让你在搜索文件时使用正则表达式。
@@ -366,7 +367,7 @@ remote_folder：远程计算机的目录。
 `scp -r root@192.168.1.2：/home/music/ /tmp/`
 
 ### mv
-mv命令用于移动文件。mv的常见选项包括：
+mv命令用于移动文件和改名。mv的常见选项包括：
 `-i`：互动。如果你选择的文件会覆盖目标中的现存文件，它会提示你。这是一个实用的选项，因为它像cp中的-i选项一样，会给你一个确认替换已存文件的机会。
 `-f`：强制。它会超越互动模式，不提示地移动文件。除非你知道自己在干什么，这个选项很危险。在你对系统信心十足之前，请谨慎使用这个选项。
 `-v`：详细。显示文件的移动进度。
@@ -375,6 +376,9 @@ mv命令用于移动文件。mv的常见选项包括：
 `[root@localhost]# mv sneakers.txt /home/newuser/`
 移动后同时给文件改名：
 `[root@localhost]# mv sneakers.txt /home/newuser/new_sneakers.txt`
+
+把当前文件夹的文件a改为b：
+`mv a b`
 
 ### mkdir
 mkdir(make directory)命令用来建立目录。例如在系统中当前目录下建立data子目录：
@@ -411,6 +415,9 @@ rm命令用于将文件或目录删除。如果是链接文件，只是删除了
 
 解压到指定目录：
 `unzip data.zip -d /home/wjy/Desktop/`
+
+centos需要安装zip和unzip指令：
+`yum install -y unzip zip`
 
 ### gzip/gunzip
 gzip命令用于压缩".gz"文件，gunzip用于解开被gzip压缩过的文件，这些压缩文件预设最后的扩展名为".gz"。

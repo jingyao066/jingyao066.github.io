@@ -1,26 +1,31 @@
 ---
 title: 持续集成服务器Jenkins实践
-tags: 其他
+tags: 部署
 date: 2018-12-09 16:54:53
 ---
 
 # 简介
-Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。
-本文描述的是Jenkins本地部署以及远程部署等功能的实现。
+Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
 
 # 安装部署
 Jenkins几乎可以在任何平台（包括docker）上运行，我们采用比较熟悉的方式进行安装，即将Jenkins部署在Tomcat容器中，使用默认的8080端口，无需任何配置，直接启动tomcat即可。
 下载步骤，请参考：http://www.jenkins.org.cn/821.html
 
+安装tomcat和jdk这里不再赘述。
+官网下载：
+https://jenkins.io/download/
+左侧列表是稳定版，右侧是开发版，这里我们下载左侧列表的稳定版。找到适合自己系统的版本下载，这里我下载`Generic Java package (.war)`，通用的java-war包。
+下载并上传到tomcat的webapps目录下，将war包更名为`ROOT`，然后启动tomcat，`./startup.sh`
+
 # Jenkins配置
 访问Jenkins地址，初次进入会要求输入密码，密码已经显示在页面中。
 一般情况下，Linux上的位置：
-/root/.jenkins/secrets/initialAdminPassword
+`/root/.jenkins/secrets/initialAdminPassword`
 windows下密码的位置：
-C:\Users\liuhuijun\.jenkins\secrets\initialAdminPassword
+`C:\Users\59923\.jenkins\secrets\initialAdminPassword`
 
-找到该文件复制里面的内容，进入到初始化页面，然后安装插件，我们选择默认的插件安装，
-Install suggested plugins
+找到该文件复制里面的内容，进入到初始化页面，然后安装插件，我们选择推荐的插件安装
+`Install suggested plugins`
 
 然后进入到Jenkins首页，然后安装中文插件。
 
@@ -33,13 +38,22 @@ Install suggested plugins
 选择可用插件Avaliable，并在右侧Filter框搜索插件名：
 ![](持续集成服务器Jenkins实践/3.png)
 这里我们需要安装的插件如下：
-1.maven集成插件：Maven Integration plugin;
-2.Jenkins语言插件（可选）：Locale plugin;
-3.远程部署插件：Publish Over SSH;
+1. maven集成插件：Maven Integration plugin
+2. Jenkins语言插件（可选）：Locale plugin
+3. 远程部署插件：Publish Over SSH
 
 然后选择install without restart。然后点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System,找到local配置，输入：ZH_cn
 ![](持续集成服务器Jenkins实践/4.png)
 简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。
+
+## 新版配置
+新版本jenkins安装好就有中文，不知道为啥。
+
+- 按照提示，添加默认用户，用户名密码自行设置。
+
+- 实例配置：这里我们给jenkins默认的地址后加上我们的项目名。
+
+- 然后需要重启jenkins，重启后可以按照域名+端口访问了。
 
 # 持续集成配置
 首先需要进行一系列环境的安装或配置，例如git/svn，maven，jdk，远程server等，本文默认以上环境都是安装好的。
