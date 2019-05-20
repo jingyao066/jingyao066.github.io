@@ -445,3 +445,18 @@ ReuseExecutor：执行update或select，以sql作为key查找Statement对象，�
 BatchExecutor：执行update（没有select，JDBC批处理不支持select），将所有sql都添加到批处理中（addBatch()），
 等待统一执行（executeBatch()），它缓存了多个Statement对象，每个Statement对象都是addBatch()完毕后，等待逐一执行executeBatch()批处理。与JDBC批处理相同。
 作用范围：Executor的这些特点，都严格限制在SqlSession生命周期范围内。
+
+# pagehelper有的时候有效果,有时候没有效果
+pagehelper只对紧跟着的第一个sql语句起作用，
+所以直接把PageHelper.startPage(pageNum,pageSize)放在需要分页的语句前边
+
+# MyBatis的xml判断
+mybatis判断int类型时，不可以加`!= ''`非空判断。
+否则判断会失效，不会进入到判断中
+
+# Mybatis报错
+`The content of element type "resultMap" must match "(constructor?,id*,result*,association*,collection*,discriminator?)"`
+
+resultMap中各元素的顺序修改为和错误信息中属性出现的顺序
+( constructor ,  id   result  association .....)一致
+一对一映射必须写在一对多映射前边

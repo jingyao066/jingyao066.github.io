@@ -441,4 +441,20 @@ where id in (select ...)
 # 一些问题
 数据库字段中时常包含`描述`字段，意思是作为xxx的描述信息，但是英文单词`describe`以及`desc`都是mysql的关键字，谨慎使用，可以使用`description`
 
-至此，mysql基础总结完毕。
+# mysql删除数据出现问题
+```sql
+delete from table where id in (
+	select a.id from table where name like 'xxx'
+)
+```
+错误：You can't specify target table 'xxx' for update in FROM clause
+意思是：不能先select同一个表的某些值，然后再update这个表。
+
+解决办法：临时表
+```
+delete from table where id in (
+	select * from(
+		select a.id from table where name like 'xxx'
+	)a
+)
+```
