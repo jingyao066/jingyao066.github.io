@@ -207,3 +207,18 @@ public class Test {
     }
 }
 ```
+
+# 使用Iterator在遍历的时候删除List里的元素
+```java
+public void iteratorRemove() {
+	List<Student> students = this.getStudents();
+	System.out.println(students);
+	Iterator<Student> stuIter = students.iterator();
+	while (stuIter.hasNext()) {
+		Student student = stuIter.next();
+		if (student.getId() % 2 == 0)
+			stuIter.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
+	}
+	System.out.println(students);
+}
+```

@@ -1,7 +1,7 @@
 ---
-title: 日常
-tags: 其他
-date: 2018-12-06 18:28:27
+title: jsDaily
+tags: js
+date: 2019-05-20 10:04:27
 ---
 
 # input设置为disabled，后台无法接受到数据
@@ -17,12 +17,6 @@ W3C的规范，`disabled=”disabled”`不能向后台提交，改为`readonly 
 
 另外：需要在ajax的中设置参数
 `traditional: true,`
-
-# idea断点问题
-当前项目处于分布式环境，在其中一个服务 打上断点后，如果debug选项卡切换到其他提供者上，
-注意是debug的选项卡，会发现断点失效了，f8和f9都不好用。
-正常的断点标识是：一个小红圈，中间有个对勾，表明当前断点生效。
-失效后的断点:红圈内的对勾没有了。此时切回断点所在服务的debug选项卡即可。
 
 # Js实现返回上一页并刷新
 `self.location=document.referrer`
@@ -62,21 +56,6 @@ function onlyNonNegative(obj) {
 }
 ```
 
-# 使用Iterator在遍历的时候删除List里的元素
-```java
-public void iteratorRemove() {
-	List<Student> students = this.getStudents();
-	System.out.println(students);
-	Iterator<Student> stuIter = students.iterator();
-	while (stuIter.hasNext()) {
-		Student student = stuIter.next();
-		if (student.getId() % 2 == 0)
-			stuIter.remove();//这里要使用Iterator的remove方法移除当前对象，如果使用List的remove方法，则同样会出现ConcurrentModificationException
-	}
-	System.out.println(students);
-}
-```
-
 # 选中颜色添加边框,相邻的去除边框
 ```
 function getColor(obj){
@@ -90,10 +69,6 @@ function getColor(obj){
 Html
 <div onclick="getColor(this)">
 ```
-
-# pagehelper有的时候有效果,有时候没有效果
-pagehelper只对紧跟着的第一个sql语句起作用，
-所以直接把PageHelper.startPage(pageNum,pageSize)放在需要分页的语句前边
 
 # JQ获取选中复选框的值
 本以为：
@@ -159,63 +134,3 @@ var data = $("#addForm").serializeArray();
 var content =  $.trim($('#summernote').summernote('code'));
 data.push({"name": "content", "value": content});
 ```
-
-# DTO内部类的问题
-在使用DTO的时候，为了简洁，使用了静态内部类。
-
-但是由于内部类中的属性是私有的，所以无法在外部访问。
-这样，如果我们使用ModelAndView返回数据，页面使用诸如el表达式访问数据，
-会出现无法访问的问题。
-
-解决办法：不使用静态内部类
-
-# MyBatis的xml判断
-mybatis判断int类型时，不可以加`!= ''`非空判断。
-否则判断会失效，不会进入到判断中
-
-# Mybatis报错
-`The content of element type "resultMap" must match "(constructor?,id*,result*,association*,collection*,discriminator?)"`
-
-resultMap中各元素的顺序修改为和错误信息中属性出现的顺序
-( constructor ,  id   result  association .....)一致
-一对一映射必须写在一对多映射前边
-
-# mysql删除数据出现问题
-```sql
-delete from table where id in (
-	select a.id from table where name like 'xxx'
-)
-```
-错误：You can't specify target table 'xxx' for update in FROM clause
-意思是：不能先select同一个表的某些值，然后再update这个表。
-
-解决办法：临时表
-```
-delete from table where id in (
-	select * from(
-		select a.id from table where name like 'xxx'
-	)a
-)
-```
-
-# IDEA自动重置LanguageLevel和JavaCompiler版本的问题
-一旦Maven项目有变化，发生自动的update时，IDEA会重置这些配置。
-解决办法就是在pom.xml中指定maven-compiler-plugin的版本，该版本会同时影响LanguageLevel和JavaCompiler，修改后默认就成了这里设置的版本。
-```xml
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.2</version>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
-```
-
-# 实体类中的布尔值
-布尔值一般会以is开头命名，如：`isShow`，表示是否显示。但是实体类生成的get、set方法会自动将is去掉。
