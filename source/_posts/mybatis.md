@@ -387,6 +387,33 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
 ```
 然后刷新maven
 
+问题：
+mysql有字段是text类型，使用generator生成xml后，多生成一个sql片段：
+```xml
+<sql id="Blob_Column_List" >
+    content
+</sql>
+```
+同时resultMap也会有变化：
+```xml
+<resultMap id="ResultMapWithBLOBs" type="com.zjx.model.Question" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+</resultMap>
+```
+`jdbcType="LONGVARCHAR"`
+update语句也会多出一个`updateByPrimaryKeyWithBLOBs`方法。
+
+可以在generator中通过加入下面的代码避免上面的情况：
+```
+<!-- 有些表的字段需要指定java类型
+<table schema="" tableName="">
+	<columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+</table> -->
+```
+
+但是，不建议这样修改，数据库字段设置成text，就是想多承载数据，生成的mapper数据类型是varchar 那么承装的数据量不就没有longvarchar高了。
+如果这样的话还不如直接写个String 就不用text属性了，是不是这个理？
+
 # 映射枚举类
 
 # 简单的SQL注入
