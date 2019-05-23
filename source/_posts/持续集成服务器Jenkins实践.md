@@ -27,6 +27,8 @@ windows下密码的位置：
 找到该文件复制里面的内容，进入到初始化页面，然后安装插件，我们选择推荐的插件安装
 `Install suggested plugins`
 
+按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，然后需要重启tomcat，才能正常访问jenkins。
+
 然后进入到Jenkins首页，然后安装中文插件。
 
 选择Jenkins配置
@@ -38,8 +40,8 @@ windows下密码的位置：
 选择可用插件Avaliable，并在右侧Filter框搜索插件名：
 ![](持续集成服务器Jenkins实践/3.png)
 这里我们需要安装的插件如下：
-1. maven集成插件：Maven Integration plugin
-2. Jenkins语言插件（可选）：Locale plugin
+1. maven集成插件：Maven Integration
+2. Jenkins语言插件（可选）：Locale
 3. 远程部署插件：Publish Over SSH
 
 然后选择install without restart。然后点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System,找到local配置，输入：ZH_cn
@@ -50,77 +52,145 @@ windows下密码的位置：
 新版本jenkins安装好就有中文，不知道为啥。
 
 - 按照提示，添加默认用户，用户名密码自行设置。
-
 - 实例配置：这里我们给jenkins默认的地址后加上我们的项目名。
-
 - 然后需要重启jenkins，重启后可以按照域名+端口访问了。
 
 # 持续集成配置
-首先需要进行一系列环境的安装或配置，例如git/svn，maven，jdk，远程server等，本文默认以上环境都是安装好的。
+服务器需要安装：
+1. git
+2. maven
+3. jdk
+4. 远程server
 
-进入系统设置，选择全局工具配置，填入本机相关安装路径：
+点击左侧的系统管理，选择全局工具配置，填入本机git/maven/jdk的安装路径：
 jdk:
 ![](持续集成服务器Jenkins实践/5.png)
-
 git:
 ![](持续集成服务器Jenkins实践/6.png)
-
 maven:
 ![](持续集成服务器Jenkins实践/7.png)
 
 ## 本地部署
 本地部署是指：部署运行在本机的服务，若项目部署在其他服务器，则需要远程部署。
 
-在Jenkins主页选择新建任务，选择构建一个maven项目。需要说明的是，由于公司项目结构为父子项目
+在主页选择新建任务，选择构建一个自由风格的软件项目。需要说明的是，由于公司项目结构为父子项目
 ![](持续集成服务器Jenkins实践/8.png)
 所有的子项目都在tubitu_project一个代码仓库里，如果配置了webhook(作用是接收远程仓库push的提交信息)的话，任何一个子项目的代码推送，都会导致所有服务的自动重启，而由于公司没有正规的代码提交审查流程，所以如果提交错误代码，会导致所有服务一同崩溃，因此，推荐每一个服务都是一个单独的部署任务，提交代码后只需要更新提交代码的服务即可。最终结果如下：
 ![](持续集成服务器Jenkins实践/9.png)
 
 配置流程：
-首先新建一个任务，选择构建一个maven项目，输入名称，然后进入配置页面。
-在General里勾选旧的构建，可选1：保持构建天数 2.保持构建的最大个数，Jenkins会自动删除[可选1]之前的安装包，节约服务器空间。
+首先新建一个任务，选择`构建maven项目`，输入名称，然后进入配置页面。
+注意，如果没有安装上边提到的maven插件，这里是看不到`构建maven项目`选项的。
 
-源码管理选择git，选择远程仓库地址，添加个人远程仓库的账户密码：
+也可以选`一个自由风格的软件`
+
+1. General选项卡：
+勾选`丢弃旧的构建`，策略只能默认。
+	- 保持构建天数
+	- 保持构建的最大个数
+Jenkins会自动删除第一项之前的安装包，节约服务器空间。
+
+2. 源码管理：
+勾选git，输入远程仓库地址，添加个人远程仓库的账户密码：
 (注：这里建议使用公司公用的账户密码，避免员工离职或更改密码带来不必要的麻烦)
 ![](持续集成服务器Jenkins实践/10.png)
 
-构建触发器勾选：Build whenever a SNAPSHOT dependency is built
-构建环境选择：Add timestamps to the Console Output（非必选）
-Build：第一框填写：pom.xml
-Goals and options里填写：
-`clean install -pl tubitu_service_api -am`
-说明：
--pl：打包指定module，可以-pl module_name -pl module_name指定打包多个项目
--am：打包指定module所依赖的模块
+3. 构建触发器
+勾选：Build whenever a SNAPSHOT dependency is built（触发远程构建 (例如,使用脚本)）
 
-Post Steps：勾选Run only if build succeeds，点击Add post-build step选择执行shell，脚本如下：
-```
+4. 构建环境
+勾选：Add timestamps to the Console Output（非必选）
+
+注意：`构建maven项目`和`构建自由风格的软件`，这里的选项是不一样的。
+5. Pre Steps
+不用选
+
+6. Build(构建)
+Root POM：默认
+
+Goals and options：`clean install -pl tubitu_service_api -am`
+注意更改模块的名称。
+其中-pl 代表打包指定module，可以`-pl module_name -pl module_name`指定打包多个项目，-am 代表自动打包指定module所依赖的模块。
+
+7. Post Steps
+勾选Run only if build succeeds
+
+8. 点击Add post-build step
+选择执行shell，如下：
+```bash
+
 #首先停止项目
 pid=`ps -ef | grep tubitu_service_api-1.0.0.jar | grep -v grep | awk '{print $2}'`
 if [ -n "$pid" ]
 then
    kill -9 $pid
 fi
+
 #删除旧的项目
 rm -rf /usr/local/meilong/api/tubitu_service_api-1.0.0.jar
+
 #复制Jenkins工作空间里的项目到指定目录下
 cp $WORKSPACE/tubitu_service_api/target/tubitu_service_api-1.0.0.jar /usr/local/meilong/api/
+
 #授权，该步骤可以省略
 chmod u+x /usr/local/meilong/api/tubitu_service_api-1.0.0.jar
+
+#指定log日志位置，并通过java -jar启动项目
 BUILD_ID=donKillme nohup java -jar -Dlogging.file=/usr/local/meilong/api/logs/tubitu.log /usr/local/meilong/api/tubitu_service_api-1.0.0.jar &
 ```
 
-PS：BUILD_ID=dontKillme 指的是不要杀死最后一步启动项目产生的子进程。官网说明如下
-https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller
-`To reliably kill processes spawned by a job during a build, Jenkins contains a bit of native code to list up such processes and kill them. This is tested on several platforms and architectures, but if you find a show-stopper problem because of this, you can disable this feature by setting a Java property named "hudson.util.ProcessTree.disable" to the value "true".`
-译：为了可靠地终止构建过程中滋生出来的进程，Jenkins包含了一系列的本地代码去查出这些子进程并且杀死它们。这个已经在一些平台上进行了测试，如果你发现由此引发的停止显示的问题，你可以设置名为“hudson.util.ProcessTree.disable" 的java property为true来禁止使用ProcessTreeKiller自动杀死。
 
+5. Build(构建)
+增加构建步骤->执行shell：
+可以先随便用个指令实验一下：
+`ifconfig`
+
+正规的更新项目shell脚本：
+```shell
+#首先停止项目
+pid=`ps -ef | grep zjx_admin-1.0.0.jar | grep -v grep | awk '{print $2}'`
+if [ -n "$pid" ]
+then
+   kill -9 $pid
+fi
+
+#删除旧的项目，注意更改此处的jar包名称
+rm -rf /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar
+
+#清除并打包指定项目，-am表示连同依赖模块一同打包
+cd $WORKSPACE
+mvn clean package -pl zjx_admin -am
+
+#复制Jenkins工作空间里的项目(打包好)到指定目录下
+cp $WORKSPACE/zjx_admin/target/zjx_admin-0.0.1-SNAPSHOT.jar /usr/local/zjx/admin/
+
+#授权，该步骤可以省略
+chmod u+x /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar
+
+#指定log日志位置，并通过java -jar启动项目
+BUILD_ID=donKillme nohup java -jar -Dlogging.file=/usr/local/zjx/admin/logs/zjx.log /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar &
+```
+
+`BUILD_ID=dontKillme`：指的是不要杀死最后一步启动项目产生的子进程。
+官网：https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller
+说明如下：
+```
+To reliably kill processes spawned by a job during a build, Jenkins contains a bit of native code to list up such processes and kill them. 
+This is tested on several platforms and architectures, but if you find a show-stopper problem because of this, 
+you can disable this feature by setting a Java property named "hudson.util.ProcessTree.disable" to the value "true".
+```
+译：为了可靠地终止构建过程中滋生出来的进程，Jenkins包含了一系列的本地代码去查出这些子进程并且杀死它们。这个已经在一些平台上进行了测试，如果你发现由此引发的停止显示的问题，你可以设置名为“hudson.util.ProcessTree.disable" 的java property为true来禁止使用ProcessTreeKiller自动杀死。
 通常情况下，我们保持官方默认配置，所以推荐使用BUILD_ID=dontKillme 表示该进程不是由Jenkins来生成，也就不会被ProcessTreeKiller杀死。
 
-配置完成以后，返回到Jenkins首页，在刚刚配置的任务点击最后一个按钮，或者点击任务名旁边的倒三角，选择立即构建，构建执行队列即会显示构建进度：
+6. 构建后操作不用选
+点击保存
+
+回到首页，点击任务列表项右侧的图标：表盘上有个绿色小箭头，或者点击模块名旁的小箭头，点击立即构建。点击`#1`，1这个数字每次构建都会+1，
+代表该模块的构建次数。鼠标悬浮在该项上，点击向下的小箭头，点击控制台输出，可以看到正在构建或已经完成构建的linux控制台信息。
+
+构建过程中可以看到构建进度：
 ![](持续集成服务器Jenkins实践/11.png)
-#10代表第十次构建，鼠标移到10旁边，即可查看控制台输入的构建和启动信息。当Finshed：SUCCESS，
-构建完成。
+`#10`代表第十次构建，鼠标移到10旁边，即可查看控制台输入的构建和启动信息。看到`Finshed：SUCCESS`，表示构建完成。
 
 此时返回到Jenkins主页，可以看到S下的一列圆形图标，
 蓝色：成功
@@ -131,7 +201,6 @@ https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller
 W下有天气图标，代表近期构建状态：
 小太阳：近期成功
 多云：少数失败，以此类推
-
 
 ## 远程部署
 远程部署是由于项目所有的服务并不都部署在本机，有可能部署在其他服务器，所以需要远程部署。
@@ -152,7 +221,7 @@ Remove prefix代表传输到远程时需要移除的前缀：即移除到远程�
 注意：这个目标路径也是相对路径，相对的是你在一开始配置SSH server时Remote Directory的目录，由于本文配置的是/，所以实际传输的远程目录为/usr/local/meilong/mall，如果一开始配置的是/usr/local/meilong，那么这里只需要配置Remote directory为mall。 
 
 Exec command执行的脚本内容为：
-```
+```bash
 #restart.sh
 #!/bin/bash
 APP_PATH=/usr/local/meilong/mall
@@ -174,7 +243,7 @@ nohup java -jar -Dlogging.file=$LOG_FILE $APP_PATH/$APP_NAME >> /dev/null &
 respid=`ps -ef | grep $APP_NAME | grep -v grep | awk '{print $2}'`
 if [ -n "$respid" ]
 then
-    echo "启动成功，进程号：$respid" 
+    echo "启动成功，进程号：$respid"
     exit 0
 else
     echo "启动失败"
@@ -229,3 +298,32 @@ User/group to add框里输入h5（不需要输入全名，Jenkins会根据userId
     <enableCaptcha>false</enableCaptcha>
   </securityRealm>
 ```
+
+# jenkins卸载
+因为我们使用的是tomcat运行jenkins.war的方式，所以：
+1. 停止tomcat
+`./shutdown.sh`
+
+2. 删除ROOT
+`rm -rf ROOT`
+
+3. 删除jenkins工作空间
+`cd /root`
+
+查看jenkins是否在root下面
+`ls`
+
+发现有，直接删除
+`rm -rf .jenkins`
+
+4. 清除缓存
+
+
+# 错误处理
+```
+Jenkins detected that you appear to be running more than one instance of Jenkins that share the same home directory '/root/.jenkins’. This greatly confuses Jenkins and you will likely experience strange behaviors, so please correct the situation.
+```
+译：Jenkins检测到，您似乎正在运行多个Jenkins实例，这些实例共享相同的主目录“/root/. Jenkins”。这让jenkins非常困惑，你可能会经历奇怪的行为，所以请纠正这种情况。
+
+解决：重装
+

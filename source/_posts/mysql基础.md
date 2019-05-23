@@ -56,12 +56,24 @@ select id,stu_name,age, from 表名字
 
 # 表相关
 - 创建数据表:
-```
+```sql
 create table[if not exists] table_name(
     列名 类型 是否为空
     列名 类型 是否为空
 )
 ```
+示例：
+```sql
+CREATE TABLE `grade` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `grade_name` varchar(10) DEFAULT NULL COMMENT '年级名字',
+  `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
+  `version` int(11) DEFAULT '1' COMMENT '版本号',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='年级表';
+```
+
 字段参数说明：
 ` id int(11) NOT NULL AUTO_INCREMENT`
 ```
