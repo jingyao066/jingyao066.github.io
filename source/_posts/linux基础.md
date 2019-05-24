@@ -780,6 +780,14 @@ Service命令用于启动、停止、重启服务程序。
 `chmod -R 777`：修改某个文件或目录读写权限7-xwr 6-xw 5-xr 3-wr 1-r 文件/目录拥有者权限-组群权限-其他人权限
 `chown -R userName{：groupName} 文件/目录`：修改文件/目录的所有者（组群）
 
+## 查看文件夹大小
+`du -h 文件夹名`
+
+## 查看端口占用情况
+`netstat -tunlp|grep 端口号`
+`netstat -nltp | grep 端口号`
+两个使用方式一致
+
 ## Linux ssh多台主机免密登录
 首先使用root登录，执行：
 `ssh-keygen`：生成ssh公钥私钥
