@@ -170,7 +170,7 @@ standalone：单机
 https://redis.io/
 官网下载，解压并复制到想要的位置 /home/wjy/install
 
-cd到目录下，执行
+cd到redis根目录下，执行
 `make`
 报错：
 ```
