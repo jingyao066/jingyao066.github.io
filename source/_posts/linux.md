@@ -6,7 +6,7 @@ date: 2019-03-27 16:11:40
 
 # 软件安装
 ## mysql
-### 
+
 
 ## tomcat
 官网下载：
@@ -59,6 +59,68 @@ cd到tomcat的bin目录下：
 `mvn -v`
 出现版本号：`Apache Maven 3.3.9...`，证明安装成功。
 
+## zookeeper
+下载地址：
+http://mirror.bit.edu.cn/apache/zookeeper/
+下载stable版本。
+
+将下载好的.gz解压并复制到想要的位置。/home/wjy/install
+
+在zk的根目录创建两个文件夹data和data_log，分别用来存放zk的数据以及日志。然后进入到data目录，使用pwd指令查看并复制data目录的绝对路径。
+
+进入zookeeper的conf目录下，复制zoo_sample.cfg为zoo.cfg
+`cp zoo_sample.cfg zoo.cfg`
+
+然后编辑zoo.cfg，修改或新增下面两行配置：
+```
+dataDir=/home/wjy/install/zookeeper-3.4.13/data
+dataLogDir=/home/wjy/install/zookeeper-3.4.13/data_log
+```
+保存并退出。
+
+zoo.cfg只存放了单机的配置，想配置集群需要在最后面加上其他服务器的ip和端口。
+
+到zk的bin目录下启动：
+`./zkServer.sh start`
+
+查看状态
+`./zkServer.sh status`
+```
+ZooKeeper JMX enabled by default
+Using config: /home/wjy/install/zookeeper-3.4.13/bin/../conf/zoo.cfg
+Mode: standalone
+```
+出现上边的状态说明启动成功。
+standalone：单机
+
+## redis
+https://redis.io/
+官网下载，解压并复制到想要的位置 /home/wjy/install
+
+cd到redis根目录下，执行
+`make`
+报错：
+```
+net.c:36:23: fatal error: sys/types.h: No such file or directory(没有那个文件或目录)
+...
+adlist.c:32:20: fatal error: stdlib.h: No such file or directory
+```
+原因是缺少文件，执行以下命令后再次make：
+`sudo apt-get install libc6-dev`
+
+还是报错:
+`zmalloc.h:50:31: fatal error: jemalloc/jemalloc.h: No such file or directory`
+
+原因是libc不是默认的分配器，在make后添加参数解决：
+`sudo make MALLOC=libc`
+
+等待执行完成，到redis/src目录下，执行
+`./redis-server`
+出现端口号和进程PID，证明启动成功。
+
+通过上边的指令启动redis，`ctrl+c`推出窗口，redis也会关闭，可以在指令后加上`&`
+`./redis-server &`
+按ctrl + C 可退出redis 启动窗口，此时redis　并不会关闭，而是会再后台运行，可通过命令查看: ps aux | grep redis
 
 # 技巧
 ## apache下载文件
