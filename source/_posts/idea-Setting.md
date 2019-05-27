@@ -12,8 +12,8 @@ file->export setting
 https://blog.csdn.net/xingbaozhen1210/article/details/81093041
 
 ## Mybatis Plugin
-1.提供Mapper接口与配置文件中对应SQL的导航
-2.编辑XML文件时自动补全..等
+- 提供Mapper接口与配置文件中对应SQL的导航
+- 编辑XML文件时自动补全..等
 
 File->settings->左上角搜索plugin->选择marketplace->输入Mybatis Plugin，回车搜索。
 筛选结果有free mybatis plugin，和mybatis plugin。这里安装free的就好，免费版的已经可以满足日常使用需求。
