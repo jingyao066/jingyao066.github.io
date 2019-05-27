@@ -136,3 +136,7 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 `DocumentRoot "/var/www/html"`
 这个是你apache默认的访问页面，进入到这个文件夹
 这个文件夹下的内容会被显示到apahce的默认访问页里，把你想要下载的东西打包成压缩文件，传到这个文件夹下，就可以通过ip访问下载了。
+
+# 直接用java -jar xxx.jar，当退出或关闭shell时，程序就会停止掉。
+`java -jar xxx.jar &`
+`nohup java -jar xxxx.jar &`
