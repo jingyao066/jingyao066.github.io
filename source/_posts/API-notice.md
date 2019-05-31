@@ -783,3 +783,17 @@ public ResponseUtil modifyMobile(Map<String, String> paramMap, ResponseUtil resp
     return response;
 }
 ```
+
+# @JsonIgnore
+作用：在json序列化时将java bean中的一些属性忽略掉，序列化和反序列化都受影响。
+使用方法：一般标记在属性或者方法上，返回的json数据即不包含该属性。
+使用场景：给前端返回数据时，不需要`xxx`属性，那么可以在该属性上加上`@JsonIgnore`注解。
+
+引入maven：
+```xml
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.5.3</version>
+</dependency>
+```
