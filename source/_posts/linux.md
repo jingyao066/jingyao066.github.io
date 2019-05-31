@@ -122,6 +122,126 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 `./redis-server &`
 按ctrl + C 可退出redis 启动窗口，此时redis　并不会关闭，而是会再后台运行，可通过命令查看: ps aux | grep redis
 
+### 给redis添加密码
+- 临时密码(redis重启之后会失效)
+首先启动redis服务，然后进入redis：
+`redis-cli -p 6379`
+
+查看当前redis有没有设置密码：
+`config get requirepass`
+```
+1) "requirepass"
+2) ""
+```
+
+为以上显示说明没有密码，那么现在来设置密码：
+`config set requirepass 123456`
+
+提示ok，再次查看当前redis就提示需要密码：
+```
+127.0.0.1:6379> config get requirepass
+(error) NOAUTH Authentication required.
+127.0.0.1:6379>
+```
+
+- 永久方式
+修改redis根目录下的`redis.conf`文件：
+`vi redis.conf`
+
+查找字符串：
+命令模式下输入`“/字符串”`，例如“/Section 3”。
+如果查找下一个，按“n”即可。
+`/requirepass foobared`
+
+在该行下面输入：
+`requirepass 123456`
+123456是你的密码
+
+## nginx
+1. 下载Nginx及相关组件
+Linux系统是Centos 6.5 64位，如果不是root用户，切换到root用户下安装
+`su root`
+输入密码，密码不显示。
+
+进入用户目录下载程序：
+`cd /usr/local/src`
+
+下载相关组件：
+```
+[root@localhost src]# wget http://nginx.org/download/nginx-1.10.2.tar.gz
+省略安装内容...
+[root@localhost src]# wget http://www.openssl.org/source/openssl-fips-2.0.10.tar.gz
+省略安装内容...
+[root@localhost src]# wget http://zlib.net/zlib-1.2.11.tar.gz
+省略安装内容...
+[root@localhost src]# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.gz
+省略安装内容...
+```
+上边的安装包可能不是最新的，可以去官网找最新的安装包：
+nginx：
+http://nginx.org/download/
+注意列表不是有序的，现在是2019年，我在页面搜索2019，就可以看到最近发布的安装包，然后把上边的`nginx-1.10.2.tar.gz`替换成新的安装包名字。
+
+安装c++编译环境，如已安装可略过
+```
+[root@localhost src]# yum install gcc-c++
+省略安装内容...
+期间会有确认提示输入y回车
+Is this ok [y/N]:y
+省略安装内容...
+```
+2. 安装Nginx及相关组件
+
+openssl安装
+```
+[root@localhost src]# tar zxvf openssl-fips-2.0.10.tar.gz
+省略安装内容...
+[root@localhost src]# cd openssl-fips-2.0.10
+[root@localhost openssl-fips-2.0.10]# ./config && make && make install
+省略安装内容...
+```
+
+pcre安装
+```
+[root@localhost src]# tar zxvf pcre-8.40.tar.gz
+省略安装内容...
+[root@localhost src]# cd pcre-8.40
+[root@localhost pcre-8.40]# ./configure && make && make install
+省略安装内容...
+```
+
+zlib安装
+```
+[root@localhost src]# tar zxvf zlib-1.2.11.tar.gz
+省略安装内容...
+[root@localhost src]# cd zlib-1.2.11
+[root@localhost zlib-1.2.11]# ./configure && make && make install
+省略安装内容...
+```
+
+nginx安装
+```
+[root@localhost src]# tar zxvf nginx-1.10.2.tar.gz
+省略安装内容...
+[root@localhost src]# cd nginx-1.10.2
+[root@localhost nginx-1.10.2]# ./configure && make && make install
+省略安装内容...
+```
+
+3. 启动nginx
+先找一下nginx安装到什么位置上了
+`whereis nginx`
+`nginx: /usr/local/nginx`
+
+进入nginx目录并启动：
+```
+cd /usr/local/nginx/sbin
+nginx
+```
+
+参考地址：
+https://www.cnblogs.com/taiyonghai/p/6728707.html
+
 # 技巧
 ## apache下载文件
 ![](linux/1.png)

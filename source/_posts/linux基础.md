@@ -795,3 +795,18 @@ Service命令用于启动、停止、重启服务程序。
 `ssh ip或host`：使用ssh登录对方主机
 `scp -r root@ip或者host：文件或者目录路径 本地路径`：将远程目录或者文件复制到本地
 
+## 查看服务器的配置
+- 总核数 = 物理CPU个数 X 每颗物理CPU的核数 
+- 总逻辑CPU数 = 物理CPU个数 X 每颗物理CPU的核数 X 超线程数
+
+- 查看物理CPU个数
+`cat /proc/cpuinfo| grep "physical id"| sort| uniq| wc -l`
+
+- 查看每个物理CPU中core的个数(即核数)
+`cat /proc/cpuinfo| grep "cpu cores"| uniq`
+
+- 查看逻辑CPU的个数
+`cat /proc/cpuinfo| grep "processor"| wc -l`
+
+- 查看CPU信息（型号）
+`cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c`
