@@ -237,6 +237,38 @@ FROM
 table a;
 ```
 
+写法2：
+```
+SELECT
+	@rowno := @rowno + 1 AS rowno,
+	a.* 
+FROM
+	table a,
+	( SELECT @rowno := 0 ) t
+```
+
+如果有按照某个字段排序，行号会不规则排列，换成先排序，外层加上行号会更加合适。
+```
+SELECT
+	@ROWNO := @ROWNO + 1 AS ROWNO,
+	T.* 
+FROM
+	(
+	SELECT
+		a.*
+	FROM
+		table_name a
+		LEFT JOIN ...
+	WHERE
+		...
+	ORDER BY
+		... desc
+	) T,( SELECT @ROWNO := 0 ) T3
+ORDER BY
+	ROWNO
+```
+
+
 # MySQL单表多次查询和多表联合查询，哪个效率高？
 很多高性能的应用都会对关联查询进行分解。
 简单地，可以对每个表进行一次单表查询，然后将结果在应用程序中进行关联。例如，下面这个查询：
