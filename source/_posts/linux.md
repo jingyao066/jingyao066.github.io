@@ -6,6 +6,121 @@ date: 2019-03-27 16:11:40
 
 # 软件安装
 ## mysql
+官网下载：https://dev.mysql.com/downloads/mysql/
+拉到页面下方，下拉Select Operating System，选择`Linux-Generic`，Select OS Version：选择64位。如果不想下载8.0版本的，可以选择右侧的：
+Looking for the latest GA version?，会出现mysql5.7版本。下载最下边的`Linux - Generic (glibc 2.12) (x86, 64-bit), TAR`
+下载完，上传到linux服务器`/usr/local`位置。
+
+加压缩：`tar -zxvf mysql-5.7...`
+重命名：`mv mysql-5.7... mysql`
+在mysql根目录创建data文件夹：`mkdir data`
+创建mysql的用户组和用户，并对mysql目录设置用户组和用户：
+```
+ groupadd mysql
+ useradd mysql -g mysql
+ cd mysql
+ pwd:/usr/local/mysql
+ chown -R mysql .
+ chgrp -R mysql .
+```
+
+初始化mysql并启动mysql服务：
+`cd /usr/local/mysql/bin`
+
+初始化：
+`./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data `
+
+报错：
+`error while loading shared libraries: libnuma.so.1: cannot open shared object file: No such file or directory`
+
+如果已经安装了libnuma.so.1，先
+`yum remove libnuma.so.1`
+
+然后安装64位版本：
+`yum -y install numactl.x86_64`
+
+然后执行上边的初始化指令，最后提示如下初始化成功：
+` A temporary password is generated for root@localhost: C(tSgbIuh4yy`
+最后提示的是默认的密码。
+
+然后修改下权限，把除了data外的所有mysql文件的权限都设置为root：
+```
+chown -R root .
+chown -R mysql data
+```
+
+然后修改mysql配置文件（如果没有自己创建）：
+`vi /etc/my.cnf`
+
+直接修改默认配置：
+```
+[mysqld]
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+socket=/usr/local/mysql/tmp/mysql.sock
+port=3306
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+[client]
+socket=/usr/local/mysql/tmp/mysql.sock
+
+[mysqld_safe]
+#log-error=/var/log/mariadb/mariadb.log
+#pid-file=/var/run/mariadb/mariadb.pid
+
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+socket=/usr/local/mysql/tmp/mysql.sock
+port=3306
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+#
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d
+```
+basedir就是mysql根目录 
+datadir就是上面在mysql根目录中新建的data文件夹 
+socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向了她，mysql.sock这个文件在我们启动mysql时会自动创建。所以我们只要新建tmp文件夹就行了。 
+
+修改tmp文件夹权限：
+`chown -R mysql:mysql tmp`
+
+然后可以启动服务了：
+
+启动和关闭mysql：
+```
+#/etc/init.d/mysql start   或者   serivce mysql start  或者  ./bin/mysqld_safe&  
+#/etc/init.d/mysql stop    或者   service mysql stop   或者  ./bin/mysqladmin -u root -p shutdown
+```
+
+我一般使用./bin/mysqld_safe&命令启动mysql服务 
+启动后检查下ps -ef|grep mysql检查下是否启动 
+现在没有启动 
+
+启动：
+`./bin/mysqld_safe&`
+见到如下内容说明启动成功：
+```
+[1] 30706
+[root@VM_0_12_centos mysql-5.7]# Logging to '/usr/local/mysql-5.7/data/VM_0_12_centos.err'.
+2019-06-09T01:55:28.047197Z mysqld_safe Starting mysqld daemon with databases from /usr/local/mysql-5.7/data
+```
+输入bg 后台运行，然后再运行ps -ef|grep mysql检查可以看到mysql已经启动了。
+
+连接mysql：
+`./bin/mysql -uroot -p`
+
+报错：
+`mysql: [ERROR] unknown variable 'symbolic-links=0'`
+
+查看my.cnf文件，文件中
+`# Disabling symbolic-links is recommended to prevent assorted security risks symbolic-links=0`
+应该是分两行展示了，修改该行为一行显示，或者把这两行全部注释掉即可
+
+输入默认密码报错：
+` Can't connect to local MySQL server through socket '/usr/local/mysql-5.7/tmp/mysql.sock' (2)`
+
 
 
 ## tomcat
