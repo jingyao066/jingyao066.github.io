@@ -784,7 +784,7 @@ Service命令用于启动、停止、重启服务程序。
 `du -h 文件夹名`
 
 ## 查看端口占用情况
-`netstat -tunlp|grep 端口号`
+`netstat -tunlp | grep 端口号`
 `netstat -nltp | grep 端口号`
 两个使用方式一致
 
@@ -810,3 +810,10 @@ Service命令用于启动、停止、重启服务程序。
 
 - 查看CPU信息（型号）
 `cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c`
+
+- 查看Linux内核版本命令
+`cat /proc/version`
+`uname -a`
+
+- 查看Linux系统版本的命令
+`lsb_release -a` 这个命令适用于所有的Linux发行版
