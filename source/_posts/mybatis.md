@@ -98,16 +98,17 @@ EmpBean 实体类中存在一对一关系：
     left join emp e on e.dept_id = d.id
 </select>
 ```
+
 编写resultMap映射结果集
 ```xml
-<resultMap id="selectAllMap" type="DeptBean">
-    <id column="id" property="id" />
+<resultMap id="selectAllMap" type="DeptBean" autoMapping="true">
+    <id column="id" property="id" /> -- 使用autoMapping，可以不映射该字段
     <result column="dept_name" property="deptName" />
-    <collection>
+    <collection property="empList" ofType="com.zjx.model.Emp" autoMapping="true">
         <!-- 
             一对多使用collection
-            property：实体类中list属性的名字
-            ofType：list中的对象类型List<EmpBean>
+            property：实体类中list属性的名字(必须)
+            ofType：list中的对象类型List<EmpBean>(必须)
             若使用自动映射automapping，需要为使用as别名的字段单独使用result标签
          -->
         <id column="id" property="id" />
@@ -116,7 +117,7 @@ EmpBean 实体类中存在一对一关系：
 </resultMap>
 ```
 注：一对多关系中，`一`方的`id`和`多`方的`dept_id`作为`left join`的连接关系，其中：
-1. `一方的id`必须被查询和成功的映射。
+1. `一方的id`必须被查询和成功的映射(自动映射autoMapping也可以)。
 2. `多方的dept_id`必须被成功的映射，不是必须查询
 若不符合上方条件，会造成结果集的关系匹配不正确。
 
