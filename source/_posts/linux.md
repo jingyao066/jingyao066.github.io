@@ -39,6 +39,11 @@ Looking for the latest GA version?，会出现mysql5.7版本。下载最下边�
 然后安装64位版本：
 `yum -y install numactl.x86_64`
 
+还是上边的报错，执行：
+`yum install -y libaio`
+或执行：
+`yum install -y libaio.so.1`
+
 然后执行上边的初始化指令，最后提示如下初始化成功：
 ` A temporary password is generated for root@localhost: C(tSgbIuh4yy`
 最后提示的是默认的密码。
@@ -79,9 +84,9 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 #
 !includedir /etc/my.cnf.d
 ```
-basedir就是mysql根目录 
-datadir就是上面在mysql根目录中新建的data文件夹 
-socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向了她，mysql.sock这个文件在我们启动mysql时会自动创建。所以我们只要新建tmp文件夹就行了。 
+basedir就是mysql根目录
+datadir就是上面在mysql根目录中新建的data文件夹
+socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向了它，mysql.sock这个文件在我们启动mysql时会自动创建。所以我们只要新建tmp文件夹就行了。 
 
 修改tmp文件夹权限：
 `chown -R mysql:mysql tmp`
@@ -94,9 +99,8 @@ socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向
 #/etc/init.d/mysql stop    或者   service mysql stop   或者  ./bin/mysqladmin -u root -p shutdown
 ```
 
-我一般使用./bin/mysqld_safe&命令启动mysql服务 
-启动后检查下ps -ef|grep mysql检查下是否启动 
-现在没有启动 
+我一般使用`./bin/mysqld_safe&`命令启动mysql服务
+启动后检查下`ps -ef|grep mysql`检查下是否启动
 
 启动：
 `./bin/mysqld_safe&`
@@ -106,7 +110,7 @@ socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向
 [root@VM_0_12_centos mysql-5.7]# Logging to '/usr/local/mysql-5.7/data/VM_0_12_centos.err'.
 2019-06-09T01:55:28.047197Z mysqld_safe Starting mysqld daemon with databases from /usr/local/mysql-5.7/data
 ```
-输入bg 后台运行，然后再运行ps -ef|grep mysql检查可以看到mysql已经启动了。
+输入bg后台运行，然后再运行`ps -ef|grep mysql`检查可以看到mysql已经启动了。
 
 连接mysql：
 `./bin/mysql -uroot -p`
@@ -116,12 +120,69 @@ socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向
 
 查看my.cnf文件，文件中
 `# Disabling symbolic-links is recommended to prevent assorted security risks symbolic-links=0`
-应该是分两行展示了，修改该行为一行显示，或者把这两行全部注释掉即可
+应该是分两行展示了，修改该行为一行显示。
+
+再次链接Mysql:
+`./bin/mysql -uroot -p`
+
+上边自动生成的密码是可以复制的，此时直接右键空白处，然后回车，应该就成功进入了。
 
 输入默认密码报错：
-` Can't connect to local MySQL server through socket '/usr/local/mysql-5.7/tmp/mysql.sock' (2)`
+`Can't connect to local MySQL server through socket '/usr/local/mysql-5.7/tmp/mysql.sock' (2)`
+此时需要检查配置文件`vi /etc/my.cnf`，socket文件路径是否正确，tmp文件夹是否已经创建。
 
+成功登录mysql，执行命令报错：
+`You must reset your password using ALTER USER statement before executing this statement.`
 
+执行如下sql：
+`alter user user() identified by "123456";`
+`identified by`后边是密码
+这部具体是什么操作？
+
+此时还需要修改root的密码：
+`update user set authentication_string=password('填入新密码”') where user='root';`
+
+注意mysql5.7之前需要把`authentication_string`替换为：`password`
+
+忘记root密码怎么办？
+编辑配置文件：`vi /etc/my.cnf`
+
+在[mysqld]下面添加一条命令：`skip-grant-tables`
+保存退出，开始修改root密码：
+
+进入MySql控制台（直接按回车，这时不需要输入root密码。）
+`mysql -uroot -p`
+
+切换到mysql数据库
+`mysql>use mysql;`
+
+修改mysql数据库中root的密码
+`update user set authentication_string=password(“填入新密码”) where user=‘root’;`
+
+刷新mysql权限
+`flush privileges;`
+
+退出
+`exit;`
+
+再次vi /etc/my.cnf。把skip-grant-tables删除掉。保存退出。完成MySql Root密码修改
+
+为root用户赋予权限：
+`grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;`
+注意修改identified by后边的密码。
+
+可能会报错：
+`Your password does not satisfy the current policy requirements`
+
+这时修改密码级别：
+`set global validate_password_policy=0;`
+`set global validate_password_length=4;`
+
+然后执行赋权语句成功，刷新权限：
+`flush privileges;`
+
+重启mysql服务：
+`service mysql restart`
 
 ## tomcat
 官网下载：
