@@ -169,8 +169,9 @@ VALUES
 ```
 
 
-# MyBatis传入多个参数
+# MyBatis传入参数
 ## 单个参数
+### 名字一致
 `public List<XXBean> getXXBeanList(String xxCode);`
 ```xml
 <select id="getXXXBeanList" parameterType="java.lang.String" resultType="XXBean">
@@ -179,6 +180,33 @@ VALUES
 ```
 其中方法名和ID一致，#{}中的参数名与方法中的参数名一直， 我这里采用的是XXXBean是采用的短名字,
 select 后的字段列表要和bean中的属性名一致， 如果不一致的可以用as来补充。
+
+### #{_parameter}
+只传入一个参数，可以使用
+`#{_parameter}`
+当作占位符。
+
+### {arg0} 与 {0}
+mybatis3.4.2或者之后的版本，使用`#{0}`就会产生绑定异常：
+`org.apache.ibatis.binding.BindingException: Parameter '0' not found. Available parameters are [arg1, arg0, param1, param2]`
+
+从异常可以看出在没有使用@参数注解的情况下，传递参数需要使用：
+`#{arg0},#{argN}`或`#{param1},#{paramN}`
+
+3.4.1以及之前版本的绑定异常信息：
+`org.apache.ibatis.binding.BindingException: Parameter 'arg0' not found. Available parameters are [0, 1, param1, param2]`
+可以发现3.4.1版本中传递参数可以使用#{0} - #{N}
+
+原因：
+MyBatis的通过XMLConfigBuilder类来加载配置文件中的各项参数
+
+3.4.2版本之前设置属性中useActualParamName参数的默认值为flase 
+XMLConfigBuilder.class的settingsElement方法中的源代码：
+`configuration.setUseActualParamName(booleanValueOf(props.getProperty("useActualParamName"), true));`
+
+3.4.2版本之后设置属性中useActualParamName参数的默认值为true 
+XMLConfigBuilder.class的settingsElement方法中的源代码
+`configuration.setUseActualParamName(booleanValueOf(props.getProperty("useActualParamName"), false));`
 
 ## 多参数
 `public List<XXXBean> getXXXBeanList(String xxId, String xxCode);`
