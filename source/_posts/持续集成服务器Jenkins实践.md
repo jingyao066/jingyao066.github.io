@@ -17,6 +17,55 @@ https://jenkins.io/download/
 左侧列表是稳定版，右侧是开发版，这里我们下载左侧列表的稳定版。找到适合自己系统的版本下载，这里我下载`Generic Java package (.war)`，通用的java-war包。
 下载并上传到tomcat的webapps目录下，将war包更名为`ROOT`，然后启动tomcat，`./startup.sh`
 
+# docker版的Jenkins
+Jenkins主要有三种安装方式
+- 下载官方war包，放到tomcat中直接运行。
+- yum安装
+- 使用官方docker镜像。
+
+要使用docker镜像，首先安装docker，本文默认已经安装docker。
+
+我们可以到Jenkins官网上寻找docker镜像地址：
+https://jenkins.io/download/
+
+找到`Download jenkins xxx for`下边的`docker`，点击后会跳转到docker hub，该网站是docker的官方镜像仓库，就像github是代码仓库一个道理。
+
+网页右侧可以看到Jenkins的docker下载命令：
+`docker pull jenkins/jenkins`
+
+等待下载完成，输入命令查看下载完成的镜像：
+`docker images`
+
+可以看到jenkins已经被下载到服务器。镜像下载完成，下面就要开始启动容器了。启动容器前，建议大家仔细阅读前面寻找镜像时[Docker Hub上关于jenkins镜像的详细说明](https://hub.docker.com/_/jenkins/)。
+在镜像文档里，我们知道Jenkins访问的端口号是8080，另外还需要暴露一个tcp的端口号50000。我们使用如下命令启动Jenkins镜像。
+`docker run -d -p 80:8080 -p 50000:50000 -v jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins docker.io/jenkins/jenkins`
+
+这里逐条解释下各参数的意义。
+- -d 后台运行镜像
+- -p 80:8080  将镜像的8080端口映射到服务器的80端口
+- -p 50000:50000  将镜像的50000端口映射到服务器的50000端口
+- -v jenkins:/var/jenkins_home  /var/jenkins_home目录为jenkins工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。
+- -v /etc/localtime:/etc/localtime  让容器使用和服务器同样的时间设置。
+- --name jenkins 给容器起一个别名
+
+启动后输入命令docker ps -a查看所有容器，可以看到jenkins已成功启动。
+
+在浏览器输入http://ip进入Jenkins登录页面。页面会提示你到服务器的指定位置获取初始化密码。
+
+## 生成SSHKey
+这里再补充一章说明如何生成SSHKey。容器从github上面下载代码的时候需要用到。因为咱们这个Jenkins是基于docker的，不是直接安装在服务器上，这里有很大的不同。
+
+要生成容器的SSHKey，首先要先进入容器
+`docker exec -it jenkins /bin/bash`
+
+进入容器后生成sshkey
+`ssh-keygen -t rsa -C "123@qq.com"`
+
+在容器内输入exit离开容器，使用如下命令获取公钥
+`tail /var/lib/docker/volumes/jenkins/_data/.ssh/id_rsa.pub`
+
+[参考地址](https://www.jianshu.com/p/0391e225e4a6)
+
 # Jenkins配置
 访问Jenkins地址，初次进入会要求输入密码，密码已经显示在页面中。
 一般情况下，Linux上的位置：
