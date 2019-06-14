@@ -91,16 +91,25 @@ docker利用容器来运行应用。容器时从镜像创建的运行实例。�
                   docker-selinux \
                   docker-engine-selinux \
                   docker-engine;
+
 #yum-utils提供了yum-config-manager的作用，而device-mapper-persistent-data和lvm2存储驱动程序
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2;
+
 #配置docker源
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+我们必然使用阿里云的镜像：
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
 #列出当前可用的的docker-ce版本
 yum list docker-ce --showduplicates | sort -r;
+
 #安装docker-ce,可以安装指定版本：sudo yum install docker-ce-18.03.0.ce
 sudo yum install docker-ce
+
 #开机自启用
 sudo systemctl enable docker
+
 #运行
 sudo systemctl start docker
 ```

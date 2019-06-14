@@ -8,7 +8,7 @@ date: 2018-12-08 23:35:36
 ## @Controller
 在SpringMVC中，控制器Controller 负责处理由DispatcherServlet 分发的请求，它把用户请求的数据经过业务处理层处理之后封装成一个Model ，然后再把该Model 返回给对应的View 进行展示。
 
-在SpringMVC 中提供了一个非常简便的定义Controller 的方法，你无需继承特定的类或实现特定的接口，只需使用@Controller 标记一个类是Controller ，然后使用@RequestMapping 和@RequestParam 等一些注解用以定义URL 请求和Controller 方法之间的映射，这样的Controller 就能被外界访问到。
+在SpringMVC 中提供了一个非常简便的定义Controller 的方法，你无需继承特定的类或实现特定的接口，只需使用@Controller 标记一个类是Controller ，然后使用@RequestMapping 或@RequestParam 等一些注解用以定义URL 请求和Controller 方法之间的映射，这样的Controller 就能被外界访问到。
 
 此外Controller 不会直接依赖于HttpServletRequest 和HttpServletResponse 等HttpServlet 对象，它们可以通过Controller 的方法参数灵活的获取到。
 
@@ -27,7 +27,7 @@ date: 2018-12-08 23:35:36
 ```
 
 ## @RequestMapping
-```
+```java
 /**
  * 设置处理方法的请求方式
  * 假如将处理方法的请求方式设置成get，那么只能用get方式进行请求
@@ -40,17 +40,15 @@ public String testRequestMethod(){
 }
 ```
 
-Spring 4.3对@RequestMapping（）进行了细分
-```
-1.@GetMapping    相当于Get请求（@RequestMapping(method=RequestMethod.GET)）
-2.@PostMapping  相当于POST请求 （@RequestMapping(method=RequestMethod.POST)）
-3.PutMapping  相当于PUT请求 （@RequestMapping(method=RequestMethod.PUT)）
-4.DeleteMapping  相当于DELETE请求 （@RequestMapping(method=RequestMethod.DELETE)）
-5.PatchMapping  相当于PATCH请求 （@RequestMapping(method=RequestMethod.PATCH)）
-```
+Spring 4.3对@RequestMapping()进行了细分：
+@GetMapping：相当于Get请求`@RequestMapping(method=RequestMethod.GET)`
+@PostMapping：相当于POST请求`@RequestMapping(method=RequestMethod.POST)`
+@PutMapping：相当于PUT请求`@RequestMapping(method=RequestMethod.PUT)`
+@DeleteMapping：相当于DELETE请求`@RequestMapping(method=RequestMethod.DELETE)`
+@PatchMapping：相当于PATCH请求`@RequestMapping(method=RequestMethod.PATCH)`
 
 ### RequestMapping的params属性
-```
+```java
 /**
  * 请求必须包含username参数
  * 不能包含address
@@ -64,27 +62,27 @@ public String testParam(){
 ```
 
 mapping中参数解析：
-```
 value：指定请求的实际地址，指定的地址可以是URI Template 模式（后面将会说明）
 method：指定请求的method类型， GET、POST、PUT、DELETE等
 consumes：指定处理请求的提交内容类型（Content-Type），例如application/json, text/html;
 produces：指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回
 params：指定request中必须包含某些参数值是，才让该方法处理
 headers：指定request中必须包含某些指定的header值，才能让该方法处理请求
-```
 
 ## @Resource和@Autowired
 @Resource和@Autowired都是做bean的注入时使用，其实@Resource并不是Spring的注解，它的包是javax.annotation.Resource，需要导入，但是Spring支持该注解的注入。
-1、共同点
+
+共同点：
 两者都可以写在字段和setter方法上。两者如果都写在字段上，那么就不需要再写setter方法。
-2、不同点
-（1）@Autowired
-@Autowired为Spring提供的注解，需要导入包org.springframework.beans.factory.annotation.Autowired;只按照byType注入。
-```
+
+不同点：
+- @Autowired
+@Autowired是Spring提供的注解，需要导入包org.springframework.beans.factory.annotation.Autowired，只按照byType注入。
+```java
 public class TestServiceImpl {
     // 下面两种@Autowired只要使用一种即可
     @Autowired
-    private UserDao userDao; // 用于字段上
+    private UserDao userDao; // 用于类上，常用于在service实现类注入dao层对象。
     
     @Autowired
     public void setUserDao(UserDao userDao) { // 用于属性的方法上
@@ -92,17 +90,21 @@ public class TestServiceImpl {
     }
 }
 ```
+
 @Autowired注解是按照类型（byType）装配依赖对象，默认情况下它要求依赖对象必须存在，如果允许null值，可以设置它的required属性为false。如果我们想使用按照名称（byName）来装配，可以结合@Qualifier注解一起使用。如下：
-```
+```java
 public class TestServiceImpl {
     @Autowired
     @Qualifier("userDao")
     private UserDao userDao; 
 }
 ```
-（2）@Resource
-@Resource默认按照ByName自动注入，由J2EE提供，需要导入包javax.annotation.Resource。@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不制定name也不制定type属性，这时将通过反射机制使用byName自动注入策略。
-```
+
+- @Resource
+@Resource默认按照ByName自动注入，由J2EE提供，需要导入包javax.annotation.Resource。
+@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。
+所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入。
+```java
 public class TestServiceImpl {
     // 下面两种@Resource只要使用一种即可
     @Resource(name="userDao")
@@ -114,18 +116,18 @@ public class TestServiceImpl {
     }
 }
 ```
-```
+
 注：最好是将@Resource放在setter方法上，因为这样更符合面向对象的思想，通过set、get去操作属性，而不是直接去操作属性。
 @Resource装配顺序：
-1.如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常。
-2.如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常。
-3.如果指定了type，则从上下文中找到类似匹配的唯一bean进行装配，找不到或是找到多个，都会抛出异常。
-4.如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配。
+1. 如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常。
+2. 如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常。
+3. 如果指定了type，则从上下文中找到类似匹配的唯一bean进行装配，找不到或是找到多个，都会抛出异常。
+4. 如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配。
+
 @Resource的作用相当于@Autowired，只不过@Autowired按照byType自动注入。
-```
 
 ## @PathVariable
-```
+```java
 /**
  * 用于将请求URL中的模板变量映射到功能处理方法的参数上，即取出uri模板中的变量作为参数
  */
@@ -143,7 +145,7 @@ public String testPathVariable(@PathVariable("id")Integer id,
 
 ## @requestParam
 获取请求参数，要写在方法的括号内，两个属性
-```
+```java
 /**
  * 1.value 要获取的参数名字
  * 2.required 是否必须传递
@@ -159,6 +161,36 @@ public String testRequestParam(
     return "success";
 }
 ```
+
+## @requestBody
+该常用来处理content-type不是默认的application/x-www-form-urlcoded编码的内容，
+比如说：application/json或者是application/xml等。一般情况下来说常用其来处理application/json类型。
+
+通常使用该注解来接收前端传递的参数。写法如下：
+`(@RequestBody Map<String,String> paramMap)`
+
+传值方法如下：
+```
+{
+	"pageNum":1,
+	"pageSize":10,
+	"status":100,
+	"groupId":"",
+	"startTime":"",
+	"endTime":""
+}
+```
+
+今天在写上传视频接口时，因为需要同时上传视频和传递参数，请求体同时使用了`requestBody`和`requestParam`两种注解：
+`@RequestParam("file") MultipartFile[] file,@RequestBody Map<String,String> paramMap`
+
+因为平时接前端参数都是requestbody+map，这时使用postMan调用接口报错(http415错误)：
+`Resolved exception caused by Handler execution: org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported`
+
+我猜测，requestBody和requestParam两种请求方式的请求体是有区别的，这时接口同时要求两种请求方式，前端根本没法规定请求类型。
+
+解决办法：
+不必非要使用`requestBody`注解，另外一个参数也使用`requestParam`好了，这样请求类型一致，即可以传文件(视频、音频、图片)，还可以带参数了。
 
 ## @ResponseBody
 作用：该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。
@@ -219,24 +251,7 @@ public String testServletAPI(HttpServletRequest request,HttpServletResponse resp
 ## @Component
 相当于通用的注解，当不知道一些类归到哪个层时使用，但是不建议。
 
-## @requestBody
-该常用来处理content-type不是默认的application/x-www-form-urlcoded编码的内容，
-比如说：application/json或者是application/xml等。一般情况下来说常用其来处理application/json类型。
 
-通常使用该注解来接收前端传递的参数。写法如下：
-`(@RequestBody Map<String,String> paramMap)`
-
-传值方法如下：
-```
-{
-	"pageNum":1,
-	"pageSize":10,
-	"status":100,
-	"groupId":"",
-	"startTime":"",
-	"endTime":""
-}
-```
 ## @ModelAttribute 和 @SessionAttributes
 SpringMVC 支持使用 @ModelAttribute 和 @SessionAttributes 在不同的模型（model）和控制器之间共享数据。
 @ModelAttribute 主要有两种使用方式，一种是标注在方法上，一种是标注在 Controller 方法参数上。
@@ -323,19 +338,18 @@ public String testRedirect(){
 ![](springMVC基础/3.png)
 
 ## SpringMVC运行流程(熟记)
-1.用户向服务器发送请求，被DispatcherServlet捕获
+1. 用户向服务器发送请求，被DispatcherServlet捕获
 
-2.根据用户发送的请求，调用HandlerMapping获取相应的配置，
-最后以Handler　execution　Chain（这三个单词是连在一起的）对象的形式返回
+2. 根据用户发送的请求，调用HandlerMapping获取相应的配置，最后以Handler　execution　Chain（这三个单词是连在一起的）对象的形式返回
 
-3.DispatcherServlet根据获得的Handler,选择一个合适的HandlerAdapter.
+3. DispatcherServlet根据获得的Handler,选择一个合适的HandlerAdapter.
 
-4.提取requerst中的数据模型，填充Handler入参，开始执行Handler
+4. 提取requerst中的数据模型，填充Handler入参，开始执行Handler
 
-5.Handler执行完成后，DispatcherServlet返回一个ModelAndView对象
+5. Handler执行完成后，DispatcherServlet返回一个ModelAndView对象
 
-6.根据返回的ModelAndView，选择一个合适的ViewResolver
+6. 根据返回的ModelAndView，选择一个合适的ViewResolver
 
-7.ViewResolver结合ModelAndView，来渲染视图
+7. ViewResolver结合ModelAndView，来渲染视图
 
-8.将渲染结果返回给客户端
+8. 将渲染结果返回给客户端
