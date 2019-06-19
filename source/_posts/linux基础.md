@@ -817,3 +817,21 @@ Service命令用于启动、停止、重启服务程序。
 
 - 查看Linux系统版本的命令
 `lsb_release -a` 这个命令适用于所有的Linux发行版
+
+# 解决Linux buffer/cache内存占用过高
+经常用free命令来查看系统内存的使用状态：
+`free -m`
+
+我们还可以使用下面这个文件来人工触发缓存清除的操作：
+`cat /proc/sys/vm/drop_caches`
+默认是0
+
+方法是：
+`echo 1 > /proc/sys/vm/drop_caches`
+
+当然，这个文件可以设置的值分别为1、2、3。它们所表示的含义为：
+echo 1 > /proc/sys/vm/drop_caches：表示清除pagecache。
+echo 2 > /proc/sys/vm/drop_caches：表示清除回收slab分配器中的对象（包括目录项缓存和inode缓存）。slab分配器是内核中管理内存的一种机制，其中很多缓存数据实现都是用的pagecache。
+echo 3 > /proc/sys/vm/drop_caches：表示清除pagecache和slab分配器中的缓存对象。
+
+[https://www.cnblogs.com/rocky-AGE-24/p/7629500.html](参考地址)
