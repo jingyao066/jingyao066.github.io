@@ -102,7 +102,7 @@ EmpBean 实体类中存在一对一关系：
 编写resultMap映射结果集
 ```xml
 <resultMap id="selectAllMap" type="DeptBean" autoMapping="true">
-    <id column="id" property="id" /> -- 使用autoMapping，可以不映射该字段
+    <id column="id" property="id" /> -- 就算使用了autoMapping，还是需要映射该字段，该字段必须单独映射，否则报错
     <result column="dept_name" property="deptName" />
     <collection property="empList" ofType="com.zjx.model.Emp" autoMapping="true">
         <!-- 
@@ -111,14 +111,17 @@ EmpBean 实体类中存在一对一关系：
             ofType：list中的对象类型List<EmpBean>(必须)
             若使用自动映射automapping，需要为使用as别名的字段单独使用result标签
          -->
-        <id column="id" property="id" />
+		 -- 若返回结果需要id，该字段必须映射，否则会把主表的id映射到每一条子数据上，造成子数据每条id都一样的错误
+		 -- 而且查询的id必须起别名，不能和主表的id一样(主表的主键叫id，子表的主键也叫id，会造成映射错误)
+        <id column="e_id" property="id" /> -- 此处的cloumn必须改为和id的别名一致，否则会造成映射错误
         <result column = "emp_name" property = "empName" />
     </collection>
 </resultMap>
 ```
-注：一对多关系中，`一`方的`id`和`多`方的`dept_id`作为`left join`的连接关系，其中：
-1. `一方的id`必须被查询和成功的映射(自动映射autoMapping也可以)。
-2. `多方的dept_id`必须被成功的映射，不是必须查询
+注：一对多关系中，`一`方(主表)的`id`和`多`方(子表)的`id`，其中：
+1. `一方的id(主表)`必须被查询和成功的映射(自动映射autoMapping不可以，必须单独映射)。
+2. `多方的id(子表)`必须被查询和成功的映射
+
 若不符合上方条件，会造成结果集的关系匹配不正确。
 
 resultMap的用法以及关联结果集映射：
@@ -448,7 +451,7 @@ update语句也会多出一个`updateByPrimaryKeyWithBLOBs`方法。
 
 # 映射枚举类
 
-# 简单的SQL注入
+# 简单的SQL注入原理
 登录界面用户名输入：`or 1=1#`，密码随便输入，密码随便输，有可能进入系统。
 通常我们的登录语句是这样的
 `select * from users where username = '' and password = ''`
@@ -505,17 +508,15 @@ BatchExecutor：执行update（没有select，JDBC批处理不支持select），
 等待统一执行（executeBatch()），它缓存了多个Statement对象，每个Statement对象都是addBatch()完毕后，等待逐一执行executeBatch()批处理。与JDBC批处理相同。
 作用范围：Executor的这些特点，都严格限制在SqlSession生命周期范围内。
 
-# pagehelper有的时候有效果,有时候没有效果
-pagehelper只对紧跟着的第一个sql语句起作用，
-所以直接把PageHelper.startPage(pageNum,pageSize)放在需要分页的语句前边
+# Pagehelper没有效果
+pagehelper只对紧跟着的第一个sql语句起作用，所以直接把`PageHelper.startPage(pageNum,pageSize)`放在需要分页的语句前边。
 
 # MyBatis的xml判断
-mybatis判断int类型时，不可以加`!= ''`非空判断。
-否则判断会失效，不会进入到判断中
+mybatis判断int类型时，不可以加`!= ''`非空判断，否则判断会失效，不会进入到判断中。
 
 # Mybatis报错
-`The content of element type "resultMap" must match "(constructor?,id*,result*,association*,collection*,discriminator?)"`
+```
+The content of element type "resultMap" must match "(constructor?,id*,result*,association*,collection*,discriminator?)"
+```
+resultMap中标签的顺序需要和错误信息中标签出现的顺序一致，一对一映射(association)必须写在一对多映射(collection)前边。
 
-resultMap中各元素的顺序修改为和错误信息中属性出现的顺序
-( constructor ,  id   result  association .....)一致
-一对一映射必须写在一对多映射前边

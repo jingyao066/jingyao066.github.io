@@ -6,8 +6,7 @@ date: 2018-6-19 17:13:02
 
 # 概述
 热部署的作用是在不重启项目的情况下，使用类加载器重新加载修改过的.class文件到内存，避免花费时间在重启上。目前比较常用的有两种热部署，分别为spring-boot-devtools和JRebel。
-spring-boot-devtools官网：
-https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-running-with-the-maven-plugin
+[spring-boot-devtools官网](https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-running-with-the-maven-plugin)
 使用方式是直接引入Maven插件或者Gradle插件即可。
 
 maven：
@@ -82,9 +81,26 @@ https://github.com/ilanyu
 还可以点击左下角的JRebel唤出panel勾选项目，它会自动在对应的项目下面的resource生成一个rebel.xml文件，可以根据官方来进行一些自定义配置。
 ![](JRebel安装/6.png)
 
+前边一排(绿色小火箭下有JR两个字母)，表示本地jrebel热部署，jrebel会对勾选的模块进行热部署。貌似不勾选也可以热部署？一直没发现勾不勾有什么区别。
+勾选之后会在模块的`resource`目录下生成`rebel.xml`文件，文件注释：
+`This is the JRebel configuration file. It maps the running application to your IDE workspace, enabling JRebel reloading for this project.`
+译：这是JRebel配置文件。它将运行中的应用程序映射到IDE工作区，从而为该项目启用JRebel重载。
+
+文件内容：
+```
+<classpath>
+		<dir name="D:/IdeaProjects/zjx_project/zjx_service_book/target/classes"></dir>
+</classpath>
+```
+这应该是可以自定义项目启动后.class文件的位置，所以不勾选的话，会找默认位置？大概...
+
+后边一排(绿色小火箭下有一朵云)，表示远程热部署，本地内容修改后，可以同步到服务器，因为我们使用了jenkins，所以暂时用不到这个配置。
+[远程部署方式](http://www.w3cbj.cn/Mblog/blog_detail/blog_id/235)
+
 # JRebel-nightly(支持xml热部署)
-以上的标准步骤所激活的JRebel是不支持Mybatis里的xml更新热部署的，如果你想更新了sql也能够热部署， 还需要到官网下载JRebel-nightly：
-https://zeroturnaround.com/software/jrebel/download/nightly-build/#!/intellij
+其实不安装这个，xml也可以热部署，为啥？
+以上的标准步骤所激活的JRebel是不支持Mybatis里的xml更新热部署的，如果你想更新了sql也能够热部署， 
+[还需要到官网下载JRebel-nightly](https://zeroturnaround.com/software/jrebel/download/nightly-build/#!/intellij)
 
 ![](JRebel安装/7.png)
 上面已经圈出来了两种方式：

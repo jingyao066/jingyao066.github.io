@@ -69,6 +69,8 @@ public class modelDto implements Serializable {
         private Integer innerId;
         //群名
         private String innerName;
+		
+		省略get/set方法...
     }
 
     //订单详情一对多内部类
@@ -79,24 +81,24 @@ public class modelDto implements Serializable {
         //商品价格
         private BigDecimal goodsPrice;
 
-        //商品名字
-        private String goodsName;
-
-        //购买数量
-        private Integer goodsNum;
+		省略get/set方法...
     }
 
+	省略get/set方法...
 }
 ```
 注意：
+- 必须实现Serializable接口，否则会报错：
+`com.alibaba.dubbo.rpc.RpcException: Failed to invoke the method......cause: java.lang.IllegalStateException: Serialized class com.zjx.model.dto.UnitAppDto must implement java.io.Serializable`
+
+- 必须是静态内部类，即前边必须加`static`，否则会报错：
+`org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.executor.ExecutorException: No constructor found in com.zjx.model.dto.DubVideoAppDto$InnerDubPart matching`
+
 - 由于内部类中的属性是私有的，所以无法在外部访问。这样，如果我们使用ModelAndView向jsp或freemarker页面返回数据，页面使用诸如el表达式访问数据，会无法获取内部类的属性。所以这种dto，我们只在写接口时使用。
 
 # DTO内部类的问题
-在使用DTO的时候，为了简洁，使用了静态内部类。
-
-但是由于内部类中的属性是私有的，所以无法在外部访问。
-这样，如果我们使用ModelAndView返回数据，页面使用诸如el表达式访问数据，
-会出现无法访问的问题。
+在使用DTO的时候，为了简洁，使用了静态内部类。但是由于内部类中的属性是私有的，所以无法在外部访问。
+这样，如果我们使用ModelAndView返回数据，页面使用诸如el表达式访问数据，会出现无法访问的问题。
 
 解决办法：不使用静态内部类
 
