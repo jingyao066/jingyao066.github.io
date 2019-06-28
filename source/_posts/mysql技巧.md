@@ -94,19 +94,22 @@ when '1' then b.real_name
 when '2' then b.association_name
     else u2.name(有else)
 end AS "user.name",
-```	
+```
+
 ```
 CASE a.exh_type
 when '1' then a.is_art
 when '2' then c.is_art
 end AS "isArt"
 ```
+
 ```
 case (case后边没东西)
 when a.end_time > now() then '1'
 when a.end_time &lt; now() then '2'
 end AS "isPass"
 ```
+
 ```
 where a.is_home = '1'
 and a.publish_status = '1'
@@ -212,7 +215,7 @@ SELECT
 1.union 操作符会选取不同的值
    UNION ALL 允许重复的值(会将所有的值列出)
 
-# union(union all)和order by 
+# union(union all)和order by
 1.每一个子句可以使用()包围，但是当第一个子句使用了()时，其它的子句都必须使用括号包围。
 2. 每一个字句可以包含WHERE，GROUP BY，HAVING，JOIN，LIMIT，但是不能使用ORDER BY，如果需要使用ORDER BY，必须使用()包围子句。
 
@@ -289,15 +292,12 @@ select * from tableC where id in (结果B)
 到底为什么要这样做？
 咋一看，这样做并没有什么好处，原本一条查询，这里却变成了多条查询，返回结果又是一模一样。
 事实上，用分解关联查询的方式重构查询具有如下优势：
-1.让缓存效率更高
+- 让缓存效率更高
 许多应用程序可以方便地缓存单表查询对应的结果对象。另外对于MySQL的查询缓存来说，如果关联中的某个表发生了变化，那么就无法使用查询缓存了，而拆分后，如果某个表很少改变，那么基于该表的查询就可以重复利用查询缓存结果了。
 
-2.将查询分解后，执行单个查询可以减少锁的竞争。
+- 将查询分解后，执行单个查询可以减少锁的竞争。
+- 在应用层做关联，可以更容易对数据库进行拆分，更容易做到高性能和可扩展。
+- 查询本身效率也可能会有所提升
+- 可以减少冗余记录的查询。
+- 更进一步，这样做相当于在应用中实现了哈希关联，而不是使用MySQL的嵌套环关联，某些场景哈希关联的效率更高很多。
 
-3.在应用层做关联，可以更容易对数据库进行拆分，更容易做到高性能和可扩展。
-
-4.查询本身效率也可能会有所提升
-
-5.可以减少冗余记录的查询。
-
-6.更进一步，这样做相当于在应用中实现了哈希关联，而不是使用MySQL的嵌套环关联，某些场景哈希关联的效率更高很多。
