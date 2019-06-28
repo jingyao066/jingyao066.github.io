@@ -192,9 +192,82 @@ public String testRequestParam(
 解决办法：
 不必非要使用`requestBody`注解，另外一个参数也使用`requestParam`好了，这样请求类型一致，即可以传文件(视频、音频、图片)，还可以带参数了。
 
+### 使用requestBody接收数组参数
+写法：
+`@RequestBody Integer[] arr`
+
+postMan请求方式：
+- Content-Type：application/json
+- `body->raw->JSON(application/json)`
+
+在body中写：
+`[1,2]`
+
+一直以为需要这么写：
+```
+{
+	"arr":[1,2]
+}
+```
+
+通过阅读[阅读json官方介绍](https://www.json.org/)和SpringMvc官方文档，
+发现@RequestBody 会自动转成一个对象，这个对象有个属性叫ids,而你直接就写ids，而不是那个对象。所以直接提交[1,2]
+
 ## @ResponseBody
 作用：该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。
 使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用
+
+## @RequestPart
+同时上传文件和json参数。上传文件时，可能还需要带参数，直接上js代码：
+```
+<body>
+    <input type="file" id="file" name="file"/>
+    <button id="button" name="">上传</button>
+</body>
+
+
+$(function () {
+    $("#button").click(function () {
+        //构建formData
+        var formData = new FormData();
+        //文件部分
+        var file = document.getElementById("file").files[0];
+        formData.append("file", file);
+        //json部分
+        var imageInfo = JSON.stringify({
+            "width": "240",
+            "height": "320"
+        });
+        //这里包装 可以直接转换成对象
+        formData.append('imageInfo', new Blob([imageInfo], {type: "application/json"}));
+
+        $.ajax({
+            url: "/test/upload",
+            type: "post",
+            //忽略contentType
+            contentType: false,
+            //取消序列换 formData本来就是序列化好的
+            processData: false,
+            dataType: "json",
+            data: formData,
+            success: function (response) {
+                alert(response);
+            },
+            error: function () {
+
+            }
+        });
+    });
+})
+```
+java：
+```
+@PostMapping("upload")
+public ImageInfo upload(@RequestPart("file") MultipartFile file,@RequestPart("imageInfo") ImageInfo imageInfo) {
+    System.out.println(imageInfo);
+    return imageInfo;
+}
+```
 
 ## 绑定POJO类型参数（实体类）
 需要将页面元素的name属性与实体类对象属性保持一致，区分大小写，支持级联属性
