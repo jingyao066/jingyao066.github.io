@@ -470,3 +470,6 @@ delete from table where id in (
 	)a
 )
 ```
+
+# tinyint
+mysql字段类型为tinyint，tinyint(1)会在查询的时候转换成true false，tinyint(2)以及以上是不会的。这个和mybatis没关系
