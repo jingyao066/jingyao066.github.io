@@ -214,6 +214,12 @@ XMLConfigBuilder.class的settingsElement方法中的源代码：
 XMLConfigBuilder.class的settingsElement方法中的源代码
 `configuration.setUseActualParamName(booleanValueOf(props.getProperty("useActualParamName"), false));`
 
+虽然`#{arg0}`和`#{param1}`可以混用，如
+`where id = #{arg0} and user_id = #{param2}`
+但是最好别这么用，容易让人懵逼。
+
+arg参数从0开始，param从1开始，注意。
+
 ## 多参数
 `public List<XXXBean> getXXXBeanList(String xxId, String xxCode);`
 ```xml
