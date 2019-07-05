@@ -349,7 +349,7 @@ public List<SysWeb> getSysInfo(Map<String, Object> map2) {
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true" />
         </commentGenerator>
-        <!--数据库链接URL，用户名、密码 -->
+
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true&amp;autoReconnect=true&amp;tinyInt1isBit=false"
@@ -812,3 +812,8 @@ The content of element type "resultMap" must match "(constructor?,id*,result*,as
 ```
 resultMap中标签的顺序需要和错误信息中标签出现的顺序一致，一对一映射(association)必须写在一对多映射(collection)前边。
 
+# 数据库int类型呗格式化为Long
+使用map.get("type")获取，并用Integer强转时，报错，错误说明是long类型不能转为Integer。what？怎么会变成long类型了？
+后来查了下，貌似mybatis偶尔会抽风，数据库里int类型的字段会时不时的被转成long或者int，所以强转就有问题了。
+那怎么办呢，有个思路，是不管什么类型，统统转为string类型，然后再解析为Integer或者Long。所以可以使用以下方法：
+Integer type = Integer.parseInt(map.get("type").toString());

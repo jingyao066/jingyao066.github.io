@@ -234,3 +234,14 @@ public void iteratorRemove() {
 - 方法调用表达式,
 - new 表达式
 
+# ？？？
+```java
+Long a = 1l;
+int b = 1;
+System.out.println(a == b);
+
+Map<String,Object> map = new HashMap<>();
+map.put("a",a);
+map.put("b",b);
+System.out.println(map.get("a") == map.get("b"));
+```
