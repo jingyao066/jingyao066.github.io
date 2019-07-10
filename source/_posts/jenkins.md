@@ -1,5 +1,5 @@
 ---
-title: 持续集成服务器Jenkins实践
+title: Jenkins
 tags: 部署
 date: 2018-12-09 16:54:53
 ---
@@ -8,14 +8,13 @@ date: 2018-12-09 16:54:53
 Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
 
 # 安装部署
-Jenkins几乎可以在任何平台（包括docker）上运行，我们采用比较熟悉的方式进行安装，即将Jenkins部署在Tomcat容器中，使用默认的8080端口，无需任何配置，直接启动tomcat即可。
-下载步骤，请参考：http://www.jenkins.org.cn/821.html
+Jenkins几乎可以在任何平台（包括docker）上运行，我们采用比较熟悉的方式进行安装，即将Jenkins部署在Tomcat容器中，无需任何配置，直接启动tomcat即可。
+[这是jenkins中文网](http://www.jenkins.org.cn/821.html)
 
 安装tomcat和jdk这里不再赘述。
-官网下载：
-https://jenkins.io/download/
+[官网下载](https://jenkins.io/download/)
 左侧列表是稳定版，右侧是开发版，这里我们下载左侧列表的稳定版。找到适合自己系统的版本下载，这里我下载`Generic Java package (.war)`，通用的java-war包。
-下载并上传到tomcat的webapps目录下，将war包更名为`ROOT`，然后启动tomcat，`./startup.sh`
+下载并上传到tomcat的webapps目录下，将war包更名为`ROOT.war`，然后启动tomcat，`./startup.sh`
 
 # docker版的Jenkins
 Jenkins主要有三种安装方式
@@ -68,64 +67,59 @@ https://jenkins.io/download/
 
 # Jenkins配置
 访问Jenkins地址，初次进入会要求输入密码，密码已经显示在页面中。
-一般情况下，Linux上的位置：
+一般情况下，Linux上存储密码的位置：
 `/root/.jenkins/secrets/initialAdminPassword`
 windows下密码的位置：
 `C:\Users\59923\.jenkins\secrets\initialAdminPassword`
 
-找到该文件复制里面的内容，进入到初始化页面，然后安装插件，我们选择推荐的插件安装
+找到该文件复制里面的内容，进入到初始化页面，然后安装插件，我们选择
+`推荐的插件安装`
 `Install suggested plugins`
 
-按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，然后需要重启tomcat，才能正常访问jenkins。
+按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，就进入到了jenkins的控制台。
+长时间没反应，请重启tomcat。
 
-然后进入到Jenkins首页，然后安装中文插件。
+如果界面不是中文，可以安装中文插件。
+- 选择左侧列表的`Manage Jenkins`
+- 然后在右侧列表找到`Manage Plugins`
+- 在右侧可以看到上边有四个选项卡，我们选择`Avaliable`
+	这里我们需要安装三个插件：
+	- maven集成插件：Maven Integration
+	- Jenkins语言插件（可选）：Locale
+	- 远程部署插件：Publish Over SSH
 
-选择Jenkins配置
-![](持续集成服务器Jenkins实践/1.png)
+然后选择`install without restart`或`直接安装`。
 
-选择管理插件Manage Plugins:
-![](持续集成服务器Jenkins实践/2.png)
-
-选择可用插件Avaliable，并在右侧Filter框搜索插件名：
-![](持续集成服务器Jenkins实践/3.png)
-这里我们需要安装的插件如下：
-1. maven集成插件：Maven Integration
-2. Jenkins语言插件（可选）：Locale
-3. 远程部署插件：Publish Over SSH
-
-然后选择install without restart。然后点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System,找到local配置，输入：ZH_cn
-![](持续集成服务器Jenkins实践/4.png)
+如果安装了语言插件，还配置成中文才可以，点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System，找到local配置，输入：ZH_cn
 简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。
-
-## 新版配置
-新版本jenkins安装好就有中文，不知道为啥。
-
-- 按照提示，添加默认用户，用户名密码自行设置。
-- 实例配置：这里我们给jenkins默认的地址后加上我们的项目名。
-- 然后需要重启jenkins，重启后可以按照域名+端口访问了。
 
 # 持续集成配置
 服务器需要安装：
-1. git
-2. maven
-3. jdk
-4. 远程server
+jdk、git、maven、远程server，安装好之后，需要在jenkins中配置：
 
 点击左侧的系统管理，选择全局工具配置，填入本机git/maven/jdk的安装路径：
 jdk:
-![](持续集成服务器Jenkins实践/5.png)
+不要勾选自动安装，因为我们已经手动安装好，这里只需要填写`JAVA_HOME`即可，别名可不填。
+`/usr/local/jdk1.8.0_211`
+
 git:
-![](持续集成服务器Jenkins实践/6.png)
+不勾选自动安装，只填写`Path to Git executable`
+`git`
+
 maven:
-![](持续集成服务器Jenkins实践/7.png)
+不勾选自动安装，只填写`MAVEN_HOME`
+`/usr/local/maven`
+
 
 ## 本地部署
 本地部署是指：部署运行在本机的服务，若项目部署在其他服务器，则需要远程部署。
 
 在主页选择新建任务，选择构建一个自由风格的软件项目。需要说明的是，由于公司项目结构为父子项目
-![](持续集成服务器Jenkins实践/8.png)
-所有的子项目都在tubitu_project一个代码仓库里，如果配置了webhook(作用是接收远程仓库push的提交信息)的话，任何一个子项目的代码推送，都会导致所有服务的自动重启，而由于公司没有正规的代码提交审查流程，所以如果提交错误代码，会导致所有服务一同崩溃，因此，推荐每一个服务都是一个单独的部署任务，提交代码后只需要更新提交代码的服务即可。最终结果如下：
-![](持续集成服务器Jenkins实践/9.png)
+![](jenkins/8.png)
+所有的子项目都在tubitu_project一个代码仓库里，如果配置了webhook(作用是接收远程仓库push的提交信息)的话，任何一个子项目的代码推送，
+都会导致所有服务的自动重启，而由于公司没有正规的代码提交审查流程，所以如果提交错误代码，会导致所有服务一同崩溃，
+因此，推荐每一个服务都是一个单独的部署任务，提交代码后只需要更新提交代码的服务即可。最终结果如下：
+![](jenkins/9.png)
 
 配置流程：
 首先新建一个任务，选择`构建maven项目`，输入名称，然后进入配置页面。
@@ -142,7 +136,7 @@ Jenkins会自动删除第一项之前的安装包，节约服务器空间。
 2. 源码管理：
 勾选git，输入远程仓库地址，添加个人远程仓库的账户密码：
 (注：这里建议使用公司公用的账户密码，避免员工离职或更改密码带来不必要的麻烦)
-![](持续集成服务器Jenkins实践/10.png)
+![](jenkins/10.png)
 
 3. 构建触发器
 勾选：Build whenever a SNAPSHOT dependency is built（触发远程构建 (例如,使用脚本)）
@@ -158,44 +152,19 @@ Jenkins会自动删除第一项之前的安装包，节约服务器空间。
 Root POM：默认
 
 Goals and options：`clean install -pl tubitu_service_api -am`
-注意更改模块的名称。
-其中-pl 代表打包指定module，可以`-pl module_name -pl module_name`指定打包多个项目，-am 代表自动打包指定module所依赖的模块。
+注意更改模块的名称。其中-pl 代表打包指定module，可以`-pl module_name -pl module_name`指定打包多个项目，-am 代表自动打包指定module所依赖的模块。
 
 7. Post Steps
 勾选Run only if build succeeds
 
-8. 点击Add post-build step
-选择执行shell，如下：
-```bash
-
-#首先停止项目
-pid=`ps -ef | grep tubitu_service_api-1.0.0.jar | grep -v grep | awk '{print $2}'`
-if [ -n "$pid" ]
-then
-   kill -9 $pid
-fi
-
-#删除旧的项目
-rm -rf /usr/local/meilong/api/tubitu_service_api-1.0.0.jar
-
-#复制Jenkins工作空间里的项目到指定目录下
-cp $WORKSPACE/tubitu_service_api/target/tubitu_service_api-1.0.0.jar /usr/local/meilong/api/
-
-#授权，该步骤可以省略
-chmod u+x /usr/local/meilong/api/tubitu_service_api-1.0.0.jar
-
-#指定log日志位置，并通过java -jar启动项目
-BUILD_ID=donKillme nohup java -jar -Dlogging.file=/usr/local/meilong/api/logs/tubitu.log /usr/local/meilong/api/tubitu_service_api-1.0.0.jar &
-```
-
-
-5. Build(构建)
-增加构建步骤->执行shell：
+8. 点击Add post-build step，然后选择执行shell，这里一步是重中之重。
 可以先随便用个指令实验一下：
 `ifconfig`
 
-正规的更新项目shell脚本：
-```shell
+然后点击保存，点击勾选，看jenkins控制台是否输入了服务器的ip地址。
+
+完整的更新项目shell脚本：
+```bash
 #首先停止项目
 pid=`ps -ef | grep zjx_admin-1.0.0.jar | grep -v grep | awk '{print $2}'`
 if [ -n "$pid" ]
@@ -221,8 +190,7 @@ BUILD_ID=donKillme nohup java -jar -Dlogging.file=/usr/local/zjx/admin/logs/zjx.
 ```
 
 `BUILD_ID=dontKillme`：指的是不要杀死最后一步启动项目产生的子进程。
-官网：https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller
-说明如下：
+[官网说明](https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller)
 ```
 To reliably kill processes spawned by a job during a build, Jenkins contains a bit of native code to list up such processes and kill them. 
 This is tested on several platforms and architectures, but if you find a show-stopper problem because of this, 
@@ -231,14 +199,11 @@ you can disable this feature by setting a Java property named "hudson.util.Proce
 译：为了可靠地终止构建过程中滋生出来的进程，Jenkins包含了一系列的本地代码去查出这些子进程并且杀死它们。这个已经在一些平台上进行了测试，如果你发现由此引发的停止显示的问题，你可以设置名为“hudson.util.ProcessTree.disable" 的java property为true来禁止使用ProcessTreeKiller自动杀死。
 通常情况下，我们保持官方默认配置，所以推荐使用BUILD_ID=dontKillme 表示该进程不是由Jenkins来生成，也就不会被ProcessTreeKiller杀死。
 
-6. 构建后操作不用选
-点击保存
-
-回到首页，点击任务列表项右侧的图标：表盘上有个绿色小箭头，或者点击模块名旁的小箭头，点击立即构建。点击`#1`，1这个数字每次构建都会+1，
-代表该模块的构建次数。鼠标悬浮在该项上，点击向下的小箭头，点击控制台输出，可以看到正在构建或已经完成构建的linux控制台信息。
+然后回到首页，点击任务列表项右侧的图标：表盘上有个绿色小箭头，或者点击模块名旁的小箭头，点击立即构建。点击`#1`，1这个数字每次构建都会+1，代表该模块的构建次数。
+鼠标悬浮在该项上，点击向下的小箭头，点击控制台输出，可以看到正在构建或已经完成构建的linux控制台信息。
 
 构建过程中可以看到构建进度：
-![](持续集成服务器Jenkins实践/11.png)
+![](jenkins/11.png)
 `#10`代表第十次构建，鼠标移到10旁边，即可查看控制台输入的构建和启动信息。看到`Finshed：SUCCESS`，表示构建完成。
 
 此时返回到Jenkins主页，可以看到S下的一列圆形图标，
@@ -256,13 +221,13 @@ W下有天气图标，代表近期构建状态：
 
 远程部署需要配置远程服务器的ip地址和用户凭证。
 返回主页，点击系统管理，然后点击系统设置，在Publish over SSH下找到SSH Servers，点击新增，分别配置好IP地址和用户名密码：
-![](持续集成服务器Jenkins实践/12.png)
+![](jenkins/12.png)
 
 这里Remote Directory为Jenkins默认远程根目录，点击高级，勾选使用用户密码，并输入密码，然后点击Test Configuration测试是否连接成功：
-![](持续集成服务器Jenkins实践/13.png)
+![](jenkins/13.png)
 
 新建一个任务tubitu_service_mall，前面基本保持一致，但是在Post Steps时，不再选择执行脚本，而是选择send files or execute commands over SSH。
-![](持续集成服务器Jenkins实践/14.png)
+![](jenkins/14.png)
 name选择上一步配置好的远程服务器，Source files默认会以本地当前任务的Jenkins工作空间+任务名为根路径，所以Source files只能配置相对路径，而Jenkins每一个任务默认的工作空间为/root/.jenkins/workspace/任务名，所以高i任务在本文中的工作空间全路径即为：/root/.jenkins/workspace/tubitu_service_mall，而由于构建依赖的pom文件又是父项目的pom文件，所以Source files为tubitu_service_mall/target/*.jar，*代表所有的jar包。
 
 Remove prefix代表传输到远程时需要移除的前缀：即移除到远程时会自动移除tubitu_service_mall/target/，只保留文件名。Remote directory代表传输到的目标路径。
@@ -312,25 +277,25 @@ done
 3.综合部署
 综合部署：建立一个公共服务，其中包括项目中所有的模块，实现一键部署、启动所有模块。
 本地部署+远程部署，基本步骤与前面两种应用一致，不再赘述，只贴出配置。
-![](持续集成服务器Jenkins实践/15.png)
-![](持续集成服务器Jenkins实践/16.png)
+![](jenkins/15.png)
+![](jenkins/16.png)
 
 # 权限分配
 考虑到Jenkins中的模块可能需要交给不同的人去维护，例如h5、后台系统、api等等，我们可以给不同的账号分配不同的角色，实现权限分配。
 
 安装插件：Role-based Authorization Strategy
 进入到全局安全配置，启用该插件：
-![](持续集成服务器Jenkins实践/17.png)
+![](jenkins/17.png)
 
 然后进入到系统管理，此时出现了Manage And Assign Roles的选项，首先选择manage roles。比如我想新增一个前端的角色，这个前端角色只能看到前端的构建任务，输入h5，点击新增，然后勾选全部/overall里的Read选项，该选项必选，否则会提示该角色没有所有的读取权限。
 
 然后新增一个项目权限，也命名为h5，Pattern里写正则，h5_.*代表显示所有以h5_开头的构建项目，选择任务里的Build，Configure，Read，启用该角色对于任务的构建，配置和读权限，点击save。
 
 然后在Jenkins的用户管理里新建一个用户，命名为h5，我这里的全名为tubitu_h5：
-![](持续集成服务器Jenkins实践/18.png)
+![](jenkins/18.png)
 
 最后返回到Manage And Assign Roles主界面，选择Assign roles分配角色。
-![](持续集成服务器Jenkins实践/19.png)
+![](jenkins/19.png)
 
 User/group to add框里输入h5（不需要输入全名，Jenkins会根据userId来找，userId=h5），然后点击Add，并勾选刚刚新建的h5的角色。
 
