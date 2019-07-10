@@ -245,3 +245,26 @@ map.put("a",a);
 map.put("b",b);
 System.out.println(map.get("a") == map.get("b"));
 ```
+
+# 自动拆箱问题
+今天在写接口时，有个方法的参数是int类型：
+`public xxx(int id);`
+
+我在传递参数时，可能为null，所以我这么写：
+`token == null ? null : token.getId()`
+
+这时编译器是不报错的，但是会给提示：
+```
+Unboxing of 'null' may produce 'NullPointerException'
+Inspection info: This inspection analyzes method control and data flow to report possible conditions that are always true or false, expressions whose value is statically proven to be constant, and situations that can lead to nullability contract violations.
+Variables, method parameters and return values marked as @Nullable or @NotNull are treated as nullable (or not-null, respectively) and used during the analysis to check nullability contracts, e.g. report NullPointerException (NPE) errors that might be produced.
+More complex contracts can be defined using @Contract annotation, for example:
+@Contract("_, null -> null") — method returns null if its second argument is null
+@Contract("_, null -> null; _, !null -> !null") — method returns null if its second argument is null and not-null otherwise
+@Contract("true -> fail") — a typical assertFalse method which throws an exception if true is passed to it
+
+The inspection can be configured to use custom @Nullable@NotNull annotations (by default the ones from annotations.jar will be used)
+```
+
+运行时直接报错了。因为`null`为对象类型，参数为int，在调用方法时，jvm会尝试把null拆箱为int类型，然后就直接报空指针了。
+直接把参数改成`Integer`就好了。
