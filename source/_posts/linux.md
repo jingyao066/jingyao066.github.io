@@ -5,6 +5,99 @@ date: 2019-03-27 16:11:40
 ---
 
 # 软件安装
+## jdk
+- 卸载系统自带的OpenJDK以及相关的java文件
+如下命令检查是否安装了jdk：
+`java -version`
+
+可能已经安装openJDK，这里需要先卸载掉：
+`rpm -qa | grep java`
+命令说明：
+rpm：管理套件
+-qa：使用询问模式，查询所有套件
+grep：查找文件里符合条件的字符串
+java：查找包含java字符串的文件
+
+把在检查出的列表中前缀带`java`的文件全部删除。
+完整的删除文件的命令，在命令窗口键入：
+`rpm -e --nodeps java-1.8.0-openjdk-1.8.0.102-4.b14.el7.x86_64`
+命令介绍：
+rpm：管理套件
+-e：删除指定的套件
+--nodeps：不验证套件档的相互关联性
+
+检查是否删除成功，再次输入：
+`java -version`
+`command not found`
+代表删除成功。
+如果还没有删除，则用yum -y remove去删除他们
+
+### 传统方式安装
+https://www.cnblogs.com/sxdcgaq8080/p/7492426.html
+
+### docker安装JDK
+1. 安装docker(过程略)
+2. 下载centos镜像
+`sudo docker pull centos:centos7`
+
+3. [下载jdk1.8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)，并上传到/usr/local/src目录，然后解压
+
+```
+$ sudo cd /usr/local/src
+$ sudo tar zxf jdk-8u201-linux-x64.tar.gz
+$ sudo ls
+jdk1.8.0_201  jdk-8u201-linux-x64.tar.gz
+```
+
+4. 创建Dockerfile
+先在/usr/local目录下创建jdk目录，并将/usr/local/src下的jdk-8u201-linux-x64.tar.gz复制到/usr/local/jdk目录下，然后在/usr/local/jdk目录下创建Dockerfile文件。
+```
+$ sudo mkdir /usr/local/jdk
+$ sudo cd /usr/local/jdk
+$ sudo cp ../src/jdk-8u201-linux-x64.tar.gz ./
+$ sudo ls
+jdk-8u201-linux-x64.tar.gz
+$ sudo vi Dockerfile
+FROM centos:centos7
+MAINTAINER tom
+RUN mkdir /usr/local/jdk
+WORKDIR /usr/local/jdk
+ADD jdk-8u201-linux-x64.tar.gz /usr/local/jdk
+
+ENV JAVA_HOME /usr/local/jdk/jdk1.8.0_201
+ENV JRE_HOME /usr/local/jdk/jdk1.8.0_201/jre
+ENV PATH $JAVA_HOME/bin:$PATH
+```
+注意：
+- 修改上边指令中jdk的名称
+- jdk拷贝到dockerfile同级目录，如果在其它目录拷贝的时候可能出现找不到目录错误
+- 使用ADD指令会直接对jdk-8u144-linux-x64.tar.gz进行解压缩，不用再单独的tar解压jdk了
+- 很多地方都是使用的Dockerfile这种固定名称，其实创建的时候可以通过 -f 来指定dockerfile
+
+5. 使用Dockerfile创建镜像
+`sudo docker build -t jdk1.8 .`
+
+如果文件名不是`Dockerfile`，需要指定别名：
+`docker build -t jdk-8u144：20180619 . -f jdkdockerfile`
+
+注意：
+- `-t`指定镜像的名称和tag； 
+- 使用-f 指定要使用的dockerfile，如果不指定会寻找当前目录名为Dockerfile的文件 
+- 上面有个 . ,这个表示当前目录，必不可少的
+
+6. 在镜像仓库中查看是否构建成功
+`docker images`
+可以看到仓库中已经有jdk镜像
+
+7. 运行创建的镜像
+`docker run -d -it jdk1.8 /bin/bash`
+
+创建容器的时候一定要使用 -it /bin/bash这种方式，要不然jdk的容器起不来。
+
+8. 进入jdk容器，查看是否安装正确（即查看安装之后的目录）
+`docker exec -it jdk1.8 /bin/bash`
+
+
 ## mysql
 官网下载：https://dev.mysql.com/downloads/mysql/
 拉到页面下方，下拉Select Operating System，选择`Linux-Generic`，Select OS Version：选择64位。如果不想下载8.0版本的，可以选择右侧的：
@@ -225,7 +318,7 @@ cd到tomcat的bin目录下：
 
 4. 配置环境变量
 `vi /etc/profile`，在合适的位置添加如下内容：
-`M2_HOME=/opt/tyrone/maven （需要修改为自己maven的安装路径）`
+`M2_HOME=/usr/local/maven （需要修改为自己maven的安装路径）`
 `export PATH=${M2_HOME}/bin:${PATH}`
 
 然后使配置文件生效：

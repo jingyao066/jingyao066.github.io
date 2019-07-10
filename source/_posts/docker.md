@@ -383,3 +383,16 @@ $ docker save  -o centos_images.tar centos:centos6 > centos_images.tar
 ## inspect
 `docker inspect <container-id> or <image-id>`
 docker inspect命令会提取出容器或者镜像最顶层的元数据
+
+# docker安装指定版本TAG的镜像
+在docker中安装镜像，一般过程是，docker search 软件名称。
+本文以tomcat为例，讲解下载指定版本TAG的tomcat。
+
+搜索tomcat镜像：
+`sudo docker search tomcat`
+
+发现只有tomcat，而如果docker pull tomcat，下载下来的是最新版的tomcat,也就是tomcat11。假设希望下载的是tomcat:8-jre8。那么该如何做呢？
+如果search出来的镜像，不是自己想要的版本，可通过在docker hub上搜索好版本TAG，地址如下：https://hub.docker.com，进入之后，在页面左上角搜索框搜索`tomcat`，
+搜索出来之后，点详情，点击标签，在下面通过翻页，找到8-jre标签，复制标签名：8-jre8，下载tomcat镜像
+`sudo docker pull tomcat:8-jre8`
+
