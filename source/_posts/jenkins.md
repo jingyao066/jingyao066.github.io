@@ -110,16 +110,15 @@ maven:
 不勾选自动安装，只填写`MAVEN_HOME`
 `/usr/local/maven`
 
-
 ## 本地部署
 本地部署是指：部署运行在本机的服务，若项目部署在其他服务器，则需要远程部署。
 
 在主页选择新建任务，选择构建一个自由风格的软件项目。需要说明的是，由于公司项目结构为父子项目
-![](jenkins/8.png)
+![](jenkins/1.png)
 所有的子项目都在tubitu_project一个代码仓库里，如果配置了webhook(作用是接收远程仓库push的提交信息)的话，任何一个子项目的代码推送，
 都会导致所有服务的自动重启，而由于公司没有正规的代码提交审查流程，所以如果提交错误代码，会导致所有服务一同崩溃，
 因此，推荐每一个服务都是一个单独的部署任务，提交代码后只需要更新提交代码的服务即可。最终结果如下：
-![](jenkins/9.png)
+![](jenkins/2.png)
 
 配置流程：
 首先新建一个任务，选择`构建maven项目`，输入名称，然后进入配置页面。
@@ -134,9 +133,8 @@ maven:
 Jenkins会自动删除第一项之前的安装包，节约服务器空间。
 
 2. 源码管理：
-勾选git，输入远程仓库地址，添加个人远程仓库的账户密码：
+勾选git，`Repository URL`输入远程仓库地址，`Credentials`添加个人远程仓库的账户密码。
 (注：这里建议使用公司公用的账户密码，避免员工离职或更改密码带来不必要的麻烦)
-![](jenkins/10.png)
 
 3. 构建触发器
 勾选：Build whenever a SNAPSHOT dependency is built（触发远程构建 (例如,使用脚本)）
@@ -161,7 +159,7 @@ Goals and options：`clean install -pl tubitu_service_api -am`
 可以先随便用个指令实验一下：
 `ifconfig`
 
-然后点击保存，点击勾选，看jenkins控制台是否输入了服务器的ip地址。
+然后点击保存，点击构建，看jenkins控制台是否输入了服务器的ip地址。
 
 完整的更新项目shell脚本：
 ```bash
@@ -203,7 +201,7 @@ you can disable this feature by setting a Java property named "hudson.util.Proce
 鼠标悬浮在该项上，点击向下的小箭头，点击控制台输出，可以看到正在构建或已经完成构建的linux控制台信息。
 
 构建过程中可以看到构建进度：
-![](jenkins/11.png)
+![](jenkins/3.png)
 `#10`代表第十次构建，鼠标移到10旁边，即可查看控制台输入的构建和启动信息。看到`Finshed：SUCCESS`，表示构建完成。
 
 此时返回到Jenkins主页，可以看到S下的一列圆形图标，
@@ -221,13 +219,13 @@ W下有天气图标，代表近期构建状态：
 
 远程部署需要配置远程服务器的ip地址和用户凭证。
 返回主页，点击系统管理，然后点击系统设置，在Publish over SSH下找到SSH Servers，点击新增，分别配置好IP地址和用户名密码：
-![](jenkins/12.png)
+![](jenkins/4.png)
 
 这里Remote Directory为Jenkins默认远程根目录，点击高级，勾选使用用户密码，并输入密码，然后点击Test Configuration测试是否连接成功：
-![](jenkins/13.png)
+![](jenkins/5.png)
 
 新建一个任务tubitu_service_mall，前面基本保持一致，但是在Post Steps时，不再选择执行脚本，而是选择send files or execute commands over SSH。
-![](jenkins/14.png)
+![](jenkins/6.png)
 name选择上一步配置好的远程服务器，Source files默认会以本地当前任务的Jenkins工作空间+任务名为根路径，所以Source files只能配置相对路径，而Jenkins每一个任务默认的工作空间为/root/.jenkins/workspace/任务名，所以高i任务在本文中的工作空间全路径即为：/root/.jenkins/workspace/tubitu_service_mall，而由于构建依赖的pom文件又是父项目的pom文件，所以Source files为tubitu_service_mall/target/*.jar，*代表所有的jar包。
 
 Remove prefix代表传输到远程时需要移除的前缀：即移除到远程时会自动移除tubitu_service_mall/target/，只保留文件名。Remote directory代表传输到的目标路径。
@@ -277,25 +275,25 @@ done
 3.综合部署
 综合部署：建立一个公共服务，其中包括项目中所有的模块，实现一键部署、启动所有模块。
 本地部署+远程部署，基本步骤与前面两种应用一致，不再赘述，只贴出配置。
-![](jenkins/15.png)
-![](jenkins/16.png)
+![](jenkins/7.png)
+![](jenkins/8.png)
 
 # 权限分配
 考虑到Jenkins中的模块可能需要交给不同的人去维护，例如h5、后台系统、api等等，我们可以给不同的账号分配不同的角色，实现权限分配。
 
 安装插件：Role-based Authorization Strategy
 进入到全局安全配置，启用该插件：
-![](jenkins/17.png)
+![](jenkins/9.png)
 
 然后进入到系统管理，此时出现了Manage And Assign Roles的选项，首先选择manage roles。比如我想新增一个前端的角色，这个前端角色只能看到前端的构建任务，输入h5，点击新增，然后勾选全部/overall里的Read选项，该选项必选，否则会提示该角色没有所有的读取权限。
 
 然后新增一个项目权限，也命名为h5，Pattern里写正则，h5_.*代表显示所有以h5_开头的构建项目，选择任务里的Build，Configure，Read，启用该角色对于任务的构建，配置和读权限，点击save。
 
 然后在Jenkins的用户管理里新建一个用户，命名为h5，我这里的全名为tubitu_h5：
-![](jenkins/18.png)
+![](jenkins/10.png)
 
 最后返回到Manage And Assign Roles主界面，选择Assign roles分配角色。
-![](jenkins/19.png)
+![](jenkins/11.png)
 
 User/group to add框里输入h5（不需要输入全名，Jenkins会根据userId来找，userId=h5），然后点击Add，并勾选刚刚新建的h5的角色。
 

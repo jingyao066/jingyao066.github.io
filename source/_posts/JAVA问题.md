@@ -268,3 +268,13 @@ The inspection can be configured to use custom @Nullable@NotNull annotations (by
 
 运行时直接报错了。因为`null`为对象类型，参数为int，在调用方法时，jvm会尝试把null拆箱为int类型，然后就直接报空指针了。
 直接把参数改成`Integer`就好了。
+
+# 集合指定和不指定反省的区别
+指定了参数类型编译器在编译期间就会帮助你检查存入容器的对象是不是参数类型，不是就会报错，保证了类型安全，性能上没什么影响，因为泛型在运行期间会擦除。
+就是说用不用类型参数在运行期间编译后的运行代码是一样的。
+```java
+Map map = new HashMap();
+Map<String,String> map1 =new  HashMap<String,String>();
+System.out.println(map.getClass().equals(map1.getClass()));
+```
+返回结果会true；说明他们运行的是同一份字节码。
