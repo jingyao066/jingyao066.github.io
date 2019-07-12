@@ -1,5 +1,5 @@
 ---
-title: springMVC基础
+title: springMVC
 tags: springMVC
 date: 2018-12-08 23:35:36
 ---
@@ -150,6 +150,7 @@ public String testPathVariable(@PathVariable("id")Integer id,
  * 1.value 要获取的参数名字
  * 2.required 是否必须传递
  * 如果将其中的一个参数设置为了必须传递，那么在浏览器上如果不传递该参数，则会报400错误
+ * 如果不指定value值，那么传递的参数必须和参数名一致
  */
 @RequestMapping("/testRequestParam")
 // 地址栏：http://localhost:8080/MySpringMvc/mvc/testRequestParam?email=123456@qq.com
@@ -187,7 +188,8 @@ public String testRequestParam(
 因为平时接前端参数都是requestbody+map，这时使用postMan调用接口报错(http415错误)：
 `Resolved exception caused by Handler execution: org.springframework.web.HttpMediaTypeNotSupportedException: Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported`
 
-我猜测，requestBody和requestParam两种请求方式的请求体是有区别的，这时接口同时要求两种请求方式，前端根本没法规定请求类型。
+我猜测，requestBody和requestParam两种请求方式的请求体是有区别的，requestBody的请求方式是`application/json`，requestParam的请求方式是：`application/x-www-form-urlencode`，就是表单。
+这时接口同时要求两种请求方式，前端根本没法规定请求类型。
 
 解决办法：
 不必非要使用`requestBody`注解，另外一个参数也使用`requestParam`好了，这样请求类型一致，即可以传文件(视频、音频、图片)，还可以带参数了。
@@ -203,15 +205,22 @@ postMan请求方式：
 在body中写：
 `[1,2]`
 
-一直以为需要这么写：
-```
-{
-	"arr":[1,2]
-}
-```
-
 通过阅读[阅读json官方介绍](https://www.json.org/)和SpringMvc官方文档，
 发现@RequestBody 会自动转成一个对象，这个对象有个属性叫ids,而你直接就写ids，而不是那个对象。所以直接提交[1,2]
+
+因为mvc接收的是单一类型`Integer[]`，所以只能传递一个数组，不能带`key`，但是这样就无法传递其他参数，比如说带个xxId啥的。
+所以如果想这么写：
+```
+{
+	"arr":[1,2],
+	"xxId":56
+}
+```
+后台还是要用`@RequestBody Map<String,Object> paramMap`来接收参数，这样他会把参数放到map中，不过传递的数组被格式化成了`list`，
+所以从map中取数据时，需要转为成`(ArrayList) paramMap.get("ids")`，而不是`(String[]) paramMap.get("ids")`
+
+另外，如果不想使用`@RequestBody`，可以使用`form-data`，即表单提交方式，即`@RequestParam String[] ids`，postMan选中`body->form-data`，key值需要和参数的名字完全一致(如果写了requestParam的value，则以value为准)，value为`7,8`，不用加中括号。
+另外，还可以不使用注解，直接用`String[] ids`，来接收参数，这时传递的key值也必须和后台参数名一致。可以发现，如果不用注解接收参数，springMvc默认使用的是表单的解析方式，即`@RequestParam`的解析方式。
 
 ## @ResponseBody
 作用：该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。
@@ -269,9 +278,177 @@ public ImageInfo upload(@RequestPart("file") MultipartFile file,@RequestPart("im
 }
 ```
 
+## 使用实体类同时接收文件和复杂对象
+前面写了接口同时文件和单一参数，即同时使用两个`@RequestParam`，现在讲讲如何**同时**接收文件和复杂对象。
+如果只是复杂的json对象，完全可以使用`Map<String,Object> map`来接收，springMvc会自动将数据格式化到map中，例如这种对象：
+```json
+{
+ "param":{
+  "videoId":1,
+  "right":[
+   {
+    "content":"asdlijhdfghjk",
+    "status":1,
+    "sort":1
+   },
+   {
+    "content":"dfghjkl;'ghjnkml,",
+    "status":1,
+    "sort":2
+   }
+  ],
+  "wrong":[
+   {
+    "content":"错误错误···",
+    "words":["啊","去"],
+    "status":1,
+    "sort":1
+   },
+   {
+    "content":"错粗错粗从搓搓粗凑",
+    "words":["吧","他"],
+    "status":1,
+    "sort":2
+   }
+  ]
+ }
+}
+```
+如果加上文件类型，我试了很多次都无法放到map中，所以我觉得只能使用实体类来接收。所以新建实体类如下：
+```java
+public class AnalysisData implements Serializable {
+
+    private Integer videoId;
+
+    private List<Sentence> right;
+
+    private List<Sentence> wrong;
+
+    private MultipartFile[] file;
+    
+	//此处省略get/set方法
+}
+```
+因为对象中还有对象，所以还需要上边实体类属性中`Sentence`的实体类：
+```java
+public class Sentence implements Serializable {
+    private Integer chapterUserDubId;
+
+    private String content;
+
+    private Integer status;
+
+    private Integer sort;
+
+    private List<String> words;
+	
+	//此处省略get/set方法
+}
+```
+因为json对象中有数组，springmvc会把数组转为list，所以我这里用`private List<String> words;`来接收数组。
+
+因为实体类中有`private MultipartFile[] file;`这个属性，所以我可以同时接收文件和复杂对象。
+但是需要注意，文件需要在controller中直接上传，而不是到serviceImpl中上传，因为实体类中的`MultipartFile[]`无法被序列化，所以在向serviceImpl传递该实体类时会报错：
+`Failed to invoke the method uploadCheckPayments in the service com.dxl.payment.service.payment.ITrepaymentService. Tried 3 times of the providers`
+译：xxx方法的参数传递错误。ITrepaymentService此接口尝试了3次请求
+因为想要调用dubbo的方法，传递的参数必须序列化，即实现`Serializable`接口，但是即使实现了`Serializable`接口，`MultipartFile[]`依旧无法被序列化，另外还有
+`HttpServletRequest request`和`HttpSession session`无法被序列化，所以需要在向service传递该实体类时，将`MultipartFile[]`属性置空，`model.setFile(null);`
+
+js代码是这样的：
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="file" id="abc">
+<button onclick="aa()">点我</button>
+</body>
+<script src="jquery.js"></script>
+<script>
+    function aa(){
+	let files = document.getElementById('abc').files[0];
+    let param = new FormData();
+	
+	//不能用这个对象
+	let aa = {
+	 
+	  "videoId":1,
+	  "right":[
+	   {
+		"content":"asdlijhdfghjk",
+		"status":1,
+		"sort":1
+	   },
+	   {
+		"content":"dfghjkl;'ghjnkml,",
+		"status":1,
+		"sort":2
+	   }
+	  ],
+	  "wrong":[
+	   {
+		"content":"错误错误···",
+		"words":["啊","去"],
+		"status":1,
+		"sort":1
+	   },
+	   {
+		"content":"错粗错粗从搓搓粗凑",
+		"words":["吧","他"],
+		"status":1,
+		"sort":2
+	   }
+	  ]
+	 }
+	 
+	//只能是这种方式模拟表单提交，当然不会这样手写，起码会循环push到数组中。
+    param.append('file', files, files.name);
+	param.append('videoId',1);
+	param.append('right[0].content','asdasd');
+	param.append('right[0].status',1);
+	param.append('right[0].sort',1);
+	param.append('right[1].content','zxczxc');
+	param.append('right[1].status',1);
+	param.append('right[1].sort',1);
+	
+	param.append('wrong[0].content','asdasd');
+	param.append('wrong[0].words[0]','啊');
+	param.append('wrong[0].words[1]','去');
+	param.append('wrong[0].status',2);
+	param.append('wrong[0].sort',1);
+	param.append('wrong[1].content','asdasd');
+	param.append('wrong[1].words[0]','啊');
+	param.append('wrong[1].words[1]','去');
+	param.append('wrong[1].status',2);
+	param.append('wrong[1].sort',2);
+	//param.append('right',JSON.stringify(aa));
+	//param.append('id',123);
+	//param.append('aa','这是参数');
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.10.103:8000/zjx/api/chapter/previewDub',
+        data: param,
+        contentType:false,
+        processData:false,
+		headers:{'token':'zUEHfaHdsacP48YXaGawK1JTJfrqGjM+xVQkCc4YkvoHgEDovoTO/bFNx1rjs63s'},
+        // async: false,
+        success: function (res) {
+            console.log(res);
+        }
+    });
+
+    }
+</script>
+</html>
+
+```
+
 ## 绑定POJO类型参数（实体类）
 需要将页面元素的name属性与实体类对象属性保持一致，区分大小写，支持级联属性
-![](springMVC基础/1.png)
+![](springMVC/1.png)
 
 ## ModelAndView
 如果方法的返回值为ModelAndView，那么可返回页面或数据模型
@@ -392,7 +569,7 @@ public String testRedirect(){
 ```
 
 ## 文件上传
-![](springMVC基础/2.png)
+![](springMVC/2.png)
 
 ## SpringMVC拦截器
 拦截器中有三个执行方法：
@@ -408,7 +585,7 @@ public String testRedirect(){
 3.然后倒序执行所有拦截器的postHandle方法和afterCompletion方法
 4.如果第一个拦截器的preHandle方法返回false，那么后续方法都不执行，只执行第一个拦截器的afterCompletion方法
 
-![](springMVC基础/3.png)
+![](springMVC/3.png)
 
 ## SpringMVC运行流程(熟记)
 1. 用户向服务器发送请求，被DispatcherServlet捕获

@@ -329,11 +329,10 @@ cd到tomcat的bin目录下：
 出现版本号：`Apache Maven 3.3.9...`，证明安装成功。
 
 ## zookeeper
-下载地址：
-http://mirror.bit.edu.cn/apache/zookeeper/
+[下载地址](http://mirror.bit.edu.cn/apache/zookeeper/)
 下载stable版本。
 
-将下载好的.gz解压并复制到想要的位置。/home/wjy/install
+将下载好的.gz解压并复制到想要的位置。如：/usr/local/install 或 /home/wjy/install
 
 在zk的根目录创建两个文件夹data和data_log，分别用来存放zk的数据以及日志。然后进入到data目录，使用pwd指令查看并复制data目录的绝对路径。
 
