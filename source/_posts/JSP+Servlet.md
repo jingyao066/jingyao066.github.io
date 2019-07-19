@@ -52,6 +52,12 @@ conf目录下server.xml文件进行修改
 ## 访问Tomcat中的项目
 IP地址:端口号/项目名字
 
+## 多个tomcat共存
+修改conf/server.xml文件其中的三处地方:
+- <Server port="8005" shutdown="SHUTDOWN">
+- <Connector port="8080" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443">
+- <Connector port="8009" protocol="AJP/1.3" redirectPort="8443">
+
 ## Web项目结构
 在WEB-INF 之外，存放静态资源，可以通过浏览器访问
 WEB-INF中的文件受保护，无法通过浏览器直接访问

@@ -817,3 +817,13 @@ resultMap中标签的顺序需要和错误信息中标签出现的顺序一致�
 后来查了下，貌似mybatis偶尔会抽风，数据库里int类型的字段会时不时的被转成long或者int，所以强转就有问题了。
 那怎么办呢，有个思路，是不管什么类型，统统转为string类型，然后再解析为Integer或者Long。所以可以使用以下方法：
 Integer type = Integer.parseInt(map.get("type").toString());
+
+# mybatis 多个条件 批量删除
+```
+<delete id="deleteList" parameterType="java.util.List">
+	delete from table where
+	<foreach collection="list"  item="item" separator=" or " index="index">
+		(id= #{item.id}and itemcode= #{item.itemcode})
+	</foreach>
+</delete>
+```
