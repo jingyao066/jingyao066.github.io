@@ -35,13 +35,13 @@ https://jenkins.io/download/
 等待下载完成，输入命令查看下载完成的镜像：
 `docker images`
 
-可以看到jenkins已经被下载到服务器。镜像下载完成，下面就要开始启动容器了。启动容器前，建议大家仔细阅读前面寻找镜像时[Docker Hub上关于jenkins镜像的详细说明](https://hub.docker.com/_/jenkins/)。
+可以看到jenkins已经被下载到服务器。镜像下载完成，下面就要开始启动容器了。启动容器前，建议大家仔细阅读前面寻找镜像时[Docker Hub上关于jenkins镜像的详细说明](https://github.com/jenkinsci/docker/blob/master/README.md)。
 在镜像文档里，我们知道Jenkins访问的端口号是8080，另外还需要暴露一个tcp的端口号50000。我们使用如下命令启动Jenkins镜像。
-`docker run -d -p 80:8080 -p 50000:50000 -v jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins docker.io/jenkins/jenkins`
+`docker run -d -p 9999:8080 -p 50000:50000 -v jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins docker.io/jenkins/jenkins`
 
 这里逐条解释下各参数的意义。
 - -d 后台运行镜像
-- -p 80:8080  将镜像的8080端口映射到服务器的80端口
+- -p 9999:8080  将镜像的8080端口映射到服务器的9999端口
 - -p 50000:50000  将镜像的50000端口映射到服务器的50000端口
 - -v jenkins:/var/jenkins_home  /var/jenkins_home目录为jenkins工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。
 - -v /etc/localtime:/etc/localtime  让容器使用和服务器同样的时间设置。
@@ -49,7 +49,7 @@ https://jenkins.io/download/
 
 启动后输入命令docker ps -a查看所有容器，可以看到jenkins已成功启动。
 
-在浏览器输入http://ip进入Jenkins登录页面。页面会提示你到服务器的指定位置获取初始化密码。
+在浏览器输入ip+端口进入Jenkins登录页面。页面会提示你到服务器的指定位置获取初始化密码。
 
 ## 生成SSHKey
 这里再补充一章说明如何生成SSHKey。容器从github上面下载代码的时候需要用到。因为咱们这个Jenkins是基于docker的，不是直接安装在服务器上，这里有很大的不同。
