@@ -78,41 +78,45 @@ docker利用容器来运行应用。容器时从镜像创建的运行实例。�
 正是文件系统隔离技术使得Docker成为了一个非常有潜力的虚拟化技术。一个容器中的进程可能会对文件进行修改、删除、创建，这些改变都将作用于可读写层。
 
 # docker安装部署
-- centos
-```
-#卸载老版本Docker
- sudo yum remove docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-selinux \
-                  docker-engine-selinux \
-                  docker-engine;
+- Docker 要求 CentOS 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的CentOS 版本是否支持 Docker 。
+通过 uname -r 命令查看你当前的内核版本
+`uname -r`
 
-#yum-utils提供了yum-config-manager的作用，而device-mapper-persistent-data和lvm2存储驱动程序
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2;
+- 使用 root 权限登录 Centos。确保 yum 包更新到最新。
+`sudo yum update`
 
-#配置docker源
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+- 卸载旧版本(如果安装过旧版本的话)
+`sudo yum remove docker  docker-common docker-selinux docker-engine`
 
-我们必然使用阿里云的镜像：
-sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+- 安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的
+`sudo yum install -y yum-utils device-mapper-persistent-data lvm2`
 
-#列出当前可用的的docker-ce版本
-yum list docker-ce --showduplicates | sort -r;
+- 设置yum源
+这是dockerHub上的镜像源：
+`sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo`
+我们使用阿里的镜像源：
+`sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo`
 
-#安装docker-ce,可以安装指定版本：sudo yum install docker-ce-18.03.0.ce
-sudo yum install docker-ce
+- 查看仓库中所有docker版本，并选择特定版本安装
+`yum list docker-ce --showduplicates | sort -r`
 
-#开机自启用
-sudo systemctl enable docker
+- 安装docker
+`sudo yum install docker-ce`#由于repo中默认只开启stable仓库，故这里安装的是最新稳定版17.12.0
+可以指定版本安装，如：
+`sudo yum install docker-ce-18.03.0.ce`
 
-#运行
-sudo systemctl start docker
-```
+- 启动并加入开机启动
+`sudo systemctl start docker`
+`sudo systemctl enable docker`
+
+- 验证安装是否成功(有client和service两部分表示docker安装启动都成功了)
+`docker version`
+
+# 删除docker
+`yum remove docker docker-common docker-selinux docker-engine -y`
+`/etc/systemd -name '*docker*' -exec rm -f {} ;`
+`find /etc/systemd -name '*docker*' -exec rm -f {} \;`
+`find /lib/systemd -name '*docker*' -exec rm -f {} \;`
 
 # docker常用命令
 ## 获取镜像
@@ -126,9 +130,8 @@ sudo systemctl start docker
 
 ## 查看镜像列表
 `docker images`
-列出了所有顶层（top-level）镜像。实际上，在这里我们没有办法区分一个镜像和一个只读层，所以我们
-提出了top-level镜像。只有创建容器时使用的镜像或者是直接pull下来的镜像能被称为顶层（top-level）
-镜像，并且每一个顶层镜像下面都隐藏了多个镜像层。
+列出了所有顶层（top-level）镜像。实际上，在这里我们没有办法区分一个镜像和一个只读层，所以我们提出了top-level镜像。
+只有创建容器时使用的镜像或者是直接pull下来的镜像能被称为顶层（top-level）镜像，并且每一个顶层镜像下面都隐藏了多个镜像层。
 
 如：
 ```

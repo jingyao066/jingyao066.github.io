@@ -1861,4 +1861,8 @@ update were rejected because the tip of your current branch is behind...
 为了覆盖掉远端的版本信息，使远端的仓库也回退到相应的版本，需要加上参数--force
 `git push origin <分支名> --force`
 
+## 忽略仓库中的某个文件
+`git update-index --assume-unchanged FILE 在FILE处输入要忽略的文件。`
 
+还原：
+`git update-index --no-assume-unchanged FILE`

@@ -99,6 +99,53 @@ ENV PATH $JAVA_HOME/bin:$PATH
 
 
 ## mysql
+### docker安装mysql
+查看docker仓库中的mysql版本：
+`docker search mysql`
+[也可以从DockerHub上查看可下载的mysql版本。](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=mysql&starCount=0)
+[可以参照dockerHub上mysql的文档来安装](https://hub.docker.com/_/mysql/)
+
+下载5.7版本：
+`docker pull mysql:5.7`
+
+[也可以通过Dockerfile构建mysql](https://www.runoob.com/docker/docker-install-mysql.html)
+
+查看docker镜像：
+`docker images |grep mysql`
+
+MySQL(5.7.19)的默认配置文件是 /etc/mysql/my.cnf 文件。如果想要自定义配置，建议向 /etc/mysql/conf.d 目录中创建 .cnf 文件。
+新建的文件可以任意起名，只要保证后缀名是 cnf 即可。新建的文件中的配置项可以覆盖 /etc/mysql/my.cnf 中的配置项。
+具体操作：
+首先需要创建将要映射到容器中的目录以及.cnf文件，然后再创建容器
+```
+# pwd
+/opt
+# mkdir -p docker_v/mysql/conf
+# cd docker_v/mysql/conf
+# touch my.cnf
+# docker run -p 3306:3306 --name mysql -v /opt/docker_v/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=123456 -d imageID
+4ec4f56455ea2d6d7251a05b7f308e314051fdad2c26bf3d0f27a9b0c0a71414
+```
+
+运行mysql容器(我们使用这种方式就可以)：
+`docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7`
+
+自定义启动，将外部的.conf文件挂载到容器：
+`docker run -p 3306:3306 --name mysql -v /opt/docker_v/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=root -d imageID`
+
+命令说明：
+-p 3306:3306：将容器的3306端口映射到主机的3306端口
+-v /opt/docker_v/mysql/conf:/etc/mysql/conf.d：将主机/opt/docker_v/mysql/conf目录挂载到容器的/etc/mysql/conf.d
+-e MYSQL_ROOT_PASSWORD=123456：初始化root用户的密码
+-d: 后台运行容器，并返回容器ID
+imageID: mysql镜像ID
+
+查看容器启动情况：
+`docker ps -a`
+
+如果服务器开放了3306端口，那么现在可以通过navcat远程连接mysql了。
+
+### 普通方式安装
 官网下载：https://dev.mysql.com/downloads/mysql/
 拉到页面下方，下拉Select Operating System，选择`Linux-Generic`，Select OS Version：选择64位。如果不想下载8.0版本的，可以选择右侧的：
 Looking for the latest GA version?，会出现mysql5.7版本。下载最下边的`Linux - Generic (glibc 2.12) (x86, 64-bit), TAR`
@@ -361,6 +408,19 @@ Mode: standalone
 出现上边的状态说明启动成功。
 standalone：单机
 
+### docker安装
+- 查看zookeeper镜像
+`docker search zookeeper`
+- 拉取镜像
+`docker pull zookeeper`
+- 构建zookeeper容器
+`docker run --name=zookeeper -p 2181:2181 -d --privileged zookeeper`
+
+--name：指定容器别名为zookeeper
+-p: 指定端口映射，格式为：主机(宿主)端口:容器端口
+-d: 后台运行容器，并返回容器ID
+-v /mysoft/zookeeper/data/:/data/ ：将宿主机的目录挂在到该镜像
+
 ## redis
 https://redis.io/
 官网下载，解压并复制到想要的位置 /home/wjy/install
@@ -424,6 +484,44 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 在该行下面输入：
 `requirepass 123456`
 123456是你的密码
+
+### docker安装redis
+- 搜索redis镜像
+`docker search redis`
+- 拉取官方镜像
+`docker pull redis`
+- 检查是否成功
+`docker images`
+- 配置data、conf
+`mkdir /usr/local/docker/redis/data`
+`mkdir /usr/local/docker/redis/conf`
+
+修改redis.conf
+```
+#bind 127.0.0.1
+protected-mode no
+appendonly yes
+requirepass yourpassword
+```
+protected-mode：在没有显示定义 bind 地址（即监听全网断），又没有设置密码 requirepass时，只允许本地回环 127.0.0.1 访问
+
+- 构建redis容器：
+```
+docker run \
+-p 6379:6379 \ # 端口映射 宿主机:容器
+-v /usr/local/docker/redis/data:/data \ # 映射数据目录 rw 为读写
+-v /usr/local/docker/redis/conf/redis.conf:/etc/redis/redis.conf \ # 挂载配置文件 ro 为readonly
+--privileged=true \ # 给与一些权限
+--name redis \ # 给容器起个名字
+-d docker.io/redis:latest redis-server /etc/redis/redis.conf # deamon 运行 服务使用指定的配置文件
+```
+- 查看运行是否成功
+`docker ps -a`
+
+- 进入Docker容器redis的客户端
+`docker exec -it 容器ID redis-cli`
+- 查看设置的密码是否成功
+`auth 刚才设置的密码`
 
 ## nginx
 1. 下载Nginx及相关组件
