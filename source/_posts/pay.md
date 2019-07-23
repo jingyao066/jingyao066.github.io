@@ -772,3 +772,7 @@ public static Map<String, String> resolveAliPayResponse(HttpServletRequest reque
 1. 微信支付中间页调起微信收银台后超过5秒
 2. 用户点击“取消支付“或支付完成后点“完成”按钮。因此无法保证页面回跳时，支付流程已结束，所以商户设置的redirect_url地址不能自动执行查单操作，应让用户去点击按钮触发查单操作
 
+
+# 微信公众号支付
+微信网页支付时序图：
+![](pay/3.png)
