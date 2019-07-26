@@ -473,3 +473,16 @@ delete from table where id in (
 
 # tinyint
 mysql字段类型为tinyint，tinyint(1)会在查询的时候转换成true false，tinyint(2)以及以上是不会的。这个和mybatis没关系
+
+# this is incompatible with sql_mode=only_full_group_by
+这个错误的原因是高版本mysql（客户服务器版本是5.7.18）默认的sql_mode包含ONLY_FULL_GROUP_BY，这个属性保证了select到的列都在group by中出现。 
+查看sql_mode的语句如下：
+`select @@GLOBAL.sql_mode;`
+
+可以使用sql语句暂时修改sql_mode：
+`set @@GLOBAL.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'`
+
+然而重启mysql数据库之后，ONLY_FULL_GROUP_BY又出现了：
+所以需要修改mysql配置文件，通过手动添加sql_mode的方式强制指定不需要ONLY_FULL_GROUP_BY属性，my.cnf位于etc文件夹下，vim下光标移到最后，添加如下：
+`sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+重启后问题解决。`

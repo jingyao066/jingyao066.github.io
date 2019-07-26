@@ -353,6 +353,9 @@ cd到tomcat的bin目录下：
 `yum install git`
 再使用 rpm -qa|grep git 来查看是否已经安装好了Git。
 
+或使用指令查看是否安装成功：
+`git --version`
+
 ## maven
 1. 到指定目录下载maven：
 `wget http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz`
