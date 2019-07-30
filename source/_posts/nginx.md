@@ -1,5 +1,5 @@
 ---
-title: nginx负载均衡的简单配置
+title: nginx
 tags: nginx
 date: 2018-12-06 18:06:29
 ---
@@ -30,12 +30,14 @@ upstream localhost{
 ```
 weight为权重，权重越大越优先分配请求
 继续编辑
+```
 location / {
     root    html;
     index   index.html    index.htm;
     proxy_pass   http://localhost;
     proxy_redirect   default;
 }
+```
 proxy_pass配置是 为http://locahost 开启代理服务，如网站上线则换成网址
 配置完之后，重启nginx
 打开浏览器，输入locahost 则可看到两个tomcat互换的效果，证明配置成功
@@ -43,10 +45,34 @@ proxy_pass配置是 为http://locahost 开启代理服务，如网站上线则�
 # 静态资源分离
 静态资源为css ，js，html，图片等资源
 编辑conf/nginx.conf，在server的大括号最后面加入如下配置：
+```
 location ~ \.(jpg|png)${
     root D:/upload;
 }
+```
 这段配置表示：当访问.jpg或.png时，会到D：/upload去匹配资源，要保证路径在本机存在，配置完成后，重启nginx，到该路径下放置一张图片，打开浏览器，输入localhost/文件名，可以访问到该图片证明配置成功。
-
 该配置可匹配多层路径，如在upload文件夹下创建一个新的文件夹images并放置一张图片。
 打开浏览器输入localhost/images/文件名  则可加载images文件夹下对应名字的图片。
+
+# 配置端口转发
+```
+server {
+	listen       80; #监听端口
+	server_name  api.xxx.com; #你想转发的域名
+	
+	location / {
+		proxy_pass http://127.0.0.1:8000;  #你想转发的地址，这里我想把本机的8000端口映射到80端口上
+		
+		#下面几个参数可以不加，我也不知道干嘛的
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Scheme $scheme;
+		proxy_pass_header Server;
+		proxy_set_header Host $http_host;
+		proxy_redirect off;
+	}
+
+	location ~.txt {
+		root /usr/local/src; #静态资源目录
+	}
+}
+```
