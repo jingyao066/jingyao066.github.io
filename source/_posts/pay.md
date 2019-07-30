@@ -776,3 +776,96 @@ public static Map<String, String> resolveAliPayResponse(HttpServletRequest reque
 # 微信公众号支付
 微信网页支付时序图：
 ![](pay/3.png)
+
+需要准备：
+- [微信公众平台已认证的服务号](https://mp.weixin.qq.com/)，并且需要开通微信支付该能（必须是企业才有资格申请，找产品或运营去申请）
+- [微信商户平台账号](https://pay.weixin.qq.com)
+- 一个正式的应用服务器，并且注册域名，微信支付涉及的私密数据比较多，不允许使用natapp，花生壳之类的内网穿透工具实现，需要有正式的服务器环境，并且要注册域名，不能使用IP。比如：`http://www.wjy.com`
+- 相关配置
+	+ 配置支付授权目录，登录商户平台->产品中心—>开发配置->支付配置
+	在项目根路径下，以及web目录下的页面都有支付权限，如果不在该路径的页面，则无法调用支付功能。
+	若页面地址为：`http://mywexx.xxxx.com/web/pay.html`
+	则需要配置为：`http://mywexx.xxxx.com/web/`
+	+ 设置API密钥，登录商户平台——>账户中心——>API安全——>API密钥
+	+ 配置JS接口安全域名与网页授权域名，登录公众平台——>公众号设置——>功能设置
+	配置网页授权域名：主要用于获取用户的openId，需要识别这是哪个人，这个域名必须和`获取用户授权`时的接口一致。
+	然后按照提示，将文件下载并上传到`网页授权域名`目录下，并且在浏览器，测试访问，`http://www.baidu.com/你的文件名.txt`看到一串字符串，证明成功。
+	若对openID不了解的同学可先参考微信公众号开发文档：https://mp.weixin.qq.com/wiki
+	配置JS接口安全域名：要让我们的页面中弹出输入密码的窗口，需要使用微信提供的JS-SDK工具，如果不配置JS接口安全域名，你的页面无法使用JS-SDK。
+	+ 设置IP白名单：登录公众平台->基本配置->IP白名单，然后根据提示添加，这里同时添加两个，
+	一个是本机的外网ip(通过百度搜索`IP`即可查看)，另外一个是服务器的ip地址。
+	必须设置IP白名单，因为在IP白名单内的IP来源，获取access_token接口才可调用成功。
+
+公众号开通微信支付，是在微信商户平台完成的，绑定完成后，可以在公众号看到绑定的商户号。[这是绑定教程](https://pay.weixin.qq.com/static/pay_setting/appid_protocol.shtml)
+可以先找商户平台所有者(超级管理员)，把自己的微信绑定为管理员：顶部点击账号中心->左侧找到员工账号管理->右侧找到管理员，点击新增账号->然后可能需要安装安全控件。
+安装控件之后，可能需要重启浏览器，才能检测到安全控件，所以需要重新登录，然后发送验证，就成功在本机上安装安全控件了。安装好控件之后，就可以将自己的微信号绑定为管理员了。
+注意提交的时候，需要输入`操作密码`，该密码不是商户平台的登录密码，是操作密码。
+根据[绑定教程](https://pay.weixin.qq.com/static/pay_setting/appid_protocol.shtml)，输入公众号的appID后，可以在绑定的公众号->商户号管理，看到待关联商户号，可以确认以及后续步骤，即可成功关联。
+
+商户的API密钥：商户平台账户中心->API安全->往下拉找到`API密钥`->如果没有设置过，可以重置，不过这个需要自己设置，我随便找了个32密码生成填进去了。
+
+登录微信公众平台，拉到页面最下边，在左侧找到开发一栏，点击基本配置，需要点击确认申请开通，然后就可以看到AppID和其他配置信息。
+AppSecret需要向该公众号的管理员申请开通，30分钟内通过即可，然后输入该公众号密码，即可查看到AppSecret，按照页面提示存储好AppSecret，并进行后续操作。
+
+此处是账号模板,请参考：
+```
+微信公众平台：账户：con*******om 登录密码 ******
+公众APPID：wx15*********a8
+APPSECEPT : c210***************892d7
+微信商户平台：账户：149**********6742 登录密码：******
+商户ID：14******42
+API密钥：5d5************b35b
+```
+至此，需要的四大参数都找到了。可以先[测试一下](https://mp.weixin.qq.com/debug/)我们的配置是否有问题，如果返回`Request successful`，以及`access_token`和`expires_in`，说明配置没问题。
+
+## 获取用户授权
+在确保微信公众账号拥有授权作用域（scope参数）的权限的前提下（服务号获得高级接口后，默认拥有scope参数中的snsapi_base和snsapi_userinfo），引导关注者打开如下页面：
+```
+https://open.weixin.qq.com/connect/oauth2/authorize
+?appid=APPID
+&redirect_uri=REDIRECT_URI
+&response_type=code
+&scope=SCOPE
+&state=STATE#wechat_redirect
+```
+参数解析：
+appid：公众号的唯一标识
+redirect_uri：授权后重定向的回调链接地址，这个地址和前端要，请使用urlEncode对链接进行处理，注意这个回调地址不能带端口，只能是80，也就是说只能是域名
+response_type：返回类型，请填写code，写死
+scope：应用授权作用域，snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid），snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且，即使在未关注的情况下，只要用户授权，也能获取其信息）
+state：重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节
+`#wechat_redirect`：无论直接打开还是做页面302重定向时候，必须带此参数
+
+若提示“该链接无法访问”，请检查参数是否填写错误，是否拥有scope参数对应的授权作用域权限。
+尤其注意，由于授权操作安全等级较高，所以在发起授权请求时，微信会对授权链接做正则强匹配校验，如果链接的参数顺序不对，授权页面将无法正常访问。
+
+这一步其实就是引导用户打开授权页面，如果用户同意授权，页面将跳转至`redirect_uri/?code=CODE&state=STATE`。
+code说明：code作为换取access_token的票据，每次用户授权带上的code将不一样，code只能使用一次，5分钟未被使用自动过期。
+由于公众号的secret和获取到的access_token安全级别都非常高，必须只保存在服务器，不允许传给客户端。后续刷新access_token、通过access_token获取用户信息等步骤，也必须从服务器发起。
+既然必须从服务器发起，所以后台接口如下：
+```java
+/**
+ * @author: wjy
+ * @description: 微信公众号支付入口：指引用户授权，获取code
+ */
+@GetMapping("wxAuthorization")
+public ModelAndView weiXinPublicPay() {
+	LOGGER.debug("*************获取code***********************************************");
+	ModelAndView mv = new ModelAndView();
+	String rediretUrl = PayUtil.getProjectUrl(this.request) + "zjx/api/pay/perPay";
+	try {
+		String url = "https://open.weixin.qq.com/connect/oauth2/authorize?"
+				+ "appid=" + PayConstant.WX_H5_APPID
+				+ "&redirect_uri=" + URLEncoder.encode(rediretUrl, PayConstant.DEFAULT_CHARSET)
+				+ "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+		mv.setViewName("redirect:" + url);
+	} catch (UnsupportedEncodingException e) {
+		e.printStackTrace();
+	}
+	LOGGER.debug("**********重定向到微信" + mv.getViewName() + "******************************************");
+	return mv;
+}
+```
+注意上边的`redirect_uri`，我们填写的是后台的一个接口，而不是前端的一个页面地址，这样省了把code传给前端，前端再传回来了。
+
+直接把微信官方提供的一堆util，放到项目中，懒得打jar包了。
