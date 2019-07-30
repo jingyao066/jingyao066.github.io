@@ -283,3 +283,5 @@ Map<String,String> map1 =new  HashMap<String,String>();
 System.out.println(map.getClass().equals(map1.getClass()));
 ```
 返回结果会true；说明他们运行的是同一份字节码。
+
+# 将代码打成jar包
