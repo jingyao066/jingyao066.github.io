@@ -858,6 +858,7 @@ public ModelAndView weiXinPublicPay() {
 				+ "appid=" + PayConstant.WX_H5_APPID
 				+ "&redirect_uri=" + URLEncoder.encode(rediretUrl, PayConstant.DEFAULT_CHARSET)
 				+ "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+				//这里必须是重定向
 		mv.setViewName("redirect:" + url);
 	} catch (UnsupportedEncodingException e) {
 		e.printStackTrace();
@@ -866,6 +867,68 @@ public ModelAndView weiXinPublicPay() {
 	return mv;
 }
 ```
-注意上边的`redirect_uri`，我们填写的是后台的一个接口，而不是前端的一个页面地址，这样省了把code传给前端，前端再传回来了。
+注意上边的`redirect_uri`，可以是前台地址也可以是后台接口，反正微信会把code拼接到`redirect_uri`的地址栏后边。
+若是前台地址，让前端在地址栏获取`code`参数，然后再次调用`perPay`预支付接口，并传递`code`参数，后台通过`@requestParam`获取code参数。
+若是后台地址，我们直接在接口上用`@requestParam`获取code参数，然后通过code换取`access_token`。
+这两地方法的区别是，`redirect_uri`填写前台地址，会多跳一次页面，然后前台再把code传回来，`redirect_uri`填写后台地址，就不用前端传递code参数，
+过程是：
+- 授权接口重定向到微信
+- 微信重定向你指定的`redirect_uri`，并在地址栏带上code
+- 前端通过code请求预支付接口
+code作为换取access_token的票据，每次用户授权带上的code将不一样，code只能使用一次，5分钟未被使用自动过期，所以不能缓存。
 
 直接把微信官方提供的一堆util，放到项目中，懒得打jar包了。
+
+调用预支付接口代码如下：
+```java
+/**
+     * @Description 公众号支付(JSAPI)
+     * @return Map
+     */
+    @ResponseBody
+    @GetMapping("perPay")
+    public Map perPay(@RequestParam("openid") String openid) {
+        LOGGER.info(">>>>>>>>>>>>>>>>>>>openid是 " + openid +">>>>>>>>>>>>>>>>>>>>>>>>>>");
+        Map<String, String> resultMap = new HashMap<>();
+        try {
+
+            //生成订单编号
+            int number = (int)((Math.random()*9)*1000);//随机数
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");//时间
+            String orderNo = dateFormat.format(new Date()) + number;
+            //拼接统一下单地址参数
+            Map<String, String> paraMap = new HashMap<>();
+            paraMap.put("appid", PayConstant.WX_H5_APPID);
+            paraMap.put("mch_id", PayConstant.WX_H5_MCHID);
+            paraMap.put("body", "最美课本支付测试");
+            paraMap.put("nonce_str",WXPayUtil.generateNonceStr());
+            paraMap.put("openid", openid);
+            paraMap.put("out_trade_no", orderNo);
+            paraMap.put("spbill_create_ip",HttpUtil.getIpAddr(this.request));
+            paraMap.put("total_fee",new BigDecimal("0.01").multiply(new BigDecimal("100")).intValue() + "");
+            paraMap.put("trade_type", "JSAPI");
+            paraMap.put("notify_url", PayUtil.getProjectUrl(this.request) + "zjx/api/wxNotify");
+            paraMap.put("sign", WXPayUtil.generateSignature(paraMap, PayConstant.WX_H5_APP_KEY));//和下面sign方法一致，不是说参数一致。
+            //将所有参数(map)转xml格式
+            String xml = WXPayUtil.mapToXml(paraMap);
+            LOGGER.info("*******************请求微信参数"+xml);
+            //发送post请求"统一下单接口"返回预支付id：prepay_id
+            String wxReturnStr = PayUtil.post(PayConstant.WX_UNIFIEDORDER_URL, xml, ContentTypeEnum.TextXml.getContentType());
+
+            Map<String, String> wxXmlMap = WXPayUtil.xmlToMap(wxReturnStr);
+            LOGGER.info("**********************微信统一下单接口返回数据:" + wxXmlMap + "*****************************************");
+            //组装返回给前端的数据
+            resultMap.put("appId", PayConstant.WX_H5_APPID);
+            resultMap.put("timeStamp", WXPayUtil.getCurrentTimestamp()+"");
+            resultMap.put("nonceStr", WXPayUtil.generateNonceStr());
+            resultMap.put("signType", "MD5");
+            resultMap.put("package", "prepay_id=" + wxXmlMap.get("prepay_id"));
+			//注意这里的签名方法需要和上边paramMap中sign的方法一致，app_key也必须一致
+            resultMap.put("paySign", WXPayUtil.generateSignature(resultMap, PayConstant.WX_H5_APP_KEY));
+            LOGGER.info("**********************返回给前端的数据:" + resultMap + "*****************************************");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+```
