@@ -59,9 +59,8 @@ location ~ \.(jpg|png)${
 server {
 	listen       80; #监听端口
 	server_name  api.xxx.com; #你想转发的域名
-	
 	location / {
-		proxy_pass http://127.0.0.1:8000;  #你想转发的地址，这里我想把本机的8000端口映射到80端口上
+		proxy_pass http://api.xxx.com:8000;  #你想转发的地址，这里我想把本机的8000端口映射到80端口上，最好不要写localhost或127.0.0.1
 		
 		#下面几个参数可以不加，我也不知道干嘛的
 		proxy_set_header X-Real-IP $remote_addr;
