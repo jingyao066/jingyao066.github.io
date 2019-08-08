@@ -100,7 +100,8 @@ public class modelDto implements Serializable {
 在使用DTO的时候，为了简洁，使用了静态内部类。但是由于内部类中的属性是私有的，所以无法在外部访问。
 这样，如果我们使用ModelAndView返回数据，页面使用诸如el表达式访问数据，会出现无法访问的问题。
 
-解决办法：不使用静态内部类
+解决办法：加上public前缀。
+`static class InnerDubPart implements Serializable{}`
 
 # 实体类中的布尔值
 布尔值一般会以is开头命名，如：`isShow`，表示是否显示。但是实体类生成的get、set方法会自动将is去掉。
