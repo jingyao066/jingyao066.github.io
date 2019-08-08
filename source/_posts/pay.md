@@ -789,7 +789,7 @@ public static Map<String, String> resolveAliPayResponse(HttpServletRequest reque
 	+ 设置API密钥，登录商户平台——>账户中心——>API安全——>API密钥
 	+ 配置JS接口安全域名与网页授权域名，登录公众平台——>公众号设置——>功能设置
 	配置网页授权域名：主要用于获取用户的openId，需要识别这是哪个人，这个域名必须和`获取用户授权`时的接口一致。
-	然后按照提示，将文件下载并上传到`网页授权域名`目录下，并且在浏览器，测试访问，`http://www.baidu.com/你的文件名.txt`看到一串字符串，证明成功。
+	然后按照提示，将文件下载并上传到`网页授权域名`目录下，并且在浏览器，测试访问，`http://www.baidu.com/你的文件名.txt`看到一串字符串，证明成功。(可以通过nginx访问该文件)
 	若对openID不了解的同学可先参考微信公众号开发文档：https://mp.weixin.qq.com/wiki
 	配置JS接口安全域名：要让我们的页面中弹出输入密码的窗口，需要使用微信提供的JS-SDK工具，如果不配置JS接口安全域名，你的页面无法使用JS-SDK。
 	+ 设置IP白名单：登录公众平台->基本配置->IP白名单，然后根据提示添加，这里同时添加两个，
@@ -817,6 +817,8 @@ APPSECEPT : c210***************892d7
 API密钥：5d5************b35b
 ```
 至此，需要的四大参数都找到了。可以先[测试一下](https://mp.weixin.qq.com/debug/)我们的配置是否有问题，如果返回`Request successful`，以及`access_token`和`expires_in`，说明配置没问题。
+
+我们直接把微信官方提供的一堆util，放到项目中，懒得打jar包了。
 
 ## 获取用户授权
 在确保微信公众账号拥有授权作用域（scope参数）的权限的前提下（服务号获得高级接口后，默认拥有scope参数中的snsapi_base和snsapi_userinfo），引导关注者打开如下页面：
@@ -868,8 +870,8 @@ public ModelAndView weiXinPublicPay() {
 }
 ```
 注意上边的`redirect_uri`，可以是前台地址也可以是后台接口，反正微信会把code拼接到`redirect_uri`的地址栏后边。
-若是前台地址，让前端在地址栏获取`code`参数，然后再次调用`perPay`预支付接口，并传递`code`参数，后台通过`@requestParam`获取code参数。
-若是后台地址，我们直接在接口上用`@requestParam`获取code参数，然后通过code换取`access_token`。
+若是前台地址，让前端在地址栏获取`code`参数，然后再次调用`perPay`预支付接口，并传递`code`参数，后台通过`@requestParam`获取前端传递的code参数。
+若是后台地址，我们直接在接口上用`@requestParam`获取code参数，然后通过code换取`access_token`和`openid`。
 这两地方法的区别是，`redirect_uri`填写前台地址，会多跳一次页面，然后前台再把code传回来，`redirect_uri`填写后台地址，就不用前端传递code参数，
 过程是：
 - 授权接口重定向到微信
@@ -877,7 +879,8 @@ public ModelAndView weiXinPublicPay() {
 - 前端通过code请求预支付接口
 code作为换取access_token的票据，每次用户授权带上的code将不一样，code只能使用一次，5分钟未被使用自动过期，所以不能缓存。
 
-直接把微信官方提供的一堆util，放到项目中，懒得打jar包了。
+预支付接口只需要用户的openid，一个用户对于一个公众号的openid是不会变的，所以没必要非要在请求预支付的时候才通过code换取openid，可以在进入公众号就获取授权，然后获取openid，
+然后让前端缓存在本地，或是通过接口存到数据库中，这样在请求预支付接口时，直接传递存储好的openid就好了。
 
 调用预支付接口代码如下：
 ```java
@@ -932,3 +935,48 @@ code作为换取access_token的票据，每次用户授权带上的code将不一
         return resultMap;
     }
 ```
+
+支付成功的回调：
+```java
+@RequestMapping("wxBuySpaceNotify")
+public void wxBuySpaceNotify() {
+	try {
+		Map<String, String> map = PayUtil.resolveWXPayResponse(this.request, PayConstant.WX_H5_APP_KEY);
+		LOGGER.info("****************微信支付回调参数:" + JSONObject.toJSONString(map) + "***************************");
+		if (map.size() >= 2) {
+			//执行回调逻辑
+			map = payService.buySpaceCallback(map);
+			//内部逻辑是否执行成功
+			int resultCode = Integer.valueOf(map.get("dealSuccess"));
+			map.clear();
+			if (resultCode == 1) {
+				//处理成功
+				map.put("return_code", "SUCCESS");
+				LOGGER.info("\n********************微信支付回调成功********************");
+			} else {
+				map.put("return_code", "FAIL");
+				map.put("return_msg", "业务处理失败");
+			}
+			response.getWriter().write(WXPayUtil.mapToXml(map));
+			response.getWriter().flush();
+			response.getWriter().close();
+		}
+	} catch (Exception e) {
+		//告诉微信业务失败
+		try {
+			Map<String, String> map = new HashMap<>();
+			map.put("return_code", "FAIL");
+			map.put("return_msg", "业务处理失败");
+			response.getWriter().write(WXPayUtil.mapToXml(map));
+			response.getWriter().flush();
+			response.getWriter().close();
+		} catch (Exception e1) {
+			LOGGER.info("\n********************微信支付回调响应异常********************", e);
+		}
+		LOGGER.info("\n********************微信支付回调异常********************", e);
+	}
+}
+```
+
+关键就这两个方法，一个预支付，微信返回perpay_id，你返回给前端，前端通过perpay_id调起支付组件，若完成支付，微信会回调你设置的notify_url地址，这就是你支付成功的回调地址。
+你要在回调方法里写一些业务相关的逻辑，比如：更改订单状态为已支付，以及赠送会员等后续操作。
