@@ -835,3 +835,6 @@ echo 2 > /proc/sys/vm/drop_caches：表示清除回收slab分配器中的对象�
 echo 3 > /proc/sys/vm/drop_caches：表示清除pagecache和slab分配器中的缓存对象。
 
 [https://www.cnblogs.com/rocky-AGE-24/p/7629500.html](参考地址)
+
+# linux查看硬盘使用情况
+`df -hl`

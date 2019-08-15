@@ -751,11 +751,12 @@ update语句也会多出一个`updateByPrimaryKeyWithBLOBs`方法。
 `select * from users where username = '' or 1=1`
 
 # 批量新增返回id
-1. mybatis版本必须在3.3.1及以上
-2. dao层方法返回值依旧是int
-3. dao层接口如果只有一个参数，可以不用`@Param`注解，但是xml中`<foreach>`标签的`collection`参数名必须是`list`
-4. dao层接口如果多个参数，需要用到`@Param`注解，value值必须是`list`，与`<foreach>`标签的`collection`参数名对应。
-5. xml中insert方法的参数类型`parameterType="list"`可写可不写。
+-  mybatis版本必须在3.3.1及以上
+-  dao层方法返回值依旧是int
+-  dao层接口如果只有一个参数，可以不用`@Param`注解，但是xml中`<foreach>`标签的`collection`参数名必须是`list`
+-  dao层接口如果多个参数，需要用到`@Param`注解，value值必须是`list`，与`<foreach>`标签的`collection`参数名对应。
+- xml中insert方法的参数类型`parameterType="list"`可写可不写。
+- 和一条新增返回id一样，从传入的参数list中获取id
 
 # 一些问题
 - #{}和${}的区别是什么
@@ -834,3 +835,8 @@ Integer type = Integer.parseInt(map.get("type").toString());
 - 先在java代码中根据分页查出`一`的列表，然后将id放到一个数组中作为参数，把多条数据查出来，然后根据id循环匹配一对多条
 - [自己实现分页插件 ](https://www.jianshu.com/p/1a0c48e8bfb7)
 - group by id ????
+
+# mybatis 日期时间格式化的问题
+mysql 数据库 datetime类型字段，实体中类型为Date，映射出来的格式是:`2019-03-11T11:03:53.000+0000`
+在实体类属性上加上该注解：
+`@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")`

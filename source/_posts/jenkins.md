@@ -339,3 +339,13 @@ Jenkins detected that you appear to be running more than one instance of Jenkins
 
 解决：重装
 
+# jenkins占用服务器硬盘过大
+jenkins在服务器跑了一个月了，8个服务，每天都要构建几次，今天发现mysql不能插入数据了，报磁盘空间不足。第一反应就是jenkins的问题。
+先查看linux服务器的磁盘使用状况：`df -h`
+
+jenkins的文件都存储在`/root/.jenkins`，使用指令查看文件夹大小`du -sh`，发现占了86G，天哪...我硬盘一共才95G，再加上其他程序占用的内存，直接就100%使用了。
+
+解决：
+先把`.jenkins/jobs`文件夹直接删掉，就这个文件夹占了85G，然后再mkdir一个。
+然后删掉`.jenkins/workspace`删掉，mkdir一个，这个也占了1G多。
+在配置时，一定要选择`丢弃旧的构建`，并且`保持构建的天数`和`保持构建的最大个数`一定要写，反正我都写1。
