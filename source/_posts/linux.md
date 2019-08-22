@@ -453,6 +453,8 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 `./redis-server &`
 按ctrl + C 可退出redis 启动窗口，此时redis　并不会关闭，而是会再后台运行，可通过命令查看: ps aux | grep redis
 
+停止redis报错` NOAUTH Authentication required`
+
 ### 给redis添加密码
 - 临时密码(redis重启之后会失效)
 首先启动redis服务，然后进入redis：
@@ -487,6 +489,12 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 在该行下面输入：
 `requirepass 123456`
 123456是你的密码
+
+问题：修改并重启redis之后发现配置并没有生效，原来启动时还需要指定配置文件。
+`./redis-server ../redis.conf &`，然后`bg`
+这样才算是指定了刚才修改的配置文件。
+
+至于windows下的redis配置文件，就不弄了，全都用临时的配置就行。
 
 ### docker安装redis
 - 搜索redis镜像
@@ -543,7 +551,7 @@ Linux系统是Centos 6.5 64位，如果不是root用户，切换到root用户下
 省略安装内容...
 [root@localhost src]# wget http://zlib.net/zlib-1.2.11.tar.gz
 省略安装内容...
-[root@localhost src]# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.gz
+[root@localhost src]# wget https://netix.dl.sourceforge.net/project/pcre/pcre/8.40/pcre-8.40.tar.gz
 省略安装内容...
 ```
 上边的安装包可能不是最新的，可以去官网找最新的安装包：
@@ -629,3 +637,15 @@ https://www.cnblogs.com/taiyonghai/p/6728707.html
 # 直接用java -jar xxx.jar，当退出或关闭shell时，程序就会停止掉。
 `java -jar xxx.jar &`
 `nohup java -jar xxxx.jar &`
+
+# 环境部署步骤
+1. 安装jdk
+2. 安装docker
+3. 通过docker安装mysql
+4. 通过docker安装zookeeper
+5. 安装redis
+6. 安装tomcat(为安装jenkins)
+7. war包安装jenkins
+8. 安装maven
+9. 安装git
+10. 安装nginx
