@@ -70,21 +70,19 @@ date: 2019-04-25 10:04:49
 ```java
 public class WxShareUtil {
 
-    @Autowired
-    private static StringRedisTemplate stringRedisTemplate;
-
-    public static WxShare getWxEntity(String url) {
+	//这里的StringRedisTemplate是从controller中传过来的，在这里不能@Autowired，该试的都试了，没什么好的解决办法
+    public static WxShare getWxEntity(String url,StringRedisTemplate template) {
         WxShare wx = new WxShare();
-        String access_token = stringRedisTemplate.opsForValue().get("wx_base_access_token");
+        String access_token = template.opsForValue().get("wx_base_access_token");
+        String ticket = template.opsForValue().get("wx_jsapi_ticket");
         if(StringUtils.isEmpty(access_token)){
+            System.out.println("重新获取access_token和ticket》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》");
             //已经超时，重新获取
-            access_token = getAccessToken();
+            access_token = getAccessToken(template);
+            //如果重新获取了access_token，ticket也要重新获取
+            ticket = getTicket(access_token,template);
         }
-        String ticket = stringRedisTemplate.opsForValue().get("wx_jsapi_ticket");
-        if(StringUtils.isEmpty(ticket)){
-            //已经超时，重新获取
-            ticket = getTicket(access_token);
-        }
+
         Map<String,String> resultMap = Sign.sign(ticket, url);
         wx.setTicket(resultMap.get("jsapi_ticket"));
         wx.setSignature(resultMap.get("signature"));
@@ -94,7 +92,7 @@ public class WxShareUtil {
     }
 
     //获取token
-    private static String getAccessToken() {
+    private static String getAccessToken(StringRedisTemplate template) {
         String access_token = "";
         //获取access_token填写client_credential
         String grant_type = "client_credential";
@@ -122,7 +120,7 @@ public class WxShareUtil {
             JSONObject demoJson = JSONObject.fromObject(message);
             access_token = demoJson.getString("access_token");
             //缓存到redis
-            stringRedisTemplate.opsForValue().set("wx_base_access_token",access_token,2, TimeUnit.HOURS);
+            template.opsForValue().set("wx_base_access_token",access_token,2, TimeUnit.HOURS);
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,7 +129,7 @@ public class WxShareUtil {
     }
 
     //获取ticket
-    private static String getTicket(String access_token) {
+    private static String getTicket(String access_token,StringRedisTemplate template) {
         String ticket = null;
         //这个url链接和参数不能变
         String url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+ access_token +"&type=jsapi";
@@ -153,7 +151,7 @@ public class WxShareUtil {
             JSONObject demoJson = JSONObject.fromObject(message);
             ticket = demoJson.getString("ticket");
             //缓存
-            stringRedisTemplate.opsForValue().set("wx_jsapi_ticket",ticket,2, TimeUnit.HOURS);
+            template.opsForValue().set("wx_jsapi_ticket",ticket,2, TimeUnit.HOURS);
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,7 +184,7 @@ public ResponseUtil getQuestionList(@RequestBody Map<String,String> paramMap){
 	try {
 		LOGGER.info("前端传过来的>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<：" + paramMap.get("strUrl"));
 		LOGGER.info("URI解码>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<：" + URI.create(paramMap.get("strUrl")).getPath());
-		response.setData(WxShareUtil.getWxEntity(URI.create(paramMap.get("strUrl")).getPath()));
+		response.setData(WxShareUtil.getWxEntity(URI.create(paramMap.get("strUrl")).getPath(),redisTemplate));
 	} catch (Exception e) {
 		e.printStackTrace();
 		response.setCode(code);
