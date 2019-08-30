@@ -122,8 +122,30 @@ case a.exh_type
 ```
 	
 # rand()
-随机函数效率很低
-order by RAND() ：随机返回结果
+order by RAND()：随机返回结果，随机函数效率很低，尽量不要使用，因为它的效率会随着数据量的增大，效率越来越低。
+
+推荐一种：
+```sql
+SELECT
+	* 
+FROM
+	`question` AS t1
+	JOIN (
+	SELECT
+		ROUND(
+			RAND( ) * ( ( SELECT MAX( id ) FROM `question` ) 
+			- ( SELECT MIN( id ) FROM `question` ) ) 
+			+ ( SELECT MIN( id ) FROM `question` ) 
+		) AS id 
+	) AS t2 
+WHERE
+	t1.id >= t2.id 
+ORDER BY
+	t1.id 
+	LIMIT 5;
+```
+加上MIN(id)的判断，是因为最开始测试的时候，因为没有加上MIN(id)的判断，结果有一半的时间总是查询到表中的前面几行。
+这种方法缺点是会产生id连续的数据。
 
 # REGEXP
 单字匹配多字，或反之
@@ -301,3 +323,58 @@ select * from tableC where id in (结果B)
 - 更进一步，这样做相当于在应用中实现了哈希关联，而不是使用MySQL的嵌套环关联，某些场景哈希关联的效率更高很多。
 
 # mysql存储表情
+存储表情时报错：
+`java.sql.SQLException: Incorrect string value: '\xF0\x9F\x92\x94' for colum n 'name' at row 1 `
+使用mysql数据库的时候，如果字符集是UTF-8，当存储emoji表情的时候，会抛出以上异常。
+这是由于字符集不支持的异常，因为utf-8编码有可能是两个，三个，四个字节，其中Emoji表情是四个字节，而mysql的utf-8编码最多三个字节，所以导致数据插不进去。
+解决：
+
+1. 修改database,table,column字符集
+```
+ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+ALTER TABLE table_name CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE table_name CHANGE column_name VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+除了column的字符集，库和表的字符集不是必须修改。
+
+2. 修改mysql配置文件
+```
+[client]
+default-character-set = utf8mb4
+[mysql]
+default-character-set = utf8mb4
+[mysqld]
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+init_connect='SET NAMES utf8mb4'
+```
+
+3. 检查`mysql-connector-java`版本，必须高于5.1.13否则仍然不能试用utf8mb4
+4. 修改链接数据库地址
+```
+jdbc:mysql://localhost:3306/test?
+"useUnicode=true" +
+"&characterEncoding=UTF-8" +
+"&zeroDateTimeBehavior=convertToNull" +
+"&useSSL=false" +
+"&allowMultiQueries=true" +
+"&autoReconnect=true" +
+"&rewriteBatchedStatements=TRUE");
+```
+如果升级了mysql-connector，其中的characterEncoding=utf8可以自动被识别为utf8mb4（兼容原来的utf8），
+而autoReconnection（当数据库连接异常中断时，是否自动重新连接？默认为false）强烈建议配上，忽略这个属性，
+可能导致缓存缘故 ，没有读取到DB最新的配置，导致一直无法试用utf8mb4字符集。
+
+# mysql排序错误
+检查排序的字段是否时int，如果是varchar，即使存的是数字，排序也是错误的。
+这时最好把字段改成int类型，如果非要对varchar里存的数字字段排序，可以`order column+0`
+最好不要对汉字进行排序，如果非要对汉字排序，
+如果不是电话而是汉字怎么办，汉字排序我们只要进行简单转换即可排序了
+在mysql中使用order by对存储了中文信息的字段，默认出来的结果并不是按汉字拼音的顺序来排序，要想按汉字的拼音来排序，
+需要把数据库的字符集设置为UTF8，然后在order by 时候强制把该字段信息转换成GBK，这样出来的结果就是按拼音顺序排序的。例如：
+`SELECT * FROM table_name ORDER BY CONVERT(column_name USING gbk);`
+
+查询的时候，通过convert函数，把查询出来的数据使用的字符集gb2312编码就可以了，然后使用convert之后的中文排序。
+但是如果真的去把表中字段的字符集改成gb2312，又会涉及到很多编码的问题，页面传值啊，从数据库中存取啊，很麻烦。
+只要在查询的时候，指定一下字符集，并不是真的把物理字段改成gb2312，很简单。

@@ -8,9 +8,7 @@ date: 2018-12-25 10:14:46
 ![](git/git命令.jpg)
 
 # git基础
-参考地址：
-https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
-原文已经写的很好了，自己抄一遍主要为了增加印象。
+[原文地址](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 
 ## 创建版本库
 版本库又名仓库，英文名repository，你可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
@@ -63,13 +61,13 @@ $ git commit -m "add 3 files."
 ```
 
 ## 时光机穿梭
-我们已经成功地添加并提交了一个readme.txt文件，现在，是时候继续工作了，于是，我们继续修改readme.txt文件，改成如下内容：
+我们已经成功地添加并提交了一个readme.txt文件，现在是时候继续工作了，于是我们继续修改readme.txt文件，修改如下：
 ```
 Git is a distributed version control system.
 Git is free software.
 ```
 现在，运行`git status`命令看看结果：
-```
+```bash
 $ git status
 On branch master
 Changes not staged for commit:
@@ -136,7 +134,7 @@ Git is free software distributed under the GPL.
 像这样，你不断对文件进行修改，然后不断提交修改到版本库里，就好比玩RPG游戏时，每通过一关就会自动把游戏状态存盘，如果某一关没过去，你还可以选择读取前一关的状态。有些时候，在打Boss之前，你会手动存盘，以便万一打Boss失败了，可以从最近的地方重新开始。Git也是一样，每当你觉得文件修改到一定程度的时候，就可以“保存一个快照”，这个快照在Git中被称为commit。一旦你把文件改乱了，或者误删了文件，还可以从最近的一个commit恢复，然后继续工作，而不是把几个月的工作成果全部丢失。
 
 使用`git log`可以告诉我们历史记录：
-```
+```bash
 $ git log
 commit 1094adb7b9b3807259d8cb349e7df1d4d6477073 (HEAD -> master)
 Author: Michael Liao <askxuefeng@gmail.com>
@@ -181,7 +179,7 @@ Git is free software.
 ```
 果然被还原了。
 还可以继续回退到上一个版本wrote a readme file，不过且慢，然我们用git log再看看现在版本库的状态：
-```
+```bash
 $ git log
 commit e475afc93c209a690c39c13a46716e8fa000c366 (HEAD -> master)
 Author: Michael Liao <askxuefeng@gmail.com>
@@ -277,7 +275,7 @@ Git has a mutable index called stage.
 然后，在工作区新增一个LICENSE文本文件（内容随便写）。
 
 先用`git status`查看一下状态：
-```
+```bash
 $ git status
 On branch master
 Changes not staged for commit:
@@ -295,7 +293,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ```
 Git非常清楚地告诉我们，`readme.txt`被修改了，而`LICENSE`还从来没有被添加过，所以它的状态是`Untracked`。
 现在，使用两次命令`git add`，把`readme.txt`和`LICENSE`都添加后，用`git status`再查看一下：
-```
+```bash
 $ git status
 On branch master
 Changes to be committed:
@@ -307,7 +305,7 @@ Changes to be committed:
 现在，暂存区的状态就变成这样了：
 ![](git/1.jpg)
 所以，git add命令实际上就是把要提交的所有修改放到暂存区（Stage），然后，执行git commit就可以一次性把暂存区的所有修改提交到分支。
-```
+```bash
 $ git commit -m "understand how stage works"
 [master e43a48b] understand how stage works
  2 files changed, 2 insertions(+)
@@ -334,7 +332,7 @@ Git has a mutable index called stage.
 Git tracks changes.
 ```
 然后，添加：
-```
+```bash
 $ git add readme.txt
 $ git status
 # On branch master
@@ -345,7 +343,7 @@ $ git status
 #
 ```
 然后，再修改readme.txt：
-```
+```bash
 $ cat readme.txt 
 Git is a distributed version control system.
 Git is free software distributed under the GPL.
@@ -359,7 +357,7 @@ $ git commit -m "git tracks changes"
  1 file changed, 1 insertion(+)
 ```
 提交后，再看看状态：
-```
+```bash
 $ git status
 On branch master
 Changes not staged for commit:
@@ -375,7 +373,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 第一次修改 -> `git add` -> 第二次修改 -> `git commit`
 你看，我们前面讲了，Git管理的是修改，当你用`git add`命令后，在工作区的第一次修改被放入暂存区，准备提交，但是，在工作区的第二次修改并没有放入暂存区，所以，git commit只负责把暂存区的修改提交了，也就是第一次的修改被提交了，第二次的修改不会被提交。
 提交后，用`git diff HEAD -- readme.txt`命令可以查看工作区和版本库里面最新版本的区别：
-```
+```bash
 $ git diff HEAD -- readme.txt 
 diff --git a/readme.txt b/readme.txt
 index 76d770f..a9c5755 100644
@@ -558,7 +556,7 @@ $ git commit -m "remove test.txt"
 
 添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是`origin`这个名字一看就知道是远程库。
 下一步，就可以把本地库的所有内容推送到远程库上：
-```
+```bash
 $ git push -u origin master
 Counting objects: 20, done.
 Delta compression using up to 4 threads.
@@ -932,7 +930,7 @@ http://liaoxuefeng.gitee.io/git-resources/14-git-no-ff.mp4
 ### bug分支
 软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。
 当你接到一个修复一个代号101的bug的任务时，很自然地，你想创建一个分支issue-101来修复它，但是，等等，当前正在dev上进行的工作还没有提交：
-```
+```bash
 $ git status
 On branch dev
 Changes to be committed:
