@@ -6,8 +6,8 @@ date: 2019-03-27 16:11:40
 
 # 软件安装
 ## jdk
-- 卸载系统自带的OpenJDK以及相关的java文件
-如下命令检查是否安装了jdk：
+首先卸载系统自带的OpenJDK以及相关的java文件。
+检查是否安装了jdk：
 `java -version`
 
 可能已经安装openJDK，这里需要先卸载掉：
@@ -32,7 +32,7 @@ rpm：管理套件
 代表删除成功。
 如果还没有删除，则用yum -y remove去删除他们
 
-### 传统方式安装
+### 普通安装JDK
 https://www.cnblogs.com/sxdcgaq8080/p/7492426.html
 
 ### docker安装JDK
@@ -82,7 +82,7 @@ ENV PATH $JAVA_HOME/bin:$PATH
 
 注意：
 - `-t`指定镜像的名称和tag； 
-- 使用-f 指定要使用的dockerfile，如果不指定会寻找当前目录名为Dockerfile的文件 
+- 使用-f 指定要使用的dockerfile，如果不指定会寻找当前目录名为Dockerfile的文件
 - 上面有个 . ,这个表示当前目录，必不可少的
 
 6. 在镜像仓库中查看是否构建成功
@@ -97,53 +97,77 @@ ENV PATH $JAVA_HOME/bin:$PATH
 8. 进入jdk容器，查看是否安装正确（即查看安装之后的目录）
 `docker exec -it jdk1.8 /bin/bash`
 
-
 ## mysql
 ### docker安装mysql
 查看docker仓库中的mysql版本：
 `docker search mysql`
-[也可以从DockerHub上查看可下载的mysql版本。](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=mysql&starCount=0)
-[可以参照dockerHub上mysql的文档来安装](https://hub.docker.com/_/mysql/)
+[可从DockerHub上查看可下载的mysql版本](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=mysql&starCount=0)
+[也可参照dockerHub上mysql的文档来安装](https://hub.docker.com/_/mysql/)
 
-下载5.7版本：
+我们下载5.7版本：
 `docker pull mysql:5.7`
 
 [也可以通过Dockerfile构建mysql](https://www.runoob.com/docker/docker-install-mysql.html)
 
 查看docker镜像：
-`docker images |grep mysql`
+`docker images | grep mysql`
 
-MySQL(5.7.19)的默认配置文件是 /etc/mysql/my.cnf 文件。如果想要自定义配置，建议向 /etc/mysql/conf.d 目录中创建 .cnf 文件。
-新建的文件可以任意起名，只要保证后缀名是 cnf 即可。新建的文件中的配置项可以覆盖 /etc/mysql/my.cnf 中的配置项。
-具体操作：
-首先需要创建将要映射到容器中的目录以及.cnf文件，然后再创建容器
+根据镜像说明可知：
+默认的配置文件是：/etc/mysql/my.cnf
+默认的数据目录是：/var/lib/mysql
+
+最简单的启动方式：
+`docker run -d --name mysql --rm -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7`
+
+进入容器，查看my.cnf：
+`docker exec -it mysql bash`
+`cat /etc/mysql/my.cnf`
+
+通过查看my.cnf可以发现，主配置文件my.cnf加载了宿主机 /etc/mysql/conf.d 文件夹下所有的配置，如果想要自定义配置，
+我们只需要向 /etc/mysql/conf.d 目录中创建 .cnf 文件，新建的文件可以任意起名，只要保证后缀名是 .cnf 即可。
+新建的文件中的配置项可以覆盖 /etc/mysql/my.cnf 中的配置项。我们只需映射 conf.d 文件夹即可。
+首先需要创建将要映射到容器中的目录以及.cnf文件，然后再创建容器。
+宿主机中创建文件夹 mysql，并分别创建 data 目录和 conf 目录。新建配置文件 wjy.cnf：
 ```
-# pwd
-/opt
-# mkdir -p docker_v/mysql/conf
-# cd docker_v/mysql/conf
-# touch my.cnf
-# docker run -p 3306:3306 --name mysql -v /opt/docker_v/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=123456 -d imageID
-4ec4f56455ea2d6d7251a05b7f308e314051fdad2c26bf3d0f27a9b0c0a71414
+[mysqld]
+server-id = 1 #服务Id唯一
+port = 3306
+log-error    = /var/log/mysql/error.log
+#只能用IP地址
+skip_name_resolve 
+#数据库默认字符集
+character-set-server = utf8mb4
+#数据库字符集对应一些排序等规则 
+collation-server = utf8mb4_general_ci
+#设置client连接mysql时的字符集,防止乱码
+init_connect='SET NAMES utf8mb4'
+#最大连接数
+max_connections = 1000
 ```
-
-运行mysql容器(我们使用这种方式就可以)：
-`docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7`
-
-自定义启动，将外部的.conf文件挂载到容器：
-`docker run -p 3306:3306 --name mysql -v /opt/docker_v/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=root -d imageID`
+接下来分别映射数据库目录和配置文件目录，启动容器：
+```
+docker run --name mysql -d \
+-v /usr/local/mysql/conf:/etc/mysql/conf.d \
+-v /usr/local/mysql/data:/var/lib/mysql \
+-p 3306:3306 \
+-e MYSQL_ROOT_PASSWORD=123456 mysql:5.7
+```
 
 命令说明：
--p 3306:3306：将容器的3306端口映射到主机的3306端口
--v /opt/docker_v/mysql/conf:/etc/mysql/conf.d：将主机/opt/docker_v/mysql/conf目录挂载到容器的/etc/mysql/conf.d
--e MYSQL_ROOT_PASSWORD=123456：初始化root用户的密码
--d: 后台运行容器，并返回容器ID
+-p：3306:3306：将容器的3306端口映射到主机的3306端口
+-v：/opt/docker_v/mysql/conf:/etc/mysql/conf.d：将主机/opt/docker_v/mysql/conf目录挂载到容器的/etc/mysql/conf.d
+-e：MYSQL_ROOT_PASSWORD=123456：初始化root用户的密码
+-d：后台运行容器，并返回容器ID
+--rm：容器退出时就能够自动清理容器内部的文件系统，就是如果你退出容器，这个容器就删除了，需要重新docker run ...
 imageID: mysql镜像ID
+
+使用容器客户端连接：
+docker exec -it mysql mysql -uroot -p123
 
 查看容器启动情况：
 `docker ps -a`
 
-如果服务器开放了3306端口，那么现在可以通过navcat远程连接mysql了。
+如果服务器开放了3306端口，那么现在可以通过navicat远程连接mysql了。
 
 ### 普通方式安装
 官网下载：https://dev.mysql.com/downloads/mysql/
