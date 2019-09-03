@@ -1,11 +1,10 @@
 ---
 title: SecureCRT
-tags: categories
+tags: other
 date: 2019-05-23 17:04:38
 ---
 
-# 配色
-## 设置背景颜色 
+# 设置背景颜色 
 永久设置背景色：
 Options->Global Options->Edit Default Settings->Appearance->Current color scheme
 选一个喜欢的背景色，然后点击ok，然后选择`Chanage ALL sessions(no undo)`
@@ -33,11 +32,11 @@ Options>>Global Options>>Terminal>>Appearance>>ANSI Color>>Normal colors中八�
 - 120,240,120
 - 124,20,132
 
-## 设置全局字体和字号
+# 设置全局字体和字号
 Options->Global Options->Default Session->Edit Default Settings->Appearance->Fonts
 字体设置为：Consolas
 字号设置为：14pt
 
-## 设置光标的颜色
+# 设置光标的颜色
 options ->Session Options->Appearance->Cursor
 勾选`Use color`，选择一个比较亮的颜色。

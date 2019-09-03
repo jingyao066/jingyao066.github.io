@@ -1,8 +1,7 @@
 ---
 title: Hexo博客搭建
+tags: other
 date: 2018-12-05 13:54:31
-tags:
-- hexo
 ---
 
 总体步骤：
@@ -19,8 +18,7 @@ tags:
 安装git、NodeJs，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。
 
 # 安装Hexo
-Hexo官网地址：
-https://hexo.io/zh-cn/docs/
+[Hexo官网地址](https://hexo.io/zh-cn/docs/)
 
 在git和node安装完毕后，即可使用 npm 安装 Hexo
 `$ npm install -g hexo-cli`
@@ -32,17 +30,17 @@ cd <folder>
 npm install
 ```
 
-上边官网给出的指令，这里就比较坑逼了。因为不知道里填什么，实际应该是：你想安装Hexo博客文件的文件夹的路径。
-所以建议使用git bush cd 到想存放博客文件的父目录，然后直接使用
+上边官网给出的指令，这里就比较坑逼了。因为不知道<>里填什么，实际应该填：你想安装Hexo博客文件的文件夹的路径。
+所以建议先cd 到想存放博客文件的父目录，然后直接使用
 `hexo init 文件夹名`
 指令，就完成初始化了。
 
-遇到的坑：
+坑：
 因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令报错。解决方法：
-![](Hexo博客搭建/1.png)
+![](Hexo/1.png)
 
 # 修改配置文件
-用Notepad++打开hexo安装目录下的_config.yml文件
+修改hexo安装目录下的_config.yml文件：
 ```
 deploy:
   type: git
@@ -50,10 +48,9 @@ deploy:
   branch: master
 ```
 
-修改上面三项内容，repo和branch是没有的，写上就好了。
 坑：
-1.repo是在github上创建好的仓库地址，仓库名字必须是username.github.io
-2.key和后面value之间必须有空格。
+- repo是在github上创建好的仓库地址，仓库名字必须是username.github.io
+- key和后面value之间必须有空格。
 
 然后执行如下命令
 ```
@@ -67,7 +64,6 @@ hexo server
 然后打开
 http://localhost:4000
 就可以看到hexo的默认页面了
-注：关闭页面服务就会停止
 
 # 上传到github
 先安装：
@@ -104,11 +100,8 @@ https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/
 然后再deploy就可以了。
 
 # 修改及配置主题
-官方主题地址：
-https://hexo.io/themes/
-
-我使用的是：next
-http://theme-next.iissnan.com/
+[官方主题地址](https://hexo.io/themes/)
+[我使用的是next](http://theme-next.iissnan.com/)
 官网说的非常简单明了，请自行参考。
 
 ## 切换主题样式
@@ -119,7 +112,6 @@ scheme: Muse  //默认主题
 #scheme: Pisces
 #scheme: Gemini
 ```
-我比较喜欢MIst
 
 ## 设置Menu
 默认只有两个首页和归档，还可以添加`关于、标签、搜索`
@@ -144,8 +136,7 @@ menu:
 主题_config.yml中搜索`power`和`theme`，将下边的`enable`和`version`都改成false
 
 ## 更改底部图标
-https://fontawesome.com/v4.7.0/icons/
-在上边的地址找到喜欢的图标。
+[在这找到喜欢的图标](https://fontawesome.com/v4.7.0/icons/)
 主题_config.yml中搜索`footer`，找到下面的icon，替换成自己想要的。
 推荐`snowflake-o`和`heart`
 
