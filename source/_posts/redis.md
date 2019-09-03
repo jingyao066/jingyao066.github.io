@@ -921,8 +921,7 @@ hgetall(key)：返回名称为key的hash中所有的键（field）及其对应�
 解决：使用StringRedisTemplate，而不是RedisTemplate。
 
 # 通过notify-keyspace-events实现订单自动关闭功能
-
-- 修改Redis配置文件，开启过期通知功能
+修改Redis配置文件，开启过期通知功能。
 在配置文件中搜索`notify`，找到`# notify-keyspace-events Ex`这一行，将注释去掉，同时注释掉下面一行`notify-keyspace-events ""`，
 为了节约cup资源，事件通知默认是没有开启的，即`notify-keyspace-events ""`
 
