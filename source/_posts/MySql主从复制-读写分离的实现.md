@@ -1,5 +1,5 @@
 ---
-title: MySql主从复制+读写分离的实现
+title: mysql主从复制+读写分离的实现
 tags: mysql
 date: 2018-12-06 18:09:14
 ---
