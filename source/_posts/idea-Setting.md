@@ -207,11 +207,9 @@ https://git.coding.net/test.git
 
 
 # 将项目上传到Coding
-- https://coding.net/user
-通过上面地址登陆自己的Coding，鼠标移到右上角的加号，点击项目
-https://coding.net/user/projects/create(或访问该地址，进入到新建项目界面)
-- 输入必填的项目名称和项目地址，拉到最下面添加项目成员，其他全部默认，点击新建项目，然后进入到项目管理界面。
-- 找到右侧的项目地址，复制。
+[登陆自己的Coding](https://coding.net/user)，鼠标移到右上角的加号，点击项目
+输入必填的项目名称和项目地址，拉到最下面添加项目成员，其他全部默认，点击新建项目，然后进入到项目管理界面。
+找到右侧的项目地址，复制。
 
 ## 将Idea中的项目上传
 - 回到Idea，点击工具栏的VCS，选择`Import into Version Control`，选择`Create Git Repository`，选择想要上传到Coding的项目。
@@ -240,7 +238,7 @@ push成功，然后就可以通过idea`ctrl+K`上传，`ctrl+T`拉取代码了�
 
 ## 通过命令行上传
 - 在本地项目的根目录打开git bush或Terminal，输入`git init`，初始化仓库。
-- 然后执行`git add .`、`git commit -m 'first commit'`，将项目添加并提交的本地缓存区。
+- 然后执行`git add .`、`git commit -m 'initialize'`，将项目添加并提交的本地缓存区。
 - 执行`git remote add origin https://git.coding.net/jingyao/123.git`，将本地仓库和远程仓库关联。
 - 然后可以把本地仓库的内容推送到远程仓库上`git push -u origin master`，推送需要输入Coding的用户名和密码。
 - 如果想不是每次推送都输入账号密码，可以添加SSH公钥，参考：https://coding.net/help/doc/git/ssh-key.html
