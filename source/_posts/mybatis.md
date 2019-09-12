@@ -840,3 +840,5 @@ Integer type = Integer.parseInt(map.get("type").toString());
 mysql 数据库 datetime类型字段，实体中类型为Date，映射出来的格式是:`2019-03-11T11:03:53.000+0000`
 在实体类属性上加上该注解：
 `@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")`
+
+# 通用mapper
