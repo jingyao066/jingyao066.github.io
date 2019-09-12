@@ -21,6 +21,9 @@ File->settings->左上角搜索plugin->选择marketplace->输入Mybatis Plugin�
 ## 彩色进度条
 Plugins->Marketplace，搜索`Nyan Progress Bar`，一个彩色的进度条。
 
+## lombok
+lombok插件用来避免使用lombok的注解(@Data\@AllArgsConstructor等)，显示编译错误的红色标记。
+
 ## 安装mybatis-generator(自动生成三件套)
 官网：http://www.mybatis.org/generator/
 github：https://github.com/mybatis/generator/releases
