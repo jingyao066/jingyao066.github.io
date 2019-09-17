@@ -841,6 +841,9 @@ mysql 数据库 datetime类型字段，实体中类型为Date，映射出来的�
 在实体类属性上加上该注解：
 `@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")`
 
+# @Autowired注入mapper文件报错
+在mapper文件上加@Repository注解
+
 # 通用mapper
 
 ## 问题
