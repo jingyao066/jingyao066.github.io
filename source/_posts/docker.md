@@ -583,3 +583,63 @@ docker inspect命令会提取出容器或者镜像最顶层的元数据
 搜索出来之后，点详情，点击标签，在下面通过翻页，找到8-jre标签，复制标签名：8-jre8，下载tomcat镜像
 `sudo docker pull tomcat:8-jre8`
 
+# /var/lib/docker/overlay2 占用过大
+查看磁盘使用情况
+`sudo du -hs /var/lib/docker/`
+
+查看Docker的磁盘使用情况
+`docker system df`
+
+清理磁盘，删除关闭的容器、无用的数据卷和网络，以及dangling镜像(即无tag的镜像)
+`docker system prune`
+
+docker system prune -a命令清理得更加彻底，可以将没有容器使用Docker镜像都删掉。注意，这两个命令会把你暂时关闭的容器，以及暂时没有用到的Docker镜像都删掉了…所以使用之前一定要想清楚.。我没用过，因为会清理 没有开启的  Docker 镜像。
+
+## 迁移 /var/lib/docker目录
+停止docker服务
+`systemctl stop docker`
+
+创建新的docker目录，执行命令df -h,找一个大的磁盘。 我在 /home目录下面建了 /home/docker/lib目录，执行的命令是：
+`mkdir -p /home/docker/lib`
+
+迁移/var/lib/docker目录下面的文件到 /home/docker/lib
+`rsync -avz /var/lib/docker /home/docker/lib/`
+
+配置 /etc/systemd/system/docker.service.d/devicemapper.conf。查看 devicemapper.conf 是否存在。如果不存在，就新建
+`sudo mkdir -p /etc/systemd/system/docker.service.d/`
+`sudo vi /etc/systemd/system/docker.service.d/devicemapper.conf`
+
+然后在 devicemapper.conf 写入：（同步的时候把父文件夹一并同步过来，实际上的目录应在 /home/docker/lib/docker）
+```
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd  --graph=/home/docker/lib/docker
+```
+
+重新加载 docker
+`systemctl daemon-reload`
+`systemctl restart docker`
+`systemctl enable docker`
+
+为了确认一切顺利，运行
+`docker info`
+
+命令检查Docker 的根目录.它将被更改为 /home/docker/lib/docker
+```
+...
+Docker Root Dir: /home/docker/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Registry: https://index.docker.io/v1/
+...
+```
+
+启动成功后，再确认之前的镜像还在
+```
+linlf@dacent:~$ docker images
+REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+AAA/AAA               v2                  7331b8651bcc        27 hours ago        3.85GB
+BBB/BBB               v1                  da4a80dd8424        28 hours ago        3.47GB
+```
+
+确定容器没问题后删除/var/lib/docker/目录中的文件。
