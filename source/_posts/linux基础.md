@@ -694,6 +694,9 @@ wget命令用于Linux环境下从www上下载文件，支持 HTTP和FTP协议，
 例如：`[root@localhost]# ifconfig`
 也可以临时修改IP，重启系统后，恢复原始IP。
 
+### 查看本机ip
+`curl ident.me`
+
 ## 进程管理
 常用命令：ps, kill。
 

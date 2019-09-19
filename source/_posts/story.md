@@ -1,6 +1,6 @@
 ---
 title: story
-tags: 杂谈
+tags: story
 date: 2019-03-27 16:23:39
 ---
 
