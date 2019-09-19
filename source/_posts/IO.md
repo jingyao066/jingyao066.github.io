@@ -1,6 +1,6 @@
 ---
 title: IO
-tags: java基础
+tags: java
 date: 2018-12-09 22:46:16
 ---
 

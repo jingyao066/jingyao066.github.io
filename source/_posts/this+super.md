@@ -1,6 +1,6 @@
 ---
 title: this and super
-tags: java基础
+tags: java
 date: 2019-03-26 17:14:37
 ---
 

@@ -82,6 +82,11 @@ apache是web服务器,Tomcat是应用（java）服务器，它只是一个servle
 	apache是web服务器，tomcat是应用（java）服务器，它只是一个servlet(jsp也翻译成servlet)容器，可以认为是apache的扩展，但是可以独立于apache运行。  
 	换句话说，apache是一辆卡车，上面可以装一些东西如html等。但是不能装水，要装水必须要有容器（桶tomcat），而这个桶也可以不放在卡车上。
 
+## Tomcat 警告：consider increasing the maximum size of the cache
+这是因为tomcat8以上对resource采取了cache，而默认的大小是10M。解决的办法很简单，就是在context.xml中调大缓存。
+在context.xml中加入如下配置：
+`<Resources cachingAllowed="true" cacheMaxSize="100000" />`
+
 # JSP
 ## JSP语法
 JSP中可以写JAVA代码
