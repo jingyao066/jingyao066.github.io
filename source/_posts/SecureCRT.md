@@ -1,6 +1,6 @@
 ---
 title: SecureCRT
-tags: other
+tags: 其他
 date: 2019-05-23 17:04:38
 ---
 

@@ -637,11 +637,10 @@ nginx安装
 进入nginx目录并启动：
 ```
 cd /usr/local/nginx/sbin
-nginx
+./nginx
 ```
 
-参考地址：
-https://www.cnblogs.com/taiyonghai/p/6728707.html
+[参考地址](https://www.cnblogs.com/taiyonghai/p/6728707.html)
 
 # 技巧
 ## apache下载文件
