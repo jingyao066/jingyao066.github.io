@@ -1,6 +1,6 @@
 ---
 title: MarkDown
-tags: 其他
+tags: other
 date: 2018-12-06 14:48:51
 ---
 

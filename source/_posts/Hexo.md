@@ -1,6 +1,6 @@
 ---
 title: Hexo
-tags: 其他
+tags: other
 date: 2018-12-05 13:54:31
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: DTO
-tags: 其他
+tags: other
 date: 2018-12-09 00:44:08
 ---
 
