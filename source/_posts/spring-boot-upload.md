@@ -118,7 +118,7 @@ public class UploadController {
 ```
 
 ## 通过springboot插件启动项目
-浏览器输入http://localhost:8080/upload，跳转到刚写的jsp页面。
+浏览器输入`http://localhost:8080/upload`跳转到刚写的jsp页面。
 选择文件点击提交按钮返回成功信息，我们上传的文件保存在/Users/itinypocket/workspace/temp路径下，然后上传成功。
 
 # 多文件上传
@@ -175,14 +175,14 @@ public String multiUpload(MultipartFile[] files) {
     return "上传成功";
 }
 ```
-重启服务，浏览器输入http://localhost:8080/multiUpload，然后选择要上传的文件，点击提交按钮，得到成功信息。
+重启服务，浏览器输入`http://localhost:8080/multiUpload`然后选择要上传的文件，点击提交按钮，得到成功信息。
 我们选择的三个文件已被成功上传到/Users/itinypocket/workspace/temp路径下。
 
 多文件上传的方法只是最基础的版本，没有加入文件存在判断，文件夹不存在判断等，可以根据自己的需求改造。
 其实只需要一个多文件上传就足够了，毕竟多文件包含了单文件，另外上面的多文件上传方法还可以当作文件上传接口使用，下面就用postman来测试这个接口。
 
 `file.getSize()`方法可以直接获取到文件的大小， 单位是字节，可以转换成自己想要的单位。
-抓换成mb，保留两位小数：
+下面转换成mb，保留两位小数：
 `new BigDecimal(files[i].getSize()).divide(BigDecimal.valueOf(1024*1024),2,BigDecimal.ROUND_HALF_UP)`
 
 配置外部访问服务器资源的。不配置的话，访问不了图片或视频等文件。
