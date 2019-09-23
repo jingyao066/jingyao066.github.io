@@ -24,9 +24,7 @@ Jenkins主要有三种安装方式
 
 要使用docker镜像，首先安装docker，本文默认已经安装docker。
 
-我们可以到Jenkins官网上寻找docker镜像地址：
-https://jenkins.io/download/
-
+我们可以到[Jenkins官网](https://jenkins.io/download/)寻找docker镜像地址。
 找到`Download jenkins xxx for`下边的`docker`，点击后会跳转到docker hub，该网站是docker的官方镜像仓库，就像github是代码仓库一个道理。
 
 网页右侧可以看到Jenkins的docker下载命令：

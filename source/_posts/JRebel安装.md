@@ -1,6 +1,6 @@
 ---
 title: JRebel安装
-tags: 其他
+tags: other
 date: 2018-6-19 17:13:02
 ---
 
