@@ -1,6 +1,6 @@
 ---
 title: poem
-tags: 其他
+tags: other
 date: 2019-03-20 13:42:03
 ---
 
@@ -54,3 +54,6 @@ date: 2019-03-20 13:42:03
 
 # 我们一路奋战，不是为了改变世界，而是为了不让世界改变我们。
 - 电影《熔炉》
+
+# Those who never change their mind,never change anything
+- 电影《至暗时刻》

@@ -1,6 +1,6 @@
 ---
 title: Apollo
-tags: 其他
+tags: other
 date: 2018-12-09 12:50:32
 ---
 

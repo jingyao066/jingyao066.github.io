@@ -1,6 +1,6 @@
 ---
 title: in the mood
-tags: 其他
+tags: other
 date: 999-12-31 00:00:00
 ---
 
