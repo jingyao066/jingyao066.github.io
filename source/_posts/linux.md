@@ -97,6 +97,8 @@ ENV PATH $JAVA_HOME/bin:$PATH
 8. 进入jdk容器，查看是否安装正确（即查看安装之后的目录）
 `docker exec -it jdk1.8 /bin/bash`
 
+[其他参考](https://www.jianshu.com/p/59e0a8828b3b)
+
 ## mysql
 ### docker安装mysql
 查看docker仓库中的mysql版本：
