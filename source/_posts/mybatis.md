@@ -221,6 +221,8 @@ XMLConfigBuilder.class的settingsElement方法中的源代码
 
 arg参数从0开始，param从1开始，注意。
 
+[其他参考](https://www.cnblogs.com/keyi/p/8509155.html)
+
 ## 多参数
 `public List<XXXBean> getXXXBeanList(String xxId, String xxCode);`
 ```xml
