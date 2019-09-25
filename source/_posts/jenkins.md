@@ -76,11 +76,19 @@ jenkins
 - 必须已root方式进入容器
 `docker exec -it --user root <container id> /bin/bash`
 
+- 也可以普通进入，再切换root，不过也需要提前再root用户下设置好密码。
+root用户进入容器之后，设置密码：
+`sudo passwd`
+连续输入两次密码就可以了。
+
 - 先查看容器是什么操作系统，直接试指令，`yum`或`apt-get`，哪个说`command not found`，就不用哪个。
 发现`apt-get可用`，那么必须先升级`apt-get`：`apt-get update`，反之要升级`yum`：`yum update`
 
 - 安装vim
 `apt-get install vim`
+
+- 安装sudo
+`apt-get install sudo`
 
 - 安装maven，参考`linux`中的maven安装。
 因为前边挂载了宿主机的`/usr/local/src`文件夹，我们可以把maven的安装包和jdk的安装包都上传到宿主机，然后在容器中直接就可以看到，然后采用普通方式安装。
@@ -365,3 +373,15 @@ jenkins的文件都存储在`/root/.jenkins`，使用指令查看文件夹大小
 先把`.jenkins/jobs`文件夹直接删掉，就这个文件夹占了85G，然后再mkdir一个。
 然后删掉`.jenkins/workspace`删掉，mkdir一个，这个也占了1G多。
 在配置时，一定要选择`丢弃旧的构建`，并且`保持构建的天数`和`保持构建的最大个数`一定要写，反正我都写1。
+
+# 自动化脚本错误
+## cannot create regular file xxx，Permission denied
+- 查看自己是谁`whoami`
+- 如果不是root用户，需要在cp前加上`sudo`，注意这里我已经提前安装了sudu。
+
+## We trust you have received the usual lecture from the local System
+编辑/etc/sudoers文件
+`vim /etc/sudoers`
+找到这行：
+`root ALL=(ALL) ALL`
+在起下面添加`xxx ALL=(ALL) ALL`(这里的xxx是你的用户名)，然后强制保存退出，因为该文件是只读文件，也可以在修改之前更改该文件的读写权限。
