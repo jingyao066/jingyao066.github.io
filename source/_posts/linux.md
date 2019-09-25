@@ -4,12 +4,11 @@ tags: linux
 date: 2019-03-27 16:11:40
 ---
 
-# 软件安装
+# 环境搭建
 ## jdk
-首先卸载系统自带的OpenJDK以及相关的java文件。
+可以选择卸载系统自带的OpenJDK以及相关的java文件，不卸载也没关系，直接修改`/etc/profile`即可。
 检查是否安装了jdk：
 `java -version`
-
 可能已经安装openJDK，这里需要先卸载掉：
 `rpm -qa | grep java`
 命令说明：
@@ -29,11 +28,27 @@ rpm：管理套件
 检查是否删除成功，再次输入：
 `java -version`
 `command not found`
-代表删除成功。
-如果还没有删除，则用yum -y remove去删除他们
+代表删除成功，如果还没有删除，则用`yum -y remove`去删除他们。
 
-### 普通安装JDK
-https://www.cnblogs.com/sxdcgaq8080/p/7492426.html
+### 普通方式安装JDK
+[官网下载jdk1.8linux安装包](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+下载`Linux64...x64.tar.gz`这个包，只有这一个包符合我们的要求。
+下载完通过FileZilla上传到服务器的理想位置，我上传到`/usr/local/src`。
+然后再复制到`/usr/local`，这里是我们的安装位置。`cp jdk-8u144-linux-x64.tar.gz /usr/local`
+解压：`tar -zxvf jdk-8u144-linux-x64.tar.gz`
+删除JDK压缩包：`rm -f jdk-8u144-linux-x64.tar.gz`
+编辑全局变量：`vim /etc/profile`
+```
+#java environment
+export JAVA_HOME=/usr/local/jdk1.8.0_144
+export CLASSPATH=.:${JAVA_HOME}/jre/lib/rt.jar:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar
+export PATH=$PATH:${JAVA_HOME}/bin
+```
+注意修改为自己的jdk安装路径，然后保存退出。
+让刚刚设置的环境变量生效`source /etc/profile`
+检查是否配置成功`java -version`，出现版本号证明成功。
+注意：JDK安装在哪个用户下，就是给哪个用户使用。
+[参考地址](https://www.cnblogs.com/sxdcgaq8080/p/7492426.html)
 
 ### docker安装JDK
 1. 安装docker(过程略)
@@ -385,21 +400,16 @@ cd到tomcat的bin目录下：
 ## maven
 1. 到指定目录下载maven：
 `wget http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz`
-
 2. 解压：
 `tar -zxvf apache-maven-3.3.9-bin.tar.gz `
-
 3. 改下名，方便后面操作：
 `mv apache-maven-3.3.9 maven`
-
 4. 配置环境变量
 `vi /etc/profile`，在合适的位置添加如下内容：
 `M2_HOME=/usr/local/maven （需要修改为自己maven的安装路径）`
 `export PATH=${M2_HOME}/bin:${PATH}`
-
 然后使配置文件生效：
 `source /etc/profile`
-
 5. 检查是否安装成功
 `mvn -v`
 出现版本号：`Apache Maven 3.3.9...`，证明安装成功。
