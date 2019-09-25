@@ -641,5 +641,7 @@ REPOSITORY           TAG                 IMAGE ID            CREATED            
 AAA/AAA               v2                  7331b8651bcc        27 hours ago        3.85GB
 BBB/BBB               v1                  da4a80dd8424        28 hours ago        3.47GB
 ```
-
 确定容器没问题后删除/var/lib/docker/目录中的文件。
+
+# Docker和K8S
+[参考地址](https://my.oschina.net/jamesview/blog/2994112)
