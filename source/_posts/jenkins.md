@@ -380,8 +380,14 @@ jenkins的文件都存储在`/root/.jenkins`，使用指令查看文件夹大小
 - 如果不是root用户，需要在cp前加上`sudo`，注意这里我已经提前安装了sudu。
 
 ## We trust you have received the usual lecture from the local System
+不是root用户，使用`sudo`时，出现该问题。
 编辑/etc/sudoers文件
 `vim /etc/sudoers`
 找到这行：
 `root ALL=(ALL) ALL`
 在起下面添加`xxx ALL=(ALL) ALL`(这里的xxx是你的用户名)，然后强制保存退出，因为该文件是只读文件，也可以在修改之前更改该文件的读写权限。
+
+然而还是不行，迷之错误，改变思路，给jenkins-workspace下的jar包赋予权限：
+`chmod u+x $WORKSPACE/target/archive-1.0.jar`
+然后就可以直接使用`cp`指令，然而只是Terminal可以使用，jenkins的脚本还是无法使用，我日...
+暂时放弃，使用tomcat安装jenkins...
