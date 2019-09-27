@@ -1864,3 +1864,13 @@ update were rejected because the tip of your current branch is behind...
 
 还原：
 `git update-index --no-assume-unchanged FILE`
+
+# Linux 服务器上记住GIT用户名密码
+`git config --global credential.helper store`
+执行下面命令，检查是否生效
+`cat ~/.gitconfig`
+得到结果
+```
+[credential]
+    helper = store
+```
