@@ -194,6 +194,18 @@ public String testRequestParam(
 解决办法：
 不必非要使用`requestBody`注解，另外一个参数也使用`requestParam`好了，这样请求类型一致，即可以传文件(视频、音频、图片)，还可以带参数了。
 
+## 接收数组参数
+### 普通数组参数
+前端表单提交(form-data)，key要和后台接收的参数值一致，value为`逗号分隔的字符串`，而不是数组。如：
+`ids：1,2`正确
+`ids：[1,2]`错误
+
+mvc参数：
+`String[] ids`
+后台尽量使用string类型数组，因为通过实验发现，string数组可同时接收string类型和int类型的字符串，如：
+`ids：1,2`
+`ids：'1','2'`
+
 ### 使用requestBody接收数组参数
 写法：
 `@RequestBody Integer[] arr`
@@ -219,12 +231,21 @@ postMan请求方式：
 后台还是要用`@RequestBody Map<String,Object> paramMap`来接收参数，这样他会把参数放到map中，不过传递的数组被格式化成了`list`，
 所以从map中取数据时，需要转为成`(ArrayList) paramMap.get("ids")`，而不是`(String[]) paramMap.get("ids")`
 
-另外，如果不想使用`@RequestBody`，可以使用`form-data`，即表单提交方式，即`@RequestParam String[] ids`，postMan选中`body->form-data`，key值需要和参数的名字完全一致(如果写了requestParam的value，则以value为准)，value为`7,8`，不用加中括号。
+另外，如果不想使用`@RequestBody`，可以使用`form-data`，即表单提交方式，即`@RequestParam String[] ids`，postMan选中`body->form-data`，
+key值需要和参数的名字完全一致(如果写了requestParam的value，则以value为准)，value为`7,8`，不用加中括号。
 另外，还可以不使用注解，直接用`String[] ids`，来接收参数，这时传递的key值也必须和后台参数名一致。可以发现，如果不用注解接收参数，springMvc默认使用的是表单的解析方式，即`@RequestParam`的解析方式。
 
 ## @ResponseBody
 作用：该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。
 使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用
+
+注：可以使用`@ResponseBody`来接收实体类参数，只需要这么写：
+`@ResponseBody User u`
+如果不加`@ResponseBody`，前端就要`form-data`提交。
+
+通常这样用:
+`@ResponseBody Map<String,String> paramMap`
+但是这样后台还要判空，然后再向实体类中set，所以还是用`@ResponseBody User u`  这种。
 
 ## @RequestPart
 同时上传文件和json参数。上传文件时，可能还需要带参数，直接上js代码：
