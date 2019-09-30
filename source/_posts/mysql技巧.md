@@ -379,8 +379,265 @@ jdbc:mysql://localhost:3306/test?
 但是如果真的去把表中字段的字符集改成gb2312，又会涉及到很多编码的问题，页面传值啊，从数据库中存取啊，很麻烦。
 只要在查询的时候，指定一下字符集，并不是真的把物理字段改成gb2312，很简单。
 
-# mysql递归删除
+# mysql进行树状所有子节点的查询
+在Oracle 中我们知道有一个 Hierarchical Queries 通过CONNECT BY 我们可以方便的查了所有当前节点下的所有子节点。但很遗憾，在MySQL的目前版本中还没有对应的功能。
+在MySQL中如果是有限的层次，比如我们事先如果可以确定这个树的最大深度是4, 那么所有节点为根的树的深度均不会超过4，则我们可以直接通过left join 来实现。
+但很多时候我们无法控制树的深度。这时就需要在MySQL中用存储过程来实现或在你的程序中来实现这个递归。本文讨论一下几种实现的方法。
+
+## 样例数据
+```
+create table treeNodes
+	(
+	id int primary key,
+	nodename varchar(20),
+	pid int
+	);
+
+select * from treenodes;
++----+----------+------+
+| id | nodename | pid  |
++----+----------+------+
+|  1 | A        |    0 |
+|  2 | B        |    1 |
+|  3 | C        |    1 |
+|  4 | D        |    2 |
+|  5 | E        |    2 |
+|  6 | F        |    3 |
+|  7 | G        |    6 |
+|  8 | H        |    0 |
+|  9 | I        |    8 |
+| 10 | J        |    8 |
+| 11 | K        |    8 |
+| 12 | L        |    9 |
+| 13 | M        |    9 |
+| 14 | N        |   12 |
+| 15 | O        |   12 |
+| 16 | P        |   15 |
+| 17 | Q        |   15 |
++----+----------+------+	
+```
+树形图如下：
+```
+1:A
+  +-- 2:B
+  |    +-- 4:D
+  |    +-- 5:E
+  +-- 3:C
+       +-- 6:F
+            +-- 7:G
+ 8:H
+  +-- 9:I
+  |    +-- 12:L
+  |    |    +--14:N
+  |    |    +--15:O
+  |    |        +--16:P
+  |    |        +--17:Q
+  |    +-- 13:M
+  +-- 10:J
+  +-- 11:K
+```
+
+## 方法一：利用函数来得到所有子节点号
+创建一个function getChildLst, 得到一个由所有子节点号组成的字符串。
+```sql
+CREATE FUNCTION `getChildLst` ( rootId INT ) RETURNS VARCHAR(1000) BEGIN
+DECLARE sTemp VARCHAR ( 1000 );
+DECLARE sTempChd VARCHAR ( 1000 );        
+SET sTemp = '$';
+SET sTempChd = cast( rootId AS CHAR );	       
+WHILE
+	sTempChd IS NOT NULL DO
+	SET sTemp = concat( sTemp, ',', sTempChd );
+	SELECT
+	group_concat( id ) INTO sTempChd 
+		FROM
+	treeNodes 
+		WHERE
+	FIND_IN_SET( pid, sTempChd ) > 0;        
+	END WHILE;
+	RETURN sTemp;
+END
+```
+使用我们直接利用find_in_set函数配合这个getChildlst来查找
+```sql
+select getChildLst(1);
++-----------------+
+| getChildLst(1)  |
++-----------------+
+| $,1,2,3,4,5,6,7 |
++-----------------+
+
+select * from treeNodes where FIND_IN_SET(id, getChildLst(1));
++----+----------+------+
+| id | nodename | pid  |
++----+----------+------+
+|  1 | A        |    0 |
+|  2 | B        |    1 |
+|  3 | C        |    1 |
+|  4 | D        |    2 |
+|  5 | E        |    2 |
+|  6 | F        |    3 |
+|  7 | G        |    6 |
++----+----------+------+
+
+select * from treeNodes where FIND_IN_SET(id, getChildLst(3));
++----+----------+------+
+| id | nodename | pid  |
++----+----------+------+
+|  3 | C        |    1 |
+|  6 | F        |    3 |
+|  7 | G        |    6 |
++----+----------+------+
+```
+优点: 简单，方便，没有递归调用层次深度的限制 (max_sp_recursion_depth,最大255) ；
+缺点：长度受限，虽然可以扩大 RETURNS varchar(1000)，但总是有最大限制的。
+MySQL目前版本( 5.1.33-community)中还不支持function 的递归调用。
+
+## 方法二：利用临时表和过程递归
+创建存储过程如下。createChildLst 为递归过程，showChildLst为调用入口过程，准备临时表及初始化。
 
 
+入口过程
+```sql
+CREATE PROCEDURE showChildLst ( IN rootId INT ) BEGIN
+	CREATE TEMPORARY TABLE
+	IF
+		NOT EXISTS tmpLst ( sno INT PRIMARY KEY auto_increment, id INT, depth INT );
+	DELETE 
+	FROM
+		tmpLst;
+	CALL createChildLst ( rootId, 0 );
+	    SELECT
+	tmpLst.*,
+	treeNodes.* 
+	FROM
+		tmpLst,
+		treeNodes 
+	WHERE
+		tmpLst.id = treeNodes.id 
+	ORDER BY
+	tmpLst.sno;
+END;
+```
+
+递归过程
+```sql
+CREATE PROCEDURE createChildLst ( IN rootId INT, IN nDepth INT ) BEGIN
+	DECLARE
+		done INT DEFAULT 0;
+	DECLARE
+		b INT;
+	DECLARE
+		cur1 CURSOR FOR SELECT
+		id 
+	FROM
+		treeNodes 
+	WHERE
+		pid = rootId;
+	DECLARE
+		CONTINUE HANDLER FOR NOT FOUND 
+		SET done = 1;
+	INSERT INTO tmpLst
+	VALUES
+		( NULL, rootId, nDepth );
+	OPEN cur1;
+	FETCH cur1 INTO b;
+	WHILE
+			done = 0 DO
+			CALL createChildLst ( b, nDepth + 1 );
+		FETCH cur1 INTO b;
+	END WHILE;
+CLOSE cur1;
+END;
+```
+
+调用时传入结点
+```
+call showChildLst(1);
++-----+------+-------+----+----------+------+
+| sno | id   | depth | id | nodename | pid  |
++-----+------+-------+----+----------+------+
+|   4 |    1 |     0 |  1 | A        |    0 |
+|   5 |    2 |     1 |  2 | B        |    1 |
+|   6 |    4 |     2 |  4 | D        |    2 |
+|   7 |    5 |     2 |  5 | E        |    2 |
+|   8 |    3 |     1 |  3 | C        |    1 |
+|   9 |    6 |     2 |  6 | F        |    3 |
+|  10 |    7 |     3 |  7 | G        |    6 |
++-----+------+-------+----+----------+------+
+
+call showChildLst(3);
++-----+------+-------+----+----------+------+
+| sno | id   | depth | id | nodename | pid  |
++-----+------+-------+----+----------+------+
+|   1 |    3 |     0 |  3 | C        |    1 |
+|   2 |    6 |     1 |  6 | F        |    3 |
+|   3 |    7 |     2 |  7 | G        |    6 |
++-----+------+-------+----+----------+------+
+```
+
+depth 为深度，这样可以在程序进行一些显示上的格式化处理。类似于oracle中的 level 伪列。sno 仅供排序控制。这样你还可以通过临时表tmpLst与数据库中其它表进行联接查询。
+
+MySQL中你可以利用系统参数 max_sp_recursion_depth 来控制递归调用的层数上限。如下例设为12.
+`set max_sp_recursion_depth=12;`
+
+优点：可以更灵活处理，及层数的显示。并且可以按照树的遍历顺序得到结果。
+缺点：递归有255的限制
+
+## 方法三：利用中间表和过程
+创建存储过程如下。由于MySQL中不允许在同一语句中对临时表多次引用，只以使用普通表tmpLst来实现了。当然你的程序中负责在用完后清除这个表。
+```sql
+drop PROCEDURE IF EXISTS  showTreeNodes_yongyupost2000
+CREATE PROCEDURE showTreeNodes_yongyupost2000 (IN rootid INT)
+BEGIN
+DECLARE Level int ;
+drop TABLE IF EXISTS tmpLst;
+CREATE TABLE tmpLst (
+ id int,
+ nLevel int,
+ sCort varchar(8000)
+);
+ 
+Set Level=0 ;
+INSERT into tmpLst SELECT id,Level,ID FROM treeNodes WHERE PID=rootid;
+WHILE ROW_COUNT()>0 DO
+ SET Level=Level+1 ;
+ INSERT into tmpLst
+  SELECT A.ID,Level,concat(B.sCort,A.ID) FROM treeNodes A,tmpLst B
+   WHERE  A.PID=B.ID AND B.nLevel=Level-1  ;
+END WHILE;
+ 
+END;
+CALL showTreeNodes_yongyupost2000(0);
+```
+执行完后会产生一个tmpLst表，nLevel 为节点深度，sCort 为排序字段。
+使用方法
+```
+SELECT concat(SPACE(B.nLevel*2),'+--',A.nodename) FROM treeNodes A,tmpLst B WHERE A.ID=B.ID ORDER BY B.sCort;
++--------------------------------------------+
+| concat(SPACE(B.nLevel*2),'+--',A.nodename) |
++--------------------------------------------+
+| +--A                                       |
+|   +--B                                     |
+|     +--D                                   |
+|     +--E                                   |
+|   +--C                                     |
+|     +--F                                   |
+|       +--G                                 |
+| +--H                                       |
+|   +--J                                     |
+|   +--K                                     |
+|   +--I                                     |
+|     +--L                                   |
+|       +--N                                 |
+|       +--O                                 |
+|         +--P                               |
+|         +--Q                               |
+|     +--M                                   |
++--------------------------------------------+
+```
+
+优点：层数的显示。并且可以按照树的遍历顺序得到结果。没有递归限制。
+缺点：MySQL中对临时表的限制，只能使用普通表，需做事后清理。
 
 [参考地址](https://blog.csdn.net/ACMAIN_CHM/article/details/4142971)
