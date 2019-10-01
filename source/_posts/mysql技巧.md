@@ -587,28 +587,28 @@ MySQL中你可以利用系统参数 max_sp_recursion_depth 来控制递归调用
 ## 方法三：利用中间表和过程
 创建存储过程如下。由于MySQL中不允许在同一语句中对临时表多次引用，只以使用普通表tmpLst来实现了。当然你的程序中负责在用完后清除这个表。
 ```sql
-drop PROCEDURE IF EXISTS  showTreeNodes_yongyupost2000
-CREATE PROCEDURE showTreeNodes_yongyupost2000 (IN rootid INT)
+drop PROCEDURE IF EXISTS  showTreeNodes;
+CREATE PROCEDURE showTreeNodes (IN rootid INT)
 BEGIN
-DECLARE Level int ;
+DECLARE Level int;
 drop TABLE IF EXISTS tmpLst;
 CREATE TABLE tmpLst (
- id int,
- nLevel int,
- sCort varchar(8000)
+ id int,
+ nLevel int,
+ sCort varchar(8000)
 );
- 
-Set Level=0 ;
-INSERT into tmpLst SELECT id,Level,ID FROM treeNodes WHERE PID=rootid;
-WHILE ROW_COUNT()>0 DO
- SET Level=Level+1 ;
- INSERT into tmpLst
-  SELECT A.ID,Level,concat(B.sCort,A.ID) FROM treeNodes A,tmpLst B
-   WHERE  A.PID=B.ID AND B.nLevel=Level-1  ;
+ 
+Set Level = 0;
+INSERT into tmpLst SELECT id,Level,ID FROM category WHERE parent_id = rootid;
+WHILE ROW_COUNT() > 0
+DO SET Level = Level + 1;
+ INSERT into tmpLst
+  SELECT A.ID,Level,concat(B.sCort,A.ID) FROM category A,tmpLst B
+   WHERE A.parent_id = B.ID AND B.nLevel = Level-1;
 END WHILE;
- 
+ 
 END;
-CALL showTreeNodes_yongyupost2000(0);
+CALL showTreeNodes(0);
 ```
 执行完后会产生一个tmpLst表，nLevel 为节点深度，sCort 为排序字段。
 使用方法
