@@ -44,7 +44,7 @@ JRebel并不是开源免费的，作为一个商业产品，它并不算便宜�
 
 # JRebel集成
 JRebel集成到IDEA只需要到IDEA的plugin里，点击Browse repository，输入JRebel，安装JRebel for IntelliJ，完成以后点击重启IDEA。再次进入到IDEA设置界面，此时已经多了JRebel的选项：
-![](JRebel安装/1.png)
+![](JRebel/1.png)
 
 # 拿别人的激活
 https://blog.csdn.net/xingbaozhen1210/article/details/81093041
@@ -54,14 +54,14 @@ https://blog.csdn.net/xingbaozhen1210/article/details/81093041
 https://github.com/ilanyu
 
 选择ReverseProxy，再进入到Release页面：
-![](JRebel安装/2.png)
+![](JRebel/2.png)
 
 选择对应版本下载，darwin代表Mac os的UNIX-like系统。大多数人都是ReverseProxy_windows_amd64.exe这个版本，代表windows 64位
 选择立刻激活，再选择I have license：
-![](JRebel安装/3.png)
+![](JRebel/3.png)
 
 运行刚刚下载的反向代理：
-![](JRebel安装/4.png)
+![](JRebel/4.png)
 代表监听本机的8888端口请求发往了作者提供的一个激活服务器，有条件的可以自己搭建一个类似的激活服务器避免lanyu的服务器被封。
 
 输入上图中类似的内容，除了`http://127.0.0.1:8888`不能改变以外，后面的内容可以随便填写，但是不能直接写明文，需要转换为GUID的形式。例如：
@@ -75,11 +75,11 @@ https://github.com/ilanyu
 注：以上步骤一定要保证反向代理程序一直运行。
 
 接下来，找到idea上debug(小甲虫)启动旁边，
-![](JRebel安装/5.png)
+![](JRebel/5.png)
 左边普通启动，右边debug启动。
 
 还可以点击左下角的JRebel唤出panel勾选项目，它会自动在对应的项目下面的resource生成一个rebel.xml文件，可以根据官方来进行一些自定义配置。
-![](JRebel安装/6.png)
+![](JRebel/6.png)
 
 前边一排(绿色小火箭下有JR两个字母)，表示本地jrebel热部署，jrebel会对勾选的模块进行热部署。貌似不勾选也可以热部署？一直没发现勾不勾有什么区别。
 勾选之后会在模块的`resource`目录下生成`rebel.xml`文件，文件注释：
@@ -102,11 +102,11 @@ https://github.com/ilanyu
 以上的标准步骤所激活的JRebel是不支持Mybatis里的xml更新热部署的，如果你想更新了sql也能够热部署， 
 [还需要到官网下载JRebel-nightly](https://zeroturnaround.com/software/jrebel/download/nightly-build/#!/intellij)
 
-![](JRebel安装/7.png)
+![](JRebel/7.png)
 上面已经圈出来了两种方式：
 
 1.下载上面那个红框里地址的压缩包，解压开，里面有一个JRebel.jar，记住其位置，然后在IDEA里面指定使用的代理jar包
-![](JRebel安装/8.png)
+![](JRebel/8.png)
 使用刚刚解压的那个作为JRebel的代理类。
 
 2.就是不使用IDEA自带的的plugin repository的插件，直接在JRebel-nightly的那个页面选择下载下面红框里的包，然后卸载原来的JRebel，

@@ -316,3 +316,9 @@ mac：
 	}
 	```
 然后右键刚才新建的`sw`，选择Change context，勾选java，即可。
+
+# Error:(73, 52) java: -source 1.5 中不支持 diamond 运算符 (请使用 -source 7 或更高版本以启用 diamond 运算符)
+已经在`project Structure`中设置了项目的jdk版本，build还是报这个错。
+解决：
+设置搜索`java compiler`，改成自己的jdk版本。如果还不行，idea重新下载jar包试试。
+
