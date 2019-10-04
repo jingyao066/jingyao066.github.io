@@ -57,3 +57,5 @@ date: 2019-03-20 13:42:03
 
 # Those who never change their mind,never change anything
 - 电影《至暗时刻》
+
+# 你在阳台抽烟，你抽一半，风抽一半，你没跟风计较，可能风也有烦恼吧。............你事后越想越气，于是抽起风来。

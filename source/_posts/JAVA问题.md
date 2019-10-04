@@ -285,3 +285,59 @@ System.out.println(map.getClass().equals(map1.getClass()));
 返回结果会true；说明他们运行的是同一份字节码。
 
 # 将代码打成jar包
+
+
+# 遍历枚举类
+```java
+public enum Test {
+
+    UPDATE(1,"更新"),
+    LOGIN(2,"登陆"),
+    STOCK_IN(3,"库存领用"),
+    QUERY_ACCOUNT(4,"账户查询"),
+    PERSTORE(5,"预存"),
+    OPEN_CARD_APPLY(6,"开卡申请"),
+    OPEN_CARD(7,"开卡"),
+    YIJIETIAO_APPLY(8,"借条申请"),
+    ADDED_SERVICE_MAG(9,"增值服务管理"),
+    NEW_ACCOUNT(10,"新建账户");
+
+    private Integer code;
+    private String type;
+
+    private Test(Integer code, String type) {
+        this.code = code;
+        this.type = type;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public static void main(String args[]) {
+        System.out.println("第一种通过反射");
+        Class<Test> clz = Test.class;
+        for (Test obj : clz.getEnumConstants()) {
+            System.out.println(obj.getType());
+            System.out.println(obj.getCode());
+        }
+
+        System.out.println("第二种通过枚举静态方法values()");
+        for (Test rate : Test.values()) {
+            System.out.println(rate.getType());
+        }
+    }
+}
+```
