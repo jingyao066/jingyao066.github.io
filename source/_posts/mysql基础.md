@@ -107,8 +107,11 @@ ALTER TABLE <表名>
 - 新增字段
 `alter table table_name add column_name varchar(200) not null default 0 COMMENT "描述";`
 
-- 修改字段
-`ALTER TABLE table_name MODIFY column_name VARCHAR(200) NULL DEFAULT null COMMENT '这是字段描述';`
+- 修改字段属性
+`alter table table_name modify column_name VARCHAR(200) NULL DEFAULT null COMMENT '这是字段描述';`
+
+- 修改字段名
+`alter table <表名> change <字段名> <字段新名称> <字段的类型>`
 
 - 删除列
 `ALTER TABLE 表名 DROP 列名`
