@@ -523,37 +523,39 @@ top命令是Linux下常用的性能分析工具，能够实时显示系统中各
 进程信息区统计信息区域的下方显示了各个进程的详细信息：
 首先来认识一下各列的含义：
 `列名-含义`
-PID：进程id
-PPID：父进程id
-RUSER：Real user name
-UID：进程所有者的用户id
-USER：进程所有者的用户名
-GROUP：进程所有者的组名
-TTY：启动进程的终端名.不是从终端启动的进程则显示为 ?
-PR：优先级
-NI：nice值.负值表示高优先级，正值表示低优先级
-P：最后使用的CPU,仅在多CPU环境下有意义
-%CPU：上次更新到现在的CPU时间占用百分比
-TIME：进程使用的CPU时间总计,单位秒
-TIME+：进程使用的CPU时间总计,单位1/100秒
-%MEM：进程使用的物理内存百分比
-VIRT：进程使用的虚拟内存总量,单位kb,VIRT=SWAP+RES
-SWAP：进程使用的虚拟内存中,被换出的大小,单位kb
-RES：进程使用的、未被换出的物理内存大小,单位kb,RES=CODE+DATA
-CODE：可执行代码占用的物理内存大小,单位kb
-DATA：可执行代码以外的部分(数据段+栈)占用的物理内存大小,单位kb
-SHR：共享内存大小,单位kb
-nFLT：页面错误次数
-nDRT：最后一次写入到现在,被修改过的页面数
-S：进程状态：
-    D=不可中断的睡眠状态
-    R=运行
-    S=睡眠
-    T=跟踪/停止
-    Z=僵尸进程
-COMMAND：命令名/命令行
-WCHAN：若该进程在睡眠,则显示睡眠中的系统函数名
-Flags：任务标志,参考 sched.h
+`PID`：进程id
+`PPID`：父进程id
+`RUSER`：Real user name
+`UID`：进程所有者的用户id
+`USER`：进程所有者的用户名
+`GROUP`：进程所有者的组名
+`TTY`：启动进程的终端名，不是从终端启动的进程则显示为 ?
+`PR`：优先级
+`NI`：nice值，负值表示高优先级，正值表示低优先级
+`P`：最后使用的CPU，仅在多CPU环境下有意义
+`%CPU`：上次更新到现在的CPU时间占用百分比
+`TIME`：进程使用的CPU时间总计，单位秒
+`TIME+`：进程使用的CPU时间总计，单位1/100秒
+`%MEM`：进程使用的物理内存百分比
+`VIRT`：进程使用的虚拟内存总量，单位kb，VIRT = SWAP + RES
+`SWAP`：进程使用的虚拟内存中，被换出的大小，单位kb
+`RES`：进程使用的、未被换出的物理内存大小,单位kb，RES = CODE + DATA
+`CODE`：可执行代码占用的物理内存大小，单位kb
+`DATA`：可执行代码以外的部分(数据段+栈)占用的物理内存大小，单位kb
+`SHR`：共享内存大小，单位kb
+`nFLT`：页面错误次数
+`nDRT`：最后一次写入到现在，被修改过的页面数
+```
+S：进程状态
+D=不可中断的睡眠状态
+R=运行
+S=睡眠
+T=跟踪/停止
+Z=僵尸进程
+```
+`COMMAND`：命令名/命令行
+`WCHAN`：若该进程在睡眠,则显示睡眠中的系统函数名
+`Flags`：任务标志,参考 sched.h
 
 默认情况下仅显示比较重要的
 `PID、USER、PR、NI、VIRT、RES、SHR、S、%CPU、%MEM、TIME+、COMMAND`
@@ -846,3 +848,43 @@ echo 3 > /proc/sys/vm/drop_caches：表示清除pagecache和slab分配器中的�
 目前发现占用磁盘过大的有：
 - jenkins
 - docker
+
+# Centos7设置定时清除buff/cache的脚本
+最近发现`buff/cache`持续缓慢上升，慢慢把服务器64G的内存都吃掉了，还没发现是谁产生的问题，只能先写个清除缓存的脚本解决一下。
+切换到root用户
+`su -root`
+
+创建脚本文件
+`touch cleanCache.sh`
+`vim cleanCache.sh`
+
+添加如下内容：
+```
+#!/bin/bash
+#每两小时清除一次缓存
+echo "开始清除缓存"
+sync;sync;sync #写入硬盘，防止数据丢失
+sleep 10 #延迟10秒
+echo 3 > /proc/sys/vm/drop_caches
+```
+
+创建定时任务
+`crontab -e  //弹出配置文件`
+
+添加如下内容：（按需修改）
+`0 */2 * * * ./cleanCache.sh`
+
+保证crond启动以及开机自启
+`systemctl start crond.service`
+`systemctl enable crond.service`
+
+查看buff/cache情况
+`free -m`
+
+查看定时任务是否被执行
+`cat /var/log/cron | grep cleanCache`
+只要任务创建了，即使退出用户登录，任务还是会执行。
+此方法清理缓存只是紧急临时用的，不建议在生产环境中使用此方法。
+
+注意：此方法不能用于解决统物理内存占用过高，导致部分服务被强制关闭的问题
+要从根本上解决服务器内存占用过高的问题，[参考这篇文章](https://www.idaobin.com/archives/345.html)
