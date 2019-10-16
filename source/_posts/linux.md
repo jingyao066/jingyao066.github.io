@@ -171,15 +171,15 @@ docker run --name mysql -d \
 ```
 
 命令说明：
--p：3306:3306：将容器的3306端口映射到主机的3306端口
--v：/opt/docker_v/mysql/conf:/etc/mysql/conf.d：将主机/opt/docker_v/mysql/conf目录挂载到容器的/etc/mysql/conf.d
--e：MYSQL_ROOT_PASSWORD=123456：初始化root用户的密码
--d：后台运行容器，并返回容器ID
---rm：容器退出时就能够自动清理容器内部的文件系统，就是如果你退出容器，这个容器就删除了，需要重新docker run ...
-imageID: mysql镜像ID
+`-p 3306:3306`：将容器的3306端口映射到主机的3306端口
+`-v /usr/local/mysql/conf:/etc/mysql/conf.d`：将主机`/usr/local/mysql/conf`目录挂载到容器的`/etc/mysql/conf.d`
+`-e MYSQL_ROOT_PASSWORD=123456`：初始化root用户的密码
+`--rm`：容器退出时就能够自动清理容器内部的文件系统，就是如果你退出容器，这个容器就删除了，需要重新docker run ...
+`-d`：后台运行容器，并返回容器ID
+`imageID`: mysql镜像ID
 
 使用容器客户端连接：
-docker exec -it mysql mysql -uroot -p123
+`docker exec -it mysql mysql -uroot -p123`
 
 查看容器启动情况：
 `docker ps -a`
