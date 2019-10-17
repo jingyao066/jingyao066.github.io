@@ -138,13 +138,13 @@ https://www.jianshu.com/p/e09d2370b796
 /**
  *@author: wjy
  *@Date: Create in ${TIME} ${DATE}
- *@description :
+ *@description:
  */
 ```
 idea设置页的下边，有变量的解释
 
 - 方法注释模板
-`File ---> Setting ---> Editor ---> LiveTemplates`
+`File ---> Setting ---> Editor ---> Live Templates`
 点击右边上面那个绿色的+号，选择Template Group双击，然后弹出一个窗口，起名，然后点击ok
 然后在列表中，选择刚才新建的Template Group，再次点击右上角的绿色加号，选择第一个选项 live Template
 ![](idea-Setting/1.png)
@@ -157,18 +157,18 @@ ps:为了只按/+自定义的快捷键，我们可以在模板的顶端，注意
 提供两种模板：
 ```
 **
- * @author: wjy 
- * @description: 
+ * @author: wjy
+ * @description:
  * @date: $date$ $time$
  * @param: $params$
  * @return: $returns$
- */ 
+ */
 ```
 ```
 **
- * @author: wjy 
+ * @author: wjy
  * @description:
- */ 
+ */
 ```
 
 # 窗口开多后自动关闭
