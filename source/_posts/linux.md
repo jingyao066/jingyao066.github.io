@@ -187,12 +187,14 @@ docker run --name mysql -d \
 如果服务器开放了3306端口，那么现在可以通过navicat远程连接mysql了。
 
 ### 普通方式安装
-官网下载：https://dev.mysql.com/downloads/mysql/
-拉到页面下方，下拉Select Operating System，选择`Linux-Generic`，Select OS Version：选择64位。如果不想下载8.0版本的，可以选择右侧的：
-Looking for the latest GA version?，会出现mysql5.7版本。下载最下边的`Linux - Generic (glibc 2.12) (x86, 64-bit), TAR`
-下载完，上传到linux服务器`/usr/local`位置。
+[官网下载mysql安装包](https://dev.mysql.com/downloads/mysql/)
+拉到页面下方，下拉选`Select Operating System`，选择`Linux-Generic`，`Select OS Version`选择64位。如果不想下载8.0，
+可以选择右侧的`Looking for the latest GA version?`，会出现mysql5.7版本。
+下载最下边的`Linux - Generic (glibc 2.12) (x86, 64-bit), TAR`，下载完，上传到linux服务器`/usr/local/src`位置。
+或使用wget获取安装包：
+`wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.28-linux-glibc2.12-x86_64.tar.gz`
 
-加压缩：`tar -zxvf mysql-5.7...`
+解压缩：`tar -zxvf mysql-5.7...`
 重命名：`mv mysql-5.7... mysql`
 在mysql根目录创建data文件夹：`mkdir data`
 创建mysql的用户组和用户，并对mysql目录设置用户组和用户：
@@ -206,7 +208,7 @@ Looking for the latest GA version?，会出现mysql5.7版本。下载最下边�
 ```
 
 初始化mysql并启动mysql服务：
-`cd /usr/local/mysql/bin`
+`cd /usr/local/mysql`
 
 初始化：
 `./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data `
@@ -214,7 +216,7 @@ Looking for the latest GA version?，会出现mysql5.7版本。下载最下边�
 报错：
 `error while loading shared libraries: libnuma.so.1: cannot open shared object file: No such file or directory`
 
-如果已经安装了libnuma.so.1，先
+如果已经安装了libnuma.so.1，先执行
 `yum remove libnuma.so.1`
 
 然后安装64位版本：
@@ -237,23 +239,60 @@ chown -R mysql data
 
 然后修改mysql配置文件（如果没有自己创建）：
 `vi /etc/my.cnf`
+或是这么找：`find / -type f -name 'my.cnf'`
 
-直接修改默认配置：
 ```
 [mysqld]
 basedir=/usr/local/mysql
 datadir=/usr/local/mysql/data
 socket=/usr/local/mysql/tmp/mysql.sock
-port=3306
-sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+# 取消密码验证，一会改完密码这段还要注释掉
+skip-grant-tables
+
+#服务Id唯一
+server-id = 1
+port = 3306
+log-error = /var/log/mysql/error.log
+
+#只能用IP地址
+skip_name_resolve
+
+character-set-client-handshake = FALSE
+
+#数据库默认字符集
+character-set-server = utf8mb4
+
+#数据库字符集对应一些排序等规则
+collation-server = utf8mb4_general_ci
+
+#设置client连接mysql时的字符集,防止乱码
+init_connect='SET NAMES utf8mb4'
+
+#最大连接数
+max_connections = 1000
+
+#解决only_full_group_by问题
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+#时区
+default-time_zone = '+8:00'
+
+#内存监控
+performance_schema_instrument ='memory%=counted'
+
+#慢查询日志
+#slow_query_log= on
+#long_quert_time= 2
+#slow-query-log-file = /home/mysql-slow-log.log
 
 [client]
 socket=/usr/local/mysql/tmp/mysql.sock
+default-character-set = utf8mb4
 
 [mysqld_safe]
 #log-error=/var/log/mariadb/mariadb.log
 #pid-file=/var/run/mariadb/mariadb.pid
-
 basedir=/usr/local/mysql
 datadir=/usr/local/mysql/data
 socket=/usr/local/mysql/tmp/mysql.sock
@@ -265,24 +304,25 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 #
 !includedir /etc/my.cnf.d
 ```
-basedir就是mysql根目录
-datadir就是上面在mysql根目录中新建的data文件夹
-socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向了它，mysql.sock这个文件在我们启动mysql时会自动创建。所以我们只要新建tmp文件夹就行了。 
+basedir就是mysql根目录，datadir就是上面在mysql根目录中新建的data文件夹。
+socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向了它，mysql.sock这个文件在启动mysql时会自动创建，所以只要新建tmp文件夹就行了。 
 
 修改tmp文件夹权限：
 `chown -R mysql:mysql tmp`
 
-然后可以启动服务了：
+将mysql加入服务
+`cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql`
+开机启动
+`chkconfig mysql on`
+启动mysql
+`service mysql start`
 
-启动和关闭mysql：
+还有一些启动方式作为参考：
 ```
-#/etc/init.d/mysql start   或者   serivce mysql start  或者  ./bin/mysqld_safe&  
-#/etc/init.d/mysql stop    或者   service mysql stop   或者  ./bin/mysqladmin -u root -p shutdown
+#/etc/init.d/mysql start  或者  ./bin/mysqld_safe&
+#/etc/init.d/mysql stop   或者  ./bin/mysqladmin -u root -p shutdown
 ```
-
-我一般使用`./bin/mysqld_safe&`命令启动mysql服务
-启动后检查下`ps -ef|grep mysql`检查下是否启动
-
+可以使用`./bin/mysqld_safe&`命令启动mysql服务，启动后检查下`ps -ef|grep mysql`检查下是否启动
 启动：
 `./bin/mysqld_safe&`
 见到如下内容说明启动成功：
@@ -294,7 +334,7 @@ socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向
 输入bg后台运行，然后再运行`ps -ef|grep mysql`检查可以看到mysql已经启动了。
 
 连接mysql：
-`./bin/mysql -uroot -p`
+`/usr/local/mysql/bin/mysql -u root -p`
 
 报错：
 `mysql: [ERROR] unknown variable 'symbolic-links=0'`
@@ -303,27 +343,43 @@ socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向
 `# Disabling symbolic-links is recommended to prevent assorted security risks symbolic-links=0`
 应该是分两行展示了，修改该行为一行显示。
 
-再次链接Mysql:
-`./bin/mysql -uroot -p`
-
-上边自动生成的密码是可以复制的，此时直接右键空白处，然后回车，应该就成功进入了。
+再次链接Mysql(由于/etc/my.cnf中设置了取消密码验证，所以此处密码直接回车即可)：
+`/usr/local/mysql/bin/mysql -u root -p`
 
 输入默认密码报错：
 `Can't connect to local MySQL server through socket '/usr/local/mysql-5.7/tmp/mysql.sock' (2)`
 此时需要检查配置文件`vi /etc/my.cnf`，socket文件路径是否正确，tmp文件夹是否已经创建。
 
-成功登录mysql，执行命令报错：
+成功登录mysql，执行sql报错：
 `You must reset your password using ALTER USER statement before executing this statement.`
 
+设置密码：
+操作mysql数据库
+`use mysql;`
+
+修改root用户的密码：
+`update user set authentication_string=password('你的密码') where user='root';`
+`flush privileges;`
+`exit;`
+
+将/etc/my.cnf中的skip-grant-tables删除，然后登录再次设置密码（不知道为啥如果不再次设置密码就操作不了数据库了）
+`/usr/local/mysql/bin/mysql -u root -p`
+
 执行如下sql：
-`alter user user() identified by "123456";`
-`identified by`后边是密码
-这部具体是什么操作？
+`alter user 'root'@'localhost' identified by '修改后的密码';`
+注意mysql_5.7之前的版本需要把`authentication_string`替换为：`password`
 
-此时还需要修改root的密码：
-`update user set authentication_string=password('填入新密码”') where user='root';`
+允许远程连接
+```
+/usr/local/mysql/bin/mysql -u root -p
+use mysql;
+update user set host='%' where user = 'root';
+flush privileges;
+eixt;
+```
 
-注意mysql5.7之前需要把`authentication_string`替换为：`password`
+添加快捷方式(可选)
+`ln -s /usr/local/mysql/bin/mysql /usr/bin`
 
 忘记root密码怎么办？
 编辑配置文件：`vi /etc/my.cnf`
@@ -346,7 +402,7 @@ socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向
 退出
 `exit;`
 
-再次vi /etc/my.cnf。把skip-grant-tables删除掉。保存退出。完成MySql Root密码修改
+再次vi /etc/my.cnf。把skip-grant-tables删除掉。保存退出。完成MySql root密码的修改。
 
 为root用户赋予权限：
 `grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;`
@@ -364,6 +420,65 @@ socket我在mysql根目录中新建了一个tmp文件夹，然后这里就指向
 
 重启mysql服务：
 `service mysql restart`
+
+[参考地址](https://www.cnblogs.com/daemon-/p/9009360.html)
+
+### windows安装mysql_8.0
+1. [官网下载](https://www.mysql.com/downloads/)
+2. 点击MySQL Community Edition (GPL) 下面的download，位于页面最下边。
+3. 点击MySQL Community Server (GPL)下面的download
+4. 页面最下边的有三种安装包。
+安装版  .msi结尾的
+Windows (x86, 64-bit), ZIP Archive 免安装版，解压即可。
+Windows (x86, 64-bit), ZIP Archive Debug Binaries & Test Suite，带工具包版本。
+这里下载第二个，免安装版，下载之后解压到你想要的位置。
+
+5. 在解压的根目录新建一个 my.ini 的文件，然后加入以下内容：（basedir datadir 这两个的值一定要改成你自己的目录地址）
+```
+[mysql]
+# 设置mysql客户端默认字符集
+default-character-set=utf8
+
+[mysqld] 
+# 设置3306端口
+port = 3306
+# 设置mysql的安装目录
+basedir=D:\install\mysql-8.0.15-winx64
+# 设置mysql数据库的数据的存放目录
+datadir=D:\install\mysql-8.0.15-winx64\data
+# 允许最大连接数
+max_connections=200
+# 服务端使用的字符集默认为8比特编码的latin1字符集
+character-set-server=utf8
+# 创建新表时将使用的默认存储引擎
+default-storage-engine=INNODB
+```
+
+6. 添加环境变量
+我的电脑右键属性-->高级系统设置-->环境变量-->系统变量中找到Path-->点击编辑-->新建 加入Mysql的bin目录路径；
+
+7. 在mysql的bin目录以管理员身份运行cmd，以此输入
+`mysqld --install`安装
+`mysqld --initialize`初始化
+`net start mysql`运行
+初始化后在Mysql的根目录会生成 data 数据库文件夹，如果启动服务失败，很有可能就是这个data文件夹有问题，删掉重新执行上边的步骤。
+
+8. 登陆mysql
+`mysql -u root -p`
+此时需要输入mysql的默认密码，在mysql的安装目录下搜索*.err，以文本形式打开可以看到一些内容：
+搜索文本`A temporary password is generated for root@localhost: `
+localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键，将密码黏贴，回车，登录成功。
+
+9. 登录成功后必须修改密码才能进行其他操作。
+`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你的新密码';`
+
+10. 配置远程连接mysql：
+在mysql的bin目录下执行：
+`mysql -u root -p密码`
+`use mysql;`
+`update user set host='%' where user ='root';`修改连接权限
+`update user set plugin='mysql_native_password' where user ='root';`更改加密方式：
+`flush privileges;`执行刷新权限
 
 ## tomcat
 官网下载：
