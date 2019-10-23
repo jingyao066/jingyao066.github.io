@@ -99,3 +99,183 @@ Elasticsearch可通过近实时搜索进行扩展。其主要功能之一是多�
 - 分组和聚合
 
 ## ElasticSearch vs solr
+由于Lucene的复杂性，一般很少会考虑它作为搜索的第一选择，排除一些公司需要自研搜索框架，底层需要依赖Lucene。所以这里我们重点分析 Elasticsearch 和 Solr。
+Elasticsearch vs. Solr。哪一个更好？他们有什么不同？你应该使用哪一个？
+
+### 历史比较
+Apache Solr是一个成熟的项目，拥有庞大而活跃的开发和用户社区，以及Apache品牌。Solr于2006年首次发布到开源，长期以来一直占据着搜索引擎领域，并且是任何需要搜索功能的人的首选引擎。它的成熟转化为丰富的功能，而不仅仅是简单的文本索引和搜索； 如分面，分组，强大的过滤，可插入的文档处理，可插入的搜索链组件，语言检测等。
+Solr 在搜索领域占据了多年的主导地位。然后，在2010年左右，Elasticsearch成为市场上的另一种选择。那时候，它远没有Solr那么稳定，没有Solr的功能深度，没有思想分享，品牌等等。
+Elasticsearch虽然很年轻，但它也自己的一些优势，Elasticsearch 建立在更现代的原则上，针对更现代的用例，并且是为了更容易处理大型索引和高查询率而构建的。此外，由于它太年轻，没有社区可以合作，它可以自由地向前推进，而不需要与其他人（用户或开发人员）达成任何共识或合作，向后兼容，或任何其他更成熟的软件通常必须处理。
+因此，它在Solr之前就公开了一些非常受欢迎的功能(例如，接近实时搜索，英文：Near Real-Time Search)。从技术上讲，NRT搜索的能力确实来自Lucene，它是 Solr 和 Elasticsearch 使用的基础搜索库。具有讽刺意味的是，因为 Elasticsearch 首先公开了NRT搜索，所以人们将NRT搜索与Elasticsearch 联系在一起，尽管 Solr 和 Lucene 都是同一个 Apache 项目的一部分，因此，人们会首先期望 Solr 具有如此高要求的功能。
+
+### 特征差异比较
+这两个搜索引擎都是流行的，先进的的开源搜索引擎。它们都是围绕核心底层搜索库 - Lucene构建的 - 但它们又是不同的。像所有东西一样，每个都有其优点和缺点，根据您的需求和期望，每个都可能更好或更差。Solr和Elasticsearch都在快速发展，所以，话不多说，先来看下它们的差异清单：
+
+|特征 | Solr/SolrCloud | Elasticsearch |
+|-|-|-|
+|社区和开发者 | Apache 软件基金和社区支持 | 单一商业实体及其员工
+|节点发现 | Apache Zookeeper，在大量项目中成熟且经过实战测试 | Zen内置于Elasticsearch本身，需要专用的主节点才能进行分裂脑保护
+|碎片放置 | 本质上是静态，需要手动工作来迁移分片，从Solr 7开始 - Autoscaling API允许一些动态操作 | 动态，可以根据群集状态按需移动分片
+|高速缓存 | 全局，每个段更改无效 | 每段，更适合动态更改数据
+|分析引擎性能 | 非常适合精确计算的静态数据	结果的准确性取决于数据放置
+|全文搜索功能 | 基于Lucene的语言分析，多建议，拼写检查，丰富的高亮显示支持 | 基于Lucene的语言分析，单一建议API实现，高亮显示重新计算
+|DevOps支持 | 尚未完全，但即将到来 | 非常好的API
+|非平面数据处理 | 嵌套文档和父-子支持 | 嵌套和对象类型的自然支持允许几乎无限的嵌套和父-子支持
+|查询DSL | JSON（有限），XML（有限）或URL参数 | JSON
+|索引/收集领导控制 | 领导者安置控制和领导者重新平衡甚至可以节点上的负载 | 不可能
+|机器学 | 内置 - 在流聚合之上，专注于逻辑回归和学习排名贡献模块 | 商业功能，专注于异常和异常值以及时间序列数据
+
+[了解更多](http://solr-vs-elasticsearch.com/)
+
+### 综合比较
+另外，我们在从以下几个方面来分析下：
+- 近几年的流行趋势
+我们查看一下这两种产品的Google搜索趋势。谷歌趋势表明，与 Solr 相比，Elasticsearch具有很大的吸引力，但这并不意味着Apache Solr已经死亡。虽然有些人可能不这么认为，但Solr仍然是最受欢迎的搜索引擎之一，拥有强大的社区和开源支持。
+- 安装和配置
+与Solr相比，Elasticsearch易于安装且非常轻巧。此外，您可以在几分钟内安装并运行Elasticsearch。
+但是，如果Elasticsearch管理不当，这种易于部署和使用可能会成为一个问题。基于JSON的配置很简单，但如果要为文件中的每个配置指定注释，那么它不适合您。
+总的来说，如果您的应用使用的是JSON，那么Elasticsearch是一个更好的选择。否则，请使用Solr，因为它的schema.xml和solrconfig.xml都有很好的文档记录。
+- 社区
+Solr拥有更大，更成熟的用户，开发者和贡献者社区。ES虽拥有的规模较小但活跃的用户社区以及不断增长的贡献者社区。
+Solr是真正的开源社区代码。任何人都可以为Solr做出贡献，并且根据优点选出新的Solr开发人员（也称为提交者）。Elasticsearch在技术上是开源的，但在精神上却不那么重要。任何人都可以看到来源，任何人都可以更改它并提供贡献，但只有Elasticsearch的员工才能真正对Elasticsearch进行更改。
+Solr贡献者和提交者来自许多不同的组织，而Elasticsearch提交者来自单个公司。
+- 成熟度
+Solr更成熟，但ES增长迅速，我认为它稳定。
+- 文档
+Solr在这里得分很高。它是一个非常有据可查的产品，具有清晰的示例和API用例场景。 Elasticsearch的文档组织良好，但它缺乏好的示例和清晰的配置说明。
+
+### 总结
+那么，到底是Solr还是Elasticsearch？
+有时很难找到明确的答案。无论您选择Solr还是Elasticsearch，首先需要了解正确的用例和未来需求。总结他们的每个属性。
+
+- 由于易于使用，Elasticsearch在新开发者中更受欢迎。但是，如果您已经习惯了与Solr合作，请继续使用它，因为迁移到Elasticsearch没有特定的优势。
+- 如果除了搜索文本之外还需要它来处理分析查询，Elasticsearch是更好的选择。
+- 如果需要分布式索引，则需要选择Elasticsearch。对于需要良好可伸缩性和性能的云和分布式环境，Elasticsearch是更好的选择。
+- 两者都有良好的商业支持（咨询，生产支持，整合等）
+- 两者都有很好的操作工具，尽管Elasticsearch因其易于使用的API而更多地吸引了DevOps人群，因此可以围绕它创建一个更加生动的工具生态系统。
+- Elasticsearch在开源日志管理用例中占据主导地位，许多组织在Elasticsearch中索引它们的日志以使其可搜索。虽然Solr现在也可以用于此目的，但它只是错过了这一想法。
+- Solr仍然更加面向文本搜索。另一方面，Elasticsearch 通常用于过滤和分组 - 分析查询工作负载 - 而不一定是文本搜索。Elasticsearch 开发人员在 Lucene 和 Elasticsearch 级别上投入了大量精力使此类查询更高效(降低内存占用和CPU使用)。因此，对于不仅需要进行文本搜索，而且需要复杂的搜索时间聚合的应用程序，Elasticsearch是一个更好的选择。
+- Elasticsearch更容易上手，一个下载和一个命令就可以启动一切。Solr传统上需要更多的工作和知识，但Solr最近在消除这一点上取得了巨大的进步，现在只需努力改变它的声誉。
+- 在性能方面，它们大致相同。我说“大致”，因为没有人做过全面和无偏见的基准测试。对于95％的用例，任何一种选择在性能方面都会很好，剩下的5％需要用它们的特定数据和特定的访问模式来测试这两种解决方案。
+- 从操作上讲，Elasticsearch使用起来比较简单 - 它只有一个进程。Solr在其类似Elasticsearch的完全分布式部署模式SolrCloud中依赖于Apache ZooKeeper。ZooKeeper是超级成熟，超级广泛使用等等，但它仍然是另一个活跃的部分。也就是说，如果您使用的是Hadoop，HBase，Spark，Kafka或其他一些较新的分布式软件，您可能已经在组织的某个地方运行ZooKeeper。
+- 虽然Elasticsearch内置了类似ZooKeeper的组件Xen，但ZooKeeper可以更好地防止有时在Elasticsearch集群中出现的可怕的裂脑问题。公平地说，Elasticsearch开发人员已经意识到这个问题，并致力于改进Elasticsearch的这个方面。
+- 如果您喜欢监控和指标，那么使用Elasticsearch，您将会进入天堂。这个东西比新年前夜在时代广场可以挤压的人有更多的指标！Solr暴露了关键指标，但远不及Elasticsearch那么多。
+
+# 思维导图
+## 全文搜索
+![](Search engine/full_text_search_overview.png)
+
+## Elastic基础
+![](Search engine/elastic_basic.png)
+
+[参考地址](https://www.cnblogs.com/jajian/p/9801154.html)
+[参考地址](https://www.cnblogs.com/reycg-blog/p/10048815.html)
+
+# solr学习
+[solr官网](https://lucene.apache.org/solr/)
+下载最新的`Binary releases`，解压得到
+![](Search engine/1.png)
+
+Solr的运行分为单机运行和集群运行，这里以单机为例。
+进入到solr的bin目录执行命令：
+`solr start`
+提示`Started Solr server on port 8983 (pid=). Happy searching!`，说明启动成功。
+然后在浏览器输入http://localhost:8983/solr 就会进入到solr的管理界面。
+注意：一定要用windows的cmd启动，而且启动之后cmd窗口不能关闭，git的bash是不行的，虽然提示happy searching，但是无法访问web界面。
+一些solr常用命令：
+`solr start –p 端口号`：单机版启动solr服务
+`solr restart –p 端口号`：重启solr服务
+`solr stop –p 端口号`：关闭solr服务
+`solr create –c name`：创建一个core实例(core概念后面介绍)
+[更多命令参考官方文档](https://lucene.apache.org/solr/guide/7_4/solr-control-script-reference.html)
+
+## 创建core实例
+简单说core就是solr的一个实例，一个solr服务下可以有多个core，每个core下都有自己的索引库和与之相应的配置文件，所以在操作solr创建索引之前要创建一个core，因为索引都存在core下面。
+- 在bin目录下执行solr create –c name，创建一个core，默认创建出来的位置如下图
+![](Search engine/2.png)
+- 第二种方式是直接使用AdminUI页面创建一个core，如下图
+![](Search engine/3.png)
+
+## 配置schema
+### schema介绍
+schema是用来告诉solr如何建立索引的，他的配置围绕着一个schema配置文件，这个配置文件决定着solr如何建立索引，每个字段的数据类型，分词方式等，老版本的schema配置文件的名字叫做schema.xml他的配置方式就是手工编辑，但是现在新版本的schema配置文件的名字叫做managed-schema，他的配置方式不再是用手工编辑而是使用schemaAPI来配置，官方给出的解释是使用schemaAPI修改managed-schema内容后不需要重新加载core或者重启solr更适合在生产环境下维护，如果使用手工编辑的方式更改配置不进行重加载core有可能会造成配置丢失，配置文件所在的路径如下图：
+![](Search engine/4.png)
+
+### schema主要成员：
+- fieldType：为field定义类型，最主要作用是定义分词器，分词器决定着如何从文档中检索关键字。
+- analyzer：他是fieldType下的子元素，这就是传说中的分词器，他由一组tokenizer和filter组成，如下图所示
+![](Search engine/5.png)
+- field：他是创建索引用的字段，如果想要这个字段生成索引需要配置他的indexed属性为true，stored属性为true表示存储该索引。如下所示每个field都要引用一种fieldType由type属性定义
+`<field name="description" type="text_tr" indexed="true" stored="true">`
+这里描述的只是最常用的三个元素，[关于更多schema的介绍请参考](http://lucene.apache.org/solr/guide/7_4/documents-fields-and-schema-design.html)
+
+### Schema API
+Schema API其实就是用post请求向solr服务器发送携带json参数的请求，所有操作内容都封装在json中，如果是linux系统直接使用curl工具，如果是windows系统推荐使用Postman
+![](Search engine/6.png)
+这里以添加一个field为例，下面列出其他API：
+add-field: add a new field with parameters youprovide.
+delete-field: delete a field.
+replace-field: replace an existing field withone that is differently configured.
+[更多api请参考](http://lucene.apache.org/solr/guide/7_4/schema-api.html)
+
+### 中文分词器
+solr自带了一些中文分词器，比较好用的是SmartChineseAnalyzer，但是扩展性比较差不能自定义扩展中文词库，所以这里选择使用IKAnalyzer，这是第三方的一个分词器可以很好的扩展中文词库，IKAnalyzer下载后解压会有如下文件
+![](Search engine/7.png)
+把核心jar文件复制到solr WEB应用的lib文件夹下，如下图
+![](Search engine/8.png)
+把配置文件和词库等文件复制到WEB应用的classes文件夹下，如果子WEB-INF下没有这个文件夹自己创建即可，如下图：
+![](Search engine/9.png)
+如果想要扩展词库可以在ext.dic文件中配置自定义的中文词组，例如：诛仙这个词组，这个分词器的算法是算不出来的但是通过我们自定义词库，分词器也可以把诛仙列出关键词。
+注意编辑此文件时字符编码最好是UTF-8无BOM模式，这个可以通过EditPlus等文本编辑工具设置。下面开始在Schema中应用分词器如下图：
+![](Search engine/10.png)
+定义了一个text_ik这个字段类型并采用Ik分词器，接下来在field元素定义式指定type=text_ik就可以把这个分词器应用在这个field中。
+接下来我们来验证下ik分词器，如下图：
+![](Search engine/11.png)
+![](Search engine/12.png)
+
+## DIH导入索引数据
+DIH全称是Data Import Handler 数据导入处理器，顾名思义这是向solr中导入数据的，我们的solr目的就是为了能让我们的应用程序更快的查询出用户想要的数据，而数据存储在应用中的各种地方如：xml、pdf、关系数据库中，那么solr首先就要能够获取这些数据并在这些数据中建立索引来达成快速搜索的目的，这里就列举我们最常用的从关系型数据库中向solr导入索引数据。
+
+在我们自己建立的core的目录下有conf目录，这里面有着几个很重要的配置文件，之前我们用到的managed-schema(老版本是schema.xml)也在其中，另外还有一个solrconfig.xml文件，这是我们DIH配置的第一步，需要在此文件中配置数据导入文件的映射位置如下图：
+![](Search engine/13.png)
+第二步配置数据导入文件，这个文件可以在solr根目录下的示例文件中copy一份到core/conf目录下，也就是跟solrconfig.xml在一个目录下，因为solrconfig.xml中配置的相对路径就是这里，当然也可以写绝对路径。如下图：
+![](Search engine/14.png)
+Copy过去之后这个文件名可以自定义，我就改成了MyDataConfig.xml，下面开始配置如下图：
+![](Search engine/15.png)
+- 首先配置数据源关系型数据库基本四项，驱动类，url，用户名，密码。
+- 配置document，可以把它当作与mysql中数据库一个层级的对象。
+- 配置entity，可以把它当作与数据库中一个表对应，在query中书写查询sql。
+- 配置field与表中的字段与之对应。
+注意这里容易与schema中的配置混淆，我的理解是schema中配置的是创建索引的配置，而索引的创建需要有数据基础，而现在讲的数据导入文件就是建立索引的数据基础，他是创建索引的元数据。现在配置文件完成后可以用DIH命令执行了。
+
+### DIH 命令
+DIH命令就是用来执行数据导入的，命令种类繁多这里只列出简单常用。DIH命令采用的方式是URL的方式。
+full-import：全部数据导入例如：
+![](Search engine/16.png)
+
+接下来验证下数据是否真的导入成功了，如下图
+![](Search engine/17.png)
+fq:过滤的字段，df：默认查询字段，start，rows：分页配置，sort：排序，[更多关于查询语句的介绍请参考](http://lucene.apache.org/solr/guide/7_4/searching.html)
+
+### solrJ(java客户端)
+solrJ是java访问solr的客户端工具包，solr也提供了其他语言访问的客户端，可以到官方文档查看，现在solr的索引和数据导入都已经有，但是作为项目中应用的一个组件，少不了java与solr的沟通。
+
+导入solrJ依赖
+```
+<dependency>
+ <groupId>org.apache.solr</groupId>
+ <artifactId>solr-solrj</artifactId>
+ <version>7.4.0</version>
+</dependency>
+```
+
+从solr中查询索引
+![](Search engine/18.png)
+
+向solr添加更改索引，java实体对象与solr索引映射
+![](Search engine/19.png)
+
+向solr添加或更新索引，如果此实体在solr索引库中已有则作为更新操作
+![](Search engine/20.png)
+
+[参考地址](https://blog.csdn.net/u010510107/article/details/81051795)
