@@ -125,6 +125,24 @@ ALTER TABLE <表名>
 - A表数据导入B表：
 `INSERT INTO 表名 SELECT * FROM 有数据的表`
 
+- 仅复制表结构
+`create table my_table_copy2 like my_table;`
+
+- 复制表结构和数据
+`create table my_table_copy1 select * from my_table;`
+注意：该语句只是按select语句执行的结果新建表，并不会复制表的主键、索引等信息。
+
+- 完全复制表
+`create table my_table_copy2 like my_table;`
+`insert into my_table_copy2 select * from my_table;`
+
+- 复制表，同时重新定义字段名
+`create table my_table_copy3`
+`select id,username yhm,realname xm,email dzyj,address dz from my_table;`
+
+- 复制表，同时定义字段信息
+`create table my_table_copy4 (id INTEGER not null auto_increment PRIMARY KEY) select * from my_table;`
+
 # 主外键
 主键：`primary_key`
 - 保证数据唯一性
