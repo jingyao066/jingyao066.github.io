@@ -111,9 +111,9 @@ EmpBean 实体类中存在一对一关系：
             ofType：list中的对象类型List<EmpBean>(必须)
             若使用自动映射automapping，需要为使用as别名的字段单独使用result标签
          -->
-		 -- 若返回结果需要id，该字段必须映射，否则会把主表的id映射到每一条子数据上，造成子数据每条id都一样的错误
-		 -- 而且查询的id必须起别名，不能和主表的id一样(主表的主键叫id，子表的主键也叫id，会造成映射错误)
-        <id column="e_id" property="id" /> -- 此处的cloumn必须改为和id的别名一致，否则会造成映射错误
+		若返回结果需要id，该字段必须映射，否则会把主表的id映射到每一条子数据上，造成子数据每条id都一样的错误
+		而且查询的id必须起别名，不能和主表的id一样(主表的主键叫id，子表的主键也叫id，会造成映射错误)
+        <id column="e_id" property="id" /> 此处的cloumn必须改为和id的别名一致，否则会造成映射错误
         <result column = "emp_name" property = "empName" />
     </collection>
 </resultMap>
