@@ -799,3 +799,85 @@ cd /usr/local/nginx/sbin
 8. 安装maven
 9. 安装git
 10. 安装nginx
+
+# 阿里云升级https
+## 申请证书
+登录阿里云->控制台->产品与服务->安全（云盾）->SSL证书(应用安全)->购买证书->免费型DV SSL->购买并支付(这里支付0.00，就是不用花钱)
+然后回到控制台->SSL证书(应用安全)，可以看到刚才购买的免费SSL证书。
+
+然后点击右侧的证书申请，填写申请人的详细信息，然后点击下一步，进入证书验证信息页面。
+然后按照以下提示信息添加DNS解析记录，该验证信息在证书签发后可删除。这些信息包括记录类型、主机记录和记录值。
+然后在域名解析记录列表添加记录，根据提示分别填入上边的三个信息，然后确认保存，然后点击验证，如果成功会提示：
+已经成功提交到CA公司，请您保持电话畅通，并及时查阅邮箱中来自CA公司的电子邮件。
+然后安静的等待审核通过，一般十分钟就通过了，审核通过后会在ssl证书页面看到证书的状态是`已签发`。
+点击右侧的下载，根据自己的服务器类型选择证书下载，我下载nginx版本，顺便打开帮助文档，[按照文档来](https://help.aliyun.com/knowledge_detail/95491.html)。
+
+- 在Nginx的安装目录下创建cert目录，并且将下载的全部文件拷贝到cert目录中，注意这里先解压再上传到服务器，应该是两个文件。
+- 打开`nginx.conf`配置文件，做如下配置：
+```
+server {
+        listen       443 ssl;
+        server_name  xxx.xxx.com;
+
+	# ssl开头的都是证书配置
+        ssl_certificate      cert/a.pem;
+        ssl_certificate_key  crert/a.key;
+        ssl_session_cache    shared:SSL:1m;
+        ssl_session_timeout  5m;
+        ssl_ciphers  ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers  on;
+
+        location / {
+            proxy_pass  http://xxx.xxx.com:8000;
+            index  index.html index.htm;
+        }
+
+	location ~.txt{
+            root /usr/local/src;
+        }
+
+	error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+```
+ssl开头的都是证书配置，要按照规定写，其他参数根据自己需求填写。
+填完之后启动nginx报错：
+`nginx: [emerg] the "ssl" parameter requires ngx_http_ssl_module in /usr/local/nginx/conf/nginx.conf:105`
+原因也很简单，nginx缺少http_ssl_module模块，编译安装的时候带上--with-http_ssl_module配置就行了，但是现在的情况是我的nginx已经安装过了，怎么添加模块，其实也很简单，往下看： 做个说明：我的nginx的安装目录是/usr/local/nginx这个目录，我的源码包在/usr/local/src/nginx-1.6.2目录
+
+Nginx开启SSL模块
+切换到源码包：
+`cd /usr/local/src/nginx-1.11.3`
+查看nginx原有的模块
+`/usr/local/nginx/sbin/nginx -V`
+在configure arguments:后面显示的原有的configure参数如下：
+`--prefix=/usr/local/nginx --with-http_stub_status_module`
+那么我们的新配置信息就应该这样写：
+`./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module`
+报错：`./configure: error: SSL modules require the OpenSSL library.`
+那就安装它：
+`yum -y install openssl openssl-devel`
+然后继续执行上边的命令，就成功了。
+
+上面的命令运行完，再执行：
+`make`
+这里不要进行make install，否则就是覆盖安装
+然后备份原有已安装好的nginx
+`cp /usr/local/nginx/sbin/nginx /usr/local/nginx/sbin/nginx.bak`
+
+停止nginx，先找到进程号：
+`netstat -nltp|grep 80`
+`kill 13589`
+
+然后将刚刚编译好的nginx覆盖掉原有的nginx（这个时候nginx要停止状态）
+`cp ./objs/nginx /usr/local/nginx/sbin/`
+然后启动nginx，在nginx的sbin目录下执行
+`./nginx`
+
+通过命令查看是否已经加入成功
+`/usr/local/nginx/sbin/nginx -V`
+
+[参考地址](https://www.cnblogs.com/ghjbk/p/6744131.html)
