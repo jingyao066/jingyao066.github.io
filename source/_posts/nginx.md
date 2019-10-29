@@ -75,3 +75,39 @@ server {
 	}
 }
 ```
+
+# Nginx 配置Http和Https共存
+把`ssl on；`这行去掉，ssl写在443端口后面。这样http和https的链接都可以用。
+注意nginx配置文件有两个`server`模块，本来`server listen 443`这个模块是注释掉的，
+现在我们把`server listen 80`这个模块都注释掉，把`server listen 443`打开，并把配置全都放到`listen 443`这个模块中。
+```
+server {
+	listen 80 default backlog=2048;
+	listen       443 ssl;
+	server_name  api.zjxk12.com;
+
+	# ssl开头的都是证书配置
+	ssl_certificate      /usr/local/nginx/cert/2998903_api.zjxk12.com.pem;
+	ssl_certificate_key  /usr/local/nginx/cert/2998903_api.zjxk12.com.key;
+	ssl_session_cache    shared:SSL:1m;
+	ssl_session_timeout  5m;
+	ssl_ciphers  ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_prefer_server_ciphers  on;
+
+	# 端口转发
+	location / {
+		proxy_pass http://api.zjxk12.com:8000;
+		index  index.html index.htm;
+	}
+
+	location ~.txt{
+		root /usr/local/src;
+	}
+
+	error_page   500 502 503 504  /50x.html;
+	location = /50x.html {
+		root   html;
+	}
+}
+```
