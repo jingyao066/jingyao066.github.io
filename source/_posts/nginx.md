@@ -76,7 +76,7 @@ server {
 }
 ```
 
-# Nginx 配置Http和Https共存
+# Nginx配置Http和Https共存
 把`ssl on；`这行去掉，ssl写在443端口后面。这样http和https的链接都可以用。
 注意nginx配置文件有两个`server`模块，本来`server listen 443`这个模块是注释掉的，
 现在我们把`server listen 80`这个模块都注释掉，把`server listen 443`打开，并把配置全都放到`listen 443`这个模块中。
