@@ -848,8 +848,11 @@ mysql 数据库 datetime类型字段，实体中类型为Date，映射出来的�
 在mapper文件上加@Repository注解
 
 # 通用mapper
-
-## 问题
 使用通用mapper的`updateByPrimaryKeySelective`方法时，`UPDATE role SET id = ?,name = ? WHERE id = ? AND name = ?`，发现where条件后，不仅有id，还有其他条件，导致更新失败。
 解决：
 原来是在实体类中的主键id字段没有加@id注解，导致找不到主键。
+
+# 映射问题
+dao层返回值为`Map<String,String>`，数据库中是int，在获取map的值时候，把id字段映射成了`Long`类型，为何？
+最后只能用`Map<String,Object>`去接收返回值，然后在java中再转。
+所以说，接收mybatis的返回值，尽量用`Map<String,Object>`去接收。
