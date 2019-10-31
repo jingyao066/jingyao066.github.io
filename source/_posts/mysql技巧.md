@@ -641,3 +641,22 @@ SELECT concat(SPACE(B.nLevel*2),'+--',A.nodename) FROM treeNodes A,tmpLst B WHER
 缺点：MySQL中对临时表的限制，只能使用普通表，需做事后清理。
 
 [参考地址](https://blog.csdn.net/ACMAIN_CHM/article/details/4142971)
+
+# 一些特殊的sql
+```sql
+<!-- 案件列表 -->
+<select id="caseList" resultType="map">
+select
+	id,
+	concat(
+	<foreach collection="list" separator="," item="i">
+		${i.columnEnglish}
+		<if test="null != i.connector and '' != i.connector">
+		  ,${i.connector}
+		</if>
+	</foreach>
+	) dataName
+from `${tableName}`
+</select>
+```
+出自：archive档案管理系统，`ArchiveMapper.xml`
