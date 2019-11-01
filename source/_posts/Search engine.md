@@ -195,6 +195,10 @@ Solr的运行分为单机运行和集群运行，这里以单机为例。
 ![](Search engine/2.png)
 - 第二种方式是直接使用AdminUI页面创建一个core，如下图
 ![](Search engine/3.png)
+创建的时候报错：
+`Can't find resource 'solrconfig.xml' in classpath orc`
+找到`solr-8.2.0/server/configsets/sample_techproducts_configs/conf`
+把这个conf文件夹copy到新建的文件夹中。
 
 ## 配置schema
 ### schema介绍
@@ -263,9 +267,9 @@ solrJ是java访问solr的客户端工具包，solr也提供了其他语言访问
 导入solrJ依赖
 ```
 <dependency>
- <groupId>org.apache.solr</groupId>
- <artifactId>solr-solrj</artifactId>
- <version>7.4.0</version>
+	<groupId>org.apache.solr</groupId>
+	<artifactId>solr-solrj</artifactId>
+	<version>7.4.0</version>
 </dependency>
 ```
 
@@ -277,5 +281,185 @@ solrJ是java访问solr的客户端工具包，solr也提供了其他语言访问
 
 向solr添加或更新索引，如果此实体在solr索引库中已有则作为更新操作
 ![](Search engine/20.png)
-
 [参考地址](https://blog.csdn.net/u010510107/article/details/81051795)
+
+如果是springb boot项目，只需要导入starter即可。
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-solr</artifactId>
+</dependency>
+```
+在配置文件`application.properties`中加入如下配置：
+`spring.data.solr.host=http://localhost:8983/solr/new_core`
+路径`solr/`后面的内容，是新建的core的名字。这里可以理解为数据库的概念。在操作的时，如果有多个core，可以切换数据库，也就是切换 core。
+
+#### solr操作
+```java
+@RestController
+@RequestMapping("solr")
+public class SolrController {
+
+    @Autowired
+    private SolrClient client;
+
+    /**
+     * 新增/修改 索引
+     * 当id存在的时候, 此方法是修改
+     * @return
+     */
+    @RequestMapping("add")
+    public String add() {
+        try {
+            SolrInputDocument doc = new SolrInputDocument();
+            doc.setField("id", uuid);
+            doc.setField("content_ik", "我是中国人, 我爱中国");
+			
+			//如果spring.data.solr.host 里面配置到 core了, 那么这里就不需要传 collection1 这个参数
+            client.add("collection1", doc);
+            //client.commit();
+            client.commit("collection1");
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "error";
+    }
+
+    /**
+     * 根据id删除索引
+     * @param id
+     * @return
+     */
+    @RequestMapping("delete")
+    public String delete(String id)  {
+        try {
+            client.deleteById("collection1",id);
+            client.commit("collection1");
+
+            return id;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return "error";
+    }
+
+    /**
+     * 删除所有的索引
+     * @return
+     */
+    @RequestMapping("deleteAll")
+    public String deleteAll(){
+        try {
+
+            client.deleteByQuery("collection1","*:*");
+            client.commit("collection1");
+
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "error";
+    }
+
+    /**
+     * 根据id查询索引
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("getById")
+    public String getById() throws Exception {
+        SolrDocument document = client.getById("collection1", "536563");
+        System.out.println(document);
+        return document.toString();
+    }
+
+    /**
+     * 综合查询: 在综合查询中, 有按条件查询, 条件过滤, 排序, 分页, 高亮显示, 获取部分域信息
+     * @return
+     */
+    @RequestMapping("search")
+    public Map<String, Map<String, List<String>>> search(){
+
+        try {
+            SolrQuery params = new SolrQuery();
+
+            //查询条件, 这里的 q 对应 下面图片标红的地方
+            params.set("q", "手机");
+
+            //过滤条件
+            params.set("fq", "product_price:[100 TO 100000]");
+
+            //排序
+            params.addSort("product_price", SolrQuery.ORDER.asc);
+
+            //分页
+            params.setStart(0);
+            params.setRows(20);
+
+            //默认域
+            params.set("df", "product_title");
+
+            //只查询指定域
+            params.set("fl", "id,product_title,product_price");
+
+            //高亮
+            //打开开关
+            params.setHighlight(true);
+            //指定高亮域
+            params.addHighlightField("product_title");
+            //设置前缀
+            params.setHighlightSimplePre("<span style='color:red'>");
+            //设置后缀
+            params.setHighlightSimplePost("</span>");
+
+            QueryResponse queryResponse = client.query(params);
+
+            SolrDocumentList results = queryResponse.getResults();
+
+            long numFound = results.getNumFound();
+
+            System.out.println(numFound);
+
+　　　　　　//获取高亮显示的结果, 高亮显示的结果和查询结果是分开放的
+            Map<String, Map<String, List<String>>> highlight = queryResponse.getHighlighting();
+
+            for (SolrDocument result : results) {
+                System.out.println(result.get("id"));
+                System.out.println(result.get("product_title"));
+                //System.out.println(result.get("product_num"));
+                System.out.println(result.get("product_price"));
+                //System.out.println(result.get("product_image"));
+
+                Map<String, List<String>> map = highlight.get(result.get("id"));
+                List<String> list = map.get("product_title");
+                System.out.println(list.get(0));
+
+                System.out.println("------------------");
+                System.out.println();
+            }
+            return highlight;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+}
+```
+
+新增索引时发现报错：
+`solr Expected mime type application/octet-stream but got text/html`
+解决：
+将配置文件中的core名字去掉，即：
+`spring.data.solr.host=http://39.97.228.206:8983/solr/test_core`
+把路径solr后的`test_core`去掉，然后在代码中指定core。即：
+`client.add("test_core", doc);`
+第一个参数就是core的名字。
+
+[参考一](https://www.cnblogs.com/elvinle/p/8149256.html)
+[参考二](https://www.jianshu.com/p/05a161add1a6)
+[参考三](https://blog.csdn.net/qixiang_chen/article/details/82562410)

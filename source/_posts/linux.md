@@ -766,8 +766,40 @@ nginx安装
 cd /usr/local/nginx/sbin
 ./nginx
 ```
-
 [参考地址](https://www.cnblogs.com/taiyonghai/p/6728707.html)
+
+## solr
+[官网下载最新的solr](https://lucene.apache.org/solr/downloads.html)
+下载Binary releases-zip包，下载后上传到服务器`/usr/local/src`，cp到`/usr/local`下，解压`unzip solr-8.2.0.zip`。
+进入bin目录，执行`./solr -start`
+
+提示：
+```
+*** [WARN] ***  Your Max Processes Limit is currently 63473. 
+ It should be set to 65000 to avoid operational disruption. 
+ If you no longer wish to see this warning, set SOLR_ULIMIT_CHECKS to false in your profile or solr.in.sh
+WARNING: Starting Solr as the root user is a security risk and not considered best practice. Exiting.
+         Please consult the Reference Guide. To override this check, start with argument '-force'
+```
+根据提示再次执行：
+`./solr start -force`
+最后提示：
+`Started Solr server on port 8983 (pid=27222). Happy searching!`
+证明启动成功，打开服务器访问：
+`你的ip:8983`
+就可以看到solr的web页面了。
+
+如果不能访问，可能是你服务器的端口没开，请设置服务器的安全组。
+
+### 创建core
+选择左侧CoreAdmin，再选择Add Core，输入核心的名称和实例路径，后边三个默认就好。
+点击Add Core提交信息，这里我遇到了一个错误信息，如下：
+`Can't find resource 'solrconfig.xml' in classpath orc`
+意思是在核心目录下找不到相应的配置文件，解决办法：将下面路径的conf文件夹copy到新创建的core目录下 /usr/local/solr-8.0.0/server/solr/new_core。
+`/usr/local/solr-8.2.0/server/solr/configsets/_default`
+执行复制命令
+`cp -r conf ../../new_core/`
+然后再去创建，就成功了。
 
 # 技巧
 ## apache下载文件
