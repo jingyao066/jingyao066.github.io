@@ -314,8 +314,7 @@ public class SolrController {
             SolrInputDocument doc = new SolrInputDocument();
             doc.setField("id", uuid);
             doc.setField("content_ik", "我是中国人, 我爱中国");
-			
-			//如果spring.data.solr.host 里面配置到 core了, 那么这里就不需要传 collection1 这个参数
+//如果spring.data.solr.host 里面配置core了, 那么这里就不需要传 collection1 这个参数
             client.add("collection1", doc);
             //client.commit();
             client.commit("collection1");
@@ -323,7 +322,6 @@ public class SolrController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return "error";
     }
 
@@ -337,7 +335,6 @@ public class SolrController {
         try {
             client.deleteById("collection1",id);
             client.commit("collection1");
-
             return id;
         } catch (Exception e) {
             e.printStackTrace();
@@ -354,10 +351,8 @@ public class SolrController {
     @RequestMapping("deleteAll")
     public String deleteAll(){
         try {
-
             client.deleteByQuery("collection1","*:*");
             client.commit("collection1");
-
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
@@ -383,29 +378,22 @@ public class SolrController {
      */
     @RequestMapping("search")
     public Map<String, Map<String, List<String>>> search(){
-
         try {
             SolrQuery params = new SolrQuery();
-
             //查询条件, 这里的 q 对应 下面图片标红的地方
             params.set("q", "手机");
-
             //过滤条件
             params.set("fq", "product_price:[100 TO 100000]");
-
             //排序
             params.addSort("product_price", SolrQuery.ORDER.asc);
-
             //分页
             params.setStart(0);
             params.setRows(20);
-
             //默认域
             params.set("df", "product_title");
-
             //只查询指定域
             params.set("fl", "id,product_title,product_price");
-
+			
             //高亮
             //打开开关
             params.setHighlight(true);
@@ -415,14 +403,12 @@ public class SolrController {
             params.setHighlightSimplePre("<span style='color:red'>");
             //设置后缀
             params.setHighlightSimplePost("</span>");
-
+            //执行查询
             QueryResponse queryResponse = client.query(params);
-
+			//获取查询结果
             SolrDocumentList results = queryResponse.getResults();
-
-            long numFound = results.getNumFound();
-
-            System.out.println(numFound);
+			//结果条数
+            System.out.println(results.getNumFound());
 
 　　　　　　//获取高亮显示的结果, 高亮显示的结果和查询结果是分开放的
             Map<String, Map<String, List<String>>> highlight = queryResponse.getHighlighting();
@@ -447,7 +433,6 @@ public class SolrController {
         }
         return null;
     }
-
 }
 ```
 
