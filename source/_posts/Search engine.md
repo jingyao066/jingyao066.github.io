@@ -261,7 +261,7 @@ full-import：全部数据导入例如：
 ![](Search engine/17.png)
 fq:过滤的字段，df：默认查询字段，start，rows：分页配置，sort：排序，[更多关于查询语句的介绍请参考](http://lucene.apache.org/solr/guide/7_4/searching.html)
 
-### solrJ(java客户端)
+## solrJ(java客户端)
 solrJ是java访问solr的客户端工具包，solr也提供了其他语言访问的客户端，可以到官方文档查看，现在solr的索引和数据导入都已经有，但是作为项目中应用的一个组件，少不了java与solr的沟通。
 
 导入solrJ依赖
@@ -314,7 +314,7 @@ public class SolrController {
             SolrInputDocument doc = new SolrInputDocument();
             doc.setField("id", uuid);
             doc.setField("content_ik", "我是中国人, 我爱中国");
-//如果spring.data.solr.host 里面配置core了, 那么这里就不需要传 collection1 这个参数
+            //如果spring.data.solr.host 里面配置core了, 那么这里就不需要传 collection1 这个参数
             client.add("collection1", doc);
             //client.commit();
             client.commit("collection1");
@@ -405,9 +405,9 @@ public class SolrController {
             params.setHighlightSimplePost("</span>");
             //执行查询
             QueryResponse queryResponse = client.query(params);
-			//获取查询结果
+            //获取查询结果
             SolrDocumentList results = queryResponse.getResults();
-			//结果条数
+            //结果条数
             System.out.println(results.getNumFound());
 
 　　　　　　//获取高亮显示的结果, 高亮显示的结果和查询结果是分开放的
@@ -439,12 +439,33 @@ public class SolrController {
 新增索引时发现报错：
 `solr Expected mime type application/octet-stream but got text/html`
 解决：
-将配置文件中的core名字去掉，即：
-`spring.data.solr.host=http://39.97.228.206:8983/solr/test_core`
-把路径solr后的`test_core`去掉，然后在代码中指定core。即：
-`client.add("test_core", doc);`
-第一个参数就是core的名字。
+在代码中，重复指定了core
+`client.commit("test_core");`
+commit中就不要带参数了。
 
 [参考一](https://www.cnblogs.com/elvinle/p/8149256.html)
 [参考二](https://www.jianshu.com/p/05a161add1a6)
 [参考三](https://blog.csdn.net/qixiang_chen/article/details/82562410)
+
+### solr查询参数
+|参数|意义|
+|-|-|-|
+|q	| 查询的关键字，此参数最为重要，例如，q=id:1，默认为q=:，|
+|fl | 指定返回哪些字段，用逗号或空格分隔，注意：字段区分大小写，例如，fl= id,title,sort|
+|start | 返回结果的第几条记录开始，一般分页用，默认0开始|
+|rows | 指定返回结果最多有多少条记录，默认值为 10，配合start实现分页|
+|sort | 排序方式，例如id desc 表示按照 “id” 降序|
+|wt | (writer type)指定输出格式，有 xml, json, php等|
+|fq | （filter query）过虑查询，提供一个可选的筛选器查询。返回在q查询符合结果中同时符合的fq条件的查询结果，例如：q=id:1&fq=sort:[1 TO 5]，找关键字id为1 的，并且sort是1到5之间的。|
+|df | 默认的查询字段，一般默认指定。|
+|qt | （query type）指定那个类型来处理查询请求，一般不用指定，默认是standard。|
+|indent | 返回的结果是否缩进，默认关闭，用 indent=true|
+|version | 查询语法的版本，建议不使用它，由服务器指定默认值。|
+
+[参考](https://www.cnblogs.com/cuihongyu3503319/p/9875628.html)
+[参考](https://blog.csdn.net/zuihongyan518/article/details/90060175)
+[参考](https://www.cnblogs.com/zhangweizhong/p/5056884.html)
+
+问题：
+现在有四条数据的标题分别是`标题1`、`标题2`、`t3`、`t4`。
+
