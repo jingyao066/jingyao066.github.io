@@ -222,7 +222,7 @@ delete-field: delete a field.
 replace-field: replace an existing field withone that is differently configured.
 [更多api请参考](http://lucene.apache.org/solr/guide/7_4/schema-api.html)
 
-### 中文分词器
+## 中文分词器
 solr自带了一些中文分词器，比较好用的是SmartChineseAnalyzer，但是扩展性比较差不能自定义扩展中文词库，所以这里选择使用IKAnalyzer，这是第三方的一个分词器可以很好的扩展中文词库，IKAnalyzer下载后解压会有如下文件
 ![](Search engine/7.png)
 把核心jar文件复制到solr WEB应用的lib文件夹下，如下图
@@ -339,8 +339,6 @@ public class SolrController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return "error";
     }
 
@@ -469,3 +467,19 @@ commit中就不要带参数了。
 问题：
 现在有四条数据的标题分别是`标题1`、`标题2`、`t3`、`t4`。
 
+### solr删除数据
+- solr的web页面删除
+左侧列表选择你的索引库，选择`Documents`，`Document Type`选择xml，在下面输入
+```
+<delete><query>*:*</query></delete>
+<commit/>
+```
+
+[参考](https://blog.csdn.net/lbf5210/article/details/51207043)
+
+### solr报错
+`Exception writing document id 7 to the index; possible analysis error: cannot change DocValues type from SORTED_NUMERIC to SORTED for field "archive_no"`
+solr新增或者修改字段的类型后出现该异常, 可以通过以下两种方法解决。
+- reload对应的core
+solr的控制台左侧列表`Core Admin`，找到你的core，点击右侧的`Reload`
+- 若第一种方法不行, 则需要清空当前core的所有数据
