@@ -322,3 +322,5 @@ mac：
 解决：
 设置搜索`java compiler`，改成自己的jdk版本。如果还不行，idea重新下载jar包试试。
 
+# 关闭idea maven自动刷新
+settings->Build,Execution,Deployment->Build Tools->Maven->Importing，`Import Maven projects automatically`取消该项的勾选。

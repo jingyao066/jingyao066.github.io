@@ -181,3 +181,20 @@ maven会先根据第一原则进行选择，第一原则不成，则按第二原
 [maven对父工程与子模块的拆分和聚合，参考这里](https://www.cnblogs.com/whgk/p/7121336.html)
 
 [本文参考](https://www.cnblogs.com/whgk/p/7112560.html)
+
+# maven引入本地jar包的方法
+- 将jar包复制到项目中，建议放到`/src/main/resources/lib`下。
+- 在pom.xml中加入配置
+```
+<dependency>
+	<groupId>com.aspose</groupId>
+	<artifactId>aspose-words</artifactId>
+	<version>19.10</version>
+	<scope>system</scope>
+	<systemPath>${basedir}/src/main/resources/lib/aspose-words-19.10-jdk17.jar</systemPath>
+</dependency>
+```
+
+# 不使用maven导包
+Porject Structure->Libraries
+点击左上角的加号，选择`java`，然后一层层找到你项目中的jar包。

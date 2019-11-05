@@ -111,3 +111,8 @@ server {
 	}
 }
 ```
+
+# 上传大文件
+在`http`模块下加入该配置：
+`client_max_body_size 500m;`
+然后重启nginx。
