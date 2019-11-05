@@ -464,8 +464,54 @@ commit中就不要带参数了。
 [参考](https://blog.csdn.net/zuihongyan518/article/details/90060175)
 [参考](https://www.cnblogs.com/zhangweizhong/p/5056884.html)
 
-问题：
-现在有四条数据的标题分别是`标题1`、`标题2`、`t3`、`t4`。
+#### 多条件查询
+**请求参数：**
+
+|参数名|必选|类型|说明|
+|----|----|-----|-----|
+| pageNum |是  |string | 页码 |
+| pageSize |是  |string | 步长 |
+| params |是  |string | 条件字符串 |
+
+params拼接格式：
+`字段1：值 AND 字段2：值 AND 字段3：值`
+**AND必须大写**，且前后要有空格
+
+如果需要模糊查询，需要在`值`的两端拼上`*`，示例：
+`title:*测试*`
+
+每新增一个条件在后边拼接一个参数即可。
+
+后台service实现类代码：
+```java
+/**
+ * @author: wjy
+ * @description: 综合查询
+ */
+@Override
+public Map<String, Object> solrQuery(Map<String,String> paramMap) {
+	Map<String,Object> resultMap = new HashMap<>();
+	try {
+		//创建查询对象
+		SolrQuery q = new SolrQuery();
+		q.setQuery(paramMap.get("params"));
+
+		//设置分页
+		q.setStart(paramMap.get("pageNum") == null ? 0 : Integer.parseInt(paramMap.get("pageNum")));
+		q.setRows(paramMap.get("pageSize") == null ? 10 : Integer.parseInt(paramMap.get("pageSize")));
+		//执行查询
+		QueryResponse queryResponse = client.query(q);
+		//取查询结果
+		SolrDocumentList solrDocumentList = queryResponse.getResults();
+		//转换成对象
+		resultMap.put("data", SolrUtil.getBeans(Archive.class, solrDocumentList));
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+
+	return resultMap;
+}
+```
 
 ### solr删除数据
 - solr的web页面删除

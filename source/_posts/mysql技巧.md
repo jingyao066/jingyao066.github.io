@@ -660,3 +660,20 @@ from `${tableName}`
 </select>
 ```
 出自：archive档案管理系统，`ArchiveMapper.xml`
+
+```
+select 
+	* 
+from table_name 
+where id in (1,2,3)
+order by field(id,1,2,3)
+```
+根据in里的参数排序。
+xml写法：
+```
+order by field(q.id,
+<foreach collection="questionIdList" separator="," item="i">
+  #{i}
+</foreach>
+)
+```
