@@ -344,6 +344,163 @@ public enum Test {
 
 # Java实现Office系列文件转PDF文件
 [官网下载jar包](https://downloads.aspose.com/)
+[获取在网盘下载破解包](https://pan.baidu.com/s/1vzYobuqDZYe6-VPRp06l3w)
+官网下载的有水印，不过是最新版，破解的是比较旧的版本，不过都能用。
+```java
+package com.archive.util.AsposeUtil;
+
+import java.io.*;
+
+import com.aspose.cells.Workbook;
+import com.aspose.slides.Presentation;
+import com.aspose.words.Document;
+import com.aspose.words.SaveFormat;
+import com.aspose.words.License;
+
+/**
+ * @author: wjy
+ * @Date: Create in 14:28 2019/10/31
+ * @description : Office系列文件转PDF文件工具类
+ */
+public class AsposeUtil {
+
+    //直接把凭证内容写进来，省的读取本地文件
+    private static final String licenseStr =
+            "<License>" +
+            "  <Data>" +
+            "    <Products>" +
+            "      <Product>Aspose.Total for Java</Product>" +
+            "    </Products>" +
+            "    <EditionType>Enterprise</EditionType>" +
+            "    <SubscriptionExpiry>20991231</SubscriptionExpiry>" +
+            "    <LicenseExpiry>20991231</LicenseExpiry>" +
+            "    <SerialNumber>8bfe198c-7f0c-4ef8-8ff0-acc3237bf0d7</SerialNumber>" +
+            "  </Data>" +
+            "  <Signature>sNLLKGMUdF0r8O1kKilWAGdgfs2BvJb/2Xp8p5iuDVfZXmhppo+d0Ran1P9TKdjV4ABwAgKXxJ3jcQTqE/2IRfqwnPf8itN8aFZlV3TJPYeD3yWE7IT55Gz6EijUpC7aKeoohTb4w2fpox58wWoF3SNp6sK6jDfiAUGEHYJ9pjU=</Signature>" +
+            "</License>";
+
+    /**
+     * 获取word、excel、ppt的license
+     */
+    private static boolean getLicense(int type) {
+        boolean result = false;
+        try {
+            InputStream license = new ByteArrayInputStream(licenseStr.getBytes("UTF-8"));
+            //也可以读取本地文件license.xml
+            //InputStream license = new FileInputStream(new File("E:\\IDEA2017\\something2pdf-demo\\src\\main\\resources\\license.xml"));
+            switch(type){
+                case 1://word
+                    License wordLicense = new License();
+                    wordLicense.setLicense(license);
+                    break;
+                case 2://excel
+                    com.aspose.cells.License excelLicense = new com.aspose.cells.License();
+                    excelLicense.setLicense(license);
+                    break;
+                case 3://ppt
+                    com.aspose.slides.License pptLicense = new com.aspose.slides.License();
+                    pptLicense.setLicense(license);
+                    break;
+                default:
+                    break;
+            }
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * word转pdf
+     */
+    public static void doc2pdf(String outputPath,String inputPath) {
+        //验证License 若不验证则转化出的pdf文档会有水印产生
+        if (!getLicense(1)) return;
+        try {
+            //pdf输出路径
+            FileOutputStream os = new FileOutputStream(new File(outputPath));
+            //word文件路径，即本地word文件路径
+            Document doc = new Document(inputPath);
+
+            //这里也可以获取上传的文件
+            //Document doc = new Document(multipartFile.getInputStream());
+
+            //保存转换的pdf文件
+            doc.save(os, SaveFormat.PDF);
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * excel转pdf
+     */
+    public static void excel2pdf(String outputPath,String inputPath) {
+        // 验证License 若不验证则转化出的pdf文档会有水印产生
+        if (!getLicense(2)) return;
+        try {
+            //pdf输出路径
+            File file = new File(outputPath);
+            FileOutputStream os = new FileOutputStream(file);
+
+            //excel输入路径，即本地excel文件路径
+            Workbook wb = new Workbook(inputPath);
+            wb.save(os, com.aspose.cells.SaveFormat.PDF);
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * ppt转pdf
+     */
+    public static void ppt2pdf(String outputPath,String inputPath) {
+        // 验证License
+        if (!getLicense(3)) return;
+        try {
+            //pdf输出路径
+            File file = new File(outputPath);
+            //ppt输入路径，即本地ppt文件路径
+            Presentation pres = new Presentation(inputPath);
+
+            FileOutputStream fileOS = new FileOutputStream(file);
+            pres.save(fileOS, com.aspose.slides.SaveFormat.Pdf);
+            fileOS.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        AsposeUtil.doc2pdf("D:\\doc2pdf.pdf","C:\\Users\\wjy\\Desktop\\测试word.docx");
+        AsposeUtil.excel2pdf("D:\\excel2pdf.pdf","C:\\Users\\wjy\\Desktop\\测试excel.xlsx");
+        AsposeUtil.ppt2pdf("D:\\ppt2pdf.pdf","C:\\Users\\wjy\\Desktop\\测试ppt.pptx");
+    }
+
+}
+```
+maven仓库里没有这三个包。需要自己下载，然后放到项目里，或放到自己的maven仓库里。
+而且`new License()`和`SaveFormat`两个方法，三个包的名字是相同的，所以只能倒一个包，剩下两个写全路径。
+
+三个包名：
+`aspose-cells-18.9.jar`excel转pdf
+`aspose-slides-19.6.jar`ppt转pdf
+`aspose-words-16.8.0-jdk16.jar`word转pdf
 
 [words转pdf参考](https://www.jianshu.com/p/86716c7122ef)
 [参考地址](https://blog.csdn.net/qq_34190023/article/details/82999054)
+[如何破解](https://blog.csdn.net/qq_42834405/article/details/98635337)
+
+# 两个同名的jar包
+```
+import com.aspose.words.License;
+import com.aspose.cells.License;
+```
+这样下边这个包会报错。
+解决办法：
+只倒一个包，另外的直接用全路径，不倒包。如：
+`com.aspose.cells.License asposeLic = new com.aspose.cells.License();`
+`java.io.File dest = new java.io.File(filePath + alias);`
