@@ -525,3 +525,14 @@ ERROR >> Read https://npmjs.com/hexo-algolia#api-key for more informations.
 <video src='https://liaoxuefeng.gitee.io/git-resources/master-branch-forward.mp4' type='video/mp4' controls='controls'  width='100%' height='100%'></video>
 {% endraw%}
 ```
+
+# 解决github提交commit,contributions不统计显示绿色的问题
+最近在提交博文的收，发现提交之后github上没有绿色小方块。
+我找到仓库的递交记录，发现竟然是两个账号提交的，此时想到应该是git设置用户名和邮箱的问题。
+先查看现在的用户名和邮箱：
+`git config user.name`
+`git config user.email`
+发现是和github的账号不对应，于是重新设置邮箱：
+`git config --global user.name "xxx"`
+`git config --global user.email "xxx"`
+然后提交一次试试，发现github可以显示contributions了。
