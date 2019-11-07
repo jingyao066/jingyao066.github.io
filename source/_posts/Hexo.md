@@ -536,3 +536,46 @@ ERROR >> Read https://npmjs.com/hexo-algolia#api-key for more informations.
 `git config --global user.name "xxx"`
 `git config --global user.email "xxx"`
 然后提交一次试试，发现github可以显示contributions了。
+
+那么之前错误的如何补救呢？
+[github官方给出了解决方案](https://help.github.com/en/github/using-git/changing-author-info)
+
+- 打开gitbash，克隆仓库
+`git clone --bare https://github.com/user/repo.git`
+进入仓库
+`cd repo.git`
+
+在仓库的根目录创建一个脚本文件1.sh，并替换头部的三个变量为自己的。
+```
+#!/bin/sh
+
+git filter-branch --env-filter '
+
+OLD_EMAIL="your-old-email@example.com"
+CORRECT_NAME="Your Correct Name"
+CORRECT_EMAIL="your-correct-email@example.com"
+
+if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_COMMITTER_NAME="$CORRECT_NAME"
+    export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+fi
+if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_AUTHOR_NAME="$CORRECT_NAME"
+    export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags
+```
+执行脚本
+`./1.sh`
+执行过程中会显示
+`Rewrite f8da63b882603d90c7f9c6286494bb0d20289a50 (125/258) (42 seconds passed, remaining 44 predicted)`
+
+在github的仓库页面查看记录是否修改过来了。
+将更正的历史记录推送到GitHub：
+`git push --force --tags origin 'refs/heads/*'`
+
+然后将临时克隆的仓库删除即可。
+
+如果不知道错误的邮箱是什么，可以通过`git log`查看仓库的提交记录，记录了每一次的提交人和邮箱，一直往下翻就行了。
