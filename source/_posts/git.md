@@ -1839,6 +1839,46 @@ git config --global user.email“your@email.com"
 
 7.重启git bush，就可以提交了。
 
+## fatal: refusing to merge unrelated histories
+起因是我修改了git之前错误的提交人邮箱。
+然后再次拉代码时提示：
+`fatal: refusing to merge unrelated histories`
+
+解决：
+切换想要提交的分支
+`git checkout hexoBranch`
+
+然后执行
+`git pull origin hexoBranch --allow-unrelated-histories`
+
+然后执行：
+`git push origin hexoBranch`
+
+报错：
+`Updates were rejected because the tip of your current branch is behind`
+意思就是本地分支的版本落后了。
+
+此时可以使用强制push的方法：
+`git push -u origin master -f`
+
+这样会使远程修改丢失，一般是不可取的，尤其是多人协作开发的时候。
+
+push前先将远程repository修改pull下来
+`git pull origin master`
+` git push -u origin master`
+
+若不想merge远程和本地修改，可以先创建新的分支：
+`git branch [name]`
+然后push
+`git push -u origin [name]`
+
+push之后发现还是无法pull，于是再次依次执行
+`git add .`
+`git commit -m 'fix branch'`
+`git push`
+
+然后再次pull，竟然成功了。一头雾水
+
 ## 撤销已经push到远端的commit
 在使用git时，push到远端后发现commit了多余的文件，或者希望能够回退到以前的版本。
 先在本地回退到相应的版本：
