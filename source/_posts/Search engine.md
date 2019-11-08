@@ -521,6 +521,21 @@ public Map<String, Object> solrQuery(Map<String,String> paramMap) {
 <commit/>
 ```
 
+### solr设置密码后代码访问solr
+url 格式修改成下边这种：
+`http://test:admin123@localhost:8983/solr/my_core`
+
+引入必备依赖：
+```
+<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+<dependency> 
+  <groupId>commons-codec</groupId>
+  <artifactId>commons-codec</artifactId>
+  <version>1.7</version>
+</dependency>
+```
+
+
 [参考](https://blog.csdn.net/lbf5210/article/details/51207043)
 
 ### solr报错
