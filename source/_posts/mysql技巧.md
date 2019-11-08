@@ -677,3 +677,21 @@ order by field(q.id,
 </foreach>
 )
 ```
+
+# mysql导入data文件夹
+昨天服务器被挖矿病毒攻击，导致服务器无法访问，数据库无法连接。
+解决过程：
+- 在阿里云控制台备份服务器硬盘快照
+- 重装操作系统
+- 将快照挂载到新系统上，我挂载到了`/mnt`目录下
+- 进入/mnt目录，查看my.cnf`vim etc/my.cnf`，发现data文件在`var/lib/mysql`
+- 进入目录`cd var/lib/mysql`，将该目录整体打包。
+- 重新安装mysql，将新装mysql的`var/lib/mysql`删除，将刚才打包的data目录复制到`/var/lib`
+- 解压，然后启动mysql
+- 远程连接发现mysql无法访问，提示`table xxxxx doesn't exist`
+- 在服务器任意位置输入`mysql_upgrade -uroot -p --force`，然后提示：
+```
+Upgrade process completed successfully.
+Checking if update is needed.
+```
+- 再次尝试远程连接，成功，数据都在！

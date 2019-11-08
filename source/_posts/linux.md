@@ -801,6 +801,91 @@ WARNING: Starting Solr as the root user is a security risk and not considered be
 `cp -r conf ../../new_core/`
 然后再去创建，就成功了。
 
+### 给solr添加访问密码
+昨天因为没给solr添加访问密码，导致服务器被挖矿病毒攻击，服务器无法访问，数据库无法访问。还好今天把数据恢复了。
+
+创建并编辑文件
+`vim /usr/local/solr-8.2.0/server/etc/verify.properties`
+输入如下内容：
+```
+#用户名 密码 权限
+user:pass,admin
+```
+也可以配置多用户：
+```
+#用户名 密码 权限
+user: pass,admin
+user1: pass,admin
+user3: pass,admin
+```
+继续编辑文件
+`vim /usr/local/solr-8.2.0/server/contexts/solr-jetty-context.xml`
+初始文件内容如下:
+```
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+  <Set name="contextPath"><Property name="hostContext" default="/solr"/></Set>
+  <Set name="war"><Property name="jetty.base"/>/solr-webapp/webapp</Set>
+  <Set name="defaultsDescriptor"><Property name="jetty.base"/>/etc/webdefault.xml</Set>
+  <Set name="extractWAR">false</Set>
+</Configure>
+```
+添加如下内容，注意要写在Configure标签中：
+```
+<Get name="securityHandler">
+ <Set name="loginService">
+	 <New class="org.eclipse.jetty.security.HashLoginService">
+		<Set name="name">verify—name</Set>
+		<Set name="config"><SystemProperty name="jetty.home" default="."/>/etc/verify.properties</Set>
+	 </New>
+ </Set>
+</Get>
+```
+继续编辑文件
+`vim /usr/local/solr-8.2.0/server/solr-webapp/webapp/WEB-INF/web.xml`
+
+找到如下内容：
+```
+  <!-- Get rid of error message -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Disable TRACE</web-resource-name>
+      <url-pattern>/</url-pattern>
+      <http-method>TRACE</http-method>
+    </web-resource-collection>
+    <auth-constraint/>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Enable everything but TRACE</web-resource-name>
+      <url-pattern>/</url-pattern>
+      <http-method-omission>TRACE</http-method-omission>
+    </web-resource-collection>
+  </security-constraint>
+```
+在下边添加
+```
+<security-constraint>
+<web-resource-collection>
+  <web-resource-name>Solr</web-resource-name>
+  <url-pattern>/</url-pattern>
+</web-resource-collection>   
+ <auth-constraint>      
+	<role-name>admin</role-name> 
+ </auth-constraint> 
+</security-constraint>
+ 
+<login-config>      
+	<auth-method>BASIC</auth-method> 
+	<realm-name>verify-name</realm-name>   
+</login-config>
+```
+然后启动solr，就会让输入用户名密码了。
+
+另外也可以通过solr地址中加入用户名密码的方式登录，直接进入主界面,地址如下：
+`http://user:pass@localhost:8088/solr/`
+
 # 技巧
 ## apache下载文件
 ![](linux/1.png)
