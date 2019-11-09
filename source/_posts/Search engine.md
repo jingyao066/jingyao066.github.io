@@ -544,3 +544,24 @@ solr新增或者修改字段的类型后出现该异常, 可以通过以下两�
 - reload对应的core
 solr的控制台左侧列表`Core Admin`，找到你的core，点击右侧的`Reload`
 - 若第一种方法不行, 则需要清空当前core的所有数据
+
+### solr查出的数据不匹配
+如我查
+`title:测试`
+把和测试完全不相干的数据也查出来了。
+这时需要在索引词的两端加上`""`双引号即可。
+
+### solr关键字匹配问题
+[参考](https://segmentfault.com/q/1010000012584778)
+
+### facet结果分组
+在solr的网页找到
+`Raw Query Parameters`
+在下面填入：
+`facet=true&facet.field=category_name`
+
+需要注意，被匹配的字段在solr的配置文件`managed-schema`中，必须是`string`类型，不能是`text_general`类型，否则如果该字段有中文的话，他会把中文的每个字都按一组划分。
+更改字段类型后，需要
+1. 重启solr
+2. 将数据全部删除
+3. 在solr控制台reload你的core
