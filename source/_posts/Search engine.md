@@ -555,7 +555,7 @@ solr的控制台左侧列表`Core Admin`，找到你的core，点击右侧的`Re
 [参考](https://segmentfault.com/q/1010000012584778)
 
 ### facet结果分组
-在solr的网页找到
+在solr控制台(web页面)找到
 `Raw Query Parameters`
 在下面填入：
 `facet=true&facet.field=category_name`
@@ -565,3 +565,89 @@ solr的控制台左侧列表`Core Admin`，找到你的core，点击右侧的`Re
 1. 重启solr
 2. 将数据全部删除
 3. 在solr控制台reload你的core
+
+### id相同数据覆盖问题
+由于之前大意没有配置UUID出现ID覆盖问题导致每个ID只能显示一个 重复的ID数据只有一个
+
+修改managed-schema配置
+`vim managed-schema`
+
+添加UUID fieldType
+`<fieldType name="uuid" class="solr.UUIDField" indexed="true"/>`
+
+然后找到field为id，修改id的type为uuid
+
+修改后发现solr控制台报错
+`_root_ field must be defined using the exact same fieldType as the uniqueKey field (id) uses: uuid`
+
+发现`_root_`这个字段的类型是string，遂将改字段的type修改为和id相同的类型`uuid`
+
+因为数据库里的数据也叫id，遂给id起个别名，dataId，就可以保证不同表的数据都能存入solr了。
+
+### 使用实体类返回solr数据
+```java
+package com.archive.util;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+
+/**
+ * @author: wjy
+ * @Date: Create in 12:26 2019/11/3
+ * @description :
+ */
+public class SolrUtil {
+
+    public static final <T> List<T> getBeans(Class<T> clazz,
+                                             SolrDocumentList solrDocumentList) throws Exception{
+        List<T> list = new ArrayList<T>();
+        T t = null;
+        for (SolrDocument solrDocument : solrDocumentList)
+        {
+            //反射出实例
+            t = clazz.newInstance();
+            //获取所有属性
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields)
+            {
+                Object val = solrDocument.get(field.getName());
+                if(val != null)
+                {
+                    String val2 = val.toString();
+                    if(val2.startsWith("[") && val2.endsWith("]"))
+                        val2 = val2.substring(1,val2.length()-1);
+                    System.out.println(field.getName()+","+val2);
+                    BeanUtils.setProperty(t, field.getName(), val2);
+                }
+            }
+            list.add(t);
+        }
+        return list;
+
+    }
+
+    public static final <T> T getBean(Class<T> clazz,
+                                      SolrDocument solrDocument) throws Exception {
+        //反射出实例
+        T t = clazz.newInstance();
+        //获取所有属性
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            // 如果注解为默认的 采用此属性的name来从solr中获取值
+            BeanUtils.setProperty(t, field.getName(), solrDocument.get(field.getName()));
+        }
+        return t;
+    }
+}
+```
+调用方法
+`resultMap.put("data", SolrUtil.getBeans(SolrDto.class, solrDocumentList));`
+
+需要注意，实体类字段名必须和solr里存的字段名一致。
+如：实体类中是`pageNo`，solr里也要是`pageNo`，
+实体类中是`page_no`，solr里也要是`page_no`，否则会映射不上。

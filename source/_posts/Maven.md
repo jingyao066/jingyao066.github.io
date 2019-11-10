@@ -198,3 +198,36 @@ maven会先根据第一原则进行选择，第一原则不成，则按第二原
 # 不使用maven导包
 Porject Structure->Libraries
 点击左上角的加号，选择`java`，然后一层层找到你项目中的jar包。
+
+# 使用dependency引入的jar包Linux上失效
+```
+<dependency>
+	<groupId>aspose-slides</groupId>
+	<artifactId>aspose-slides</artifactId>
+	<scope>system</scope>
+	<version>19.6</version>
+	<systemPath>${basedir}/src/main/resources/lib/aspose-slides-19.6.jar</systemPath>
+</dependency>
+```
+system scope引入的包，在使用jar-with-dependencies打包时将不会被包含，就是如果我`maven install`打包，这个打不进去。到时候调用的时候就会报：`classNotFound`。
+
+执行命令
+windows:
+`mvn install:install-file -DgroupId=alipay -DartifactId=alipay-trade-sdk -Dversion=1.0 -Dpackaging=jar -Dfile=F:\支付宝SDKJARlongguo\alipay-trade-sdk.jar`
+
+linux:
+`mvn install:install-file -DgroupId=aspose-cells -DartifactId=aspose-cells -Dversion=18.9 -Dpackaging=jar -Dfile=/usr/local/src/aspose-cells-18.9.jar`
+区别只是路径不同。
+
+然后使用时，在pom中添加
+```
+<dependency>
+   <groupId>alipay</groupId>
+   <artifactId>alipay-trade-sdk</artifactId>
+   <version>1.0</version>
+</dependency>
+```
+这里的groupId、artifactId、version，随便写，只需要和上边命令中的参数一致即可。
+
+[参考1](https://blog.csdn.net/mingjie1212/article/details/78395744)
+[参考2](https://blog.csdn.net/hhb200766/article/details/42168819)
