@@ -216,6 +216,8 @@ windows:
 `mvn install:install-file -DgroupId=alipay -DartifactId=alipay-trade-sdk -Dversion=1.0 -Dpackaging=jar -Dfile=F:\支付宝SDKJARlongguo\alipay-trade-sdk.jar`
 
 linux:
+`mvn install:install-file -DgroupId=aspose-words -DartifactId=aspose-words -Dversion=16.8 -Dpackaging=jar -Dfile=/usr/local/src/aspose-words-16.8.0-jdk16.jar`
+`mvn install:install-file -DgroupId=aspose-slides -DartifactId=aspose-slides -Dversion=19.6 -Dpackaging=jar -Dfile=/usr/local/src/aspose-slides-19.6.jar`
 `mvn install:install-file -DgroupId=aspose-cells -DartifactId=aspose-cells -Dversion=18.9 -Dpackaging=jar -Dfile=/usr/local/src/aspose-cells-18.9.jar`
 区别只是路径不同。
 
@@ -231,3 +233,17 @@ linux:
 
 [参考1](https://blog.csdn.net/mingjie1212/article/details/78395744)
 [参考2](https://blog.csdn.net/hhb200766/article/details/42168819)
+
+# 卸载jar包
+上边使用`mvn install:install-file`安装了本地的jar包，现在卸载它。
+
+ 
+- 第一步,从Maven本地仓库删除jar
+//清除某个jar
+`mvn dependency:purge-local-repository -DmanualInclude="groupId:artifactId"`
+ 
+//清除多个属于不同groupId的jar
+`mvn dependency:purge-local-repository -DmanualInclude="groupId1:artifactId1,groupId2:artifactId2,..."`
+ 
+- 第二步,阻止Maven对已删除的jar进行reResolve
+`mvn dependency:purge-local-repository -DreResolve=false`
