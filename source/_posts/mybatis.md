@@ -856,3 +856,28 @@ mysql 数据库 datetime类型字段，实体中类型为Date，映射出来的�
 dao层返回值为`Map<String,String>`，数据库中是int，在获取map的值时候，把id字段映射成了`Long`类型，为何？
 最后只能用`Map<String,Object>`去接收返回值，然后在java中再转。
 所以说，接收mybatis的返回值，尽量用`Map<String,Object>`去接收。
+
+# map参数返回主键
+mybatis新增时，参数为map，返回自增的主键。
+
+paramMap中要有key为id 的属性，在参数map中加入id索引
+paramMap.put("id",null);
+
+```
+<insert id="addCase" useGeneratedKeys="true" parameterType="map" keyProperty="id">
+    <selectKey resultType="int" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID() as id
+    </selectKey>
+    insert into ${tableName}
+    <foreach close=")" collection="columnList" item="i" open="(" separator=",">
+      ${i}
+    </foreach>
+    values
+    <foreach close=")" collection="valueList" item="i" open="(" separator=",">
+      #{i}
+    </foreach>
+</insert>
+```
+
+然后在程序中获取新增的主键
+`doc.setField("dataId",paramMap.get("id"));`

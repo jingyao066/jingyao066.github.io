@@ -236,7 +236,6 @@ linux:
 
 # 卸载jar包
 上边使用`mvn install:install-file`安装了本地的jar包，现在卸载它。
-
  
 - 第一步,从Maven本地仓库删除jar
 //清除某个jar

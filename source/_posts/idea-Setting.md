@@ -324,3 +324,10 @@ mac：
 
 # 关闭idea maven自动刷新
 settings->Build,Execution,Deployment->Build Tools->Maven->Importing，`Import Maven projects automatically`取消该项的勾选。
+
+# idea xml文件注释
+xml的注释变成了这样，而且是顶在行首的，看起来十分难受。
+`<!--    播放量+1-->`
+
+settings->Editor->Code style->XML
+找到`Code Generation`选项卡，将`Line comment at first column`和`Block comment at first column`前边的勾选去掉。

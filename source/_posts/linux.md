@@ -529,6 +529,25 @@ cd到tomcat的bin目录下：
 `mvn -v`
 出现版本号：`Apache Maven 3.3.9...`，证明安装成功。
 
+### windows安装maven
+提前安装好jdk。
+
+[官网下载zip包](http://maven.apache.org/download.cgi)
+解压到理想的路径
+
+添加M2_HOME环境变量
+值为maven的安装路径
+
+添加MAVEN_HOME环境变量
+值为maven的安装路径
+
+编辑系统变量`PATH`，在末尾添加
+`%M2_HOME%\bin`
+`%MAVEN_HOME%\bin`
+
+验证
+打开cmd，`mvn -v`，显示版本号证明配置成功！
+
 ## zookeeper
 [下载地址](http://mirror.bit.edu.cn/apache/zookeeper/)
 下载stable版本。
