@@ -1,5 +1,5 @@
 ---
-title: WxShare
+title: wx
 tags: 
     wx
 date: 2019-04-25 10:04:49
@@ -22,7 +22,7 @@ date: 2019-04-25 10:04:49
 想用公众号获得更多功能，如开通微信支付，建议选择服务号。
 
 服务号、订阅号功能对比：
-![](WxShare/1.jpg)
+![](wx/1.jpg)
 
 # 微信开放平台、公众平台区别
 - 公众平台
@@ -38,7 +38,7 @@ date: 2019-04-25 10:04:49
 [参考地址](https://blog.csdn.net/change_on/article/details/75264843)
 
 流程图：
-![](WxShare/2.png)
+![](wx/2.png)
 
 
 准备：公众号、已经备案好的域名
@@ -68,11 +68,11 @@ date: 2019-04-25 10:04:49
 
 ## 获取access_token、ticket
 ```java
-public class WxShareUtil {
+public class wxUtil {
 
 	//这里的StringRedisTemplate是从controller中传过来的，在这里不能@Autowired，该试的都试了，没什么好的解决办法
-    public static WxShare getWxEntity(String url,StringRedisTemplate template) {
-        WxShare wx = new WxShare();
+    public static wx getWxEntity(String url,StringRedisTemplate template) {
+        wx wx = new wx();
         String access_token = template.opsForValue().get("wx_base_access_token");
         String ticket = template.opsForValue().get("wx_jsapi_ticket");
         if(StringUtils.isEmpty(access_token)){
@@ -184,7 +184,7 @@ public ResponseUtil getQuestionList(@RequestBody Map<String,String> paramMap){
 	try {
 		LOGGER.info("前端传过来的>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<：" + paramMap.get("strUrl"));
 		LOGGER.info("URI解码>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<：" + URI.create(paramMap.get("strUrl")).getPath());
-		response.setData(WxShareUtil.getWxEntity(URI.create(paramMap.get("strUrl")).getPath(),redisTemplate));
+		response.setData(wxUtil.getWxEntity(URI.create(paramMap.get("strUrl")).getPath(),redisTemplate));
 	} catch (Exception e) {
 		e.printStackTrace();
 		response.setCode(code);
@@ -195,9 +195,9 @@ public ResponseUtil getQuestionList(@RequestBody Map<String,String> paramMap){
 ```
 需要注意：这个url是前端动态获取的，不能写死。如果带参数，或是中文，前端要对url做`encodeURIComponent`转码，后台再使用`URI.create(paramMap.get("strUrl")).getPath()`进行解码。
 
-我们再新建一个存放微信信息的实体类：WxShare.java
+我们再新建一个存放微信信息的实体类：wx.java
 ```java
-public class WxShare {
+public class wx {
 
     private String access_token;
     private String ticket ;
@@ -291,3 +291,137 @@ wx.onMenuShareAppMessage({
 - 确认 config 中的 appid 与用来获取 jsapi_ticket 的 appid 一致。
 - 确保一定缓存access_token和jsapi_ticket。
 - 确保你获取用来签名的url是动态获取的，动态页面可参见实例代码中php的实现方式。如果是html的静态页面在前端通过ajax将url传到后台签名，前端需要用js获取当前页面除去'#'hash部分的链接（可用location.href.split('#')[0]获取,而且需要encodeURIComponent，后台decodeURIComponent解码），因为页面一旦分享，微信客户端会在你的链接末尾加入其它参数，如果不是动态获取当前链接，将导致分享后的页面签名失败。
+
+# 微信小程序登录
+[官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
+登录流程时序图
+![](wx/3.jpg)
+微信的文档写的像狗屎，所以我抄了一份时序图：
+![](wx/4.jpg)
+
+大致流程如下：
+- 程序客户端调用wx.login，回调里面包含js_code。
+- 然后将js_code发送到服务器A（开发者服务器）,服务器A向微信服务器发起请求附带js_code、appId、secretkey和grant_type参数，以换取用户的openid和session_key（会话密钥）。
+- 服务器A拿到session_key后，生成一个随机数我们叫3rd_session,以3rdSessionId为key,以session_key + openid为value缓存到redis或memcached中；因为微信团队不建议直接将session_key在网络上传输，由开发者自行生成唯一键与session_key关联。其作用是：
+	+ 将3rdSessionId返回给客户端，维护小程序登录态。
+	+ 通过3rdSessionId找到用户session_key和openid。
+- 客户端拿到3rdSessionId后缓存到storage。
+- 客户端通过wx.getUserIinfo可以获取到用户敏感数据encryptedData。
+- 客户端将encryptedData、3rdSessionId和偏移量一起发送到服务器A
+- 服务器A根据3rdSessionId从缓存中获取session_key
+- 在服务器A使用AES解密encryptedData，从而实现用户敏感数据解密
+
+重点在6、7、8三个环节。
+AES解密三个参数：
+- 密文 encryptedData
+- 密钥 aesKey
+- 偏移向量 iv
+
+服务端解密流程：
+
+- 密文和偏移向量由客户端发送给服务端，对这两个参数在服务端进行Base64_decode解编码操作。
+- 根据3rdSessionId从缓存中获取session_key，对session_key进行Base64_decode可以得到aesKey，aes密钥。
+- 调用aes解密方法，算法为 AES-128-CBC，数据采用PKCS#7填充。
+
+下面结合小程序实例说明解密流程：
+1. 微信登录，获取用户信息
+```js
+var that = this;
+wx.login({
+success: function (res) {
+    //微信js_code
+    that.setData({wxcode: res.code});
+    //获取用户信息
+    wx.getUserInfo({
+        success: function (res) {
+            //获取用户敏感数据密文和偏移向量
+            that.setData({encryptedData: res.encryptedData})
+            that.setData({iv: res.iv})
+        }
+    })
+}
+})
+```
+
+2. 使用code换取3rdSessionId
+```js
+var httpclient = require('../../utils/httpclient.js')
+VAR that = this
+//httpclient.req(url, data, method, success, fail)
+httpclient.req(
+  'http://localhost:8090/wxappservice/api/v1/wx/getSession',
+  {
+      apiName: 'WX_CODE',
+      code: this.data.wxcode
+  },
+  'GET',
+  function(result){
+    var thirdSessionId = result.data.data.sessionId;
+    that.setData({thirdSessionId: thirdSessionId})
+    //将thirdSessionId放入小程序缓存
+    wx.setStorageSync('thirdSessionId', thirdSessionId)
+  },
+  function(result){
+    console.log(result)
+  }
+);
+```
+
+3. 发起解密请求
+```js
+//httpclient.req(url, data, method, success, fail)
+httpclient.req(
+'http://localhost:8090/wxappservice/api/v1/wx/decodeUserInfo',
+  {
+    apiName: 'WX_DECODE_USERINFO',
+    encryptedData: this.data.encryptedData,
+    iv: this.data.iv,
+    sessionId: wx.getStorageSync('thirdSessionId')
+  },
+  'GET',
+  function(result){
+  //解密后的数据
+    console.log(result.data)
+  },
+  function(result){
+    console.log(result)
+  }
+);
+```
+
+
+1. 通过前端过去的code，获取openid和session_key
+```
+/**
+ * @author: wjy
+ * @description: 小程序，通过code获取session_key和openid
+ */
+@ResponseBody
+@GetMapping("code2session")
+public JSONObject code2session(@RequestParam("code") String code) {
+	LOGGER.info("*************获取session_key和openid,然后获取微信userinfo***********************************************");
+	JSONObject jsonObject = new JSONObject();
+	try {
+		//完整的地址示例
+		//https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+
+		//获取小程序openId地址
+		String getOpenidUrl = "api.weixin.qq.com/sns/jscode2session";
+		String param = 
+				"appid=" + PayConstant.XCX_APPID +
+				"&secret=" + PayConstant.XCX_APPSECRET +
+				"&code=" + code +
+				"&grant_type=authorization_code";
+		//向微信服务器发送get请求,获取session_key和openid
+		String accessTokenAndOpenid = HttpUtil.sendGet(getOpenidUrl, param);
+		jsonObject = JSONObject.parseObject(accessTokenAndOpenid);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return jsonObject;
+}
+```
+
+[参考1](https://www.cnblogs.com/cangqinglang/p/8944681.html)
+[参考2](https://blog.csdn.net/qi923701/article/details/81534820)
+[参考3](https://blog.csdn.net/weixin_38429587/article/details/82814325)
