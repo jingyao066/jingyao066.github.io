@@ -68,22 +68,18 @@ date: 2019-04-25 10:04:49
 
 ## 获取access_token、ticket
 ```java
-public class wxUtil {
-
-	//这里的StringRedisTemplate是从controller中传过来的，在这里不能@Autowired，该试的都试了，没什么好的解决办法
-    public static wx getWxEntity(String url,StringRedisTemplate template) {
-        wx wx = new wx();
+public static WxShare getWxEntity(String url,StringRedisTemplate template) {
         String access_token = template.opsForValue().get("wx_base_access_token");
         String ticket = template.opsForValue().get("wx_jsapi_ticket");
         if(StringUtils.isEmpty(access_token)){
-            System.out.println("重新获取access_token和ticket》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》");
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>重新获取access_token和ticket>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             //已经超时，重新获取
             access_token = getAccessToken(template);
             //如果重新获取了access_token，ticket也要重新获取
             ticket = getTicket(access_token,template);
         }
-
         Map<String,String> resultMap = Sign.sign(ticket, url);
+        WxShare wx = new WxShare();
         wx.setTicket(resultMap.get("jsapi_ticket"));
         wx.setSignature(resultMap.get("signature"));
         wx.setNoncestr(resultMap.get("nonceStr"));
@@ -119,7 +115,7 @@ public class wxUtil {
             String message = new String(jsonBytes, "UTF-8");
             JSONObject demoJson = JSONObject.fromObject(message);
             access_token = demoJson.getString("access_token");
-            //缓存到redis
+            //缓存到redis，一定要缓存，每天只能请求2000次
             template.opsForValue().set("wx_base_access_token",access_token,2, TimeUnit.HOURS);
             is.close();
         } catch (Exception e) {
@@ -150,7 +146,7 @@ public class wxUtil {
             String message = new String(jsonBytes, "UTF-8");
             JSONObject demoJson = JSONObject.fromObject(message);
             ticket = demoJson.getString("ticket");
-            //缓存
+            //缓存到redis，一定要缓存，每天只能请求2000次
             template.opsForValue().set("wx_jsapi_ticket",ticket,2, TimeUnit.HOURS);
             is.close();
         } catch (Exception e) {
@@ -158,8 +154,6 @@ public class wxUtil {
         }
         return ticket;
     }
-
-}
 ```
 
 ## 获取url，并进行签名
@@ -390,38 +384,144 @@ httpclient.req(
 ```
 
 
-1. 通过前端过去的code，获取openid和session_key
+4. 通过前端获取的code，获取openid和session_key
 ```
 /**
- * @author: wjy
- * @description: 小程序，通过code获取session_key和openid
- */
-@ResponseBody
-@GetMapping("code2session")
-public JSONObject code2session(@RequestParam("code") String code) {
-	LOGGER.info("*************获取session_key和openid,然后获取微信userinfo***********************************************");
-	JSONObject jsonObject = new JSONObject();
-	try {
-		//完整的地址示例
-		//https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+     * @author: wjy
+     * @description: 小程序登录，先通过code获取session_key和openid，然后获取userinfo
+     */
+    @ResponseBody
+    @PostMapping("xcxLogin")
+    public ResponseUtil xcxLogin(@RequestBody Map<String,String> paramMap){
+        LOGGER.info(
+                "\n***************************************" + "\n" +
+                        "start schoolRollTestify" + "\n" +
+                        "学籍认证" + "\n" +
+                        "paramMap" + paramMap +"\n" +
+                        "\n********************************************"
+        );
+        ResponseUtil response = ResponseUtil.success();
+        CodeEnum code = CodeEnum.FAIL;
+        JSONObject jsonObject;
+        try{
+            AssertUtil.assertValidate(code,CodeEnum.ERROR_2002.getCode(),"iv不能为空",StringUtils.isNotEmpty(paramMap.get("iv")));
+            AssertUtil.assertValidate(code,CodeEnum.ERROR_2003.getCode(),"code不能为空",StringUtils.isNotEmpty(paramMap.get("code")));
+            AssertUtil.assertValidate(code,CodeEnum.ERROR_2001.getCode(),"encryptedData不能为空",StringUtils.isNotEmpty(paramMap.get("encryptedData")));
 
-		//获取小程序openId地址
-		String getOpenidUrl = "api.weixin.qq.com/sns/jscode2session";
-		String param = 
-				"appid=" + PayConstant.XCX_APPID +
-				"&secret=" + PayConstant.XCX_APPSECRET +
-				"&code=" + code +
-				"&grant_type=authorization_code";
-		//向微信服务器发送get请求,获取session_key和openid
-		String accessTokenAndOpenid = HttpUtil.sendGet(getOpenidUrl, param);
-		jsonObject = JSONObject.parseObject(accessTokenAndOpenid);
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-	return jsonObject;
-}
+            //完整地址示例
+            //https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+            //获取小程序openId地址
+            String getOpenidUrl = "api.weixin.qq.com/sns/jscode2session";
+            String param =
+                    "appid=" + PayConstant.XCX_APPID +
+                    "&secret=" + PayConstant.XCX_APPSECRET +
+                    "&code=" + code +
+                    "&grant_type=authorization_code";
+            //向微信服务器发送get请求,获取session_key和openid
+            String accessTokenAndOpenid = HttpUtil.sendGet(getOpenidUrl, param);
+            jsonObject = JSONObject.parseObject(accessTokenAndOpenid);
+
+            if(StringUtils.isNotBlank(jsonObject.getString("openid"))
+                    && StringUtils.isNotBlank(jsonObject.getString("session_key"))){
+                //解密获取用户信息，这里只有用户：头像、性别、地址、openid，没有手机号
+                JSONObject userInfoJSON= XcxUtil.decodeUserInfo(paramMap.get("encryptedData"),jsonObject.getString("session_key"),paramMap.get("iv"));
+                //根据openid判断用户是否存在
+                if(存在)
+                    返回用户信息
+                else
+                    入库...
+                    返回用户信息
+            }else{
+                response.setCode(CodeEnum.ERROR_2004);
+                response.setMessage("未获取到用户openid 或 session_key");
+                return response;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setCode(code);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+    }
 ```
 
 [参考1](https://www.cnblogs.com/cangqinglang/p/8944681.html)
 [参考2](https://blog.csdn.net/qi923701/article/details/81534820)
 [参考3](https://blog.csdn.net/weixin_38429587/article/details/82814325)
+
+# 小程序获取手机号
+1. 前端调用 wx.login() 获取code
+```
+wx.login({   
+    success:function(res){
+        console.log('loginCode:', res.code)
+    }
+});
+```
+2. 后端拿到该code发送get请求微信接口获取 session_key和openid，返回结果类似：
+```
+{
+	"session_key": "kI+3ookOAYC9olOcGzYPmQ",
+	"openid": "oNZE65Pu0XfTg2yFP-dFks"
+}
+```
+后台拿到数据后，我们把session_key存到redis，然后把session_key存在redis中的key返回给前端。
+因为微信官方说：
+[为了应用自身的数据安全，开发者服务器不应该把会话密钥下发到小程序，也不应该对外提供这个密钥](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
+
+3. 前端调用 getPhoneNumber组件，用户确认授权。拿到encryptedData和iv。并传给后端。（此步骤不能在 1、2步骤之前）
+`<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> </button>`
+```
+getPhoneNumber: function(e) { 
+    console.log(e.detail.errMsg) 
+    console.log(e.detail.iv) 
+    console.log(e.detail.encryptedData) 
+}
+```
+
+4. 后端用session_key，encryptedData，iv解密获取手机号。
+后端解密其实就这么简单，只要流程对了就可以解密，如果解密出错，基本就是流程出错了。不用再去换什么解密算法。
+```
+public Object getPhoneNumber(String encryptedData, String session_key, String iv) {
+		 // 被加密的数据
+		byte[] dataByte = Base64.decode(encryptedData);
+		// 加密秘钥
+		byte[] keyByte = Base64.decode(session_key);
+		// 偏移量
+		byte[] ivByte = Base64.decode(iv);
+		try {
+			// 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
+			int base = 16;
+			if (keyByte.length % base != 0) {
+				int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
+				byte[] temp = new byte[groups * base];
+				Arrays.fill(temp, (byte) 0);
+				System.arraycopy(keyByte, 0, temp, 0, keyByte.length);
+				keyByte = temp;
+			}
+			// 初始化
+			Security.addProvider(new BouncyCastleProvider());
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			SecretKeySpec spec = new SecretKeySpec(keyByte, "AES");
+			AlgorithmParameters parameters = AlgorithmParameters.getInstance("AES");
+			parameters.init(new IvParameterSpec(ivByte));
+			cipher.init(Cipher.DECRYPT_MODE, spec, parameters);// 初始化
+			byte[] resultByte = cipher.doFinal(dataByte);
+			if (null != resultByte && resultByte.length > 0) {
+				String result = new String(resultByte, "UTF-8");
+				return JSONObject.parseObject(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return null;
+}
+```
+
+遇到的问题：
+在写之前，我想既然只和微信服务器有一次交互，为啥还要请求两次后台接口，直接一次完事不行得了么。
+所以我想一次完事，就是直接让前端获取code和iv、encryptedData，一块传给我，我通过code获取session_key，然后通过session_key、iv、encryptedData一起解密。
+但是接口怎么都报错，后来才发现需要严格按照步骤来请求。
+
+[参考1](https://blog.csdn.net/qq_36466653/article/details/83374485)
+[参考2](https://blog.csdn.net/Lonely_Devil/article/details/90024579)

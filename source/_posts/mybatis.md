@@ -881,3 +881,6 @@ paramMap.put("id",null);
 
 然后在程序中获取新增的主键
 `doc.setField("dataId",paramMap.get("id"));`
+
+# mybatis使用map返回值，返回key为空的值
+`mybatis.configuration.call-setters-on-nulls=true`
