@@ -391,3 +391,6 @@ jenkins的文件都存储在`/root/.jenkins`，使用指令查看文件夹大小
 `chmod u+x $WORKSPACE/target/archive-1.0.jar`
 然后就可以直接使用`cp`指令，然而只是Terminal可以使用，jenkins的脚本还是无法使用，我日...
 暂时放弃，使用tomcat安装jenkins...
+
+## 重装jenkins
+删除安装jenkins用户的主目录（~）下的（.jenkins）文件夹，然后重启，就可以重新配置jenkins

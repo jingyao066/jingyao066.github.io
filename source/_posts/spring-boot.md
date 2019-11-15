@@ -677,3 +677,101 @@ public class ExcelController extends BaseController {
 }
 ```
 [参考地址](https://www.cnblogs.com/linjiqin/p/10975761.html)
+
+# 记录一次折腾spring boot配置文件
+之前老M弃用`application.properties`，自己写配置文件，搞了一大堆配置，现在因为要搭集群，遂把配置文件改回`application.properties`。
+
+首先删除`configure`模块，然后删除各个模块中的config配置文件，并在各个模块加入`application.properties`。
+
+然后启动报错：
+`java.lang.IllegalStateException: No such application config! Please add <dubbo:application name="..." /> to your spring config.`
+解决：
+在`controller`或`service`同级创建config文件夹，在下面创建dubbo的配置文件：
+```java
+package com.zjx.api.config;
+
+import com.alibaba.dubbo.config.ApplicationConfig;
+import com.alibaba.dubbo.config.ConsumerConfig;
+import com.alibaba.dubbo.config.ProtocolConfig;
+import com.alibaba.dubbo.config.RegistryConfig;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @Author: wjy
+ * @Description: dubbo配置
+ */
+@Configuration
+public class DubboConfig {
+
+    /**
+     * @Author: wjy
+     * @Description: dubbo.application配置
+     * @Params []
+     * @Return com.alibaba.dubbo.config.ApplicationConfig
+     */
+    @Bean
+    public ApplicationConfig applicationConfig() {
+        ApplicationConfig applicationConfig = new ApplicationConfig();
+        applicationConfig.setId("zjx_api");
+        applicationConfig.setName("zjx_api");
+        applicationConfig.setQosEnable(true);
+        applicationConfig.setQosPort(20002);
+        return applicationConfig;
+    }
+
+    /**
+     * @Author: wjy
+     * @Description: dubbo.protocol配置
+     * @Params []
+     * @Return com.alibaba.dubbo.config.ProtocolConfig
+     */
+    @Bean
+    public ProtocolConfig protocolConfig() {
+        ProtocolConfig protocolConfig = new ProtocolConfig();
+        protocolConfig.setId("dubbo");
+        protocolConfig.setName("dubbo");
+        protocolConfig.setPort(20882);
+        return protocolConfig;
+    }
+
+    /**
+     * @Author: wjy
+     * @Description: dubbo.registry配置
+     * @Params []
+     * @Return com.alibaba.dubbo.config.RegistryConfig
+     */
+    @Bean
+    public RegistryConfig registryConfig() {
+        RegistryConfig registryConfig = new RegistryConfig();
+        registryConfig.setAddress("zookeeper://127.0.0.1:2181");
+        registryConfig.setCheck(true);
+        return registryConfig;
+    }
+
+    /**
+     * @Author: wjy
+     * @Description: dubbo.consumer配置
+     * @Params []
+     * @Return com.alibaba.dubbo.config.ConsumerConfig
+     */
+    @Bean
+    public ConsumerConfig consumerConfig() {
+        ConsumerConfig consumerConfig = new ConsumerConfig();
+        consumerConfig.setTimeout(3000);
+        consumerConfig.setCheck(true);
+        consumerConfig.setVersion("1.0.0");
+        return consumerConfig;
+    }
+}
+```
+启动成功。
+
+整完之后，jenkins启动报错：
+`org.apache.maven.project.ProjectBuildingException: Some problems were encountered while processing the POMs:`
+`[ERROR] Child module /root/.jenkins/workspace/zjx_service_video/zjx_configure of /root/.jenkins/workspace/zjx_service_video/pom.xml does not exist @ `
+
+`zjx_configure`该模块是项目之前的配置模块，现在被我删除了，我估计是jenkins的缓存还在。
+
+解决：
+重装jenkins
