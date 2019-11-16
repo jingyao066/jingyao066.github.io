@@ -387,62 +387,53 @@ httpclient.req(
 4. 通过前端获取的code，获取openid和session_key
 ```
 /**
-     * @author: wjy
-     * @description: 小程序登录，先通过code获取session_key和openid，然后获取userinfo
-     */
-    @ResponseBody
-    @PostMapping("xcxLogin")
-    public ResponseUtil xcxLogin(@RequestBody Map<String,String> paramMap){
-        LOGGER.info(
-                "\n***************************************" + "\n" +
-                        "start schoolRollTestify" + "\n" +
-                        "学籍认证" + "\n" +
-                        "paramMap" + paramMap +"\n" +
-                        "\n********************************************"
-        );
-        ResponseUtil response = ResponseUtil.success();
-        CodeEnum code = CodeEnum.FAIL;
-        JSONObject jsonObject;
-        try{
-            AssertUtil.assertValidate(code,CodeEnum.ERROR_2002.getCode(),"iv不能为空",StringUtils.isNotEmpty(paramMap.get("iv")));
-            AssertUtil.assertValidate(code,CodeEnum.ERROR_2003.getCode(),"code不能为空",StringUtils.isNotEmpty(paramMap.get("code")));
-            AssertUtil.assertValidate(code,CodeEnum.ERROR_2001.getCode(),"encryptedData不能为空",StringUtils.isNotEmpty(paramMap.get("encryptedData")));
+ * @author: wjy
+ * @description: 小程序，通过code获取session_key和openid
+ */
+@ResponseBody
+@PostMapping("getSessionId")
+public ResponseUtil getSessionId(@RequestBody Map<String,String> paramMap){
+	LOGGER.info(
+			"\n***************************************" + "\n" +
+					"start getSessionId" + "\n" +
+					"通过code获取session_key和openid" + "\n" +
+					"paramMap" + paramMap +"\n" +
+					"\n********************************************"
+	);
+	ResponseUtil response = ResponseUtil.success();
+	CodeEnum code = CodeEnum.FAIL;
+	JSONObject jsonObject;
+	try{
+		AssertUtil.assertValidate(code,CodeEnum.ERROR_2001.getCode(),"code不能为空",StringUtils.isNotEmpty(paramMap.get("code")));
 
-            //完整地址示例
-            //https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
-            //获取小程序openId地址
-            String getOpenidUrl = "api.weixin.qq.com/sns/jscode2session";
-            String param =
-                    "appid=" + PayConstant.XCX_APPID +
-                    "&secret=" + PayConstant.XCX_APPSECRET +
-                    "&code=" + code +
-                    "&grant_type=authorization_code";
-            //向微信服务器发送get请求,获取session_key和openid
-            String accessTokenAndOpenid = HttpUtil.sendGet(getOpenidUrl, param);
-            jsonObject = JSONObject.parseObject(accessTokenAndOpenid);
+		//完整地址示例
+		//https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+		String url = "https://api.weixin.qq.com/sns/jscode2session";
+		String param =
+				"appid=" + PayConstant.XCX_APPID +
+				"&secret=" + PayConstant.XCX_APPSECRET +
+				"&code=" + paramMap.get("code") +
+				"&grant_type=authorization_code";
+		//向微信服务器发送get请求,获取session_key和openid
+		String sessionKeyAndOpenid = HttpUtil.sendGet(url, param);
+		jsonObject = JSONObject.parseObject(sessionKeyAndOpenid);
 
-            if(StringUtils.isNotBlank(jsonObject.getString("openid"))
-                    && StringUtils.isNotBlank(jsonObject.getString("session_key"))){
-                //解密获取用户信息，这里只有用户：头像、性别、地址、openid，没有手机号
-                JSONObject userInfoJSON= XcxUtil.decodeUserInfo(paramMap.get("encryptedData"),jsonObject.getString("session_key"),paramMap.get("iv"));
-                //根据openid判断用户是否存在
-                if(存在)
-                    返回用户信息
-                else
-                    入库...
-                    返回用户信息
-            }else{
-                response.setCode(CodeEnum.ERROR_2004);
-                response.setMessage("未获取到用户openid 或 session_key");
-                return response;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            response.setCode(code);
-            response.setMessage(e.getMessage());
-        }
-        return response;
-    }
+		String uuid = UUID.randomUUID().toString().replaceAll("-","");
+
+		LOGGER.info("session_key是：~~~~~~~~~~~~~~~~" + jsonObject.getString("session_key"));
+
+		//将获取到的session_key存入redis，这里不用设置过期时间
+		stringRedisTemplate.opsForValue().set(uuid,jsonObject.getString("session_key"));
+
+		//把uuid返回给前端
+		response.setData(uuid);
+	}catch (Exception e){
+		e.printStackTrace();
+		response.setCode(code);
+		response.setMessage(e.getMessage());
+	}
+	return response;
+}
 ```
 
 [参考1](https://www.cnblogs.com/cangqinglang/p/8944681.html)
@@ -452,7 +443,7 @@ httpclient.req(
 # 小程序获取手机号
 1. 前端调用 wx.login() 获取code
 ```
-wx.login({   
+wx.login({
     success:function(res){
         console.log('loginCode:', res.code)
     }

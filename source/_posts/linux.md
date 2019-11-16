@@ -787,6 +787,42 @@ cd /usr/local/nginx/sbin
 ```
 [参考地址](https://www.cnblogs.com/taiyonghai/p/6728707.html)
 
+make报错：
+`make: *** No rule to make target `build', needed by `default'. Stop.`
+更新yum
+`yum update`
+
+安装前置库
+`yum install -y gcc pcre pcre-devel openssl openssl-devel gd gd-devel`
+
+进入nginx根目录重新编译一次参数：
+```
+./configure \
+
+--prefix=/usr/local/nginx \
+
+--pid-path=/usr/local/nginx/run \
+
+--user=nginx \
+
+--group=nginx \
+
+--with-http_ssl_module \
+
+--with-http_flv_module \
+
+--with-http_stub_status_module \
+
+--with-http_gzip_static_module \
+
+--with-pcre \
+
+--with-http_image_filter_module \
+
+--with-debug \
+```
+ok了。
+
 ## solr
 [官网下载最新的solr](https://lucene.apache.org/solr/downloads.html)
 下载Binary releases-zip包，下载后上传到服务器`/usr/local/src`，cp到`/usr/local`下，解压`unzip solr-8.2.0.zip`。
@@ -941,14 +977,14 @@ user3: pass,admin
 登录阿里云->控制台->产品与服务->安全（云盾）->SSL证书(应用安全)->购买证书->免费型DV SSL->购买并支付(这里支付0.00，就是不用花钱)
 然后回到控制台->SSL证书(应用安全)，可以看到刚才购买的免费SSL证书。
 
-然后点击右侧的证书申请，填写申请人的详细信息，然后点击下一步，进入证书验证信息页面。
-然后按照以下提示信息添加DNS解析记录，该验证信息在证书签发后可删除。这些信息包括记录类型、主机记录和记录值。
-然后在域名解析记录列表添加记录，根据提示分别填入上边的三个信息，然后确认保存，然后点击验证，如果成功会提示：
-已经成功提交到CA公司，请您保持电话畅通，并及时查阅邮箱中来自CA公司的电子邮件。
-然后安静的等待审核通过，一般十分钟就通过了，审核通过后会在ssl证书页面看到证书的状态是`已签发`。
-点击右侧的下载，根据自己的服务器类型选择证书下载，我下载nginx版本，顺便打开帮助文档，[按照文档来](https://help.aliyun.com/knowledge_detail/95491.html)。
+- 点击右侧的证书申请，填写申请人的详细信息，然后点击下一步，进入证书验证信息页面。在这个界面可以看到三个值：记录类型、主机记录和记录值。
+- 找到你的域名供应商控制台，我的是腾讯云，进入控制台，在左上角`云产品`的下拉列表搜索`云解析`，进入会看到你的域名，点击右侧的解析，点击左上角的`添加记录`
+- 根据提示分别填入上边的三个信息，然后确认保存，解析记录添加成功。
+- 回到阿里云，点击验证，成功会提示：已经成功提交到CA公司，请您保持电话畅通，并及时查阅邮箱中来自CA公司的电子邮件。
+- 安静的等待审核通过，一般十分钟就通过了，审核通过后会在ssl证书页面看到证书的状态是`已签发`。
+- 点击右侧的下载，根据自己的服务器类型选择证书下载，我下载nginx版本，顺便打开帮助文档，[按照文档来](https://help.aliyun.com/knowledge_detail/95491.html)。
 
-- 在Nginx的安装目录下创建cert目录，并且将下载的全部文件拷贝到cert目录中，注意这里先解压再上传到服务器，应该是两个文件。
+- 在Nginx的安装目录下创建cert目录，并且将下载的全部文件拷贝到cert目录中，注意这里先解压再上传到服务器，应该是两个文件，分别是.key和.pem结尾的。
 - 打开`nginx.conf`配置文件，做如下配置：
 ```
 server {
