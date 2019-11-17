@@ -383,7 +383,6 @@ httpclient.req(
 );
 ```
 
-
 4. 通过前端获取的code，获取openid和session_key
 ```
 /**
@@ -412,7 +411,7 @@ public ResponseUtil getSessionId(@RequestBody Map<String,String> paramMap){
 		String param =
 				"appid=" + PayConstant.XCX_APPID +
 				"&secret=" + PayConstant.XCX_APPSECRET +
-				"&code=" + paramMap.get("code") +
+				"&js_code=" + paramMap.get("code") +
 				"&grant_type=authorization_code";
 		//向微信服务器发送get请求,获取session_key和openid
 		String sessionKeyAndOpenid = HttpUtil.sendGet(url, param);
@@ -435,12 +434,53 @@ public ResponseUtil getSessionId(@RequestBody Map<String,String> paramMap){
 	return response;
 }
 ```
+5. 后端用session_key，encryptedData，iv解密获取用户信息userinfo。
+后端解密其实就这么简单，只要流程对了就可以解密，如果解密出错，基本就是流程出错了。不用再去换什么解密算法。
+```
+public Object getPhoneNumber(String encryptedData, String session_key, String iv) {
+		 // 被加密的数据
+		byte[] dataByte = Base64.decode(encryptedData);
+		// 加密秘钥
+		byte[] keyByte = Base64.decode(session_key);
+		// 偏移量
+		byte[] ivByte = Base64.decode(iv);
+		try {
+			// 如果密钥不足16位，那么就补足.  这个if 中的内容很重要
+			int base = 16;
+			if (keyByte.length % base != 0) {
+				int groups = keyByte.length / base + (keyByte.length % base != 0 ? 1 : 0);
+				byte[] temp = new byte[groups * base];
+				Arrays.fill(temp, (byte) 0);
+				System.arraycopy(keyByte, 0, temp, 0, keyByte.length);
+				keyByte = temp;
+			}
+			// 初始化
+			Security.addProvider(new BouncyCastleProvider());
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			SecretKeySpec spec = new SecretKeySpec(keyByte, "AES");
+			AlgorithmParameters parameters = AlgorithmParameters.getInstance("AES");
+			parameters.init(new IvParameterSpec(ivByte));
+			cipher.init(Cipher.DECRYPT_MODE, spec, parameters);// 初始化
+			byte[] resultByte = cipher.doFinal(dataByte);
+			if (null != resultByte && resultByte.length > 0) {
+				String result = new String(resultByte, "UTF-8");
+				return JSONObject.parseObject(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return null;
+}
+```
+上边分别请求了两次后台接口，其实完全可以合并成一次请求，参考下边获取手机号的内容。
+
 
 [参考1](https://www.cnblogs.com/cangqinglang/p/8944681.html)
 [参考2](https://blog.csdn.net/qi923701/article/details/81534820)
 [参考3](https://blog.csdn.net/weixin_38429587/article/details/82814325)
 
 # 小程序获取手机号
+[官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html)
 1. 前端调用 wx.login() 获取code
 ```
 wx.login({
@@ -460,7 +500,7 @@ wx.login({
 因为微信官方说：
 [为了应用自身的数据安全，开发者服务器不应该把会话密钥下发到小程序，也不应该对外提供这个密钥](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
 
-3. 前端调用 getPhoneNumber组件，用户确认授权。拿到encryptedData和iv。并传给后端。（此步骤不能在 1、2步骤之前）
+3. 前端调用 getPhoneNumber组件，用户确认授权。拿到encryptedData和iv。并传给后端。
 `<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> </button>`
 ```
 getPhoneNumber: function(e) { 
@@ -509,10 +549,72 @@ public Object getPhoneNumber(String encryptedData, String session_key, String iv
 }
 ```
 
-遇到的问题：
-在写之前，我想既然只和微信服务器有一次交互，为啥还要请求两次后台接口，直接一次完事不行得了么。
-所以我想一次完事，就是直接让前端获取code和iv、encryptedData，一块传给我，我通过code获取session_key，然后通过session_key、iv、encryptedData一起解密。
-但是接口怎么都报错，后来才发现需要严格按照步骤来请求。
+上边是请求了两次接口，其实完全可以只请求一次接口：
+```
+/**
+ * @author: wjy
+ * @description: 小程序登录，返回用户信息
+ */
+@ResponseBody
+@PostMapping("xcxRegisterOrLogin")
+public ResponseUtil xcxRegisterOrLogin(@RequestBody Map<String,String> paramMap){
+	LOGGER.info(
+			"\n***************************************" + "\n" +
+					"start xcxRegisterOrLogin" + "\n" +
+					"小程序登录，返回用户信息" + "\n" +
+					"paramMap" + paramMap +"\n" +
+					"\n********************************************"
+	);
+	ResponseUtil response = ResponseUtil.success();
+	CodeEnum code = CodeEnum.FAIL;
+	JSONObject jsonObject;
+	try{
+		AssertUtil.assertValidate(code,CodeEnum.ERROR_2001.getCode(),"iv不能为空",StringUtils.isNotEmpty(paramMap.get("iv")));
+		AssertUtil.assertValidate(code,CodeEnum.ERROR_2001.getCode(),"code不能为空",StringUtils.isNotEmpty(paramMap.get("code")));
+		AssertUtil.assertValidate(code,CodeEnum.ERROR_2003.getCode(),"encryptedData不能为空",StringUtils.isNotEmpty(paramMap.get("encryptedData")));
+
+		//完整地址示例
+		//https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+		String url = "https://api.weixin.qq.com/sns/jscode2session";
+		String param = "appid=" + PayConstant.XCX_APPID +
+				"&secret=" + PayConstant.XCX_APPSECRET +
+				"&js_code=" + paramMap.get("code") +
+				"&grant_type=authorization_code";
+		//向微信服务器发送get请求,获取session_key和openid
+		String wxReturnJson = HttpUtil.sendGet(url, param);
+		LOGGER.info("微信返回结果是：~~~~~~~~~~~~~~~~" + wxReturnJson);
+		jsonObject = JSONObject.parseObject(wxReturnJson);
+
+		//解密用户信息
+		JSONObject userinfo = XcxUtil.decodeUserInfo(paramMap.get("encryptedData"),jsonObject.getString("session_key"),paramMap.get("iv"));
+		//用户手机号
+		String phoneNum = userinfo.getString("purePhoneNumber");
+		LOGGER.info("用户手机号是：~~~~~~~~~~~~~~~~" + phoneNum);
+
+		paramMap.put("mobile",phoneNum);
+		//根据手机号，注册或登录
+		response = usersService.registerOrLogin(paramMap,response);
+	}catch (Exception e){
+		e.printStackTrace();
+		response.setCode(code);
+		response.setMessage(e.getMessage());
+	}
+	return response;
+}
+```
+这个接口，我接收了code、iv、encryptedData三个参数。
+其中code是前端请求`wx.login()`返回的，`iv、encryptedData`是前端请求`wx.userinfo()`返回的。
+我的接口中，先通过code请求微信服务器，获取`session_key`和`openid`，然后通过`session_key、iv、encryptedData`进行解密，就得到了用户手机号。
+后续是自己业务的逻辑，即通过手机号判断自己的数据库是否有这个用户，有->返回用户信息(即登录)，没有->注册并返回用户信息。
 
 [参考1](https://blog.csdn.net/qq_36466653/article/details/83374485)
 [参考2](https://blog.csdn.net/Lonely_Devil/article/details/90024579)
+
+获取手机号和获取用户信息，两套流程的区别，只在于前端第二次请求微信接口的不同。每个步骤，对于后台来说都是一样的。
+后台只需要通过前端获取的code，获取session_id和openid，然后再用三个参数`session_key，iv，encryptedData`进行解密即可。
+- 获取用户信息，前端调用`wx.getUserInfo(Object object)`[官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserInfo.html)
+- 获取手机号，前端调用`getPhoneNumber`[官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html)
+
+所以，获取用户信息和获取用户手机号，后台只需一个接口即可，但是需要注意，解密出来的，一个是手机号，一个是用户信息，所以可能还需要在自己的业务中，对两种不同的参数采取不同的处理。
+
+**后台请求微信授权，在本地即可以测试，只要有code或encryptedData和iv(这三个参数需要前端给你)，不用非拿到线上去测。而且，小程序后台，也无需配置服务器域名啥的。**
