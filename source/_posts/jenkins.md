@@ -208,8 +208,9 @@ cp $WORKSPACE/zjx_admin/target/zjx_admin-0.0.1-SNAPSHOT.jar /usr/local/zjx/admin
 chmod u+x /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar
 
 #指定log日志位置，并通过java -jar启动项目
-BUILD_ID=donKillme nohup java -jar -Dlogging.file=/usr/local/zjx/admin/logs/zjx.log /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar &
+BUILD_ID=donKillme nohup java -jar -Dspring.profiles.active=dev -Dlogging.file=/usr/local/zjx/admin/logs/zjx.log /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar &
 ```
+这个-D是 java命令的参数-D。意指加入全局属性，比如-Djdbc.driver=<jdbc driver classpath>表示在程序里可用System.getProperty("jdbc.driver")获得<jdbc driver classpath>，以此类推。
 
 `BUILD_ID=dontKillme`：指的是不要杀死最后一步启动项目产生的子进程。
 [官网说明](https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller)
@@ -379,7 +380,7 @@ jenkins的文件都存储在`/root/.jenkins`，使用指令查看文件夹大小
 - 查看自己是谁`whoami`
 - 如果不是root用户，需要在cp前加上`sudo`，注意这里我已经提前安装了sudu。
 
-## We trust you have received the usual lecture from the local System
+# We trust you have received the usual lecture from the local System
 不是root用户，使用`sudo`时，出现该问题。
 编辑/etc/sudoers文件
 `vim /etc/sudoers`
@@ -392,5 +393,9 @@ jenkins的文件都存储在`/root/.jenkins`，使用指令查看文件夹大小
 然后就可以直接使用`cp`指令，然而只是Terminal可以使用，jenkins的脚本还是无法使用，我日...
 暂时放弃，使用tomcat安装jenkins...
 
-## 重装jenkins
+# 重装jenkins
 删除安装jenkins用户的主目录（~）下的（.jenkins）文件夹，然后重启，就可以重新配置jenkins
+
+# jenkins指定spring boot的配置文件
+在启动脚本加如下代码：
+`-Dspring.profiles.active=dev`
