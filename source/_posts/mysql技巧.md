@@ -695,3 +695,7 @@ Upgrade process completed successfully.
 Checking if update is needed.
 ```
 - 再次尝试远程连接，成功，数据都在！
+
+# 导入`.frm和.ibd`文件
+`.frm`和`.ibd`分别对应数据库中的表名和表中的数据。
+我们进入到mysql的data文件夹，找到一个库进去，可以证实我的想法。
