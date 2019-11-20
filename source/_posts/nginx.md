@@ -55,14 +55,64 @@ location ~ \.(jpg|png)${
 打开浏览器输入localhost/images/文件名  则可加载images文件夹下对应名字的图片。
 
 # 配置端口转发
+假如现在服务器上有两个程序，分别占用8001端口和8002端口，我只想通过80端口访问这两个服务，不想加端口。
+我们可以通过nginx监听80端口，例如当用户访问 `book.douban.com` 时，
+Nginx从配置文件中知道这个是图书应用的HTTP请求，于是将此请求转发给 8001 端口的应用处理。
+当用户访问 `movie.douban.com` 时，Nginx 从配置文件中知道这个是电影应用的 HTTP 请求，于是将此请求转发给 8002 端口的应用处理。
+简单示例：
+```
+#配置负载均衡池
+#Demo1负载均衡池
+upstream book_pool{
+    server 127.0.0.1:8001;
+}
+#Demo2负载均衡池
+upstream movie_pool{
+    server 127.0.0.1:8002;
+}
+
+#Demo1端口转发
+server {
+    listen       80;
+    server_name  book.douban.com;
+    access_log logs/book.log;
+    error_log logs/book.error;
+    
+    #将所有请求转发给demo_pool池的应用处理
+    location / {
+        proxy_pass http://book_pool;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+#Demo2端口转发
+server {
+    listen       80;
+    server_name  movie.douban.com;
+    access_log logs/movie.log;
+    error_log logs/movie.error;
+    
+    #将所有请求转发给demo_pool池的应用处理
+    location / {
+        proxy_pass http://movie_pool;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+上面这段配置实现了：
+- 当用户访问的域名是：http://book.douban.com 时，我们自动将其请求转发给端口号为 8001 的 Tomcat 应用处理。
+- 当用户访问的域名是：http://movie.douban.com 时，我们自动将其请求转发给端口号为 8002 的 Tomcat 应用处理。
+上面的这种技术实现就是端口转发。端口转发指的是由软件统一监听某个域名上的某个端口（一般是80端口），当访问服务器的域名和端口符合要求时，就按照配置转发给指定的 Tomcat 服务器处理。
+
 ```
 server {
 	listen       80; #监听端口
 	server_name  api.xxx.com; #你想转发的域名
 	location / {
-		proxy_pass http://api.xxx.com:8000;  #你想转发的地址，这里我想把本机的8000端口映射到80端口上，最好不要写localhost或127.0.0.1
+	    #你想转发的地址，这里我想把本机的8000端口映射到80端口上，不要写localhost或127.0.0.1
+		proxy_pass http://api.xxx.com:8000;
 		
-		#下面几个参数可以不加，我也不知道干嘛的
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Scheme $scheme;
 		proxy_pass_header Server;
@@ -111,6 +161,7 @@ server {
 	}
 }
 ```
+详细配置过程参见另一篇文章：linux->阿里云升级https
 
 # 上传大文件
 在`http`模块下加入该配置：

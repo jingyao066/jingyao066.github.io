@@ -823,6 +823,8 @@ make报错：
 ```
 ok了。
 
+[make报错参考](https://blog.csdn.net/cailongbiaoyuli/article/details/84348866)
+
 ## solr
 [官网下载最新的solr](https://lucene.apache.org/solr/downloads.html)
 下载Binary releases-zip包，下载后上传到服务器`/usr/local/src`，cp到`/usr/local`下，解压`unzip solr-8.2.0.zip`。
@@ -988,32 +990,34 @@ user3: pass,admin
 - 打开`nginx.conf`配置文件，做如下配置：
 ```
 server {
-        listen       443 ssl;
-        server_name  xxx.xxx.com;
+	listen 80 default backlog=2048;
+	listen       443 ssl;
+	server_name  api.zjxk12.com;
 
 	# ssl开头的都是证书配置
-        ssl_certificate      cert/a.pem;
-        ssl_certificate_key  crert/a.key;
-        ssl_session_cache    shared:SSL:1m;
-        ssl_session_timeout  5m;
-        ssl_ciphers  ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
-		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-        ssl_prefer_server_ciphers  on;
+	ssl_certificate      /usr/local/nginx/cert/api.zjxk12.com.pem;
+	ssl_certificate_key  /usr/local/nginx/cert/api.zjxk12.com.key;
+	ssl_session_cache    shared:SSL:1m;
+	ssl_session_timeout  5m;
+	ssl_ciphers  ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+	ssl_prefer_server_ciphers  on;
 
-        location / {
-            proxy_pass  http://xxx.xxx.com:8000;
-            index  index.html index.htm;
-        }
+	# 端口转发
+	location / {
+		proxy_pass http://api.zjxk12.com:8000;
+		index  index.html index.htm;
+	}
 
 	location ~.txt{
-            root /usr/local/src;
-        }
+		root /usr/local/src;
+	}
 
 	error_page   500 502 503 504  /50x.html;
-        location = /50x.html {
-            root   html;
-        }
-    }
+	location = /50x.html {
+		root   html;
+	}
+}
 ```
 ssl开头的都是证书配置，要按照规定写，其他参数根据自己需求填写。
 填完之后启动nginx报错：
@@ -1046,6 +1050,9 @@ Nginx开启SSL模块
 
 然后将刚刚编译好的nginx覆盖掉原有的nginx（这个时候nginx要停止状态）
 `cp ./objs/nginx /usr/local/nginx/sbin/`
+提示：`cp overwrite...?`
+此时输入`y`，然后回车，直接回车则不执行任何操作。
+
 然后启动nginx，在nginx的sbin目录下执行
 `./nginx`
 
