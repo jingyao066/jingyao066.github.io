@@ -161,6 +161,51 @@ init_connect='SET NAMES utf8mb4'
 #最大连接数
 max_connections = 1000
 ```
+
+补一个比较完整的配置：
+```
+[client]
+default-character-set = utf8mb4
+[mysql]
+default-character-set = utf8mb4
+[mysqld]
+#服务Id唯一
+server-id = 1
+port = 3306
+log-error = /var/log/mysql/error.log
+
+#只能用IP地址
+skip_name_resolve
+
+character-set-client-handshake = FALSE
+
+#数据库默认字符集
+character-set-server = utf8mb4
+
+#数据库字符集对应一些排序等规则
+collation-server = utf8mb4_general_ci
+
+#设置client连接mysql时的字符集,防止乱码
+init_connect='SET NAMES utf8mb4'
+
+#最大连接数
+max_connections = 1000
+
+#解决only_full_group_by问题
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+
+#时区
+default-time_zone = '+8:00'
+
+#内存监控
+performance_schema_instrument ='memory%=counted'
+
+#慢查询日志
+#slow_query_log= on
+#long_quert_time= 2
+#slow-query-log-file = /home/mysql-slow-log.log
+```
+
 接下来分别映射数据库目录和配置文件目录，启动容器：
 ```
 docker run --name mysql -d \
