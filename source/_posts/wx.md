@@ -618,3 +618,8 @@ public ResponseUtil xcxRegisterOrLogin(@RequestBody Map<String,String> paramMap)
 所以，获取用户信息和获取用户手机号，后台只需一个接口即可，但是需要注意，解密出来的，一个是手机号，一个是用户信息，所以可能还需要在自己的业务中，对两种不同的参数采取不同的处理。
 
 **后台请求微信授权，在本地即可以测试，只要有code或encryptedData和iv(这三个参数需要前端给你)，不用非拿到线上去测。而且，小程序后台，也无需配置服务器域名啥的。**
+
+# 小程序报错
+`{"errcode":40163,"errmsg":"code been used, hints: [ req_id: UGKfDXXBe-rIpWva ]"}`
+前端获取code，通过code请求后台接口，后台通过code获取openid和session_key。偶尔会报上边的错。
+原因：前端传了重复的code，小程序的code只能用一次，每次使用都要重新获取，不能缓存。
