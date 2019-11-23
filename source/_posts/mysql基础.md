@@ -143,6 +143,12 @@ ALTER TABLE <表名>
 - 复制表，同时定义字段信息
 `create table my_table_copy4 (id INTEGER not null auto_increment PRIMARY KEY) select * from my_table;`
 
+- 检查数据表是否存在
+`SELECT table_name FROM information_schema.tables WHERE table_name=#{tableName, jdbcType=VARCHAR}`
+
+- 检查表字段是否存在
+`SELECT column_name FROM information_schema.columns WHERE table_name=#{tableName, jdbcType=VARCHAR} AND column_name=#{columnName, jdbcType=VARCHAR}`
+
 # 主外键
 主键：`primary_key`
 - 保证数据唯一性
