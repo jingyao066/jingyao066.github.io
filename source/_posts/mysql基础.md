@@ -522,3 +522,108 @@ mysql字段类型为tinyint，tinyint(1)会在查询的时候转换成true false
 # 修改mysql时区
 在配置文件加上：
 `default-time_zone = '+8:00'`
+
+# explain关键字
+mysql官方介绍：
+When EXPLAIN is used with an explainable statement, MySQL displays information from the optimizer about the statement execution plan. That is, MySQL explains how it would process the statement, including information about how tables are joined and in which order.
+explain能解释mysql如何处理SQL语句，表的加载顺序，表是如何连接，以及索引使用情况。是SQL优化的重要工具。
+
+explain的结果共包含12个字段，下面逐一解释。
+
+## id
+id相同，执行顺序从上之下
+id不同，执行顺序从大到小
+id相同不同，同时存在，遵守1、2规则
+
+|id|select_type|table|
+|-|-|-|
+|1|PRIMARY|A|
+|1|PRIMARY|B|
+|2|SUBQUERY|B|
+
+可以这样理解，执行顺序从大到小，先执行id为2的，然后执行id为1的（先A再B，规则1）；执行顺序为：第三行，第一行，第二行。
+
+## select_type
+查询中每个select的查询类型，如下：
+
+- SIMPLE：简单select，不使用union和子查询
+`explain select * from A`
+
+- PRIMARY：查询中包含任何复杂的子部分，最外层的select被标记为PRIMARY
+`explain select * from A where A.key_A = (select key_B from B where B.id = 1)`
+
+- UNION：union中第二个后面的select语句
+
+- DEPENDENT UNION：一般是子查询中的第二个select语句（取决于外查询，mysql内部也有些优化）
+
+- UNION RESULT：union的结果
+```
+explain
+select * from A
+union
+select * from B
+```
+
+- SUBQUERY：子查询中的第一个select
+`explain select * from A where A.key_A = (select key_B from B where B.id = 1)`
+
+- DEPENDENT SUBQUERY：子查询中第一个select，取决于外查询（在mysql中会有些优化，有些dependent会直接优化成simple）
+
+- DERIVED：派生表的select（from子句的子查询），奇怪的是在5.7的版本中竟然只有一个SIMPLE
+`explain select * from (select * from A where a.key_A = 1) t`
+
+## table
+显示数据来自于哪个表，有时不是真实的表的名字（虚拟表），虚拟表最后一位是数字，代表id为多少的查询。
+
+## type
+这个字段是我们优化要重点关注的字段，这个字段直接反映我们SQL的性能是否高效。
+这个字段值较多，这里我只重点关注我们开发中经常用到的几个字段：system、const、eq_ref、ref、range、index、all
+性能由好到差依次为：system->const->eq_ref->ref->range->index->all
+
+- system：表只有一行记录，这个是const的特例，一般不会出现，可以忽略
+
+- const：表示通过索引一次就找到了，const用于比较primary key或者unique索引。因为只匹配一行数据，所以很快。
+`explain select * from a where id = 1`
+
+- eq_ref：唯一性索引扫描，表中只有一条记录与之匹配。一般是两表关联，关联条件中的字段是主键或唯一索引。
+`explain select * from a,b where a.id = b.a_id`
+
+- ref：非唯一行索引扫描，返回匹配某个单独值的所有行
+`explain select * from a where a.key_A = 1`
+
+- range：检索给定范围的行，一般条件查询中出现了>、<、in、between等查询
+`explain select * from a where a.id > 1`
+
+- index：遍历索引树。通常比ALL快，因为索引文件通常比数据文件小。all和index都是读全表，但index是从索引中检索的，而all是从硬盘中检索的。
+`explain select id from a`
+
+- all：遍历全表以找到匹配的行
+`explain select * from a`
+
+## possible_keys
+显示可能应用在这张表中的索引，但**不一定被查询实际使用**。
+
+## key
+实际使用的索引。
+
+## key_len
+表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。一般来说，索引长度越长表示精度越高，效率偏低；长度越短，效率高，但精度就偏低。并不是真正使用索引的长度，是个预估值。
+
+## ref
+表示哪一列被使用了，常数表示这一列等于某个常数。
+
+## rows
+大致找到所需记录需要读取的行数。
+
+## filter
+表示选取的行和读取的行的百分比，100表示选取了100%，80表示读取了80%。
+
+## extra
+- Using filesort：使用外部的索引排序，而不是按照表内的索引顺序进行读取。（一般需要优化）
+- Using temporary：使用了临时表保存中间结果。常见于排序order by和分组查询group by（最好优化）
+- Using index：表示select语句中使用了覆盖索引，直接冲索引中取值，而不需要回行（从磁盘中取数据）
+- Using where：使用了where过滤
+- Using index condition：5.6之后新增的，表示查询的列有非索引的列，先判断索引的条件，以减少磁盘的IO
+- Using join buffer：使用了连接缓存
+- impossible where：where子句的值总是false
+还有一些，基本上很少遇到，就不作说明了。

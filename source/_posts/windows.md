@@ -4,8 +4,6 @@ tags: other
 date: 2019-09-28 16:39:52
 ---
 
-解决一些windows的问题。
-
 # 查看端口占用
 查看全部端口：
 `netstat -ano`
