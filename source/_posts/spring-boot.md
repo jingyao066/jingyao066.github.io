@@ -766,12 +766,3 @@ public class DubboConfig {
 }
 ```
 启动成功。
-
-整完之后，jenkins启动报错：
-`org.apache.maven.project.ProjectBuildingException: Some problems were encountered while processing the POMs:`
-`[ERROR] Child module /root/.jenkins/workspace/zjx_service_video/zjx_configure of /root/.jenkins/workspace/zjx_service_video/pom.xml does not exist @ `
-
-`zjx_configure`该模块是项目之前的配置模块，现在被我删除了，我估计是jenkins的缓存还在。
-
-解决：
-重装jenkins
