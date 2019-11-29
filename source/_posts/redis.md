@@ -969,7 +969,7 @@ public static String getData(String key) throws InterruptedException{
 			//暂停100ms再重新获取数据
 			Thread.sleep(100);
 			result = getData(key);
-		}		
+		}
 	}
 	return result;
 }
