@@ -208,9 +208,15 @@ cp $WORKSPACE/zjx_admin/target/zjx_admin-0.0.1-SNAPSHOT.jar /usr/local/zjx/admin
 chmod u+x /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar
 
 #指定log日志位置，并通过java -jar启动项目
-BUILD_ID=donKillme nohup java -jar -Dspring.profiles.active=dev -Dlogging.file=/usr/local/zjx/admin/logs/zjx.log /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar &
+BUILD_ID=donKillme nohup java -jar -Dspring.profiles.active=dev >/usr/local/zjx/service/logs/zjx.log /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar &
 ```
+两种打印日志的设置
+`>/usr/local/zjx/service/logs/zjx.log`
+下边这种死活打不出日志，不知道为啥。
+`-Dlogging.file=/usr/local/zjx/admin/logs/zjx.log`
+
 这个-D是 java命令的参数-D。意指加入全局属性，比如-Djdbc.driver=<jdbc driver classpath>表示在程序里可用System.getProperty("jdbc.driver")获得<jdbc driver classpath>，以此类推。
+`-Dspring.profiles.active=dev`：指定启动配置文件，可以用来区分测试环境和生产环境。
 
 `BUILD_ID=dontKillme`：指的是不要杀死最后一步启动项目产生的子进程。
 [官网说明](https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller)

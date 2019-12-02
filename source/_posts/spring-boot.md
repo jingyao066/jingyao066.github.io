@@ -766,3 +766,104 @@ public class DubboConfig {
 }
 ```
 启动成功。
+
+# 日志
+日志，通常不会在需求阶段作为一个功能单独提出来，也不会在产品方案中看到它的细节。但是，这丝毫不影响它在任何一个系统中的重要的地位。
+为了保证服务的高可用，发现问题一定要即使，解决问题一定要迅速，所以生产环境一旦出现问题，预警系统就会通过邮件、短信甚至电话的方式实施多维轰炸模式，确保相关负责人不错过每一个可能的bug。
+预警系统判断疑似bug大部分源于日志。比如某个微服务接口由于各种原因导致频繁调用出错，此时调用端会捕获这样的异常并打印ERROR级别的日志，当该错误日志达到一定次数出现的时候，就会触发报警。
+
+Spring Boot默认日志系统
+Spring Boot默认使用LogBack日志系统，如果不需要更改为其他日志系统如Log4j2等，则无需多余的配置，LogBack默认将日志打印到控制台上。
+如果要使用LogBack，原则上是需要添加dependency依赖的
+```
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-logging</artifactId></pre>
+```
+但是因为新建的Spring Boot项目一般都会引用spring-boot-starter或者spring-boot-starter-web，而这两个起步依赖中都已经包含了对于spring-boot-starter-logging的依赖，所以，无需额外添加依赖。
+我们基于《没做过大项目，但我会建大项目》中创建的项目，启动springboot-demo项目，可以看到打印的日志信息如下。
+![](spring-boot/1.gif)
+
+以上至默认配置启动下的日志显示情况，如果需要做一些定制的日志配置比如将日志存储到文件等应该如何配置，下面就通过几个小问题来看看Spring Boot下是如何解决这些问题的。
+
+## 如何在项目中打印日志
+新建一个配置类LogConfig，注入一个Bean，并在方法中打印日志
+```java
+package com.jackie.springbootdemo.config;
+
+import com.jackie.springbootdemo.model.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration public class LogConfig {
+    private static final Logger LOG = LoggerFactory.getLogger(LogConfig.class);
+
+    @Bean
+ public Person logMethod() {
+        LOG.info("==========print log==========");
+        return new Person();
+    }
+}
+```
+运行SpringBootDemoApplication，可以看到控制台的日志
+![](spring-boot/2.png)
+Spring Boot默认的日志级别为INFO，这里打印的是INFO级别的日志所以可以显示。
+很多开发者在日常写private static final Logger LOG = LoggerFactory.getLogger(LogConfig.class);总觉得后面的LogConfig.class可有可无，因为随便写个其他类也不会报错，但是准确编写class信息能够提供快速定位日志的效率。
+我们看到打印的日志内容左侧就是对应的类名称，这个是通过private static final Logger LOG = LoggerFactory.getLogger(LogConfig.class);实现的。
+如果将LogConfig.class换成xxx.class，输出日志就会显示对应的xxx类名。这样声明的好处就是方便定位日志。
+
+## 如何将日志信息存储到文件
+在本机环境，我们习惯在控制台看日志，但是线上我们还是要通过将日志信息保存到日志文件中，查询日志文件即可。
+那么应该如何配置才能将日志信息保存到文件呢？
+在我们创建的springboot-demo项目中，resources目录下有个application.properties文件（如果是application.yml文件也是同样的道理，只是采用的不同的编写风格而已）。添加如下配置
+```
+logging.path=/Users/jackie/workspace/rome/ 
+logging.file=springbootdemo.log
+```
+logging.path：该属性用来配置日志文件的路径
+logging.file：该属性用来配置日志文件名，如果该属性不配置，默认文件名为spring.log
+运行SpringBootDemoApplication
+![](spring-boot/3.gif)
+可以看到在指定路径下生成了springbootdemo.log文件，该文件内容和控制台打印内容一致。
+如果注释logging.file=springbootdemo.log则生成默认文件名spring.log
+![](spring-boot/4.gif)
+
+## 如何设置日志级别
+日志级别总共有TARCE < DEBUG < INFO < WARN < ERROR < FATAL ，且级别是逐渐提供，如果日志级别设置为INFO，则意味TRACE和DEBUG级别的日志都看不到。
+上例中我们打印了一个INFO级别的日志，因为Spring Boot默认级别就是INFO，如果我们改为WARN，是否还能看到这行日志信息。
+
+**logging.level**
+该属性用于配置日志级别。在applicaition.properties中添加
+`logging.level.root=warn`
+这里是用的root级别，即项目的所有日志，我们也可以使用package级别，即指定包下使用相应的日志级别，下面再看。
+启动SpringBootDemoApplication
+![](spring-boot/5.png)
+你没看错，这个项目是成功启动了，但是几乎没有内容，这是因为之前打印的日志级别都是INFO，这里设置为WARN，所以INFO级别的日志都不显示。
+这里我们可以改动root还是INFO级别，将指定包下的日志级别设置为WARN
+```
+logging.level.root=INFO
+logging.level.com.jackie.springbootdemo.config=WARN
+```
+启动SpringBootDemoApplication
+![](spring-boot/6.png)
+可以看到除了LogConfig类中的INFO级别的日志没有打印出来，其他的INFO级别的日志都正常输出了。
+
+## 如何定制自己的日志格式
+在application.properties中添加
+```
+logging.pattern.console=%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n 
+logging.pattern.file=%d{yyyy/MM/dd-HH:mm} [%thread] %-5level %logger- %msg%n
+```
+logging.pattern.console：该属性用于定制日志输出格式。
+上述配置的编码中，对应符号的含义如下
+```
+%d{HH:mm:ss.SSS}——日志输出时间
+%thread——输出日志的进程名字，这在Web应用以及异步任务处理中很有用
+%-5level——日志级别，并且使用5个字符靠左对齐
+%logger- ——日志输出者的名字
+%msg——日志消息
+%n——平台的换行符
+```
+启动SpringBootDemoApplication
+![](spring-boot/7.png)

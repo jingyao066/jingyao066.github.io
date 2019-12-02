@@ -223,18 +223,71 @@ replace-field: replace an existing field withone that is differently configured.
 [更多api请参考](http://lucene.apache.org/solr/guide/7_4/schema-api.html)
 
 ## 中文分词器
-solr自带了一些中文分词器，比较好用的是SmartChineseAnalyzer，但是扩展性比较差不能自定义扩展中文词库，所以这里选择使用IKAnalyzer，这是第三方的一个分词器可以很好的扩展中文词库，IKAnalyzer下载后解压会有如下文件
-![](Search engine/7.png)
-把核心jar文件复制到solr WEB应用的lib文件夹下，如下图
-![](Search engine/8.png)
-把配置文件和词库等文件复制到WEB应用的classes文件夹下，如果子WEB-INF下没有这个文件夹自己创建即可，如下图：
-![](Search engine/9.png)
-如果想要扩展词库可以在ext.dic文件中配置自定义的中文词组，例如：诛仙这个词组，这个分词器的算法是算不出来的但是通过我们自定义词库，分词器也可以把诛仙列出关键词。
-注意编辑此文件时字符编码最好是UTF-8无BOM模式，这个可以通过EditPlus等文本编辑工具设置。下面开始在Schema中应用分词器如下图：
-![](Search engine/10.png)
+solr自带了一些中文分词器，比较好用的是SmartChineseAnalyzer，但是扩展性比较差不能自定义扩展中文词库，所以这里选择使用IKAnalyzer，这是第三方的一个分词器可以很好的扩展中文词库。
+[下载IKAnalyzer的jar包](https://search.maven.org/search?q=com.github.magese)
+将下载好的jar包放入solr-7.4.0/server/solr-webapp/webapp/WEB-INF/lib目录中。
+
+复制新项目的配置文件
+```
+cd /usr/local/solr-7.4.0
+mkdir server/solr/ik
+cp -r server/solr/configsets/_default/conf  server/solr/ik/
+```
+
+然后到server/solr/ik/conf目录中打开managed-schema文件，增加如下代码
+```
+<!-- ik分词器 -->
+<fieldType name="text_ik" class="solr.TextField">
+  <analyzer type="index">
+      <tokenizer class="org.wltea.analyzer.lucene.IKTokenizerFactory" useSmart="false" conf="ik.conf"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+  </analyzer>
+  <analyzer type="query">
+      <tokenizer class="org.wltea.analyzer.lucene.IKTokenizerFactory" useSmart="true" conf="ik.conf"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+  </analyzer>
+</fieldType>
+```
 定义了一个text_ik这个字段类型并采用Ik分词器，接下来在field元素定义式指定type=text_ik就可以把这个分词器应用在这个field中。
-接下来我们来验证下ik分词器，如下图：
-![](Search engine/11.png)
+
+重启solr
+`bin/solr restart -force`
+新增core：ik，或是在旧的core的manage-schema中增加上边的配置。
+
+### solr7自带分词中文分词器
+复制jar包
+` cp contrib/analysis-extras/lucene-libs/lucene-analyzers-smartcn-7.4.0.jar  server/solr-webapp/webapp/WEB-INF/lib`
+复制新项目的配置文件
+```
+cd /root/tar/solr-7.4.0
+mkdir server/solr/test
+cp -r server/solr/configsets/_default/conf  server/solr/test/
+```
+然后到server/solr/test/conf目录中打开managed-schema文件，增加如下代码
+```
+<fieldType name="text_hmm_chinese" class="solr.TextField" positionIncrementGap="100">
+	<analyzer type="index">
+		<tokenizer class="org.apache.lucene.analysis.cn.smart.HMMChineseTokenizerFactory"/>
+	</analyzer>
+	<analyzer type="query">
+		<tokenizer class="org.apache.lucene.analysis.cn.smart.HMMChineseTokenizerFactory"/>
+	</analyzer>
+</fieldType>
+```
+定义了一个text_hmm_chinese这个字段类型并采用自带中文分词器，接下来在field元素定义式指定type=text_hmm_chinese就可以把这个分词器应用在这个field中。
+
+重启solr
+`bin/solr restart -force`
+新增一个core：test
+
+对比两个分词的效果
+IK分词器
+![](Search engine/a1.png)
+
+自带分词器
+![](Search engine/a2.png)
+
+我感觉IK的语义分析更好些。
 ![](Search engine/12.png)
 
 ## DIH导入索引数据
