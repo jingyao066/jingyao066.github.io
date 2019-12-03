@@ -504,3 +504,67 @@ import com.aspose.cells.License;
 只倒一个包，另外的直接用全路径，不倒包。如：
 `com.aspose.cells.License asposeLic = new com.aspose.cells.License();`
 `java.io.File dest = new java.io.File(filePath + alias);`
+
+# 读取pdf内容
+文本内容提取:
+pom引入
+```
+<dependency>
+	<groupId>org.apache.pdfbox</groupId>
+	<artifactId>pdfbox</artifactId>
+	<version>2.0.15</version>
+</dependency>
+
+<dependency>
+	<groupId>org.apache.pdfbox</groupId>
+	<artifactId>fontbox</artifactId>
+	<version>2.0.15</version>
+</dependency>
+
+<dependency>
+	<groupId>org.apache.pdfbox</groupId>
+	<artifactId>jempbox</artifactId>
+	<version>1.8.16</version>
+</dependency>
+```
+
+```java
+/**
+ * 读PDF文件
+ * @param fileName
+ */
+public static void readPDF(String fileName) {
+	File file = new File(fileName);
+	FileInputStream in = null;
+	try {
+		PDDocument document=PDDocument.load(file);
+		// 获取页码
+		int pages = document.getNumberOfPages();
+		// 读文本内容
+		PDFTextStripper stripper=new PDFTextStripper();
+		// 设置按顺序输出
+		stripper.setSortByPosition(true);
+		stripper.setStartPage(1);
+		stripper.setEndPage(pages);
+		String content = stripper.getText(document);
+		System.out.println(content);
+
+		//可选，将pdf内容写入到txt文本文件
+//            FileWriter fileWriter = new FileWriter(new File("pdf.txt"));
+//            fileWriter.write(content);
+//            fileWriter.flush();
+//            fileWriter.close();
+
+	} catch (Exception e) {
+		System.out.println("读取PDF文件" + file.getAbsolutePath() + "失败！" + e);
+		e.printStackTrace();
+	} finally {
+		if (in != null) {
+			try {
+				in.close();
+			} catch (IOException e1) {
+			}
+		}
+	}
+}
+```

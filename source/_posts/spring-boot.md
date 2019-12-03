@@ -867,3 +867,95 @@ logging.pattern.console：该属性用于定制日志输出格式。
 ```
 启动SpringBootDemoApplication
 ![](spring-boot/7.png)
+
+# SpringBoot中获取ApplicationContext的三种方式
+ApplicationContext是什么？
+简单来说就是Spring中的容器，可以用来获取容器中的各种bean组件，注册监听事件，加载资源文件等功能。
+
+- 直接使用Autowired注入
+```
+@Component
+public class Book1 {
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    public void show (){
+        System.out.println(applicationContext.getClass());
+    }
+}
+```
+
+- 利用 spring4.3 的新特性
+使用spring4.3新特性但是存在一定的局限性，必须满足以下两点：
+构造函数只能有一个，如果有多个，就必须有一个无参数的构造函数，此时，spring会调用无参的构造函数。
+构造函数的参数，必须在spring容器中存在。
+```
+@Component
+public class Book2 {
+
+    private ApplicationContext applicationContext;
+
+    public Book2(ApplicationContext applicationContext){
+        System.out.println(applicationContext.getClass());
+        this.applicationContext=applicationContext;
+    }
+
+    public void show (){
+        System.out.println(applicationContext.getClass());
+    }
+
+}
+```
+
+- 实现spring提供的接口 ApplicationContextAware
+spring 在bean 初始化后会判断是不是ApplicationContextAware的子类，调用setApplicationContext（）方法， 会将容器中ApplicationContext传入进去
+```
+@Component
+public class Book3 implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    public void show (){
+        System.out.println(applicationContext.getClass());
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+}
+```
+
+# 在工具类中使用redisTemplate
+- 启动类加上组件扫描
+`@ComponentScan(basePackages = {"com.zjx.util","com.zjx.api"})`
+
+- 工具类需要实现spring提供的接口
+`public class TokenUtil implements ApplicationContextAware`
+
+- 类上加注解
+`@Component`
+
+- 
+```java
+private static RedisTemplate redisTemplate;
+
+private static ApplicationContext applicationContext;
+
+@Override
+public synchronized void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	if(this.applicationContext == null){
+		this.applicationContext = applicationContext;
+		if(redisTemplate == null){
+			Object o = applicationContext.getBean("redisTemplate");
+			if(o instanceof RedisTemplate){
+				redisTemplate = (RedisTemplate)o;
+			}
+		}
+	}
+}
+`
+
+- 然后直接使用就好了
+`redisTemplate.opsForValue().set("test","1");`
