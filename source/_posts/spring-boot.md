@@ -955,7 +955,18 @@ public synchronized void setApplicationContext(ApplicationContext applicationCon
 		}
 	}
 }
-`
+```
 
 - 然后直接使用就好了
 `redisTemplate.opsForValue().set("test","1");`
+
+# 单用户登录
+单用户登录区别于单点登录。
+单点登录：单点登录（Single Sign On），简称为 SSO，是目前比较流行的企业业务整合的解决方案之一。SSO的定义是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。
+单用户登录：也叫单设备登录(Single device login)，互斥登录。即同一个账号的下，后一个登录的把前一个踢掉。比如，微信，钉钉。
+
+一直没在网上找到这个机制的实现方法，只能自己琢磨。
+前后端分离的系统，该功能需要前后端配合实现。我决定使用redis+token来实现该功能。思路：
+- 一个设备登录时，app端传递一个code，uuid就行，保存在app本地，每次登录都传递相同的code。为什么不用设备码？考虑到可能获取不到设备码，iphone现在好像也没有设备码这一说了。
+将userId作为key，code作为value存到redis中，同时将userId、mobile、ip、code等参数des加密成token，并返回给前端。
+- 用户请求接口时，会携带token，解密token，将token中取到的code，同redis中的code对比，如果相同，就是同一设备，不同，就给前端返回错误码，然后前端让将用户踢下线。
