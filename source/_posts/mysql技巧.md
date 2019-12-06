@@ -749,3 +749,32 @@ flush privileges表示刷新权限变更。
 
 ## 删除用户
 `drop user zhangsan@'%';`
+
+# select执行顺序
+```
+(7) SELECT
+(8) DISTINCT <select_list>
+(1) FROM <left_table>
+(3) <join_type> JOIN <right_table>
+(2) ON <join_condition>
+(4) WHERE <where_condition>
+(5) GROUP BY <group_by_list>
+(6) HAVING <having_condition>
+(9) ORDER BY <order_by_condition>
+(10) LIMIT <limit_number>
+```
+MySQL的SELECT执行顺序一共分为10步，如上所标注的那样，最先执行的是FROM操作，最后执行的是LIMIT操作。
+其中每一次操作都会产生一张虚拟的表，这个虚拟的表作为一个处理的输入，只是这些虚拟的表对用户来说是透明的，
+但是只有最后一个虚拟的表才会被作为结果返回。如果没有在语句中指定某一个子句，那么将会跳过相应的步骤。
+
+下面我们来具体分析一下查询处理的每一个阶段
+1. FORM: 对FROM左边的表和右边的表计算笛卡尔积，产生虚表VT1。
+2. ON: 对虚表VT1进行ON过滤，只有那些符合<join-condition>的行才会被记录在虚表VT2中。
+3. JOIN： 如果指定了OUTER JOIN（比如left join、 right join），那么保留表中未匹配的行就会作为外部行添加到虚拟表VT2中，产生虚拟表VT3。
+4. WHERE： 对虚拟表VT3进行WHERE条件过滤。只有符合<where-condition>的记录才会被插入到虚拟表VT4中。
+5. GROUP BY: 根据group by子句中的列，对VT4中的记录进行分组操作，产生VT5。
+6. HAVING： 对虚拟表VT5应用having过滤，只有符合<having-condition>的记录才会被 插入到虚拟表VT6中。
+7. SELECT： 执行select操作，选择指定的列，插入到虚拟表VT7中。
+8. DISTINCT： 对VT7中的记录进行去重。产生虚拟表VT8.
+9. ORDER BY: 将虚拟表VT8中的记录按照<order_by_list>进行排序操作，产生虚拟表VT9.
+10. LIMIT：取出指定行的记录，产生虚拟表VT10, 并将结果返回。

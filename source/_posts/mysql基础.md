@@ -6,27 +6,27 @@ date: 2018-12-06 18:12:58
 
 # 增删改查
 ```
-插入(增)：
+增：
 insert into 表名字(列名1，列名2...) values(值1，值2...)
-或者：
+或：
 insert into 表名字 values(值1，值2...)
 若不指定列名，则需要插入全部字段。
 ```
 
 ```
-删除：
+删：
 delete from 表名字 where id = 1
 若不加where条件，则删除数据表中所有数据
 ```
 
 ```
-修改：
+改：
 update 表名字 set 列1=值1，列2=值2... where id = 1
 若不加where条件，则更新数据表中所有数据
 ```
 
 ```
-查询：
+查：
 select * from 表名字
 星号代表查询数据表中所有字段
 select id,stu_name,age, from 表名字
@@ -76,22 +76,11 @@ CREATE TABLE `grade` (
 
 字段参数说明：
 ` id int(11) NOT NULL AUTO_INCREMENT`
-```
 id：字段名称
 int(11)：字段类型及长度
-NOT NULL：是否可为空，可为空则为null
+DEFAULT NULL：默认为空，不可空是not null
 AUTO_INCREMENT：自动递增，一般此属性只应用在主键上
 COMMENT：字段说明
-```
-
-- 删除表
-`DROP TABLE [if exists] table_name`
-
-- 显示表的数据结构
-`desc table_name`
-
-- 查看数据库中所有的表
-`show tables`
 
 - 修改数据表
 
@@ -103,6 +92,15 @@ ALTER TABLE <表名>
 |[ADD [constraint] [约束名] 约束定义
 |[DROP [constraint] 约束名]
 ```
+
+- 删除表
+`DROP TABLE [if exists] table_name`
+
+- 显示表的数据结构
+`desc table_name`
+
+- 查看数据库中所有的表
+`show tables`
 
 - 新增字段
 `alter table table_name add column_name varchar(200) not null default 0 COMMENT "描述";`
@@ -161,7 +159,7 @@ ALTER TABLE <表名>
 - 参照列的表为父表，外键列的表为子表
 - 实现一对多，多对一的关系
 - 外键列和参照列必须创建索引，如不创建，mySQL会自动创建
-```
+```sql
 create table test(
 	id int primary_key auto_increment,
 	foreign key(test1_id) references  test2(id)
@@ -169,15 +167,14 @@ create table test(
 )
 ```
 尽量不要使用外键，我们一般人为的人为表与表之间是相关联的。如：
-班级表class为主表，在学生表student中加入class_id字段，表示班级id，这样就人为的认为student为class的字表，两张表就关联起来了。
-使用外键在删除表或修改表结构时，会造成很大麻烦。
+班级表class为主表，在学生表student中加入class_id字段，表示班级id，这样就人为的认为student为class的字表，两张表就关联起来了。使用外键在删除表或修改表结构时，会造成很大麻烦。
 
 # where条件
 - 可以跟在`select、update、delete`后
 - 多个where条件，并且的关系，用and链接，或者的关系，用or链接
 - `group by`：把查询结构进行分组，分组结果可以升序(asc)或降序(desc)，默认升序，用于去重
 - `having`：如果要将group by的结果进行删选，需要用到having关键字，不可以用where
-- `order by`：把查询结果进行排序，可升(asc)可降(desc),默认升序，可以进行多次排序，用逗号分割排序字段，越靠前，优先级越高
+- `order by`：把查询结果进行排序，可升(asc)可降(desc)，默认升序，可以进行多次排序，用逗号分割排序字段，越靠前，优先级越高
 - `limit`：限制查询返回的结果(用于分页功能)是select语句的最后一个关键字
 	参数1：从第几条结果开始获取
 	参数2：获取几条结果
@@ -195,7 +192,6 @@ select * from table_name
 
 ## where条件参数介绍
 以下参数必须跟在where关键字后面，作为where的修饰
-```
 =：相等
 >(=)：大于(等于)
 <(=)：小于(等于)
@@ -203,7 +199,6 @@ is [not] null：为null(不为null)
 [not] like：模糊查询
 [not] between ... and ..：(不包含)包含在范围内
 [not] in：包含在指定范围值内
-```
 
 ## null
 使用NULL条件检索时不能使用=号，必须使用is
