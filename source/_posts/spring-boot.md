@@ -957,7 +957,7 @@ public synchronized void setApplicationContext(ApplicationContext applicationCon
 }
 ```
 
-- 然后直接使用就好了
+- 然后启动服务，直接使用就好了
 `redisTemplate.opsForValue().set("test","1");`
 
 # 单用户登录

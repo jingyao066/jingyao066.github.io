@@ -178,6 +178,7 @@ create table test(
 - `limit`：限制查询返回的结果(用于分页功能)是select语句的最后一个关键字
 	参数1：从第几条结果开始获取
 	参数2：获取几条结果
+	只写一个参数：获取几条结果
 
 select语句结构：	
 ```sql
@@ -192,17 +193,16 @@ select * from table_name
 
 ## where条件参数介绍
 以下参数必须跟在where关键字后面，作为where的修饰
-=：相等
->(=)：大于(等于)
-<(=)：小于(等于)
-is [not] null：为null(不为null)
-[not] like：模糊查询
-[not] between ... and ..：(不包含)包含在范围内
-[not] in：包含在指定范围值内
+`=`：相等
+`>=`：大于等于
+`<=`：小于等于
+`is [not] null`：为null(不为null)
+`[not] like`：模糊查询
+`[not] between ... and ..`：(不包含)包含在范围内
+`[not] in`：包含在指定范围值内
 
 ## null
-使用NULL条件检索时不能使用=号，必须使用is
-`is null`，不能是`= null`
+使用NULL条件检索时不能使用=号，必须使用is：`is null`，不能是`= null`
 
 ## like(模糊查询)
 `select * from student where stu_name like '%小%';`
@@ -226,7 +226,6 @@ and：且(必须全部满足)
 or：或(只需满足一个)
 
 # 字符函数
- 以下字符函数都必须跟在`select`语句后面
 `concat(str1,str2,...)`：拼接字符串
 `length(str)`：字符串长度
 `lower(str)`：字符串转小写
@@ -246,7 +245,6 @@ SQL：
 解：因为最短有4位，在每个字符串左侧都拼接6个0，然后从右侧开始截取10个字符
 
 # 聚合函数
-聚合函数必须跟在`select`语句后面
 一列的和：`select sum(列名) from 表名 where ...条件`
 一列的最大值：`select max(列名) from 表名 where ...条件`
 一列的最小值：`select min(列名) from 表名 where ...条件`
@@ -263,7 +261,8 @@ SQL：
 `now()`：当前时间(年月日-时分秒)
 `curdate()`：当前日期(年月日)
 `curtime()`：当前时间(时分秒)
-`unix_timestamp(now())`：当前时间戳，如：1557729824，一共十位数，精确到秒，精确到毫秒需要十三位
+`unix_timestamp()`：当前时间戳，如：1557729824，一共十位数，精确到秒，精确到毫秒需要十三位
+`unix_timestamp(now())`：带参数，可以是一个DATE字符串，一个DATETIME字符串，一个TIMESTAMP或者一个当地时间的YYMMDD或YYYYMMDD格式的数字，表示自'1970-01-01 00:00:00'与指定时间的秒数差
 
 `date_add()`：日期加减算法
 参数1：要进行运算的日期
