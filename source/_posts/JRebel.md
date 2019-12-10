@@ -47,6 +47,8 @@ JRebel并不是开源免费的，作为一个商业产品，它并不算便宜�
 ![](JRebel/1.png)
 
 # windows激活
+[直接下载](ReverseProxy_windows_amd64.exe)
+
 [激活需要反向代理工具](https://github.com/ilanyu)
 
 选择ReverseProxy，再进入到Release页面：
