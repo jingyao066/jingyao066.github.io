@@ -1,6 +1,6 @@
 ---
 title: travel
-tags: other
+tags: life
 date: 0000-00-00 00:00:00
 ---
 
