@@ -888,3 +888,12 @@ echo 3 > /proc/sys/vm/drop_caches
 
 注意：此方法不能用于解决统物理内存占用过高，导致部分服务被强制关闭的问题
 要从根本上解决服务器内存占用过高的问题，[参考这篇文章](https://www.idaobin.com/archives/345.html)
+
+# 问题
+## ubuntu下使用filezilla上传文件失败的问题
+`open for write: permission denied`
+原因：用户没有上传文件到该目录下面的权限。
+解决：使用以下命令给我们需要放入的目标文件权限，我这里是操作opt文件夹的权限，如果你要操作所有目录权限，把opt修改为home即可，命令如下：
+`sudo chmod 777 /opt/`
+试试能不能传，不能就重启服务器：
+`sudo /etc/init.d/vsftpd restart`
