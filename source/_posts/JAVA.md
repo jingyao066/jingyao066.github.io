@@ -1052,6 +1052,30 @@ public static int getTimeDifference(int beginTimestamp, int endTimestamp, int ty
 }
 ```
 
+- 字符串排序
+```
+/**
+ * @author: wjy
+ * @description: 字符串根据ASCII码表进行升序排列
+ */
+public static String ASCIISort(String str) {
+	char[] test = new char[str.length()];
+	StringBuilder sb = new StringBuilder();
+	while (true) {
+		String a = str;//直接读取这行当中的字符串。
+		for (int i = 0; i < str.length(); i++) {
+			test[i] = a.charAt(i);//字符串处理每次读取一位。
+		}
+		Arrays.sort(test);
+		for (int i = 0; i < test.length; i++) {
+			sb.append(test[i]);
+		}
+		String trim = sb.toString().trim();
+		return trim;
+	}
+}
+```
+
 # Lambda表达式
 Lambda 表达式是一种匿名函数，简单地说，它是没有声明的方法，也即没有访问修饰符、返回值声明和名字。
 它可以写出更简洁、更灵活的代码。作为一种更紧凑的代码风格，使 Java 语言的表达能力得到了提升。
