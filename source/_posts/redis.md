@@ -1340,3 +1340,5 @@ sentinel_simulate_failure_flags:0
 master0:name=mymaster,status=ok,address=192.168.43.188:6380,slaves=2,sentinels=3
 ```
 可以看到端口号为:6380的redis服务器已经变成master服务器了，说明哨兵配置成功。
+
+[参考](https://www.jianshu.com/p/ce1d78cd368a)

@@ -772,7 +772,6 @@ public static Map<String, String> resolveAliPayResponse(HttpServletRequest reque
 1. 微信支付中间页调起微信收银台后超过5秒
 2. 用户点击“取消支付“或支付完成后点“完成”按钮。因此无法保证页面回跳时，支付流程已结束，所以商户设置的redirect_url地址不能自动执行查单操作，应让用户去点击按钮触发查单操作
 
-
 # 微信公众号支付
 微信网页支付时序图：
 ![](pay/3.png)
@@ -980,3 +979,6 @@ public void wxBuySpaceNotify() {
 
 关键就这两个方法，一个预支付，微信返回perpay_id，你返回给前端，前端通过perpay_id调起支付组件，若完成支付，微信会回调你设置的notify_url地址，这就是你支付成功的回调地址。
 你要在回调方法里写一些业务相关的逻辑，比如：更改订单状态为已支付，以及赠送会员等后续操作。
+
+[公众号支付参考](https://www.jianshu.com/p/9c322b1a5274)
+[参考2](https://blog.csdn.net/javaYouCome/article/details/79473743)
