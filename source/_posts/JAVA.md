@@ -1743,3 +1743,16 @@ System.out.println("所有数字的总和   : " + stats.getSum());
 System.out.println("所有数字的平均值 : " + stats.getAverage()); 
 ``` 
 [参考](https://www.cnblogs.com/franson-2016/p/5593080.html)
+
+# base64编码和解码
+```
+final Base64.Decoder decoder = Base64.getDecoder();
+final Base64.Encoder encoder = Base64.getEncoder();
+final String text = "字串文字";
+final byte[] textByte = text.getBytes("UTF-8");
+//编码
+final String encodedText = encoder.encodeToString(textByte);
+System.out.println(encodedText);
+//解码
+System.out.println(new String(decoder.decode(encodedText), "UTF-8"));
+```
