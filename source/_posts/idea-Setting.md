@@ -24,6 +24,12 @@ Plugins->Marketplace，搜索`Nyan Progress Bar`，一个彩色的进度条。
 ## lombok
 lombok插件用来避免使用lombok的注解(@Data\@AllArgsConstructor等)，显示编译错误的红色标记。
 
+## 阿里巴巴Java开发规约插件p3c
+2017年初，阿里公开了java代码规范标准手册，《阿里巴巴Java开发手册》。
+然后阿里基于该手册，开发了一款插件。[github地址](https://github.com/alibaba/p3c)
+
+idea插件中心搜索`Alibaba Java Coding Guidelines`，下载并重启idea。
+
 ## 安装mybatis-generator(自动生成三件套)
 官网：http://www.mybatis.org/generator/
 github：https://github.com/mybatis/generator/releases
