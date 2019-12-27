@@ -1756,3 +1756,105 @@ System.out.println(encodedText);
 //解码
 System.out.println(new String(decoder.decode(encodedText), "UTF-8"));
 ```
+
+# 养成良好的编程习惯
+## 常量&变量
+- 直接赋值常量值，禁止声明新对象
+直接赋值常量值，只是创建了一个对象引用，而这个对象引用指向常量值。
+反例：
+`Long i = new Long(1L);`
+`String s = new String("abc");`
+
+正例：
+`Long i = 1L;`
+`String s = "abc";`
+
+- 当成员变量值无需改变时，尽量定义为静态常量。
+在类的每个对象实例中，每个成员变量都有一份副本，而成员静态常量只有一份实例。
+
+反例：
+```
+public class HttpConnection {
+    private final long timeout = 5L;
+    ...
+}
+```
+
+正例：
+```
+public class HttpConnection {
+    private static final long TIMEOUT = 5L;
+    ...
+}
+```
+
+- 尽量使用基本数据类型，避免自动拆箱和装箱
+Java 中的基本数据类型double、float、long、int、short、char、boolean，分别对应包装类Double、Float、Long、Integer、Short、Character、Boolean。JVM支持基本类型与对应包装类的自动转换，被称为自动装箱和拆箱。装箱和拆箱都是需要CPU和内存资源的，所以应尽量避免使用自动装箱和拆箱。
+反例：
+```
+Integer sum = 0;
+int[] values = ...;
+for (int value : values) {
+    sum += value; // 相当于result = Integer.valueOf(result.intValue() + value);
+}
+```
+
+正例：
+```
+int sum = 0;
+int[] values = ...;
+for (int value : values) {
+    sum += value;
+}
+```
+
+- 如果变量的初始值会被覆盖，就没有必要给变量赋初值
+反例：
+```
+List<UserDO> userList = new ArrayList<>();
+if (isAll) {
+    userList = userDAO.queryAll();
+} else {
+    userList = userDAO.queryActive();
+}
+```
+
+正例：
+```
+List<UserDO> userList;
+if (isAll) {
+    userList = userDAO.queryAll();
+} else {
+    userList = userDAO.queryActive();
+}
+```
+
+- 尽量使用函数内的基本类型临时变量
+在函数内，基本类型的参数和临时变量都保存在栈（Stack）中，访问速度较快；对象类型的参数和临时变量的引用都保存在栈（Stack）中，内容都保存在堆（Heap）中，访问速度较慢。在类中，任何类型的成员变量都保存在堆（Heap）中，访问速度较慢。
+反例：
+```
+public final class Accumulator {
+    private double result = 0.0D;
+    public void addAll(@NonNull double[] values) {
+        for(double value : values) {
+            result += value;
+        }
+    }
+    ...
+}
+```
+
+正例：
+```
+public final class Accumulator {
+    private double result = 0.0D;
+    public void addAll(@NonNull double[] values) {
+        double sum = 0.0D;
+        for(double value : values) {
+            sum += value;
+        }
+        result += sum;
+    }
+    ...
+}
+```

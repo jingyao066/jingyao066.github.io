@@ -714,3 +714,11 @@ MySQL的SELECT执行顺序一共分为10步，如上所标注的那样，最先�
 8. DISTINCT： 对VT7中的记录进行去重。产生虚拟表VT8.
 9. ORDER BY: 将虚拟表VT8中的记录按照<order_by_list>进行排序操作，产生虚拟表VT9.
 10. LIMIT：取出指定行的记录，产生虚拟表VT10, 并将结果返回。
+
+# group by 获取最新的数据
+因为group by 是获取的第一条数据，所以可以通过下面的方法获取最后一条数据。
+```
+select * from chapter_user_dub where id in(
+ select MAX(id) from chapter_user_dub where user_id = 106175 group by user_id
+)
+```
