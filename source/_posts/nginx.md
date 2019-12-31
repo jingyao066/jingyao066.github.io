@@ -4,6 +4,8 @@ tags: nginx
 date: 2018-12-06 18:06:29
 ---
 
+[nginx学习](https://www.cnblogs.com/knowledgesea/p/5175711.html)
+
 # 配置
 1.下载：http://nginx.org/
 2.解压至英文路径

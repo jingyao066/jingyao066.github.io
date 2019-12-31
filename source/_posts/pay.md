@@ -980,5 +980,12 @@ public void wxBuySpaceNotify() {
 关键就这两个方法，一个预支付，微信返回perpay_id，你返回给前端，前端通过perpay_id调起支付组件，若完成支付，微信会回调你设置的notify_url地址，这就是你支付成功的回调地址。
 你要在回调方法里写一些业务相关的逻辑，比如：更改订单状态为已支付，以及赠送会员等后续操作。
 
-[公众号支付参考](https://www.jianshu.com/p/9c322b1a5274)
-[参考2](https://blog.csdn.net/javaYouCome/article/details/79473743)
+[公众号支付参考1](https://www.jianshu.com/p/9c322b1a5274)
+[公众号支付参考2](https://blog.csdn.net/javaYouCome/article/details/79473743)
+
+# 微信app支付
+[官网](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F)
+[开发文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)
+
+![微信支付时序图](pay/4.png)
+微信这图做的，老子真想骂街。
