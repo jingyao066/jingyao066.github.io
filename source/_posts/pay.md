@@ -989,3 +989,21 @@ public void wxBuySpaceNotify() {
 
 ![微信支付时序图](pay/4.png)
 微信这图做的，老子真想骂街。
+
+必要参数：
+appid：微信开放平台审核通过的应用APPID（请登录open.weixin.qq.com查看，注意与公众号的APPID不同）
+mch_id：微信支付分配的商户号
+nonce_str：随机字符串
+body：内容
+out_trade_no：商户订单号
+fee_type：货币类型
+total_fee：总金额
+spbill_create_ip：终端IP(一般为服务器本机:127.0.0.1)
+notify_url：回调url
+trade_type：交易类型(APP)
+这些参数生成签名，参数注释参考官方文档。
+将生成的签名连同这些参数一起生成xml报文请求统一下单api。
+
+统一下单api成功后会返回prepayid(预支付交易会话标识)，将
+`prepayid，appid，partnerid(商户号)，package(Sign=WXPay)，noncestr，timestamp`
+这些参数再次进行签名，再将签名，连同这些参数发送到app端供其调用完成。
