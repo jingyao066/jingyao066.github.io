@@ -773,6 +773,7 @@ public static Map<String, String> resolveAliPayResponse(HttpServletRequest reque
 2. 用户点击“取消支付“或支付完成后点“完成”按钮。因此无法保证页面回跳时，支付流程已结束，所以商户设置的redirect_url地址不能自动执行查单操作，应让用户去点击按钮触发查单操作
 
 # 微信公众号支付
+[官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1)
 微信网页支付时序图：
 ![](pay/3.png)
 
@@ -1005,5 +1006,80 @@ trade_type：交易类型(APP)
 将生成的签名连同这些参数一起生成xml报文请求统一下单api。
 
 统一下单api成功后会返回prepayid(预支付交易会话标识)，将
-`prepayid，appid，partnerid(商户号)，package(Sign=WXPay)，noncestr，timestamp`
+`appid，prepayid，partnerid(商户号)，package(Sign=WXPay)，noncestr，timestamp`
 这些参数再次进行签名，再将签名，连同这些参数发送到app端供其调用完成。
+```
+@ResponseBody
+@PostMapping("appBuySapcePerPay")
+public ResponseUtil appBuySapcePerPay(@RequestBody Map<String,String> paramMap) {
+	LOGGER.info(">>>>>>>>>>>>>>>>>>>前端请求参数是 " + paramMap +">>>>>>>>>>>>>>>>>>>>>>>>>>");
+	Map<String, String> resultMap = new HashMap<>();
+	ResponseUtil response = ResponseUtil.success();
+	CodeEnum code = CodeEnum.FAIL;
+	try {
+		Token token = TokenUtil.getToken(request.getHeader("token"));
+		//验证前端传的价格是否正确
+		Integer price = Integer.parseInt(paramMap.get("price"));
+		AssertUtil.assertValidate(code,CodeEnum.ERROR_2001.getCode(),"购买空间价格错误",price.equals(sapcePrice));
+
+		//前端传过来的订单号
+		String orderNo = paramMap.get("order_no");
+		//生成订单
+		orderNo = generateSpaceOrder(paramMap, token, price, orderNo, 1);
+
+		//拼接统一下单地址参数(共10个必须参数)
+		Map<String, String> toWxMap = new HashMap<>();
+		toWxMap.put("appid", PayConstant.PARENT_APP_WX_APPID);
+		toWxMap.put("mch_id", PayConstant.WX_H5_MCHID);
+		toWxMap.put("nonce_str",WXPayUtil.generateNonceStr());
+		toWxMap.put("body", "最美课本-孩子空间VIP");
+		toWxMap.put("out_trade_no", orderNo);
+		toWxMap.put("spbill_create_ip",HttpUtil.getIpAddr(this.request));
+		toWxMap.put("total_fee",new BigDecimal(price).multiply(new BigDecimal("100")).intValue() + "");
+		toWxMap.put("trade_type", "APP");
+		//接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。
+		toWxMap.put("notify_url", PayUtil.getProjectUrl(this.request) + "zjx/api/pay/wxBuySpaceNotify");
+		LOGGER.info("************支付成功回调地址是:"+PayUtil.getProjectUrl(this.request) + "zjx/api/pay/wxBuySpaceNotify");
+		toWxMap.put("sign", WXPayUtil.generateSignature(toWxMap, PayConstant.WX_H5_APP_KEY));
+
+		//将所有参数(map)转xml格式
+		String xml = WXPayUtil.mapToXml(toWxMap);
+		LOGGER.info("*******************请求微信参数"+xml);
+		//调用微信统一下单接口，返回预支付id：prepay_id
+		String wxReturnStr = PayUtil.post(PayConstant.WX_UNIFIEDORDER_URL, xml, ContentTypeEnum.TextXml.getContentType());
+		//将微信返回数据格式化成map
+		Map<String, String> wxXmlMap = WXPayUtil.xmlToMap(wxReturnStr);
+		LOGGER.info("**********************微信统一下单接口返回数据:" + wxXmlMap + "*****************************************");
+
+		// todo
+		//组装返回给前端的数据
+		resultMap.put("appid", PayConstant.PARENT_APP_WX_APPID);
+		resultMap.put("partnerid", PayConstant.WX_H5_MCHID);
+		resultMap.put("prepayid", wxXmlMap.get("prepay_id"));
+		resultMap.put("package", "Sign=WXPay");
+		resultMap.put("nonceStr", WXPayUtil.generateNonceStr());
+		resultMap.put("timeStamp", WXPayUtil.getCurrentTimestamp()+"");
+		resultMap.put("sign", WXPayUtil.generateSignature(resultMap, PayConstant.WX_H5_APP_KEY));
+		resultMap.put("order_no", orderNo);
+
+		LOGGER.info("**********************返回给前端的数据:" + resultMap + "*****************************************");
+		response.setData(resultMap);
+
+		//订单记录redis，12小时自动过期
+		stringRedisTemplate.opsForValue().set(orderNo, "sapceOrder", 60 * 60 * 12, TimeUnit.SECONDS);
+	} catch (Exception e) {
+		e.printStackTrace();
+		response.setCode(code);
+		response.setMessage(e.getMessage());
+	}
+	return response;
+}
+```
+预支付接口就是这样，和公众号支付基本一致，只是参数有些不同。
+预支付接口调用成功后，需要编写支付成功回调接口，微信会主动调用我们在预支付接口中设置好的url，即`notify_url`。
+微信会将：商户订单号,微信支付订单号发送给我们，我们可以通过这些来完成业务逻辑。
+
+[参考1](https://www.jianshu.com/p/54f73fea5986)
+[参考2](https://blog.csdn.net/u012552275/article/details/78758571)
+[参考3](https://www.cnblogs.com/zhanglingbing/p/9073217.html)
+[参考4](https://www.cnblogs.com/xxss/p/10244513.html)
