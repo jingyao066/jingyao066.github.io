@@ -1083,3 +1083,11 @@ public ResponseUtil appBuySapcePerPay(@RequestBody Map<String,String> paramMap) 
 [参考2](https://blog.csdn.net/u012552275/article/details/78758571)
 [参考3](https://www.cnblogs.com/zhanglingbing/p/9073217.html)
 [参考4](https://www.cnblogs.com/xxss/p/10244513.html)
+
+# 支付宝支付
+## app支付宝支付
+[官方文档](https://docs.open.alipay.com/204)
+支付宝的文档真的一目了然，比微信强太多...
+[参考](https://blog.csdn.net/shuaishuaidewo/article/details/88641913)
+
+# 苹果支付
