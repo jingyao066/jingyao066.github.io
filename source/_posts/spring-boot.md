@@ -992,3 +992,42 @@ delay：表示重试的延迟时间，单位毫秒。
 multiplier：表示上一次延时时间是这一次的倍数。比如配置delay 是1000，multiplier是2 也就是一秒 第一次尝试是间隔1秒第二次就是2秒第三次就是4秒依次类推。
 
 @Recover：用于@Retryable重试失败后处理方法，用在和上边一个方法的类中，此方法里的异常一定要是@Retryable方法里抛出的异常，否则不会调用。
+
+# 读取配置文件
+通常，我将一些支付的参数写在一个类中，`静态常量类`。
+但是这样修改参数后，需要重启项目。一种更好的方法是将这些参数写在配置文件中，这样修改配置文件后，无需重启项目，实现热部署。
+
+1. 将参数写在配置文件中
+```
+alipay.config.gatewayUrl=https://openapi.alipay.com/gateway.do
+alipay.config.appId=2019123456474282
+```
+
+2. 新建实体类，字段名与配置文件中的一致。
+```
+@Data
+@Component
+@ConfigurationProperties(prefix = "alipay.config")
+public class AlipayAppConfig {
+    private String gatewayUrl;
+    private String appId;
+	//...其他参数
+}
+```
+就是通过`ConfigurationProperties`来读取配置文件的。
+使用该注解需要引入maven
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-configuration-processor</artifactId>
+	<optional>true</optional>
+</dependency>
+```
+
+3. 在需要用到的类，注入该实体类
+```
+@Autowired
+private AlipayAppConfig alipayAppConfig;
+```
+
+完。然后我现在是分布式项目，不知道怎么搞...
