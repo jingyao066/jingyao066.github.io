@@ -1091,3 +1091,84 @@ public ResponseUtil appBuySapcePerPay(@RequestBody Map<String,String> paramMap) 
 [参考](https://blog.csdn.net/shuaishuaidewo/article/details/88641913)
 
 # 苹果支付
+[苹果支付官方文档](https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html#//apple_ref/doc/uid/TP40010573-CH104-SW4)
+只要你在苹果系统购买APP中虚拟物品（虚拟货币，VIP充值等），必须通过内购方式进行支付，苹果和商家进行三七开。
+![](pay/5.png)
+和支付宝、微信支付不同，唤起支付到付款完成，这个动作，都是由前端自己处理就可以了，不需要在支付前通过服务端拿到签名等信息。
+支付成功后，苹果服务器会给前端一串东西，前端再把这串东西，传给自己的服务端，服务端拿到这串东西再到苹果服务器验证，根据返回内容验证是否通过，如果通过证明前端是真的有支付发生。服务端根据和前端约定好的支付内容解析获取自己的数据，处理自己的业务逻辑就可以了。
+
+前端支付成功后，拿到参数：{"receipt-data" : "MIIVDAYJKoZIhvcNAQcCoIIU/T..."}，将参数传给我们自己的服务器，由我们向苹果服务器发送post请求。
+```
+@RequestMapping(value = "/apple/verify", method = RequestMethod.POST)
+public BaseResponse<Object> appleVerify(String data) {
+	//data = {"receipt-data" : "MIIVDAYJKoZIhvcNAQcCoIIU/T..."}
+	// 苹果支付沙箱验证地址
+	String url = "https://sandbox.itunes.apple.com/verifyReceipt";
+	// 苹果支付正式验证地址
+	// String url = "https://buy.itunes.apple.com/verifyReceipt";
+	JSONObject param = JSON.parseObject(data);
+	JSONObject result = this.sendPost(url, param);
+	log.info("order apple notify result: {}", result);
+	Integer status = result.getInteger("status");//0 成功的
+	//处理自己的订单业务逻辑
+	//...
+	//返回
+	return new BaseResponse<Object>(status == 0 ? "SUCCESS" : "FAIL");
+}
+```
+status状态码
+- 0 SUCCESS
+- 21000 App Store不能读取你提供的JSON对象
+- 21002 receipt-data域的数据有问题
+- 21003 receipt无法通过验证
+- 21004 提供的shared secret不匹配你账号中的shared secret
+- 21005 receipt服务器当前不可用
+- 21006 receipt合法，但是订阅已过期。服务器接收到这个状态码时，receipt数据仍然会解码并一起发送
+- 21007 receipt是Sandbox receipt，但却发送至生产系统的验证服务
+- 21008 receipt是生产receipt，但却发送至Sandbox环境的验证服务
+
+status为0(成功)时，返回的数据：
+```
+{
+    "environment": "Sandbox",
+    "receipt": {
+        "in_app": [
+            {
+                "transaction_id": "1000000514154331",
+                "original_purchase_date": "2019-03-28 06:40:18 Etc/GMT",
+                "quantity": "1",
+                "original_transaction_id": "1000000514154331",
+                "purchase_date_pst": "2019-03-27 23:40:18 America/Los_Angeles",
+                "original_purchase_date_ms": "1553755218000",
+                "purchase_date_ms": "1553755218000",
+                "product_id": "ERSHUAI18",//18是钱，具体格式和前端约定。服务端把约定字符串（ERSHUAI）去掉，剩下的数字（18）就是业务逻辑需要的金额
+                "original_purchase_date_pst": "2019-03-27 23:40:18 America/Los_Angeles",
+                "is_trial_period": "false",
+                "purchase_date": "2019-03-28 06:40:18 Etc/GMT"
+            }
+        ],
+        "adam_id": 0,
+        "receipt_creation_date": "2019-03-28 08:21:40 Etc/GMT",
+        "original_application_version": "1.0",
+        "app_item_id": 0,
+        "original_purchase_date_ms": "1375340400000",
+        "request_date_ms": "1553761302654",
+        "original_purchase_date_pst": "2013-08-01 00:00:00 America/Los_Angeles",
+        "original_purchase_date": "2013-08-01 07:00:00 Etc/GMT",
+        "receipt_creation_date_pst": "2019-03-28 01:21:40 America/Los_Angeles",
+        "receipt_type": "ProductionSandbox",
+        "bundle_id": "com.ershuai.blog",
+        "receipt_creation_date_ms": "1553761300000",
+        "request_date": "2019-03-28 08:21:42 Etc/GMT",
+        "version_external_identifier": 0,
+        "request_date_pst": "2019-03-28 01:21:42 America/Los_Angeles",
+        "download_id": 0,
+        "application_version": "1.0.1"
+    },
+    "status": 0
+}
+```
+
+[参考](https://www.jianshu.com/p/976fc6090cfa)
+[参考](https://blog.csdn.net/shuai825644975/article/details/88872103)
+[参考](https://blog.csdn.net/jianzhonghao/article/details/79343887)
