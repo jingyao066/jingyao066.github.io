@@ -223,6 +223,7 @@ replace-field: replace an existing field withone that is differently configured.
 [更多api请参考](http://lucene.apache.org/solr/guide/7_4/schema-api.html)
 
 ## 中文分词器
+分词，即文本分析，是指把整个文本分解成一系列单词的过程。比如说：北京大学 是一个词那么进行拆分可以得到：北京与大学，甚至北京大学整个词也是一个语义。
 solr自带了一些中文分词器，比较好用的是SmartChineseAnalyzer，但是扩展性比较差不能自定义扩展中文词库，所以这里选择使用IKAnalyzer，这是第三方的一个分词器可以很好的扩展中文词库。
 [下载IKAnalyzer的jar包](https://search.maven.org/search?q=com.github.magese)
 将下载好的jar包放入solr-7.4.0/server/solr-webapp/webapp/WEB-INF/lib目录中。
@@ -289,6 +290,8 @@ IK分词器
 
 我感觉IK的语义分析更好些。
 ![](Search engine/12.png)
+
+[参考](https://blog.csdn.net/guyan0319/article/details/81188977)
 
 ## DIH导入索引数据
 DIH全称是Data Import Handler 数据导入处理器，顾名思义这是向solr中导入数据的，我们的solr目的就是为了能让我们的应用程序更快的查询出用户想要的数据，而数据存储在应用中的各种地方如：xml、pdf、关系数据库中，那么solr首先就要能够获取这些数据并在这些数据中建立索引来达成快速搜索的目的，这里就列举我们最常用的从关系型数据库中向solr导入索引数据。

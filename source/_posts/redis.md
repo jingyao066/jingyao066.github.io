@@ -978,3 +978,367 @@ public static String getData(String key) throws InterruptedException{
 - 缓存中有数据，直接走上述代码13行后就返回结果了
 - 缓存中没有数据，第1个进入的线程，获取锁并从数据库去取数据，没释放锁之前，其他并行进入的线程会等待100ms，再重新去缓存取数据。这样就防止都去数据库重复取数据，重复往缓存中更新数据情况出现。
 - 当然这是简化处理，理论上如果能根据key值加锁就更好了，就是线程A从数据库取key1的数据并不妨碍线程B取key2的数据，上面代码明显做不到这点。
+
+# redis哨兵
+哨兵是一个独立的进程，作为进程，它会独立运行。其原理是哨兵通过发送命令，等待Redis服务器响应，从而监控运行的多个Redis实例。
+![](redis/1.jpg)
+
+通过发送命令，让Redis服务器返回监控其运行状态，包括主服务器和从服务器。
+当哨兵监测到master宕机，会自动将slave切换成master，然后通过发布订阅模式通知其他的从服务器，修改配置文件，让它们切换主机。
+然而一个哨兵进程对Redis服务器进行监控，可能会出现问题，为此，我们可以使用多个哨兵进行监控。各个哨兵之间还会进行监控，这样就形成了多哨兵模式。
+故障切换（failover）的过程。假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认为主服务器不可用，这个现象成为主观下线。当后面的哨兵也检测到主服务器不可用，并且数量达到一定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover操作。切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为客观下线。这样对于客户端而言，一切都是透明的。
+
+配置3个哨兵和1主2从的Redis服务器来演示这个过程。
+
+|服务类型|是否是主服务器|IP地址|端口|
+|-|-|-|
+|Redis|是|192.168.11.128|6379|
+|Redis|否|192.168.11.129|6379|
+|Redis|否|192.168.11.130|6379|
+|Sentinel|-|192.168.11.128|26379|
+|Sentinel|-|192.168.11.129|26379|
+|Sentinel|-|192.168.11.130|26379|
+
+![](redis/2.jpg)
+首先配置Redis的主从服务器，修改redis.conf文件如下
+```
+# 使得Redis服务器可以跨网络访问
+bind 0.0.0.0
+# 设置密码
+requirepass "123456"
+# 指定主服务器，注意：有关slaveof的配置只是配置从服务器，主服务器不需要配置
+slaveof 192.168.11.128 6379
+# 主服务器密码，注意：有关slaveof的配置只是配置从服务器，主服务器不需要配置
+masterauth 123456
+```
+上述内容主要是配置Redis服务器，从服务器比主服务器多一个slaveof的配置和密码。
+配置3个哨兵，每个哨兵的配置都是一样的。在Redis安装目录下有一个sentinel.conf文件，copy一份进行修改。
+```
+# 禁止保护模式
+protected-mode no
+# 配置监听的主服务器，这里sentinel monitor代表监控，mymaster代表服务器的名称，可以自定义，192.168.11.128代表监控的主服务器，6379代表端口，2代表只有两个或两个以上的哨兵认为主服务器不可用的时候，才会进行failover操作。
+sentinel monitor mymaster 192.168.11.128 6379 2
+# sentinel author-pass定义服务的密码，mymaster是服务名称，123456是Redis服务器密码
+# sentinel auth-pass <master-name> <password>
+sentinel auth-pass mymaster 123456
+```
+上述关闭了保护模式，便于测试。
+有了上述的修改，我们可以进入Redis的安装目录的src目录，通过下面的命令启动服务器和哨兵
+```
+# 启动Redis服务器进程
+./redis-server ../redis.conf
+# 启动哨兵进程
+./redis-sentinel ../sentinel.conf
+```
+注意启动的顺序。首先是主机（192.168.11.128）的Redis服务进程，然后启动从机的服务进程，最后启动3个哨兵的服务进程。
+
+## Java中使用哨兵模式
+```java
+/**
+ * 测试Redis哨兵模式
+ * @author liu
+ */
+public class TestSentinels {
+    @SuppressWarnings("resource")
+    @Test
+    public void testSentinel() {
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        jedisPoolConfig.setMaxTotal(10);
+        jedisPoolConfig.setMaxIdle(5);
+        jedisPoolConfig.setMinIdle(5);
+        // 哨兵信息
+        Set<String> sentinels = new HashSet<>(Arrays.asList("192.168.11.128:26379",
+                "192.168.11.129:26379","192.168.11.130:26379"));
+        // 创建连接池
+        JedisSentinelPool pool = new JedisSentinelPool("mymaster", sentinels,jedisPoolConfig,"123456");
+        // 获取客户端
+        Jedis jedis = pool.getResource();
+        // 执行两个命令
+        jedis.set("mykey", "myvalue");
+        String value = jedis.get("mykey");
+        System.out.println(value);
+    }
+}
+```
+上面是通过Jedis进行使用的，同样也可以使用Spring进行配置RedisTemplate使用。
+```
+<bean id = "poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+	<!-- 最大空闲数 -->
+	<property name="maxIdle" value="50"></property>
+	<!-- 最大连接数 -->
+	<property name="maxTotal" value="100"></property>
+	<!-- 最大等待时间 -->
+	<property name="maxWaitMillis" value="20000"></property>
+</bean>
+
+<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+	<constructor-arg name="poolConfig" ref="poolConfig"></constructor-arg>
+	<constructor-arg name="sentinelConfig" ref="sentinelConfig"></constructor-arg>
+	<property name="password" value="123456"></property>
+</bean>
+
+<!-- JDK序列化器 -->
+<bean id="jdkSerializationRedisSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"></bean>
+
+<!-- String序列化器 -->
+<bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+
+<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+	<property name="connectionFactory" ref="connectionFactory"></property>
+	<property name="keySerializer" ref="stringRedisSerializer"></property>
+	<property name="defaultSerializer" ref="stringRedisSerializer"></property>
+	<property name="valueSerializer" ref="jdkSerializationRedisSerializer"></property>
+</bean>
+
+<!-- 哨兵配置 -->
+<bean id="sentinelConfig" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+	<!-- 服务名称 -->
+	<property name="master">
+		<bean class="org.springframework.data.redis.connection.RedisNode">
+			<property name="name" value="mymaster"></property>
+		</bean>
+	</property>
+	<!-- 哨兵服务IP和端口 -->
+	<property name="sentinels">
+		<set>
+			<bean class="org.springframework.data.redis.connection.RedisNode">
+				<constructor-arg name="host" value="192.168.11.128"></constructor-arg>
+				<constructor-arg name="port" value="26379"></constructor-arg>
+			</bean>
+			<bean class="org.springframework.data.redis.connection.RedisNode">
+				<constructor-arg name="host" value="192.168.11.129"></constructor-arg>
+				<constructor-arg name="port" value="26379"></constructor-arg>
+			</bean>
+			<bean class="org.springframework.data.redis.connection.RedisNode">
+				<constructor-arg name="host" value="192.168.11.130"></constructor-arg>
+				<constructor-arg name="port" value="26379"></constructor-arg>
+			</bean>
+		</set>
+	</property>
+</bean>
+```
+## 哨兵模式的其他配置项
+
+|配置项|参数类型|作用|
+|-|-|-|
+|port|整数|启动哨兵进程端口|
+|dir|文件夹目录 | 哨兵进程服务临时文件夹，默认为/tmp，要保证有可写入的权限|
+|sentinel down-after-milliseconds | <服务名称><毫秒数（整数）> | 指定哨兵在监控Redis服务时，当Redis服务在一个默认毫秒数内都无法回答时，单个哨兵认为的主观下线时间，默认为30000（30秒）|
+|sentinel parallel-syncs | <服务名称><服务器数（整数）> | 指定可以有多少个Redis服务同步新的主机，一般而言，这个数字越小同步时间越长，而越大，则对网络资源要求越高|
+|sentinel failover-timeout | <服务名称><毫秒数（整数）> | 指定故障切换允许的毫秒数，超过这个时间，就认为故障切换失败，默认为3分钟|
+|sentinel notification-script | <服务名称><脚本路径> | 指定sentinel检测到该监控的redis实例指向的实例异常时，调用的报警脚本。该配置项可选，比较常用|
+
+sentinel down-after-milliseconds配置项只是一个哨兵在超过规定时间依旧没有得到响应后，会自己认为主机不可用。对于其他哨兵而言，并不是这样认为。哨兵会记录这个消息，当拥有认为主观下线的哨兵达到sentinel monitor所配置的数量时，就会发起一次投票，进行failover，此时哨兵会重写Redis的哨兵配置文件，以适应新场景的需要。
+
+
+# Docker实现Redis主从配置、哨兵模式
+使用docker下载redis镜像，默认下载最新版本。
+`docker pull redis`
+
+创建文件夹
+```
+cd /home
+mkdir docker
+cd docker
+mkdir redis
+cd redis
+
+mkdir redis-6379-data
+mkdir redis-6380-data
+mkdir redis-6381-data
+mkdir sentinel-26379-data
+mkdir sentinel-26380-data
+mkdir sentinel-26381-data
+```
+
+创建自定义配置文件
+```
+touch redis-6379.conf
+touch redis-6380.conf
+touch redis-6381.conf
+```
+其中redis-6379.conf是master服务器配置文件，redis-6380.conf、redis-6381.conf 是slave服务器配置文件。
+
+编辑6379配置文件，输入如下内容：
+```
+port 6379
+logfile "redis-6379.log"
+dir /data
+appendonly yes
+appendfilename appendonly.aof
+masterauth 123456
+requirepass 123456
+```
+
+编辑6380：
+```
+port 6380
+logfile "redis-6380.log"
+dir /data
+appendonly yes
+appendfilename appendonly.aof
+slaveof 192.168.43.188 6379
+masterauth 123456
+requirepass 123456
+```
+
+编辑6381：
+```
+port 6381
+logfile "redis-6381.log"
+dir /data
+appendonly yes
+appendfilename appendonly.aof
+slaveof 192.168.43.188 6379
+masterauth 123456
+requirepass 123456
+```
+
+然后启动三个redis容器：
+```
+docker run -p 6379:6379 --net=host --restart=always --name redis-6379 -v /home/docker/redis/redis-6379.conf:/etc/redis/redis-6379.conf -v /home/docker/redis/redis-6379-data:/data -d redis redis-server /etc/redis/redis-6379.conf
+docker run -p 6380:6380 --net=host --restart=always --name redis-6380 -v /home/docker/redis/redis-6380.conf:/etc/redis/redis-6380.conf -v /home/docker/redis/redis-6380-data:/data -d redis redis-server /etc/redis/redis-6380.conf
+docker run -p 6381:6381 --net=host --restart=always --name redis-6381 -v /home/docker/redis/redis-6381.conf:/etc/redis/redis-6381.conf -v /home/docker/redis/redis-6381-data:/data -d redis redis-server /etc/redis/redis-6381.conf
+```
+命令解释：
+`-v /home/docker/redis/redis-6379-data:/data`
+该命令是将redis容器中，redis配置文件中指定的数据存储目录/data下文件的内容共享到宿主机/home/docker/redis/redis-6379-data目录下。
+为何必须挂载`/data`目录？有状态容器都有数据持久化需求，在容器的生命周期内，数据持久化是持续的，包括容器在被停止后，但当容器被删除后，数据也随之被删除了，因此Docker 采用 volume （卷）的形式来向容器提供持久化存储，如果不设置该命令，数据库中的数据会默认保存在redis容器中的/data目录下，这样当执行 docker rm 容器id/容器name 命令，会丢失数据库中的数据。
+
+查看容器状态：
+`docker ps -a`
+
+如果STATUS状态是Up表示成功启动容器，如果STATUS状态是Exited (1) 或者 Restarting (1) 表示未能正常启动，这时候我们需要查看redis容器日志修改配置文件内容重新运行容器
+`docker logs redis-6379|less`
+查找出问题后停止redis容器
+`docker stop redis-6379`
+删除redis容器
+`docker rm redis-6379`
+然后重新执行步骤6。
+
+启动redis容器后，分别观察三个redis容器内部情况
+`docker exec -it redis-6379 /bin/bash`
+`redis-cli`
+`127.0.0.1:6379> auth 123456`
+`info replication`
+
+master会有如下显示
+```
+# Replication
+role:master
+connected_slaves:2
+slave0:ip=172.17.0.1,port=6379,state=online,offset=707,lag=0
+slave1:ip=172.17.0.1,port=6379,state=online,offset=707,lag=0
+master_replid:db3135b2f4cba8e6c1eb4be290b9dbfc2ec3b6d0
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:707
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:707
+```
+
+slave显示：
+```
+role:slave
+master_host:192.168.43.188
+master_port:6379
+master_link_status:up
+master_last_io_seconds_ago:8
+master_sync_in_progress:0
+slave_repl_offset:833
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_replid:db3135b2f4cba8e6c1eb4be290b9dbfc2ec3b6d0
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:833
+second_repl_offset:-1
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1
+repl_backlog_histlen:833
+```
+
+看到主机role:master、connected_slaves:2，两台从机role:slave、master_host有地址，可以确认redis主从模式已经建立成功。
+下面可以使用`RedisDesktopManager`或分别进入各个redis容器，来测试数据是否同步。测试过程我就略了。
+
+## 哨兵模式
+主机上创建哨兵配置文件
+```
+touch sentinel-26379.conf
+touch sentinel-26380.conf
+touch sentinel-26381.conf
+```
+编辑sentinel-26379.conf
+```
+port 26379
+dir "/data"
+logfile "sentinel-26379.log"
+sentinel monitor mymaster 192.168.43.188 6379 2
+sentinel down-after-milliseconds mymaster 10000
+sentinel failover-timeout mymaster 60000
+sentinel auth-pass mymaster 123456
+```
+编辑sentinel-26380.conf
+```
+port 26380
+dir "/data"
+logfile "sentinel-26380.log"
+sentinel monitor mymaster 192.168.43.188 6379 2
+sentinel down-after-milliseconds mymaster 10000
+sentinel failover-timeout mymaster 60000
+sentinel auth-pass mymaster 123456
+```
+编辑sentinel-26381.conf
+```
+port 26381
+dir "/data"
+logfile "sentinel-26381.log"
+sentinel monitor mymaster 192.168.43.188 6379 2
+sentinel down-after-milliseconds mymaster 10000
+sentinel failover-timeout mymaster 60000
+sentinel auth-pass mymaster 123456
+```
+
+启动哨兵：
+```
+docker run -p 26379:26379 --restart=always --name sentinel-26379 -v/home/docker/redis/sentinel-26379.conf:/etc/redis/sentinel.conf -v /home/docker/redis/sentinel-26379-data:/data -d redis redis-sentinel /etc/redis/sentinel.conf
+docker run -p 26380:26380 --restart=always --name sentinel-26380 -v/home/docker/redis/sentinel-26380.conf:/etc/redis/sentinel.conf -v /home/docker/redis/sentinel-26380-data:/data -d redis redis-sentinel /etc/redis/sentinel.conf
+docker run -p 26381:26381 --restart=always --name sentinel-26381 -v/home/docker/redis/sentinel-26381.conf:/etc/redis/sentinel.conf -v /home/docker/redis/sentinel-26381-data:/data -d redis redis-sentinel /etc/redis/sentinel.conf
+```
+查看哨兵容器状态
+`docker ps -a`
+
+至此，哨兵模式已经建立起来，查看哨兵信息
+```
+[root@localhost redis]# docker exec -it sentinel-26379 /bin/bash
+root@zhangqian527halbin:/data# redis-cli -p 26379
+127.0.0.1:26379>  info sentinel
+# Sentinel
+sentinel_masters:1
+sentinel_tilt:0
+sentinel_running_scripts:0
+sentinel_scripts_queue_length:0
+sentinel_simulate_failure_flags:0
+master0:name=mymaster,status=ok,address=192.168.43.188:6379,slaves=2,sentinels=3
+```
+可以看到，现在端口号为:6379的redis服务器是master服务器，这时我们关闭端口号为6379的redis-6379容器测试哨兵配置是否生效
+`docker stop redis-6379`
+
+然后再查看哨兵信息，哨兵模式下，当master服务器宕机之后，哨兵自动会在从slave redis服务器里面投票选举一个master服务器来，这个master服务器也可以进行读写操作
+```
+[root@localhost redis]# docker exec -it sentinel-26379 /bin/bash
+root@zhangqian527halbin:/data# redis-cli -p 26379
+127.0.0.1:26379>  info sentinel
+sentinel_masters:1
+sentinel_tilt:0
+sentinel_running_scripts:0
+sentinel_scripts_queue_length:0
+sentinel_simulate_failure_flags:0
+master0:name=mymaster,status=ok,address=192.168.43.188:6380,slaves=2,sentinels=3
+```
+可以看到端口号为:6380的redis服务器已经变成master服务器了，说明哨兵配置成功。
+
+[参考](https://www.jianshu.com/p/ce1d78cd368a)

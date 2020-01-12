@@ -970,3 +970,64 @@ public synchronized void setApplicationContext(ApplicationContext applicationCon
 - 一个设备登录时，app端传递一个code，uuid就行，保存在app本地，每次登录都传递相同的code。为什么不用设备码？考虑到可能获取不到设备码，iphone现在好像也没有设备码这一说了。
 将userId作为key，code作为value存到redis中，同时将userId、mobile、ip、code等参数des加密成token，并返回给前端。
 - 用户请求接口时，会携带token，解密token，将token中取到的code，同redis中的code对比，如果相同，就是同一设备，不同，就给前端返回错误码，然后前端让将用户踢下线。
+
+# SpringBoot 中使用Spring retry 重试机制
+当我们调用一个接口可能由于网络等原因造成第一次失败，再去尝试就成功了，这就是重试机制，spring支持重试机制。
+加入maven依赖
+```
+<dependency>
+	<groupId>org.springframework.retry</groupId>
+	<artifactId>spring-retry</artifactId>
+</dependency>
+```
+
+启动类加注解
+`@EnableRetry`
+
+在需要重试的Servcie方法上加注解配置
+`@Retryable(value = Exception.class,maxAttempts = 3,backoff = @Backoff(delay = 2000,multiplier = 2))`
+value：表示当哪些异常的时候触发重试
+maxAttempts：表示最大重试次数默认为3
+delay：表示重试的延迟时间，单位毫秒。
+multiplier：表示上一次延时时间是这一次的倍数。比如配置delay 是1000，multiplier是2 也就是一秒 第一次尝试是间隔1秒第二次就是2秒第三次就是4秒依次类推。
+
+@Recover：用于@Retryable重试失败后处理方法，用在和上边一个方法的类中，此方法里的异常一定要是@Retryable方法里抛出的异常，否则不会调用。
+
+# 读取配置文件
+通常，我将一些支付的参数写在一个类中，`静态常量类`。
+但是这样修改参数后，需要重启项目。一种更好的方法是将这些参数写在配置文件中，这样修改配置文件后，无需重启项目，实现热部署。
+
+1. 将参数写在配置文件中
+```
+alipay.config.gatewayUrl=https://openapi.alipay.com/gateway.do
+alipay.config.appId=2019123456474282
+```
+
+2. 新建实体类，字段名与配置文件中的一致。
+```
+@Data
+@Component
+@ConfigurationProperties(prefix = "alipay.config")
+public class AlipayAppConfig {
+    private String gatewayUrl;
+    private String appId;
+	//...其他参数
+}
+```
+就是通过`ConfigurationProperties`来读取配置文件的。
+使用该注解需要引入maven
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-configuration-processor</artifactId>
+	<optional>true</optional>
+</dependency>
+```
+
+3. 在需要用到的类，注入该实体类
+```
+@Autowired
+private AlipayAppConfig alipayAppConfig;
+```
+
+完。然后我现在是分布式项目，不知道怎么搞...

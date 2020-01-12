@@ -834,7 +834,7 @@ Integer type = Integer.parseInt(map.get("type").toString());
 
 # mybatis+pageHelper，一对多分页
 有三种解决方案：
-- 使用collection的select标签
+- 使用collection的select标签(参考，zjx项目，`questionMapper.xml`->`getAppQuestionListWithSelect`)
 - 先在java代码中根据分页查出`一`的列表，然后将id放到一个数组中作为参数，把多条数据查出来，然后根据id循环匹配一对多条
 - [自己实现分页插件 ](https://www.jianshu.com/p/1a0c48e8bfb7)
 - group by id ????

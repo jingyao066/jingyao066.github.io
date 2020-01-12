@@ -6,7 +6,7 @@ date: 2018-12-09 16:54:53
 
 # 简介
 Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
-[这是jenkins中文网](http://www.jenkins.org.cn/821.html)
+[这是jenkins中文网](https://jenkins.io/zh/)
 
 # 安装部署
 Jenkins主要有三种安装方式，yum安装、使用官方docker镜像和官方war包，放到tomcat中直接运行。我们采用比较熟悉的方式进行安装，即将Jenkins部署在Tomcat容器中，无需任何配置，直接启动tomcat即可。
@@ -215,6 +215,12 @@ BUILD_ID=donKillme nohup java -jar -Dspring.profiles.active=dev >/usr/local/zjx/
 下边这种死活打不出日志，不知道为啥。
 `-Dlogging.file=/usr/local/zjx/admin/logs/zjx.log`
 
+2019/12/13更新：
+终于知道为啥不能打印日志了。其实上述两种方式都可以打印日志，只不过我是分布式应用，提供者有多个，但是同时向一个日志文件中写日志。
+所以造成了死锁问题，多个程序都在争抢日志文件的锁，然后导致谁都无法写入。
+解决办法：
+每个服务，单独配置日志文件。
+
 这个-D是 java命令的参数-D。意指加入全局属性，比如-Djdbc.driver=<jdbc driver classpath>表示在程序里可用System.getProperty("jdbc.driver")获得<jdbc driver classpath>，以此类推。
 `-Dspring.profiles.active=dev`：指定启动配置文件，可以用来区分测试环境和生产环境。
 
@@ -405,3 +411,10 @@ jenkins的文件都存储在`/root/.jenkins`，使用指令查看文件夹大小
 # jenkins指定spring boot的配置文件
 在启动脚本加如下代码：
 `-Dspring.profiles.active=dev`
+
+# jenkins配置分布式应用时日志文件问题。
+现在分布式应用结构为：
+admin和api为消费者，其他user、video等提供者。提供者有多个，但是同时向一个日志文件中写入日志。
+所以造成了死锁问题，多个程序都在争抢日志文件的锁，然后导致谁都无法写入。
+解决办法：
+每个服务，单独配置日志文件。

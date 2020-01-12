@@ -11,6 +11,7 @@ Date 是表示时间的类。
 一个Date对象表示一个特定的瞬间，能精确到毫秒。我们可以通过这个特定的瞬间，来获取到Date对应的“年、月、日、时、分、秒”。反之亦然，我们也可以通过设置Date的“年、月、日、时、分、秒”等信息，来改变Date所指定的特定瞬间。
 除了“年月日时分秒”等信息之外，Data也允许格式化和解析日期字符串。即，我们可以定义一个字符串，这个字符串包含时间信息，然后将字符串通过Date来解析，从而得到相应的Date对象。
 在 JDK 1.1 之前，通常是通过Data操作“年月日时分秒”。不过，由于Date的相关 API 不易于实现国际化。从 JDK 1.1 开始，应该使用 Calendar 类来操作“年月日时分秒”，同时可以通过 DateFormat 类来格式化和解析日期字符串。Date 中的相应方法已废弃。
+jdk1.8之后，不建议再使用date对象。转而使用`LocalDateTime`
 
 # Date和Calendar相互转换
 - Date转换为Calendar
@@ -322,11 +323,81 @@ public class DateTest {
 }
 ```
 
+# LocalDateTime
+
+- 获取当前此刻的时间
+```
+LocalDateTime rightNow = LocalDateTime.now();
+System.out.println( "当前时刻：" + rightNow );
+System.out.println( "当前年份：" + rightNow.getYear() );
+System.out.println( "当前月份：" + rightNow.getMonth() );
+System.out.println( "当前日份：" + rightNow.getDayOfMonth() );
+System.out.println( "当前时：" + rightNow.getHour() );
+System.out.println( "当前分：" + rightNow.getMinute() );
+System.out.println( "当前秒：" + rightNow.getSecond() );
+
+// 输出结果：
+当前时刻：2019-12-13T22:05:26.779
+当前年份：2019
+当前月份：DECEMBER
+当前日份：13
+当前时：22
+当前分：5
+当前秒：26
+```
+
+- 构造一个指定年、月、日的时间：
+比如，想构造：2019年10月12月12日9时21分32秒
+`    LocalDateTime beforeDate = LocalDateTime.of(2019, Month.DECEMBER, 12, 9, 21, 32);`
+
+- 修改日期
+```
+LocalDateTime rightNow = LocalDateTime.now(); 
+rightNow = rightNow.minusYears( 2 );  // 减少 2 年
+rightNow = rightNow.plusMonths( 3 );  // 增加 3 个月
+rightNow = rightNow.withYear( 2008 ); // 直接修改年份到2008年
+rightNow = rightNow.withHour( 13 );   // 直接修改小时到13时
+```
+
+- 格式化日期
+```
+LocalDateTime rightNow = LocalDateTime.now();
+String result1 = rightNow.format( DateTimeFormatter.ISO_DATE );
+String result2 = rightNow.format( DateTimeFormatter.BASIC_ISO_DATE );
+String result3 = rightNow.format( DateTimeFormatter.ofPattern("yyyy/MM/dd") );
+System.out.println("格式化后的日期(基本样式一举例)：" + result1);
+System.out.println("格式化后的日期(基本样式二举例)：" + result2);
+System.out.println("格式化后的日期(自定义样式举例)：" + result3);
+
+// 输出结果：
+格式化后的日期(基本样式一举例)：2019-12-13
+格式化后的日期(基本样式二举例)：20191213
+格式化后的日期(自定义样式举例)：2019/12/13
+```
+
+- 时间反解析
+```
+LocalDateTime time = LocalDateTime.parse("2002--01--02 11:21",DateTimeFormatter.ofPattern("yyyy--MM--dd HH:mm"));
+System.out.println("字符串反解析后的时间为：" + time);
+
+// 输出：
+字符串反解析后的时间为：2002-01-02T11:21
+```
+
+## 线程安全问题
+其实以前我们惯用的 Date时间类是可变类，这就意味着在多线程环境下对共享 Date变量进行操作时，必须由程序员自己来保证线程安全！否则极有可能翻车。
+而自 Java8开始推出的 LocalDateTime却是线程安全的，开发人员不用再考虑并发问题，这点我们从 LocalDateTime的官方源码中即可看出：
+`this class is immutable and thread-safe`
+
+## 日期格式化的选择
+大家除了惯用 Date来表示时间之外，还有一个用于和 Date连用的 SimpleDateFormat 时间格式化类大家可能也戒不掉了!
+SimpleDateFormat最主要的致命问题也是在于它本身并不线程安全，这在它的源码注释里已然告知过了：
+`Date formats are not synchronized`
+那取而代之，我们现在改用什么呢？其实在前文已经用到啦，那就是了`DateTimeFormatter`了，他也是线程安全的：
+`this class is immutable and thread-safe`
+
 # GMT、UTC、时区的关系
 许多人都知道两地时间表简称为GMT或UTC，而世界时区表则通称为World Time，那么GMT与UTC的实质原意又是为何？世界时区又是怎么区分的？面盘上密密麻麻的英文单字代表着什么意义与作用呢？这些都是新手在接触两地时间表或世界时区表时，脑海中所不断浮现的种种疑问，以下将带您一探时区奥妙的究竟。
-## 世界时区及国际换日线示意图
-图挂了...
-
 
 ## 全球24个时区的划分 
 相较于两地时间表，可以显示世界各时区时间和地名的世界时区表（World Time），就显得精密与复杂多了，通常世界时区表的表盘上会标示着全球24个时区的城市名称，但究竟这24个时区是如何产生的？过去世界各地原本各自订定当地时间，但随着交通和电讯的发达，各地交流日益频繁，不同的地方时间，造成许多困扰，于是在西元1884年的国际会议上制定了全球性的标准时，明定以英国伦敦格林威治这个地方为零度经线的起点（亦称为本初子午线），并以地球由西向东每24小时自转一周360°，订定每隔经度15°，时差1小时。而每15°的经线则称为该时区的中央经线，将全球划分为24个时区，其中包含23个整时区及180°经线左右两侧的2个半时区。就全球的时间来看，东经的时间比西经要早，也就是如果格林威治时间是中午12时，则中央经线15°E的时区为下午1时，中央经线30°E时区的时间为下午2时；反之，中央经线15°W的时区时间为上午11时，中央经线30°W时区的时间为上午10时。以台湾为例，台湾位于东经121°，换算后与格林威治就有8小时的时差。如果两人同时从格林威治的0°各往东、西方前进，当他们在经线180°时，就会相差24小时，所以经线180°被定为国际换日线，由西向东通过此线时日期要减去一日，反之，若由东向西则要增加一日。

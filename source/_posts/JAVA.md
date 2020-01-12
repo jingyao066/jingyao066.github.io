@@ -1052,6 +1052,30 @@ public static int getTimeDifference(int beginTimestamp, int endTimestamp, int ty
 }
 ```
 
+- 字符串排序
+```
+/**
+ * @author: wjy
+ * @description: 字符串根据ASCII码表进行升序排列
+ */
+public static String ASCIISort(String str) {
+	char[] test = new char[str.length()];
+	StringBuilder sb = new StringBuilder();
+	while (true) {
+		String a = str;//直接读取这行当中的字符串。
+		for (int i = 0; i < str.length(); i++) {
+			test[i] = a.charAt(i);//字符串处理每次读取一位。
+		}
+		Arrays.sort(test);
+		for (int i = 0; i < test.length; i++) {
+			sb.append(test[i]);
+		}
+		String trim = sb.toString().trim();
+		return trim;
+	}
+}
+```
+
 # Lambda表达式
 Lambda 表达式是一种匿名函数，简单地说，它是没有声明的方法，也即没有访问修饰符、返回值声明和名字。
 它可以写出更简洁、更灵活的代码。作为一种更紧凑的代码风格，使 Java 语言的表达能力得到了提升。
@@ -1719,3 +1743,118 @@ System.out.println("所有数字的总和   : " + stats.getSum());
 System.out.println("所有数字的平均值 : " + stats.getAverage()); 
 ``` 
 [参考](https://www.cnblogs.com/franson-2016/p/5593080.html)
+
+# base64编码和解码
+```
+final Base64.Decoder decoder = Base64.getDecoder();
+final Base64.Encoder encoder = Base64.getEncoder();
+final String text = "字串文字";
+final byte[] textByte = text.getBytes("UTF-8");
+//编码
+final String encodedText = encoder.encodeToString(textByte);
+System.out.println(encodedText);
+//解码
+System.out.println(new String(decoder.decode(encodedText), "UTF-8"));
+```
+
+# 养成良好的编程习惯
+## 常量&变量
+- 直接赋值常量值，禁止声明新对象
+直接赋值常量值，只是创建了一个对象引用，而这个对象引用指向常量值。
+反例：
+`Long i = new Long(1L);`
+`String s = new String("abc");`
+
+正例：
+`Long i = 1L;`
+`String s = "abc";`
+
+- 当成员变量值无需改变时，尽量定义为静态常量。
+在类的每个对象实例中，每个成员变量都有一份副本，而成员静态常量只有一份实例。
+
+反例：
+```
+public class HttpConnection {
+    private final long timeout = 5L;
+    ...
+}
+```
+
+正例：
+```
+public class HttpConnection {
+    private static final long TIMEOUT = 5L;
+    ...
+}
+```
+
+- 尽量使用基本数据类型，避免自动拆箱和装箱
+Java 中的基本数据类型double、float、long、int、short、char、boolean，分别对应包装类Double、Float、Long、Integer、Short、Character、Boolean。JVM支持基本类型与对应包装类的自动转换，被称为自动装箱和拆箱。装箱和拆箱都是需要CPU和内存资源的，所以应尽量避免使用自动装箱和拆箱。
+反例：
+```
+Integer sum = 0;
+int[] values = ...;
+for (int value : values) {
+    sum += value; // 相当于result = Integer.valueOf(result.intValue() + value);
+}
+```
+
+正例：
+```
+int sum = 0;
+int[] values = ...;
+for (int value : values) {
+    sum += value;
+}
+```
+
+- 如果变量的初始值会被覆盖，就没有必要给变量赋初值
+反例：
+```
+List<UserDO> userList = new ArrayList<>();
+if (isAll) {
+    userList = userDAO.queryAll();
+} else {
+    userList = userDAO.queryActive();
+}
+```
+
+正例：
+```
+List<UserDO> userList;
+if (isAll) {
+    userList = userDAO.queryAll();
+} else {
+    userList = userDAO.queryActive();
+}
+```
+
+- 尽量使用函数内的基本类型临时变量
+在函数内，基本类型的参数和临时变量都保存在栈（Stack）中，访问速度较快；对象类型的参数和临时变量的引用都保存在栈（Stack）中，内容都保存在堆（Heap）中，访问速度较慢。在类中，任何类型的成员变量都保存在堆（Heap）中，访问速度较慢。
+反例：
+```
+public final class Accumulator {
+    private double result = 0.0D;
+    public void addAll(@NonNull double[] values) {
+        for(double value : values) {
+            result += value;
+        }
+    }
+    ...
+}
+```
+
+正例：
+```
+public final class Accumulator {
+    private double result = 0.0D;
+    public void addAll(@NonNull double[] values) {
+        double sum = 0.0D;
+        for(double value : values) {
+            sum += value;
+        }
+        result += sum;
+    }
+    ...
+}
+```

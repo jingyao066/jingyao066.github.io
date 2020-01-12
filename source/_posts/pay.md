@@ -772,8 +772,8 @@ public static Map<String, String> resolveAliPayResponse(HttpServletRequest reque
 1. 微信支付中间页调起微信收银台后超过5秒
 2. 用户点击“取消支付“或支付完成后点“完成”按钮。因此无法保证页面回跳时，支付流程已结束，所以商户设置的redirect_url地址不能自动执行查单操作，应让用户去点击按钮触发查单操作
 
-
 # 微信公众号支付
+[官方文档](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1)
 微信网页支付时序图：
 ![](pay/3.png)
 
@@ -980,3 +980,195 @@ public void wxBuySpaceNotify() {
 
 关键就这两个方法，一个预支付，微信返回perpay_id，你返回给前端，前端通过perpay_id调起支付组件，若完成支付，微信会回调你设置的notify_url地址，这就是你支付成功的回调地址。
 你要在回调方法里写一些业务相关的逻辑，比如：更改订单状态为已支付，以及赠送会员等后续操作。
+
+[公众号支付参考1](https://www.jianshu.com/p/9c322b1a5274)
+[公众号支付参考2](https://blog.csdn.net/javaYouCome/article/details/79473743)
+
+# 微信app支付
+[官网](https://pay.weixin.qq.com/index.php/core/home/login?return_url=%2F)
+[开发文档](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)
+
+![微信支付时序图](pay/4.png)
+微信这图做的，老子真想骂街。
+
+必要参数：
+appid：微信开放平台审核通过的应用APPID（请登录open.weixin.qq.com查看，注意与公众号的APPID不同）
+mch_id：微信支付分配的商户号
+nonce_str：随机字符串
+body：内容
+out_trade_no：商户订单号
+fee_type：货币类型
+total_fee：总金额
+spbill_create_ip：终端IP(一般为服务器本机:127.0.0.1)
+notify_url：回调url
+trade_type：交易类型(APP)
+这些参数生成签名，参数注释参考官方文档。
+将生成的签名连同这些参数一起生成xml报文请求统一下单api。
+
+统一下单api成功后会返回prepayid(预支付交易会话标识)，将
+`appid，prepayid，partnerid(商户号)，package(Sign=WXPay)，noncestr，timestamp`
+这些参数再次进行签名，再将签名，连同这些参数发送到app端供其调用完成。
+```
+@ResponseBody
+@PostMapping("appBuySapcePerPay")
+public ResponseUtil appBuySapcePerPay(@RequestBody Map<String,String> paramMap) {
+	LOGGER.info(">>>>>>>>>>>>>>>>>>>前端请求参数是 " + paramMap +">>>>>>>>>>>>>>>>>>>>>>>>>>");
+	Map<String, String> resultMap = new HashMap<>();
+	ResponseUtil response = ResponseUtil.success();
+	CodeEnum code = CodeEnum.FAIL;
+	try {
+		Token token = TokenUtil.getToken(request.getHeader("token"));
+		//验证前端传的价格是否正确
+		Integer price = Integer.parseInt(paramMap.get("price"));
+		AssertUtil.assertValidate(code,CodeEnum.ERROR_2001.getCode(),"购买空间价格错误",price.equals(sapcePrice));
+
+		//前端传过来的订单号
+		String orderNo = paramMap.get("order_no");
+		//生成订单
+		orderNo = generateSpaceOrder(paramMap, token, price, orderNo, 1);
+
+		//拼接统一下单地址参数(共10个必须参数)
+		Map<String, String> toWxMap = new HashMap<>();
+		toWxMap.put("appid", PayConstant.PARENT_APP_WX_APPID);
+		toWxMap.put("mch_id", PayConstant.WX_H5_MCHID);
+		toWxMap.put("nonce_str",WXPayUtil.generateNonceStr());
+		toWxMap.put("body", "最美课本-孩子空间VIP");
+		toWxMap.put("out_trade_no", orderNo);
+		toWxMap.put("spbill_create_ip",HttpUtil.getIpAddr(this.request));
+		toWxMap.put("total_fee",new BigDecimal(price).multiply(new BigDecimal("100")).intValue() + "");
+		toWxMap.put("trade_type", "APP");
+		//接收微信支付异步通知回调地址，通知url必须为直接可访问的url，不能携带参数。
+		toWxMap.put("notify_url", PayUtil.getProjectUrl(this.request) + "zjx/api/pay/wxBuySpaceNotify");
+		LOGGER.info("************支付成功回调地址是:"+PayUtil.getProjectUrl(this.request) + "zjx/api/pay/wxBuySpaceNotify");
+		toWxMap.put("sign", WXPayUtil.generateSignature(toWxMap, PayConstant.WX_H5_APP_KEY));
+
+		//将所有参数(map)转xml格式
+		String xml = WXPayUtil.mapToXml(toWxMap);
+		LOGGER.info("*******************请求微信参数"+xml);
+		//调用微信统一下单接口，返回预支付id：prepay_id
+		String wxReturnStr = PayUtil.post(PayConstant.WX_UNIFIEDORDER_URL, xml, ContentTypeEnum.TextXml.getContentType());
+		//将微信返回数据格式化成map
+		Map<String, String> wxXmlMap = WXPayUtil.xmlToMap(wxReturnStr);
+		LOGGER.info("**********************微信统一下单接口返回数据:" + wxXmlMap + "*****************************************");
+
+		// todo
+		//组装返回给前端的数据
+		resultMap.put("appid", PayConstant.PARENT_APP_WX_APPID);
+		resultMap.put("partnerid", PayConstant.WX_H5_MCHID);
+		resultMap.put("prepayid", wxXmlMap.get("prepay_id"));
+		resultMap.put("package", "Sign=WXPay");
+		resultMap.put("nonceStr", WXPayUtil.generateNonceStr());
+		resultMap.put("timeStamp", WXPayUtil.getCurrentTimestamp()+"");
+		resultMap.put("sign", WXPayUtil.generateSignature(resultMap, PayConstant.WX_H5_APP_KEY));
+		resultMap.put("order_no", orderNo);
+
+		LOGGER.info("**********************返回给前端的数据:" + resultMap + "*****************************************");
+		response.setData(resultMap);
+
+		//订单记录redis，12小时自动过期
+		stringRedisTemplate.opsForValue().set(orderNo, "sapceOrder", 60 * 60 * 12, TimeUnit.SECONDS);
+	} catch (Exception e) {
+		e.printStackTrace();
+		response.setCode(code);
+		response.setMessage(e.getMessage());
+	}
+	return response;
+}
+```
+预支付接口就是这样，和公众号支付基本一致，只是参数有些不同。
+预支付接口调用成功后，需要编写支付成功回调接口，微信会主动调用我们在预支付接口中设置好的url，即`notify_url`。
+微信会将：商户订单号,微信支付订单号发送给我们，我们可以通过这些来完成业务逻辑。
+
+[参考1](https://www.jianshu.com/p/54f73fea5986)
+[参考2](https://blog.csdn.net/u012552275/article/details/78758571)
+[参考3](https://www.cnblogs.com/zhanglingbing/p/9073217.html)
+[参考4](https://www.cnblogs.com/xxss/p/10244513.html)
+
+# 支付宝支付
+## app支付宝支付
+[官方文档](https://docs.open.alipay.com/204)
+支付宝的文档真的一目了然，比微信强太多...
+[参考](https://blog.csdn.net/shuaishuaidewo/article/details/88641913)
+
+# 苹果支付
+[苹果支付官方文档](https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html#//apple_ref/doc/uid/TP40010573-CH104-SW4)
+只要你在苹果系统购买APP中虚拟物品（虚拟货币，VIP充值等），必须通过内购方式进行支付，苹果和商家进行三七开。
+![](pay/5.png)
+和支付宝、微信支付不同，唤起支付到付款完成，这个动作，都是由前端自己处理就可以了，不需要在支付前通过服务端拿到签名等信息。
+支付成功后，苹果服务器会给前端一串东西，前端再把这串东西，传给自己的服务端，服务端拿到这串东西再到苹果服务器验证，根据返回内容验证是否通过，如果通过证明前端是真的有支付发生。服务端根据和前端约定好的支付内容解析获取自己的数据，处理自己的业务逻辑就可以了。
+
+前端支付成功后，拿到参数：{"receipt-data" : "MIIVDAYJKoZIhvcNAQcCoIIU/T..."}，将参数传给我们自己的服务器，由我们向苹果服务器发送post请求。
+```
+@RequestMapping(value = "/apple/verify", method = RequestMethod.POST)
+public BaseResponse<Object> appleVerify(String data) {
+	//data = {"receipt-data" : "MIIVDAYJKoZIhvcNAQcCoIIU/T..."}
+	// 苹果支付沙箱验证地址
+	String url = "https://sandbox.itunes.apple.com/verifyReceipt";
+	// 苹果支付正式验证地址
+	// String url = "https://buy.itunes.apple.com/verifyReceipt";
+	JSONObject param = JSON.parseObject(data);
+	JSONObject result = this.sendPost(url, param);
+	log.info("order apple notify result: {}", result);
+	Integer status = result.getInteger("status");//0 成功的
+	//处理自己的订单业务逻辑
+	//...
+	//返回
+	return new BaseResponse<Object>(status == 0 ? "SUCCESS" : "FAIL");
+}
+```
+status状态码
+- 0 SUCCESS
+- 21000 App Store不能读取你提供的JSON对象
+- 21002 receipt-data域的数据有问题
+- 21003 receipt无法通过验证
+- 21004 提供的shared secret不匹配你账号中的shared secret
+- 21005 receipt服务器当前不可用
+- 21006 receipt合法，但是订阅已过期。服务器接收到这个状态码时，receipt数据仍然会解码并一起发送
+- 21007 receipt是Sandbox receipt，但却发送至生产系统的验证服务
+- 21008 receipt是生产receipt，但却发送至Sandbox环境的验证服务
+
+status为0(成功)时，返回的数据：
+```
+{
+    "environment": "Sandbox",
+    "receipt": {
+        "in_app": [
+            {
+                "transaction_id": "1000000514154331",
+                "original_purchase_date": "2019-03-28 06:40:18 Etc/GMT",
+                "quantity": "1",
+                "original_transaction_id": "1000000514154331",
+                "purchase_date_pst": "2019-03-27 23:40:18 America/Los_Angeles",
+                "original_purchase_date_ms": "1553755218000",
+                "purchase_date_ms": "1553755218000",
+                "product_id": "ERSHUAI18",//18是钱，具体格式和前端约定。服务端把约定字符串（ERSHUAI）去掉，剩下的数字（18）就是业务逻辑需要的金额
+                "original_purchase_date_pst": "2019-03-27 23:40:18 America/Los_Angeles",
+                "is_trial_period": "false",
+                "purchase_date": "2019-03-28 06:40:18 Etc/GMT"
+            }
+        ],
+        "adam_id": 0,
+        "receipt_creation_date": "2019-03-28 08:21:40 Etc/GMT",
+        "original_application_version": "1.0",
+        "app_item_id": 0,
+        "original_purchase_date_ms": "1375340400000",
+        "request_date_ms": "1553761302654",
+        "original_purchase_date_pst": "2013-08-01 00:00:00 America/Los_Angeles",
+        "original_purchase_date": "2013-08-01 07:00:00 Etc/GMT",
+        "receipt_creation_date_pst": "2019-03-28 01:21:40 America/Los_Angeles",
+        "receipt_type": "ProductionSandbox",
+        "bundle_id": "com.ershuai.blog",
+        "receipt_creation_date_ms": "1553761300000",
+        "request_date": "2019-03-28 08:21:42 Etc/GMT",
+        "version_external_identifier": 0,
+        "request_date_pst": "2019-03-28 01:21:42 America/Los_Angeles",
+        "download_id": 0,
+        "application_version": "1.0.1"
+    },
+    "status": 0
+}
+```
+
+[参考](https://www.jianshu.com/p/976fc6090cfa)
+[参考](https://blog.csdn.net/shuai825644975/article/details/88872103)
+[参考](https://blog.csdn.net/jianzhonghao/article/details/79343887)

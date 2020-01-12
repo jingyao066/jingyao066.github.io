@@ -96,3 +96,25 @@ BigDecimal result52 = num22.divide(num12,20,BigDecimal.ROUND_HALF_UP);
 - ROUND_UNNECESSARY
 断言请求的操作具有精确的结果，因此不需要舍入。
 如果对获得精确结果的操作指定此舍入模式，则抛出ArithmeticException。
+
+## BigDecimal比较大小
+```java
+BigDecimal a = new BigDecimal (1);
+BigDecimal b = new BigDecimal (2);
+
+//使用compareTo方法比较
+//注意：a、b均不能为null，否则会报空指针
+System.out.println(a.compareTo(b));
+
+if(a.compareTo(b) == -1){
+	System.out.println("a小于b");
+}
+
+if(a.compareTo(b) == 0){
+	System.out.println("a等于b");
+}
+
+if(a.compareTo(b) == 1){
+	System.out.println("a大于b");
+}
+```
