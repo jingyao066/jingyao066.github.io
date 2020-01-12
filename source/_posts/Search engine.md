@@ -347,6 +347,19 @@ solrJ是java访问solr的客户端工具包，solr也提供了其他语言访问
 `spring.data.solr.host=http://localhost:8983/solr/new_core`
 路径`solr/`后面的内容，是新建的core的名字。这里可以理解为数据库的概念。在操作的时，如果有多个core，可以切换数据库，也就是切换 core。
 
+## solr加上baseAuth安全认证后，使用solrj查询数据和添加索引
+Using BasicAuth with SolrJ
+In SolrJ, the basic authentication credentials need to be set for each request as in this example:
+
+//create a new request object 
+SolrRequest req ;
+req.setBasicAuthCredentials(userName, password); solrClient.request(req);
+
+Query example:
+QueryRequest req = new QueryRequest(new SolrQuery("*:*"));
+req.setBasicAuthCredentials(userName, password); 
+QueryResponse rsp = req.process(solrClient);
+
 #### solr操作
 ```java
 @RestController
@@ -487,6 +500,9 @@ public class SolrController {
 }
 ```
 
+[高亮查询参考](https://blog.csdn.net/ryuenkyo/article/details/81061144)
+[高亮查询](https://www.cnblogs.com/chinaifae/articles/10218885.html)
+
 新增索引时发现报错：
 `solr Expected mime type application/octet-stream but got text/html`
 解决：
@@ -587,7 +603,6 @@ url 格式修改成下边这种：
   <version>1.7</version>
 </dependency>
 ```
-
 
 [参考](https://blog.csdn.net/lbf5210/article/details/51207043)
 
