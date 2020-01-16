@@ -56,6 +56,19 @@ location ~ \.(jpg|png)${
 该配置可匹配多层路径，如在upload文件夹下创建一个新的文件夹images并放置一张图片。
 打开浏览器输入localhost/images/文件名  则可加载images文件夹下对应名字的图片。
 
+## 配置访问txt文件
+txt文件也属于静态文件的一种，要想直接访问服务器上的静态资源(图片，音乐，txt文件等)，是不可能的，必须通过服务器来访问。最简单的是使用nginx访问。
+在配置微信公众号的`网页授权域名`时，微信要求，将文件放置在域名根目录下，例如`wx.qq.com/MP_verify_Vj5DWJGTc1Y85lCu.txt`，这个文件是微信来验证服务器有效性的。
+- 将文件下载到本地，然后通过`file Zilla`上传到服务器理想位置，记住路径。
+- 打开nginx配置文件`vim /usr/local/nginx/confg/nginx.conf`，在理想的server块，加入如下配置
+```
+location ~ \.(txt|json)$ {
+	root /usr/local/src/;
+}
+```
+然后重启nginx，在浏览器访问`test.wjy.com/MP_verify_Vj5DWJGTc1Y85lCu.txt`，看浏览器打出文件内容，证明成功。
+因为可能配置了多个server块，所以要注意区分。
+
 # 配置端口转发
 假如现在服务器上有两个程序，分别占用8001端口和8002端口，我只想通过80端口访问这两个服务，不想加端口。
 我们可以通过nginx监听80端口，例如当用户访问 `book.douban.com` 时，

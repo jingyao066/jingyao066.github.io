@@ -69,6 +69,7 @@ jdk1.8.0_201  jdk-8u201-linux-x64.tar.gz
 ```
 $ sudo mkdir /usr/local/jdk
 $ sudo cd /usr/local/jdk
+$ sudo cd /usr/local/jdk
 $ sudo cp ../src/jdk-8u201-linux-x64.tar.gz ./
 $ sudo ls
 jdk-8u201-linux-x64.tar.gz
@@ -670,6 +671,10 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 
 停止redis报错` NOAUTH Authentication required`
 
+### 停止redis
+通过源码安装的redis，只能通过这种方式停止，或使用`kill -9`
+`./redis-cli -h 你的ip -p 6379 -a 你的密码 shutdown`
+
 ### 给redis添加密码
 - 临时密码(redis重启之后会失效)
 首先启动redis服务，然后进入redis：
@@ -710,6 +715,16 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 这样才算是指定了刚才修改的配置文件。
 
 至于windows下的redis配置文件，就不弄了，全都用临时的配置就行。
+
+### 配置远程链接redis
+- 将`redis.conf`中的`bind 127.0.0.1`注释掉，或改成`0.0.0.0`
+- 找到`protected-mode`，后边默认是`yes`，改成`no`
+重启redis。
+
+在windows的cmd或mac的终端输入
+`redis-cli -h 你的服务器ip -p 6379 -a 你的密码`
+
+远程连接成功。如果还是连不上，请检查你服务器的安全组，是否开放了6379端口。
 
 ### docker安装redis
 - 搜索redis镜像
