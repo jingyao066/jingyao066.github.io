@@ -183,3 +183,18 @@ abstract V                  put(K key, V value)
 abstract V                  remove(Object key)
 abstract int                size()
 ```
+
+# 记一次map的使用
+```
+List<Map<String,String>> videoList = new ArrayList<>();
+Map<String,String> map = new HashMap<>();
+map.put("video","v1");
+map.put("cover","c1");
+videoList.add(map);
+//这一步，list的中第一个map中的v1变成了v2
+map.put("video","v2");
+//c1变成了c2，也就是说map改变了，同时add到list中的map也改变了
+//也就是说，add到list中的map，是指向了内存地址，内存地址变了，指向的也改变了
+map.put("cover","c2");
+videoList.add(map);
+```
