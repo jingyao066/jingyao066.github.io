@@ -128,6 +128,29 @@ docker利用容器来运行应用。容器时从镜像创建的运行实例。�
 命令，即从注册服务器 registry.hub.docker.com 中的 centos 仓库来下载标记为 centos6 的镜像。
 有时候官方仓库注册服务器下载较慢，可以从其他仓库下载。 从其它仓库下载时需要指定完整的仓库注册服务器地址。
 
+docker默认从docker自己的服务器下载镜像，在国内自然是很慢。我们可以将镜像源替换成阿里的源。通过`daemon.json`这个文件配置镜像。
+docker安装后默认没有daemon.json这个配置文件，需要进行手动创建。配置文件的默认路径：/etc/docker/daemon.json
+`touch /etc/docker/daemon.json`
+`vim /etc/docker/daemon.json`
+输入如下内容：
+```
+{
+  "registry-mirrors": ["https://t21sxucj.mirror.aliyuncs.com"]
+}
+```
+那么从哪找这个地址呢？我们知道阿里云有提供docker镜像服务。
+- 登录阿里云（没有账号先注册）
+- 找到容器镜像服务
+- 点击创建镜像仓库
+- 创建之后点击`镜像加速器`选项卡
+在右侧可以看到配置镜像加速器，在下边可以看到想要的地址。
+
+配置完之后重启docker
+`systemctl restart docker`
+然后再`docker pull xxx`试试，体验飞一般的感觉。
+[参考1](https://blog.csdn.net/weixin_43569697/article/details/89279225)
+[参考2](https://blog.csdn.net/u013948858/article/details/79974796)
+
 ## 查看镜像列表
 `docker images`
 列出了所有顶层（top-level）镜像。实际上，在这里我们没有办法区分一个镜像和一个只读层，所以我们提出了top-level镜像。

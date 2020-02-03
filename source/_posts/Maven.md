@@ -219,7 +219,7 @@ linux:
 `mvn install:install-file -DgroupId=aspose-words -DartifactId=aspose-words -Dversion=16.8 -Dpackaging=jar -Dfile=/usr/local/src/aspose-words-16.8.0-jdk16.jar`
 `mvn install:install-file -DgroupId=aspose-slides -DartifactId=aspose-slides -Dversion=19.6 -Dpackaging=jar -Dfile=/usr/local/src/aspose-slides-19.6.jar`
 `mvn install:install-file -DgroupId=aspose-cells -DartifactId=aspose-cells -Dversion=18.9 -Dpackaging=jar -Dfile=/usr/local/src/aspose-cells-18.9.jar`
-区别只是路径不同。
+区别只是路径不同，注意修改groupId、artifactId、version和file后的路径。
 
 然后使用时，在pom中添加
 ```

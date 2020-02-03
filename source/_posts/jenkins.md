@@ -102,7 +102,7 @@ root用户进入容器之后，设置密码：
 windows下密码的位置：
 `C:\Users\59923\.jenkins\secrets\initialAdminPassword`
 
-找到该文件复制里面的内容，进入到初始化页面，然后安装插件，我们选择第一个蓝色的`Install suggested plugins`
+找到该文件复制里面的内容，进入到初始化页面，然后安装插件，这里不推荐`Install suggested plugins(安装推荐插件)`，因为会安装很多我们用不到的插件，而且巨慢。
 按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，就进入到了jenkins的控制台。长时间没反应，请重启tomcat或docker的jenkins镜像。
 
 # 安装插件
@@ -117,6 +117,8 @@ windows下密码的位置：
 然后选择`install without restart`。
 如果安装了语言插件，还配置成中文才可以，点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System，找到local配置，输入：ZH_cn
 简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。
+
+[安装插件提速](https://www.cnblogs.com/hellxz/p/jenkins_install_plugins_faster.html)
 
 # 持续集成配置
 服务器需要安装：jdk、git、maven，安装好之后，需要在jenkins中进行配置。
