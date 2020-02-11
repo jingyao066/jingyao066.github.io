@@ -40,7 +40,7 @@ rpm：管理套件
 编辑全局变量：`vim /etc/profile`
 ```
 #java environment
-export JAVA_HOME=/usr/local/jdk1.8.0_144
+export JAVA_HOME=/usr/local/jdk1.8.0_211
 export CLASSPATH=.:${JAVA_HOME}/jre/lib/rt.jar:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar
 export PATH=$PATH:${JAVA_HOME}/bin
 ```
@@ -567,9 +567,11 @@ cd到tomcat的bin目录下：
 3. 改下名，方便后面操作：
 `mv apache-maven-3.3.9 maven`
 4. 配置环境变量
-`vi /etc/profile`，在合适的位置添加如下内容：
-`M2_HOME=/usr/local/maven （需要修改为自己maven的安装路径）`
+`vim /etc/profile`，在合适的位置添加如下内容：
+`M2_HOME=/usr/local/maven`
 `export PATH=${M2_HOME}/bin:${PATH}`
+修改为自己maven的安装路径
+
 然后使配置文件生效：
 `source /etc/profile`
 5. 检查是否安装成功
@@ -792,6 +794,8 @@ Linux系统是Centos 6.5 64位，如果不是root用户，切换到root用户下
 安装：
 `./configure && make && make install`
 
+执行完，会在源码同一层生成名为nginx的目录。
+
 启动nginx
 先找一下nginx安装到什么位置上了
 `whereis nginx`
@@ -802,6 +806,8 @@ Linux系统是Centos 6.5 64位，如果不是root用户，切换到root用户下
 cd /usr/local/nginx/sbin
 ./nginx
 ```
+停止nginx：`./nginx -s stop`
+
 [参考1](https://www.cnblogs.com/taiyonghai/p/6728707.html)
 [参考2](https://www.cnblogs.com/bluestorm/p/4574688.html)
 
