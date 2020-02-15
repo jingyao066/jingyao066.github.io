@@ -560,7 +560,7 @@ cd到tomcat的bin目录下：
 `git --version`
 
 ## maven
-1. 到指定目录下载maven：
+1. 到理想目录下载maven：
 `wget http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz`
 2. 解压：
 `tar -zxvf apache-maven-3.3.9-bin.tar.gz `
