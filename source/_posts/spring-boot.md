@@ -809,8 +809,10 @@ import org.springframework.context.annotation.Configuration;
 运行SpringBootDemoApplication，可以看到控制台的日志
 ![](spring-boot/2.png)
 Spring Boot默认的日志级别为INFO，这里打印的是INFO级别的日志所以可以显示。
-很多开发者在日常写private static final Logger LOG = LoggerFactory.getLogger(LogConfig.class);总觉得后面的LogConfig.class可有可无，因为随便写个其他类也不会报错，但是准确编写class信息能够提供快速定位日志的效率。
-我们看到打印的日志内容左侧就是对应的类名称，这个是通过private static final Logger LOG = LoggerFactory.getLogger(LogConfig.class);实现的。
+很多开发者在日常写
+`private static final Logger LOG = LoggerFactory.getLogger(LogConfig.class);`
+总觉得后面的`LogConfig.class`可有可无，因为随便写个其他类也不会报错，但是准确编写class信息能够提供快速定位日志的效率。我们看到打印的日志内容左侧就是对应的类名称，这个是通过
+`private static final Logger LOG = LoggerFactory.getLogger(LogConfig.class);`实现的。
 如果将LogConfig.class换成xxx.class，输出日志就会显示对应的xxx类名。这样声明的好处就是方便定位日志。
 
 ## 如何将日志信息存储到文件

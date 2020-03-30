@@ -982,6 +982,23 @@ user3: pass,admin
 这个是你apache默认的访问页面，进入到这个文件夹
 这个文件夹下的内容会被显示到apahce的默认访问页里，把你想要下载的东西打包成压缩文件，传到这个文件夹下，就可以通过ip访问下载了。
 
+## 磁盘满了
+nginx启动报错：
+`nginx: [crit] pwrite() "/usr/local/nginx/logs/nginx.pid" failed (28: No space left on device)`
+磁盘满了，查一下
+`df -h`
+
+查看所有路径下大于100M的文件
+`find / -size +100M |xargs ls -lh`
+大部分情况是因为某些日志把磁盘写满了。
+
+清空文件内容几种方式：
+`echo > filename`
+`echo "" > filename`
+`> filename`
+`: > filename`
+`cat /dev/null > filename`
+
 # 直接用java -jar xxx.jar，当退出或关闭shell时，程序就会停止掉。
 `java -jar xxx.jar &`
 `nohup java -jar xxxx.jar &`

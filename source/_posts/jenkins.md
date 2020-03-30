@@ -118,6 +118,7 @@ windows下密码的位置：
 如果安装了语言插件，还配置成中文才可以，点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System，找到local配置，输入：ZH_cn
 简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。
 
+## 安装插件提速
 看到好多加速Jenkins安装插件速度的文章，大多数教程中都是在插件配置里使用
 `https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json`
 替换原来的官方的json，我们来看看清华源拉下来的是什么 这里使用官方的下载插件的url全局搜索。
@@ -147,8 +148,11 @@ windows下密码的位置：
 
 # 持续集成配置
 服务器需要安装：jdk、git、maven，安装好之后，需要在jenkins中进行配置。
-点击左侧的系统管理，选择全局工具配置，填入本机git/maven/jdk的安装路径。
 
+系统管理 ->全局工具配置
+Manage Jenkins -> Global Tool Configuration
+
+然后填入本机git/maven/jdk的安装路径。
 jdk:
 不要勾选自动安装，因为我们已经手动安装好，这里只需要填写`JAVA_HOME`即可，别名可不填。
 `/usr/local/jdk1.8.0_211`

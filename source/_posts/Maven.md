@@ -213,7 +213,7 @@ system scope引入的包，在使用jar-with-dependencies打包时将不会被�
 
 执行命令
 windows:
-`mvn install:install-file -DgroupId=alipay -DartifactId=alipay-trade-sdk -Dversion=1.0 -Dpackaging=jar -Dfile=F:\支付宝SDKJARlongguo\alipay-trade-sdk.jar`
+`mvn install:install-file -DgroupId=aspose-words -DartifactId=aspose-words -Dversion=16.8 -Dpackaging=jar -Dfile=E:\work\aspose-cells-18.9.jar`
 
 linux:
 `mvn install:install-file -DgroupId=aspose-words -DartifactId=aspose-words -Dversion=16.8 -Dpackaging=jar -Dfile=/usr/local/src/aspose-words-16.8.0-jdk16.jar`
