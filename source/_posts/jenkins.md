@@ -102,8 +102,8 @@ root用户进入容器之后，设置密码：
 windows下密码的位置：
 `C:\Users\59923\.jenkins\secrets\initialAdminPassword`
 
-找到该文件复制里面的内容，进入到初始化页面，然后安装插件，我们选择第一个蓝色的`Install suggested plugins`
-按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，就进入到了jenkins的控制台。长时间没反应，请重启tomcat或docker的jenkins镜像。
+找到该文件复制里面的内容，进入到初始化页面，然后安装插件，这里不推荐`Install suggested plugins(安装推荐插件)`，因为会安装很多我们用不到的插件，而且巨慢。
+按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，就进入到了jenkins的控制台。长时间没反应，请重启jenkins。
 
 # 安装插件
 - 选择左侧列表的`Manage Jenkins`
@@ -118,10 +118,41 @@ windows下密码的位置：
 如果安装了语言插件，还配置成中文才可以，点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System，找到local配置，输入：ZH_cn
 简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。
 
+## 安装插件提速
+看到好多加速Jenkins安装插件速度的文章，大多数教程中都是在插件配置里使用
+`https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json`
+替换原来的官方的json，我们来看看清华源拉下来的是什么 这里使用官方的下载插件的url全局搜索。
+这里我们发现，每个插件下载路径依旧没有改变，变的只是这个json是从清华源下来的，其内写死的插件下载地址是没有变的，还是从官网下载！
+所以无论是更换还是没更换镜像json，下载插件的速度其实是没有变的！这真是令人心痛！💔​
+以上的配置Json其实在Jenkins的工作目录中。
+进入更新配置位置
+`cd /root/.jenkins/updates`
+
+`vim default.json`
+这个Json文件与上边的配置文件是相同的
+
+这里wiki和github的文档不用改，我们就可以成功修改这个配置
+使用vim的命令，如下，替换所有插件下载的url
+`:1,$s/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g`
+替换连接测试url
+`:1,$s/http:\/\/www.google.com/https:\/\/www.baidu.com/g`
+进入vim先输入：然后再粘贴上边的：后边的命令，注意不要写两个冒号！
+保存退出，并重启jenkins。
+
+方式二：使用sed
+`$ sed -i 's/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json && sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g' default.json`
+这是直接修改的配置文件，如果前边Jenkins用sudo启动的话，那么这里的两个sed前均需要加上sudo。
+重启Jenkins，安装插件试试，简直超速。
+
+[安装插件提速参考](https://www.cnblogs.com/hellxz/p/jenkins_install_plugins_faster.html)
+
 # 持续集成配置
 服务器需要安装：jdk、git、maven，安装好之后，需要在jenkins中进行配置。
-点击左侧的系统管理，选择全局工具配置，填入本机git/maven/jdk的安装路径。
 
+系统管理 ->全局工具配置
+Manage Jenkins -> Global Tool Configuration
+
+然后填入本机git/maven/jdk的安装路径。
 jdk:
 不要勾选自动安装，因为我们已经手动安装好，这里只需要填写`JAVA_HOME`即可，别名可不填。
 `/usr/local/jdk1.8.0_211`

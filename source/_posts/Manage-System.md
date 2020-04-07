@@ -32,25 +32,25 @@ from users
 ## DaoMapper.java
 增加一个方法返回列表数据，其他方法自动生成
 ```java
-List<Tag> getTagList(Tag tag);
+List<Tag> dataList(Tag tag);
 ```
 
 ## service
 ```java
-PageInfo<Tag> getTagList(int pageNum,int pageSize,Tag tag);
+PageInfo<Tag> dataList(int pageNum,int pageSize,Tag tag);
 
-Tag tagDetail(Integer id);
+Tag detail(Integer id);
 
 int addOrModify(Tag tag);
 
-int delTag(Integer id);
+int del(Integer id);
 ```
 ## serviceImpl
 ```java
 @Override
-public PageInfo<Tag> getTagList(int pageNum,int pageSize, Tag tag) {
+public PageInfo<Tag> dataList(int pageNum,int pageSize, Tag tag) {
 	PageHelper.startPage(pageNum,pageSize);
-	return new PageInfo<Tag>(tagMapper.getTagList(tag));
+	return new PageInfo<Tag>(tagMapper.dataList(tag));
 }
 
 /**
@@ -58,8 +58,8 @@ public PageInfo<Tag> getTagList(int pageNum,int pageSize, Tag tag) {
  * @description: 获取所有tag 不分页
  */
 @Override
-public List<Tag> getTagList(Tag tag) {
-	return tagMapper.getTagList(tag);
+public List<Tag> dataList(Tag tag) {
+	return tagMapper.dataList(tag);
 }
 
 /**
@@ -67,7 +67,7 @@ public List<Tag> getTagList(Tag tag) {
  * @description: tag详情
  */
 @Override
-public Tag tagDetail(Integer id) {
+public Tag detail(Integer id) {
 	return tagMapper.selectByPrimaryKey(id);
 }
 
@@ -77,7 +77,7 @@ public Tag tagDetail(Integer id) {
  */
 @Override
 public int addTag(Tag tag) {
-	int r = 0;
+	int r;
 	if(null != tag.getId()){
 		r = tagMapper.updateByPrimaryKeySelective(tag);
 	}else{
@@ -95,7 +95,7 @@ public int addTag(Tag tag) {
  * @description: 删除tag
  */
 @Override
-public int delTag(Integer id) {
+public int del(Integer id) {
 	return tagMapper.deleteByPrimaryKey(id);
 }
 ```

@@ -922,7 +922,8 @@ hgetall(key)：返回名称为key的hash中所有的键（field）及其对应�
 
 # 通过notify-keyspace-events实现订单自动关闭功能
 修改Redis配置文件，开启过期通知功能。
-在配置文件中搜索`notify`，找到`# notify-keyspace-events Ex`这一行，将注释去掉，同时注释掉下面一行`notify-keyspace-events ""`，
+在配置文件中搜索`notify`，找到`# notify-keyspace-events Ex`这一行，将注释去掉。
+同时注释掉下面一行`notify-keyspace-events ""`，
 为了节约cup资源，事件通知默认是没有开启的，即`notify-keyspace-events ""`
 
 修改之后在需要重启redis，然后通过cli查看配置是否生效，`config get notify-keyspace-events`，如果显示Ex，就生效了。
@@ -1342,3 +1343,59 @@ master0:name=mymaster,status=ok,address=192.168.43.188:6380,slaves=2,sentinels=3
 可以看到端口号为:6380的redis服务器已经变成master服务器了，说明哨兵配置成功。
 
 [参考](https://www.jianshu.com/p/ce1d78cd368a)
+
+# Redis SETNX 命令实现分布式锁
+起因：
+最开始我们是单服务，注册时候总是出现重复的手机号用户。
+于是加了同步锁`synchronized`，解决了问题。
+
+后来用了阿里云SLB分布式服务。又出现了重复注册的问题，想到用redis的SETNX来解决问题。
+现在分布式的应用场景很多，为了保持数据的一致性，经常碰到需要对资源加锁的情形。利用redis来实现分布式锁就是其中的一种实现方案。
+命令各式：
+`SETNX key value`
+
+将 key 的值设为 value ，当且仅当 key 不存在。
+若给定的 key 已经存在，则 SETNX 不做任何动作。
+SETNX 是『SET if Not eXists』(如果不存在，则 SET)的简写。
+设置成功，返回1。
+设置失败，返回0。
+利用SETNX的特性，很容易的想到，在需要加锁的时候，调用SETNX命令，如果返回了1，表示设置成功，获得了当前锁，之后做一些想要的操作，完成之后调用DEL命令释放锁。
+因为java的try/catch特性，即使程序报错，我们也可以在finally块释放锁，这样不会因为程序报错导致所无法释放的情况。
+示例代码：
+```
+try {
+	Boolean result = redisTemplate.opsForValue().setIfAbsent("reg_" + newUser.getMobile(),newUser.getMobile(),30,TimeUnit.SECONDS);
+	if(result){
+		//插入新用户
+		usersMapper.insertSelective(newUser);
+		redisTemplate.delete("reg_" + newUser.getMobile());
+	}
+} catch (java.lang.Exception e) {
+	e.printStackTrace();
+} finally {
+	redisTemplate.delete("reg_" + newUser.getMobile());
+}
+```
+幂等性：
+HTTP/1.1中对幂等性的定义是：一次和多次请求某一个资源对于资源本身应该具有同样的结果（网络超时等问题除外）。也就是说，其任意多次执行对资源本身所产生的影响均与一次执行的影响相同。
+
+很多复杂的事务要分布进行，但它们组成了一个整体，要么整体生效，要么整体失效。这种思想反应到数据库上，就是多条SQL语句，要么所有执行成功，要么所有执行失败。
+
+数据库事务由严格的定义，它必须满足4个特性：
+原子性(Atomicity),一致性(consistency),隔离性(Isolation),持久性(Durability)。
+
+原子性：
+表示组成一个事务的多个数据库操作是一个不可分割的原子单元，只有所有的操作执行成功，整个事务才提交。事务中的任何一个数据库操作失败，已经执行的任何操作都必须被撤销，让数据库返回初始状态。
+
+一致性：
+事务操作成功后，数据库所处的状态和他的业务规则是一致的，即数据不会被破坏。如A账户转账100元到B账户，不管操作成功与否，A和B账户的存款总额是不变的。
+
+隔离性：
+在并发数据操作时，不同的事务拥有各自的数据空间，他们的操作不会对对方产生敢逃。准确地说，并非要求做到完全无干扰。数据库规定了多种事务隔离界别，不同的隔离级别对应不用的干扰成都，隔离级别越高，数据一致性越好，但并发行越弱。
+
+持久性：
+一旦事务提交成功后，事务中所有的数据操作都必须被持久化到数据库中。即使在事务提交后，数据库马上崩溃，在数据库重启时，也必须保证能够通过某种机制恢复数据。
+在这些事务特性中，数据“一致性”时最终目标，其他特性都是为达到这个目标而采取的措施、要求或手段。
+数据库管理系统一般采用重执行日志来保证原子性、一致性和持久性。重执行日志记录了数据库变化的每一个动作，数据库在一个事务中执行一部分操作后发生错误退出，数据库即可根据重执行日志撤销已经执行的操作。对于已经提交的事务即使数据库崩溃，在重启数据库时也能后根据日志对尚未持久化的数据进行相应的重执行操作。
+
+[参考](https://blog.csdn.net/harleylau/article/details/85856774)

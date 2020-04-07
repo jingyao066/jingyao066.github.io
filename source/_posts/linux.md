@@ -40,7 +40,7 @@ rpm：管理套件
 编辑全局变量：`vim /etc/profile`
 ```
 #java environment
-export JAVA_HOME=/usr/local/jdk1.8.0_144
+export JAVA_HOME=/usr/local/jdk1.8.0_211
 export CLASSPATH=.:${JAVA_HOME}/jre/lib/rt.jar:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar
 export PATH=$PATH:${JAVA_HOME}/bin
 ```
@@ -134,18 +134,19 @@ ENV PATH $JAVA_HOME/bin:$PATH
 默认的配置文件是：/etc/mysql/my.cnf
 默认的数据目录是：/var/lib/mysql
 
-最简单的启动方式：
+可以先简单构建一次mysql：
 `docker run -d --name mysql --rm -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7`
 
 进入容器，查看my.cnf：
 `docker exec -it mysql bash`
 `cat /etc/mysql/my.cnf`
 
-通过查看my.cnf可以发现，主配置文件my.cnf加载了宿主机 /etc/mysql/conf.d 文件夹下所有的配置，如果想要自定义配置，
-我们只需要向 /etc/mysql/conf.d 目录中创建 .cnf 文件，新建的文件可以任意起名，只要保证后缀名是 .cnf 即可。
-新建的文件中的配置项可以覆盖 /etc/mysql/my.cnf 中的配置项。我们只需映射 conf.d 文件夹即可。
-首先需要创建将要映射到容器中的目录以及.cnf文件，然后再创建容器。
-宿主机中创建文件夹 mysql，并分别创建 data 目录和 conf 目录。新建配置文件 wjy.cnf：
+通过查看mysql容器中的my.cnf可以发现，主配置文件my.cnf加载了宿主机 /etc/mysql/conf.d 文件夹下所有的配置。
+这个路径只是默认的，我们可以在构建容器时，手动指定data文件夹和conf文件的位置。
+所以如果想要自定义配置，只需在我们理想的目录创建 .cnf 文件，并在构建容器时指定配置文件的路径即可(新建的文件可以任意起名，但保证后缀名是 .cnf)。
+
+创建将要映射到容器中的目录以及.cnf文件，然后再创建容器。
+在宿主机中创建文件夹 mysql，并分别创建 data 目录和 conf 目录。新建配置文件 my.cnf，并写入如下内容：
 ```
 [mysqld]
 server-id = 1 #服务Id唯一
@@ -559,16 +560,18 @@ cd到tomcat的bin目录下：
 `git --version`
 
 ## maven
-1. 到指定目录下载maven：
+1. 到理想目录下载maven：
 `wget http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz`
 2. 解压：
 `tar -zxvf apache-maven-3.3.9-bin.tar.gz `
 3. 改下名，方便后面操作：
 `mv apache-maven-3.3.9 maven`
 4. 配置环境变量
-`vi /etc/profile`，在合适的位置添加如下内容：
-`M2_HOME=/usr/local/maven （需要修改为自己maven的安装路径）`
+`vim /etc/profile`，在合适的位置添加如下内容：
+`M2_HOME=/usr/local/maven`
 `export PATH=${M2_HOME}/bin:${PATH}`
+修改为自己maven的安装路径
+
 然后使配置文件生效：
 `source /etc/profile`
 5. 检查是否安装成功
@@ -714,7 +717,7 @@ adlist.c:32:20: fatal error: stdlib.h: No such file or directory
 `./redis-server ../redis.conf &`，然后`bg`
 这样才算是指定了刚才修改的配置文件。
 
-至于windows下的redis配置文件，就不弄了，全都用临时的配置就行。
+至于windows下的redis配置文件，同理。
 
 ### 配置远程链接redis
 - 将`redis.conf`中的`bind 127.0.0.1`注释掉，或改成`0.0.0.0`
@@ -765,77 +768,35 @@ docker run \
 `auth 刚才设置的密码`
 
 ## nginx
-1. 下载Nginx及相关组件
+下载Nginx及相关组件
 Linux系统是Centos 6.5 64位，如果不是root用户，切换到root用户下安装
 `su root`
 输入密码，密码不显示。
 
-进入用户目录下载程序：
+首先安装所需依赖：
+`yum -y install gcc gcc-c++ make libtool zlib zlib-devel openssl openssl-devel pcre pcre-devel`
+
+进入理想目录准备下载：
 `cd /usr/local/src`
 
-下载相关组件：
-```
-[root@localhost src]# wget http://nginx.org/download/nginx-1.10.2.tar.gz
-省略安装内容...
-[root@localhost src]# wget http://www.openssl.org/source/openssl-fips-2.0.10.tar.gz
-省略安装内容...
-[root@localhost src]# wget http://zlib.net/zlib-1.2.11.tar.gz
-省略安装内容...
-[root@localhost src]# wget https://netix.dl.sourceforge.net/project/pcre/pcre/8.40/pcre-8.40.tar.gz
-省略安装内容...
-```
-上边的安装包可能不是最新的，可以去官网找最新的安装包：
-nginx：
-http://nginx.org/download/
-注意列表不是有序的，现在是2019年，我在页面搜索2019，就可以看到最近发布的安装包，然后把上边的`nginx-1.10.2.tar.gz`替换成新的安装包名字。
+下载nginx tar包：
+`wget http://nginx.org/download/nginx-1.17.8.tar.gz`
 
-安装c++编译环境，如已安装可略过
-```
-[root@localhost src]# yum install gcc-c++
-省略安装内容...
-期间会有确认提示输入y回车
-Is this ok [y/N]:y
-省略安装内容...
-```
-2. 安装Nginx及相关组件
+上边的版本号可能不是最新的，可以去[官网](http://nginx.org/download/)找最新的安装包。
+注意列表不是有序的，现在是2020年，我在页面搜索2020，就可以看到最近发布的安装包，然后把上边的`nginx-1.17.8.tar.gz`替换成新的安装包名字。
 
-openssl安装
-```
-[root@localhost src]# tar zxvf openssl-fips-2.0.10.tar.gz
-省略安装内容...
-[root@localhost src]# cd openssl-fips-2.0.10
-[root@localhost openssl-fips-2.0.10]# ./config && make && make install
-省略安装内容...
-```
+解包：
+`tar -xvf nginx-1.17.8.tar.g`
 
-pcre安装
-```
-[root@localhost src]# tar zxvf pcre-8.40.tar.gz
-省略安装内容...
-[root@localhost src]# cd pcre-8.40
-[root@localhost pcre-8.40]# ./configure && make && make install
-省略安装内容...
-```
+进入nginx目录：
+`cd nginx-1.10.2`
 
-zlib安装
-```
-[root@localhost src]# tar zxvf zlib-1.2.11.tar.gz
-省略安装内容...
-[root@localhost src]# cd zlib-1.2.11
-[root@localhost zlib-1.2.11]# ./configure && make && make install
-省略安装内容...
-```
+安装：
+`./configure && make && make install`
 
-nginx安装
-```
-[root@localhost src]# tar zxvf nginx-1.10.2.tar.gz
-省略安装内容...
-[root@localhost src]# cd nginx-1.10.2
-[root@localhost nginx-1.10.2]# ./configure && make && make install
-省略安装内容...
-```
+执行完，会在源码同一层生成名为nginx的目录。
 
-3. 启动nginx
+启动nginx
 先找一下nginx安装到什么位置上了
 `whereis nginx`
 `nginx: /usr/local/nginx`
@@ -845,7 +806,10 @@ nginx安装
 cd /usr/local/nginx/sbin
 ./nginx
 ```
-[参考地址](https://www.cnblogs.com/taiyonghai/p/6728707.html)
+停止nginx：`./nginx -s stop`
+
+[参考1](https://www.cnblogs.com/taiyonghai/p/6728707.html)
+[参考2](https://www.cnblogs.com/bluestorm/p/4574688.html)
 
 make报错：
 `make: *** No rule to make target `build', needed by `default'. Stop.`
@@ -1018,6 +982,23 @@ user3: pass,admin
 这个是你apache默认的访问页面，进入到这个文件夹
 这个文件夹下的内容会被显示到apahce的默认访问页里，把你想要下载的东西打包成压缩文件，传到这个文件夹下，就可以通过ip访问下载了。
 
+## 磁盘满了
+nginx启动报错：
+`nginx: [crit] pwrite() "/usr/local/nginx/logs/nginx.pid" failed (28: No space left on device)`
+磁盘满了，查一下
+`df -h`
+
+查看所有路径下大于100M的文件
+`find / -size +100M |xargs ls -lh`
+大部分情况是因为某些日志把磁盘写满了。
+
+清空文件内容几种方式：
+`echo > filename`
+`echo "" > filename`
+`> filename`
+`: > filename`
+`cat /dev/null > filename`
+
 # 直接用java -jar xxx.jar，当退出或关闭shell时，程序就会停止掉。
 `java -jar xxx.jar &`
 `nohup java -jar xxxx.jar &`
@@ -1028,7 +1009,7 @@ user3: pass,admin
 3. 通过docker安装mysql
 4. 通过docker安装zookeeper
 5. 安装redis
-6. 安装tomcat(为安装jenkins)
+6. 安装tomcat(为了安装jenkins)
 7. war包安装jenkins
 8. 安装maven
 9. 安装git

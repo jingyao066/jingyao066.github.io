@@ -31,8 +31,14 @@ date: 2019-04-17 11:05:53
 打包`mvn  package -Dmaven.skip.test=true`
 进入target，找到打好的war包，复制到tomcat的webapps下，并更名为`ROOT.war`
 启动tomcat，启动完了再停止(这一步是要通过tomcat将war包解开。)
-进入到`webapps\dubbo-admin-2.6.0\WEB-INF`，找到`dubbo.properties`
-修改成你的zookeeper地址和用户名密码。
+进入到`webapps\dubbo-admin-2.6.0\WEB-INF`，修改`dubbo.properties`
+```
+dubbo.registry.address=zookeeper://127.0.0.1:2181
+dubbo.admin.root.password=root
+dubbo.admin.guest.password=guest
+```
+修改你的zookeeper地址。
+修改你的用户名和密码，需要注意用户名在=号前边，等号后边的是密码。
 然后再启动tomcat，访问即可。
 
 [参考](https://blog.csdn.net/qq_28988969/article/details/79866111)
