@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>java on Wjy&#39;s Blog</title>
+    <link>https://funny-toffee-4aa7c3.netlify.app/en/tags/java/</link>
+    <description>Recent content in java on Wjy&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 06 Sep 2022 17:05:25 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/en/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SPI</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/spi/</link>
+      <pubDate>Tue, 06 Sep 2022 17:05:25 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/spi/</guid>
+      <description>&lt;p&gt;SPI ，全称为 Service Provider Interface，是一种服务发现机制。它通过在ClassPath路径下的META-INF/services文件夹查找文件，自动加载文件里所定义的类。
+这一机制为很多框架扩展提供了可能，比如在Dubbo、JDBC中都使用到了SPI机制。我们先通过一个很简单的例子来看下它是怎么用的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JSR303</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jsr303/</link>
+      <pubDate>Tue, 30 Aug 2022 17:54:53 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jsr303/</guid>
+      <description>&lt;p&gt;JSR303是一套JavaBean参数校验的标准，定义了很多常用的校验注解。我们需要对前端传的参数进行校验。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>web开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/web%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Mon, 15 Aug 2022 15:40:43 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/web%E5%BC%80%E5%8F%91/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;什么是JavaEE？JavaEE是Java Platform Enterprise Edition的缩写，即Java企业平台。我们前面介绍的所有基于标准JDK的开发都是JavaSE，即Java Platform Standard Edition。此外，还有一个小众不太常用的JavaME：Java Platform Micro Edition，是Java移动开发平台（非Android），它们三者关系如下：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JDBC</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jdbc/</link>
+      <pubDate>Fri, 12 Aug 2022 17:43:19 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jdbc/</guid>
+      <description>&lt;h1 id=&#34;jdbc简介&#34;&gt;JDBC简介&lt;/h1&gt;
+&lt;p&gt;在介绍JDBC之前，我们先简单介绍一下关系数据库。&lt;/p&gt;
+&lt;p&gt;程序运行的时候，数据都是在内存中的。当程序终止的时候，通常都需要将数据保存到磁盘上，无论是保存到本地磁盘，还是通过网络保存到服务器上，最终都会将数据写入磁盘文件。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>网络编程</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Fri, 12 Aug 2022 16:42:13 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;网络编程是Java最擅长的方向之一，使用Java进行网络编程时，由虚拟机实现了底层复杂的网络协议，Java程序只需要调用Java标准库提供的接口，就可以简单高效地编写网络程序。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>java核心类</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</link>
+      <pubDate>Wed, 03 Aug 2022 16:13:22 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</guid>
+      <description>&lt;h1 id=&#34;字符串和编码&#34;&gt;字符串和编码&lt;/h1&gt;</description>
+    </item>
+    
+    <item>
+      <title>概念</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E6%A6%82%E5%BF%B5/</link>
+      <pubDate>Tue, 02 Aug 2022 18:18:52 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E6%A6%82%E5%BF%B5/</guid>
+      <description>&lt;h1 id=&#34;java反编译&#34;&gt;java反编译&lt;/h1&gt;
+&lt;p&gt;在介绍编译和反编译之前，我们先来简单介绍下编程语言（Programming Language）。编程语言（Programming Language）分为低级语言（Low-level Language）和高级语言（High-level Language）。&lt;/p&gt;
+&lt;p&gt;机器语言（Machine Language）和汇编语言（Assembly Language）属于低级语言，直接用计算机指令编写程序。&lt;/p&gt;
+&lt;p&gt;而C、C++、Java、Python等属于高级语言，用语句（Statement）编写程序，语句是计算机指令的抽象表示。&lt;/p&gt;
+&lt;p&gt;举个例子，同样一个语句用C语言、汇编语言和机器语言分别表示如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;编程语言&lt;/th&gt;
+&lt;th&gt;表示形式&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;C语言&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;a=b+1;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;汇编&lt;/td&gt;
+&lt;td&gt;mov    0x804a01c,%eax&lt;br /&gt;add     $Ox1,%eax&lt;br /&gt;mov     %eax,0x804a018&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;机器语言&lt;/td&gt;
+&lt;td&gt;a1 1c a0 04 08&lt;br/&gt;83 c0 01&lt;br/&gt;a3 18 a0 04 08&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;计算机只能对数字做运算，符号、声音、图像在计算机内部都要用数字表示，指令也不例外，上表中的机器语言完全由十六进制数字组成。最早的程序员都是直接用机器语言编程，但是很麻烦，需要查大量的表格来确定每个数字表示什么意思，编写出来的程序很不直观，而且容易出错，于是有了汇编语言，把机器语言中一组一组的数字用助记符（Mnemonic）表示，直接用这些助记符写出汇编程序，然后让汇编器（Assembler）去查表把助记符替换成数字，也就把汇编语言翻译成了机器语言。但是，汇编语言用起来同样比较复杂，后面，就衍生出了Java、C、C++等高级语言。&lt;/p&gt;
+&lt;h2 id=&#34;什么是编译&#34;&gt;什么是编译？&lt;/h2&gt;
+&lt;p&gt;上面提到语言有两种，一种低级语言，一种高级语言。可以这样简单的理解：低级语言是计算机认识的语言、高级语言是程序员认识的语言。那么如何从高级语言转换成低级语言呢？这个过程其实就是编译。&lt;/p&gt;
+&lt;p&gt;从上面的例子还可以看出，C语言的语句和低级语言的指令之间不是简单的一一对应关系，一条&lt;code&gt;a=b+1&lt;/code&gt;;语句要翻译成三条汇编或机器指令，这个过程称为编译（Compile），由编译器（Compiler）来完成，显然编译器的功能比汇编器要复杂得多。用C语言编写的程序必须经过编译转成机器指令才能被计算机执行，编译需要花一些时间，这是用高级语言编程的一个缺点，然而更多的是优点。首先，用C语言编程更容易，写出来的代码更紧凑，可读性更强，出了错也更容易改正。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;将便于人编写、阅读、维护的高级计算机语言所写作的源代码程序，翻译为计算机能解读、运行的低阶机器语言的程序的过程就是编译。负责这一过程的处理的工具叫做编译器。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;现在我们知道了什么是编译，也知道了什么是编译器。不同的语言都有自己的编译器，Java语言中负责编译的编译器是一个命令：&lt;code&gt;javac&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;javac是收录于JDK中的Java语言编译器。该工具可以将后缀名为.java的源文件编译为后缀名为.class的可以运行于Java虚拟机的字节码。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;当我们写完一个&lt;code&gt;HelloWorld.java&lt;/code&gt;文件后，我们可以使用&lt;code&gt;javac HelloWorld.java&lt;/code&gt;命令来生成&lt;code&gt;HelloWorld.class&lt;/code&gt;文件，这个&lt;code&gt;class&lt;/code&gt;类型的文件是JVM可以识别的文件。通常我们认为这个过程叫做Java语言的编译。其实，&lt;code&gt;class&lt;/code&gt;文件仍然不是机器能够识别的语言，因为机器只能识别机器语言，还需要JVM再将这种&lt;code&gt;class&lt;/code&gt;文件类型字节码转换成机器可以识别的机器语言。&lt;/p&gt;
+&lt;h2 id=&#34;什么是反编译&#34;&gt;什么是反编译？&lt;/h2&gt;
+&lt;p&gt;反编译的过程与编译刚好相反，就是将已编译好的编程语言还原到未编译的状态，也就是找出程序语言的源代码。就是将机器看得懂的语言转换成程序员可以看得懂的语言。Java语言中的反编译一般指将&lt;code&gt;class&lt;/code&gt;文件转换成&lt;code&gt;java&lt;/code&gt;文件。&lt;/p&gt;
+&lt;p&gt;有了反编译工具，我们可以做很多事情，最主要的功能就是有了反编译工具，我们就能读得懂Java编译器生成的字节码。&lt;/p&gt;
+&lt;p&gt;如何防止反编译？&lt;/p&gt;
+&lt;p&gt;由于我们有工具可以对&lt;code&gt;Class&lt;/code&gt;文件进行反编译，所以，对开发人员来说，如何保护Java程序就变成了一个非常重要的挑战。但是，魔高一尺、道高一丈。当然有对应的技术可以应对反编译咯。但是，这里还是要说明一点，和网络安全的防护一样，无论做出多少努力，其实都只是提高攻击者的成本而已。无法彻底防治。&lt;/p&gt;
+&lt;p&gt;典型的应对策略有以下几种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;隔离Java程序&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;让用户接触不到你的Class文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对Class文件进行加密&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;提到破解难度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代码混淆&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;将代码转换成功能上等价，但是难于阅读和理解的形式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;java反编译工具&#34;&gt;Java反编译工具&lt;/h2&gt;
+&lt;h3 id=&#34;javap&#34;&gt;Javap&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;javap&lt;/code&gt;是jdk自带的一个工具，可以对代码反编译，也可以查看java编译器生成的字节码。&lt;code&gt;javap&lt;/code&gt;和其他两个反编译工具最大的区别是他生成的文件并不是&lt;code&gt;java&lt;/code&gt;文件，也不像其他两个工具生成代码那样更容易理解。拿一段简单的代码举例，如我们想分析Java 7中的&lt;code&gt;switch&lt;/code&gt;是如何支持&lt;code&gt;String&lt;/code&gt;的，我们先有以下可以编译通过的源代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;class&lt;/span&gt; switchDemoString {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; main(String[] args) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        String str = &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;switch&lt;/span&gt; (str) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;default&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行以下两个命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;javac switchDemoString.java
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;javap -c switchDemoString.class
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;生成代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;24
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;25
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;26
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;27
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;28
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;29
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;30
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;31
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;32
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;33
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;34
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;35
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;36
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;37
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;38
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;39
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;40
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;41
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;42
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;43
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;44
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;45
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;46
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;47
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;48
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;49
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;50
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;51
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;public class com.hollis.suguar.switchDemoString {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  public com.hollis.suguar.switchDemoString();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Code:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       0: aload_0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       1: invokespecial #1                  // Method java/lang/Object.&amp;#34;&amp;lt;init&amp;gt;&amp;#34;:()V
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       4: return
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  public static void main(java.lang.String[]);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Code:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       0: ldc           #2                  // String world
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       2: astore_1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       3: aload_1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       4: astore_2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       5: iconst_m1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       6: istore_3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       7: aload_2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       8: invokevirtual #3                  // Method java/lang/String.hashCode:()I
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      11: lookupswitch  { // 2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              99162322: 36
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;             113318802: 50
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               default: 61
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      36: aload_2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      37: ldc           #4                  // String hello
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      39: invokevirtual #5                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      42: ifeq          61
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      45: iconst_0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      46: istore_3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      47: goto          61
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      50: aload_2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      51: ldc           #2                  // String world
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      53: invokevirtual #5                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      56: ifeq          61
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      59: iconst_1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      60: istore_3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      61: iload_3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      62: lookupswitch  { // 2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     0: 88
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     1: 99
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               default: 110
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;          }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      88: getstatic     #6                  // Field java/lang/System.out:Ljava/io/PrintStream;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      91: ldc           #4                  // String hello
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      93: invokevirtual #7                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      96: goto          110
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      99: getstatic     #6                  // Field java/lang/System.out:Ljava/io/PrintStream;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     102: ldc           #2                  // String world
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     104: invokevirtual #7                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     107: goto          110
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     110: return
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;我个人的理解，&lt;code&gt;javap&lt;/code&gt;并没有将字节码反编译成&lt;code&gt;java&lt;/code&gt;文件，而是生成了一种我们可以看得懂字节码。其实javap生成的文件仍然是字节码，只是程序员可以稍微看得懂一些。如果你对字节码有所掌握，还是可以看得懂以上的代码的。其实就是把String转成hashcode，然后进行比较。&lt;/p&gt;
+&lt;p&gt;个人认为，一般情况下我们会用到&lt;code&gt;javap&lt;/code&gt;命令的时候不多，一般只有在真的需要看字节码的时候才会用到。但是字节码中间暴露的东西是最全的，你肯定有机会用到，比如我在分析&lt;code&gt;synchronized&lt;/code&gt;的原理的时候就有是用到&lt;code&gt;javap&lt;/code&gt;。通过&lt;code&gt;javap&lt;/code&gt;生成的字节码，我发现&lt;code&gt;synchronized&lt;/code&gt;底层依赖了&lt;code&gt;ACC_SYNCHRONIZED&lt;/code&gt;标记和&lt;code&gt;monitorenter&lt;/code&gt;、&lt;code&gt;monitorexit&lt;/code&gt;两个指令来实现同步。&lt;/p&gt;
+&lt;h3 id=&#34;jad&#34;&gt;jad&lt;/h3&gt;
+&lt;p&gt;jad是一个比较不错的反编译工具，只要下载一个执行工具，就可以实现对&lt;code&gt;class&lt;/code&gt;文件的反编译了。还是上面的源代码，使用jad反编译后内容如下：&lt;/p&gt;
+&lt;p&gt;命令：&lt;code&gt;jad switchDemoString.class&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;24
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;class&lt;/span&gt; switchDemoString
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; switchDemoString()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; main(String args[])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        String str = &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        String s;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;switch&lt;/span&gt;((s = str).&lt;span style=&#34;color:#007f7f&#34;&gt;hashCode&lt;/span&gt;())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;default&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;99162322&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;if&lt;/span&gt;(s.&lt;span style=&#34;color:#007f7f&#34;&gt;equals&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;113318802&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;if&lt;/span&gt;(s.&lt;span style=&#34;color:#007f7f&#34;&gt;equals&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;看，这个代码你肯定看的懂，因为这不就是标准的java的源代码么。这个就很清楚的可以看到原来&lt;strong&gt;字符串的switch是通过****&lt;code&gt;equals()&lt;/code&gt;和&lt;code&gt;hashCode()&lt;/code&gt;方法来实现的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;但是，jad已经很久不更新了，在对Java7生成的字节码进行反编译时，偶尔会出现不支持的问题，在对Java 8的lambda表达式反编译时就彻底失败。&lt;/p&gt;
+&lt;h3 id=&#34;crf&#34;&gt;crf&lt;/h3&gt;
+&lt;p&gt;jad很好用，但是无奈的是很久没更新了，所以只能用一款新的工具替代他，CFR是一个不错的选择，相比jad来说，他的语法可能会稍微复杂一些，但是好在能用。我们使用cfr对刚刚的代码进行反编译。执行以下命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;java -jar cfr_0_125.jar switchDemoString.class --decodestringswitch false
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;得到以下代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;24
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;25
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;26
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;27
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;28
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;class&lt;/span&gt; switchDemoString {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; main(String[] arrstring) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        String string;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        String string2 = string = &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;int&lt;/span&gt; n = -&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;switch&lt;/span&gt; (string2.&lt;span style=&#34;color:#007f7f&#34;&gt;hashCode&lt;/span&gt;()) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;99162322&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;if&lt;/span&gt; (!string2.&lt;span style=&#34;color:#007f7f&#34;&gt;equals&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                n = &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;113318802&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;if&lt;/span&gt; (!string2.&lt;span style=&#34;color:#007f7f&#34;&gt;equals&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                n = &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;switch&lt;/span&gt; (n) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;0&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;1&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;通过这段代码也能得到字符串的switch是通过&lt;code&gt;equals()&lt;/code&gt;和&lt;code&gt;hashCode()&lt;/code&gt;方法来实现的结论。&lt;/p&gt;
+&lt;p&gt;相比Jad来说，CFR有很多参数，还是刚刚的代码，如果我们使用以下命令，&lt;code&gt;java -jar cfr_0_125.jar switchDemoString.class&lt;/code&gt;，输出结果就会不同：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;class&lt;/span&gt; switchDemoString {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; main(String[] arrstring) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        String string;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;switch&lt;/span&gt; (string = &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;world&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;所以&lt;code&gt;--decodestringswitch&lt;/code&gt;表示对于switch支持string的细节进行解码。类似的还有&lt;code&gt;--decodeenumswitch&lt;/code&gt;、&lt;code&gt;--decodefinally&lt;/code&gt;、&lt;code&gt;--decodelambdas&lt;/code&gt;等。在我的关于语法糖的文章中，我使用&lt;code&gt;--decodelambdas&lt;/code&gt;对lambda表达式警进行了反编译。 源码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; main(String... args) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    List&amp;lt;String&amp;gt; strList = ImmutableList.&lt;span style=&#34;color:#007f7f&#34;&gt;of&lt;/span&gt;(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;Hollis&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;公众号：Hollis&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;博客：www.hollischuang.com&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    strList.&lt;span style=&#34;color:#007f7f&#34;&gt;forEach&lt;/span&gt;( s -&amp;gt; { System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(s); } );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;java -jar cfr_0_125.jar lambdaDemo.class --decodelambdas false&lt;/code&gt;反编译后代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;7
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#007f7f&#34;&gt;/* varargs */&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; main(String ... args) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ImmutableList strList = ImmutableList.&lt;span style=&#34;color:#007f7f&#34;&gt;of&lt;/span&gt;((Object)&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;Hollis&amp;#34;&lt;/span&gt;, (Object)&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;\u516c\u4f17\u53f7\uff1aHollis&amp;#34;&lt;/span&gt;, (Object)&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;\u535a\u5ba2\uff1awww.hollischuang.com&amp;#34;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    strList.&lt;span style=&#34;color:#007f7f&#34;&gt;forEach&lt;/span&gt;((Consumer&amp;lt;String&amp;gt;)LambdaMetafactory.&lt;span style=&#34;color:#007f7f&#34;&gt;metafactory&lt;/span&gt;(&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;null&lt;/span&gt;, &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;null&lt;/span&gt;, &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;null&lt;/span&gt;, (Ljava/lang/Object;)V, lambda$main$0(java.&lt;span style=&#34;color:#007f7f&#34;&gt;lang&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;String&lt;/span&gt; ), (Ljava/lang/String;)V)());
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#007f7f&#34;&gt;/* synthetic */&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; lambda$main$0(String s) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(s);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;CFR还有很多其他参数，均用于不同场景，读者可以使用&lt;code&gt;java -jar cfr_0_125.jar --help&lt;/code&gt;进行了解。这里不逐一介绍了。&lt;/p&gt;
+&lt;h1 id=&#34;java实例变量和类变量&#34;&gt;Java实例变量和类变量&lt;/h1&gt;
+&lt;p&gt;Java程序的变量大体可分为成员变量和局部变量。其中局部变量可分为如下3类。
+形参：在方法签名中定义的局部变量，由方法调用者负责为其赋值，随方法的结束而消亡。
+方法内的局部变量：在方法内定义的局部变量，必须在方法内对其进行显示初始化。这种类型的局部变量从初始化完成后开始生效，随方法的结束而消亡。
+代码块的局部变量：在代码块内定义的局部变量，必须在代码块内对其进行显式初始化，这种类型的局部变量从初始化完成后开始生效，随代码的结束而消亡。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>面向对象编程</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Tue, 02 Aug 2022 17:37:14 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;Java是一种面向对象的编程语言。面向对象编程，英文是Object-Oriented Programming，简称OOP。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>jvm</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jvm/</link>
+      <pubDate>Mon, 01 Aug 2022 18:16:18 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jvm/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.processon.com/view/link/5eea141cf346fb1ae56a44e7#map&#34;&gt;jvm全面思维导图&lt;/a&gt;
+&lt;a href=&#34;https://blog.csdn.net/suifeng3051/article/details/52611310&#34;&gt;java内存模型&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;什么是虚拟机&#34;&gt;什么是虚拟机&lt;/h1&gt;
+&lt;p&gt;windows只能安装exe安装包，mac只能安装dmg安装包，这是因为操作系统底层的实现是不一样的。系统软件无法通用是一个常见的问题。&lt;/p&gt;
+&lt;p&gt;但使用过 Java 的同学都知道，Java 代码可以在Linux 系统运行，也可以在 Windows 系统运行，但我们并没有生成多份不同的代码。所以 Java 语言是如何做到的呢？
+Java 语言并不直接将代码编译成与系统有关的机器码，而是编译成一种特定的语言规范，这种语言规范我们称之为字节码。无论 Java 程序要在 Windows 系统，还是 Mac 系统，抑或是 Linux 系统，它首先都得编译成字节码文件，之后才能运行。
+但即使编译成字节码文件了，各个系统还是无法明白字节码文件的内容，这时候就需要 Java 虚拟机的帮助了。Java 虚拟机会解析字节码文件的内容，并将其翻译为各操作系统能理解的机器码。
+&lt;code&gt;java源码-&amp;gt;字节码（byte code）-&amp;gt;java Virture Machine -&amp;gt;windows\linux code&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>java基础</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/java%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Mon, 01 Aug 2022 17:22:05 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/java%E5%9F%BA%E7%A1%80/</guid>
+      <description>Java教程 - 廖雪峰的官方网站 (liaoxuefeng.com) 概述 为什么Java应用最广泛？ 从互联网到企业平台，Java是应用最广泛的编程语言，原因在于： Java是基于J</description>
+    </item>
+    
+    <item>
+      <title>单元测试</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Thu, 26 Aug 2021 15:21:25 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;单元测试就是针对最小的功能单元编写测试代码。Java程序最小的功能单元是方法，因此，对Java程序进行单元测试就是针对单个Java方法的测试。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>effective java读书笔记</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Tue, 09 Feb 2021 15:50:13 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>&lt;h1 id=&#34;chapter_02-创建和销毁对象&#34;&gt;chapter_02 创建和销毁对象&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Creating and Destroying Objects&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;本章涉及创建和销毁对象：何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们被及时销毁，以及如何管理在销毁之前必须执行的清理操作。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>《Netty实战》读书笔记</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Thu, 14 Jan 2021 09:28:13 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>第一个Netty应用程序 Netty 客户端/服务器概览 Echo 客户端和服务器之间的交互是非常简单的；在客户端建立一个连接之后，它会向服务器发送一个或多个消息</description>
+    </item>
+    
+    <item>
+      <title>编程规约</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/</link>
+      <pubDate>Fri, 09 Oct 2020 17:36:56 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/</guid>
+      <description>&lt;p&gt;养成良好的编程习惯。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>kit</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/kit/</link>
+      <pubDate>Sat, 11 Jan 2020 10:27:48 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/kit/</guid>
+      <description>&lt;h1 id=&#34;ffmpeg使用&#34;&gt;ffmpeg使用&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://baike.baidu.com/item/ffmpeg&#34;&gt;ffmpeg了解&lt;/a&gt;
+&lt;a href=&#34;http://ffmpeg.org/&#34;&gt;ffmpeg官网&lt;/a&gt;
+在使用Java调用FFmpeg处理音视频之前，需要先安装FFmpeg，安装方法分为两种：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>IO</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/io/</link>
+      <pubDate>Sat, 02 Nov 2019 22:46:16 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/io/</guid>
+      <description>IO IO是指Input/Output，即输入和输出。以内存为中心： Input指从外部读入数据到内存，例如，把文件从磁盘读取到内存，从网络读取数</description>
+    </item>
+    
+    <item>
+      <title>Exception</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/exception/</link>
+      <pubDate>Tue, 07 May 2019 17:46:43 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/exception/</guid>
+      <description>&lt;h1 id=&#34;java异常简介&#34;&gt;Java异常简介&lt;/h1&gt;
+&lt;p&gt;Java异常机制可以使程序中异常处理代码和正常业务代码分离，保证程序代码更加优雅，并提高程序健壮性。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>StringBuilder和StringBuffer</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/stringbuilder%E5%92%8Cstringbuffer/</link>
+      <pubDate>Tue, 07 May 2019 17:16:52 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/stringbuilder%E5%92%8Cstringbuffer/</guid>
+      <description>&lt;h1 id=&#34;stringbuilder-简介&#34;&gt;StringBuilder 简介&lt;/h1&gt;
+&lt;p&gt;StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。
+StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>String</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/string/</link>
+      <pubDate>Tue, 07 May 2019 15:30:07 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/string/</guid>
+      <description>&lt;h1 id=&#34;string简介&#34;&gt;String简介&lt;/h1&gt;
+&lt;p&gt;String 是java中的字符串，它继承于CharSequence。
+String类所包含的API接口非常多。为了便于今后的使用，我对String的API进行了分类，并都给出的演示程序。&lt;/p&gt;
+&lt;p&gt;String 和 CharSequence 关系：
+String 继承于CharSequence，也就是说String也是CharSequence类型。
+CharSequence是一个接口，它只包括length(), charAt(int index), subSequence(int start, int end)这几个API接口。除了String实现了CharSequence之外，StringBuffer和StringBuilder也实现了CharSequence接口。
+需要说明的是，CharSequence就是字符序列，String、StringBuilder和StringBuffer本质上都是通过字符数组实现的。
+StringBuilder 和 StringBuffer 的区别：
+StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于AbstractStringBuilder，实现了CharSequence接口。
+但是，StringBuilder是非线程安全的，而StringBuffer是线程安全的。&lt;/p&gt;
+&lt;p&gt;它们之间的关系图如下：
+&lt;img loading=&#34;lazy&#34; src=&#34;1.jpg&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>java时间</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/java%E6%97%B6%E9%97%B4/</link>
+      <pubDate>Tue, 07 May 2019 10:42:11 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/java%E6%97%B6%E9%97%B4/</guid>
+      <description>&lt;h1 id=&#34;localdatetime&#34;&gt;LocalDateTime&lt;/h1&gt;</description>
+    </item>
+    
+    <item>
+      <title>反射（Reflect）</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/reflect/</link>
+      <pubDate>Mon, 06 May 2019 16:21:35 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/reflect/</guid>
+      <description>&lt;h1 id=&#34;反射&#34;&gt;反射&lt;/h1&gt;
+&lt;p&gt;什么是反射？
+反射就是&lt;code&gt;Reflection&lt;/code&gt;，Java的反射是指程序在运行期可以拿到一个对象的所有信息。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Annotation</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/annotation/</link>
+      <pubDate>Tue, 30 Apr 2019 16:36:38 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/annotation/</guid>
+      <description>&lt;h1 id=&#34;使用注解&#34;&gt;使用注解&lt;/h1&gt;
+&lt;p&gt;什么是注解（Annotation）？注解是放在Java源码的类、方法、字段、参数前的一种特殊“注释”：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>equals</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/equals/</link>
+      <pubDate>Tue, 30 Apr 2019 11:36:50 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/equals/</guid>
+      <description>&lt;h1 id=&#34;equals-的作用&#34;&gt;equals() 的作用&lt;/h1&gt;
+&lt;p&gt;equals() 的作用是&lt;code&gt;用来判断两个对象是否相等&lt;/code&gt;。
+equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否相等(即，是否是同一个对象)来区分它们是否相等。源码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;boolean&lt;/span&gt; equals(Object obj) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;return&lt;/span&gt; (&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;this&lt;/span&gt; == obj);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;既然&lt;code&gt;Object.java&lt;/code&gt;中定义了equals()方法，这就意味着所有的Java类都实现了equals()方法，所有的类都可以通过equals()去比较两个对象是否相等。 但是，我们已经说过，使用默认的&lt;code&gt;equals()&lt;/code&gt;方法，等价于&lt;code&gt;==&lt;/code&gt;方法。因此，我们通常会重写equals()方法：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。&lt;/p&gt;
+&lt;p&gt;下面根据&lt;code&gt;类是否覆盖equals()方法&lt;/code&gt;，将它分为2类。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若某个类没有覆盖equals()方法，当它的通过equals()比较两个对象时，实际上是比较两个对象是不是同一个对象。这时，等价于通过&lt;code&gt;==&lt;/code&gt;去比较这两个对象。&lt;/li&gt;
+&lt;li&gt;我们可以覆盖类的equals()方法，来让equals()通过其它方式比较两个对象是否相等。通常的做法是：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面，举例对上面的2种情况进行说明。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>comparable和comparator</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/comparable%E5%92%8Ccomparator/</link>
+      <pubDate>Tue, 30 Apr 2019 09:53:16 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/comparable%E5%92%8Ccomparator/</guid>
+      <description>&lt;h1 id=&#34;comparable简介&#34;&gt;Comparable简介&lt;/h1&gt;
+&lt;p&gt;Comparable 是排序接口，若一个类实现了Comparable接口，就意味着&lt;code&gt;该类支持排序&lt;/code&gt;。
+如果 List 中的类实现了&lt;code&gt;Comparable&lt;/code&gt;接口，则该List 可以通过&lt;code&gt;Collections.sort&lt;/code&gt;排序。
+此外，一个类如果实现了&lt;code&gt;Comparable&lt;/code&gt;接口，可以用作&lt;code&gt;TreeMap&lt;/code&gt;的键，或&lt;code&gt;TreeSet&lt;/code&gt;中的元素，而不需要指定比较器。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>lambda</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/lambda/</link>
+      <pubDate>Tue, 06 Nov 2018 18:18:18 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/lambda/</guid>
+      <description>&lt;h1 id=&#34;函数式编程&#34;&gt;函数式编程&lt;/h1&gt;
+&lt;p&gt;我们先看看什么是函数。函数是一种最基本的任务，一个大型程序就是一个顶层函数调用若干底层函数，这些被调用的函数又可以调用其他函数，即大任务被一层层拆解并执行。所以函数就是面向过程的程序设计的基本单元。&lt;/p&gt;
+&lt;p&gt;Java不支持单独定义函数，但可以把静态方法视为独立的函数，把实例方法视为自带&lt;code&gt;this&lt;/code&gt;参数的函数。&lt;/p&gt;
+&lt;p&gt;而函数式编程（请注意多了一个“式”字）——Functional Programming，虽然也可以归结到面向过程的程序设计，但其思想更接近数学计算。&lt;/p&gt;
+&lt;p&gt;我们首先要搞明白计算机（Computer）和计算（Compute）的概念。&lt;/p&gt;
+&lt;p&gt;在计算机的层次上，CPU执行的是加减乘除的指令代码，以及各种条件判断和跳转指令，所以，汇编语言是最贴近计算机的语言。&lt;/p&gt;
+&lt;p&gt;而计算则指数学意义上的计算，越是抽象的计算，离计算机硬件越远。&lt;/p&gt;
+&lt;p&gt;对应到编程语言，就是越低级的语言，越贴近计算机，抽象程度低，执行效率高，比如C语言；越高级的语言，越贴近计算，抽象程度高，执行效率低，比如Lisp语言。&lt;/p&gt;
+&lt;p&gt;函数式编程就是一种抽象程度很高的编程范式，纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。而允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。&lt;/p&gt;
+&lt;p&gt;函数式编程的一个特点就是，允许把函数本身作为参数传入另一个函数，还允许返回一个函数！&lt;/p&gt;
+&lt;p&gt;函数式编程最早是数学家&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E9%98%BF%E9%9A%86%E4%BD%90%C2%B7%E9%82%B1%E5%A5%87&#34;&gt;阿隆佐·邱奇&lt;/a&gt;研究的一套函数变换逻辑，又称Lambda Calculus（λ-Calculus），所以也经常把函数式编程称为Lambda计算。&lt;/p&gt;
+&lt;p&gt;Java平台从Java 8开始，支持函数式编程。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JSP&#43;Servlet</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jsp&#43;servlet/</link>
+      <pubDate>Sat, 06 Oct 2018 18:14:43 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/jsp&#43;servlet/</guid>
+      <description>&lt;h1 id=&#34;web应用服务器&#34;&gt;web应用服务器&lt;/h1&gt;
+&lt;p&gt;目前较为主流的Web应用服务器
+Tomcat  &amp;mdash;&amp;mdash;  Apache软件基金会
+Jboss  &amp;mdash;&amp;mdash;-  JBOSS公司
+Weblogic &amp;mdash;&amp;mdash;  BEA公司
+Websphere &amp;mdash;&amp;ndash;  IBM公司
+IIS  &amp;mdash;&amp;mdash; 微软  支持ASP语言
+Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>javadoc</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/javadoc/</link>
+      <pubDate>Thu, 06 Sep 2018 17:10:20 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/javadoc/</guid>
+      <description>&lt;p&gt;Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。&lt;a href=&#34;https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html&#34;&gt;官方文档&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>log</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/log/</link>
+      <pubDate>Sat, 07 Apr 2018 15:02:26 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/log/</guid>
+      <description>概述 门面接口： 1 2 3 4 5 6 commons-logging： apache最早提供的日志门面接口，用户可以根据自己喜欢选择不同日志实现框架，而不</description>
+    </item>
+    
+    <item>
+      <title>web_api</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/web_api/</link>
+      <pubDate>Wed, 24 Jan 2018 17:40:34 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/web_api/</guid>
+      <description>&lt;p&gt;web api 设计。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>OAuth</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/oauth/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/oauth/</guid>
+      <description>&lt;h1 id=&#34;oauth&#34;&gt;OAuth&lt;/h1&gt;
+&lt;p&gt;OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>泛型</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E6%B3%9B%E5%9E%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/java/%E6%B3%9B%E5%9E%8B/</guid>
+      <description>&lt;p&gt;泛型是一种“代码模板”，可以用一套代码套用各种类型。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

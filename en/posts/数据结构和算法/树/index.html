@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>树 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="数据结构">
+<meta name="description" content="完整参考
+树（tree）
+树是一种常用的数据结构，它是一个由n（n&gt;=0，有限)个节点组成的一个具有层次关系的集合。
+数据就存储在树的这些节点中。
+当n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集T1、T2、&hellip;&hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。
+
+">
+<meta name="author" content="">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%A0%91/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="树" />
+<meta property="og:description" content="完整参考
+树（tree）
+树是一种常用的数据结构，它是一个由n（n&gt;=0，有限)个节点组成的一个具有层次关系的集合。
+数据就存储在树的这些节点中。
+当n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集T1、T2、&hellip;&hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%A0%91/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-04-09T15:28:45+00:00" />
+<meta property="article:modified_time" content="2019-04-09T15:28:45+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="树"/>
+<meta name="twitter:description" content="完整参考
+树（tree）
+树是一种常用的数据结构，它是一个由n（n&gt;=0，有限)个节点组成的一个具有层次关系的集合。
+数据就存储在树的这些节点中。
+当n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集T1、T2、&hellip;&hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。
+
+"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "树",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%A0%91/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "树",
+  "name": "树",
+  "description": "完整参考\n树（tree） 树是一种常用的数据结构，它是一个由n（n\u0026gt;=0，有限)个节点组成的一个具有层次关系的集合。 数据就存储在树的这些节点中。 当n\u0026gt;1时，其余结点可分为m(m\u0026gt;0)个互不相交的有限集T1、T2、\u0026hellip;\u0026hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。 ",
+  "keywords": [
+    "数据结构"
+  ],
+  "articleBody": "完整参考\n树（tree） 树是一种常用的数据结构，它是一个由n（n\u003e=0，有限)个节点组成的一个具有层次关系的集合。 数据就存储在树的这些节点中。 当n\u003e1时，其余结点可分为m(m\u003e0)个互不相交的有限集T1、T2、……、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。 递归 递归就是在运行的过程中调用自己。\n概念 根节点 最顶层的节点，只有一个。\n叶节点 下方没有任何分叉的节点。\n边 节点和节点之间的连线。\n节点的深度： 从某个节点到树的根节点的边数。根节点的深度为0。 从根节点出发，到某节点边的条数，称为该节点的深度。\n节点的高度： 从某个节点到叶子节点的最长路径上的边数。叶节点的高度为0。 从某节点出发，到叶子节点为止，最长简单路径上，边的条数，称为该节点的高度。\n节点的度 节点拥有的子树数目称为节点的度。 节点之间的关系 结点子树的根结点为该结点的孩子结点。相应该结点称为孩子结点的双亲结点。 上图中，A为B的双亲结点，B为A的孩子结点。 同一个双亲结点的孩子结点之间互称兄弟结点。 上图中，结点B与结点C互为兄弟结点。\n结点层次 从根开始定义起，根为第一层，根的孩子为第二层，以此类推。 树的高度：根节点的高度，\n树的深度：最深节点的深度。即：树的高度和深度相等。\n树的特点 只有一个节点，即根节点，也可以是一棵树。 其中任何一个节点与下面所有节点构成的树称为子树 根节点没有父节点，而叶子节点没有子节点 除根节点外，任何节点有且仅有一个父节点 任何节点可以有0-n个子节点 二叉树 二叉树是n(n\u003e=0)个结点的有限集合，该集合或为空集（称为空二叉树），或由一个根结点和两棵互不相交的、分别称为根结点的左子树和右子树组成。 二叉树的特点 每个结点最多有两颗子树，所以二叉树中不存在度大于2的结点。 左子树和右子树是有顺序的，次序不能任意颠倒。 即使树中某结点只有一棵子树，也要区分它是左子树还是右子树。 二叉树的性质 在二叉树的第i层上最多有2i-1 个节点 。（i\u003e=1） 二叉树中如果深度为k,那么最多有2k-1个节点。(k\u003e=1） n0=n2+1。n0表示度数为0的节点数，n2表示度数为2的节点数。 在完全二叉树中，具有n个节点的完全二叉树的深度为[log2n]+1，其中[log2n]是向下取整。 若对含 n 个结点的完全二叉树从上到下且从左至右进行 1 至 n 的编号，则对完全二叉树中任意一个编号为 i 的结点有如下特性： 若 i=1，则该结点是二叉树的根，无双亲, 否则，编号为 [i/2] 的结点为其双亲结点; 若 2i\u003en，则该结点无左孩子， 否则，编号为 2i 的结点为其左孩子结点； 若 2i+1\u003en，则该结点无右孩子结点， 否则，编号为2i+1 的结点为其右孩子结点。 斜树 所有的结点都只有左子树的二叉树叫左斜树。 所有结点都是只有右子树的二叉树叫右斜树。 这两者统称为斜树。 满二叉树 在一棵二叉树中。如果所有分支结点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树。 满二叉树的特点：\n叶子只能出现在最下一层。出现在其它层就不可能达成平衡。 非叶子结点的度一定是2。 在同样深度的二叉树中，满二叉树的结点个数最多，叶子数最多。 完全二叉树 完全二叉树：对一颗具有n个结点的二叉树按层编号，如果编号为i(1\u003c=i\u003c=n)的结点与同样深度的满二叉树中编号为i的结点在二叉树中位置完全相同，则这棵二叉树称为完全二叉树。 完全二叉树的特点： 1）叶子结点只能出现在最下层和次下层。 2）最下层的叶子结点集中在树的左部。 3）倒数第二层若存在叶子结点，一定在右部连续位置。 4）如果结点度为1，则该结点只有左孩子，即没有右子树。 5）同样结点数目的二叉树，完全二叉树深度最小。 注：满二叉树一定是完全二叉树，完全二叉树不一定是满二叉树。\n平衡二叉树 平衡二叉树的性质：\n树的左右高度差不能超过1 任何往下递归的左子树与右子树，必须符合第一条性质 没有任何节点的空树或只有根节点的树也是平衡二叉树 二叉搜索(查找)树 若树的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若树的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为二叉排序树。\n节点查找 1 2 3 4 5 6 7 8 9 10 11 12 13 14 //查找节点 public BinaryTreeNode find(int key) { BinaryTreeNode current = root; while(current != null){ if(current.data \u003e key){//当前值比查找值大，搜索左子树 current = current.left; }else if(current.data \u003c key){//当前值比查找值小，搜索右子树 current = current.right; }else{ return current; } } return null;//遍历完整个树没找到，返回null } 插入节点 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 //插入节点 public boolean insert(BinaryTreeNode root, int data) { BinaryTreeNode newNode = new BinaryTreeNode(data); if(root == null){//当前树为空树，没有任何节点 root = newNode; return true; }else{ BinaryTreeNode current = root; BinaryTreeNode parentNode = null; while(current != null){ parentNode = current; if(current.data \u003e data){//当前值比插入值大，搜索左子节点 current = current.left; if(current == null){//左子节点为空，直接将新值插入到该节点 parentNode.left = newNode; return true; } }else{ current = current.right; if(current == null){//右子节点为空，直接将新值插入到该节点 parentNode.right = newNode; return true; } } } } return false; } 查找最大值和最小值 要找最小值，先找根的左节点，然后一直找这个左节点的左节点，直到找到没有左节点的节点，那么这个节点就是最小值。同理要找最大值，一直找根节点的右节点，直到没有右节点，则就是最大值。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 //找到最大值 public BinaryTreeNode findMax(){ BinaryTreeNode current = root; BinaryTreeNode maxNode = current; while(current != null){ maxNode = current; current = current.right; } return maxNode; } //找到最小值 public BinaryTreeNode findMin(){ BinaryTreeNode current = root; BinaryTreeNode minNode = current; while(current != null){ minNode = current; current = current.left; } return minNode; } 删除节点 删除节点是二叉搜索树中最复杂的操作，删除的节点有三种情况，前两种比较简单，第三种却最复杂。\n该节点是叶节点（没有子节点） 该节点有一个子节点 该节点有两个子节点 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 // 删除没有子节点的节点 public boolean delete(int key) { BinaryTreeNode current = root; BinaryTreeNode parent = root; boolean isLeftChild = false; //查找删除值，找不到直接返回false while(current.data != key){ parent = current; if(current.data \u003e key){ isLeftChild = true; current = current.left; }else{ isLeftChild = false; current = current.right; } if(current == null){ return false; } } //如果当前节点没有子节点 if(current.left == null \u0026\u0026 current.right == null){ if(current == root){ root = null; }else if(isLeftChild){ parent.left = null; }else{ parent.right = null; } return true; } return false; } 删除有一个子节点的节点，我们只需要将其父节点原本指向该节点的引用，改为指向该节点的子节点即可。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 //当前节点有一个子节点 public boolean delete(int key) { BinaryTreeNode current = root; BinaryTreeNode parent = root; boolean isLeftChild = false; //查找删除值，找不到直接返回false while(current.data != key){ parent = current; if(current.data \u003e key){ isLeftChild = true; current = current.left; }else{ isLeftChild = false; current = current.right; } if(current == null){ return false; } } //当前节点有一个子节点 if(current.left == null \u0026\u0026 current.right != null){ if(current == root){ root = current.right; }else if(isLeftChild){ parent.left = current.right; }else{ parent.right = current.right; } return true; }else{ //current.left != null \u0026\u0026 current.right == null if(current == root){ root = current.left; }else if(isLeftChild){ parent.left = current.left; }else{ parent.right = current.left; } return true; } return false; } 二叉树的存储结构 顺序存储 顺序存储就是使用一维数组存储二叉树中的结点，并且结点的存储位置，就是数组的下标索引。 上图是一棵完全二叉树，采用顺序存储方式如下 当二叉树为完全二叉树时，结点数刚好填满数组。\n那么当二叉树不为完全二叉树时，采用顺序存储形式如何呢？ 其中浅色结点表示结点不存在。那么上图的存储结构如下： 其中，∧表示数组中此位置没有存储结点。此时可以发现，顺序存储结构中已经出现了空间浪费的情况。\n那么对于右斜树极端情况对应的顺序存储结构如下所示： 由图3.10可以看出，对于这种右斜树极端情况，采用顺序存储的方式是十分浪费空间的。 因此，顺序存储一般适用于完全二叉树。\n二叉链表 既然顺序存储不能满足二叉树的存储需求，那么考虑采用链式存储。由二叉树定义可知，二叉树的每个结点最多有两个孩子。因此，可以将结点数据结构定义为一个数据和两个指针域。 左孩子指针：数据：右孩子指针 lchild：data：rchild\n则完全二叉树可以如下表示： 二叉树的遍历就是基于二叉链表实现的。\n二叉树的遍历 二叉树的遍历是指从二叉树的根结点出发，按照某种次序依次访问二叉树中的所有结点，使得每个结点被访问一次，且仅被访问一次。二叉树的访问次序可以分为四种：\n前序遍历 中序遍历 后序遍历 层序遍历 先创建节点\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 public class BinaryTreeNode { private int data; private BinaryTreeNode left; private BinaryTreeNode right; public BinaryTreeNode() {} public BinaryTreeNode(int data, BinaryTreeNode left, BinaryTreeNode right) { this.data = data; this.left = left; this.right = right; } public int getData() { return data; } public void setData(int data) { this.data = data; } public BinaryTreeNode getLeft() { return left; } public void setLeft(BinaryTreeNode left) { this.left = left; } public BinaryTreeNode getRight() { return right; } public void setRight(BinaryTreeNode right) { this.right = right; } } 前序遍历 先访问根节点，然后前序遍历左子树，再前序遍历右子树。 1 2 3 4 5 6 7 8 9 10 11 12 /** * 二叉树前序遍历 根-\u003e 左-\u003e 右 * @param node 二叉树节点 */ public void preOrder(BinaryTreeNode root){ if(null == root){ return; } System.out.print(root.getData()+\"\\t\"); preOrder(root.getLeft()); preOrder(root.getRight()); } 中序遍历 中序遍历根节点的左子树，然后访问根节点，最后遍历右子树。 1 2 3 4 5 6 7 8 9 10 11 12 /** * 二叉树中序遍历 左-\u003e 根-\u003e 右 * @param node 二叉树节点 */ public void inOrder(BinaryTreeNode root){ if(null == root){ return; } inOrder(root.getLeft()); System.out.print(root.getData()+\"\\t\"); inOrder(root.getRight()); } 后序遍历 先访问左节点，再访问右节点，最后访问根节点。 1 2 3 4 5 6 7 8 9 10 11 12 /** * 二叉树后序遍历 左-\u003e 右-\u003e 根 * @param node 二叉树节点 */ public void postOrder(BinaryTreeNode root){ if(root == null){ return; } postOrder(root.getLeft()); postOrder(root.getRight()); System.out.print(root.getData()+\"\\t\"); } 层序遍历 根节点开始，自上向下逐层遍历，在同一层，按从左到右的顺序逐个访问节点\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public void levelOrder(BinaryTreeNode root){ BinaryTreeNode temp; Queue queue=new LinkedList\u003c\u003e(); queue.offer(root); while(!queue.isEmpty()){ temp=queue.poll(); System.out.print(temp.getData()+\"\\t\"); if(null!=temp.getLeft()) queue.offer(temp.getLeft()); if(null!=temp.getRight()){ queue.offer(temp.getRight()); } } } 完整代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 public class BinaryTree { //前序遍历递归的方式 public void preOrder(BinaryTreeNode root){ if(null == root){ return; } System.out.print(root.getData()+\"\\t\"); preOrder(root.getLeft()); preOrder(root.getRight()); } //前序遍历非递归的方式 public void preOrderNonRecursive(BinaryTreeNode root){ Stack stack=new Stack\u003c\u003e(); while(true){ while(root!=null){ System.out.print(root.getData()+\"\\t\"); stack.push(root); root=root.getLeft(); } if(stack.isEmpty()) break; root=stack.pop(); root=root.getRight(); } } //中序遍历采用递归的方式 public void inOrder(BinaryTreeNode root){ if(null == root){ return; } inOrder(root.getLeft()); System.out.print(root.getData()+\"\\t\"); inOrder(root.getRight()); } //中序遍历采用非递归的方式 public void inOrderNonRecursive(BinaryTreeNode root){ Stack stack=new Stack(); while(true){ while(root!=null){ stack.push(root); root=root.getLeft(); } if(stack.isEmpty())break; root=stack.pop(); System.out.print(root.getData()+\"\\t\"); root=root.getRight(); } } //后序遍历采用递归的方式 public void postOrder(BinaryTreeNode root){ if(root == null){ return; } postOrder(root.getLeft()); postOrder(root.getRight()); System.out.print(root.getData()+\"\\t\"); } //后序遍历采用非递归的方式 public void postOrderNonRecursive(BinaryTreeNode root){ Stack stack=new Stack(); while(true){ if(root!=null){ stack.push(root); root=root.getLeft(); }else{ if(stack.isEmpty()) return; if(null==stack.lastElement().getRight()){ root=stack.pop(); System.out.print(root.getData()+\"\\t\"); while(root==stack.lastElement().getRight()){ System.out.print(stack.lastElement().getData()+\"\\t\"); root=stack.pop(); if(stack.isEmpty()){ break; } } } if(!stack.isEmpty()) root=stack.lastElement().getRight(); else root=null; } } } //层序遍历 public void levelOrder(BinaryTreeNode root){ BinaryTreeNode temp; Queue queue=new LinkedList\u003c\u003e(); queue.offer(root); while(!queue.isEmpty()){ temp=queue.poll(); System.out.print(temp.getData()+\"\\t\"); if(null!=temp.getLeft()) queue.offer(temp.getLeft()); if(null!=temp.getRight()){ queue.offer(temp.getRight()); } } } public static void main(String[] args) { //根据树的结构，分别创建节点 BinaryTreeNode node10=new BinaryTreeNode(10,null,null); BinaryTreeNode node8=new BinaryTreeNode(8,null,null); BinaryTreeNode node9=new BinaryTreeNode(9,null,node10); BinaryTreeNode node4=new BinaryTreeNode(4,null,null); BinaryTreeNode node5=new BinaryTreeNode(5,node8,node9); BinaryTreeNode node6=new BinaryTreeNode(6,null,null); BinaryTreeNode node7=new BinaryTreeNode(7,null,null); BinaryTreeNode node2=new BinaryTreeNode(2,node4,node5); BinaryTreeNode node3=new BinaryTreeNode(3,node6,node7); BinaryTreeNode node1=new BinaryTreeNode(1,node2,node3); BinaryTree tree=new BinaryTree(); //采用递归的方式进行遍历 System.out.println(\"-----前序遍历------\"); tree.preOrder(node1); System.out.println(); //采用非递归的方式遍历 tree.preOrderNonRecursive(node1); System.out.println(); //采用递归的方式进行遍历 System.out.println(\"-----中序遍历------\"); tree.inOrder(node1); System.out.println(); //采用非递归的方式遍历 tree.inOrderNonRecursive(node1); System.out.println(); //采用递归的方式进行遍历 System.out.println(\"-----后序遍历------\"); tree.postOrder(node1); System.out.println(); //采用非递归的方式遍历 tree.postOrderNonRecursive(node1); System.out.println(); //采用递归的方式进行遍历 System.out.println(\"-----层序遍历------\"); tree.levelOrder(node1); System.out.println(); } } 二叉树遍历考点 已知前序遍历序列和中序遍历序列，确定一棵二叉树。 例题：若一棵二叉树的前序遍历为ABCDEF，中序遍历为CBAEDF，请画出这棵二叉树。 分析：前序遍历第一个输出结点为根结点，故A为根结点。早中序遍历中根结点处于左右子树结点中间，故结点A的左子树中结点有CB，右子树中结点有EDF。 如下图所示： 按照同样的分析方法，对A的左右子树进行划分，最后得出二叉树的形态如下图所示： 已知后序遍历序列和中序遍历序列，确定一棵二叉树。 后序遍历中最后访问的为根结点，因此可以按照上述同样的方法，找到根结点后分成两棵子树，进而继续找到子树的根结点，一步步确定二叉树的形态。 注：已知前序遍历序列和后序遍历序列，不可以唯一确定一棵二叉树。\n翻转二叉树 将二叉树的两个孩子换位置，即左变右，右变左。 即左子树和右子树换位置，相应的，子树下的节点也要左右交换。\n循环，栈存储（DFS，非递归) 本质思想是，左右节点进行交换，循环翻转每个节点的左右子节点，将未翻转的子节点存入栈中，循环直到栈里所有节点都循环交换完为止。伪代码如下：\n1、判断根结点是否为空，为空则返回null； 2、新建栈（队列），用于节点存储，初始存入根节点到栈（队列）里； 3、while循环，栈（队列）为空时结束循环； i.出栈（队列）一个节点，将该节点的左右子节点交互； ii.判断左右子节点是否为null，非null则继续将左右节点入栈（队列）； 4、循环交换结束，返回根节点;\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 public TreeNode invertTree(TreeNode root) { if (root == null) { return null; } Stack stack = new Stack\u003c\u003e(); stack.push(root); while(!stack.isEmpty()) { final TreeNode node = stack.pop(); final TreeNode left = node.left; node.left = node.right; node.right = left; if(node.left != null) { stack.push(node.left); } if(node.right != null) { stack.push(node.right); } } return root; } 循环，队列存储（BFS，非递归） 本质思想是，左右节点进行交换，循环翻转每个节点的左右子节点，将未翻转的子节点存入队列中，循环直到栈里所有节点都循环交换完为止。伪代码和上边的栈存储一样。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 public TreeNode invertTree(TreeNode root) { if (root == null) { return null; } Queue queue = new LinkedList\u003c\u003e(); queue.offer(root); while (!queue.isEmpty()) { TreeNode node = queue.poll(); TreeNode left = node.left; node.left = node.right; node.right = left; if (node.left != null) { queue.offer(node.left); } if (node.right != null) { queue.offer(node.right); } } return root; } 递归 本质思想也是左右节点进行交换，交换前递归调用对根结点的左右节点分别进行处理，保证交换前左右节点已经翻转。\n1、判断根结点是否为空，为空则返回null； 2、交换跟节点的左右节点； 3、递归交互左右子树；\n1 2 3 4 5 6 7 8 9 10 11 public TreeNode invertTree(TreeNode node) { if (node == null) { return null; } TreeNode temp = node.left; node.left = node.right; node.right = temp; invertTree(node.left); invertTree(node.right); return node; } 红黑树",
+  "wordCount" : "5358",
+  "inLanguage": "en",
+  "datePublished": "2019-04-09T15:28:45Z",
+  "dateModified": "2019-04-09T15:28:45Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%A0%91/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/en/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/en/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/en/posts/">Posts</a></div>
+    <h1 class="post-title">
+      树
+    </h1>
+    <div class="post-meta"><span title='2019-04-09 15:28:45 +0000 UTC'>2019-04-09</span>
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%a0%91tree" aria-label="树（tree）">树（tree）</a></li>
+                <li>
+                    <a href="#%e9%80%92%e5%bd%92" aria-label="递归">递归</a><ul>
+                        
+                <li>
+                    <a href="#%e6%a6%82%e5%bf%b5" aria-label="概念">概念</a></li>
+                <li>
+                    <a href="#%e6%a0%91%e7%9a%84%e7%89%b9%e7%82%b9" aria-label="树的特点">树的特点</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="二叉树">二叉树</a><ul>
+                        
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e7%89%b9%e7%82%b9" aria-label="二叉树的特点">二叉树的特点</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%80%a7%e8%b4%a8" aria-label="二叉树的性质">二叉树的性质</a></li>
+                <li>
+                    <a href="#%e6%96%9c%e6%a0%91" aria-label="斜树">斜树</a></li>
+                <li>
+                    <a href="#%e6%bb%a1%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="满二叉树">满二叉树</a></li>
+                <li>
+                    <a href="#%e5%ae%8c%e5%85%a8%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="完全二叉树">完全二叉树</a></li>
+                <li>
+                    <a href="#%e5%b9%b3%e8%a1%a1%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="平衡二叉树">平衡二叉树</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%9f%a5%e6%89%be%e6%a0%91" aria-label="二叉搜索(查找)树">二叉搜索(查找)树</a><ul>
+                        
+                <li>
+                    <a href="#%e8%8a%82%e7%82%b9%e6%9f%a5%e6%89%be" aria-label="节点查找">节点查找</a></li>
+                <li>
+                    <a href="#%e6%8f%92%e5%85%a5%e8%8a%82%e7%82%b9" aria-label="插入节点">插入节点</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e6%89%be%e6%9c%80%e5%a4%a7%e5%80%bc%e5%92%8c%e6%9c%80%e5%b0%8f%e5%80%bc" aria-label="查找最大值和最小值">查找最大值和最小值</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e8%8a%82%e7%82%b9" aria-label="删除节点">删除节点</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%ad%98%e5%82%a8%e7%bb%93%e6%9e%84" aria-label="二叉树的存储结构">二叉树的存储结构</a><ul>
+                        
+                <li>
+                    <a href="#%e9%a1%ba%e5%ba%8f%e5%ad%98%e5%82%a8" aria-label="顺序存储">顺序存储</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e9%93%be%e8%a1%a8" aria-label="二叉链表">二叉链表</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%81%8d%e5%8e%86" aria-label="二叉树的遍历">二叉树的遍历</a><ul>
+                        
+                <li>
+                    <a href="#%e5%89%8d%e5%ba%8f%e9%81%8d%e5%8e%86" aria-label="前序遍历">前序遍历</a></li>
+                <li>
+                    <a href="#%e4%b8%ad%e5%ba%8f%e9%81%8d%e5%8e%86" aria-label="中序遍历">中序遍历</a></li>
+                <li>
+                    <a href="#%e5%90%8e%e5%ba%8f%e9%81%8d%e5%8e%86" aria-label="后序遍历">后序遍历</a></li>
+                <li>
+                    <a href="#%e5%b1%82%e5%ba%8f%e9%81%8d%e5%8e%86" aria-label="层序遍历">层序遍历</a></li>
+                <li>
+                    <a href="#%e5%ae%8c%e6%95%b4%e4%bb%a3%e7%a0%81" aria-label="完整代码">完整代码</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e9%81%8d%e5%8e%86%e8%80%83%e7%82%b9" aria-label="二叉树遍历考点">二叉树遍历考点</a><ul>
+                        
+                <li>
+                    <a href="#%e5%b7%b2%e7%9f%a5%e5%89%8d%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97%e5%92%8c%e4%b8%ad%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97%e7%a1%ae%e5%ae%9a%e4%b8%80%e6%a3%b5%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="已知前序遍历序列和中序遍历序列，确定一棵二叉树。">已知前序遍历序列和中序遍历序列，确定一棵二叉树。</a></li>
+                <li>
+                    <a href="#%e5%b7%b2%e7%9f%a5%e5%90%8e%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97%e5%92%8c%e4%b8%ad%e5%ba%8f%e9%81%8d%e5%8e%86%e5%ba%8f%e5%88%97%e7%a1%ae%e5%ae%9a%e4%b8%80%e6%a3%b5%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="已知后序遍历序列和中序遍历序列，确定一棵二叉树。">已知后序遍历序列和中序遍历序列，确定一棵二叉树。</a></li>
+                <li>
+                    <a href="#%e7%bf%bb%e8%bd%ac%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="翻转二叉树">翻转二叉树</a><ul>
+                        
+                <li>
+                    <a href="#%e5%be%aa%e7%8e%af%e6%a0%88%e5%ad%98%e5%82%a8dfs%e9%9d%9e%e9%80%92%e5%bd%92" aria-label="循环，栈存储（DFS，非递归)">循环，栈存储（DFS，非递归)</a></li>
+                <li>
+                    <a href="#%e5%be%aa%e7%8e%af%e9%98%9f%e5%88%97%e5%ad%98%e5%82%a8bfs%e9%9d%9e%e9%80%92%e5%bd%92" aria-label="循环，队列存储（BFS，非递归）">循环，队列存储（BFS，非递归）</a></li>
+                <li>
+                    <a href="#%e9%80%92%e5%bd%92-1" aria-label="递归">递归</a></li></ul>
+                </li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%ba%a2%e9%bb%91%e6%a0%91" aria-label="红黑树">红黑树</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><a href="https://www.cnblogs.com/skywang12345/p/3603935.html">完整参考</a></p>
+<h1 id="树tree">树（tree）<a hidden class="anchor" aria-hidden="true" href="#树tree">#</a></h1>
+<p>树是一种常用的数据结构，它是一个由n（n&gt;=0，有限)个节点组成的一个具有层次关系的集合。
+数据就存储在树的这些节点中。
+当n&gt;1时，其余结点可分为m(m&gt;0)个互不相交的有限集T1、T2、&hellip;&hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。
+<img loading="lazy" src="1.png" alt=""  />
+</p>
+<h1 id="递归">递归<a hidden class="anchor" aria-hidden="true" href="#递归">#</a></h1>
+<p>递归就是在运行的过程中调用自己。</p>
+<h2 id="概念">概念<a hidden class="anchor" aria-hidden="true" href="#概念">#</a></h2>
+<ul>
+<li>
+<p>根节点
+最顶层的节点，只有一个。</p>
+</li>
+<li>
+<p>叶节点
+下方没有任何分叉的节点。</p>
+</li>
+<li>
+<p>边
+节点和节点之间的连线。</p>
+</li>
+<li>
+<p>节点的深度：
+从某个节点到树的根节点的边数。根节点的深度为0。
+从根节点出发，到某节点边的条数，称为该节点的深度。</p>
+</li>
+<li>
+<p>节点的高度：
+从某个节点到叶子节点的最长路径上的边数。叶节点的高度为0。
+从某节点出发，到叶子节点为止，最长简单路径上，边的条数，称为该节点的高度。</p>
+</li>
+<li>
+<p>节点的度
+节点拥有的子树数目称为节点的度。
+<img loading="lazy" src="2.png" alt=""  />
+</p>
+</li>
+<li>
+<p>节点之间的关系
+结点子树的根结点为该结点的孩子结点。相应该结点称为孩子结点的双亲结点。
+上图中，A为B的双亲结点，B为A的孩子结点。
+同一个双亲结点的孩子结点之间互称兄弟结点。
+上图中，结点B与结点C互为兄弟结点。</p>
+</li>
+<li>
+<p>结点层次
+从根开始定义起，根为第一层，根的孩子为第二层，以此类推。
+<img loading="lazy" src="3.png" alt=""  />
+</p>
+</li>
+<li>
+<p>树的高度：根节点的高度，</p>
+</li>
+<li>
+<p>树的深度：最深节点的深度。即：树的高度和深度相等。</p>
+</li>
+</ul>
+<h2 id="树的特点">树的特点<a hidden class="anchor" aria-hidden="true" href="#树的特点">#</a></h2>
+<ul>
+<li>只有一个节点，即根节点，也可以是一棵树。</li>
+<li>其中任何一个节点与下面所有节点构成的树称为子树</li>
+<li>根节点没有父节点，而叶子节点没有子节点</li>
+<li>除根节点外，任何节点有且仅有一个父节点</li>
+<li>任何节点可以有0-n个子节点</li>
+</ul>
+<h1 id="二叉树">二叉树<a hidden class="anchor" aria-hidden="true" href="#二叉树">#</a></h1>
+<p>二叉树是n(n&gt;=0)个结点的有限集合，该集合或为空集（称为空二叉树），或由一个根结点和两棵互不相交的、分别称为根结点的左子树和右子树组成。
+<img loading="lazy" src="4.png" alt=""  />
+</p>
+<h2 id="二叉树的特点">二叉树的特点<a hidden class="anchor" aria-hidden="true" href="#二叉树的特点">#</a></h2>
+<ul>
+<li>每个结点最多有两颗子树，所以二叉树中不存在度大于2的结点。</li>
+<li>左子树和右子树是有顺序的，次序不能任意颠倒。</li>
+<li>即使树中某结点只有一棵子树，也要区分它是左子树还是右子树。</li>
+</ul>
+<h2 id="二叉树的性质">二叉树的性质<a hidden class="anchor" aria-hidden="true" href="#二叉树的性质">#</a></h2>
+<ul>
+<li>在二叉树的第i层上最多有2i-1 个节点 。（i&gt;=1）</li>
+<li>二叉树中如果深度为k,那么最多有2k-1个节点。(k&gt;=1）</li>
+<li>n0=n2+1。n0表示度数为0的节点数，n2表示度数为2的节点数。</li>
+<li>在完全二叉树中，具有n个节点的完全二叉树的深度为[log2n]+1，其中[log2n]是向下取整。</li>
+<li>若对含 n 个结点的完全二叉树从上到下且从左至右进行 1 至 n 的编号，则对完全二叉树中任意一个编号为 i 的结点有如下特性：
+<ul>
+<li>若 i=1，则该结点是二叉树的根，无双亲, 否则，编号为 [i/2] 的结点为其双亲结点;</li>
+<li>若 2i&gt;n，则该结点无左孩子， 否则，编号为 2i 的结点为其左孩子结点；</li>
+<li>若 2i+1&gt;n，则该结点无右孩子结点， 否则，编号为2i+1 的结点为其右孩子结点。</li>
+</ul>
+</li>
+</ul>
+<h2 id="斜树">斜树<a hidden class="anchor" aria-hidden="true" href="#斜树">#</a></h2>
+<p>所有的结点都只有左子树的二叉树叫左斜树。
+所有结点都是只有右子树的二叉树叫右斜树。
+这两者统称为斜树。
+<img loading="lazy" src="5.png" alt=""  />
+</p>
+<h2 id="满二叉树">满二叉树<a hidden class="anchor" aria-hidden="true" href="#满二叉树">#</a></h2>
+<p>在一棵二叉树中。如果所有分支结点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树。
+满二叉树的特点：</p>
+<ul>
+<li>叶子只能出现在最下一层。出现在其它层就不可能达成平衡。</li>
+<li>非叶子结点的度一定是2。</li>
+<li>在同样深度的二叉树中，满二叉树的结点个数最多，叶子数最多。
+<img loading="lazy" src="6.png" alt=""  />
+</li>
+</ul>
+<h2 id="完全二叉树">完全二叉树<a hidden class="anchor" aria-hidden="true" href="#完全二叉树">#</a></h2>
+<p>完全二叉树：对一颗具有n个结点的二叉树按层编号，如果编号为i(1&lt;=i&lt;=n)的结点与同样深度的满二叉树中编号为i的结点在二叉树中位置完全相同，则这棵二叉树称为完全二叉树。
+<img loading="lazy" src="7.png" alt=""  />
+</p>
+<p>完全二叉树的特点：
+1）叶子结点只能出现在最下层和次下层。
+2）最下层的叶子结点集中在树的左部。
+3）倒数第二层若存在叶子结点，一定在右部连续位置。
+4）如果结点度为1，则该结点只有左孩子，即没有右子树。
+5）同样结点数目的二叉树，完全二叉树深度最小。
+注：满二叉树一定是完全二叉树，完全二叉树不一定是满二叉树。</p>
+<h2 id="平衡二叉树">平衡二叉树<a hidden class="anchor" aria-hidden="true" href="#平衡二叉树">#</a></h2>
+<p>平衡二叉树的性质：</p>
+<ul>
+<li>树的左右高度差不能超过1</li>
+<li>任何往下递归的左子树与右子树，必须符合第一条性质</li>
+<li>没有任何节点的空树或只有根节点的树也是平衡二叉树</li>
+</ul>
+<h2 id="二叉搜索查找树">二叉搜索(查找)树<a hidden class="anchor" aria-hidden="true" href="#二叉搜索查找树">#</a></h2>
+<p>若树的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
+若树的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
+它的左、右子树也分别为二叉排序树。</p>
+<h3 id="节点查找">节点查找<a hidden class="anchor" aria-hidden="true" href="#节点查找">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">//查找节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> BinaryTreeNode find(<span style="color:#fff;font-weight:bold">int</span> key) {
+</span></span><span style="display:flex;"><span>    BinaryTreeNode current = root;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span>(current != <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(current.<span style="color:#007f7f">data</span> &gt; key){<span style="color:#007f7f">//当前值比查找值大，搜索左子树
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            current = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span>(current.<span style="color:#007f7f">data</span> &lt; key){<span style="color:#007f7f">//当前值比查找值小，搜索右子树
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            current = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> current;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;<span style="color:#007f7f">//遍历完整个树没找到，返回null
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="插入节点">插入节点<a hidden class="anchor" aria-hidden="true" href="#插入节点">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">//插入节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> insert(BinaryTreeNode root, <span style="color:#fff;font-weight:bold">int</span> data) {
+</span></span><span style="display:flex;"><span>    BinaryTreeNode newNode = <span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(data);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span>(root == <span style="color:#fff;font-weight:bold">null</span>){<span style="color:#007f7f">//当前树为空树，没有任何节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        root = newNode;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>    }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>        BinaryTreeNode current = root;
+</span></span><span style="display:flex;"><span>        BinaryTreeNode parentNode = <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">while</span>(current != <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>            parentNode = current;
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span>(current.<span style="color:#007f7f">data</span> &gt; data){<span style="color:#007f7f">//当前值比插入值大，搜索左子节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                current = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span>(current == <span style="color:#fff;font-weight:bold">null</span>){<span style="color:#007f7f">//左子节点为空，直接将新值插入到该节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                    parentNode.<span style="color:#007f7f">left</span> = newNode;
+</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>                current = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span>(current == <span style="color:#fff;font-weight:bold">null</span>){<span style="color:#007f7f">//右子节点为空，直接将新值插入到该节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                    parentNode.<span style="color:#007f7f">right</span> = newNode;
+</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查找最大值和最小值">查找最大值和最小值<a hidden class="anchor" aria-hidden="true" href="#查找最大值和最小值">#</a></h3>
+<p>要找最小值，先找根的左节点，然后一直找这个左节点的左节点，直到找到没有左节点的节点，那么这个节点就是最小值。同理要找最大值，一直找根节点的右节点，直到没有右节点，则就是最大值。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">//找到最大值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> BinaryTreeNode findMax(){
+</span></span><span style="display:flex;"><span>    BinaryTreeNode current = root;
+</span></span><span style="display:flex;"><span>    BinaryTreeNode maxNode = current;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span>(current != <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        maxNode = current;
+</span></span><span style="display:flex;"><span>        current = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> maxNode;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">//找到最小值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> BinaryTreeNode findMin(){
+</span></span><span style="display:flex;"><span>    BinaryTreeNode current = root;
+</span></span><span style="display:flex;"><span>    BinaryTreeNode minNode = current;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span>(current != <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        minNode = current;
+</span></span><span style="display:flex;"><span>        current = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> minNode;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="删除节点">删除节点<a hidden class="anchor" aria-hidden="true" href="#删除节点">#</a></h3>
+<p>删除节点是二叉搜索树中最复杂的操作，删除的节点有三种情况，前两种比较简单，第三种却最复杂。</p>
+<ul>
+<li>该节点是叶节点（没有子节点）</li>
+<li>该节点有一个子节点</li>
+<li>该节点有两个子节点</li>
+</ul>
+<p><img loading="lazy" src="18.png" alt=""  />
+</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// 删除没有子节点的节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> delete(<span style="color:#fff;font-weight:bold">int</span> key) {
+</span></span><span style="display:flex;"><span>    BinaryTreeNode current = root;
+</span></span><span style="display:flex;"><span>    BinaryTreeNode parent = root;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">boolean</span> isLeftChild = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//查找删除值，找不到直接返回false
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">while</span>(current.<span style="color:#007f7f">data</span> != key){
+</span></span><span style="display:flex;"><span>        parent = current;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(current.<span style="color:#007f7f">data</span> &gt; key){
+</span></span><span style="display:flex;"><span>            isLeftChild = <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>            current = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>            isLeftChild = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>            current = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(current == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//如果当前节点没有子节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span>(current.<span style="color:#007f7f">left</span> == <span style="color:#fff;font-weight:bold">null</span> &amp;&amp; current.<span style="color:#007f7f">right</span> == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(current == root){
+</span></span><span style="display:flex;"><span>            root = <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span>(isLeftChild){
+</span></span><span style="display:flex;"><span>            parent.<span style="color:#007f7f">left</span> = <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>            parent.<span style="color:#007f7f">right</span> = <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>删除有一个子节点的节点，我们只需要将其父节点原本指向该节点的引用，改为指向该节点的子节点即可。
+<img loading="lazy" src="19.png" alt=""  />
+</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">//当前节点有一个子节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> delete(<span style="color:#fff;font-weight:bold">int</span> key) {
+</span></span><span style="display:flex;"><span>    BinaryTreeNode current = root;
+</span></span><span style="display:flex;"><span>    BinaryTreeNode parent = root;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">boolean</span> isLeftChild = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//查找删除值，找不到直接返回false
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">while</span>(current.<span style="color:#007f7f">data</span> != key){
+</span></span><span style="display:flex;"><span>        parent = current;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(current.<span style="color:#007f7f">data</span> &gt; key){
+</span></span><span style="display:flex;"><span>            isLeftChild = <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>            current = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>            isLeftChild = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>            current = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(current == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//当前节点有一个子节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span>(current.<span style="color:#007f7f">left</span> == <span style="color:#fff;font-weight:bold">null</span> &amp;&amp; current.<span style="color:#007f7f">right</span> != <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(current == root){
+</span></span><span style="display:flex;"><span>          root = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span>(isLeftChild){
+</span></span><span style="display:flex;"><span>          parent.<span style="color:#007f7f">left</span> = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>          parent.<span style="color:#007f7f">right</span> = current.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>      }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//current.left != null &amp;&amp; current.right == null
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span>(current == root){
+</span></span><span style="display:flex;"><span>          root = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span>(isLeftChild){
+</span></span><span style="display:flex;"><span>          parent.<span style="color:#007f7f">left</span> = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>          parent.<span style="color:#007f7f">right</span> = current.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二叉树的存储结构">二叉树的存储结构<a hidden class="anchor" aria-hidden="true" href="#二叉树的存储结构">#</a></h2>
+<h3 id="顺序存储">顺序存储<a hidden class="anchor" aria-hidden="true" href="#顺序存储">#</a></h3>
+<p>顺序存储就是使用一维数组存储二叉树中的结点，并且结点的存储位置，就是数组的下标索引。
+<img loading="lazy" src="8.png" alt=""  />
+</p>
+<p>上图是一棵完全二叉树，采用顺序存储方式如下
+<img loading="lazy" src="9.png" alt=""  />
+
+当二叉树为完全二叉树时，结点数刚好填满数组。</p>
+<p>那么当二叉树不为完全二叉树时，采用顺序存储形式如何呢？
+<img loading="lazy" src="10.png" alt=""  />
+
+其中浅色结点表示结点不存在。那么上图的存储结构如下：
+<img loading="lazy" src="11.png" alt=""  />
+
+其中，∧表示数组中此位置没有存储结点。此时可以发现，顺序存储结构中已经出现了空间浪费的情况。</p>
+<p>那么对于右斜树极端情况对应的顺序存储结构如下所示：
+<img loading="lazy" src="12.png" alt=""  />
+
+由图3.10可以看出，对于这种右斜树极端情况，采用顺序存储的方式是十分浪费空间的。
+因此，顺序存储一般适用于完全二叉树。</p>
+<h3 id="二叉链表">二叉链表<a hidden class="anchor" aria-hidden="true" href="#二叉链表">#</a></h3>
+<p>既然顺序存储不能满足二叉树的存储需求，那么考虑采用链式存储。由二叉树定义可知，二叉树的每个结点最多有两个孩子。因此，可以将结点数据结构定义为一个数据和两个指针域。
+<code>左孩子指针：数据：右孩子指针</code>
+<code>lchild：data：rchild</code></p>
+<p>则完全二叉树可以如下表示：
+<img loading="lazy" src="13.png" alt=""  />
+</p>
+<p>二叉树的遍历就是基于二叉链表实现的。</p>
+<h1 id="二叉树的遍历">二叉树的遍历<a hidden class="anchor" aria-hidden="true" href="#二叉树的遍历">#</a></h1>
+<p>二叉树的遍历是指从二叉树的根结点出发，按照某种次序依次访问二叉树中的所有结点，使得每个结点被访问一次，且仅被访问一次。二叉树的访问次序可以分为四种：</p>
+<ul>
+<li>前序遍历</li>
+<li>中序遍历</li>
+<li>后序遍历</li>
+<li>层序遍历</li>
+</ul>
+<p><img loading="lazy" src="14.png" alt=""  />
+</p>
+<p>先创建节点</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> BinaryTreeNode {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> data;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> BinaryTreeNode left;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> BinaryTreeNode right;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> BinaryTreeNode() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> BinaryTreeNode(<span style="color:#fff;font-weight:bold">int</span> data, BinaryTreeNode left, BinaryTreeNode right) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">data</span> = data;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">left</span> = left;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">right</span> = right;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> getData() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> data;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> setData(<span style="color:#fff;font-weight:bold">int</span> data) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">data</span> = data;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> BinaryTreeNode getLeft() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> left;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> setLeft(BinaryTreeNode left) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">left</span> = left;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> BinaryTreeNode getRight() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> right;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> setRight(BinaryTreeNode right) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">right</span> = right;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="前序遍历">前序遍历<a hidden class="anchor" aria-hidden="true" href="#前序遍历">#</a></h2>
+<p>先访问根节点，然后前序遍历左子树，再前序遍历右子树。
+<img loading="lazy" src="15.png" alt=""  />
+</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * 二叉树前序遍历   根-&gt; 左-&gt; 右
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * @param node    二叉树节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> preOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span> == root){
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>	preOrder(root.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>	preOrder(root.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="中序遍历">中序遍历<a hidden class="anchor" aria-hidden="true" href="#中序遍历">#</a></h2>
+<p>中序遍历根节点的左子树，然后访问根节点，最后遍历右子树。
+<img loading="lazy" src="16.png" alt=""  />
+</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * 二叉树中序遍历   左-&gt; 根-&gt; 右
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * @param node   二叉树节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> inOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span> == root){
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	inOrder(root.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>	System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>	inOrder(root.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="后序遍历">后序遍历<a hidden class="anchor" aria-hidden="true" href="#后序遍历">#</a></h2>
+<p>先访问左节点，再访问右节点，最后访问根节点。
+<img loading="lazy" src="17.png" alt=""  />
+</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * 二叉树后序遍历   左-&gt; 右-&gt; 根
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * @param node    二叉树节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> postOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span>(root == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	postOrder(root.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>	postOrder(root.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>	System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="层序遍历">层序遍历<a hidden class="anchor" aria-hidden="true" href="#层序遍历">#</a></h2>
+<p>根节点开始，自上向下逐层遍历，在同一层，按从左到右的顺序逐个访问节点</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> levelOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>	BinaryTreeNode temp;
+</span></span><span style="display:flex;"><span>	Queue&lt;BinaryTreeNode&gt; queue=<span style="color:#fff;font-weight:bold">new</span> LinkedList&lt;&gt;();
+</span></span><span style="display:flex;"><span>	queue.<span style="color:#007f7f">offer</span>(root);
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">while</span>(!queue.<span style="color:#007f7f">isEmpty</span>()){
+</span></span><span style="display:flex;"><span>		temp=queue.<span style="color:#007f7f">poll</span>();
+</span></span><span style="display:flex;"><span>		System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(temp.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span>!=temp.<span style="color:#007f7f">getLeft</span>())
+</span></span><span style="display:flex;"><span>			queue.<span style="color:#007f7f">offer</span>(temp.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span>!=temp.<span style="color:#007f7f">getRight</span>()){
+</span></span><span style="display:flex;"><span>			queue.<span style="color:#007f7f">offer</span>(temp.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="完整代码">完整代码<a hidden class="anchor" aria-hidden="true" href="#完整代码">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">123
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">124
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">125
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">126
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">127
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">128
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">129
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">130
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">131
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">132
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">133
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">134
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">135
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">136
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">137
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">138
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">139
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">140
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">141
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">142
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">143
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">144
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">145
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">146
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">147
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">148
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">149
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">150
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">151
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">152
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> BinaryTree {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//前序遍历递归的方式
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> preOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span> == root){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>        preOrder(root.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>        preOrder(root.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//前序遍历非递归的方式
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> preOrderNonRecursive(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>        Stack&lt;BinaryTreeNode&gt; stack=<span style="color:#fff;font-weight:bold">new</span> Stack&lt;&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">while</span>(<span style="color:#fff;font-weight:bold">true</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">while</span>(root!=<span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>                System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>                stack.<span style="color:#007f7f">push</span>(root);
+</span></span><span style="display:flex;"><span>                root=root.<span style="color:#007f7f">getLeft</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span>(stack.<span style="color:#007f7f">isEmpty</span>()) <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>            root=stack.<span style="color:#007f7f">pop</span>();
+</span></span><span style="display:flex;"><span>            root=root.<span style="color:#007f7f">getRight</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//中序遍历采用递归的方式
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> inOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span> == root){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        inOrder(root.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>        inOrder(root.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//中序遍历采用非递归的方式
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> inOrderNonRecursive(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>        Stack&lt;BinaryTreeNode&gt; stack=<span style="color:#fff;font-weight:bold">new</span> Stack&lt;BinaryTreeNode&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">while</span>(<span style="color:#fff;font-weight:bold">true</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">while</span>(root!=<span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>                stack.<span style="color:#007f7f">push</span>(root);
+</span></span><span style="display:flex;"><span>                root=root.<span style="color:#007f7f">getLeft</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span>(stack.<span style="color:#007f7f">isEmpty</span>())<span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>            root=stack.<span style="color:#007f7f">pop</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>            root=root.<span style="color:#007f7f">getRight</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//后序遍历采用递归的方式
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> postOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span>(root == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        postOrder(root.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>        postOrder(root.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//后序遍历采用非递归的方式
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> postOrderNonRecursive(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>        Stack&lt;BinaryTreeNode&gt; stack=<span style="color:#fff;font-weight:bold">new</span> Stack&lt;BinaryTreeNode&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">while</span>(<span style="color:#fff;font-weight:bold">true</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span>(root!=<span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>                stack.<span style="color:#007f7f">push</span>(root);
+</span></span><span style="display:flex;"><span>                root=root.<span style="color:#007f7f">getLeft</span>();
+</span></span><span style="display:flex;"><span>            }<span style="color:#fff;font-weight:bold">else</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span>(stack.<span style="color:#007f7f">isEmpty</span>()) <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span>==stack.<span style="color:#007f7f">lastElement</span>().<span style="color:#007f7f">getRight</span>()){
+</span></span><span style="display:flex;"><span>                    root=stack.<span style="color:#007f7f">pop</span>();
+</span></span><span style="display:flex;"><span>                    System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(root.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">while</span>(root==stack.<span style="color:#007f7f">lastElement</span>().<span style="color:#007f7f">getRight</span>()){
+</span></span><span style="display:flex;"><span>                        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(stack.<span style="color:#007f7f">lastElement</span>().<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>                        root=stack.<span style="color:#007f7f">pop</span>();
+</span></span><span style="display:flex;"><span>                        <span style="color:#fff;font-weight:bold">if</span>(stack.<span style="color:#007f7f">isEmpty</span>()){
+</span></span><span style="display:flex;"><span>                            <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span>(!stack.<span style="color:#007f7f">isEmpty</span>())
+</span></span><span style="display:flex;"><span>                    root=stack.<span style="color:#007f7f">lastElement</span>().<span style="color:#007f7f">getRight</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>                    root=<span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//层序遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> levelOrder(BinaryTreeNode root){
+</span></span><span style="display:flex;"><span>        BinaryTreeNode temp;
+</span></span><span style="display:flex;"><span>        Queue&lt;BinaryTreeNode&gt; queue=<span style="color:#fff;font-weight:bold">new</span> LinkedList&lt;&gt;();
+</span></span><span style="display:flex;"><span>        queue.<span style="color:#007f7f">offer</span>(root);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">while</span>(!queue.<span style="color:#007f7f">isEmpty</span>()){
+</span></span><span style="display:flex;"><span>            temp=queue.<span style="color:#007f7f">poll</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">print</span>(temp.<span style="color:#007f7f">getData</span>()+<span style="color:#0ff;font-weight:bold">&#34;\t&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span>!=temp.<span style="color:#007f7f">getLeft</span>())
+</span></span><span style="display:flex;"><span>                queue.<span style="color:#007f7f">offer</span>(temp.<span style="color:#007f7f">getLeft</span>());
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span>(<span style="color:#fff;font-weight:bold">null</span>!=temp.<span style="color:#007f7f">getRight</span>()){
+</span></span><span style="display:flex;"><span>                queue.<span style="color:#007f7f">offer</span>(temp.<span style="color:#007f7f">getRight</span>());
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>		<span style="color:#007f7f">//根据树的结构，分别创建节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        BinaryTreeNode node10=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">10</span>,<span style="color:#fff;font-weight:bold">null</span>,<span style="color:#fff;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node8=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">8</span>,<span style="color:#fff;font-weight:bold">null</span>,<span style="color:#fff;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node9=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">9</span>,<span style="color:#fff;font-weight:bold">null</span>,node10);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node4=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">4</span>,<span style="color:#fff;font-weight:bold">null</span>,<span style="color:#fff;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node5=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">5</span>,node8,node9);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node6=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">6</span>,<span style="color:#fff;font-weight:bold">null</span>,<span style="color:#fff;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node7=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">7</span>,<span style="color:#fff;font-weight:bold">null</span>,<span style="color:#fff;font-weight:bold">null</span>);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node2=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">2</span>,node4,node5);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node3=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">3</span>,node6,node7);
+</span></span><span style="display:flex;"><span>        BinaryTreeNode node1=<span style="color:#fff;font-weight:bold">new</span> BinaryTreeNode(<span style="color:#ff0;font-weight:bold">1</span>,node2,node3);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        BinaryTree tree=<span style="color:#fff;font-weight:bold">new</span> BinaryTree();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//采用递归的方式进行遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;-----前序遍历------&#34;</span>);
+</span></span><span style="display:flex;"><span>        tree.<span style="color:#007f7f">preOrder</span>(node1);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//采用非递归的方式遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        tree.<span style="color:#007f7f">preOrderNonRecursive</span>(node1);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//采用递归的方式进行遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;-----中序遍历------&#34;</span>);
+</span></span><span style="display:flex;"><span>        tree.<span style="color:#007f7f">inOrder</span>(node1);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//采用非递归的方式遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        tree.<span style="color:#007f7f">inOrderNonRecursive</span>(node1);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//采用递归的方式进行遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;-----后序遍历------&#34;</span>);
+</span></span><span style="display:flex;"><span>        tree.<span style="color:#007f7f">postOrder</span>(node1);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//采用非递归的方式遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        tree.<span style="color:#007f7f">postOrderNonRecursive</span>(node1);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//采用递归的方式进行遍历
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;-----层序遍历------&#34;</span>);
+</span></span><span style="display:flex;"><span>        tree.<span style="color:#007f7f">levelOrder</span>(node1);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二叉树遍历考点">二叉树遍历考点<a hidden class="anchor" aria-hidden="true" href="#二叉树遍历考点">#</a></h2>
+<h3 id="已知前序遍历序列和中序遍历序列确定一棵二叉树">已知前序遍历序列和中序遍历序列，确定一棵二叉树。<a hidden class="anchor" aria-hidden="true" href="#已知前序遍历序列和中序遍历序列确定一棵二叉树">#</a></h3>
+<p>例题：若一棵二叉树的前序遍历为ABCDEF，中序遍历为CBAEDF，请画出这棵二叉树。
+分析：前序遍历第一个输出结点为根结点，故A为根结点。早中序遍历中根结点处于左右子树结点中间，故结点A的左子树中结点有CB，右子树中结点有EDF。
+如下图所示：
+<img loading="lazy" src="20.png" alt=""  />
+
+按照同样的分析方法，对A的左右子树进行划分，最后得出二叉树的形态如下图所示：
+<img loading="lazy" src="21.png" alt=""  />
+</p>
+<h3 id="已知后序遍历序列和中序遍历序列确定一棵二叉树">已知后序遍历序列和中序遍历序列，确定一棵二叉树。<a hidden class="anchor" aria-hidden="true" href="#已知后序遍历序列和中序遍历序列确定一棵二叉树">#</a></h3>
+<p>后序遍历中最后访问的为根结点，因此可以按照上述同样的方法，找到根结点后分成两棵子树，进而继续找到子树的根结点，一步步确定二叉树的形态。
+注：已知前序遍历序列和后序遍历序列，不可以唯一确定一棵二叉树。</p>
+<h3 id="翻转二叉树">翻转二叉树<a hidden class="anchor" aria-hidden="true" href="#翻转二叉树">#</a></h3>
+<p>将二叉树的两个孩子换位置，即左变右，右变左。
+即左子树和右子树换位置，相应的，子树下的节点也要左右交换。</p>
+<h4 id="循环栈存储dfs非递归">循环，栈存储（DFS，非递归)<a hidden class="anchor" aria-hidden="true" href="#循环栈存储dfs非递归">#</a></h4>
+<p>本质思想是，左右节点进行交换，循环翻转每个节点的左右子节点，将未翻转的子节点存入栈中，循环直到栈里所有节点都循环交换完为止。伪代码如下：</p>
+<p>1、判断根结点是否为空，为空则返回null；
+2、新建栈（队列），用于节点存储，初始存入根节点到栈（队列）里；
+3、while循环，栈（队列）为空时结束循环；
+i.出栈（队列）一个节点，将该节点的左右子节点交互；
+ii.判断左右子节点是否为null，非null则继续将左右节点入栈（队列）；
+4、循环交换结束，返回根节点;</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> TreeNode invertTree(TreeNode root) {
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span> (root == <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	Stack&lt;TreeNode&gt; stack = <span style="color:#fff;font-weight:bold">new</span> Stack&lt;&gt;();
+</span></span><span style="display:flex;"><span>	stack.<span style="color:#007f7f">push</span>(root);
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">while</span>(!stack.<span style="color:#007f7f">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">final</span> TreeNode node = stack.<span style="color:#007f7f">pop</span>();
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">final</span> TreeNode left = node.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>		node.<span style="color:#007f7f">left</span> = node.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>		node.<span style="color:#007f7f">right</span> = left;           
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">if</span>(node.<span style="color:#007f7f">left</span> != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>			stack.<span style="color:#007f7f">push</span>(node.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">if</span>(node.<span style="color:#007f7f">right</span> != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>			stack.<span style="color:#007f7f">push</span>(node.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">return</span> root;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="循环队列存储bfs非递归">循环，队列存储（BFS，非递归）<a hidden class="anchor" aria-hidden="true" href="#循环队列存储bfs非递归">#</a></h4>
+<p>本质思想是，左右节点进行交换，循环翻转每个节点的左右子节点，将未翻转的子节点存入队列中，循环直到栈里所有节点都循环交换完为止。伪代码和上边的栈存储一样。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> TreeNode invertTree(TreeNode root) {
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span> (root == <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	Queue&lt;TreeNode&gt; queue = <span style="color:#fff;font-weight:bold">new</span> LinkedList&lt;&gt;();
+</span></span><span style="display:flex;"><span>	queue.<span style="color:#007f7f">offer</span>(root);
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">while</span> (!queue.<span style="color:#007f7f">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>		TreeNode node = queue.<span style="color:#007f7f">poll</span>();
+</span></span><span style="display:flex;"><span>		TreeNode left = node.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>		node.<span style="color:#007f7f">left</span> = node.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>		node.<span style="color:#007f7f">right</span> = left;
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">if</span> (node.<span style="color:#007f7f">left</span> != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>			queue.<span style="color:#007f7f">offer</span>(node.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">if</span> (node.<span style="color:#007f7f">right</span> != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>			queue.<span style="color:#007f7f">offer</span>(node.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">return</span> root;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="递归-1">递归<a hidden class="anchor" aria-hidden="true" href="#递归-1">#</a></h4>
+<p>本质思想也是左右节点进行交换，交换前递归调用对根结点的左右节点分别进行处理，保证交换前左右节点已经翻转。</p>
+<p>1、判断根结点是否为空，为空则返回null；
+2、交换跟节点的左右节点；
+3、递归交互左右子树；</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> TreeNode invertTree(TreeNode node) {
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">if</span> (node == <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	TreeNode temp = node.<span style="color:#007f7f">left</span>;
+</span></span><span style="display:flex;"><span>	node.<span style="color:#007f7f">left</span> = node.<span style="color:#007f7f">right</span>;
+</span></span><span style="display:flex;"><span>	node.<span style="color:#007f7f">right</span> = temp;
+</span></span><span style="display:flex;"><span>	invertTree(node.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>	invertTree(node.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">return</span> node;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="红黑树">红黑树<a hidden class="anchor" aria-hidden="true" href="#红黑树">#</a></h1>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/en/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://funny-toffee-4aa7c3.netlify.app/en/">Wjy&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
