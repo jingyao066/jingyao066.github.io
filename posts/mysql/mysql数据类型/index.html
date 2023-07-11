@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>mysql数据类型 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="mysql">
+<meta name="description" content="mysql数据类型
+主要包括以下五大类：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT
+
+浮点数类型：FLOAT、DOUBLE、DECIMAL
+
+字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB
+
+日期类型：Date、DateTime、TimeStamp、Time、Year
+
+其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等
+
+
+">
+<meta name="author" content="">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="mysql数据类型" />
+<meta property="og:description" content="mysql数据类型
+主要包括以下五大类：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT
+
+浮点数类型：FLOAT、DOUBLE、DECIMAL
+
+字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB
+
+日期类型：Date、DateTime、TimeStamp、Time、Year
+
+其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-12-03T11:31:38+00:00" />
+<meta property="article:modified_time" content="2019-12-03T11:31:38+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="mysql数据类型"/>
+<meta name="twitter:description" content="mysql数据类型
+主要包括以下五大类：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT
+
+浮点数类型：FLOAT、DOUBLE、DECIMAL
+
+字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB
+
+日期类型：Date、DateTime、TimeStamp、Time、Year
+
+其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等
+
+
+"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "mysql数据类型",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "mysql数据类型",
+  "name": "mysql数据类型",
+  "description": "mysql数据类型 主要包括以下五大类：\n1 2 3 4 5 6 7 8 9 整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT 浮点数类型：FLOAT、DOUBLE、DECIMAL 字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB 日期类型：Date、DateTime、TimeStamp、Time、Year 其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等 ",
+  "keywords": [
+    "mysql"
+  ],
+  "articleBody": "mysql数据类型 主要包括以下五大类：\n1 2 3 4 5 6 7 8 9 整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT 浮点数类型：FLOAT、DOUBLE、DECIMAL 字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB 日期类型：Date、DateTime、TimeStamp、Time、Year 其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等 整型 MySQL数据类型 含义（有符号） tinyint(m) 1个字节 范围(-128~127) smallint(m) 2个字节 范围(-32768~32767) mediumint(m) 3个字节 范围(-8388608~8388607) int(m) 4个字节 范围(-2147483648~2147483647) bigint(m) 8个字节 范围(+-9.22*10的18次方) 取值范围如果加了unsigned，则最大值翻倍，如tinyint unsigned的取值范围为(0~256)。 int(m)里的m是表示SELECT查询结果集中的显示宽度，并不影响实际的取值范围。也不影响插入的内容，如： 设置字段test_length为int(1)，即显示宽度为1，不影响插入内容，即： insert into test (test_length) values(1000000) 是可以正常插入的。 但是，想要真正影响显示宽度，还需要一个属性，zerofill，即Navicat中的填充零选项，数据长度不足的，将会以0填充在前边。 设置zerofill之后，如果设置int(3)，即显示长度为3，插入10，select出的结果为：010，若不设置zerofill，结果为：10 超出设置长度，则正常显示。\n浮点型与定点型 MySQL数据类型 含义 float(m,d) 单精度浮点型 8位精度(4字节) m总个数，d小数位 double(m,d) 双精度浮点型 16位精度(8字节) m总个数，d小数位 DECIMAL(m,d) 1.MySQL中可以指定浮点数和定点数的精度。其基本形式如下：数据类型(M,D)，M参数称为精度，是数据的总长度，小数点也占位置(MYSQL5.8)。D参数称为标度，是指小数点后面的长度是D 例：float(4,2)的含义数据是float型，数据长度是4，小数点后保留2位。所以，12.34是符合要求的。4指数据总长度是4，包含小数点的长度，如果插入123.45，就会报错： Out of range value for column 意思是超出了范围值。 而且，float(m,d)，d不能比m大，m只能 \u003e= d， 这是在数据表创建时规定的，否则会报 M must \u003e= D 若m=d，即float(4,4)，则只能插入比1小的数，即0.1234； d表示小数点位数，若数据超出指定长度： .float和double类型，会直接截断指定长度之后的数据 .decimal类型，则遵守四舍五入 这就是为什么float和double类型会损失精度，所以尽量少去使用这两种类型。\n2.上述指定的小数精度的方法虽然都适用于浮点数和定点数，但不是浮点数的标准用法。建议在定义浮点数时，如果不是实际情况需要，最好不要使用，如果使用了，可能会影响数据库的迁移。\n3.如果插入值的精度高于实际定义的精度，系统会自动进行四舍五入处理，使值的精度达到要求。\n4.浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值\n5.未指定精度： .float和double默认会保存实际精度，但这与操作系统和硬件的精度有关。 .decimal型的默认整数位为10，小数位为0，即默认为整数。\n6.在MySQL中，定点数以字符串形式存储，因此，其精度比浮点数要高，而且浮点数会出现误差，这是浮点数一直存在的缺陷。 如果要对数据的精度要求比较高，比如订单价格、商品售价等等，还是选择定点数decimal比较安全。\n字符串(char,varchar,_text) MySQL数据类型 含义 char(n) n个字节，1 \u003c= n \u003c= 255，固定长度，最多255个字符 varchar(n) 可变长度，最多65535个字符 tinytext 可变长度，最多255个字符 text 可变长度，最多65535个字符 mediumtext 可变长度，最多2的24次方-1个字符 longtext 可变长度，最多2的32次方-1个字符 char char(n) 1.若存入字符数小于n，则以空格补于其后，查询之时再将空格去掉。所以char类型存储的字符串末尾不能有空格 2.存入字符数不能大于n,若超出，则会报： Data too long for column 3.固定长度，占用n(指定长度)个字节\nvarchar 1.varchar是存入的实际字符数+1个字节\n速度对比 char \u003e varchar \u003e text char、varchar可直接创建索引，text创建索引要指定前多少个字符。varchar查询速度快于text,在都创建索引的情况下，text的索引似乎不起作用。\n关于varchar的长度 有必要单独说明，比较复杂：\n1.编码长度限制 字符类型若为latin1，每个字符最多占1个字节，最大长度不能超过65535; 字符类型若为gbk，每个字符最多占2个字节，最大长度不能超过32766; 字符类型若为utf8，每个字符最多占3个字节，最大长度不能超过21845。 若定义的时候超过上述限制，则varchar字段会被强行转为text类型，并产生warning。\n2.存储限制 varchar最多能存储65535个字节的数据。varchar 的最大长度受限于最大行长度（max row size，65535bytes）。65535并不是一个很精确的上限，可以继续缩小这个上限。 65535个字节包括所有字段的长度，变长字段的长度标识（每个变长字段额外使用1或者2个字节记录实际数据长度）、NULL标识位的累计。\nNULL标识位： 如果varchar字段定义中带有default null允许列空,则需要需要1bit来标识，每8个bits的标识组成一个字段。一张表中存在N个varchar字段，那么需要（N+7）/8 （取整）bytes存储所有的NULL标识位。\n最大行长度： MySQL要求一个行的定义长度不能超过65535。若定义的表长度超过这个值，则提示： ERROR 1118 (42000): Row size too large. The maximum row size for the used table type, not counting BLOBs, is 65535. You have to change some columns to TEXT or BLOBs。 即：一行中所有字段加起来的长度，不能超过65535。 如：一行有两个字段，一个char(100)，那么另外varchar字段的长度只能是(65435):65535 - 100,超出会报上面的错误。\n如果数据表只有一个varchar字段且该字段DEFAULT NULL，那么该varchar字段的最大长度为65532个字节，即65535-2-1=65532 byte。 为什么 -2 -1 ？ 字符集是latin1，占用1个字节。 null标识位，( 1 + 7 ) / 8 =1,所以null标识位占用1个字节。 因为varchar类型存储变长字段的字符类型，与char类型不同的是，其存储时需要在前缀长度列表加上实际存储的字符，当存储的字符串长度小于255字节时，其需要1字节的空间，当大于255字节时，需要2字节的空间。\n3.行长度限制 即最大行长度限制。\n举例说明实际长度的计算 1.若一个表只有一个varchar类型，如定义为 create table t4(c varchar(N)) charset=gbk; 则此处N的最大值为(65535-1-2)/2= 32766。 减1的原因是实际行存储从第二个字节开始; 减2的原因是varchar头部的2个字节表示长度; 除2的原因是字符编码是gbk。\n2.若一个表定义为 create table t4(c int, c2 char(30), c3 varchar(N)) charset=utf8; 则此处N的最大值为 (65535-1-2-4-303)/3=21812 减1和减2与上例相同; 减4的原因是int类型的c占4个字节; 减303的原因是char(30)占用90个字节，编码是utf8。 如果被varchar超过上述的b规则，被强转成text类型，则每个字段占用定义长度为11字节，当然这已经不是varchar了。 则此处N的最大值为 (65535-1-2-4-30*3)/3=21812\n3.\n1 2 3 4 5 6 7 8 9 10 11 12 CREATE TABLE t6 ( id int, a VARCHAR(100) DEFAULT NULL, b VARCHAR(100) DEFAULT NULL, c VARCHAR(100) DEFAULT NULL, d VARCHAR(100) DEFAULT NULL, e VARCHAR(100) DEFAULT NULL, f VARCHAR(100) DEFAULT NULL, g VARCHAR(100) DEFAULT NULL, h VARCHAR(100) DEFAULT NULL, i VARCHAR(N) DEFAULT NULL ) CHARSET=utf8; 每个NULL字段用1bit标识，10个字段都是default null，那么需要用(10+7)/8bit = 2 bytes存储NULL标识位。int占用4个 byte。 (65535 - 1 - 28 -4 - 1003*8 -2)/3=21037\n我想，这样应该能够很好的说明varchar的长度问题了。 参考内容：«MySQL技术内幕–InnoDB引擎第二版»\n日期时间类型 MySQL数据类型 含义 date 日期 ‘2008-12-2’ time 时间 ‘12:25:36’ datetime 日期时间 ‘2008-12-2 22:06:44’ timestamp 自动存储记录修改时间 若定义一个字段为timestamp，这个字段里的时间数据会随其他字段修改的时候自动刷新，所以这个数据类型的字段可以存放这条记录最后被修改的时间。\n数据类型的属性 MySQL关键字 含义 NULL 数据列可包含NULL值 NOT NULL 数据列不允许包含NULL值 DEFAULT 默认值 PRIMARY KEY 主键 AUTO_INCREMENT 自动递增，适用于整数类型 UNSIGNED 无符号 CHARACTER SET name 指定一个字符集 数据类型长度和范围一览 数据类型 字节长度 范围或用法 Bit 1 无符号[0,255]，有符号[-128,127]，BIT和BOOL布尔型都占用1字节 TinyInt 1 整数[0,255] SmallInt 2 无符号[0,65535]，有符号[-32768,32767] MediumInt 3 无符号[0,2^24-1]，有符号[-2^23,2^23-1]] Int 4 无符号[0,2^32-1]，有符号[-2^31,2^31-1] BigInt 8 无符号[0,2^64-1]，有符号[-2^63 ,2^63 -1] Float(M,D) 4 单精度浮点数 Double(M,D) 8 双精度浮点。 Decimal(M,D) M+1或M+2 未打包的浮点数，用法类似于FLOAT和DOUBLE Date 3 以YYYY-MM-DD的格式显示，比如：2009-07-19 Date Time 8 以YYYY-MM-DD HH:MM:SS的格式显示，比如：2009-07-19 11：22：30 TimeStamp 4 以YYYY-MM-DD的格式显示，比如：2009-07-19 Time 3 以HH:MM:SS的格式显示。比如：11：22：30 Year 1 以YYYY的格式显示。比如：2009 Char(M) M 定长字符串。 VarChar(M) M 变长字符串，要求M\u003c=255 Binary(M) M 类似Char的二进制存储，特点是插入定长不足补0 VarBinary(M) M 类似VarChar的变长二进制存储，特点是定长不补0 Tiny Text Max:255 大小写不敏感 Text Max:64K 大小写不敏感 Medium Text Max:16M 大小写不敏感 Long Text Max:4G 大小写不敏感 TinyBlob Max:255 大小写敏感 Blob Max:64K 大小写敏感 MediumBlob Max:16M 大小写敏感 LongBlob Max:4G 大小写敏感 Enum 1或2 最大可达65535个不同的枚举值 Set 可达8 最大可达64个不同的值 Geometry Point LineString Polygon MultiPoint MultiLineString MultiPolygon GeometryCollection ",
+  "wordCount" : "4183",
+  "inLanguage": "en",
+  "datePublished": "2019-12-03T11:31:38Z",
+  "dateModified": "2019-12-03T11:31:38Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title">
+      mysql数据类型
+    </h1>
+    <div class="post-meta"><span title='2019-12-03 11:31:38 +0000 UTC'>2019-12-03</span>
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#mysql%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b" aria-label="mysql数据类型">mysql数据类型</a><ul>
+                        
+                <li>
+                    <a href="#%e6%95%b4%e5%9e%8b" aria-label="整型">整型</a></li>
+                <li>
+                    <a href="#%e6%b5%ae%e7%82%b9%e5%9e%8b%e4%b8%8e%e5%ae%9a%e7%82%b9%e5%9e%8b" aria-label="浮点型与定点型">浮点型与定点型</a></li>
+                <li>
+                    <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2charvarchar_text" aria-label="字符串(char,varchar,_text)">字符串(char,varchar,_text)</a><ul>
+                        
+                <li>
+                    <a href="#char" aria-label="char">char</a></li>
+                <li>
+                    <a href="#varchar" aria-label="varchar">varchar</a></li>
+                <li>
+                    <a href="#%e9%80%9f%e5%ba%a6%e5%af%b9%e6%af%94" aria-label="速度对比">速度对比</a><ul>
+                        
+                <li>
+                    <a href="#%e5%85%b3%e4%ba%8evarchar%e7%9a%84%e9%95%bf%e5%ba%a6" aria-label="关于varchar的长度">关于varchar的长度</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%be%e4%be%8b%e8%af%b4%e6%98%8e%e5%ae%9e%e9%99%85%e9%95%bf%e5%ba%a6%e7%9a%84%e8%ae%a1%e7%ae%97" aria-label="举例说明实际长度的计算">举例说明实际长度的计算</a></li></ul>
+                </li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%97%a5%e6%9c%9f%e6%97%b6%e9%97%b4%e7%b1%bb%e5%9e%8b" aria-label="日期时间类型">日期时间类型</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e7%9a%84%e5%b1%9e%e6%80%a7" aria-label="数据类型的属性">数据类型的属性</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b%e9%95%bf%e5%ba%a6%e5%92%8c%e8%8c%83%e5%9b%b4%e4%b8%80%e8%a7%88" aria-label="数据类型长度和范围一览">数据类型长度和范围一览</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="mysql数据类型">mysql数据类型<a hidden class="anchor" aria-hidden="true" href="#mysql数据类型">#</a></h1>
+<p>主要包括以下五大类：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>浮点数类型：FLOAT、DOUBLE、DECIMAL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>日期类型：Date、DateTime、TimeStamp、Time、Year
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="整型">整型<a hidden class="anchor" aria-hidden="true" href="#整型">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>MySQL数据类型</th>
+<th>含义（有符号）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tinyint(m)</td>
+<td>1个字节  范围(-128~127)</td>
+</tr>
+<tr>
+<td>smallint(m)</td>
+<td>2个字节  范围(-32768~32767)</td>
+</tr>
+<tr>
+<td>mediumint(m)</td>
+<td>3个字节  范围(-8388608~8388607)</td>
+</tr>
+<tr>
+<td>int(m)</td>
+<td>4个字节  范围(-2147483648~2147483647)</td>
+</tr>
+<tr>
+<td>bigint(m)</td>
+<td>8个字节  范围(+-9.22*10的18次方)</td>
+</tr>
+</tbody>
+</table>
+<p>取值范围如果加了unsigned，则最大值翻倍，如tinyint unsigned的取值范围为(0~256)。
+int(m)里的m是表示SELECT查询结果集中的显示宽度，并不影响实际的取值范围。也不影响插入的内容，如：
+设置字段test_length为int(1)，即显示宽度为1，不影响插入内容，即：
+<code>insert into test (test_length) values(1000000)</code>
+是可以正常插入的。
+但是，想要真正影响显示宽度，还需要一个属性，zerofill，即Navicat中的<code>填充零</code>选项，数据长度不足的，将会以0填充在前边。
+设置zerofill之后，如果设置int(3)，即显示长度为3，插入10，select出的结果为：010，若不设置zerofill，结果为：10
+超出设置长度，则正常显示。</p>
+<h2 id="浮点型与定点型">浮点型与定点型<a hidden class="anchor" aria-hidden="true" href="#浮点型与定点型">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>MySQL数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float(m,d)</td>
+<td>单精度浮点型    8位精度(4字节)     m总个数，d小数位</td>
+</tr>
+<tr>
+<td>double(m,d)</td>
+<td>双精度浮点型    16位精度(8字节)    m总个数，d小数位</td>
+</tr>
+<tr>
+<td>DECIMAL(m,d)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>1.MySQL中可以指定浮点数和定点数的精度。其基本形式如下：数据类型(M,D)，M参数称为精度，是数据的总长度，小数点也占位置(MYSQL5.8)。D参数称为标度，是指小数点后面的长度是D
+例：float(4,2)的含义数据是float型，数据长度是4，小数点后保留2位。所以，12.34是符合要求的。4指数据总长度是4，包含小数点的长度，如果插入123.45，就会报错：
+<code>Out of range value for column</code>
+意思是超出了范围值。
+而且，float(m,d)，d不能比m大，m只能 &gt;= d， 这是在数据表创建时规定的，否则会报
+<code>M must &gt;= D</code>
+若m=d，即float(4,4)，则只能插入比1小的数，即0.1234；
+d表示小数点位数，若数据超出指定长度：
+.float和double类型，会直接截断指定长度之后的数据
+.decimal类型，则遵守四舍五入
+这就是为什么float和double类型会损失精度，所以尽量少去使用这两种类型。</p>
+<p>2.上述指定的小数精度的方法虽然都适用于浮点数和定点数，但不是浮点数的标准用法。建议在定义浮点数时，如果不是实际情况需要，最好不要使用，如果使用了，可能会影响数据库的迁移。</p>
+<p>3.如果插入值的精度高于实际定义的精度，系统会自动进行四舍五入处理，使值的精度达到要求。</p>
+<p>4.浮点型在数据库中存放的是近似值，而定点类型在数据库中存放的是精确值</p>
+<p>5.未指定精度：
+.float和double默认会保存实际精度，但这与操作系统和硬件的精度有关。
+.decimal型的默认整数位为10，小数位为0，即默认为整数。</p>
+<p>6.在MySQL中，定点数以字符串形式存储，因此，其精度比浮点数要高，而且浮点数会出现误差，这是浮点数一直存在的缺陷。
+如果要对数据的精度要求比较高，比如订单价格、商品售价等等，还是选择定点数decimal比较安全。</p>
+<h2 id="字符串charvarchar_text">字符串(char,varchar,_text)<a hidden class="anchor" aria-hidden="true" href="#字符串charvarchar_text">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>MySQL数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char(n)</td>
+<td>n个字节，1 &lt;= n &lt;= 255，固定长度，最多255个字符</td>
+</tr>
+<tr>
+<td>varchar(n)</td>
+<td>可变长度，最多65535个字符</td>
+</tr>
+<tr>
+<td>tinytext</td>
+<td>可变长度，最多255个字符</td>
+</tr>
+<tr>
+<td>text</td>
+<td>可变长度，最多65535个字符</td>
+</tr>
+<tr>
+<td>mediumtext</td>
+<td>可变长度，最多2的24次方-1个字符</td>
+</tr>
+<tr>
+<td>longtext</td>
+<td>可变长度，最多2的32次方-1个字符</td>
+</tr>
+</tbody>
+</table>
+<h3 id="char">char<a hidden class="anchor" aria-hidden="true" href="#char">#</a></h3>
+<p><code>char(n)</code>
+1.若存入字符数小于n，则以空格补于其后，查询之时再将空格去掉。所以char类型存储的字符串末尾不能有空格
+2.存入字符数不能大于n,若超出，则会报：
+<code>Data too long for column</code>
+3.固定长度，占用n(指定长度)个字节</p>
+<h3 id="varchar">varchar<a hidden class="anchor" aria-hidden="true" href="#varchar">#</a></h3>
+<p>1.varchar是存入的实际字符数+1个字节</p>
+<h3 id="速度对比">速度对比<a hidden class="anchor" aria-hidden="true" href="#速度对比">#</a></h3>
+<p>char &gt; varchar &gt; text
+char、varchar可直接创建索引，text创建索引要指定前多少个字符。varchar查询速度快于text,在都创建索引的情况下，text的索引似乎不起作用。</p>
+<h4 id="关于varchar的长度">关于varchar的长度<a hidden class="anchor" aria-hidden="true" href="#关于varchar的长度">#</a></h4>
+<p>有必要单独说明，比较复杂：</p>
+<p>1.编码长度限制
+字符类型若为latin1，每个字符最多占1个字节，最大长度不能超过65535;
+字符类型若为gbk，每个字符最多占2个字节，最大长度不能超过32766;
+字符类型若为utf8，每个字符最多占3个字节，最大长度不能超过21845。
+若定义的时候超过上述限制，则varchar字段会被强行转为text类型，并产生warning。</p>
+<p>2.存储限制
+varchar最多能存储65535个字节的数据。varchar 的最大长度受限于最大行长度（max row size，65535bytes）。65535并不是一个很精确的上限，可以继续缩小这个上限。
+65535个字节包括所有字段的长度，变长字段的长度标识（每个变长字段额外使用1或者2个字节记录实际数据长度）、NULL标识位的累计。</p>
+<p>NULL标识位：
+如果varchar字段定义中带有default null允许列空,则需要需要1bit来标识，每8个bits的标识组成一个字段。一张表中存在N个varchar字段，那么需要（N+7）/8 （取整）bytes存储所有的NULL标识位。</p>
+<p>最大行长度：
+MySQL要求一个行的定义长度不能超过65535。若定义的表长度超过这个值，则提示：
+<code>ERROR 1118 (42000): Row size too large. The maximum row size for the used table type, not counting BLOBs, is 65535. You have to change some columns to TEXT or BLOBs。</code>
+即：一行中所有字段加起来的长度，不能超过65535。
+如：一行有两个字段，一个char(100)，那么另外varchar字段的长度只能是(65435):65535 - 100,超出会报上面的错误。</p>
+<p>如果数据表只有一个varchar字段且该字段DEFAULT NULL，那么该varchar字段的最大长度为65532个字节，即65535-2-1=65532 byte。
+为什么 -2 -1 ？
+字符集是latin1，占用1个字节。
+null标识位，( 1 + 7 ) / 8 =1,所以null标识位占用1个字节。
+因为varchar类型存储变长字段的字符类型，与char类型不同的是，其存储时需要在前缀长度列表加上实际存储的字符，当存储的字符串长度小于255字节时，其需要1字节的空间，当大于255字节时，需要2字节的空间。</p>
+<p>3.行长度限制
+即最大行长度限制。</p>
+<h5 id="举例说明实际长度的计算">举例说明实际长度的计算<a hidden class="anchor" aria-hidden="true" href="#举例说明实际长度的计算">#</a></h5>
+<p>1.若一个表只有一个varchar类型，如定义为
+create table t4(c varchar(N)) charset=gbk;
+则此处N的最大值为(65535-1-2)/2= 32766。
+减1的原因是实际行存储从第二个字节开始;
+减2的原因是varchar头部的2个字节表示长度;
+除2的原因是字符编码是gbk。</p>
+<p>2.若一个表定义为
+create table t4(c int, c2 char(30), c3 varchar(N)) charset=utf8;
+则此处N的最大值为 (65535-1-2-4-30<em>3)/3=21812
+减1和减2与上例相同;
+减4的原因是int类型的c占4个字节;
+减30</em>3的原因是char(30)占用90个字节，编码是utf8。
+如果被varchar超过上述的b规则，被强转成text类型，则每个字段占用定义长度为11字节，当然这已经不是varchar了。
+则此处N的最大值为 (65535-1-2-4-30*3)/3=21812</p>
+<p>3.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>CREATE TABLE t6 (
+</span></span><span style="display:flex;"><span>id int,
+</span></span><span style="display:flex;"><span>a VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>b VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>c VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>d VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>e VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>f VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>g VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>h VARCHAR(100) DEFAULT NULL,
+</span></span><span style="display:flex;"><span>i VARCHAR(N) DEFAULT NULL
+</span></span><span style="display:flex;"><span>) CHARSET=utf8;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每个NULL字段用1bit标识，10个字段都是default null，那么需要用(10+7)/8bit = 2 bytes存储NULL标识位。int占用4个 byte。
+(65535 - 1 - 2<em>8  -4 - 100</em>3*8 -2)/3=21037</p>
+<p>我想，这样应该能够很好的说明varchar的长度问题了。
+参考内容：&laquo;MySQL技术内幕&ndash;InnoDB引擎第二版&raquo;</p>
+<h2 id="日期时间类型">日期时间类型<a hidden class="anchor" aria-hidden="true" href="#日期时间类型">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>MySQL数据类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>date</td>
+<td>日期 &lsquo;2008-12-2&rsquo;</td>
+</tr>
+<tr>
+<td>time</td>
+<td>时间 &lsquo;12:25:36&rsquo;</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>日期时间 &lsquo;2008-12-2 22:06:44&rsquo;</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>自动存储记录修改时间</td>
+</tr>
+</tbody>
+</table>
+<p>若定义一个字段为timestamp，这个字段里的时间数据会随其他字段修改的时候自动刷新，所以这个数据类型的字段可以存放这条记录最后被修改的时间。</p>
+<h2 id="数据类型的属性">数据类型的属性<a hidden class="anchor" aria-hidden="true" href="#数据类型的属性">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>MySQL关键字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NULL</td>
+<td>数据列可包含NULL值</td>
+</tr>
+<tr>
+<td>NOT NULL</td>
+<td>数据列不允许包含NULL值</td>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td>默认值</td>
+</tr>
+<tr>
+<td>PRIMARY KEY</td>
+<td>主键</td>
+</tr>
+<tr>
+<td>AUTO_INCREMENT</td>
+<td>自动递增，适用于整数类型</td>
+</tr>
+<tr>
+<td>UNSIGNED</td>
+<td>无符号</td>
+</tr>
+<tr>
+<td>CHARACTER SET name</td>
+<td>指定一个字符集</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数据类型长度和范围一览">数据类型长度和范围一览<a hidden class="anchor" aria-hidden="true" href="#数据类型长度和范围一览">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>字节长度</th>
+<th>范围或用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bit</td>
+<td>1</td>
+<td>无符号[0,255]，有符号[-128,127]，BIT和BOOL布尔型都占用1字节</td>
+</tr>
+<tr>
+<td>TinyInt</td>
+<td>1</td>
+<td>整数[0,255]</td>
+</tr>
+<tr>
+<td>SmallInt</td>
+<td>2</td>
+<td>无符号[0,65535]，有符号[-32768,32767]</td>
+</tr>
+<tr>
+<td>MediumInt</td>
+<td>3</td>
+<td>无符号[0,2^24-1]，有符号[-2^23,2^23-1]]</td>
+</tr>
+<tr>
+<td>Int</td>
+<td>4</td>
+<td>无符号[0,2^32-1]，有符号[-2^31,2^31-1]</td>
+</tr>
+<tr>
+<td>BigInt</td>
+<td>8</td>
+<td>无符号[0,2^64-1]，有符号[-2^63 ,2^63 -1]</td>
+</tr>
+<tr>
+<td>Float(M,D)</td>
+<td>4</td>
+<td>单精度浮点数</td>
+</tr>
+<tr>
+<td>Double(M,D)</td>
+<td>8</td>
+<td>双精度浮点。</td>
+</tr>
+<tr>
+<td>Decimal(M,D)</td>
+<td>M+1或M+2</td>
+<td>未打包的浮点数，用法类似于FLOAT和DOUBLE</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>3</td>
+<td>以YYYY-MM-DD的格式显示，比如：2009-07-19</td>
+</tr>
+<tr>
+<td>Date Time</td>
+<td>8</td>
+<td>以YYYY-MM-DD HH:MM:SS的格式显示，比如：2009-07-19 11：22：30</td>
+</tr>
+<tr>
+<td>TimeStamp</td>
+<td>4</td>
+<td>以YYYY-MM-DD的格式显示，比如：2009-07-19</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>3</td>
+<td>以HH:MM:SS的格式显示。比如：11：22：30</td>
+</tr>
+<tr>
+<td>Year</td>
+<td>1</td>
+<td>以YYYY的格式显示。比如：2009</td>
+</tr>
+<tr>
+<td>Char(M)</td>
+<td>M</td>
+<td>定长字符串。</td>
+</tr>
+<tr>
+<td>VarChar(M)</td>
+<td>M</td>
+<td>变长字符串，要求M&lt;=255</td>
+</tr>
+<tr>
+<td>Binary(M)</td>
+<td>M</td>
+<td>类似Char的二进制存储，特点是插入定长不足补0</td>
+</tr>
+<tr>
+<td>VarBinary(M)</td>
+<td>M</td>
+<td>类似VarChar的变长二进制存储，特点是定长不补0</td>
+</tr>
+<tr>
+<td>Tiny Text</td>
+<td>Max:255</td>
+<td>大小写不敏感</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>Max:64K</td>
+<td>大小写不敏感</td>
+</tr>
+<tr>
+<td>Medium Text</td>
+<td>Max:16M</td>
+<td>大小写不敏感</td>
+</tr>
+<tr>
+<td>Long Text</td>
+<td>Max:4G</td>
+<td>大小写不敏感</td>
+</tr>
+<tr>
+<td>TinyBlob</td>
+<td>Max:255</td>
+<td>大小写敏感</td>
+</tr>
+<tr>
+<td>Blob</td>
+<td>Max:64K</td>
+<td>大小写敏感</td>
+</tr>
+<tr>
+<td>MediumBlob</td>
+<td>Max:16M</td>
+<td>大小写敏感</td>
+</tr>
+<tr>
+<td>LongBlob</td>
+<td>Max:4G</td>
+<td>大小写敏感</td>
+</tr>
+<tr>
+<td>Enum</td>
+<td>1或2</td>
+<td>最大可达65535个不同的枚举值</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>可达8</td>
+<td>最大可达64个不同的值</td>
+</tr>
+<tr>
+<td>Geometry</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>Point</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>LineString</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>Polygon</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>MultiPoint</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>MultiLineString</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>MultiPolygon</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>GeometryCollection</td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/mysql/">mysql</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

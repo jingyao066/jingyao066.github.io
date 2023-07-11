@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>hugo | Wjy&#39;s Blog</title>
+<meta name="keywords" content="other">
+<meta name="description" content="准备
+全程参考官方文档：https://gohugo.io/
+安装git（忽略）。
+go 不需要安装。
+安装hugo：
+https://github.com/gohugoio/hugo/releases
+windows下载：hugo_extended_0.110.0_windows-amd64.zip
+下载并解压，只有一个exe文件，然后将文件移动到理想的位置，接着将exe文件的位置添加系统环境变量Path，然后用cmd检查hugo是否安装成功：
+hugo version
+出现版本号，说明配置成功。">
+<meta name="author" content="">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hugo/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="hugo" />
+<meta property="og:description" content="准备
+全程参考官方文档：https://gohugo.io/
+安装git（忽略）。
+go 不需要安装。
+安装hugo：
+https://github.com/gohugoio/hugo/releases
+windows下载：hugo_extended_0.110.0_windows-amd64.zip
+下载并解压，只有一个exe文件，然后将文件移动到理想的位置，接着将exe文件的位置添加系统环境变量Path，然后用cmd检查hugo是否安装成功：
+hugo version
+出现版本号，说明配置成功。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hugo/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-03T10:14:27+00:00" />
+<meta property="article:modified_time" content="2023-02-03T10:14:27+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="hugo"/>
+<meta name="twitter:description" content="准备
+全程参考官方文档：https://gohugo.io/
+安装git（忽略）。
+go 不需要安装。
+安装hugo：
+https://github.com/gohugoio/hugo/releases
+windows下载：hugo_extended_0.110.0_windows-amd64.zip
+下载并解压，只有一个exe文件，然后将文件移动到理想的位置，接着将exe文件的位置添加系统环境变量Path，然后用cmd检查hugo是否安装成功：
+hugo version
+出现版本号，说明配置成功。"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "hugo",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hugo/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "hugo",
+  "name": "hugo",
+  "description": "准备 全程参考官方文档：https://gohugo.io/\n安装git（忽略）。\ngo 不需要安装。\n安装hugo：\nhttps://github.com/gohugoio/hugo/releases\nwindows下载：hugo_extended_0.110.0_windows-amd64.zip\n下载并解压，只有一个exe文件，然后将文件移动到理想的位置，接着将exe文件的位置添加系统环境变量Path，然后用cmd检查hugo是否安装成功：\nhugo version\n出现版本号，说明配置成功。\n",
+  "keywords": [
+    "other"
+  ],
+  "articleBody": "准备 全程参考官方文档：https://gohugo.io/\n安装git（忽略）。\ngo 不需要安装。\n安装hugo：\nhttps://github.com/gohugoio/hugo/releases\nwindows下载：hugo_extended_0.110.0_windows-amd64.zip\n下载并解压，只有一个exe文件，然后将文件移动到理想的位置，接着将exe文件的位置添加系统环境变量Path，然后用cmd检查hugo是否安装成功：\nhugo version\n出现版本号，说明配置成功。\n快速开始 参考官网：https://gohugo.io/getting-started/quick-start/\n创建站点目录：\nhugo new site quickstart\n切换到站点目录：\ncd quickstart\n在当前目录下初始化一个空的 Git 仓库。\ngit init\n添加主题（可能需要挂梯子才能拉代码）：\ngit submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod\n在网站配置文件中添加一行，使用当前的主题：\necho \"theme = 'PaperMod'\" \u003e\u003e config.toml\n注意：这里可能会有编码问题，还是建议直接打开config.toml，在末尾添加theme = 'PaperMod'\n配置文件示例（注意现在hugo的配置文件使用的是toml）：\n1 2 3 4 baseURL = 'http://example.org/' languageCode = 'en-us' title = 'My New Hugo Site' theme= \"PaperMod\" 启动hugo服务：\nhugo server\n然后根据提示访问：\nhttp://localhost:1313/\n添加内容 新增一篇文章：\nhugo new posts/my-first-post.md\nHugo在content/posts目录下创建了这个文件，你可以用编辑器打开这个md文件。\n1 2 3 4 5 --- title: \"My First Post\" date: 2022-11-20T09:03:20-08:00 draft: true --- 注意draft字段的值为true，默认情况下，Hugo在构建时不会发布草稿内容。\n修改draft的值为false，就可以在页面看到刚才创建的文章，或者使用以下命令显示草稿文章。\n1 2 hugo server --buildDrafts hugo server -D 修改文章内容，无需重启服务，无需刷新页面，就可以看到内容改变。\n问题 文件不渲染（文章时间问题） 原因，Hugo 默认不会渲染将来的页面，也不会输出任何提示，说明有页面因为时间未到而未渲染。而 Hugo 按照 UTC 时间考虑我的页面，认为我的页面是将来的页面，自然就没有输出了。\n找到了问题，方法就很简单了。你可以：\n为自己文章/页面的 date 加上时区 配置 Hugo 使其输出将来的页面 我直接采用了简单粗暴的第二种方式。在 config.yaml 中添加：\n1 buildFuture: true 配置 用你的编辑器，打开你项目根部的站点配置文件（config.toml）。\n1 2 3 4 baseURL = 'http://example.org/' languageCode = 'en-us' title = 'My New Hugo Site' theme= \"PaperMod\" 修改baseURL为你站点的根目录。\n修改languageCode为你自己的语音。中文：zh-cn\n修改title\nhexo和hugo简单对比 hugo的目录结构如下：\n相较于 Hexo，Hugo 的站点文件夹非常干净没有恶心人的 node_modules，配置文件集中在 config.toml，当然你可以直接改名为更为习惯的 config.yaml\n1 2 3 4 5 6 7 8 9 . ├── archetypes │ └── default.md ├── config.toml ├── content ├── data ├── layouts ├── static └── themes Hugo 的内容管理，每篇文章独立项目文件夹\n1 2 3 4 5 6 ├── post (主文件夹) │ └── operator-precedence (项目文件夹) │ ├── index.md (文章内容) │ └── operator-precedence (图像资源) │ ├── c-operator-precedence.webp │ └── tree.webp Hexo 的内容管理，每篇文章都在 _posts 主文件夹下\n1 2 3 4 5 6 7 8 9 10 11 12 13 _posts (主文件夹) ├── acsl (文章图像资源) │ ├── ... │ └── xxx.webp ├── acsl.md (文章内容) ├── ap-cal-bc │ ├── ... │ └── xxx.webp ├── ap-cal-bc.md ├── ap-chem │ ├── ... │ └── xxx.webp └── ap-chem.md 文件头部配置的差异\nhexo\n1 2 3 title: 面试 tags: other date: 999-12-09 00:42:45 hugo\n1 2 3 title: \"123\" date: 2023-02-24T17:58:17+08:00 // 时间表示更为严谨 draft: true //表示是否草稿 快速迁移 直接将hexo你的hexo根目录\\source\\_posts下的所有md文件全部复制到hugo的你的hugo根目录\\content下面。\n因为hugo的md文档头部配置和hexo不同，所有需要修改所有md文件的头部，有格式不对的文件hugo无法启动。\n图片引用 方法一 1 2 3 4 5 6 7 ├─content │ └─posts │ └─数据结构和算法 │ └─树.md │ └─ 1.png 你要引用的图片 │ └─ 2.png │ └─其他文章.md 在树.md的同级建同名文件夹，图片放到文件夹里，这么引用图片：![](1.png)\n方法二 1 2 3 4 5 6 7 8 ├─content │ └─posts │ └─数据结构和算法 │ └─树 │ └─ index.md 你的文档md │ └─ 1.png 你要引用的图片 │ └─ 2.png │ └─其他文章.md 建一个文件夹树，md文件改名为index.md，图片和md都放到这个文件夹下，这么引用图片：![](1.png)。\n方法三 或者可以将图片放到站点根目录的static文件夹下，然后这么引用图片：/static/1.png，这样的缺点是如果使用vsCode或者Typora编辑md文件，不能在本地预览图片，可能通过一些配置可以显示，没研究，反正不建议用这种方式。\n发布到github 手动发布 hugo命令就可以生成public文件夹，这个文件夹可以部署到云服务器或者托管到github上。\n注意：输入hugo的生成方式只会往public文件夹里添加内容，但是不会删除外部已经不存在而public里面还存在的文件， 所以我一般用hugo -F --cleanDestinationDir命令，表示每次生成的public都是全新的，会覆盖原来的。\nHugo 默认会将生成的静态网页文件存放在 public/ 目录下，我们可以通过将 public/ 目录初始化为 git 仓库并关联我们的 https://youname.github.io 远程仓库来推送我们的网页静态文件。\n1 2 3 4 5 6 7 git init git remote add origin git@github.com:youname/youname.github.io git add . git commit -m \"hugo first\" # 推送 git push origin master 稍等几分钟即可通过我们的自定义域名来访问我们的博客站点了，和我们 hugo server 本地调试完全一致。\n遇到的问题：\n1 papermod Failed to find a valid digest in the 'integrity' attribute for resource 发布的github pages后，发现页面引用css出错，f12控制台显示如上错误。google之，在stackoverflow找到解决办法，在配置文件加入如下配置：\n1 2 3 params: assets: disableFingerprinting: true 自动发布 自动发布流程：\n提交修改 博客源文件仓库 触发Github Action 生成静态文件 博客仓库github pages 创建博客静态资源仓库 存放生成后的静态文件。因为要开启github pages，所以必须是youname.github.io的形式。\n创建博客源仓库 用于存放博客的源文件，包括自己写的md文件等。随意起名字。\n1 2 3 4 5 6 7 8 # 初始化仓库，强制分支名是main git init -b main git remote add origin 你的仓库地址 git add . git commit -m \"hugo first\" # 推送 git push origin main 需要注意：本地创建的默认分支名字是master，github上默认的分支名是main，本地分支和远程关联时需要注意。\n在源仓库根目录创建文件夹.github/workflows，并在该文件夹下创建文件deploy.yml，内容如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 name: deploy # GitHub Action 的触发条件 on: # 当这个项目仓库发生推送动作后，执行 GitHub Action push: # 可以在 GitHub 项目仓库的 Action 工具栏进行手动调用 workflow_dispatch: # 定时执行 GitHub Action，如我的设置为北京时间每天早上执行，主要是使用一些自动化统计 CI 来自动更新我博客的关于页面，如本周编码时间，影音记录等，如果你不需要定时功能，可以删除这个条件 schedule: # Runs everyday at 8:00 AM - cron: \"0 0 * * *\" # 表示 GitHub Action 中的任务 jobs: # 任务名是build build: # 表示 GitHub Action 运行环境 runs-on: ubuntu-latest # 步骤 steps: - name: Checkout # uses 是 GitHub Action 中的一个插件 uses: actions/checkout@v3 with: # 可以同步博客源仓库的子模块，即我们的主题模块 submodules: true fetch-depth: 0 - name: Setup Hugo # 插件 uses: peaceiris/actions-hugo@v2 with: hugo-version: \"latest\" - name: Build Web run: hugo - name: Deploy Web # 插件 uses: peaceiris/actions-gh-pages@v3 with: PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }} # 修改为你的GitHub Pages 仓库地址 EXTERNAL_REPOSITORY: yourname/yourname.github.io PUBLISH_BRANCH: master PUBLISH_DIR: ./public commit_message: ${{ github.event.head_commit.message }} 下面是一段官方的action，可以和上边对比参考。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 # Sample workflow for building and deploying a Hugo site to GitHub Pages name: Deploy Hugo site to Pages on: # Runs on pushes targeting the default branch push: branches: [\"main\"] # Allows you to run this workflow manually from the Actions tab workflow_dispatch: # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages permissions: contents: read pages: write id-token: write # Allow one concurrent deployment concurrency: group: \"pages\" cancel-in-progress: true # Default to bash defaults: run: shell: bash jobs: # Build job build: runs-on: ubuntu-latest env: HUGO_VERSION: 0.108.0 steps: - name: Install Hugo CLI run: | wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \\ \u0026\u0026 sudo dpkg -i ${{ runner.temp }}/hugo.deb - name: Install Dart Sass Embedded run: sudo snap install dart-sass-embedded - name: Checkout uses: actions/checkout@v3 with: submodules: recursive - name: Setup Pages id: pages uses: actions/configure-pages@v3 - name: Install Node.js dependencies run: \"[[ -f package-lock.json || -f npm-shrinkwrap.json ]] \u0026\u0026 npm ci || true\" - name: Build with Hugo env: # For maximum backward compatibility with Hugo modules HUGO_ENVIRONMENT: production HUGO_ENV: production run: | hugo \\ --minify \\ --baseURL \"${{ steps.pages.outputs.base_url }}/\" - name: Upload artifact uses: actions/upload-pages-artifact@v1 with: path: ./public # Deployment job deploy: environment: name: github-pages url: ${{ steps.deployment.outputs.page_url }} runs-on: ubuntu-latest needs: build steps: - name: Deploy to GitHub Pages id: deployment uses: actions/deploy-pages@v1 因为我们需要从博客源仓库推送到外部 GitHub Pages 仓库，需要特定权限，要在GitHub 账户下创建一个token。\n用户头像 -\u003e Setting -\u003e Developer setting -\u003e Personal access tokens\n注意这个token是可以选择失效时间的，所以这里为了方便我们选择no expiration，永不过期，如果选择了失效时间，某一天推送的时候会发现推送失败，还半天找不到问题，找了半天才发现原来token失效了。。。\n配置后复制生成的 Token（注：只会出现一次，窗口关闭后就看不到了），然后在我们博客源仓库的\nSettings -\u003e Secrets and variables -\u003e Actions\n点击右上角New repository secret，名字填写PERSONAL_TOKEN，值为刚才复制的token。这样 GitHub Action 就可以获取到 Token 了。\n这样我们的配置就大功告成了。以后md源文件修改后，只需要git push origin main推送到源仓库，即可触发 GitHub Action，自动生成博客页面并推送至 GitHub Pages 仓库，而 GitHub Pages 仓库更新后，又会自动触发官方页面部署 CI，实现我们的网站发布。从两个仓库的Actions选项卡，可以看到这个构建的流程。\n部署到vercel 参考\n我们当前已经把hugo部署到Github Pages上。但是Github Pages有两个小问题：\n国内访问慢，有些地区访问Github Pages可能超时 Github禁止百度抓取网页，意味着你的网站没办法在百度上搜到。 当然你可以部署到自己的云服务器上，但是当我们没有云服务器的时候，就要找一些免费的托管平台。\nVercel 它是一个免费的网站托管平台，也是我目前用过最好的网站托管平台，不仅仅可以部署静态网站，而且还可以部署动态网站，所以我们可以拿 vercel 充当你免费的服务器，是非常好用的。\n它有以下几点好处：\n关联 github，只需要往 github 提交代码，它会自动获取最新的提交，然后自动部署 提供了免费的域名，省去了申请域名的问题，如果有自己的域名，还可以做个域名解析到这个平台上 提供了免费的 Https 证书，如果证书到期了，它会自动替换，完全不需要操心 傻瓜式的部署方式，它的操作非常简单，Vercel 提供了两种方式：通过命令行部署、通过 Vercel 提供管理后台部署，这期视频我们主要介绍通过命令行部署，因为命令行的部署方式更加简单 Vercel可以支持一键导入Github, Gitlab，非常方便。\n部署到Vercel 想要把自己的博客部署到Vercel，有两种方式：\n源码托管，Vercel会自动编译成目标文件。(vercel会执行hugo命令来编译成HTML文件) 目标文件托管，把Github Pages （HTML文件）导入Vercel。 经过我的实验，两种方式都可以成功，看个人喜好。 不过目标代码托管比较简单。 我这里两种托管方式都介绍。\n无论哪种方式，都需要先注册一个Vercel账号： Vercel 我这边直接使用github注册，同时方便从Github导入仓库。\n目标代码托管 目标代码托管非常简单，只需要从Github导入你的 xx.github.io 仓库即可。\n一、New Project 第一步是新建项目\n二、Import Git Repository 导入Git仓库，可以选择导入所有仓库\n三、选择yourname.github.io并Import 选择目标文件仓库 yourname.github.io然后点击Import\n四、设置 FRAMEWORK PRESET 选Other (因为目标文件是没有框架的) 点击Deploy 五、完成 托管成功。\n注意，托管成功后，vercel会给分配一个域名，你需要修改你的hugo站点配置文件的baseURL为这个地址，不然一点其他连接就跳到你之前配置的地址了。\n源码托管 源码托管需要注意几点：\n源代码需要发布到Github上。 public目录不能发布。（添加到 .gitignore上） 主题如果是从github下载下来的，子目录里面会有 .git 文件，发布代码的话，内层目录是不能有.git的，它会识别成另一个git仓库并忽略上传，只上传一个软链接文件。所以需要删除themes主题下面的.git文件，否则 Vercel 无法从 github上拉取到主题，编译会失败。 下面介绍下如何进行源码部署：\n一、选择codingxiaoma并Import 二、设置 FRAMEWORK PRESET 自动会识别为Hugo Build Command 是hugo Output directory是public Environment Variables 填写hugo版本。不然会默认使用很旧的版本。 使用hugo version查看你的hugo版本。 NAME: HUGO_VERSION, VALUE: 0.89.4\n三、点击发布 一、如果出现：\nWARN 2021/11/29 14:03:51 found no layout file for \"HTML\" for kind \"page\": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.\n这是因为你的主题并没有发布到你的Github上，只是发布了一个软链接。 去到你的themes目录：\n➜ even git:(master) rm -rf .git\n如果还是没有变动需要提交，重命名even提交，然后再改回来，就可以正常提交了。\n二、如果出现：\nERROR 2021/11/29 14:10:32 mkdir /vercel/path0/public: file exists\n意思是public文件已经存在了，Vercel没办法给你编译成目标文件，你需要从Github删除public并忽略public文件提交到Github。\n方式： 你把public rename一下，并把public加到 .gitignore里面提交，然后再把名字改回来，就自动被忽略了。\n1 2 3 4 5 6 7 8 9 10 11 12 13 mv public public2 git add public public2 git commit -m \"mv\" git push echo 'public'\u003e\u003e.gitignore mv public2 public git add public2 git commit -m \"gitignore\" git push 这样public就会忽略提交了且从Github删除。 点击Redeploy重新部署。（要从主界面重新进入，才是main branch） 等一会就发布成功了。 如果左边的小窗口显示正常，就说明发布成功，点击Visit。 可以看到发布成功了。 可以看到Vercel自动给分配了一个域名。\n注意： BUILD COMMAND是可以支持多行命令的，如果你有定制化的需求。 比如：\n同时部署Github Pages和Verel，想要修改config.toml里面的域名。 想增加一个sitemap.xml等等。 可以像我一样：\nsed -i \"s/codingxiaoma.github.io/www.codingxiaoma.tk/g\" config.toml; hugo; cd public; cp sitemap.xml gg_sitemap.xml; cd ../\n是不是很强大。\n部署到netlify 部署完vercel，挂梯子能访问，不挂梯子访问不了，才发现vercel被墙了。想要继续用vercel，只能自己买域名解析到vercel给分配的域名上，无奈，转netlify。\nnetlify官网\n根据官网提示操作。同样，记得hugo的配置文件的baseURL，为netlify分配给你的域名。\n",
+  "wordCount" : "5649",
+  "inLanguage": "en",
+  "datePublished": "2023-02-03T10:14:27Z",
+  "dateModified": "2023-02-03T10:14:27Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hugo/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title">
+      hugo
+    </h1>
+    <div class="post-meta"><span title='2023-02-03 10:14:27 +0000 UTC'>2023-02-03</span>
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%87%86%e5%a4%87" aria-label="准备">准备</a></li>
+                <li>
+                    <a href="#%e5%bf%ab%e9%80%9f%e5%bc%80%e5%a7%8b" aria-label="快速开始">快速开始</a></li>
+                <li>
+                    <a href="#%e6%b7%bb%e5%8a%a0%e5%86%85%e5%ae%b9" aria-label="添加内容">添加内容</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98" aria-label="问题">问题</a><ul>
+                        
+                <li>
+                    <a href="#%e6%96%87%e4%bb%b6%e4%b8%8d%e6%b8%b2%e6%9f%93%e6%96%87%e7%ab%a0%e6%97%b6%e9%97%b4%e9%97%ae%e9%a2%98" aria-label="文件不渲染（文章时间问题）">文件不渲染（文章时间问题）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%85%8d%e7%bd%ae" aria-label="配置">配置</a></li>
+                <li>
+                    <a href="#hexo%e5%92%8chugo%e7%ae%80%e5%8d%95%e5%af%b9%e6%af%94" aria-label="hexo和hugo简单对比">hexo和hugo简单对比</a><ul>
+                        
+                <li>
+                    <a href="#%e5%bf%ab%e9%80%9f%e8%bf%81%e7%a7%bb" aria-label="快速迁移">快速迁移</a></li>
+                <li>
+                    <a href="#%e5%9b%be%e7%89%87%e5%bc%95%e7%94%a8" aria-label="图片引用">图片引用</a><ul>
+                        
+                <li>
+                    <a href="#%e6%96%b9%e6%b3%95%e4%b8%80" aria-label="方法一">方法一</a></li>
+                <li>
+                    <a href="#%e6%96%b9%e6%b3%95%e4%ba%8c" aria-label="方法二">方法二</a></li>
+                <li>
+                    <a href="#%e6%96%b9%e6%b3%95%e4%b8%89" aria-label="方法三">方法三</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%8f%91%e5%b8%83%e5%88%b0github" aria-label="发布到github">发布到github</a><ul>
+                        
+                <li>
+                    <a href="#%e6%89%8b%e5%8a%a8%e5%8f%91%e5%b8%83" aria-label="手动发布">手动发布</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e5%8a%a8%e5%8f%91%e5%b8%83" aria-label="自动发布">自动发布</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e5%8d%9a%e5%ae%a2%e9%9d%99%e6%80%81%e8%b5%84%e6%ba%90%e4%bb%93%e5%ba%93" aria-label="创建博客静态资源仓库">创建博客静态资源仓库</a></li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e5%8d%9a%e5%ae%a2%e6%ba%90%e4%bb%93%e5%ba%93" aria-label="创建博客源仓库">创建博客源仓库</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%83%a8%e7%bd%b2%e5%88%b0vercel" aria-label="部署到vercel">部署到vercel</a><ul>
+                        
+                <li>
+                    <a href="#%e9%83%a8%e7%bd%b2%e5%88%b0vercel-1" aria-label="部署到Vercel">部署到Vercel</a></li>
+                <li>
+                    <a href="#%e7%9b%ae%e6%a0%87%e4%bb%a3%e7%a0%81%e6%89%98%e7%ae%a1" aria-label="目标代码托管">目标代码托管</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%80new-project" aria-label="一、New Project">一、New Project</a></li>
+                <li>
+                    <a href="#%e4%ba%8cimport-git-repository" aria-label="二、Import Git Repository">二、Import Git Repository</a></li>
+                <li>
+                    <a href="#%e4%b8%89%e9%80%89%e6%8b%a9yournamegithubio%e5%b9%b6import" aria-label="三、选择yourname.github.io并Import">三、选择yourname.github.io并Import</a></li>
+                <li>
+                    <a href="#%e5%9b%9b%e8%ae%be%e7%bd%ae" aria-label="四、设置">四、设置</a></li>
+                <li>
+                    <a href="#%e4%ba%94%e5%ae%8c%e6%88%90" aria-label="五、完成">五、完成</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%ba%90%e7%a0%81%e6%89%98%e7%ae%a1" aria-label="源码托管">源码托管</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%80%e9%80%89%e6%8b%a9codingxiaoma%e5%b9%b6import" aria-label="一、选择codingxiaoma并Import">一、选择<code>codingxiaoma</code>并Import</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e8%ae%be%e7%bd%ae" aria-label="二、设置">二、设置</a></li>
+                <li>
+                    <a href="#%e4%b8%89%e7%82%b9%e5%87%bb%e5%8f%91%e5%b8%83" aria-label="三、点击发布">三、点击发布</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%83%a8%e7%bd%b2%e5%88%b0netlify" aria-label="部署到netlify">部署到netlify</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="准备">准备<a hidden class="anchor" aria-hidden="true" href="#准备">#</a></h1>
+<p>全程参考官方文档：https://gohugo.io/</p>
+<p>安装git（忽略）。</p>
+<p>go 不需要安装。</p>
+<p>安装hugo：</p>
+<p><a href="https://github.com/gohugoio/hugo/releases">https://github.com/gohugoio/hugo/releases</a></p>
+<p>windows下载：<code>hugo_extended_0.110.0_windows-amd64.zip</code></p>
+<p>下载并解压，只有一个exe文件，然后将文件移动到理想的位置，接着将exe文件的位置添加系统环境变量Path，然后用cmd检查hugo是否安装成功：</p>
+<p><code>hugo version</code></p>
+<p>出现版本号，说明配置成功。</p>
+<h1 id="快速开始">快速开始<a hidden class="anchor" aria-hidden="true" href="#快速开始">#</a></h1>
+<p>参考官网：https://gohugo.io/getting-started/quick-start/</p>
+<p>创建站点目录：</p>
+<p><code>hugo new site quickstart</code></p>
+<p>切换到站点目录：</p>
+<p><code>cd quickstart</code></p>
+<p>在当前目录下初始化一个空的 Git 仓库。</p>
+<p><code>git init</code></p>
+<p>添加主题（可能需要挂梯子才能拉代码）：</p>
+<p><code>git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod</code></p>
+<p>在网站配置文件中添加一行，使用当前的主题：</p>
+<p><code>echo &quot;theme = 'PaperMod'&quot; &gt;&gt; config.toml</code></p>
+<p>注意：这里可能会有编码问题，还是建议直接打开<code>config.toml</code>，在末尾添加<code>theme = 'PaperMod'</code></p>
+<p>配置文件示例（注意现在hugo的配置文件使用的是toml）：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>baseURL = <span style="color:#0ff;font-weight:bold">&#39;http://example.org/&#39;</span>
+</span></span><span style="display:flex;"><span>languageCode = <span style="color:#0ff;font-weight:bold">&#39;en-us&#39;</span>
+</span></span><span style="display:flex;"><span>title = <span style="color:#0ff;font-weight:bold">&#39;My New Hugo Site&#39;</span>
+</span></span><span style="display:flex;"><span>theme= <span style="color:#0ff;font-weight:bold">&#34;PaperMod&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动hugo服务：</p>
+<p><code>hugo server</code></p>
+<p>然后根据提示访问：</p>
+<p>http://localhost:1313/</p>
+<h1 id="添加内容">添加内容<a hidden class="anchor" aria-hidden="true" href="#添加内容">#</a></h1>
+<p>新增一篇文章：</p>
+<p><code>hugo new posts/my-first-post.md</code></p>
+<p>Hugo在<code>content/posts</code>目录下创建了这个文件，你可以用编辑器打开这个md文件。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>title: &#34;My First Post&#34;
+</span></span><span style="display:flex;"><span>date: 2022-11-20T09:03:20-08:00
+</span></span><span style="display:flex;"><span>draft: true
+</span></span><span style="display:flex;"><span>---
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意<code>draft</code>字段的值为true，默认情况下，Hugo在构建时不会发布草稿内容。</p>
+<p>修改<code>draft</code>的值为false，就可以在页面看到刚才创建的文章，或者使用以下命令显示草稿文章。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>hugo server --buildDrafts
+</span></span><span style="display:flex;"><span>hugo server -D
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改文章内容，无需重启服务，无需刷新页面，就可以看到内容改变。</p>
+<h1 id="问题">问题<a hidden class="anchor" aria-hidden="true" href="#问题">#</a></h1>
+<h2 id="文件不渲染文章时间问题">文件不渲染（文章时间问题）<a hidden class="anchor" aria-hidden="true" href="#文件不渲染文章时间问题">#</a></h2>
+<p>原因，Hugo 默认不会渲染将来的页面，也不会输出任何提示，说明有页面因为时间未到而未渲染。而 Hugo 按照 UTC 时间考虑我的页面，认为我的页面是将来的页面，自然就没有输出了。</p>
+<p>找到了问题，方法就很简单了。你可以：</p>
+<ul>
+<li>为自己文章/页面的 date 加上时区</li>
+<li>配置 Hugo 使其输出将来的页面</li>
+</ul>
+<p>我直接采用了简单粗暴的第二种方式。在 config.yaml 中添加：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="font-weight:bold">buildFuture</span>: <span style="color:#fff;font-weight:bold">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="配置">配置<a hidden class="anchor" aria-hidden="true" href="#配置">#</a></h1>
+<p>用你的编辑器，打开你项目根部的站点配置文件（config.toml）。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>baseURL = &#39;http://example.org/&#39;
+</span></span><span style="display:flex;"><span>languageCode = &#39;en-us&#39;
+</span></span><span style="display:flex;"><span>title = &#39;My New Hugo Site&#39;
+</span></span><span style="display:flex;"><span>theme= &#34;PaperMod&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改baseURL为你站点的根目录。</p>
+<p>修改<code>languageCode</code>为你自己的语音。中文：<code>zh-cn</code></p>
+<p>修改<code>title</code></p>
+<h1 id="hexo和hugo简单对比">hexo和hugo简单对比<a hidden class="anchor" aria-hidden="true" href="#hexo和hugo简单对比">#</a></h1>
+<p>hugo的目录结构如下：</p>
+<p>相较于 Hexo，Hugo 的站点文件夹非常干净没有恶心人的 <code>node_modules</code>，配置文件集中在 <code>config.toml</code>，当然你可以直接改名为更为习惯的 <code>config.yaml</code></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>├── archetypes
+</span></span><span style="display:flex;"><span>│   └── default.md
+</span></span><span style="display:flex;"><span>├── config.toml
+</span></span><span style="display:flex;"><span>├── content
+</span></span><span style="display:flex;"><span>├── data
+</span></span><span style="display:flex;"><span>├── layouts
+</span></span><span style="display:flex;"><span>├── static
+</span></span><span style="display:flex;"><span>└── themes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Hugo 的内容管理，每篇文章独立项目文件夹</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>├── post (主文件夹)
+</span></span><span style="display:flex;"><span>│   └── operator-precedence (项目文件夹)
+</span></span><span style="display:flex;"><span>│       ├── index.md (文章内容)
+</span></span><span style="display:flex;"><span>│       └── operator-precedence (图像资源)
+</span></span><span style="display:flex;"><span>│           ├── c-operator-precedence.webp
+</span></span><span style="display:flex;"><span>│           └── tree.webp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Hexo 的内容管理，每篇文章都在 <code>_posts</code> 主文件夹下</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>_posts (主文件夹)
+</span></span><span style="display:flex;"><span>├── acsl (文章图像资源)
+</span></span><span style="display:flex;"><span>│   ├── ...
+</span></span><span style="display:flex;"><span>│   └── xxx.webp
+</span></span><span style="display:flex;"><span>├── acsl.md (文章内容)
+</span></span><span style="display:flex;"><span>├── ap-cal-bc
+</span></span><span style="display:flex;"><span>│   ├── ...
+</span></span><span style="display:flex;"><span>│   └── xxx.webp
+</span></span><span style="display:flex;"><span>├── ap-cal-bc.md
+</span></span><span style="display:flex;"><span>├── ap-chem
+</span></span><span style="display:flex;"><span>│   ├── ...
+</span></span><span style="display:flex;"><span>│   └── xxx.webp
+</span></span><span style="display:flex;"><span>└── ap-chem.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>文件头部配置的差异</p>
+<p>hexo</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>title: 面试
+</span></span><span style="display:flex;"><span>tags: other
+</span></span><span style="display:flex;"><span>date: 999-12-09 00:42:45
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>hugo</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>title: &#34;123&#34;
+</span></span><span style="display:flex;"><span>date: 2023-02-24T17:58:17+08:00 // 时间表示更为严谨
+</span></span><span style="display:flex;"><span>draft: true //表示是否草稿
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="快速迁移">快速迁移<a hidden class="anchor" aria-hidden="true" href="#快速迁移">#</a></h2>
+<p>直接将hexo<code>你的hexo根目录\source\_posts</code>下的所有md文件全部复制到hugo的<code>你的hugo根目录\content</code>下面。</p>
+<p>因为hugo的md文档头部配置和hexo不同，所有需要修改所有md文件的头部，有格式不对的文件hugo无法启动。</p>
+<h2 id="图片引用">图片引用<a hidden class="anchor" aria-hidden="true" href="#图片引用">#</a></h2>
+<h3 id="方法一">方法一<a hidden class="anchor" aria-hidden="true" href="#方法一">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>├─content
+</span></span><span style="display:flex;"><span>│  └─posts
+</span></span><span style="display:flex;"><span>│      └─数据结构和算法
+</span></span><span style="display:flex;"><span>│          └─树.md
+</span></span><span style="display:flex;"><span>│             └─ 1.png 你要引用的图片
+</span></span><span style="display:flex;"><span>│             └─ 2.png
+</span></span><span style="display:flex;"><span>│          └─其他文章.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在<code>树.md</code>的同级建同名文件夹，图片放到文件夹里，这么引用图片：<code>![](1.png)</code></p>
+<h3 id="方法二">方法二<a hidden class="anchor" aria-hidden="true" href="#方法二">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>├─content
+</span></span><span style="display:flex;"><span>│  └─posts
+</span></span><span style="display:flex;"><span>│      └─数据结构和算法
+</span></span><span style="display:flex;"><span>│          └─树
+</span></span><span style="display:flex;"><span>│             └─ index.md 你的文档md
+</span></span><span style="display:flex;"><span>│             └─ 1.png 你要引用的图片
+</span></span><span style="display:flex;"><span>│             └─ 2.png
+</span></span><span style="display:flex;"><span>│          └─其他文章.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>建一个文件夹<code>树</code>，md文件改名为<code>index.md</code>，图片和md都放到这个文件夹下，这么引用图片：<code>![](1.png)</code>。</p>
+<h3 id="方法三">方法三<a hidden class="anchor" aria-hidden="true" href="#方法三">#</a></h3>
+<p>或者可以将图片放到站点根目录的<code>static</code>文件夹下，然后这么引用图片：<code>/static/1.png</code>，这样的缺点是如果使用vsCode或者Typora编辑md文件，不能在本地预览图片，可能通过一些配置可以显示，没研究，反正不建议用这种方式。</p>
+<h1 id="发布到github">发布到github<a hidden class="anchor" aria-hidden="true" href="#发布到github">#</a></h1>
+<h2 id="手动发布">手动发布<a hidden class="anchor" aria-hidden="true" href="#手动发布">#</a></h2>
+<p><code>hugo</code>命令就可以生成public文件夹，这个文件夹可以部署到云服务器或者托管到github上。</p>
+<p>注意：输入hugo的生成方式只会往public文件夹里添加内容，但是不会删除外部已经不存在而public里面还存在的文件， 所以我一般用<code>hugo -F --cleanDestinationDir</code>命令，表示每次生成的public都是全新的，会覆盖原来的。</p>
+<p>Hugo 默认会将生成的静态网页文件存放在 <code>public/</code> 目录下，我们可以通过将 <code>public/</code> 目录初始化为 git 仓库并关联我们的 <code>https://youname.github.io</code> 远程仓库来推送我们的网页静态文件。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
+</span></span><span style="display:flex;"><span>git remote add origin git@github.com:youname/youname.github.io
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#0ff;font-weight:bold">&#34;hugo first&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 推送</span>
+</span></span><span style="display:flex;"><span>git push origin master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>稍等几分钟即可通过我们的自定义域名来访问我们的博客站点了，和我们 <code>hugo server</code> 本地调试完全一致。</p>
+<p>遇到的问题：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>papermod Failed to find a valid digest in the &#39;integrity&#39; attribute for resource
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发布的<code>github pages</code>后，发现页面引用css出错，f12控制台显示如上错误。google之，在stackoverflow找到解决办法，在配置文件加入如下配置：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="font-weight:bold">params</span>:
+</span></span><span style="display:flex;"><span>	<span style="font-weight:bold">assets</span>:
+</span></span><span style="display:flex;"><span>		<span style="font-weight:bold">disableFingerprinting</span>: <span style="color:#fff;font-weight:bold">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="自动发布">自动发布<a hidden class="anchor" aria-hidden="true" href="#自动发布">#</a></h2>
+<p>自动发布流程：</p>
+<ol>
+<li>提交修改</li>
+<li>博客源文件仓库</li>
+<li>触发<code>Github Action</code></li>
+<li>生成静态文件</li>
+<li>博客仓库<code>github pages</code></li>
+</ol>
+<h3 id="创建博客静态资源仓库">创建博客静态资源仓库<a hidden class="anchor" aria-hidden="true" href="#创建博客静态资源仓库">#</a></h3>
+<p>存放生成后的静态文件。因为要开启<code>github pages</code>，所以必须是<code>youname.github.io</code>的形式。</p>
+<h3 id="创建博客源仓库">创建博客源仓库<a hidden class="anchor" aria-hidden="true" href="#创建博客源仓库">#</a></h3>
+<p>用于存放博客的源文件，包括自己写的md文件等。随意起名字。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#007f7f"># 初始化仓库，强制分支名是main</span>
+</span></span><span style="display:flex;"><span>git init -b main
+</span></span><span style="display:flex;"><span>git remote add origin 你的仓库地址
+</span></span><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#0ff;font-weight:bold">&#34;hugo first&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 推送</span>
+</span></span><span style="display:flex;"><span>git push origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意：本地创建的默认分支名字是<code>master</code>，github上默认的分支名是<code>main</code>，本地分支和远程关联时需要注意。</p>
+<p>在源仓库根目录创建文件夹<code>.github/workflows</code>，并在该文件夹下创建文件<code>deploy.yml</code>，内容如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="font-weight:bold">name</span>: deploy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># GitHub Action 的触发条件</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">on</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#007f7f"># 当这个项目仓库发生推送动作后，执行 GitHub Action</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># 可以在 GitHub 项目仓库的 Action 工具栏进行手动调用</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">workflow_dispatch</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f"># 定时执行 GitHub Action，如我的设置为北京时间每天早上执行，主要是使用一些自动化统计 CI 来自动更新我博客的关于页面，如本周编码时间，影音记录等，如果你不需要定时功能，可以删除这个条件</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">schedule</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f"># Runs everyday at 8:00 AM</span>
+</span></span><span style="display:flex;"><span>        - <span style="font-weight:bold">cron</span>: <span style="color:#0ff;font-weight:bold">&#34;0 0 * * *&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 表示 GitHub Action 中的任务</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">jobs</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#007f7f"># 任务名是build</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">build</span>:
+</span></span><span style="display:flex;"><span>    	<span style="color:#007f7f"># 表示 GitHub Action 运行环境</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">runs-on</span>: ubuntu-latest
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f"># 步骤</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">steps</span>:
+</span></span><span style="display:flex;"><span>            - <span style="font-weight:bold">name</span>: Checkout
+</span></span><span style="display:flex;"><span>              <span style="color:#007f7f"># uses 是 GitHub Action 中的一个插件</span>
+</span></span><span style="display:flex;"><span>              <span style="font-weight:bold">uses</span>: actions/checkout@v3
+</span></span><span style="display:flex;"><span>              <span style="font-weight:bold">with</span>:
+</span></span><span style="display:flex;"><span>               	  <span style="color:#007f7f"># 可以同步博客源仓库的子模块，即我们的主题模块</span>
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">submodules</span>: <span style="color:#fff;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">fetch-depth</span>: <span style="color:#ff0;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            - <span style="font-weight:bold">name</span>: Setup Hugo
+</span></span><span style="display:flex;"><span>              <span style="color:#007f7f"># 插件</span>
+</span></span><span style="display:flex;"><span>              <span style="font-weight:bold">uses</span>: peaceiris/actions-hugo@v2
+</span></span><span style="display:flex;"><span>              <span style="font-weight:bold">with</span>:
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">hugo-version</span>: <span style="color:#0ff;font-weight:bold">&#34;latest&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            - <span style="font-weight:bold">name</span>: Build Web
+</span></span><span style="display:flex;"><span>              <span style="font-weight:bold">run</span>: hugo
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            - <span style="font-weight:bold">name</span>: Deploy Web
+</span></span><span style="display:flex;"><span>              <span style="color:#007f7f"># 插件</span>
+</span></span><span style="display:flex;"><span>              <span style="font-weight:bold">uses</span>: peaceiris/actions-gh-pages@v3
+</span></span><span style="display:flex;"><span>              <span style="font-weight:bold">with</span>:
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">PERSONAL_TOKEN</span>: ${{ secrets.PERSONAL_TOKEN }}
+</span></span><span style="display:flex;"><span>                  <span style="color:#007f7f"># 修改为你的GitHub Pages 仓库地址</span>
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">EXTERNAL_REPOSITORY</span>: yourname/yourname.github.io
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">PUBLISH_BRANCH</span>: master
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">PUBLISH_DIR</span>: ./public
+</span></span><span style="display:flex;"><span>                  <span style="font-weight:bold">commit_message</span>: ${{ github.event.head_commit.message }}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面是一段官方的action，可以和上边对比参考。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">74
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#007f7f"># Sample workflow for building and deploying a Hugo site to GitHub Pages</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">name</span>: Deploy Hugo site to Pages
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#007f7f"># Runs on pushes targeting the default branch</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">branches</span>: [<span style="color:#0ff;font-weight:bold">&#34;main&#34;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#007f7f"># Allows you to run this workflow manually from the Actions tab</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">workflow_dispatch</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">permissions</span>:
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">contents</span>: read
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">pages</span>: write
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">id-token</span>: write
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># Allow one concurrent deployment</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">concurrency</span>:
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">group</span>: <span style="color:#0ff;font-weight:bold">&#34;pages&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">cancel-in-progress</span>: <span style="color:#fff;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># Default to bash</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">defaults</span>:
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">run</span>:
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">shell</span>: bash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#007f7f"># Build job</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">build</span>:
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">runs-on</span>: ubuntu-latest
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">env</span>:
+</span></span><span style="display:flex;"><span>      <span style="font-weight:bold">HUGO_VERSION</span>: <span style="color:#ff0;font-weight:bold">0.108.0</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Install Hugo CLI
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">run</span>: |<span style="color:#0ff;font-weight:bold">
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">          &amp;&amp; sudo dpkg -i ${{ runner.temp }}/hugo.deb</span>          
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Install Dart Sass Embedded
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">run</span>: sudo snap install dart-sass-embedded
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Checkout
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">uses</span>: actions/checkout@v3
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold">submodules</span>: recursive
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Setup Pages
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">id</span>: pages
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">uses</span>: actions/configure-pages@v3
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Install Node.js dependencies
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">run</span>: <span style="color:#0ff;font-weight:bold">&#34;[[ -f package-lock.json || -f npm-shrinkwrap.json ]] &amp;&amp; npm ci || true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Build with Hugo
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">env</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#007f7f"># For maximum backward compatibility with Hugo modules</span>
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold">HUGO_ENVIRONMENT</span>: production
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold">HUGO_ENV</span>: production
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">run</span>: |<span style="color:#0ff;font-weight:bold">
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">          hugo \
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">            --minify \
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">            --baseURL &#34;${{ steps.pages.outputs.base_url }}/&#34;</span>          
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Upload artifact
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">uses</span>: actions/upload-pages-artifact@v1
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">with</span>:
+</span></span><span style="display:flex;"><span>          <span style="font-weight:bold">path</span>: ./public
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#007f7f"># Deployment job</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">deploy</span>:
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">environment</span>:
+</span></span><span style="display:flex;"><span>      <span style="font-weight:bold">name</span>: github-pages
+</span></span><span style="display:flex;"><span>      <span style="font-weight:bold">url</span>: ${{ steps.deployment.outputs.page_url }}
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">runs-on</span>: ubuntu-latest
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">needs</span>: build
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="font-weight:bold">name</span>: Deploy to GitHub Pages
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">id</span>: deployment
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">uses</span>: actions/deploy-pages@v1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为我们需要从博客源仓库推送到外部 GitHub Pages 仓库，需要特定权限，要在GitHub 账户下创建一个token。</p>
+<p><code>用户头像 -&gt; Setting -&gt; Developer setting -&gt; Personal access tokens</code></p>
+<p>注意这个token是可以选择失效时间的，所以这里为了方便我们选择<code>no expiration</code>，永不过期，如果选择了失效时间，某一天推送的时候会发现推送失败，还半天找不到问题，找了半天才发现原来token失效了。。。</p>
+<p>配置后复制生成的 Token（注：只会出现一次，窗口关闭后就看不到了），然后在我们博客源仓库的</p>
+<p><code>Settings -&gt; Secrets and variables -&gt; Actions</code></p>
+<p>点击右上角<code>New repository secret</code>，名字填写<code>PERSONAL_TOKEN</code>，值为刚才复制的token。这样 GitHub Action 就可以获取到 Token 了。</p>
+<p>这样我们的配置就大功告成了。以后md源文件修改后，只需要<code>git push origin main</code>推送到源仓库，即可触发 GitHub Action，自动生成博客页面并推送至 GitHub Pages 仓库，而 GitHub Pages 仓库更新后，又会自动触发官方页面部署 CI，实现我们的网站发布。从两个仓库的<code>Actions</code>选项卡，可以看到这个构建的流程。</p>
+<h1 id="部署到vercel">部署到vercel<a hidden class="anchor" aria-hidden="true" href="#部署到vercel">#</a></h1>
+<p><a href="https://www.leftpocket.cn/post/hugo/hugo_vercel">参考</a></p>
+<p>我们当前已经把hugo部署到<code>Github Pages</code>上。但是<code>Github Pages</code>有两个小问题：</p>
+<ul>
+<li>国内访问慢，有些地区访问<code>Github Pages</code>可能超时</li>
+<li><code>Github</code>禁止百度抓取网页，意味着你的网站没办法在百度上搜到。</li>
+</ul>
+<p>当然你可以部署到自己的云服务器上，但是当我们没有云服务器的时候，就要找一些免费的托管平台。</p>
+<p>Vercel 它是一个免费的网站托管平台，也是我目前用过最好的网站托管平台，不仅仅可以部署静态网站，而且还可以部署动态网站，所以我们可以拿 vercel 充当你免费的服务器，是非常好用的。</p>
+<p>它有以下几点好处：</p>
+<ul>
+<li>关联 github，只需要往 github 提交代码，它会自动获取最新的提交，然后自动部署</li>
+<li>提供了免费的域名，省去了申请域名的问题，如果有自己的域名，还可以做个域名解析到这个平台上</li>
+<li>提供了免费的 Https 证书，如果证书到期了，它会自动替换，完全不需要操心</li>
+<li>傻瓜式的部署方式，它的操作非常简单，Vercel 提供了两种方式：通过命令行部署、通过 Vercel 提供管理后台部署，这期视频我们主要介绍通过命令行部署，因为命令行的部署方式更加简单</li>
+</ul>
+<p>Vercel可以支持一键导入<code>Github</code>, <code>Gitlab</code>，非常方便。</p>
+<h2 id="部署到vercel-1">部署到Vercel<a hidden class="anchor" aria-hidden="true" href="#部署到vercel-1">#</a></h2>
+<p>想要把自己的博客部署到Vercel，有两种方式：</p>
+<ol>
+<li>源码托管，Vercel会自动编译成目标文件。(vercel会执行hugo命令来编译成HTML文件)</li>
+<li>目标文件托管，把Github Pages （HTML文件）导入Vercel。</li>
+</ol>
+<p>经过我的实验，两种方式都可以成功，看个人喜好。 不过目标代码托管比较简单。
+我这里两种托管方式都介绍。</p>
+<p>无论哪种方式，都需要先注册一个Vercel账号：
+<a href="https://vercel.com/">Vercel</a> 我这边直接使用github注册，同时方便从Github导入仓库。</p>
+<h2 id="目标代码托管">目标代码托管<a hidden class="anchor" aria-hidden="true" href="#目标代码托管">#</a></h2>
+<p>目标代码托管非常简单，只需要从Github导入你的 <code>xx.github.io</code> 仓库即可。</p>
+<h3 id="一new-project">一、New Project<a hidden class="anchor" aria-hidden="true" href="#一new-project">#</a></h3>
+<p>第一步是新建项目</p>
+<h3 id="二import-git-repository">二、Import Git Repository<a hidden class="anchor" aria-hidden="true" href="#二import-git-repository">#</a></h3>
+<p>导入Git仓库，可以选择导入所有仓库</p>
+<h3 id="三选择yournamegithubio并import">三、选择yourname.github.io并Import<a hidden class="anchor" aria-hidden="true" href="#三选择yournamegithubio并import">#</a></h3>
+<p>选择目标文件仓库 <code>yourname.github.io</code>然后点击<code>Import</code></p>
+<h3 id="四设置">四、设置<a hidden class="anchor" aria-hidden="true" href="#四设置">#</a></h3>
+<ol>
+<li>FRAMEWORK PRESET 选Other (因为目标文件是没有框架的)</li>
+<li>点击Deploy</li>
+</ol>
+<h3 id="五完成">五、完成<a hidden class="anchor" aria-hidden="true" href="#五完成">#</a></h3>
+<p>托管成功。</p>
+<p>注意，托管成功后，vercel会给分配一个域名，你需要修改你的hugo站点配置文件的<code>baseURL</code>为这个地址，不然一点其他连接就跳到你之前配置的地址了。</p>
+<h2 id="源码托管">源码托管<a hidden class="anchor" aria-hidden="true" href="#源码托管">#</a></h2>
+<p>源码托管需要注意几点：</p>
+<ol>
+<li>源代码需要发布到Github上。</li>
+<li>public目录不能发布。（添加到 .gitignore上）</li>
+<li>主题如果是从github下载下来的，子目录里面会有 <code>.git</code> 文件，发布代码的话，内层目录是不能有<code>.git</code>的，它会识别成另一个git仓库并忽略上传，只上传一个软链接文件。所以需要删除themes主题下面的<code>.git</code>文件，否则 Vercel 无法从 github上拉取到主题，编译会失败。</li>
+</ol>
+<p>下面介绍下如何进行源码部署：</p>
+<h3 id="一选择codingxiaoma并import">一、选择<code>codingxiaoma</code>并Import<a hidden class="anchor" aria-hidden="true" href="#一选择codingxiaoma并import">#</a></h3>
+<h3 id="二设置">二、设置<a hidden class="anchor" aria-hidden="true" href="#二设置">#</a></h3>
+<ol>
+<li>FRAMEWORK PRESET 自动会识别为Hugo</li>
+<li>Build Command 是hugo</li>
+<li>Output directory是public</li>
+<li>Environment Variables 填写hugo版本。不然会默认使用很旧的版本。</li>
+</ol>
+<p>使用<code>hugo version</code>查看你的hugo版本。
+<strong>NAME:</strong> <code>HUGO_VERSION</code>, <strong>VALUE:</strong> <code>0.89.4</code></p>
+<h3 id="三点击发布">三、点击发布<a hidden class="anchor" aria-hidden="true" href="#三点击发布">#</a></h3>
+<p>一、如果出现：</p>
+<p><code>WARN 2021/11/29 14:03:51 found no layout file for &quot;HTML&quot; for kind &quot;page&quot;: You should create a template file which matches Hugo Layouts Lookup Rules for this combination.</code></p>
+<p>这是因为你的主题并没有发布到你的Github上，只是发布了一个软链接。 去到你的themes目录：</p>
+<p><code>➜ even git:(master) rm -rf .git</code></p>
+<p>如果还是没有变动需要提交，重命名<code>even</code>提交，然后再改回来，就可以正常提交了。</p>
+<p>二、如果出现：</p>
+<p><code>ERROR 2021/11/29 14:10:32 mkdir /vercel/path0/public: file exists</code></p>
+<p>意思是public文件已经存在了，Vercel没办法给你编译成目标文件，你需要从Github删除public并忽略public文件提交到Github。</p>
+<p><strong>方式：</strong>
+你把public rename一下，并把public加到 <code>.gitignore</code>里面提交，然后再把名字改回来，就自动被忽略了。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mv public public2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git add public public2
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#0ff;font-weight:bold">&#34;mv&#34;</span>
+</span></span><span style="display:flex;"><span>git push
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#39;public&#39;</span>&gt;&gt;.gitignore
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mv public2 public
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git add public2
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#0ff;font-weight:bold">&#34;gitignore&#34;</span>
+</span></span><span style="display:flex;"><span>git push
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样public就会忽略提交了且从Github删除。 点击Redeploy重新部署。（要从主界面重新进入，才是main branch） 等一会就发布成功了。
+如果左边的小窗口显示正常，就说明发布成功，点击Visit。
+可以看到发布成功了。
+可以看到Vercel自动给分配了一个域名。</p>
+<p>注意：
+BUILD COMMAND是可以支持多行命令的，如果你有定制化的需求。
+比如：</p>
+<p>同时部署Github Pages和Verel，想要修改config.toml里面的域名。
+想增加一个sitemap.xml等等。
+可以像我一样：</p>
+<p><code>sed -i &quot;s/codingxiaoma.github.io/www.codingxiaoma.tk/g&quot; config.toml; hugo; cd public; cp sitemap.xml gg_sitemap.xml; cd ../</code></p>
+<p>是不是很强大。</p>
+<h1 id="部署到netlify">部署到netlify<a hidden class="anchor" aria-hidden="true" href="#部署到netlify">#</a></h1>
+<p>部署完vercel，挂梯子能访问，不挂梯子访问不了，才发现vercel被墙了。想要继续用vercel，只能自己买域名解析到vercel给分配的域名上，无奈，转netlify。</p>
+<p><a href="https://app.netlify.com/">netlify官网</a></p>
+<p>根据官网提示操作。同样，记得hugo的配置文件的<code>baseURL</code>，为netlify分配给你的域名。</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/other/">other</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
