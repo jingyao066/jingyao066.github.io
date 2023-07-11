@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>interview on Wjy&#39;s Blog</title>
+    <link>https://funny-toffee-4aa7c3.netlify.app/tags/interview/</link>
+    <description>Recent content in interview on Wjy&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 06 Jul 2023 05:00:00 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>java基础面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <description>基础概念和常识 JVM JVM是运行 Java 字节码的虚拟机。JVM 有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节</description>
+    </item>
+    
+    <item>
+      <title>java基础面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <description>什么是线程和进程? 进程 进程是程序的一次执行过程，是系统运行程序的基本单位，因此进程是动态的。系统运行一个程序即是一个进程从创建，运行到消亡的</description>
+    </item>
+    
+    <item>
+      <title>java集合常见面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <description>概述 List, Set, Queue, Map 四者的区别 List(对付顺序的好帮手): 存储的元素是有序的、可重复的。 Set(注重独一无二的性质): 存储的元素是无序的、不可重复</description>
+    </item>
+    
+  </channel>
+</rss>

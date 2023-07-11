@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>网络 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="其他基础">
+<meta name="description" content="网络通信原理
+TCP/IP五层模型详解
+计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质&#43;互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。
+
+">
+<meta name="author" content="">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="网络" />
+<meta property="og:description" content="网络通信原理
+TCP/IP五层模型详解
+计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质&#43;互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-12-09T00:48:47+00:00" />
+<meta property="article:modified_time" content="2020-12-09T00:48:47+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="网络"/>
+<meta name="twitter:description" content="网络通信原理
+TCP/IP五层模型详解
+计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质&#43;互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。
+
+"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "网络",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "网络",
+  "name": "网络",
+  "description": "网络通信原理 TCP/IP五层模型详解 计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质+互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。 ",
+  "keywords": [
+    "其他基础"
+  ],
+  "articleBody": "网络通信原理 TCP/IP五层模型详解 计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质+互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。 物理层 物理层主要是基于电器特性发送高低电平信号，电平即“电压平台”，指的是电路中某一点电压的高低状态，在网络信号中高电平用数字“1”表示，低电平用数字“0”表示。电平的高低是个相对概念，3V对于7V是低电平，但对于1V就是高电平。\n数据链路层 由于单纯的电平信号“0”和“1”没有任何意义，在实际应用中，我们会将电平信号进行分组处理， 多少位一组、每组什么意思，这样数据才有具体的含义。数据链路层的功能就是定义电平信号的分组方式。\n以太网协议 数据链路层使用以太网协议进行数据传输，基于MAC地址的广播方式实现数据传输，只能在局域网内广播。早期各个公司都有自己的分组方式，后来形成了统一的标准，即以太网协议Ethernet。\nEthernet以太网 由一组电平信号构成一个数据包，叫作“帧”，每一数据帧由报头Head和数Data两部分组成。 Head：固定18字节，其中发送者/源地址6字节，接收者/目标地址6字节，数据类型6字节。 Data：最短46字节，最长1500字节。数据包的具体内容格式为：Head长度+Data长度=最短64字节，最长1518字节（超过最大限制就分片发送）。\nMAC地址 Head中包含的源地址和目标地址的由来：Ethernet规定接入Internet的设备必须配有网卡，发送端和接收端的地址便是指网卡的地址，即MAC地址。MAC地址：每块网卡出厂时都被印上一个世界唯一的MAC地址，它是一个长度为48位的二进制数，通常用12位十六进制数表示（前6位是厂商编号，后6位是流水线号）。\nBroadcast广播 有了MAC地址，同一网络内的两台主机就可以通信了（一台主机通过ARP协议获取另外一台主机的MAC地址），下面是以太网通信数据帧的详细示意图。 其实Ethernet采用非常原始的广播方式进行通信，也就是说计算机之间的通信基本靠“吼”。 例如，有多台PC组成了一个网络，并通过硬件设施链接具备了通信条件。 PC1按照固定协议格式以广播的方式发送以太网包给PC2，然而，PC3、PC4、PC5都会收到PC1发来的数据包，拆开后如果发现目标MAC地址不是自己就会丢弃，如果是自己就响应。\n网络层 有了Ethernet、MAC地址、广播的发送方式，世界上的计算机就可以彼此进行通信了，问题是世界范围的互联网是由一个个彼此隔离的小的局域网组成的，如果所有的通信都采用以太网的广播方式，那么一台机器发送的数据包全世界都会收到，这就不仅仅是效率低的问题了，这会是一种灾难。\n全世界的大网络由一个个小的彼此隔离的局域网组成，以太网包只能在一个局域网内发送，一个局域网是一个广播域，跨广播域通信只能通过路由转发。由此得出结论：必须找出一种方法来区分哪些计算机属于同一广播域，哪些不是。如果是就采用广播的方式发送，如果不是就采用路由的方式发送（向不同广播域/子网分发数据包），MAC地址是无法区分的，它只跟厂商有关，网络层就是用来解决这一问题的。网络层的作用就是引入一套新的地址来区分不同的广播域/子网，这套地址叫作网络地址。\nIP 规定网络地址的协议叫作IP（Internet Protocol，网际互联协议），它定义的地址称为IP地址。广泛采用v4版本即IPv4，规定网络地址由32位二进制数表示。一个IP地址通常写成四段十进制数，例如172.16.10.1，其取值范围为：0.0.0.0～255.255.255.255。\nIP地址由两部分组成：网络部分（用来标识子网）和主机部分（用来标识主机）。 注意：单纯的IP地址段只是标识了IP地址的种类，从网络部分或主机部分都无法辨识一个IP地址所处的子网。例如，并不能确定172.16.10.1与172.16.10.2处于同一子网。因此，就需要子网掩码。\n子网掩码 所谓“子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.10.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。\n我们根据“子网掩码”就能判断任意两个IP地址是否处于同一个子网络。方法是将两个IP地址与子网掩码分别进行\u0026运算（两个数位都为1，运算结果为1，否则为0），然后比较结果是否相同，如果相同，就表明它们在同一个子网络中，否则就不在。比如，已知IP地址172.16.10.1和172.16.10.2的子网掩码都是255.255.255.0，请问它们是否在同一个子网络中？我们将二者IP地址与子网掩码分别进行\u0026运算，具体规则如下图所示。\n总结一下，IP的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络中。\nIP数据包 IP数据包也分为Head和Data两部分，无须为IP数据包定义单独的栏位，直接放入以太网包的Data部分即可。 Head（IP头部）：长度为20～60字节。 Data（IP数据）：最长为65515字节。 而以太网数据包的Data部分，最长只有1500字节。因此，如果IP数据包超过1500字节，它就需要分割成几个以太网数据包，分开发送。 ARP 我们已经知道计算机通信方式基本靠“吼”，也就是广播的方式。所有上层的数据包到最后都要封装到以太网头，然后通过以太网协议发送。在谈及以太网协议的时候，我们已经了解到，通信基于MAC地址的广播方式实现的，计算机在发送数据包时，获取自身的MAC地址是容易的，获取目标主机的MAC地址，需要通过ARP（Address Resolution Protocol，地址解析协议）来实现。\nARP用于实现从IP地址到MAC地址的映射，即询问目标IP地址对应的MAC地址，以广播的方式发送数据包，获取目标主机的MAC地址。我们通过一个案例来说明其具体通信原理。 假设主机IP地址都已知: 主机A的IP地址为10.1.20.64，MAC地址为00：08：ca：xx：xx：xx 主机B的IP地址为10.1.20.109，MAC地址为44：6d：57：xx：xx：xx\n当主机A要与主机B通信时，ARP可以将主机B的IP地址（10.1.20.109）解析成主机B的MAC地址，以下为工作流程。 第一步：通过IP地址和子网掩码计算出自己所处的子网，得出如下表所示的结果。 同一子网：目标主机MAC地址，目标主机IP地址。 不同子网：网关MAC地址，目标主机IP地址。\n第二步：分析主机A和B是否处于同一网络，如果不是同一网络，那么下表中目标IP地址为10.1.20.109（访问路由器的路由表），通过ARP获取的是网关的MAC地址。\n第三步：根据主机A上的路由表内容，确定用于访问主机B的转发IP地址是10.1.20.109。然后主机A在自己的本地ARP缓存中检查主机B的匹配MAC地址。\n第四步：如果主机A在ARP缓存中没有找到映射，它将询问10.1.20.64的硬件地址，从而将ARP请求帧广播到本地网络上的所有主机。源主机A的IP地址和MAC地址都包括在ARP请求中。本地网络上的每台主机都接收到ARP请求并且检查是否与自己的IP地址匹配。如果主机发现请求的IP地址与自己的IP地址不匹配，它将丢弃ARP请求。\n第五步：主机B确定ARP请求中的IP地址与自己的IP地址匹配，将主机A的IP地址和MAC地址映射添加到本地ARP缓存中。\n第六步：主机B将包含其MAC地址的ARP回复消息直接发送回主机A。\n第七步：当主机A接收到从主机B发来的ARP回复消息时，会用主机B的IP地址和MAC地址映射更新ARP缓存。本机缓存是有生存期的，生存期结束后，将再次重复上面的过程。主机B的MAC地址一旦确定，主机A就能向主机B发送IP地址了。\n传输层 现在我们已经知道，网络层的IP地址帮我们区分子网，以太网层的MAC地址帮我们找到主机。大家使用的都是应用程序，你的计算机上可能同时开启QQ、微信等多个应用程序，那么我们通过IP地址和MAC地址找到了一台特定的主机，如何标识这台主机上的应用程序？答案就是端口，端口就是应用程序与网卡关联的编号。那么传输层就是用来建立端口到端口的通信机制的。\n补充：主机端口的取值范围为0～65535，其中0～1023为系统保留端口的取值范围，也叫作BSD保留端口。用户可注册端口的取值范围为1024～49152，还有随机动态端口的取值范围为49152～65535。为什么取值范围只能为0～65535，多一个都不行？从协议来讲，在TCP头部留给存储端口的空间只有2字节，最大值就是65535。\nTCP TCP（Transmission Control Protocol，传输控制协议）是一种可靠传输协议，TCP数据包没有长度限制，理论上可以无限长，但是为了保证网络的效率，通常TCP数据包的长度不会超过IP数据包的长度，以确保单个TCP数据包不必再分割，其数据结构如下图所示。 UDP UDP（User Datagram Protocol，用户数据报协议）是一种不可靠传输协议，“报头”部分总共有8字节，总长度不超过65535字节，正好放进一个IP数据包，其数据结构和TCP相同。\nTCP报文结构 TCP报文是TCP层传输的数据单元，也叫作报文段。TCP报文结构如下图所示。 下面对报文内容做详细介绍。\n端口号：同一台计算机的不同进程。 源端口：源端口和IP地址的作用是标识报文的返回地址。 目的端口：接收方计算机上的程序端口。 TCP报头中的源端口号和目的端口号同IP数据包中的源IP地址和目的IP地址唯一确定一条TCP连接。\n序号：序号是本报文段发送的数据组的第一个字节的序号。在TCP传送的流中，每一个字节都有一个序号。 例如：一个报文段的序号为300，此报文段数据部分共有100字节，则下一个报文段的序号为400。所以序号确保了TCP传输的有序性。\n确认号：即ACK，指明下一个期待收到的字节序号，表明该序号之前的所有数据已经正确无误地收到。确认号只有当ACK标志为1时才有效。比如建立连接时，SYN报文的ACK标志为0。\n数据偏移/头部长度：4位。由于头部可能含有可选项内容，TCP报头的长度是不确定的，报头不包含任何任选属性则长度为20字节，4位头部长度属性所能表示的最大值为1111，转化成十进制为15，15×32/8=60，故报头最大长度为60字节。头部长度也叫数据偏移，是因为头部长度实际上指示了数据区在报文段中的起始偏移值。\n保留：为将来定义新的用途保留，现在一般设置为0。\n标志位：URG、ACK、PSH、RST、SYN、FIN，共6个，每一个标志位都表示一个控制功能，具体含义如下表所示。\n字段 中文名 含义 URG 紧急指针标志 1表示紧急指针有效，0表示忽略紧急指针 ACK 确认序号标志 1表示确认号有效，0表示报文中不含确认信息，忽略确认号属性 PSH 接收信号标志 1表示数据含有push标志，告诉接收方在接口该段报文以后，应尽快将这个报文段交给应用程序，而不是在缓冲区排队 RST 重置连接标志 用于重置因主机重置或其他原因导致的链接错误，或用于拒绝非法的报文段和链接请求 SYN 同步序号标志 用于建立链接，SYN=1，ACK=0，表示链接请求中。SYN=1，ACK=1，表示链接响应中。 FIN 完成标志 用于释放链接，为1表示发送了已经没有数据发送了，可以关闭本方链接 窗口：滑动窗口大小，用来告知发送端接收端的缓存大小，以此控制发送端发送数据的速率，从而达到流量控制。窗口大小是一个16位属性，因而窗口大小最大为65535。\n校验和：奇偶校验，此校验和针对整个TCP报文段，包括TCP头部和TCP数据，以16位属性进行计算所得。由发送端计算和存储，并由接收端进行验证。\n紧急指针：只有当URG标志为1时紧急指针才有效。紧急指针是一个正的偏移量，和顺序号属性中的值相加表示紧急数据最后一个字节的序号。TCP的紧急方式是发送端向另一端发送紧急数据的一种方式。\n选项和填充：最常见的可选属性是最长报文大小，又称为MSS（MaximumSegment Size），每个连接方通常都在通信的第一个报文段（为建立连接而设置SYN标志为1的那个段）中指明这个选项，它表示本端所能接收的最大报文段的长度。选项长度不一定是32位的整数倍，所以要加填充位，即在这个属性中加入额外的零，以保证TCP头部长度是32位的整数倍。\n数据部分：TCP报文段中的数据部分是可选的。在一个连接建立和一个连接终止时，双方交换的报文段仅有TCP头部。如果一方没有数据要发送，也使用没有任何数据的头部来确认收到的数据。在处理超时的许多情况中，也会发送不带任何数据的报文段。\nTCP交互流程 传输连接包括三个阶段：连接建立、数据传送和连接释放。传输连接管理就是对连接建立和连接释放过程的管控，使其能正常运行，以达到这些目的：使通信双方能够确知对方的存在、可以允许通信双方协商一些参数（最大报文段长度、最大窗口大小等）、能够对运输实体资源进行分配（缓存大小等）。TCP连接的建立采用客户端-服务器模式：主动发起连接建立的应用进程叫作客户端，被动等待连接建立的应用进程叫作服务器。接下来，介绍TCP完成数据传输的三次握手和四次挥手的详细过程。\n第一次握手：建立连接时，客户端发送SYN包（syn=1）到服务器，并进入SYN_SENT状态，等待服务器确认。 第二次握手：服务器收到SYN包，必须确认客户端的SYN包（ack=x+1），同时自己也发送一个 SYN包（syn=1），即SYN+ACK包，此时服务器进入SYN_RECV状态。 第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK（ack=y+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。\n至此，TCP连接就建立了，客户端和服务器可以愉快地“玩耍”了。只要通信双方没有一方发出连接释放的请求，连接就将一直保持。如果有一方释放连接，就会发起挥手操作。\n第一次挥手：客户端进程发出连接释放报文，并且停止发送数据。释放数据报文头部，FIN=1，其序列号为seq=u（等于前面已经传送过来的数据的最后一个字节的序号加1），此时，客户端进入FIN_WAIT_1（终止等待1）状态。TCP规定，FIN报文段即使不携带数据，也要消耗一个序号。\n第二次挥手：服务器收到连接释放报文，发出确认报文，ACK=1，ack=u+1，并且带上自己的序列号seq=v，此时，服务器就进入了CLOSE_WAIT（关闭等待）状态。TCP服务器通知高层的应用进程，客户端向服务器方向的连接就被释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接收。这个状态还要持续一段时间，也就是整个CLOSE_WAIT状态持续的时间。 客户端收到服务器的确认请求后，客户端就进入FIN_WAIT_2（终止等待2）状态，等待服务器发送连接释放报文（在这之前还需要接收服务器发送的最后的数据）。\n第三次挥手：服务器将最后的数据发送完毕后，就向客户端发送连接释放报文，FIN=1，ack=u+1，由于在半关闭状态，服务器很可能又发送了一些数据，假定此时的序列号为seq=w，此时，服务器就进入了LAST_ACK（最后确认）状态，等待客户端的确认。\n最后，服务器只要收到了客户端发出的确认，就立即进入CLOSED状态。同样，撤销TCB后，就结束了这次TCP连接。可以看到，服务器结束TCP连接的时间要比客户端早一些。 TCP交互的详细过程如下图所示。 应用层 在日常操作中，用户使用的都是应用程序，应用程序都工作在应用层。互联网是开放的，大家都可以开发自己的应用程序，数据多种多样，必须规定好数据的组织形式。应用层的功能就是规定应用程序的数据格式。 例如：TCP可以为各种各样的程序传递数据，比如SMTP、HTTP、FTP、POP3等，那么，必须有不同的协议规定电子邮件、网页、FTP数据的格式，这些应用程序协议就构成了“应用层”。如下图所示是应用层协议的基本组成结构示意。 用户从应用程序中发送数据是一个对数据封装的过程，而接收数据则是一个解封装的动作。下面简单介绍一下常用的应用层协议。\nDNS DNS是英文Domain Name System（域名系统）的缩写，用来把便于人们使用的机器名字转换为IP地址。现在顶级域名TLD（Totel Lead Domination）分为三大类：国家顶级域名nTLD、通用顶级域名gTLD和基础结构域名。域名服务器分为四种类型：根域名服务器、顶级域名服务器、本地域名服务器和权限域名服务器。DNS使用TCP和UDP端口53。当前，对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符。\nHTTP HTTP（HyperText Transfer Protocol，超文本传输协议）是面向事务的应用层协议。它是互联网上能够可靠地交换信息的重要基础。HTTP使用面向连接的TCP作为运输层协议，保证了数据的可靠传输。\nFTP FTP（File Transfer Protocol，文件传输协议）是互联网上使用最广泛的文件传送协议。FTP提供交互式的访问，允许客户指明文件类型与格式，并允许文件具有存取权限。FTP基于TCP工作。\nSMTP SMTP（Simple Mail Transfer Protocol，简单邮件传输协议）规定了在两个相互通信的SMTP进程之间应如何交换信息。SMTP通信的三个阶段：建立连接、邮件传送和连接释放。\nPOP3 POP3（Post Office Protocol 3，邮件读取协议）通常被用来接收电子邮件。\nTelnet协议 Telnet协议是一个简单的远程终端协议，也是互联网的正式标准，又称为终端仿真协议。\n总结 总结一下OSI七层模型，它为开放互联信息系统提供了一种结构框架。建立七层模型的主要目的是解决异种网络互联时所遇到的兼容性问题。它的最大优点是将服务、接口和协议这三个概念明确地区分开来：服务说明某一层为上一层提供一些什么功能，接口说明上一层如何使用下一层的服务，而协议涉及如何实现本层的服务；这样各层之间具有很强的独立性，互联网络中各实体采用什么样的协议是没有限制的，只要向上提供相同的服务并且不改变相邻层的接口就可以。其详细结构如下图所示。 网络通信实现原理 要想实现网络通信，每台主机需具备四要素：本机的IP地址、子网掩码、网关的IP地址和DNS的IP地址。获取这四要素有两种方式：一是静态获取，即手动配置；二是动态获取，即通过 DHCP（Dynamic Host Configuration Protocol，动态主机配置协议）获取。\n下图是网络通信的数据结构示意 以太网头部 – IP头部 – UDP头部 – DHCP数据包\n详细分析一下网络通信的交互过程。\n最前面的“以太网头部”，设置发出方（本机）的MAC地址和接收方（DHCP服务器）的MAC地址。 前者就是本机网卡的MAC地址，后者这时不知道，就填入一个广播地址：FF-FF-FF-FF-FF-FF。\n后面的“IP头部”，设置发出方的IP地址和接收方的IP地址。这时，对于这两者，本机都不知道。于是，发出方的IP地址就设为0.0.0.0，接收方的IP地址设为255.255.255.255。\n最后的“UDP头部”，设置发出方的端口和接收方的端口。这一部分是DHCP规定好的，发出方是68端口，接收方是67端口。\n这个数据包构造完成后，就可以发出了。以太网是广播发送的，同一个子网的每台计算机都收到了这个数据包。 因为接收方的MAC地址是FF-FF-FF-FF-FF-FF，看不出是发给谁的，所以每台收到这个数据包的计算机，还必须分析这个数据包的IP地址，才能确定是不是发给自己的。看到发出方IP地址是0.0.0.0，接收方IP地址是255.255.255.255，于是DHCP服务器知道“这个数据包是发给我的”，而其他计算机就可以丢弃这个数据包。\n接下来，DHCP服务器读出这个数据包的数据内容，分配好IP地址，发送回去一个“DHCP响应”数据包。这个响应包的结构也是类似的，以太网头部的MAC地址是双方的网卡地址，IP头部的IP地址是DHCP服务器的IP地址（发出方）和255.255.255.255（接收方），UDP头部的端口是67（发出方）和68（接收方），分配给请求端的IP地址和本网络的具体参数则包含在Data部分。\n新加入的计算机收到这个响应包，于是就知道了自己的IP地址、子网掩码、网关地址、DNS服务器等参数。\n向浏览器输入URL后发生了什么 当在浏览器地址栏中输入网址后，浏览器是怎么把最终的页面呈现出来的呢？这个过程大致可以分为两个部分：网络通信和页面渲染。下面详细分析完整的通信过程。\n第一步，本机设置以下信息。 本机ip：192.168.1.100 子网掩码：255.255.255.0 网关IP：192.168.1.1 DNS地址：8.8.8.8\n第二步，打开浏览器，想要访问百度，在地址栏中输入网址www.baidu.com 第三步，通过访问DNS域名系统服务器（基于UDP）获得IP地址。\n下图完整地说明了一次网络请求如何获取目标服务器IP地址的全过程。 图中13台国际DNS根服务器IP地址具体如下。\n名称 管理单位及设置地点 IP地址 A INTERNIC.NET（美国，弗吉尼亚州） 198.41.0.4 B 美国信息科学研究所（美国，加利弗尼亚州） 128.9.0.107 C PSINet公司（美国，弗吉尼亚州） 192.33.4.12 D 马里兰大学（美国马里兰州） 128.8.10.90 E 美国航空航天管理局（美国加利弗尼亚州） 192.203.230.10 F 因特网软件联盟（美国加利弗尼亚州） 192.5.5.241 G 美国国防部网络信息中心（美国弗吉尼亚州） 192.112.36.4 H 美国陆军研究所（美国马里兰州） 128.63.2.53 I Autonomica公司（瑞典，斯德哥尔摩） 192.36.148.17 J VeriSign公司（美国，弗吉尼亚州） 192.58.128.30 K RIPE NCC（英国，伦敦） 193.0.14.129 L IANA（美国，弗吉尼亚州） 198.32.64.12 M WIDE Project（日本，东京） 202.12.27.33 通过域名寻找到目标机器所在位置。下面简单科普一下域名知识，域名有顶级域名和二级域名。 顶级域名如.com、.net、.org、.cn等属于国际顶级域名。根据目前的国际互联网域名体系，国际顶级域名分为两类：类别顶级域名（gTLD）和地理顶级域名（ccTLD）。类别顶级域名是以“com”“net”“org”“biz”“info”等结尾的域名，均由国外公司负责管理。地理顶级域名是以国家或地区代码为结尾的域名，如“cn”代表中国，“uk”代表英国。地理顶级域名一般由各个国家或地区负责管理。在不同的地域还会使用二级域名，二级域名是以顶级域名为基础的地理域名，例如中国的二级域有.com.cn、.net.cn、.org.cn、.gd.cn等。\n在实际的网站应用中，通常会使用子域名。比如父域名是abc.com，子域名就是www.abc.com或者*.abc.com。一般来说，子域名是域名的一条记录，比如abc.com是一个域名，www.abc.com是其中比较常用的记录，一般默认类似*.abc.com的域名全部被称作abc.com的子域名。\n第四步，向目标机器发起HTTP请求，获得如下格式的http响应报文：\n1 2 3 4 5 6 7 8 9 10 11 Date: Sun, 17 Mar 2013 08:12:54 GMT　响应头部 Server: Apache/2.2.8 (Win32) PHP/5.2.5 X-Powered-By: PHP/5.2.5 Set-Cookie: PHPSESSID=c0huq7pdkmm5gg6osoe3mgjmm3; path=/ Expires: Thu, 19 Nov 1981 08:52:00 GMT Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0 Pragma: no-cache Content-Length: 4393 Keep-Alive: timeout=5, max=100 Connection: Keep-Alive Content-Type: text/html; charset=utf-8 我们假定这些数据的长度为4960字节，它会被嵌在TCP数据包中。\n第五步，TCP。TCP数据包需要设置端口，接收方（百度）的HTTP端口默认是80，发送方（本机）的端口是一个随机生成的1024～65535之间的整数，假定为51775。TCP数据包的头部长度为20字节，加上嵌入HTTP的数据包，总长度变为4980字节。\n第六步，IP。TCP数据包再嵌入IP数据包。IP数据包需要设置双方的IP地址，这是已知的。IP数据包的头部长度为20字节，加上嵌入的TCP数据包，总长度变为5000字节。\n第七步，以太网协议。IP数据包嵌入以太网数据包。以太网数据包需要设置双方的MAC地址，发送方为本机的网卡MAC地址，接收方为网关192.168.1.1的MAC地址（通过ARP得到）。以太网数据包的数据部分最大长度为1500字节，而现在的IP数据包长度为5000字节。因此，IP数据包必须分割成四个包。因为每个包都有自己的IP头部（20字节），所以四个包的长度分别为1500字节、1500字节、1500字节、560字节。如下图所示是以太网数据包示意图。 第八步，服务器响应。经过多个网关的转发，百度的服务器收到了这四个以太网数据包。 根据IP头部的序号，咕泡官网将四个包拼起来，取出完整的TCP数据包，然后读出里面的“HTTP请求”，接着做出“HTTP响应”，再用TCP发回来。本机收到HTTP响应以后，就可以将网页显示出来，完成一次网络通信。\nSocket 我们知道两个进程进行通信一个最基本的前提是能够唯一地标识一个进程。在本地进程通信中，我们可以使用PID来唯一标识一个进程，但PID只在本地唯一，网络中的两个进程PID冲突概率很大，这时候就需要另辟蹊径了。我们知道IP层的IP地址可以唯一标识主机，而TCP层的协议和端口号可以唯一标识主机的一个进程，可以用IP地址+协议+端口号唯一标识网络中的一个进程。\n能够唯一标识网络中的进程后，它们就可以利用Socket进行通信了。那么，什么是Socket呢？我们经常把Socket翻译为套接字，Socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用，以实现进程在网络中的通信，具体结构如下图所示。 Socket起源于UNIX，在UNIX“一切皆文件”的哲学思想下，Socket是一种从打开，到完成读、写操作，最后关闭的模式，服务器和客户端各自维护一个“文件”，在建立连接打开文件后，可以向自己的文件写入内容供对方读取或者读取对方的内容，通信结束时关闭文件。\nJava I/O演进之路 什么是io? 我们都知道在UNIX世界里一切皆文件，而文件是什么呢？文件就是一串二进制流而已，其实不管是Socket，还是FIFO（First Input First Output，先进先出队列））、管道、终端。对计算机来说，一切都是文件，一切都是流。在信息交换的过程中，计算机都是对这些流进行数据的收发操作，简称为I/O操作（Input andOutput），包括往流中读出数据、系统调用Read、写入数据、系统调用Write。不过计算机里有那么多流，怎么知道要操作哪个流呢？实际上是由操作系统内核创建文件描述符（File Descriptor，FD）来标识的，一个FD就是一个非负整数，所以对这个整数的操作就是对这个文件（流）的操作。我们创建一个Socket，通过系统调用会返回一个FD，那么剩下的对Socket的操作就会转化为对这个描述符的操作，这又是一种分层和抽象的思想。\nIO交互流程 通常用户进程中的一次完整I/O交互流程分为两阶段，首先是经过内核空间，也就是由操作系统处理；紧接着就是到用户空间，也就是交由应用程序。具体交互流程如下图所示。 内核空间中存放的是内核代码和数据，而进程的用户空间中存放的是用户程序的代码和数据。不管是内核空间还是用户空间，它们都处于虚拟空间中，Linux使用两级保护机制：0级供内核（Kernel）使用，3级供用户程序使用。每个进程都有各自的私有用户空间（0～3G），这个空间对系统中的其他进程是不可见的。最高的1G字节虚拟内核空间则为所有进程及内核共享。\n操作系统和驱动程序运行在内核空间，应用程序运行在用户空间，两者不能简单地使用指针传递数据。因为Linux使用的虚拟内存机制，必须通过系统调用请求Kernel来协助完成I/O操作，内核会为每个I/O设备维护一个缓冲区，用户空间的数据可能被换出，所以当内核空间使用用户空间的指针时，对应的数据可能不在内存中。\n对于一个输入操作来说，进程I/O系统调用后，内核会先看缓冲区中有没有相应的缓存数据，如果没有再到设备中读取。因为设备I/O一般速度较慢，需要等待，内核缓冲区有数据则直接复制到进程空间。所以，一个网络输入操作通常包括两个不同阶段。\n等待网络数据到达网卡，然后将数据读取到内核缓冲区。 从内核缓冲区复制数据，然后拷贝到用户空间。 I/O有内存I/O、网络I/O和磁盘I/O三种，通常我们说的I/O指的是后两者。如下图所示是I/O通信过程的调度示意。 五种I/O通信模型 在网络环境下，通俗地讲，将I/O分为两步：第一步是等待；第二步是数据搬迁。如果想要提高I/O效率，需要将等待时间降低。因此发展出来五种I/O模型，分别是：阻塞I/O模型、非阻塞I/O模型、多路复用I/O模型、信号驱动I/O模型、异步I/O模型。其中，前四种被称为同步I/O，下面对每一种I/O模型进行详细分析。\n阻塞I/O模型 阻塞I/O模型的通信过程示意如下图所示。 当用户进程调用了recvfrom这个系统调用，内核就开始了I/O的第一个阶段：准备数据。对于网络I/O来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候内核就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞，当数据准备好时，它就会将数据从内核拷贝到用户内存，然后返回结果，用户进程才解除阻塞的状态，重新运行起来。几乎所有的开发者第一次接触到的网络编程都是从listen()、send()、recv()等接口开始的，这些接口都是阻塞型的。阻塞I/O模型的特性总结如下。 特点：在IO执行的两个阶段（等待数据和拷贝数据）都被阻塞 典型应用：阻塞Socket、java BIO 优点：\n阻塞线程挂起不消耗CPU资源，及时响应每个操作 难度低，开发简单 适合并发量小的网络应用 缺点：\n不适合并发量大的应用 为了及时响应，需要为每个请求分配一个处理进程，系统开销大 非阻塞I/O模型 非阻塞I/O模型的通信过程示意如下图所示。 当用户进程发出read操作时，如果内核中的数据还没有准备好，那么它并不会阻塞用户进程，而是立刻返回一个error。从用户进程角度讲，它发起一个read操作后，并不需要等待，而是马上就得到了一个结果，用户进程判断结果是一个error时，它就知道数据还没有准备好。于是它可以再次发送read操作，一旦内核中的数据准备好了，并且再次收到了用户进程的系统调用，那么它会马上将数据拷贝到用户内存，然后返回，非阻塞型接口相比于阻塞型接口的显著差异在于，在被调用之后立即返回。非阻塞I/O模型的特性总结如下表所示。\n特点：用户进程需要不断的询问内核（Kernel）数据是否准备好。 典型应用：Socket设置NON_BLOCK。 优点：难度低，但相对阻塞IO更难 缺点：\n进程轮询调用，小号CPU资源 适合并发量小、不需要及时响应的网络应用 非阻塞模式套接字与阻塞模式套接字相比，不容易使用。使用非阻塞模式套接字，需要编写更多的代码，但是，非阻塞模式套接字在控制建立多个连接、数据的收发量不均、时间不定时，具有明显优势。\n多路复用I/O模型 多路复用I/O模型的通信过程示意如下图所示。 多个进程的I/O可以注册到一个复用器（Selector）上，当用户进程调用该Selector，Selector会监听注册进来的所有I/O，如果Selector监听的所有I/O在内核缓冲区都没有可读数据，select调用进程会被阻塞，而当任一I/O在内核缓冲区中有可读数据时，select调用就会返回，而后select调用进程可以自己或通知另外的进程（注册进程）再次发起读取I/O，读取内核中准备好的数据，多个进程注册I/O后，只有一个select调用进程被阻塞。\n多路复用I/O相对阻塞和非阻塞更难简单说明，所以额外解释一段，其实多路复用I/O模型和阻塞I/O模型并没有太大的不同，事实上，还更差一些，因为这里需要使用两个系统调用（select和recvfrom），而阻塞I/O模型只有一次系统调用（recvfrom）。但是，用Selector的优势在于它可以同时处理多个连接，所以如果处理的连接数不是很多，使用select/epoll的Web Server不一定比使用多线程加阻塞I/O的Web Server性能更好，可能延迟还更大，select/epoll的优势并不是对于单个连接能处理得更快，而是能处理更多的连接。多路复用I/O模型的特性总结如下表所示。 特点：对于每一个Socket，一般设置成非阻塞，但是整个用户的进程其实是一直阻塞的，只不过进程是被select函数阻塞，而不是被Socket IO阻塞。 典型应用：java NIO、nginx(epoll、poll、select) 优点：\n专一进程解决多个进程IO的阻塞问题，性能好，Reactor模式 适合高并发应用开发，一个进程/线程响应多个请求 缺点：开发难度大\n信号驱动I/O模型 信号驱动I/O模型的通信过程示意如下图所示。 信号驱动I/O是指进程预先告知内核，向内核注册一个信号处理函数，然后用户进程返回不阻塞，当内核数据就绪时会发送一个信号给进程，用户进程便在信号处理函数中调用I/O读取数据。从上图可以看出，实际上I/O内核拷贝到用户进程的过程还是阻塞的，信号驱动I/O并没有实现真正的异步，因为通知到进程之后，依然由进程来完成I/O操作。这和后面的异步I/O模型很容易混淆，需要理解I/O交互并结合五种I/O模型进行比较阅读。 信号驱动I/O模型的特性总结如下表所示。 特点：不符合异步IO要求，只能算是伪异步，实际不常用 典型应用：应用场景较少 优点：不知道 缺点：开发难度大\n异步I/O模型 异步I/O模型的通信过程示意如下图所示。 用户进程发起aio_read操作后，给内核传递与read相同的描述符、缓冲区指针、缓冲区大小三个参数及文件偏移，告诉内核当整个操作完成时，如何通知我们立刻就可以开始去做其他的事；而另一方面，从内核的角度，当它收到一个aio_read之后，首先它会立刻返回，所以不会对用户进程产生任何阻塞，内核会等待数据准备完成，然后将数据拷贝到用户内存，当这一切都完成之后，内核会给用户进程发送一个信号，告诉它aio_read操作完成。\n异步I/O的工作机制是：告知内核启动某个操作，并让内核在整个操作完成后通知我们，这种模型与信号驱动I/O模型的区别在于，信号驱动I/O模型是由内核通知我们何时可以启动一个I/O操作，这个I/O操作由用户自定义的信号函数来实现，而异步I/O模型由内核告知我们I/O操作何时完成。 异步I/O模型的特性总结如下表所示。 特点：真正实现了异步IO，是唯一的异步IO模型。 典型应用：java 7 AIO，高性能服务器应用。 优点：\n不阻塞，数据一步到位，Proactor模式 适合高并发应用 缺点： 需要操作系统底层支持，Linux2.5内核实现，Linux2.6的内核标准特性 开发难度大 易混淆的概念 同步和异步 同步和异步其实是指CPU时间片的利用，主要看请求发起方对消息结果的获取是主动发起的，还是被动通知的，如下图所示。 请求方主动发起： 同步阻塞：一直在等待应答结果 同步非阻塞：CPU先去处理其他事情，但要不断轮询查看发起的请求是否有应答结果。 因为不管如何都要发起方主动获取消息结果，所以形式上还是同步操作。\n服务方通知的： 异步阻塞：请求方发出请求后，一直等待服务方通知。 异步非阻塞：不等待，先去干自己的事。 当事情处理完成后，服务方会主动通知请求方，它的请求已经完成，这就是异步。 异步通知的方式一般通过状态改变、消息通知或者回调函数来完成。\n阻塞和非阻塞 阻塞和非阻塞在计算机的世界里，通常指针对I/O的操作，如网络I/O和磁盘I/O等。那么什么是阻塞和非阻塞呢？简单地说，就是我们调用了一个函数后，在等待这个函数返回结果之前，当前的线程是处于挂起状态还是运行状态。如果是挂起状态，就意味着当前线程什么都不能干，就等着获取结果，这就是同步阻塞；如果仍然是运行状态，就意味着当前线程是可以继续处理其他任务的，但要时不时地看一下是否有结果了，这就是同步非阻塞。具体如下图所示。 解释1 阻塞、非阻塞，同步、异步。 不能简单的从字面理解，提供一个从分布式系统角度的回答。\n同步与异步 同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication) 所谓同步，就是在发出一个调用时，在没有得到结果之前，该调用就不返回。但是一旦调用返回，就得到返回值了。换句话说，就是由调用者主动等待这个调用的结果。 而异步则是相反，调用在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在调用发出后，被调用者通过状态、通知来通知调用者，或通过回调函数处理这个调用。\n举例：你打电话问书店老板有没有《分布式系统》这本书，如果是同步通信机制，书店老板会说， 你稍等，”我查一下\"，然后开始查啊查，等查好了（可能是5秒，也可能是一天）告诉你结果（返回结果）。而异步通信机制，书店老板直接告诉你我查一下啊，查好了打电话给你，然后直接挂电话了（不返回结果）。然后查好了，他会主动打电话给你。在这里老板通过“回电”这种方式来回调。\n阻塞与非阻塞 阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态。 阻塞调用是指调用结果返回之前，当前线程会被挂起。调用线程只有在得到结果之后才会返回。 非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程。\n还是上面的例子，你打电话问书店老板有没有《分布式系统》这本书，你如果是阻塞式调用，你会一直把自己“挂起”，直到得到这本书有没有的结果，如果是非阻塞式调用，你不管老板有没有告诉你，你自己先一边去玩了， 当然你也要偶尔过几分钟check一下老板有没有返回结果。在这里阻塞与非阻塞与是否同步异步无关。跟老板通过什么方式回答你结果无关。\n解释2 我认为同步、异步、阻塞、非阻塞，是分3个层次的：CPU层次；线程层次；程序员感知层次。这几个概念之所以容易混淆，是因为没有分清楚是在哪个层次进行讨论。\nCPU层次 在CPU层次，或者说操作系统进行IO和任务调度的层次，现代操作系统通常使用异步非阻塞方式进行IO（有少部分IO可能会使用同步非阻塞轮询），即发出IO请求之后，并不等待IO操作完成，而是继续执行下面的指令（非阻塞），IO操作和CPU指令互不干扰（异步），最后通过中断的方式来通知IO操作完成结果。\n线程层次 在线程层次，或者说操作系统调度单元的层次，操作系统为了减轻程序员的思考负担，将底层的异步非阻塞的IO方式进行封装，把相关系统调用（如read，write等）以同步的方式展现出来。然而，同步阻塞的IO会使线程挂起，同步非阻塞的IO会消耗CPU资源在轮询上。 为了解决这一问题，就有3种思路：多线程（同步阻塞）；IO多路复用（select，poll，epoll）（同步非阻塞，严格地来讲，是把阻塞点改变了位置）；直接暴露出异步的IO接口，如kernel-aio和IOCP（异步非阻塞）。\n程序员感知层次 在Linux中，上面提到的第2种思路用得比较广泛，也是比较理想的解决方案。然而，直接使用select之类的接口，依然比较复杂，所以各种库和框架百花齐放，都试图对IO多路复用进行封装。此时，库和框架提供的API又可以选择是以同步的方式还是异步的方式来展现。如python的asyncio库中，就通过协程，提供了同步阻塞式的API；如node.js中，就通过回调函数，提供了异步非阻塞式的API。\n其他参考\n总结 从上面的描述中，我们能够看到阻塞和非阻塞通常是指在客户端发出请求后，在服务端处理这个请求的过程中，客户端本身是直接挂起等待结果，还是继续做其他的任务。而异步和同步则是对于请求结果的获取是客户端主动获取结果，还是由服务端来通知结果。从这一点来看，同步和阻塞其实描述的是两个不同角度的事情，阻塞和非阻塞指的是客户端等待消息处理时本身的状态，是挂起还是继续干别的。同步和异步指的是对于消息结果是客户端主动获取的，还是由服务端间接推送的。记住这两点关键的区别将有助于我们更好地区分和理解它们。\nI/O模型的对比与总结 从上图可以看出，阻塞程度：阻塞I/O\u003e非阻塞I/O\u003e多路复用I/O\u003e信号驱动I/O\u003e异步I/O，效率是由低到高的。\n从BIO到NIO的演进 BIO NIO 通信 面向流 面向缓冲区 处理 阻塞 非阻塞 触发 无 选择器 流和缓冲区 Java NIO和BIO之间第一个最大的区别是，BIO是面向流的，NIO是面向缓冲区的。Java BIO面向流意味着每次从流中读一个或多个字节，直至读取所有字节，它们没有被缓存在任何地方。此外，不能前后移动流中的数据。 如果需要前后移动从流中读取的数据，需要先将它缓存到一个缓冲区。Java NIO的缓冲导向方法略有不同。数据读取到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动。这就增加了处理过程的灵活性。但是，还需要检查该缓冲区是否包含所有需要处理的数据。而且，要确保当更多的数据读入缓冲区时，不能覆盖缓冲区里尚未处理的数据。\n阻塞和非阻塞 Java BIO的各种流是阻塞的。这意味着，当一个线程调用read()或write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情。Java NIO的非阻塞模式，是一个线程从某通道（Channel）发送请求读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用，就什么都不会获取，而不是保持线程阻塞，所以直到数据变成可以读取之前，该线程可以继续做其他的事情。非阻塞写也是如此。一个线程请求写入某通道一些数据，但不需要等待它完全写入，这个线程同时可以去做别的事情。线程通常将非阻塞I/O的空闲时间用于在其他通道上执行I/O操作，所以一个单独的线程现在可以管理多个I/O通道。\n选择器在I/O中的应用 Java NIO的选择器（Selector）允许一个单独的线程监视多个输入通道，可以注册多个通道使用一个选择器，然后使用一个单独的线程来“选择”通道：这些通道里已经有可以处理的输入，或者选择已准备写入的通道。这种选择机制使一个单独的线程很容易管理多个通道。\nNIO和BIO如何影响应用程序的设计 API调用 数据处理逻辑 用来处理数据的线程数 Java AIO详解 彻底的异步通信 省略…\nnetty netty是一个java网络通信框架。 Netty是一款基于NIO（Nonblocking I/O，非阻塞IO）开发的网络通信框架，对比于 BIO（Blocking I/O，阻塞IO），他的并发性能得到了很大提高。通过下面2图了解NIO和BIO的区别。\nBIO NIO 从这两图可以看出，NIO的单线程能处理连接的数量比BIO要高出很多，而为什么单线程能处理更多的连接呢？原因就是图二中出现的Selector。\n当一个连接建立之后，他有两个步骤要做，第一步是接收完客户端发过来的全部数据，第二步是服务端处理完请求业务之后返回response给客户端。NIO和BIO的区别主要是在第一步。 在BIO中，等待客户端发数据这个过程是阻塞的，这样就造成了一个线程只能处理一个请求的情况，而机器能支持的最大线程数是有限的，这就是为什么BIO不能支持高并发的原因。 而NIO中，当一个Socket建立好之后，Thread并不会阻塞去接受这个Socket，而是将这个请求交给Selector，Selector会不断的去遍历所有的Socket，一旦有一个Socket建立完成，他会通知Thread，然后Thread处理完数据再返回给客户端——这个过程是不阻塞的，这样就能让一个Thread处理更多的请求了。\nNetty为什么传输快 Netty的传输快其实也是依赖了NIO的一个特性——零拷贝。我们知道，Java的内存有堆内存、栈内存和字符串常量池等等，其中堆内存是占用内存空间最大的一块，也是Java对象存放的地方，一般我们的数据如果需要从IO读取到堆内存，中间需要经过Socket缓冲区，也就是说一个数据会被拷贝两次才能到达他的的终点，如果数据量大，就会造成不必要的资源浪费。 Netty针对这种情况，使用了NIO中的另一大特性——零拷贝，当他需要接收数据的时候，他会在堆内存之外开辟一块内存，数据就直接从IO读到了那块内存中去，在netty里面通过ByteBuf可以直接对这些数据进行直接操作，从而加快了传输速度。\n下两图就介绍了两种拷贝方式的区别，摘自Linux 中的零拷贝技术，第 1 部分\n传统数据拷贝 零拷贝 为什么说Netty封装好？ 直接上代码对比\n阻塞I/O 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 public class PlainOioServer { public void serve(int port) throws IOException { final ServerSocket socket = new ServerSocket(port); //1 try { for (;;) { final Socket clientSocket = socket.accept(); //2 System.out.println(\"Accepted connection from \" + clientSocket); new Thread(new Runnable() { //3 @Override public void run() { OutputStream out; try { out = clientSocket.getOutputStream(); out.write(\"Hi!\\r\\n\".getBytes(Charset.forName(\"UTF-8\"))); //4 out.flush(); clientSocket.close(); //5 } catch (IOException e) { e.printStackTrace(); try { clientSocket.close(); } catch (IOException ex) { // ignore on close } } } }).start(); //6 } } catch (IOException e) { e.printStackTrace(); } } } 非阻塞IO 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 public class PlainNioServer { public void serve(int port) throws IOException { ServerSocketChannel serverChannel = ServerSocketChannel.open(); serverChannel.configureBlocking(false); ServerSocket ss = serverChannel.socket(); InetSocketAddress address = new InetSocketAddress(port); ss.bind(address); //1 Selector selector = Selector.open(); //2 serverChannel.register(selector, SelectionKey.OP_ACCEPT); //3 final ByteBuffer msg = ByteBuffer.wrap(\"Hi!\\r\\n\".getBytes()); for (;;) { try { selector.select(); //4 } catch (IOException ex) { ex.printStackTrace(); // handle exception break; } Set readyKeys = selector.selectedKeys(); //5 Iterator iterator = readyKeys.iterator(); while (iterator.hasNext()) { SelectionKey key = iterator.next(); iterator.remove(); try { if (key.isAcceptable()) { //6 ServerSocketChannel server = (ServerSocketChannel)key.channel(); SocketChannel client = server.accept(); client.configureBlocking(false); client.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ, msg.duplicate()); //7 System.out.println( \"Accepted connection from \" + client); } if (key.isWritable()) { //8 SocketChannel client = (SocketChannel)key.channel(); ByteBuffer buffer = (ByteBuffer)key.attachment(); while (buffer.hasRemaining()) { if (client.write(buffer) == 0) { //9 break; } } client.close(); //10 } } catch (IOException ex) { key.cancel(); try { key.channel().close(); } catch (IOException cex) { // 在关闭时忽略 } } } } } } Netty 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 public class NettyOioServer { public void server(int port) throws Exception { final ByteBuf buf = Unpooled.unreleasableBuffer( Unpooled.copiedBuffer(\"Hi!\\r\\n\", Charset.forName(\"UTF-8\"))); EventLoopGroup group = new OioEventLoopGroup(); try { ServerBootstrap b = new ServerBootstrap(); //1 b.group(group) //2 .channel(OioServerSocketChannel.class) .localAddress(new InetSocketAddress(port)) .childHandler(new ChannelInitializer() {//3 @Override public void initChannel(SocketChannel ch) throws Exception { ch.pipeline().addLast(new ChannelInboundHandlerAdapter() { //4 @Override public void channelActive(ChannelHandlerContext ctx) throws Exception { ctx.writeAndFlush(buf.duplicate()).addListener(ChannelFutureListener.CLOSE);//5 } }); } }); ChannelFuture f = b.bind().sync(); //6 f.channel().closeFuture().sync(); } finally { group.shutdownGracefully().sync(); //7 } } } 从代码量上来看，Netty就已经秒杀传统Socket编程了，但是这一部分博大精深，仅仅贴几个代码岂能说明问题，在这里给大家介绍一下Netty的一些重要概念，让大家更理解Netty。\nchannel Channel，表示一个连接，可以理解为每一个请求，就是一个Channel。 ChannelHandler，核心处理业务就在这里，用于处理业务请求。 ChannelHandlerContext，用于传输业务数据。 ChannelPipeline，用于保存处理过程需要用到的ChannelHandler和ChannelHandlerContext。\nByteBuf ByteBuf是一个存储字节的容器，最大特点就是使用方便，它既有自己的读索引和写索引，方便你对整段字节缓存进行读写，也支持get/set，方便你对其中每一个字节进行读写。\nByteBuf三种使用模式\nHeap Buffer 堆缓冲区 堆缓冲区是ByteBuf最常用的模式，他将数据存储在堆空间。\nDirect Buffer 直接缓冲区 直接缓冲区是ByteBuf的另外一种常用模式，他的内存分配都不发生在堆，jdk1.4引入的nio的ByteBuffer类 允许jvm通过本地方法调用分配内存，这样做有两个好处。\n通过免去中间交换的内存拷贝, 提升IO处理速度; 直接缓冲区的内容可以驻留在垃圾回收扫描的堆区以外。 DirectBuffer 在 -XX:MaxDirectMemorySize=xxM大小限制下, 使用 Heap 之外的内存, GC对此 ”无能为力”,也就意味着规避了在高负载下频繁的GC过程对应用线程的中断影响. Composite Buffer 复合缓冲区 复合缓冲区相当于多个不同ByteBuf的视图，这是netty提供的，jdk不提供这样的功能。 使用Netty创建Telnet服务 Netty作为一个高性能网络通信框架，可以自定义实现不同协议的服务端和客户端程序。这里以telnet为例做一个服务端程序。Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的标准协议和主要方式。\n在maven的pom.xml中添加：\n1 2 3 4 5 io.netty netty-all 4.0.36.Final 主程序NettyTelnetServer.java 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 public class NettyTelnetServer { // 指定端口号 private static final int PORT = 8888; private ServerBootstrap serverBootstrap; private EventLoopGroup bossGroup = new NioEventLoopGroup(1); private EventLoopGroup workerGroup = new NioEventLoopGroup(); public void open() throws InterruptedException { serverBootstrap = new ServerBootstrap(); // 指定socket的一些属性 serverBootstrap.option(ChannelOption.SO_BACKLOG, 1024); serverBootstrap.group(bossGroup, workerGroup) .channel(NioServerSocketChannel.class) // 指定是一个NIO连接通道 .handler(new LoggingHandler(LogLevel.INFO)) .childHandler(new NettyTelnetInitializer()); // 绑定对应的端口号,并启动开始监听端口上的连接 Channel ch = serverBootstrap.bind(PORT).sync().channel(); // 等待关闭,同步端口 ch.closeFuture().sync(); } public void close(){ bossGroup.shutdownGracefully(); workerGroup.shutdownGracefully(); } } NioEventLoopGroup对应一个被封装好的NIO线程池，bossGroup负责收集客户端连接， workerGroup负责处理每个连接的IO读写。 ServerBootstrap是Socket服务端启动类。通过这个类的实例，用户可以创建对应的服务端程序。\n初始化配置类NettyTelnetInitializer.java 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 public class NettyTelnetInitializer extends ChannelInitializer { private static final StringDecoder DECODER = new StringDecoder(); private static final StringEncoder ENCODER = new StringEncoder(); @Override protected void initChannel(SocketChannel channel) throws Exception { ChannelPipeline pipeline = channel.pipeline(); // Add the text line codec combination first, pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter())); // 添加编码和解码的类 pipeline.addLast(DECODER); pipeline.addLast(ENCODER); // 添加处理业务的类 pipeline.addLast(new NettyTelnetHandler()); } } 业务处理类NettyTelnetHandler.java 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 public class NettyTelnetHandler extends SimpleChannelInboundHandler { @Override public void channelActive(ChannelHandlerContext ctx) throws Exception { // Send greeting for a new connection. ctx.write(\"Welcome to \" + InetAddress.getLocalHost().getHostName() + \"!\\r\\n\"); ctx.write(\"It is \" + new Date() + \" now.\\r\\n\"); ctx.flush(); } @Override public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) { cause.printStackTrace(); ctx.close(); } @Override protected void channelRead0(ChannelHandlerContext ctx, String request) throws Exception { String response; boolean close = false; if (request.isEmpty()) { response = \"Please type something.\\r\\n\"; } else if (\"bye\".equals(request.toLowerCase())) { response = \"Have a good day!\\r\\n\"; close = true; } else { response = \"Did you say '\" + request + \"'?\\r\\n\"; } ChannelFuture future = ctx.write(response); ctx.flush(); if (close) { future.addListener(ChannelFutureListener.CLOSE); } } } 运行服务 1 2 3 4 5 6 7 8 9 10 11 public class NettyTest { @Test public void test() { NettyTelnetServer nettyTelnetServer = new NettyTelnetServer(); try { nettyTelnetServer.open(); } catch (InterruptedException e) { nettyTelnetServer.close(); } } } 使用命令行工具访问telnet服务(window建议使用xShell)\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ➜ telnet 127.0.0.1 8888 Trying 127.0.0.1... Connected to localhost. Escape character is '^]'. Welcome to whthomasdeMacBook-Pro.local! It is Tue Apr 12 11:37:20 CST 2016 now. hello Did you say 'hello'? yes Did you say 'yes'? telnet Did you say 'telnet'? bye Have a good day! Connection closed by foreign host. 利用netty构建的telnet服务器建立成功。\n其他 get和post 最直观的区别就是GET把参数包含在URL中，POST通过request body传递参数。你可能自己写过无数个GET和POST请求，或者已经看过很多权威网站总结出的他们的区别，你非常清楚知道什么时候该用什么。当你在面试中被问到这个问题，你的内心充满了自信和喜悦。你轻轻松松的给出了一个“标准答案”：\n1 2 3 4 5 6 7 8 9 10 GET在浏览器回退时是无害的，而POST会再次提交请求。 GET产生的URL地址可以被Bookmark，而POST不可以。 GET请求会被浏览器主动cache，而POST不会，除非手动设置。 GET请求只能进行url编码，而POST支持多种编码方式。 GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。 GET请求在URL中传送的参数是有长度限制的，而POST没有。 对参数的数据类型，GET只接受ASCII字符，而POST没有限制。 GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。 GET参数通过URL传递，POST放在Request body中。 （本标准答案参考自w3schools） “很遗憾，这不是我们要的回答！” GET和POST是什么？HTTP协议中的两种发送请求的方法。 HTTP是什么？HTTP是基于TCP/IP的关于数据如何在万维网中如何通信的协议。 HTTP的底层是TCP/IP。所以GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP链接。GET和POST能做的事情是一样一样的。你要给GET加上request body，给POST带上url参数，技术上是完全行的通的。\n在万维网世界中，TCP就像汽车，我们用TCP来运输数据，它很可靠，从来不会发生丢件少件的现象。但是如果路上跑的全是看起来一模一样的汽车，那这个世界看起来是一团混乱，送急件的汽车可能被前面满载货物的汽车拦堵在路上，整个交通系统一定会瘫痪。为了避免这种情况发生，交通规则HTTP诞生了。HTTP给汽车运输设定了好几个服务类别，有GET, POST, PUT, DELETE等等，HTTP规定，当执行GET请求的时候，要给汽车贴上GET的标签（设置method为GET），而且要求把传送的数据放在车顶上（url中）以方便记录。如果是POST请求，就要在车上贴上POST的标签，并把货物放在车厢里。当然，你也可以在GET的时候往车厢内偷偷藏点货物，但是这是很不光彩；也可以在POST的时候在车顶上也放一些数据，让人觉得傻乎乎的。HTTP只是个行为准则，而TCP才是GET和POST怎么实现的基本。\n但是，我们只看到HTTP对GET和POST参数的传送渠道（url还是requrest body）提出了要求。“标准答案”里关于参数大小的限制又是从哪来的呢？在万维网世界中，还有另一个重要的角色：运输公司。不同的浏览器（发起http请求）和服务器（接受http请求）就是不同的运输公司。 虽然理论上，你可以在车顶上无限的堆货物（url中无限加参数）。但是运输公司可不傻，装货和卸货也是有很大成本的，他们会限制单次运输量来控制风险，数据量太大对浏览器和服务器都是很大负担。业界不成文的规定是，（大多数）浏览器通常都会限制url长度在2K个字节，而（大多数）服务器最多处理64K大小的url。超过的部分，恕不处理。如果你用GET服务，在request body偷偷藏了数据，不同服务器的处理方式也是不同的，有些服务器会帮你卸货，读出数据，有些服务器直接忽略，所以，虽然GET可以带request body，也不能保证一定能被接收到哦。好了，现在你知道，GET和POST本质上就是TCP链接，并无差别。但是由于HTTP的规定和浏览器/服务器的限制，导致他们在应用过程中体现出一些不同。\nGET和POST还有一个重大区别，简单的说： GET产生一个TCP数据包；POST产生两个TCP数据包。\n对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）； 而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。 也就是说，GET只需要汽车跑一趟就把货送到了，而POST得跑两趟，第一趟，先去和服务器打个招呼“嗨，我等下要送一批货来，你们打开门迎接我”，然后再回头把货送过去。\n因为POST需要两步，时间上消耗的要多一点，看起来GET比POST更有效。因此Yahoo团队有推荐用GET替换POST来优化网站性能。但这是一个坑！跳入需谨慎。为什么？\nGET与POST都有自己的语义，不能随便混用。 据研究，在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。而在网络环境差 的情况下，两次包的TCP在验证数据包完整性上，有非常大的优点。 并不是所有浏览器都会在POST中发送两次包，Firefox就只发送一次。 参考地址\npatch请求 在HTTP原本的定义中，用于数据上传的方法只有post和put，后来鉴于post和put语义和功能上的不足，又加入了patch方法，post和put方法的差异是显而易见的，而put和patch方法就比较相似，但用法却完全不同。 PATCH方法是新引入的，是对PUT方法的补充，用来对已知资源进行局部更新。patch方法用来更新局部资源，这句话我们该如何理解？ 假设我们有一个UserInfo，里面有userId， userName， userGender等10个字段。可你的编辑功能因为需求，在某个特别的页面里只能修改userName，这时候的更新怎么做？ 人们通常(为徒省事)把一个包含了修改后userName的完整userInfo对象传给后端，做完整更新。但仔细想想，这种做法感觉有点二，而且真心浪费带宽(纯技术上讲，你不关心带宽那是你土豪)。 于是patch诞生，只传一个userName到指定资源去，表示该请求是一个局部更新，后端仅更新接收到的字段。而put虽然也是更新资源，但要求前端提供的一定是一个完整的资源对象，理论上说，如果你用了put，但却没有提供完整的UserInfo，那么缺了的那些字段应该被清空。 补充一下，PATCH 与 PUT 属性上的一个重要区别还在于：PUT 是幂等的，而 PATCH 不是幂等的。幂等是一个数学和计算机学概念，在计算机范畴内表示一个操作执行任意次对系统的影响跟一次是相同。如：POST 方法不是幂等的，若反复执行多次对应的每一次都会创建一个新资源。如果请求超时，则需要回答这一问题：资源是否已经在服务端创建了？能否再重试一次或检查资源列表？而对于幂等方法不存在这一个问题，我们可以放心地多次请求。最后再补充一句，restful只是标准，标准的意思是如果在大家都依此行事的话，沟通成本会很低，开发效率就高。但并非强制(也没人强制得了)，所以你说在你的程序里把方法名从put改成patch没有任何影响，那是自然，因为你的后端程序并没有按照标准对两个方法做不同处理，它的表现自然是一样的。\n",
+  "wordCount" : "23067",
+  "inLanguage": "en",
+  "datePublished": "2020-12-09T00:48:47Z",
+  "dateModified": "2020-12-09T00:48:47Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title">
+      网络
+    </h1>
+    <div class="post-meta"><span title='2020-12-09 00:48:47 +0000 UTC'>2020-12-09</span>
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%bd%91%e7%bb%9c%e9%80%9a%e4%bf%a1%e5%8e%9f%e7%90%86" aria-label="网络通信原理">网络通信原理</a><ul>
+                        
+                <li>
+                    <a href="#tcpip%e4%ba%94%e5%b1%82%e6%a8%a1%e5%9e%8b%e8%af%a6%e8%a7%a3" aria-label="TCP/IP五层模型详解">TCP/IP五层模型详解</a><ul>
+                        
+                <li>
+                    <a href="#%e7%89%a9%e7%90%86%e5%b1%82" aria-label="物理层">物理层</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e9%93%be%e8%b7%af%e5%b1%82" aria-label="数据链路层">数据链路层</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bb%a5%e5%a4%aa%e7%bd%91%e5%8d%8f%e8%ae%ae" aria-label="以太网协议">以太网协议</a></li>
+                <li>
+                    <a href="#ethernet%e4%bb%a5%e5%a4%aa%e7%bd%91" aria-label="Ethernet以太网">Ethernet以太网</a></li>
+                <li>
+                    <a href="#mac%e5%9c%b0%e5%9d%80" aria-label="MAC地址">MAC地址</a></li>
+                <li>
+                    <a href="#broadcast%e5%b9%bf%e6%92%ad" aria-label="Broadcast广播">Broadcast广播</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%bd%91%e7%bb%9c%e5%b1%82" aria-label="网络层">网络层</a><ul>
+                        
+                <li>
+                    <a href="#ip" aria-label="IP">IP</a></li>
+                <li>
+                    <a href="#%e5%ad%90%e7%bd%91%e6%8e%a9%e7%a0%81" aria-label="子网掩码">子网掩码</a></li>
+                <li>
+                    <a href="#ip%e6%95%b0%e6%8d%ae%e5%8c%85" aria-label="IP数据包">IP数据包</a></li>
+                <li>
+                    <a href="#arp" aria-label="ARP">ARP</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%bc%a0%e8%be%93%e5%b1%82" aria-label="传输层">传输层</a><ul>
+                        
+                <li>
+                    <a href="#tcp" aria-label="TCP">TCP</a></li>
+                <li>
+                    <a href="#udp" aria-label="UDP">UDP</a></li>
+                <li>
+                    <a href="#tcp%e6%8a%a5%e6%96%87%e7%bb%93%e6%9e%84" aria-label="TCP报文结构">TCP报文结构</a></li>
+                <li>
+                    <a href="#tcp%e4%ba%a4%e4%ba%92%e6%b5%81%e7%a8%8b" aria-label="TCP交互流程">TCP交互流程</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8%e5%b1%82" aria-label="应用层">应用层</a><ul>
+                        
+                <li>
+                    <a href="#dns" aria-label="DNS">DNS</a></li>
+                <li>
+                    <a href="#http" aria-label="HTTP">HTTP</a></li>
+                <li>
+                    <a href="#ftp" aria-label="FTP">FTP</a></li>
+                <li>
+                    <a href="#smtp" aria-label="SMTP">SMTP</a></li>
+                <li>
+                    <a href="#pop3" aria-label="POP3">POP3</a></li>
+                <li>
+                    <a href="#telnet%e5%8d%8f%e8%ae%ae" aria-label="Telnet协议">Telnet协议</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%80%bb%e7%bb%93" aria-label="总结">总结</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%bd%91%e7%bb%9c%e9%80%9a%e4%bf%a1%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86" aria-label="网络通信实现原理">网络通信实现原理</a></li>
+                <li>
+                    <a href="#%e5%90%91%e6%b5%8f%e8%a7%88%e5%99%a8%e8%be%93%e5%85%a5url%e5%90%8e%e5%8f%91%e7%94%9f%e4%ba%86%e4%bb%80%e4%b9%88" aria-label="向浏览器输入URL后发生了什么">向浏览器输入URL后发生了什么</a></li>
+                <li>
+                    <a href="#socket" aria-label="Socket">Socket</a></li></ul>
+                </li>
+                <li>
+                    <a href="#java-io%e6%bc%94%e8%bf%9b%e4%b9%8b%e8%b7%af" aria-label="Java I/O演进之路">Java I/O演进之路</a><ul>
+                        
+                <li>
+                    <a href="#io%e4%ba%a4%e4%ba%92%e6%b5%81%e7%a8%8b" aria-label="IO交互流程">IO交互流程</a></li>
+                <li>
+                    <a href="#%e4%ba%94%e7%a7%8dio%e9%80%9a%e4%bf%a1%e6%a8%a1%e5%9e%8b" aria-label="五种I/O通信模型">五种I/O通信模型</a><ul>
+                        
+                <li>
+                    <a href="#%e9%98%bb%e5%a1%9eio%e6%a8%a1%e5%9e%8b" aria-label="阻塞I/O模型">阻塞I/O模型</a></li>
+                <li>
+                    <a href="#%e9%9d%9e%e9%98%bb%e5%a1%9eio%e6%a8%a1%e5%9e%8b" aria-label="非阻塞I/O模型">非阻塞I/O模型</a></li>
+                <li>
+                    <a href="#%e5%a4%9a%e8%b7%af%e5%a4%8d%e7%94%a8io%e6%a8%a1%e5%9e%8b" aria-label="多路复用I/O模型">多路复用I/O模型</a></li>
+                <li>
+                    <a href="#%e4%bf%a1%e5%8f%b7%e9%a9%b1%e5%8a%a8io%e6%a8%a1%e5%9e%8b" aria-label="信号驱动I/O模型">信号驱动I/O模型</a></li>
+                <li>
+                    <a href="#%e5%bc%82%e6%ad%a5io%e6%a8%a1%e5%9e%8b" aria-label="异步I/O模型">异步I/O模型</a></li>
+                <li>
+                    <a href="#%e6%98%93%e6%b7%b7%e6%b7%86%e7%9a%84%e6%a6%82%e5%bf%b5" aria-label="易混淆的概念">易混淆的概念</a><ul>
+                        
+                <li>
+                    <a href="#%e5%90%8c%e6%ad%a5%e5%92%8c%e5%bc%82%e6%ad%a5" aria-label="同步和异步">同步和异步</a></li>
+                <li>
+                    <a href="#%e9%98%bb%e5%a1%9e%e5%92%8c%e9%9d%9e%e9%98%bb%e5%a1%9e" aria-label="阻塞和非阻塞">阻塞和非阻塞</a><ul>
+                        
+                <li>
+                    <a href="#%e8%a7%a3%e9%87%8a1" aria-label="解释1">解释1</a></li>
+                <li>
+                    <a href="#%e8%a7%a3%e9%87%8a2" aria-label="解释2">解释2</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#io%e6%a8%a1%e5%9e%8b%e7%9a%84%e5%af%b9%e6%af%94%e4%b8%8e%e6%80%bb%e7%bb%93" aria-label="I/O模型的对比与总结">I/O模型的对比与总结</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%bb%8ebio%e5%88%b0nio%e7%9a%84%e6%bc%94%e8%bf%9b" aria-label="从BIO到NIO的演进">从BIO到NIO的演进</a><ul>
+                        
+                <li>
+                    <a href="#%e6%b5%81%e5%92%8c%e7%bc%93%e5%86%b2%e5%8c%ba" aria-label="流和缓冲区">流和缓冲区</a></li>
+                <li>
+                    <a href="#%e9%98%bb%e5%a1%9e%e5%92%8c%e9%9d%9e%e9%98%bb%e5%a1%9e-1" aria-label="阻塞和非阻塞">阻塞和非阻塞</a></li>
+                <li>
+                    <a href="#%e9%80%89%e6%8b%a9%e5%99%a8%e5%9c%a8io%e4%b8%ad%e7%9a%84%e5%ba%94%e7%94%a8" aria-label="选择器在I/O中的应用">选择器在I/O中的应用</a></li>
+                <li>
+                    <a href="#nio%e5%92%8cbio%e5%a6%82%e4%bd%95%e5%bd%b1%e5%93%8d%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f%e7%9a%84%e8%ae%be%e8%ae%a1" aria-label="NIO和BIO如何影响应用程序的设计">NIO和BIO如何影响应用程序的设计</a></li></ul>
+                </li>
+                <li>
+                    <a href="#java-aio%e8%af%a6%e8%a7%a3" aria-label="Java AIO详解">Java AIO详解</a></li></ul>
+                </li>
+                <li>
+                    <a href="#netty" aria-label="netty">netty</a><ul>
+                        
+                <li>
+                    <a href="#netty%e4%b8%ba%e4%bb%80%e4%b9%88%e4%bc%a0%e8%be%93%e5%bf%ab" aria-label="Netty为什么传输快">Netty为什么传输快</a></li>
+                <li>
+                    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%af%b4netty%e5%b0%81%e8%a3%85%e5%a5%bd" aria-label="为什么说Netty封装好？">为什么说Netty封装好？</a><ul>
+                        
+                <li>
+                    <a href="#%e9%98%bb%e5%a1%9eio" aria-label="阻塞I/O">阻塞I/O</a></li>
+                <li>
+                    <a href="#%e9%9d%9e%e9%98%bb%e5%a1%9eio" aria-label="非阻塞IO">非阻塞IO</a></li>
+                <li>
+                    <a href="#netty-1" aria-label="Netty">Netty</a><ul>
+                        
+                <li>
+                    <a href="#channel" aria-label="channel">channel</a></li>
+                <li>
+                    <a href="#bytebuf" aria-label="ByteBuf">ByteBuf</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8netty%e5%88%9b%e5%bb%batelnet%e6%9c%8d%e5%8a%a1" aria-label="使用Netty创建Telnet服务">使用Netty创建Telnet服务</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%bb%e7%a8%8b%e5%ba%8fnettytelnetserverjava" aria-label="主程序NettyTelnetServer.java">主程序NettyTelnetServer.java</a></li>
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e9%85%8d%e7%bd%ae%e7%b1%bbnettytelnetinitializerjava" aria-label="初始化配置类NettyTelnetInitializer.java">初始化配置类NettyTelnetInitializer.java</a></li>
+                <li>
+                    <a href="#%e4%b8%9a%e5%8a%a1%e5%a4%84%e7%90%86%e7%b1%bbnettytelnethandlerjava" aria-label="业务处理类NettyTelnetHandler.java">业务处理类NettyTelnetHandler.java</a></li>
+                <li>
+                    <a href="#%e8%bf%90%e8%a1%8c%e6%9c%8d%e5%8a%a1" aria-label="运行服务">运行服务</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96" aria-label="其他">其他</a><ul>
+                        
+                <li>
+                    <a href="#get%e5%92%8cpost" aria-label="get和post">get和post</a></li>
+                <li>
+                    <a href="#patch%e8%af%b7%e6%b1%82" aria-label="patch请求">patch请求</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="网络通信原理">网络通信原理<a hidden class="anchor" aria-hidden="true" href="#网络通信原理">#</a></h1>
+<h2 id="tcpip五层模型详解">TCP/IP五层模型详解<a hidden class="anchor" aria-hidden="true" href="#tcpip五层模型详解">#</a></h2>
+<p>计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质+互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。
+<img loading="lazy" src="1.jpg" alt=""  />
+</p>
+<h3 id="物理层">物理层<a hidden class="anchor" aria-hidden="true" href="#物理层">#</a></h3>
+<p>物理层主要是基于电器特性发送高低电平信号，电平即“电压平台”，指的是电路中某一点电压的高低状态，在网络信号中高电平用数字“1”表示，低电平用数字“0”表示。电平的高低是个相对概念，3V对于7V是低电平，但对于1V就是高电平。</p>
+<h3 id="数据链路层">数据链路层<a hidden class="anchor" aria-hidden="true" href="#数据链路层">#</a></h3>
+<p>由于单纯的电平信号“0”和“1”没有任何意义，在实际应用中，我们会将电平信号进行分组处理，
+多少位一组、每组什么意思，这样数据才有具体的含义。数据链路层的功能就是定义电平信号的分组方式。</p>
+<h4 id="以太网协议">以太网协议<a hidden class="anchor" aria-hidden="true" href="#以太网协议">#</a></h4>
+<p>数据链路层使用以太网协议进行数据传输，基于MAC地址的广播方式实现数据传输，只能在局域网内广播。早期各个公司都有自己的分组方式，后来形成了统一的标准，即以太网协议Ethernet。</p>
+<h4 id="ethernet以太网">Ethernet以太网<a hidden class="anchor" aria-hidden="true" href="#ethernet以太网">#</a></h4>
+<p>由一组电平信号构成一个数据包，叫作“帧”，每一数据帧由报头Head和数Data两部分组成。
+Head：固定18字节，其中发送者/源地址6字节，接收者/目标地址6字节，数据类型6字节。
+Data：最短46字节，最长1500字节。数据包的具体内容格式为：Head长度+Data长度=最短64字节，最长1518字节（超过最大限制就分片发送）。</p>
+<h4 id="mac地址">MAC地址<a hidden class="anchor" aria-hidden="true" href="#mac地址">#</a></h4>
+<p>Head中包含的源地址和目标地址的由来：Ethernet规定接入Internet的设备必须配有网卡，发送端和接收端的地址便是指网卡的地址，即MAC地址。MAC地址：每块网卡出厂时都被印上一个世界唯一的MAC地址，它是一个长度为48位的二进制数，通常用12位十六进制数表示（前6位是厂商编号，后6位是流水线号）。</p>
+<h4 id="broadcast广播">Broadcast广播<a hidden class="anchor" aria-hidden="true" href="#broadcast广播">#</a></h4>
+<p>有了MAC地址，同一网络内的两台主机就可以通信了（一台主机通过ARP协议获取另外一台主机的MAC地址），下面是以太网通信数据帧的详细示意图。
+<img loading="lazy" src="3.jpg" alt=""  />
+</p>
+<p>其实Ethernet采用非常原始的广播方式进行通信，也就是说计算机之间的通信基本靠“吼”。
+例如，有多台PC组成了一个网络，并通过硬件设施链接具备了通信条件。
+PC1按照固定协议格式以广播的方式发送以太网包给PC2，然而，PC3、PC4、PC5都会收到PC1发来的数据包，拆开后如果发现目标MAC地址不是自己就会丢弃，如果是自己就响应。</p>
+<h3 id="网络层">网络层<a hidden class="anchor" aria-hidden="true" href="#网络层">#</a></h3>
+<p>有了Ethernet、MAC地址、广播的发送方式，世界上的计算机就可以彼此进行通信了，问题是世界范围的互联网是由一个个彼此隔离的小的局域网组成的，如果所有的通信都采用以太网的广播方式，那么一台机器发送的数据包全世界都会收到，这就不仅仅是效率低的问题了，这会是一种灾难。</p>
+<p>全世界的大网络由一个个小的彼此隔离的局域网组成，以太网包只能在一个局域网内发送，一个局域网是一个广播域，跨广播域通信只能通过路由转发。由此得出结论：必须找出一种方法来区分哪些计算机属于同一广播域，哪些不是。如果是就采用广播的方式发送，如果不是就采用路由的方式发送（向不同广播域/子网分发数据包），MAC地址是无法区分的，它只跟厂商有关，网络层就是用来解决这一问题的。网络层的作用就是引入一套新的地址来区分不同的广播域/子网，这套地址叫作网络地址。</p>
+<h4 id="ip">IP<a hidden class="anchor" aria-hidden="true" href="#ip">#</a></h4>
+<p>规定网络地址的协议叫作IP（Internet Protocol，网际互联协议），它定义的地址称为IP地址。广泛采用v4版本即IPv4，规定网络地址由32位二进制数表示。一个IP地址通常写成四段十进制数，例如172.16.10.1，其取值范围为：0.0.0.0～255.255.255.255。</p>
+<p>IP地址由两部分组成：网络部分（用来标识子网）和主机部分（用来标识主机）。
+注意：单纯的IP地址段只是标识了IP地址的种类，从网络部分或主机部分都无法辨识一个IP地址所处的子网。例如，并不能确定172.16.10.1与172.16.10.2处于同一子网。因此，就需要子网掩码。</p>
+<h4 id="子网掩码">子网掩码<a hidden class="anchor" aria-hidden="true" href="#子网掩码">#</a></h4>
+<p>所谓“子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.10.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。</p>
+<p>我们根据“子网掩码”就能判断任意两个IP地址是否处于同一个子网络。方法是将两个IP地址与子网掩码分别进行&amp;运算（两个数位都为1，运算结果为1，否则为0），然后比较结果是否相同，如果相同，就表明它们在同一个子网络中，否则就不在。比如，已知IP地址172.16.10.1和172.16.10.2的子网掩码都是255.255.255.0，请问它们是否在同一个子网络中？我们将二者IP地址与子网掩码分别进行&amp;运算，具体规则如下图所示。</p>
+<p><img loading="lazy" src="4.jpg" alt=""  />
+
+总结一下，IP的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络中。</p>
+<h4 id="ip数据包">IP数据包<a hidden class="anchor" aria-hidden="true" href="#ip数据包">#</a></h4>
+<p>IP数据包也分为Head和Data两部分，无须为IP数据包定义单独的栏位，直接放入以太网包的Data部分即可。
+Head（IP头部）：长度为20～60字节。
+Data（IP数据）：最长为65515字节。
+而以太网数据包的Data部分，最长只有1500字节。因此，如果IP数据包超过1500字节，它就需要分割成几个以太网数据包，分开发送。
+<img loading="lazy" src="5.jpg" alt=""  />
+</p>
+<h4 id="arp">ARP<a hidden class="anchor" aria-hidden="true" href="#arp">#</a></h4>
+<p>我们已经知道计算机通信方式基本靠“吼”，也就是广播的方式。所有上层的数据包到最后都要封装到以太网头，然后通过以太网协议发送。在谈及以太网协议的时候，我们已经了解到，通信基于MAC地址的广播方式实现的，计算机在发送数据包时，获取自身的MAC地址是容易的，获取目标主机的MAC地址，需要通过ARP（Address Resolution Protocol，地址解析协议）来实现。</p>
+<p>ARP用于实现从IP地址到MAC地址的映射，即询问目标IP地址对应的MAC地址，以广播的方式发送数据包，获取目标主机的MAC地址。我们通过一个案例来说明其具体通信原理。
+假设主机IP地址都已知:
+主机A的IP地址为10.1.20.64，MAC地址为00：08：ca：xx：xx：xx
+主机B的IP地址为10.1.20.109，MAC地址为44：6d：57：xx：xx：xx</p>
+<p>当主机A要与主机B通信时，ARP可以将主机B的IP地址（10.1.20.109）解析成主机B的MAC地址，以下为工作流程。
+第一步：通过IP地址和子网掩码计算出自己所处的子网，得出如下表所示的结果。
+同一子网：目标主机MAC地址，目标主机IP地址。
+不同子网：网关MAC地址，目标主机IP地址。</p>
+<p>第二步：分析主机A和B是否处于同一网络，如果不是同一网络，那么下表中目标IP地址为10.1.20.109（访问路由器的路由表），通过ARP获取的是网关的MAC地址。</p>
+<p>第三步：根据主机A上的路由表内容，确定用于访问主机B的转发IP地址是10.1.20.109。然后主机A在自己的本地ARP缓存中检查主机B的匹配MAC地址。</p>
+<p>第四步：如果主机A在ARP缓存中没有找到映射，它将询问10.1.20.64的硬件地址，从而将ARP请求帧广播到本地网络上的所有主机。源主机A的IP地址和MAC地址都包括在ARP请求中。本地网络上的每台主机都接收到ARP请求并且检查是否与自己的IP地址匹配。如果主机发现请求的IP地址与自己的IP地址不匹配，它将丢弃ARP请求。</p>
+<p>第五步：主机B确定ARP请求中的IP地址与自己的IP地址匹配，将主机A的IP地址和MAC地址映射添加到本地ARP缓存中。</p>
+<p>第六步：主机B将包含其MAC地址的ARP回复消息直接发送回主机A。</p>
+<p>第七步：当主机A接收到从主机B发来的ARP回复消息时，会用主机B的IP地址和MAC地址映射更新ARP缓存。本机缓存是有生存期的，生存期结束后，将再次重复上面的过程。主机B的MAC地址一旦确定，主机A就能向主机B发送IP地址了。</p>
+<h3 id="传输层">传输层<a hidden class="anchor" aria-hidden="true" href="#传输层">#</a></h3>
+<p>现在我们已经知道，网络层的IP地址帮我们区分子网，以太网层的MAC地址帮我们找到主机。大家使用的都是应用程序，你的计算机上可能同时开启QQ、微信等多个应用程序，那么我们通过IP地址和MAC地址找到了一台特定的主机，如何标识这台主机上的应用程序？答案就是端口，端口就是应用程序与网卡关联的编号。那么传输层就是用来建立端口到端口的通信机制的。</p>
+<p>补充：主机端口的取值范围为0～65535，其中0～1023为系统保留端口的取值范围，也叫作BSD保留端口。用户可注册端口的取值范围为1024～49152，还有随机动态端口的取值范围为49152～65535。为什么取值范围只能为0～65535，多一个都不行？从协议来讲，在TCP头部留给存储端口的空间只有2字节，最大值就是65535。</p>
+<h4 id="tcp">TCP<a hidden class="anchor" aria-hidden="true" href="#tcp">#</a></h4>
+<p>TCP（Transmission Control Protocol，传输控制协议）是一种可靠传输协议，TCP数据包没有长度限制，理论上可以无限长，但是为了保证网络的效率，通常TCP数据包的长度不会超过IP数据包的长度，以确保单个TCP数据包不必再分割，其数据结构如下图所示。
+<img loading="lazy" src="6.jpg" alt=""  />
+</p>
+<h4 id="udp">UDP<a hidden class="anchor" aria-hidden="true" href="#udp">#</a></h4>
+<p>UDP（User Datagram Protocol，用户数据报协议）是一种不可靠传输协议，“报头”部分总共有8字节，总长度不超过65535字节，正好放进一个IP数据包，其数据结构和TCP相同。</p>
+<h4 id="tcp报文结构">TCP报文结构<a hidden class="anchor" aria-hidden="true" href="#tcp报文结构">#</a></h4>
+<p>TCP报文是TCP层传输的数据单元，也叫作报文段。TCP报文结构如下图所示。
+<img loading="lazy" src="7.jpg" alt=""  />
+
+下面对报文内容做详细介绍。</p>
+<p>端口号：同一台计算机的不同进程。
+源端口：源端口和IP地址的作用是标识报文的返回地址。
+目的端口：接收方计算机上的程序端口。
+TCP报头中的源端口号和目的端口号同IP数据包中的源IP地址和目的IP地址唯一确定一条TCP连接。</p>
+<p>序号：序号是本报文段发送的数据组的第一个字节的序号。在TCP传送的流中，每一个字节都有一个序号。
+例如：一个报文段的序号为300，此报文段数据部分共有100字节，则下一个报文段的序号为400。所以序号确保了TCP传输的有序性。</p>
+<p>确认号：即ACK，指明下一个期待收到的字节序号，表明该序号之前的所有数据已经正确无误地收到。确认号只有当ACK标志为1时才有效。比如建立连接时，SYN报文的ACK标志为0。</p>
+<p>数据偏移/头部长度：4位。由于头部可能含有可选项内容，TCP报头的长度是不确定的，报头不包含任何任选属性则长度为20字节，4位头部长度属性所能表示的最大值为1111，转化成十进制为15，15×32/8=60，故报头最大长度为60字节。头部长度也叫数据偏移，是因为头部长度实际上指示了数据区在报文段中的起始偏移值。</p>
+<p>保留：为将来定义新的用途保留，现在一般设置为0。</p>
+<p>标志位：URG、ACK、PSH、RST、SYN、FIN，共6个，每一个标志位都表示一个控制功能，具体含义如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>中文名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URG</td>
+<td>紧急指针标志</td>
+<td>1表示紧急指针有效，0表示忽略紧急指针</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>确认序号标志</td>
+<td>1表示确认号有效，0表示报文中不含确认信息，忽略确认号属性</td>
+</tr>
+<tr>
+<td>PSH</td>
+<td>接收信号标志</td>
+<td>1表示数据含有push标志，告诉接收方在接口该段报文以后，应尽快将这个报文段交给应用程序，而不是在缓冲区排队</td>
+</tr>
+<tr>
+<td>RST</td>
+<td>重置连接标志</td>
+<td>用于重置因主机重置或其他原因导致的链接错误，或用于拒绝非法的报文段和链接请求</td>
+</tr>
+<tr>
+<td>SYN</td>
+<td>同步序号标志</td>
+<td>用于建立链接，SYN=1，ACK=0，表示链接请求中。SYN=1，ACK=1，表示链接响应中。</td>
+</tr>
+<tr>
+<td>FIN</td>
+<td>完成标志</td>
+<td>用于释放链接，为1表示发送了已经没有数据发送了，可以关闭本方链接</td>
+</tr>
+</tbody>
+</table>
+<p>窗口：滑动窗口大小，用来告知发送端接收端的缓存大小，以此控制发送端发送数据的速率，从而达到流量控制。窗口大小是一个16位属性，因而窗口大小最大为65535。</p>
+<p>校验和：奇偶校验，此校验和针对整个TCP报文段，包括TCP头部和TCP数据，以16位属性进行计算所得。由发送端计算和存储，并由接收端进行验证。</p>
+<p>紧急指针：只有当URG标志为1时紧急指针才有效。紧急指针是一个正的偏移量，和顺序号属性中的值相加表示紧急数据最后一个字节的序号。TCP的紧急方式是发送端向另一端发送紧急数据的一种方式。</p>
+<p>选项和填充：最常见的可选属性是最长报文大小，又称为MSS（MaximumSegment Size），每个连接方通常都在通信的第一个报文段（为建立连接而设置SYN标志为1的那个段）中指明这个选项，它表示本端所能接收的最大报文段的长度。选项长度不一定是32位的整数倍，所以要加填充位，即在这个属性中加入额外的零，以保证TCP头部长度是32位的整数倍。</p>
+<p>数据部分：TCP报文段中的数据部分是可选的。在一个连接建立和一个连接终止时，双方交换的报文段仅有TCP头部。如果一方没有数据要发送，也使用没有任何数据的头部来确认收到的数据。在处理超时的许多情况中，也会发送不带任何数据的报文段。</p>
+<h4 id="tcp交互流程">TCP交互流程<a hidden class="anchor" aria-hidden="true" href="#tcp交互流程">#</a></h4>
+<p>传输连接包括三个阶段：连接建立、数据传送和连接释放。传输连接管理就是对连接建立和连接释放过程的管控，使其能正常运行，以达到这些目的：使通信双方能够确知对方的存在、可以允许通信双方协商一些参数（最大报文段长度、最大窗口大小等）、能够对运输实体资源进行分配（缓存大小等）。TCP连接的建立采用客户端-服务器模式：主动发起连接建立的应用进程叫作客户端，被动等待连接建立的应用进程叫作服务器。接下来，介绍TCP完成数据传输的三次握手和四次挥手的详细过程。</p>
+<p>第一次握手：建立连接时，客户端发送SYN包（syn=1）到服务器，并进入SYN_SENT状态，等待服务器确认。
+第二次握手：服务器收到SYN包，必须确认客户端的SYN包（ack=x+1），同时自己也发送一个
+SYN包（syn=1），即SYN+ACK包，此时服务器进入SYN_RECV状态。
+第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK（ack=y+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
+<p>至此，TCP连接就建立了，客户端和服务器可以愉快地“玩耍”了。只要通信双方没有一方发出连接释放的请求，连接就将一直保持。如果有一方释放连接，就会发起挥手操作。</p>
+<p>第一次挥手：客户端进程发出连接释放报文，并且停止发送数据。释放数据报文头部，FIN=1，其序列号为seq=u（等于前面已经传送过来的数据的最后一个字节的序号加1），此时，客户端进入FIN_WAIT_1（终止等待1）状态。TCP规定，FIN报文段即使不携带数据，也要消耗一个序号。</p>
+<p>第二次挥手：服务器收到连接释放报文，发出确认报文，ACK=1，ack=u+1，并且带上自己的序列号seq=v，此时，服务器就进入了CLOSE_WAIT（关闭等待）状态。TCP服务器通知高层的应用进程，客户端向服务器方向的连接就被释放了，这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接收。这个状态还要持续一段时间，也就是整个CLOSE_WAIT状态持续的时间。
+客户端收到服务器的确认请求后，客户端就进入FIN_WAIT_2（终止等待2）状态，等待服务器发送连接释放报文（在这之前还需要接收服务器发送的最后的数据）。</p>
+<p>第三次挥手：服务器将最后的数据发送完毕后，就向客户端发送连接释放报文，FIN=1，ack=u+1，由于在半关闭状态，服务器很可能又发送了一些数据，假定此时的序列号为seq=w，此时，服务器就进入了LAST_ACK（最后确认）状态，等待客户端的确认。</p>
+<p>最后，服务器只要收到了客户端发出的确认，就立即进入CLOSED状态。同样，撤销TCB后，就结束了这次TCP连接。可以看到，服务器结束TCP连接的时间要比客户端早一些。
+TCP交互的详细过程如下图所示。
+<img loading="lazy" src="8.png" alt=""  />
+</p>
+<h3 id="应用层">应用层<a hidden class="anchor" aria-hidden="true" href="#应用层">#</a></h3>
+<p>在日常操作中，用户使用的都是应用程序，应用程序都工作在应用层。互联网是开放的，大家都可以开发自己的应用程序，数据多种多样，必须规定好数据的组织形式。应用层的功能就是规定应用程序的数据格式。
+例如：TCP可以为各种各样的程序传递数据，比如SMTP、HTTP、FTP、POP3等，那么，必须有不同的协议规定电子邮件、网页、FTP数据的格式，这些应用程序协议就构成了“应用层”。如下图所示是应用层协议的基本组成结构示意。
+<img loading="lazy" src="9.jpg" alt=""  />
+
+用户从应用程序中发送数据是一个对数据封装的过程，而接收数据则是一个解封装的动作。下面简单介绍一下常用的应用层协议。</p>
+<h4 id="dns">DNS<a hidden class="anchor" aria-hidden="true" href="#dns">#</a></h4>
+<p>DNS是英文Domain Name System（域名系统）的缩写，用来把便于人们使用的机器名字转换为IP地址。现在顶级域名TLD（Totel Lead Domination）分为三大类：国家顶级域名nTLD、通用顶级域名gTLD和基础结构域名。域名服务器分为四种类型：根域名服务器、顶级域名服务器、本地域名服务器和权限域名服务器。DNS使用TCP和UDP端口53。当前，对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符。</p>
+<h4 id="http">HTTP<a hidden class="anchor" aria-hidden="true" href="#http">#</a></h4>
+<p>HTTP（HyperText Transfer Protocol，超文本传输协议）是面向事务的应用层协议。它是互联网上能够可靠地交换信息的重要基础。HTTP使用面向连接的TCP作为运输层协议，保证了数据的可靠传输。</p>
+<h4 id="ftp">FTP<a hidden class="anchor" aria-hidden="true" href="#ftp">#</a></h4>
+<p>FTP（File Transfer Protocol，文件传输协议）是互联网上使用最广泛的文件传送协议。FTP提供交互式的访问，允许客户指明文件类型与格式，并允许文件具有存取权限。FTP基于TCP工作。</p>
+<h4 id="smtp">SMTP<a hidden class="anchor" aria-hidden="true" href="#smtp">#</a></h4>
+<p>SMTP（Simple Mail Transfer Protocol，简单邮件传输协议）规定了在两个相互通信的SMTP进程之间应如何交换信息。SMTP通信的三个阶段：建立连接、邮件传送和连接释放。</p>
+<h4 id="pop3">POP3<a hidden class="anchor" aria-hidden="true" href="#pop3">#</a></h4>
+<p>POP3（Post Office Protocol 3，邮件读取协议）通常被用来接收电子邮件。</p>
+<h4 id="telnet协议">Telnet协议<a hidden class="anchor" aria-hidden="true" href="#telnet协议">#</a></h4>
+<p>Telnet协议是一个简单的远程终端协议，也是互联网的正式标准，又称为终端仿真协议。</p>
+<h3 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h3>
+<p>总结一下OSI七层模型，它为开放互联信息系统提供了一种结构框架。建立七层模型的主要目的是解决异种网络互联时所遇到的兼容性问题。它的最大优点是将服务、接口和协议这三个概念明确地区分开来：服务说明某一层为上一层提供一些什么功能，接口说明上一层如何使用下一层的服务，而协议涉及如何实现本层的服务；这样各层之间具有很强的独立性，互联网络中各实体采用什么样的协议是没有限制的，只要向上提供相同的服务并且不改变相邻层的接口就可以。其详细结构如下图所示。
+<img loading="lazy" src="2.png" alt=""  />
+</p>
+<h2 id="网络通信实现原理">网络通信实现原理<a hidden class="anchor" aria-hidden="true" href="#网络通信实现原理">#</a></h2>
+<p>要想实现网络通信，每台主机需具备四要素：本机的IP地址、子网掩码、网关的IP地址和DNS的IP地址。获取这四要素有两种方式：一是静态获取，即手动配置；二是动态获取，即通过
+DHCP（Dynamic Host Configuration Protocol，动态主机配置协议）获取。</p>
+<p>下图是网络通信的数据结构示意
+以太网头部 &ndash; IP头部 &ndash; UDP头部 &ndash; DHCP数据包</p>
+<p>详细分析一下网络通信的交互过程。</p>
+<ul>
+<li>
+<p>最前面的“以太网头部”，设置发出方（本机）的MAC地址和接收方（DHCP服务器）的MAC地址。
+前者就是本机网卡的MAC地址，后者这时不知道，就填入一个广播地址：FF-FF-FF-FF-FF-FF。</p>
+</li>
+<li>
+<p>后面的“IP头部”，设置发出方的IP地址和接收方的IP地址。这时，对于这两者，本机都不知道。于是，发出方的IP地址就设为0.0.0.0，接收方的IP地址设为255.255.255.255。</p>
+</li>
+<li>
+<p>最后的“UDP头部”，设置发出方的端口和接收方的端口。这一部分是DHCP规定好的，发出方是68端口，接收方是67端口。</p>
+</li>
+</ul>
+<p>这个数据包构造完成后，就可以发出了。以太网是广播发送的，同一个子网的每台计算机都收到了这个数据包。
+因为接收方的MAC地址是FF-FF-FF-FF-FF-FF，看不出是发给谁的，所以每台收到这个数据包的计算机，还必须分析这个数据包的IP地址，才能确定是不是发给自己的。看到发出方IP地址是0.0.0.0，接收方IP地址是255.255.255.255，于是DHCP服务器知道“这个数据包是发给我的”，而其他计算机就可以丢弃这个数据包。</p>
+<p>接下来，DHCP服务器读出这个数据包的数据内容，分配好IP地址，发送回去一个“DHCP响应”数据包。这个响应包的结构也是类似的，以太网头部的MAC地址是双方的网卡地址，IP头部的IP地址是DHCP服务器的IP地址（发出方）和255.255.255.255（接收方），UDP头部的端口是67（发出方）和68（接收方），分配给请求端的IP地址和本网络的具体参数则包含在Data部分。</p>
+<p>新加入的计算机收到这个响应包，于是就知道了自己的IP地址、子网掩码、网关地址、DNS服务器等参数。</p>
+<h2 id="向浏览器输入url后发生了什么">向浏览器输入URL后发生了什么<a hidden class="anchor" aria-hidden="true" href="#向浏览器输入url后发生了什么">#</a></h2>
+<p>当在浏览器地址栏中输入网址后，浏览器是怎么把最终的页面呈现出来的呢？这个过程大致可以分为两个部分：网络通信和页面渲染。下面详细分析完整的通信过程。</p>
+<p>第一步，本机设置以下信息。
+本机ip：192.168.1.100
+子网掩码：255.255.255.0
+网关IP：192.168.1.1
+DNS地址：8.8.8.8</p>
+<p>第二步，打开浏览器，想要访问百度，在地址栏中输入网址www.baidu.com
+第三步，通过访问DNS域名系统服务器（基于UDP）获得IP地址。</p>
+<p>下图完整地说明了一次网络请求如何获取目标服务器IP地址的全过程。
+<img loading="lazy" src="10.png" alt=""  />
+
+图中13台国际DNS根服务器IP地址具体如下。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>管理单位及设置地点</th>
+<th>IP地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>INTERNIC.NET（美国，弗吉尼亚州）</td>
+<td>198.41.0.4</td>
+</tr>
+<tr>
+<td>B</td>
+<td>美国信息科学研究所（美国，加利弗尼亚州）</td>
+<td>128.9.0.107</td>
+</tr>
+<tr>
+<td>C</td>
+<td>PSINet公司（美国，弗吉尼亚州）</td>
+<td>192.33.4.12</td>
+</tr>
+<tr>
+<td>D</td>
+<td>马里兰大学（美国马里兰州）</td>
+<td>128.8.10.90</td>
+</tr>
+<tr>
+<td>E</td>
+<td>美国航空航天管理局（美国加利弗尼亚州）</td>
+<td>192.203.230.10</td>
+</tr>
+<tr>
+<td>F</td>
+<td>因特网软件联盟（美国加利弗尼亚州）</td>
+<td>192.5.5.241</td>
+</tr>
+<tr>
+<td>G</td>
+<td>美国国防部网络信息中心（美国弗吉尼亚州）</td>
+<td>192.112.36.4</td>
+</tr>
+<tr>
+<td>H</td>
+<td>美国陆军研究所（美国马里兰州）</td>
+<td>128.63.2.53</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Autonomica公司（瑞典，斯德哥尔摩）</td>
+<td>192.36.148.17</td>
+</tr>
+<tr>
+<td>J</td>
+<td>VeriSign公司（美国，弗吉尼亚州）</td>
+<td>192.58.128.30</td>
+</tr>
+<tr>
+<td>K</td>
+<td>RIPE NCC（英国，伦敦）</td>
+<td>193.0.14.129</td>
+</tr>
+<tr>
+<td>L</td>
+<td>IANA（美国，弗吉尼亚州）</td>
+<td>198.32.64.12</td>
+</tr>
+<tr>
+<td>M</td>
+<td>WIDE Project（日本，东京）</td>
+<td>202.12.27.33</td>
+</tr>
+</tbody>
+</table>
+<p>通过域名寻找到目标机器所在位置。下面简单科普一下域名知识，域名有顶级域名和二级域名。
+顶级域名如.com、.net、.org、.cn等属于国际顶级域名。根据目前的国际互联网域名体系，国际顶级域名分为两类：类别顶级域名（gTLD）和地理顶级域名（ccTLD）。类别顶级域名是以“com”“net”“org”“biz”“info”等结尾的域名，均由国外公司负责管理。地理顶级域名是以国家或地区代码为结尾的域名，如“cn”代表中国，“uk”代表英国。地理顶级域名一般由各个国家或地区负责管理。在不同的地域还会使用二级域名，二级域名是以顶级域名为基础的地理域名，例如中国的二级域有.com.cn、.net.cn、.org.cn、.gd.cn等。</p>
+<p>在实际的网站应用中，通常会使用子域名。比如父域名是<code>abc.com</code>，子域名就是<code>www.abc.com</code>或者<code>*.abc.com</code>。一般来说，子域名是域名的一条记录，比如<code>abc.com</code>是一个域名，<code>www.abc.com</code>是其中比较常用的记录，一般默认类似<code>*.abc.com</code>的域名全部被称作<code>abc.com</code>的子域名。</p>
+<p>第四步，向目标机器发起HTTP请求，获得如下格式的http响应报文：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Date: Sun, 17 Mar 2013 08:12:54 GMT　　响应头部
+</span></span><span style="display:flex;"><span>Server: Apache/2.2.8 (Win32) PHP/5.2.5
+</span></span><span style="display:flex;"><span>X-Powered-By: PHP/5.2.5
+</span></span><span style="display:flex;"><span>Set-Cookie: PHPSESSID=c0huq7pdkmm5gg6osoe3mgjmm3; path=/
+</span></span><span style="display:flex;"><span>Expires: Thu, 19 Nov 1981 08:52:00 GMT
+</span></span><span style="display:flex;"><span>Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+</span></span><span style="display:flex;"><span>Pragma: no-cache
+</span></span><span style="display:flex;"><span>Content-Length: 4393
+</span></span><span style="display:flex;"><span>Keep-Alive: timeout=5, max=100
+</span></span><span style="display:flex;"><span>Connection: Keep-Alive
+</span></span><span style="display:flex;"><span>Content-Type: text/html; charset=utf-8
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们假定这些数据的长度为4960字节，它会被嵌在TCP数据包中。</p>
+<p>第五步，TCP。TCP数据包需要设置端口，接收方（百度）的HTTP端口默认是80，发送方（本机）的端口是一个随机生成的1024～65535之间的整数，假定为51775。TCP数据包的头部长度为20字节，加上嵌入HTTP的数据包，总长度变为4980字节。</p>
+<p>第六步，IP。TCP数据包再嵌入IP数据包。IP数据包需要设置双方的IP地址，这是已知的。IP数据包的头部长度为20字节，加上嵌入的TCP数据包，总长度变为5000字节。</p>
+<p>第七步，以太网协议。IP数据包嵌入以太网数据包。以太网数据包需要设置双方的MAC地址，发送方为本机的网卡MAC地址，接收方为网关192.168.1.1的MAC地址（通过ARP得到）。以太网数据包的数据部分最大长度为1500字节，而现在的IP数据包长度为5000字节。因此，IP数据包必须分割成四个包。因为每个包都有自己的IP头部（20字节），所以四个包的长度分别为1500字节、1500字节、1500字节、560字节。如下图所示是以太网数据包示意图。
+<img loading="lazy" src="11.jpg" alt=""  />
+</p>
+<p>第八步，服务器响应。经过多个网关的转发，百度的服务器收到了这四个以太网数据包。
+根据IP头部的序号，咕泡官网将四个包拼起来，取出完整的TCP数据包，然后读出里面的“HTTP请求”，接着做出“HTTP响应”，再用TCP发回来。本机收到HTTP响应以后，就可以将网页显示出来，完成一次网络通信。</p>
+<h2 id="socket">Socket<a hidden class="anchor" aria-hidden="true" href="#socket">#</a></h2>
+<p>我们知道两个进程进行通信一个最基本的前提是能够唯一地标识一个进程。在本地进程通信中，我们可以使用PID来唯一标识一个进程，但PID只在本地唯一，网络中的两个进程PID冲突概率很大，这时候就需要另辟蹊径了。我们知道IP层的IP地址可以唯一标识主机，而TCP层的协议和端口号可以唯一标识主机的一个进程，可以用IP地址+协议+端口号唯一标识网络中的一个进程。</p>
+<p>能够唯一标识网络中的进程后，它们就可以利用Socket进行通信了。那么，什么是Socket呢？我们经常把Socket翻译为套接字，Socket是在应用层和传输层之间的一个抽象层，它把TCP/IP层复杂的操作抽象为几个简单的接口供应用层调用，以实现进程在网络中的通信，具体结构如下图所示。
+<img loading="lazy" src="12.jpg" alt=""  />
+
+Socket起源于UNIX，在UNIX“一切皆文件”的哲学思想下，Socket是一种从打开，到完成读、写操作，最后关闭的模式，服务器和客户端各自维护一个“文件”，在建立连接打开文件后，可以向自己的文件写入内容供对方读取或者读取对方的内容，通信结束时关闭文件。</p>
+<h1 id="java-io演进之路">Java I/O演进之路<a hidden class="anchor" aria-hidden="true" href="#java-io演进之路">#</a></h1>
+<p>什么是io?
+我们都知道在UNIX世界里一切皆文件，而文件是什么呢？文件就是一串二进制流而已，其实不管是Socket，还是FIFO（First Input First Output，先进先出队列））、管道、终端。对计算机来说，一切都是文件，一切都是流。在信息交换的过程中，计算机都是对这些流进行数据的收发操作，简称为I/O操作（Input andOutput），包括往流中读出数据、系统调用Read、写入数据、系统调用Write。不过计算机里有那么多流，怎么知道要操作哪个流呢？实际上是由操作系统内核创建文件描述符（File Descriptor，FD）来标识的，一个FD就是一个非负整数，所以对这个整数的操作就是对这个文件（流）的操作。我们创建一个Socket，通过系统调用会返回一个FD，那么剩下的对Socket的操作就会转化为对这个描述符的操作，这又是一种分层和抽象的思想。</p>
+<h2 id="io交互流程">IO交互流程<a hidden class="anchor" aria-hidden="true" href="#io交互流程">#</a></h2>
+<p>通常用户进程中的一次完整I/O交互流程分为两阶段，首先是经过内核空间，也就是由操作系统处理；紧接着就是到用户空间，也就是交由应用程序。具体交互流程如下图所示。
+<img loading="lazy" src="13.jpg" alt=""  />
+
+内核空间中存放的是内核代码和数据，而进程的用户空间中存放的是用户程序的代码和数据。不管是内核空间还是用户空间，它们都处于虚拟空间中，Linux使用两级保护机制：0级供内核（Kernel）使用，3级供用户程序使用。每个进程都有各自的私有用户空间（0～3G），这个空间对系统中的其他进程是不可见的。最高的1G字节虚拟内核空间则为所有进程及内核共享。</p>
+<p>操作系统和驱动程序运行在内核空间，应用程序运行在用户空间，两者不能简单地使用指针传递数据。因为Linux使用的虚拟内存机制，必须通过系统调用请求Kernel来协助完成I/O操作，内核会为每个I/O设备维护一个缓冲区，用户空间的数据可能被换出，所以当内核空间使用用户空间的指针时，对应的数据可能不在内存中。</p>
+<p>对于一个输入操作来说，进程I/O系统调用后，内核会先看缓冲区中有没有相应的缓存数据，如果没有再到设备中读取。因为设备I/O一般速度较慢，需要等待，内核缓冲区有数据则直接复制到进程空间。所以，一个网络输入操作通常包括两个不同阶段。</p>
+<ul>
+<li>等待网络数据到达网卡，然后将数据读取到内核缓冲区。</li>
+<li>从内核缓冲区复制数据，然后拷贝到用户空间。</li>
+</ul>
+<p>I/O有内存I/O、网络I/O和磁盘I/O三种，通常我们说的I/O指的是后两者。如下图所示是I/O通信过程的调度示意。
+<img loading="lazy" src="14.jpg" alt=""  />
+</p>
+<h2 id="五种io通信模型">五种I/O通信模型<a hidden class="anchor" aria-hidden="true" href="#五种io通信模型">#</a></h2>
+<p>在网络环境下，通俗地讲，将I/O分为两步：第一步是等待；第二步是数据搬迁。如果想要提高I/O效率，需要将等待时间降低。因此发展出来五种I/O模型，分别是：阻塞I/O模型、非阻塞I/O模型、多路复用I/O模型、信号驱动I/O模型、异步I/O模型。其中，前四种被称为同步I/O，下面对每一种I/O模型进行详细分析。</p>
+<h3 id="阻塞io模型">阻塞I/O模型<a hidden class="anchor" aria-hidden="true" href="#阻塞io模型">#</a></h3>
+<p>阻塞I/O模型的通信过程示意如下图所示。
+<img loading="lazy" src="15.jpg" alt=""  />
+
+当用户进程调用了recvfrom这个系统调用，内核就开始了I/O的第一个阶段：准备数据。对于网络I/O来说，很多时候数据在一开始还没有到达（比如，还没有收到一个完整的UDP包），这个时候内核就要等待足够的数据到来。而在用户进程这边，整个进程会被阻塞，当数据准备好时，它就会将数据从内核拷贝到用户内存，然后返回结果，用户进程才解除阻塞的状态，重新运行起来。几乎所有的开发者第一次接触到的网络编程都是从listen()、send()、recv()等接口开始的，这些接口都是阻塞型的。阻塞I/O模型的特性总结如下。
+特点：在IO执行的两个阶段（等待数据和拷贝数据）都被阻塞
+典型应用：阻塞Socket、java BIO
+优点：</p>
+<ul>
+<li>阻塞线程挂起不消耗CPU资源，及时响应每个操作</li>
+<li>难度低，开发简单</li>
+<li>适合并发量小的网络应用</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不适合并发量大的应用</li>
+<li>为了及时响应，需要为每个请求分配一个处理进程，系统开销大</li>
+</ul>
+<h3 id="非阻塞io模型">非阻塞I/O模型<a hidden class="anchor" aria-hidden="true" href="#非阻塞io模型">#</a></h3>
+<p>非阻塞I/O模型的通信过程示意如下图所示。
+<img loading="lazy" src="16.jpg" alt=""  />
+
+当用户进程发出read操作时，如果内核中的数据还没有准备好，那么它并不会阻塞用户进程，而是立刻返回一个error。从用户进程角度讲，它发起一个read操作后，并不需要等待，而是马上就得到了一个结果，用户进程判断结果是一个error时，它就知道数据还没有准备好。于是它可以再次发送read操作，一旦内核中的数据准备好了，并且再次收到了用户进程的系统调用，那么它会马上将数据拷贝到用户内存，然后返回，非阻塞型接口相比于阻塞型接口的显著差异在于，在被调用之后立即返回。非阻塞I/O模型的特性总结如下表所示。</p>
+<p>特点：用户进程需要不断的询问内核（Kernel）数据是否准备好。
+典型应用：Socket设置NON_BLOCK。
+优点：难度低，但相对阻塞IO更难
+缺点：</p>
+<ul>
+<li>进程轮询调用，小号CPU资源</li>
+<li>适合并发量小、不需要及时响应的网络应用</li>
+</ul>
+<p>非阻塞模式套接字与阻塞模式套接字相比，不容易使用。使用非阻塞模式套接字，需要编写更多的代码，但是，非阻塞模式套接字在控制建立多个连接、数据的收发量不均、时间不定时，具有明显优势。</p>
+<h3 id="多路复用io模型">多路复用I/O模型<a hidden class="anchor" aria-hidden="true" href="#多路复用io模型">#</a></h3>
+<p>多路复用I/O模型的通信过程示意如下图所示。
+<img loading="lazy" src="17.jpg" alt=""  />
+</p>
+<p>多个进程的I/O可以注册到一个复用器（Selector）上，当用户进程调用该Selector，Selector会监听注册进来的所有I/O，如果Selector监听的所有I/O在内核缓冲区都没有可读数据，select调用进程会被阻塞，而当任一I/O在内核缓冲区中有可读数据时，select调用就会返回，而后select调用进程可以自己或通知另外的进程（注册进程）再次发起读取I/O，读取内核中准备好的数据，多个进程注册I/O后，只有一个select调用进程被阻塞。</p>
+<p>多路复用I/O相对阻塞和非阻塞更难简单说明，所以额外解释一段，其实多路复用I/O模型和阻塞I/O模型并没有太大的不同，事实上，还更差一些，因为这里需要使用两个系统调用（select和recvfrom），而阻塞I/O模型只有一次系统调用（recvfrom）。但是，用Selector的优势在于它可以同时处理多个连接，所以如果处理的连接数不是很多，使用select/epoll的Web Server不一定比使用多线程加阻塞I/O的Web Server性能更好，可能延迟还更大，select/epoll的优势并不是对于单个连接能处理得更快，而是能处理更多的连接。多路复用I/O模型的特性总结如下表所示。
+特点：对于每一个Socket，一般设置成非阻塞，但是整个用户的进程其实是一直阻塞的，只不过进程是被select函数阻塞，而不是被Socket IO阻塞。
+典型应用：java NIO、nginx(epoll、poll、select)
+优点：</p>
+<ul>
+<li>专一进程解决多个进程IO的阻塞问题，性能好，Reactor模式</li>
+<li>适合高并发应用开发，一个进程/线程响应多个请求</li>
+</ul>
+<p>缺点：开发难度大</p>
+<h3 id="信号驱动io模型">信号驱动I/O模型<a hidden class="anchor" aria-hidden="true" href="#信号驱动io模型">#</a></h3>
+<p>信号驱动I/O模型的通信过程示意如下图所示。
+<img loading="lazy" src="18.jpg" alt=""  />
+
+信号驱动I/O是指进程预先告知内核，向内核注册一个信号处理函数，然后用户进程返回不阻塞，当内核数据就绪时会发送一个信号给进程，用户进程便在信号处理函数中调用I/O读取数据。从上图可以看出，实际上I/O内核拷贝到用户进程的过程还是阻塞的，信号驱动I/O并没有实现真正的异步，因为通知到进程之后，依然由进程来完成I/O操作。这和后面的异步I/O模型很容易混淆，需要理解I/O交互并结合五种I/O模型进行比较阅读。
+信号驱动I/O模型的特性总结如下表所示。
+特点：不符合异步IO要求，只能算是伪异步，实际不常用
+典型应用：应用场景较少
+优点：不知道
+缺点：开发难度大</p>
+<h3 id="异步io模型">异步I/O模型<a hidden class="anchor" aria-hidden="true" href="#异步io模型">#</a></h3>
+<p>异步I/O模型的通信过程示意如下图所示。
+<img loading="lazy" src="19.jpg" alt=""  />
+
+用户进程发起aio_read操作后，给内核传递与read相同的描述符、缓冲区指针、缓冲区大小三个参数及文件偏移，告诉内核当整个操作完成时，如何通知我们立刻就可以开始去做其他的事；而另一方面，从内核的角度，当它收到一个aio_read之后，首先它会立刻返回，所以不会对用户进程产生任何阻塞，内核会等待数据准备完成，然后将数据拷贝到用户内存，当这一切都完成之后，内核会给用户进程发送一个信号，告诉它aio_read操作完成。</p>
+<p>异步I/O的工作机制是：告知内核启动某个操作，并让内核在整个操作完成后通知我们，这种模型与信号驱动I/O模型的区别在于，信号驱动I/O模型是由内核通知我们何时可以启动一个I/O操作，这个I/O操作由用户自定义的信号函数来实现，而异步I/O模型由内核告知我们I/O操作何时完成。
+异步I/O模型的特性总结如下表所示。
+特点：真正实现了异步IO，是唯一的异步IO模型。
+典型应用：java 7 AIO，高性能服务器应用。
+优点：</p>
+<ul>
+<li>不阻塞，数据一步到位，Proactor模式</li>
+<li>适合高并发应用
+缺点：</li>
+<li>需要操作系统底层支持，Linux2.5内核实现，Linux2.6的内核标准特性</li>
+<li>开发难度大</li>
+</ul>
+<h3 id="易混淆的概念">易混淆的概念<a hidden class="anchor" aria-hidden="true" href="#易混淆的概念">#</a></h3>
+<h4 id="同步和异步">同步和异步<a hidden class="anchor" aria-hidden="true" href="#同步和异步">#</a></h4>
+<p>同步和异步其实是指CPU时间片的利用，主要看请求发起方对消息结果的获取是主动发起的，还是被动通知的，如下图所示。
+<img loading="lazy" src="20.jpg" alt=""  />
+</p>
+<p>请求方主动发起：
+同步阻塞：一直在等待应答结果
+同步非阻塞：CPU先去处理其他事情，但要不断轮询查看发起的请求是否有应答结果。
+因为不管如何都要发起方主动获取消息结果，所以形式上还是同步操作。</p>
+<p>服务方通知的：
+异步阻塞：请求方发出请求后，一直等待服务方通知。
+异步非阻塞：不等待，先去干自己的事。
+当事情处理完成后，服务方会主动通知请求方，它的请求已经完成，这就是异步。
+异步通知的方式一般通过状态改变、消息通知或者回调函数来完成。</p>
+<h4 id="阻塞和非阻塞">阻塞和非阻塞<a hidden class="anchor" aria-hidden="true" href="#阻塞和非阻塞">#</a></h4>
+<p>阻塞和非阻塞在计算机的世界里，通常指针对I/O的操作，如网络I/O和磁盘I/O等。那么什么是阻塞和非阻塞呢？简单地说，就是我们调用了一个函数后，在等待这个函数返回结果之前，当前的线程是处于挂起状态还是运行状态。如果是挂起状态，就意味着当前线程什么都不能干，就等着获取结果，这就是同步阻塞；如果仍然是运行状态，就意味着当前线程是可以继续处理其他任务的，但要时不时地看一下是否有结果了，这就是同步非阻塞。具体如下图所示。
+<img loading="lazy" src="21.jpg" alt=""  />
+</p>
+<h5 id="解释1">解释1<a hidden class="anchor" aria-hidden="true" href="#解释1">#</a></h5>
+<p>阻塞、非阻塞，同步、异步。
+不能简单的从字面理解，提供一个从分布式系统角度的回答。</p>
+<ul>
+<li>同步与异步
+同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication)
+所谓同步，就是在发出一个<em>调用</em>时，在没有得到结果之前，该<em>调用</em>就不返回。但是一旦调用返回，就得到返回值了。换句话说，就是由<em>调用者</em>主动等待这个<em>调用</em>的结果。</li>
+</ul>
+<p>而异步则是相反，<em>调用</em>在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在<em>调用</em>发出后，<em>被调用者</em>通过状态、通知来通知调用者，或通过回调函数处理这个调用。</p>
+<p>举例：你打电话问书店老板有没有《分布式系统》这本书，如果是同步通信机制，书店老板会说，
+你稍等，”我查一下&quot;，然后开始查啊查，等查好了（可能是5秒，也可能是一天）告诉你结果（返回结果）。而异步通信机制，书店老板直接告诉你我查一下啊，查好了打电话给你，然后直接挂电话了（不返回结果）。然后查好了，他会主动打电话给你。在这里老板通过“回电”这种方式来回调。</p>
+<ul>
+<li>阻塞与非阻塞
+阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态。</li>
+</ul>
+<p>阻塞调用是指调用结果返回之前，当前线程会被挂起。调用线程只有在得到结果之后才会返回。
+非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程。</p>
+<p>还是上面的例子，你打电话问书店老板有没有《分布式系统》这本书，你如果是阻塞式调用，你会一直把自己“挂起”，直到得到这本书有没有的结果，如果是非阻塞式调用，你不管老板有没有告诉你，你自己先一边去玩了， 当然你也要偶尔过几分钟check一下老板有没有返回结果。在这里阻塞与非阻塞与是否同步异步无关。跟老板通过什么方式回答你结果无关。</p>
+<h5 id="解释2">解释2<a hidden class="anchor" aria-hidden="true" href="#解释2">#</a></h5>
+<p>我认为同步、异步、阻塞、非阻塞，是分3个层次的：CPU层次；线程层次；程序员感知层次。这几个概念之所以容易混淆，是因为没有分清楚是在哪个层次进行讨论。</p>
+<p>CPU层次
+在CPU层次，或者说操作系统进行IO和任务调度的层次，现代操作系统通常使用异步非阻塞方式进行IO（有少部分IO可能会使用同步非阻塞轮询），即发出IO请求之后，并不等待IO操作完成，而是继续执行下面的指令（非阻塞），IO操作和CPU指令互不干扰（异步），最后通过中断的方式来通知IO操作完成结果。</p>
+<p>线程层次
+在线程层次，或者说操作系统调度单元的层次，操作系统为了减轻程序员的思考负担，将底层的异步非阻塞的IO方式进行封装，把相关系统调用（如read，write等）以同步的方式展现出来。然而，同步阻塞的IO会使线程挂起，同步非阻塞的IO会消耗CPU资源在轮询上。
+为了解决这一问题，就有3种思路：多线程（同步阻塞）；IO多路复用（select，poll，epoll）（同步非阻塞，严格地来讲，是把阻塞点改变了位置）；直接暴露出异步的IO接口，如kernel-aio和IOCP（异步非阻塞）。</p>
+<p>程序员感知层次
+在Linux中，上面提到的第2种思路用得比较广泛，也是比较理想的解决方案。然而，直接使用select之类的接口，依然比较复杂，所以各种库和框架百花齐放，都试图对IO多路复用进行封装。此时，库和框架提供的API又可以选择是以同步的方式还是异步的方式来展现。如python的asyncio库中，就通过协程，提供了同步阻塞式的API；如node.js中，就通过回调函数，提供了异步非阻塞式的API。</p>
+<p><a href="https://www.zhihu.com/question/19732473">其他参考</a></p>
+<p>总结
+从上面的描述中，我们能够看到阻塞和非阻塞通常是指在客户端发出请求后，在服务端处理这个请求的过程中，客户端本身是直接挂起等待结果，还是继续做其他的任务。而异步和同步则是对于请求结果的获取是客户端主动获取结果，还是由服务端来通知结果。从这一点来看，同步和阻塞其实描述的是两个不同角度的事情，阻塞和非阻塞指的是客户端等待消息处理时本身的状态，是挂起还是继续干别的。同步和异步指的是对于消息结果是客户端主动获取的，还是由服务端间接推送的。记住这两点关键的区别将有助于我们更好地区分和理解它们。</p>
+<h3 id="io模型的对比与总结">I/O模型的对比与总结<a hidden class="anchor" aria-hidden="true" href="#io模型的对比与总结">#</a></h3>
+<p><img loading="lazy" src="22.jpg" alt=""  />
+
+从上图可以看出，阻塞程度：阻塞I/O&gt;非阻塞I/O&gt;多路复用I/O&gt;信号驱动I/O&gt;异步I/O，效率是由低到高的。</p>
+<h2 id="从bio到nio的演进">从BIO到NIO的演进<a hidden class="anchor" aria-hidden="true" href="#从bio到nio的演进">#</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>BIO</th>
+<th>NIO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通信</td>
+<td>面向流</td>
+<td>面向缓冲区</td>
+</tr>
+<tr>
+<td>处理</td>
+<td>阻塞</td>
+<td>非阻塞</td>
+</tr>
+<tr>
+<td>触发</td>
+<td>无</td>
+<td>选择器</td>
+</tr>
+</tbody>
+</table>
+<h3 id="流和缓冲区">流和缓冲区<a hidden class="anchor" aria-hidden="true" href="#流和缓冲区">#</a></h3>
+<p>Java NIO和BIO之间第一个最大的区别是，BIO是面向流的，NIO是面向缓冲区的。Java BIO面向流意味着每次从流中读一个或多个字节，直至读取所有字节，它们没有被缓存在任何地方。此外，不能前后移动流中的数据。
+如果需要前后移动从流中读取的数据，需要先将它缓存到一个缓冲区。Java NIO的缓冲导向方法略有不同。数据读取到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动。这就增加了处理过程的灵活性。但是，还需要检查该缓冲区是否包含所有需要处理的数据。而且，要确保当更多的数据读入缓冲区时，不能覆盖缓冲区里尚未处理的数据。</p>
+<h3 id="阻塞和非阻塞-1">阻塞和非阻塞<a hidden class="anchor" aria-hidden="true" href="#阻塞和非阻塞-1">#</a></h3>
+<p>Java BIO的各种流是阻塞的。这意味着，当一个线程调用read()或write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情。Java NIO的非阻塞模式，是一个线程从某通道（Channel）发送请求读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用，就什么都不会获取，而不是保持线程阻塞，所以直到数据变成可以读取之前，该线程可以继续做其他的事情。非阻塞写也是如此。一个线程请求写入某通道一些数据，但不需要等待它完全写入，这个线程同时可以去做别的事情。线程通常将非阻塞I/O的空闲时间用于在其他通道上执行I/O操作，所以一个单独的线程现在可以管理多个I/O通道。</p>
+<h3 id="选择器在io中的应用">选择器在I/O中的应用<a hidden class="anchor" aria-hidden="true" href="#选择器在io中的应用">#</a></h3>
+<p>Java NIO的选择器（Selector）允许一个单独的线程监视多个输入通道，可以注册多个通道使用一个选择器，然后使用一个单独的线程来“选择”通道：这些通道里已经有可以处理的输入，或者选择已准备写入的通道。这种选择机制使一个单独的线程很容易管理多个通道。</p>
+<h3 id="nio和bio如何影响应用程序的设计">NIO和BIO如何影响应用程序的设计<a hidden class="anchor" aria-hidden="true" href="#nio和bio如何影响应用程序的设计">#</a></h3>
+<ul>
+<li>API调用</li>
+<li>数据处理逻辑</li>
+<li>用来处理数据的线程数</li>
+</ul>
+<h2 id="java-aio详解">Java AIO详解<a hidden class="anchor" aria-hidden="true" href="#java-aio详解">#</a></h2>
+<p>彻底的异步通信
+省略&hellip;</p>
+<h1 id="netty">netty<a hidden class="anchor" aria-hidden="true" href="#netty">#</a></h1>
+<p>netty是一个java网络通信框架。
+Netty是一款基于NIO（Nonblocking I/O，非阻塞IO）开发的网络通信框架，对比于
+BIO（Blocking I/O，阻塞IO），他的并发性能得到了很大提高。通过下面2图了解NIO和BIO的区别。</p>
+<p>BIO
+<img loading="lazy" src="23.jpg" alt=""  />
+</p>
+<p>NIO
+<img loading="lazy" src="24.jpg" alt=""  />
+
+从这两图可以看出，NIO的单线程能处理连接的数量比BIO要高出很多，而为什么单线程能处理更多的连接呢？原因就是图二中出现的Selector。</p>
+<p>当一个连接建立之后，他有两个步骤要做，第一步是接收完客户端发过来的全部数据，第二步是服务端处理完请求业务之后返回response给客户端。NIO和BIO的区别主要是在第一步。
+在BIO中，等待客户端发数据这个过程是阻塞的，这样就造成了一个线程只能处理一个请求的情况，而机器能支持的最大线程数是有限的，这就是为什么BIO不能支持高并发的原因。
+而NIO中，当一个Socket建立好之后，Thread并不会阻塞去接受这个Socket，而是将这个请求交给Selector，Selector会不断的去遍历所有的Socket，一旦有一个Socket建立完成，他会通知Thread，然后Thread处理完数据再返回给客户端——这个过程是不阻塞的，这样就能让一个Thread处理更多的请求了。</p>
+<h2 id="netty为什么传输快">Netty为什么传输快<a hidden class="anchor" aria-hidden="true" href="#netty为什么传输快">#</a></h2>
+<p>Netty的传输快其实也是依赖了NIO的一个特性——零拷贝。我们知道，Java的内存有堆内存、栈内存和字符串常量池等等，其中堆内存是占用内存空间最大的一块，也是Java对象存放的地方，一般我们的数据如果需要从IO读取到堆内存，中间需要经过Socket缓冲区，也就是说一个数据会被拷贝两次才能到达他的的终点，如果数据量大，就会造成不必要的资源浪费。
+Netty针对这种情况，使用了NIO中的另一大特性——零拷贝，当他需要接收数据的时候，他会在堆内存之外开辟一块内存，数据就直接从IO读到了那块内存中去，在netty里面通过ByteBuf可以直接对这些数据进行直接操作，从而加快了传输速度。</p>
+<p>下两图就介绍了两种拷贝方式的区别，摘自<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-zerocopy1/index.html">Linux 中的零拷贝技术，第 1 部分</a></p>
+<p>传统数据拷贝
+<img loading="lazy" src="25.jpg" alt=""  />
+</p>
+<p>零拷贝
+<img loading="lazy" src="26.jpg" alt=""  />
+</p>
+<h2 id="为什么说netty封装好">为什么说Netty封装好？<a hidden class="anchor" aria-hidden="true" href="#为什么说netty封装好">#</a></h2>
+<p>直接上代码对比</p>
+<h3 id="阻塞io">阻塞I/O<a hidden class="anchor" aria-hidden="true" href="#阻塞io">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> PlainOioServer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> serve(<span style="color:#fff;font-weight:bold">int</span> port) <span style="color:#fff;font-weight:bold">throws</span> IOException {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">final</span> ServerSocket socket = <span style="color:#fff;font-weight:bold">new</span> ServerSocket(port);     <span style="color:#007f7f">//1
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">final</span> Socket clientSocket = socket.<span style="color:#007f7f">accept</span>();    <span style="color:#007f7f">//2
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;Accepted connection from &#34;</span> + clientSocket);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">new</span> Thread(<span style="color:#fff;font-weight:bold">new</span> Runnable() {                        <span style="color:#007f7f">//3
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                    @Override
+</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> run() {
+</span></span><span style="display:flex;"><span>                        OutputStream out;
+</span></span><span style="display:flex;"><span>                        <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                            out = clientSocket.<span style="color:#007f7f">getOutputStream</span>();
+</span></span><span style="display:flex;"><span>                            out.<span style="color:#007f7f">write</span>(<span style="color:#0ff;font-weight:bold">&#34;Hi!\r\n&#34;</span>.<span style="color:#007f7f">getBytes</span>(Charset.<span style="color:#007f7f">forName</span>(<span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span>)));                            <span style="color:#007f7f">//4
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                            out.<span style="color:#007f7f">flush</span>();
+</span></span><span style="display:flex;"><span>                            clientSocket.<span style="color:#007f7f">close</span>();                <span style="color:#007f7f">//5
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>
+</span></span><span style="display:flex;"><span>                        } <span style="color:#fff;font-weight:bold">catch</span> (IOException e) {
+</span></span><span style="display:flex;"><span>                            e.<span style="color:#007f7f">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                            <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                                clientSocket.<span style="color:#007f7f">close</span>();
+</span></span><span style="display:flex;"><span>                            } <span style="color:#fff;font-weight:bold">catch</span> (IOException ex) {
+</span></span><span style="display:flex;"><span>                                <span style="color:#007f7f">// ignore on close
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                            }
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }).<span style="color:#007f7f">start</span>();                                        <span style="color:#007f7f">//6
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">catch</span> (IOException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#007f7f">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="非阻塞io">非阻塞IO<a hidden class="anchor" aria-hidden="true" href="#非阻塞io">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> PlainNioServer {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> serve(<span style="color:#fff;font-weight:bold">int</span> port) <span style="color:#fff;font-weight:bold">throws</span> IOException {
+</span></span><span style="display:flex;"><span>        ServerSocketChannel serverChannel = ServerSocketChannel.<span style="color:#007f7f">open</span>();
+</span></span><span style="display:flex;"><span>        serverChannel.<span style="color:#007f7f">configureBlocking</span>(<span style="color:#fff;font-weight:bold">false</span>);
+</span></span><span style="display:flex;"><span>        ServerSocket ss = serverChannel.<span style="color:#007f7f">socket</span>();
+</span></span><span style="display:flex;"><span>        InetSocketAddress address = <span style="color:#fff;font-weight:bold">new</span> InetSocketAddress(port);
+</span></span><span style="display:flex;"><span>        ss.<span style="color:#007f7f">bind</span>(address);                                            <span style="color:#007f7f">//1
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        Selector selector = Selector.<span style="color:#007f7f">open</span>();                        <span style="color:#007f7f">//2
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        serverChannel.<span style="color:#007f7f">register</span>(selector, SelectionKey.<span style="color:#007f7f">OP_ACCEPT</span>);    <span style="color:#007f7f">//3
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">final</span> ByteBuffer msg = ByteBuffer.<span style="color:#007f7f">wrap</span>(<span style="color:#0ff;font-weight:bold">&#34;Hi!\r\n&#34;</span>.<span style="color:#007f7f">getBytes</span>());
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (;;) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                selector.<span style="color:#007f7f">select</span>();                                    <span style="color:#007f7f">//4
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            } <span style="color:#fff;font-weight:bold">catch</span> (IOException ex) {
+</span></span><span style="display:flex;"><span>                ex.<span style="color:#007f7f">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#007f7f">// handle exception
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Set&lt;SelectionKey&gt; readyKeys = selector.<span style="color:#007f7f">selectedKeys</span>();    <span style="color:#007f7f">//5
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            Iterator&lt;SelectionKey&gt; iterator = readyKeys.<span style="color:#007f7f">iterator</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">while</span> (iterator.<span style="color:#007f7f">hasNext</span>()) {
+</span></span><span style="display:flex;"><span>                SelectionKey key = iterator.<span style="color:#007f7f">next</span>();
+</span></span><span style="display:flex;"><span>                iterator.<span style="color:#007f7f">remove</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">if</span> (key.<span style="color:#007f7f">isAcceptable</span>()) {                <span style="color:#007f7f">//6
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                        ServerSocketChannel server =
+</span></span><span style="display:flex;"><span>                                (ServerSocketChannel)key.<span style="color:#007f7f">channel</span>();
+</span></span><span style="display:flex;"><span>                        SocketChannel client = server.<span style="color:#007f7f">accept</span>();
+</span></span><span style="display:flex;"><span>                        client.<span style="color:#007f7f">configureBlocking</span>(<span style="color:#fff;font-weight:bold">false</span>);
+</span></span><span style="display:flex;"><span>                        client.<span style="color:#007f7f">register</span>(selector, SelectionKey.<span style="color:#007f7f">OP_WRITE</span> |
+</span></span><span style="display:flex;"><span>                                SelectionKey.<span style="color:#007f7f">OP_READ</span>, msg.<span style="color:#007f7f">duplicate</span>());    <span style="color:#007f7f">//7
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(
+</span></span><span style="display:flex;"><span>                                <span style="color:#0ff;font-weight:bold">&#34;Accepted connection from &#34;</span> + client);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">if</span> (key.<span style="color:#007f7f">isWritable</span>()) {                <span style="color:#007f7f">//8
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                        SocketChannel client =
+</span></span><span style="display:flex;"><span>                                (SocketChannel)key.<span style="color:#007f7f">channel</span>();
+</span></span><span style="display:flex;"><span>                        ByteBuffer buffer =
+</span></span><span style="display:flex;"><span>                                (ByteBuffer)key.<span style="color:#007f7f">attachment</span>();
+</span></span><span style="display:flex;"><span>                        <span style="color:#fff;font-weight:bold">while</span> (buffer.<span style="color:#007f7f">hasRemaining</span>()) {
+</span></span><span style="display:flex;"><span>                            <span style="color:#fff;font-weight:bold">if</span> (client.<span style="color:#007f7f">write</span>(buffer) == <span style="color:#ff0;font-weight:bold">0</span>) {        <span style="color:#007f7f">//9
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                                <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>                            }
+</span></span><span style="display:flex;"><span>                        }
+</span></span><span style="display:flex;"><span>                        client.<span style="color:#007f7f">close</span>();                    <span style="color:#007f7f">//10
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                    }
+</span></span><span style="display:flex;"><span>                } <span style="color:#fff;font-weight:bold">catch</span> (IOException ex) {
+</span></span><span style="display:flex;"><span>                    key.<span style="color:#007f7f">cancel</span>();
+</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>                        key.<span style="color:#007f7f">channel</span>().<span style="color:#007f7f">close</span>();
+</span></span><span style="display:flex;"><span>                    } <span style="color:#fff;font-weight:bold">catch</span> (IOException cex) {
+</span></span><span style="display:flex;"><span>                        <span style="color:#007f7f">// 在关闭时忽略
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="netty-1">Netty<a hidden class="anchor" aria-hidden="true" href="#netty-1">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> NettyOioServer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> server(<span style="color:#fff;font-weight:bold">int</span> port) <span style="color:#fff;font-weight:bold">throws</span> Exception {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">final</span> ByteBuf buf = Unpooled.<span style="color:#007f7f">unreleasableBuffer</span>(
+</span></span><span style="display:flex;"><span>                Unpooled.<span style="color:#007f7f">copiedBuffer</span>(<span style="color:#0ff;font-weight:bold">&#34;Hi!\r\n&#34;</span>, Charset.<span style="color:#007f7f">forName</span>(<span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span>)));
+</span></span><span style="display:flex;"><span>        EventLoopGroup group = <span style="color:#fff;font-weight:bold">new</span> OioEventLoopGroup();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            ServerBootstrap b = <span style="color:#fff;font-weight:bold">new</span> ServerBootstrap();        <span style="color:#007f7f">//1
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>
+</span></span><span style="display:flex;"><span>            b.<span style="color:#007f7f">group</span>(group)                                    <span style="color:#007f7f">//2
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>             .<span style="color:#007f7f">channel</span>(OioServerSocketChannel.<span style="color:#007f7f">class</span>)
+</span></span><span style="display:flex;"><span>             .<span style="color:#007f7f">localAddress</span>(<span style="color:#fff;font-weight:bold">new</span> InetSocketAddress(port))
+</span></span><span style="display:flex;"><span>             .<span style="color:#007f7f">childHandler</span>(<span style="color:#fff;font-weight:bold">new</span> ChannelInitializer&lt;SocketChannel&gt;() {<span style="color:#007f7f">//3
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                 @Override
+</span></span><span style="display:flex;"><span>                 <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> initChannel(SocketChannel ch) 
+</span></span><span style="display:flex;"><span>                     <span style="color:#fff;font-weight:bold">throws</span> Exception {
+</span></span><span style="display:flex;"><span>                     ch.<span style="color:#007f7f">pipeline</span>().<span style="color:#007f7f">addLast</span>(<span style="color:#fff;font-weight:bold">new</span> ChannelInboundHandlerAdapter() {            <span style="color:#007f7f">//4
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                         @Override
+</span></span><span style="display:flex;"><span>                         <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> channelActive(ChannelHandlerContext ctx) <span style="color:#fff;font-weight:bold">throws</span> Exception {
+</span></span><span style="display:flex;"><span>                             ctx.<span style="color:#007f7f">writeAndFlush</span>(buf.<span style="color:#007f7f">duplicate</span>()).<span style="color:#007f7f">addListener</span>(ChannelFutureListener.<span style="color:#007f7f">CLOSE</span>);<span style="color:#007f7f">//5
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                         }
+</span></span><span style="display:flex;"><span>                     });
+</span></span><span style="display:flex;"><span>                 }
+</span></span><span style="display:flex;"><span>             });
+</span></span><span style="display:flex;"><span>            ChannelFuture f = b.<span style="color:#007f7f">bind</span>().<span style="color:#007f7f">sync</span>();  <span style="color:#007f7f">//6
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            f.<span style="color:#007f7f">channel</span>().<span style="color:#007f7f">closeFuture</span>().<span style="color:#007f7f">sync</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">finally</span> {
+</span></span><span style="display:flex;"><span>            group.<span style="color:#007f7f">shutdownGracefully</span>().<span style="color:#007f7f">sync</span>();        <span style="color:#007f7f">//7
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从代码量上来看，Netty就已经秒杀传统Socket编程了，但是这一部分博大精深，仅仅贴几个代码岂能说明问题，在这里给大家介绍一下Netty的一些重要概念，让大家更理解Netty。</p>
+<h4 id="channel">channel<a hidden class="anchor" aria-hidden="true" href="#channel">#</a></h4>
+<p>Channel，表示一个连接，可以理解为每一个请求，就是一个Channel。
+ChannelHandler，核心处理业务就在这里，用于处理业务请求。
+ChannelHandlerContext，用于传输业务数据。
+ChannelPipeline，用于保存处理过程需要用到的ChannelHandler和ChannelHandlerContext。</p>
+<h4 id="bytebuf">ByteBuf<a hidden class="anchor" aria-hidden="true" href="#bytebuf">#</a></h4>
+<p>ByteBuf是一个存储字节的容器，最大特点就是使用方便，它既有自己的读索引和写索引，方便你对整段字节缓存进行读写，也支持get/set，方便你对其中每一个字节进行读写。</p>
+<p>ByteBuf三种使用模式</p>
+<ul>
+<li>
+<p>Heap Buffer 堆缓冲区
+堆缓冲区是ByteBuf最常用的模式，他将数据存储在堆空间。</p>
+</li>
+<li>
+<p>Direct Buffer 直接缓冲区
+直接缓冲区是ByteBuf的另外一种常用模式，他的内存分配都不发生在堆，jdk1.4引入的nio的ByteBuffer类
+允许jvm通过本地方法调用分配内存，这样做有两个好处。</p>
+</li>
+</ul>
+<ol>
+<li>通过免去中间交换的内存拷贝, 提升IO处理速度; 直接缓冲区的内容可以驻留在垃圾回收扫描的堆区以外。</li>
+<li>DirectBuffer 在 -XX:MaxDirectMemorySize=xxM大小限制下, 使用 Heap 之外的内存, GC对此
+”无能为力”,也就意味着规避了在高负载下频繁的GC过程对应用线程的中断影响.</li>
+</ol>
+<ul>
+<li>Composite Buffer 复合缓冲区
+复合缓冲区相当于多个不同ByteBuf的视图，这是netty提供的，jdk不提供这样的功能。</li>
+</ul>
+<h2 id="使用netty创建telnet服务">使用Netty创建Telnet服务<a hidden class="anchor" aria-hidden="true" href="#使用netty创建telnet服务">#</a></h2>
+<p>Netty作为一个高性能网络通信框架，可以自定义实现不同协议的服务端和客户端程序。这里以telnet为例做一个服务端程序。Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的标准协议和主要方式。</p>
+<p>在maven的pom.xml中添加：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;dependency&gt;
+</span></span><span style="display:flex;"><span>    &lt;groupId&gt;io.netty&lt;/groupId&gt;
+</span></span><span style="display:flex;"><span>    &lt;artifactId&gt;netty-all&lt;/artifactId&gt;
+</span></span><span style="display:flex;"><span>    &lt;version&gt;4.0.36.Final&lt;/version&gt;
+</span></span><span style="display:flex;"><span>&lt;/dependency&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="主程序nettytelnetserverjava">主程序NettyTelnetServer.java<a hidden class="anchor" aria-hidden="true" href="#主程序nettytelnetserverjava">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> NettyTelnetServer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 指定端口号
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span> PORT = <span style="color:#ff0;font-weight:bold">8888</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> ServerBootstrap serverBootstrap;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> EventLoopGroup bossGroup = <span style="color:#fff;font-weight:bold">new</span> NioEventLoopGroup(<span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> EventLoopGroup workerGroup = <span style="color:#fff;font-weight:bold">new</span> NioEventLoopGroup();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> open() <span style="color:#fff;font-weight:bold">throws</span> InterruptedException {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        serverBootstrap = <span style="color:#fff;font-weight:bold">new</span> ServerBootstrap();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 指定socket的一些属性
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        serverBootstrap.<span style="color:#007f7f">option</span>(ChannelOption.<span style="color:#007f7f">SO_BACKLOG</span>, <span style="color:#ff0;font-weight:bold">1024</span>);
+</span></span><span style="display:flex;"><span>        serverBootstrap.<span style="color:#007f7f">group</span>(bossGroup, workerGroup)
+</span></span><span style="display:flex;"><span>                .<span style="color:#007f7f">channel</span>(NioServerSocketChannel.<span style="color:#007f7f">class</span>)  <span style="color:#007f7f">// 指定是一个NIO连接通道
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>                .<span style="color:#007f7f">handler</span>(<span style="color:#fff;font-weight:bold">new</span> LoggingHandler(LogLevel.<span style="color:#007f7f">INFO</span>))
+</span></span><span style="display:flex;"><span>                .<span style="color:#007f7f">childHandler</span>(<span style="color:#fff;font-weight:bold">new</span> NettyTelnetInitializer());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 绑定对应的端口号,并启动开始监听端口上的连接
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        Channel ch = serverBootstrap.<span style="color:#007f7f">bind</span>(PORT).<span style="color:#007f7f">sync</span>().<span style="color:#007f7f">channel</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 等待关闭,同步端口
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        ch.<span style="color:#007f7f">closeFuture</span>().<span style="color:#007f7f">sync</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> close(){
+</span></span><span style="display:flex;"><span>        bossGroup.<span style="color:#007f7f">shutdownGracefully</span>();
+</span></span><span style="display:flex;"><span>        workerGroup.<span style="color:#007f7f">shutdownGracefully</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>NioEventLoopGroup对应一个被封装好的NIO线程池，bossGroup负责收集客户端连接，
+workerGroup负责处理每个连接的IO读写。
+ServerBootstrap是Socket服务端启动类。通过这个类的实例，用户可以创建对应的服务端程序。</p>
+<h3 id="初始化配置类nettytelnetinitializerjava">初始化配置类NettyTelnetInitializer.java<a hidden class="anchor" aria-hidden="true" href="#初始化配置类nettytelnetinitializerjava">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> NettyTelnetInitializer <span style="color:#fff;font-weight:bold">extends</span> ChannelInitializer&lt;SocketChannel&gt; {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">final</span> StringDecoder DECODER = <span style="color:#fff;font-weight:bold">new</span> StringDecoder();
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">final</span> StringEncoder ENCODER = <span style="color:#fff;font-weight:bold">new</span> StringEncoder();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">protected</span> <span style="color:#fff;font-weight:bold">void</span> initChannel(SocketChannel channel) <span style="color:#fff;font-weight:bold">throws</span> Exception {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ChannelPipeline pipeline = channel.<span style="color:#007f7f">pipeline</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// Add the text line codec combination first,
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        pipeline.<span style="color:#007f7f">addLast</span>(<span style="color:#fff;font-weight:bold">new</span> DelimiterBasedFrameDecoder(<span style="color:#ff0;font-weight:bold">8192</span>, Delimiters.<span style="color:#007f7f">lineDelimiter</span>()));
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 添加编码和解码的类
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        pipeline.<span style="color:#007f7f">addLast</span>(DECODER);
+</span></span><span style="display:flex;"><span>        pipeline.<span style="color:#007f7f">addLast</span>(ENCODER);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 添加处理业务的类
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        pipeline.<span style="color:#007f7f">addLast</span>(<span style="color:#fff;font-weight:bold">new</span> NettyTelnetHandler());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="业务处理类nettytelnethandlerjava">业务处理类NettyTelnetHandler.java<a hidden class="anchor" aria-hidden="true" href="#业务处理类nettytelnethandlerjava">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> NettyTelnetHandler <span style="color:#fff;font-weight:bold">extends</span> SimpleChannelInboundHandler&lt;String&gt; {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> channelActive(ChannelHandlerContext ctx) <span style="color:#fff;font-weight:bold">throws</span> Exception {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// Send greeting for a new connection.
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        ctx.<span style="color:#007f7f">write</span>(<span style="color:#0ff;font-weight:bold">&#34;Welcome to &#34;</span> + InetAddress.<span style="color:#007f7f">getLocalHost</span>().<span style="color:#007f7f">getHostName</span>() + <span style="color:#0ff;font-weight:bold">&#34;!\r\n&#34;</span>);
+</span></span><span style="display:flex;"><span>        ctx.<span style="color:#007f7f">write</span>(<span style="color:#0ff;font-weight:bold">&#34;It is &#34;</span> + <span style="color:#fff;font-weight:bold">new</span> Date() + <span style="color:#0ff;font-weight:bold">&#34; now.\r\n&#34;</span>);
+</span></span><span style="display:flex;"><span>        ctx.<span style="color:#007f7f">flush</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+</span></span><span style="display:flex;"><span>        cause.<span style="color:#007f7f">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        ctx.<span style="color:#007f7f">close</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">protected</span> <span style="color:#fff;font-weight:bold">void</span> channelRead0(ChannelHandlerContext ctx, String request) <span style="color:#fff;font-weight:bold">throws</span> Exception {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        String response;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">boolean</span> close = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (request.<span style="color:#007f7f">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>            response = <span style="color:#0ff;font-weight:bold">&#34;Please type something.\r\n&#34;</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span> (<span style="color:#0ff;font-weight:bold">&#34;bye&#34;</span>.<span style="color:#007f7f">equals</span>(request.<span style="color:#007f7f">toLowerCase</span>())) {
+</span></span><span style="display:flex;"><span>            response = <span style="color:#0ff;font-weight:bold">&#34;Have a good day!\r\n&#34;</span>;
+</span></span><span style="display:flex;"><span>            close = <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            response = <span style="color:#0ff;font-weight:bold">&#34;Did you say &#39;&#34;</span> + request + <span style="color:#0ff;font-weight:bold">&#34;&#39;?\r\n&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ChannelFuture future = ctx.<span style="color:#007f7f">write</span>(response);
+</span></span><span style="display:flex;"><span>        ctx.<span style="color:#007f7f">flush</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (close) {
+</span></span><span style="display:flex;"><span>            future.<span style="color:#007f7f">addListener</span>(ChannelFutureListener.<span style="color:#007f7f">CLOSE</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="运行服务">运行服务<a hidden class="anchor" aria-hidden="true" href="#运行服务">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> NettyTest {
+</span></span><span style="display:flex;"><span>    @Test
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> test() {
+</span></span><span style="display:flex;"><span>        NettyTelnetServer nettyTelnetServer = <span style="color:#fff;font-weight:bold">new</span> NettyTelnetServer();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">try</span> {
+</span></span><span style="display:flex;"><span>            nettyTelnetServer.<span style="color:#007f7f">open</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>            nettyTelnetServer.<span style="color:#007f7f">close</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用命令行工具访问telnet服务(window建议使用xShell)</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>➜ telnet 127.0.0.1 8888
+</span></span><span style="display:flex;"><span>Trying 127.0.0.1...
+</span></span><span style="display:flex;"><span>Connected to localhost.
+</span></span><span style="display:flex;"><span>Escape character is &#39;^]&#39;.
+</span></span><span style="display:flex;"><span>Welcome to whthomasdeMacBook-Pro.local!
+</span></span><span style="display:flex;"><span>It is Tue Apr 12 11:37:20 CST 2016 now.
+</span></span><span style="display:flex;"><span>hello
+</span></span><span style="display:flex;"><span>Did you say &#39;hello&#39;?
+</span></span><span style="display:flex;"><span>yes
+</span></span><span style="display:flex;"><span>Did you say &#39;yes&#39;?
+</span></span><span style="display:flex;"><span>telnet
+</span></span><span style="display:flex;"><span>Did you say &#39;telnet&#39;?
+</span></span><span style="display:flex;"><span>bye
+</span></span><span style="display:flex;"><span>Have a good day!
+</span></span><span style="display:flex;"><span>Connection closed by foreign host.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>利用netty构建的telnet服务器建立成功。</p>
+<h1 id="其他">其他<a hidden class="anchor" aria-hidden="true" href="#其他">#</a></h1>
+<h2 id="get和post">get和post<a hidden class="anchor" aria-hidden="true" href="#get和post">#</a></h2>
+<p>最直观的区别就是GET把参数包含在URL中，POST通过request body传递参数。你可能自己写过无数个GET和POST请求，或者已经看过很多权威网站总结出的他们的区别，你非常清楚知道什么时候该用什么。当你在面试中被问到这个问题，你的内心充满了自信和喜悦。你轻轻松松的给出了一个“标准答案”：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>GET在浏览器回退时是无害的，而POST会再次提交请求。
+</span></span><span style="display:flex;"><span>GET产生的URL地址可以被Bookmark，而POST不可以。
+</span></span><span style="display:flex;"><span>GET请求会被浏览器主动cache，而POST不会，除非手动设置。
+</span></span><span style="display:flex;"><span>GET请求只能进行url编码，而POST支持多种编码方式。
+</span></span><span style="display:flex;"><span>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留。
+</span></span><span style="display:flex;"><span>GET请求在URL中传送的参数是有长度限制的，而POST没有。
+</span></span><span style="display:flex;"><span>对参数的数据类型，GET只接受ASCII字符，而POST没有限制。
+</span></span><span style="display:flex;"><span>GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。
+</span></span><span style="display:flex;"><span>GET参数通过URL传递，POST放在Request body中。
+</span></span><span style="display:flex;"><span>（本标准答案参考自w3schools）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>“很遗憾，这不是我们要的回答！”
+GET和POST是什么？HTTP协议中的两种发送请求的方法。
+HTTP是什么？HTTP是基于TCP/IP的关于数据如何在万维网中如何通信的协议。
+HTTP的底层是TCP/IP。所以GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP链接。GET和POST能做的事情是一样一样的。你要给GET加上request body，给POST带上url参数，技术上是完全行的通的。</p>
+<p>在万维网世界中，TCP就像汽车，我们用TCP来运输数据，它很可靠，从来不会发生丢件少件的现象。但是如果路上跑的全是看起来一模一样的汽车，那这个世界看起来是一团混乱，送急件的汽车可能被前面满载货物的汽车拦堵在路上，整个交通系统一定会瘫痪。为了避免这种情况发生，交通规则HTTP诞生了。HTTP给汽车运输设定了好几个服务类别，有GET, POST, PUT, DELETE等等，HTTP规定，当执行GET请求的时候，要给汽车贴上GET的标签（设置method为GET），而且要求把传送的数据放在车顶上（url中）以方便记录。如果是POST请求，就要在车上贴上POST的标签，并把货物放在车厢里。当然，你也可以在GET的时候往车厢内偷偷藏点货物，但是这是很不光彩；也可以在POST的时候在车顶上也放一些数据，让人觉得傻乎乎的。HTTP只是个行为准则，而TCP才是GET和POST怎么实现的基本。</p>
+<p>但是，我们只看到HTTP对GET和POST参数的传送渠道（url还是requrest body）提出了要求。“标准答案”里关于参数大小的限制又是从哪来的呢？在万维网世界中，还有另一个重要的角色：运输公司。不同的浏览器（发起http请求）和服务器（接受http请求）就是不同的运输公司。 虽然理论上，你可以在车顶上无限的堆货物（url中无限加参数）。但是运输公司可不傻，装货和卸货也是有很大成本的，他们会限制单次运输量来控制风险，数据量太大对浏览器和服务器都是很大负担。业界不成文的规定是，（大多数）浏览器通常都会限制url长度在2K个字节，而（大多数）服务器最多处理64K大小的url。超过的部分，恕不处理。如果你用GET服务，在request body偷偷藏了数据，不同服务器的处理方式也是不同的，有些服务器会帮你卸货，读出数据，有些服务器直接忽略，所以，虽然GET可以带request body，也不能保证一定能被接收到哦。好了，现在你知道，GET和POST本质上就是TCP链接，并无差别。但是由于HTTP的规定和浏览器/服务器的限制，导致他们在应用过程中体现出一些不同。</p>
+<p>GET和POST还有一个重大区别，简单的说：
+GET产生一个TCP数据包；POST产生两个TCP数据包。</p>
+<p>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；
+而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。
+也就是说，GET只需要汽车跑一趟就把货送到了，而POST得跑两趟，第一趟，先去和服务器打个招呼“嗨，我等下要送一批货来，你们打开门迎接我”，然后再回头把货送过去。</p>
+<p>因为POST需要两步，时间上消耗的要多一点，看起来GET比POST更有效。因此Yahoo团队有推荐用GET替换POST来优化网站性能。但这是一个坑！跳入需谨慎。为什么？</p>
+<ol>
+<li>GET与POST都有自己的语义，不能随便混用。</li>
+<li>据研究，在网络环境好的情况下，发一次包的时间和发两次包的时间差别基本可以无视。而在网络环境差
+的情况下，两次包的TCP在验证数据包完整性上，有非常大的优点。</li>
+<li>并不是所有浏览器都会在POST中发送两次包，Firefox就只发送一次。</li>
+</ol>
+<p><a href="https://www.cnblogs.com/logsharing/p/8448446.html">参考地址</a></p>
+<h2 id="patch请求">patch请求<a hidden class="anchor" aria-hidden="true" href="#patch请求">#</a></h2>
+<p>在HTTP原本的定义中，用于数据上传的方法只有post和put，后来鉴于post和put语义和功能上的不足，又加入了patch方法，post和put方法的差异是显而易见的，而put和patch方法就比较相似，但用法却完全不同。
+PATCH方法是新引入的，是对PUT方法的补充，用来对已知资源进行局部更新。patch方法用来更新局部资源，这句话我们该如何理解？
+假设我们有一个UserInfo，里面有userId， userName， userGender等10个字段。可你的编辑功能因为需求，在某个特别的页面里只能修改userName，这时候的更新怎么做？
+人们通常(为徒省事)把一个包含了修改后userName的完整userInfo对象传给后端，做完整更新。但仔细想想，这种做法感觉有点二，而且真心浪费带宽(纯技术上讲，你不关心带宽那是你土豪)。
+于是patch诞生，只传一个userName到指定资源去，表示该请求是一个局部更新，后端仅更新接收到的字段。而put虽然也是更新资源，但要求前端提供的一定是一个完整的资源对象，理论上说，如果你用了put，但却没有提供完整的UserInfo，那么缺了的那些字段应该被清空。
+补充一下，PATCH 与 PUT 属性上的一个重要区别还在于：PUT 是幂等的，而 PATCH 不是幂等的。幂等是一个数学和计算机学概念，在计算机范畴内表示一个操作执行任意次对系统的影响跟一次是相同。如：POST 方法不是幂等的，若反复执行多次对应的每一次都会创建一个新资源。如果请求超时，则需要回答这一问题：资源是否已经在服务端创建了？能否再重试一次或检查资源列表？而对于幂等方法不存在这一个问题，我们可以放心地多次请求。最后再补充一句，restful只是标准，标准的意思是如果在大家都依此行事的话，沟通成本会很低，开发效率就高。但并非强制(也没人强制得了)，所以你说在你的程序里把方法名从put改成patch没有任何影响，那是自然，因为你的后端程序并没有按照标准对两个方法做不同处理，它的表现自然是一样的。</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/">其他基础</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

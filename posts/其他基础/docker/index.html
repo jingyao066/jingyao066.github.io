@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>docker | Wjy&#39;s Blog</title>
+<meta name="keywords" content="其他基础">
+<meta name="description" content="概述
+Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。
+Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。
+下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见docker是在操作系统上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。
+
+">
+<meta name="author" content="">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="docker" />
+<meta property="og:description" content="概述
+Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。
+Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。
+下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见docker是在操作系统上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-03-05T10:26:24+00:00" />
+<meta property="article:modified_time" content="2020-03-05T10:26:24+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="docker"/>
+<meta name="twitter:description" content="概述
+Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。
+Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。
+下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见docker是在操作系统上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。
+
+"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "docker",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "docker",
+  "name": "docker",
+  "description": "概述 Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。 Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。 下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见docker是在操作系统上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。 ",
+  "keywords": [
+    "其他基础"
+  ],
+  "articleBody": "概述 Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。 Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。 下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见docker是在操作系统上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。 为什么使用docker 作为一种新兴的虚拟化方式，docker跟传统的虚拟化方式相比具备众多的优势。\n更快速的交付和部署 Docker在整个开发周期都可以完美的辅助你实现快速交付。Docker允许开发者在装有应用和服务的本地容器中做开发，可以直接集成到可持续开发流程中。 例如：开发者可以使用一个标准的镜像来构建一套开发容器，开发完成之后，运维人员可以直接使用这个容器来部署代码。 Docker 可以快速创建容器，快速迭代应用程序，并让整个过程全程可见，使团队中的其他成员更容易理解应用程序是如何创建和工作的。 Docker 容器很轻很快！容器的启动时间是秒级的，大量地节约开发、测试、部署的时间。\n高效的部署和扩容 Docker 容器几乎可以在任意的平台上运行，包括物理机、虚拟机、公有云、私有云、个人电脑、服务器等。 这种兼容性可以让用户把一个应用程序从一个平台直接迁移到另外一个。 Docker的兼容性和轻量特性可以很轻松的实现负载的动态管理。你可以快速扩容或方便的下线的你的应用和服务，这种速度趋近实时。\n更高的资源利用率 Docker 对系统资源的利用率很高，一台主机上可以同时运行数千个 Docker 容器。容器除了运行其中应用外，基本不消耗额外的系统资源，使得应用的性能很高，同时系统的开销尽量小。传统虚拟机方式运行 10 个不同的应用就要起 10 个虚拟机，而Docker 只需要启动 10 个隔离的应用即可。\n更简单的管理 使用 Docker，只需要小小的修改，就可以替代以往大量的更新工作。所有的修改都以增量的方式被分发和更新，从而实现自动化并且高效的管理。\n举个最简单的例子： 传统的javaWeb应用是部署在tomcat中的，一个服务器可能运行多个tomcat，每个tomcat中有一个或多个web应用，那么此时docker就可以起到应用隔离和资源独立的作用。 如果不使用docker，一台服务器上多个tomcat，即A1，所有的应用共享服务器的CPU、内存等资源，这时如果一个应用出现问题，导致CPU爆满等等，其他应用也会无法运行。 那么这时就需要做到资源独立，一个应用一份资源，即我们所说的传统的虚拟化方式，即A2，这样需要在服务器上安装数个虚拟机，每个虚拟机运行一个应用，这样的缺点是，重启虚拟机太麻烦，迁移应用需要重装虚拟机，配置环境等等。 A3即使用docker，此时服务器上运行多个容器，每个容器都拥有独立的CPU、内存等资源，完全满足了应用隔离的需求，重启容器只需要几秒，迁移应用也很方便，所有装了Docker的服务器，只需把镜像pull或者load进去，run，就可以了。 上图是docker的运行流程\ndocker引擎 docker引擎是一个c/s结构的应用，主要组件见下图： server是一个常驻进程 REST API实现了server和client之间的交互协议 CLI实现容器和镜像的管理，为用户提供统一的管理界面 docker架构 Docker使用C/S架构，Client 通过接口与Server进程通信实现容器的构建，运行和发布。client和server可以运行在同一台集群，也可以通过跨主机实现远程通信。 核心概念 镜像(Image) docker镜像就是一个只读的模板，如：一个镜像可以包含一个完整的操作系统环境，里面仅安装了Apache或用户需要的其他应用程序。 镜像可以用来创建docker容器，一个镜像可以创建很多容器。Docker 提供了一个很简单的机制来创建镜像或者更新现有的镜像，用户甚至可以直接从其他人那里下载一个已经做好的镜像来直接使用。\n镜像（Image）就是一堆只读层（read-only layer）的统一视角，也许这个定义有些难以理解，看看下面这张图： 右边我们看到了多个只读层，它们重叠在一起。除了最上面一层，其它层都会有一个指针指向下一层。这些层是Docker内部的实现细节，并且能够在docker宿主机的文件系统上访问到。统一文件系统（Union File System）技术能够将不同的层整合成一个文件系统，为这些层提供了一个统一的视角，这样就隐藏了多层的存在，在用户的角度看来，只存在一个文件系统。\n仓库(repository) 仓库是集中存放镜像文件的场所。有时候会把仓库和仓库注册服务器混为一谈，并不严格区分。实际上，仓库注册服务器往往存放着多个仓库，每个仓库又包含了多个镜像，每个镜像有不同的标签(tag)。 仓库分为公开仓库（Public）和私有仓库（Private）两种形式。最大的公开仓库是 Docker Hub，存放了数量庞大的镜像供用户下载。国内的公开仓库包括 时速云 、网易云 等，可以提供大陆用户更稳定快速的访问。当然，用户也可以在本地网络内创建一个私有仓库。 当用户创建了自己的镜像之后就可以使用 push 命令将它上传到公有或者私有仓库，这样下次在另外一台机器上使用这个镜像时候，只需要从仓库上 pull 下来就可以了。 Docker 仓库的概念跟 Git 类似，注册服务器可以理解为 GitHub 这样的托管服务。\n容器(container) docker利用容器来运行应用。容器时从镜像创建的运行实例。它可以被启动、开始、停止、删除。每个容器都是相互隔离的、保证安全的平台。可以把容器看做是一个简易版的 Linux 环境（包括root用户权限、进程空间、用户空间和网络空间等）和运行在其中的应用程序。 容器的定义和镜像几乎一模一样，也是一堆层的统一视角，唯一区别在于容器的最上面那一层是可读可写的。 一个运行态容器被定义为一个可读写的统一文件系统加上隔离的进程空间和包含其中的进程。下面这张图片展示了一个运行中的容器。 正是文件系统隔离技术使得Docker成为了一个非常有潜力的虚拟化技术。一个容器中的进程可能会对文件进行修改、删除、创建，这些改变都将作用于可读写层。 docker安装部署 Docker 要求 CentOS 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的CentOS 版本是否支持 Docker 。 通过 uname -r 命令查看你当前的内核版本 uname -r\n使用 root 权限登录 Centos。确保 yum 包更新到最新。 sudo yum update\n卸载旧版本(如果安装过旧版本的话) sudo yum remove docker docker-common docker-selinux docker-engine\n安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的 sudo yum install -y yum-utils device-mapper-persistent-data lvm2\n设置yum源 这是dockerHub上的镜像源： sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 我们使用阿里的镜像源： sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo\n查看仓库中所有docker版本，并选择特定版本安装 yum list docker-ce --showduplicates | sort -r\n安装docker sudo yum install docker-ce#由于repo中默认只开启stable仓库，故这里安装的是最新稳定版17.12.0 可以指定版本安装，如： sudo yum install docker-ce-18.03.0.ce\n启动并加入开机启动 sudo systemctl start docker sudo systemctl enable docker\n验证安装是否成功(有client和service两部分表示docker安装启动都成功了) docker version\n删除docker yum remove docker docker-common docker-selinux docker-engine -y /etc/systemd -name '*docker*' -exec rm -f {} ; find /etc/systemd -name '*docker*' -exec rm -f {} \\; find /lib/systemd -name '*docker*' -exec rm -f {} \\;\ndocker常用命令 获取镜像 docker pull 从仓库获取所需镜像，示例如下: docker pull centos:centos6\n实际上相当于 docker pull registry.hub.docker.com/centos:centos6 命令，即从注册服务器 registry.hub.docker.com 中的 centos 仓库来下载标记为 centos6 的镜像。\n有时候官方仓库注册服务器下载较慢，可以从其他仓库下载。 从其它仓库下载时需要指定完整的仓库注册服务器地址。 docker默认从docker自己的服务器下载镜像，在国内自然是很慢。我们可以将镜像源替换成阿里的源。通过daemon.json这个文件配置镜像。 docker安装后默认没有daemon.json这个配置文件，需要进行手动创建。配置文件的默认路径：/etc/docker/daemon.json touch /etc/docker/daemon.json vim /etc/docker/daemon.json 输入如下内容：\n1 2 3 { \"registry-mirrors\": [\"https://t21sxucj.mirror.aliyuncs.com\"] } registry-mirrors后边的就是镜像的下载地址，这个地址我是怎么找到的呢？地址失效了怎么办呢？ 我们知道阿里云有提供docker镜像服务。\n登录阿里云（没有账号先注册） 找到容器镜像服务 点击创建镜像仓库 创建之后点击镜像加速器选项卡 在右侧可以看到配置镜像加速器，在下边可以看到想要的地址。 配置完之后重启docker systemctl restart docker 然后再docker pull xxx试试，贼快。 参考1 参考2\n查看镜像列表 docker images 列出了所有顶层（top-level）镜像。实际上，在这里我们没有办法区分一个镜像和一个只读层，所以我们提出了top-level镜像。 只有创建容器时使用的镜像或者是直接pull下来的镜像能被称为顶层（top-level）镜像，并且每一个顶层镜像下面都隐藏了多个镜像层。\n如：\n1 2 3 4 $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE centos centos6 6a77ab6655b9 8 weeks ago 194.6 MB ubuntu latest 2fa927b5cdd3 9 weeks ago 122 MB 在列出信息中，可以看到几个字段信息\n来自于哪个仓库，比如 ubuntu 镜像的标记，比如 latest 它的 ID 号（唯一） 创建时间 镜像大小 利用dockerfile来创建镜像 docker build 使用 docker commit 来扩展一个镜像比较简单，但是不方便在一个团队中分享。我们可以使用docker build 来创建一个新的镜像。为此，首先需要创建一个Dockerfile，包含一些如何创建镜像的指令。新建一个目录和一个Dockerfile。\n1 2 3 mkdir test_docker cd test_docker touch Dockerfile Dockerfile 中每一条指令都创建镜像的一层，例如：\n1 2 3 4 5 6 7 FROM centos:centos6 MAINTAINER sandywei # move all configuration files into container RUN yum install -y httpd EXPOSE 80 CMD [\"sh\",\"-c\",\"service httpd start;bash\"] dockerfile基本语法： Dockfile是一个用于编写docker镜像生成过程的文件，其有特定的语法。在一个文件夹中，如果有一个名字为Dockfile的文件，其内容满足语法要求，在这个文件夹路径下执行命令:docker build –tag name:tag .，就可以按照描述构建一个镜像了。name是镜像的名称，tag是镜像的版本或者是标签号，不写就是lastest。注意后面有一个空格和点。 Dockerfile的基本指令有十三个，分别是：FROM、MAINTAINER、RUN、CMD、EXPOSE、ENV、ADD、COPY、ENTRYPOINT、VOLUME、USER、WORKDIR、ONBUILD。下面对这些指令的用法一一说明。\nFROM 用法：FROM 说明：第一个指令必须是FROM了，其指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，可以出现多次，如果需要在一个Dockerfile中构建多个镜像。\nMAINTAINER 用法：MAINTAINER 说明：描述镜像的创建者，名称和邮箱\nRUN 用法：RUN “command” “param1” “param2” 说明：RUN命令是一个常用的命令，执行完成之后会成为一个新的镜像，这里也是指镜像的分层构建。一句RUN就是一层，也相当于一个版本。这就是之前说的缓存的原理。我们知道docker是镜像层是只读的，所以你如果第一句安装了软件，用完在后面一句删除是不可能的。所以这种情况要在一句RUN命令中完成，可以通过\u0026符号连接多个RUN语句。RUN后面的必须是双引号不能是单引号（没引号貌似也不要紧），command是不会调用shell的，所以也不会继承相应变量，要查看输入RUN “sh” “-c” “echo” “$HOME”，而不是RUN “echo” “$HOME”。\nCMD 用法：CMD command param1 param2 说明：CMD在Dockerfile中只能出现一次，有多个，只有最后一个会有效。其作用是在启动容器的时候提供一个默认的命令项。如果用户执行docker run的时候提供了命令项，就会覆盖掉这个命令。没提供就会使用构建时的命令。\nEXPOSE 用法：EXPOSE [...] 说明：告诉Docker服务器容器对外映射的容器端口号，在docker run -p的时候生效。\nEVN 用法：EVN 只能设置一个\nEVN =允许一次设置多个 说明：设置容器的环境变量，可以让其后面的RUN命令使用，容器运行的时候这个变量也会保留。\nADD 用法：ADD 说明：复制本机文件或目录或远程文件，添加到指定的容器目录，支持GO的正则模糊匹配。路径是绝对路径，不存在会自动创建。如果源是一个目录，只会复制目录下的内容，目录本身不会复制。ADD命令会将复制的压缩文件夹自动解压，这也是与COPY命令最大的不同。\nCOPY 用法：COPY 说明：COPY除了不能自动解压，也不能复制网络文件。其它功能和ADD相同。\nENTRYPOINT 用法：ENTRYPOINT “command” “param1” “param2” 说明：这个命令和CMD命令一样，唯一的区别是不能被docker run命令的执行命令覆盖，如果要覆盖需要带上选项–entrypoint，如果有多个选项，只有最后一个会生效。\nVOLUME 用法：VOLUME [“path”] 说明：在主机上创建一个挂载，挂载到容器的指定路径。docker run -v命令也能完成这个操作，而且更强大。这个命令不能指定主机的需要挂载到容器的文件夹路径。但docker run -v可以，而且其还可以挂载数据容器。\nUSER 用法：USER daemon 说明：指定运行容器时的用户名或UID，后续的RUN、CMD、ENTRYPOINT也会使用指定的用户运行命令。\nWORKDIR 用法:WORKDIR path 说明：为RUN、CMD、ENTRYPOINT指令配置工作目录。可以使用多个WORKDIR指令，后续参数如果是相对路径，则会基于之前的命令指定的路径。如：WORKDIR /home　WORKDIR test 。最终的路径就是/home/test。path路径也可以是环境变量，比如有环境变量HOME=/home，WORKDIR $HOME/test也就是/home/test。\nONBUILD 用法：ONBUILD [INSTRUCTION] 说明：配置当前所创建的镜像作为其它新创建镜像的基础镜像时，所执行的操作指令。意思就是，这个镜像创建后，如果其它镜像以这个镜像为基础，会先执行这个镜像的ONBUILD命令。\nDockerfile例子 一个使用安装包安装的tomcat例子：\n1 2 3 4 5 6 7 8 9 10 11 FROM centos MAINTAINER nobody \"xx@qq.com\" RUN mkdir -p /opt/jdk/ RUN mkdir -p /opt/tomcat/ ADD jdk1.7.0_79 /opt/jdk/ ADD tomcat /opt/tomcat/ ENV CATALINA_HOME /opt/tomcat ENV JAVA_HOME /opt/jdk EXPOSE 8080 ENV PATH $PATH:$JAVA_HOME/bin CMD [\"/opt/tomcat/bin/catalina.sh\",\"run\"] 更详细的语法说明请参考 https://docs.docker.com/engine/reference/builder/\n编写完成 Dockerfile 后可以使用 docker build 来生成镜像。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 $ docker build -t test/httpd:1.0 . Sending build context to Docker daemon 2.048 kB Step 1 : FROM centos:centos6 ---\u003e 6a77ab6655b9 Step 2 : MAINTAINER sandywei ---\u003e Running in 1b26493518a7 ---\u003e 8877ee5f7432 Removing intermediate container 1b26493518a7 Step 3 : RUN yum install -y httpd ---\u003e Running in fe5b6f1ef888 ..... Step 5 : CMD sh -c service httpd start ---\u003e Running in b2b94c1601c2 ---\u003e 5f9aa91b0c9e Removing intermediate container b2b94c1601c2 Successfully built 5f9aa91b0c9e 其中 -t 标记来添加 tag，指定新的镜像的用户信息。 “.” 是 Dockerfile 所在的路径（当前目录）， 也可以替换为一个具体的 Dockerfile 的路径。注意一个镜像不能超过 127 层。\n用docker images 查看镜像列表\n1 2 3 4 5 $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE test/httpd 1.0 5f9aa91b0c9e 3 minutes ago 292.4 MB centos centos6 6a77ab6655b9 8 weeks ago 194.6 MB ubuntu latest 2fa927b5cdd3 9 weeks ago 122 MB 可以发现最后一层的ID（5f9aa91b0c9e）和 image id是一样的\n上传镜像 docker push 用户可以通过 docker push 命令，把自己创建的镜像上传到仓库中来共享。例如，用户在 Docker Hub 上完成注册后，可以推送自己的镜像到仓库中。\n运行实例： $ docker push test/httpd:1.0\n创建容器 docker create docker create 命令为指定的镜像（image）添加了一个可读写层，构成了一个新的容器。注意，这个容器并没有运行。\ndocker create 命令提供了许多参数选项可以指定名字，硬件资源，网络配置等等。\n如： 创建一个centos的容器，可以使用仓库＋标签的名字确定image，也可以使用image－id指定image。返回容器id\n1 2 3 4 5 6 7 8 9 10 11 12 ＃查看本地images列表 $ docker images ＃用仓库＋标签 $ docker create -it --name centos6_container centos:centos6 ＃使用image－id $ docker create -it --name centos6_container 6a77ab6655b9 bash b3cd0b47fe3db0115037c5e9cf776914bd46944d1ac63c0b753a9df6944c7a67 #可以使用 docker ps查看一件存在的容器列表,不加参数默认只显示当前运行的容器 $ docker ps -a 可以使用 -v 参数将本地目录挂载到容器中。 $ docker create -it --name centos6_container -v /src/webapp:/opt/webapp centos:centos6 这个功能在进行测试的时候十分方便，比如用户可以放置一些程序到本地目录中，来查看容器是否正常工作。本地目录的路径必须是绝对路径，如果目录不存在 Docker 会自动为你创建它。\ndocker -v 挂载问题： Docker容器启动的时候，如果要挂载宿主机的一个目录，可以用-v参数指定。 譬如我要启动一个centos容器，宿主机的/test目录挂载到容器的/soft目录，可通过以下方式指定： docker run -it -v /test:/soft centos /bin/bash 这样在容器启动后，容器内会自动创建/soft的目录。通过这种方式，我们可以明确一点，即-v参数中，冒号\":“前面的目录是宿主机目录，后面的目录是容器内目录。 貌似简单，其实不然，下面我们来验证一下：\n容器目录不可以为相对路径 1 2 3 [root@localhost ~]# docker run -it -v /test:soft centos /bin/bash invalid value \"/test:soft\" for flag -v: soft is not an absolute path See 'docker run --help'. 直接报错，提示soft不是一个绝对路径，所谓的绝对路径，必须以下斜线“/”开头。\n宿主机目录如果不存在，则会自动生成 如果宿主机中存在/test目录，首先删除它 1 2 3 [root@localhost ~]# rm -rf /test [root@localhost ~]# ls / bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var 启动容器\n1 2 3 [root@localhost ~]# docker run -it -v /test:/soft centos /bin/bash [root@a487a3ca7997 /]# ls bin dev etc home lib lib64 lost+found media mnt opt proc root run sbin soft srv sys tmp usr var 查看宿主机，发现新增了一个/test目录\n1 2 [root@localhost ~]# ls / bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys test tmp usr var 宿主机的目录如果为相对路径呢？ 这次，我们换个目录名test1试试 docker run -it -v test1:/soft centos /bin/bash 再到宿主机上查看是否新增了一个/test1目录，结果没有，是不是因为我用的是相对路径，所以生成的test1目录在当前目录下，结果发现还是没有。 那容器内的/soft目录挂载到哪里去了？通过docker inspect命令，查看容器“Mounts”那一部分，我们可以得到这个问题的答案。 1 2 3 4 5 6 7 8 9 10 \"Mounts\": [ { \"Name\": \"test1\", \"Source\": \"/var/lib/docker/volumes/test1/_data\", \"Destination\": \"/soft\", \"Driver\": \"local\", \"Mode\": \"z\", \"RW\": true } ], 可以看出，容器内的/soft目录挂载的是宿主机上的/var/lib/docker/volumes/test1/_data目录，原来所谓的相对路径指的是/var/lib/docker/volumes/，与宿主机的当前目录无关。\n如果只是-v指定一个目录，这个又是如何对应呢？ 启动一个容器 1 2 3 [root@localhost ~]# docker run -it -v /test2 centos /bin/bash [root@ea24067bc902 /]# ls bin dev etc home lib lib64 lost+found media mnt opt proc root run sbin srv sys test2 tmp usr var 同样使用docker inspect命令查看宿主机的挂载目录\n1 2 3 4 5 6 7 8 9 10 \"Mounts\": [ { \"Name\": \"96256232eb74edb139d652746f0fe426e57fbacdf73376963e3acdb411b3d73a\", \"Source\": \"/var/lib/docker/volumes/96256232eb74edb139d652746f0fe426e57fbacdf73376963e3acdb411b3d73a/_data\", \"Destination\": \"/test2\", \"Driver\": \"local\", \"Mode\": \"\", \"RW\": true } ], 可以看出，同3中的结果类似，只不过，它不是相对路径的目录名，而是随机生成的一个目录名。\n如果在容器内修改了目录的属主和属组，那么对应的挂载点是否会修改呢？ 首先开启一个容器，查看容器内/soft目录的属性 1 2 3 [root@localhost ~]# docker run -it -v /test:/soft centos /bin/bash [root@b5ed8216401f /]# ll -d /soft/ drwxr-xr-x 2 root root 6 Sep 24 03:48 /soft/ 查看宿主机内/test目录的属性\n1 2 [root@localhost ~]# ll -d /test/ drwxr-xr-x 2 root root 6 Sep 24 11:48 /test/ 在容器内新建用户，修改/soft的属主和属组\n1 2 3 4 [root@b5ed8216401f /]# useradd victor [root@b5ed8216401f /]# chown -R victor.victor /soft/ [root@b5ed8216401f /]# ll -d /soft/ drwxr-xr-x 2 victor victor 6 Sep 24 03:48 /soft/ 再来看看宿主机内/test目录的属主和属组是否会发生变化？\n1 2 [root@localhost ~]# ll -d /test/ drwxr-xr-x 2 mycat mycat 6 Sep 24 11:48 /test/ 竟然变为mycat了。。。 原来，这个与UID有关系，UID，即“用户标识号”，是一个整数，系统内部用它来标识用户。一般情况下它与用户名是一一对应的。 首先查看容器内victor对应的UID是多少，\n1 2 [root@b5ed8216401f /]# cat /etc/passwd | grep victor victor❌1000:1000::/home/victor:/bin/bash victor的UID为1000，那么宿主机内1000对应的用户是谁呢？\n1 2 [root@localhost ~]# cat /etc/passwd |grep 1000 mycat❌1000:1000::/home/mycat:/bin/bash 可以看出，宿主机内UID 1000对应的用户是mycat。\n容器销毁了，在宿主机上新建的挂载目录是否会消失？ 在这里，主要验证两种情况：一、指定了宿主机目录，即 -v /test:/soft。二、没有指定宿主机目录，即-v /soft 第一种情况： 1 2 3 4 5 6 7 8 9 10 [root@localhost ~]# rm -rf /test --首先删除宿主机的/test目录 [root@localhost ~]# ls / --可以看到，宿主机上无/test目录 bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys tmp usr var [root@localhost ~]# docker run -it --name=centos_test -v /test:/soft centos /bin/bash --启动容器，为了删除方便，我用--name参数指定了容器的名字 [root@82ad7f3a779a /]# exit exit [root@localhost ~]# docker rm centos_test --删除容器 centos_test [root@localhost ~]# ls / --发现 /test目录依旧存在 bin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys test tmp usr var 可以看出，即便容器销毁了，新建的挂载目录不会消失。进一步也可验证，如果宿主机目录的属主和属组发生了变化，容器销毁后，宿主机目录的属主和属组不会恢复到挂载之前的状态。\n第二种情况，通过上面的验证知道，如果没有指定宿主机的目录，则容器会在/var/lib/docker/volumes/随机配置一个目录，那么我们看看这种情况下的容器销毁是否会导致相应目录的删除 首先启动容器\n1 2 3 [root@localhost ~]# docker run -it --name=centos_test -v /soft centos /bin/bash [root@6b75579ec934 /]# exit exit 通过docker inspect命令查看容器在宿主机上生成的挂载目录\n1 2 3 4 5 6 7 8 9 10 \"Mounts\": [ { \"Name\": \"b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301\", \"Source\": \"/var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301/_data\", \"Destination\": \"/soft\", \"Driver\": \"local\", \"Mode\": \"\", \"RW\": true } ], 对应的是/var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301/_data目录 销毁容器，看目录是否存在\n1 2 3 4 5 [root@localhost ~]# docker rm centos_test centos_test [root@localhost ~]# ll /var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301 total 0 drwxr-xr-x 2 root root 6 Sep 24 14:25 _data 发现该目录依旧存在，即便重启了docker服务，该目录依旧存在\n1 2 3 4 [root@localhost ~]# systemctl restart docker [root@localhost ~]# ll /var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301 total 0 drwxr-xr-x 2 root root 6 Sep 24 14:25 _data 挂载宿主机已存在目录后，在容器内对其进行操作，报“Permission denied”。 可通过两种方式解决： 1\u003e 关闭selinux。 临时关闭：# setenforce 0 永久关闭：修改/etc/sysconfig/selinux文件，将SELINUX的值设置为disabled。\n2\u003e 以特权方式启动容器 指定–privileged参数 如：# docker run -it –privileged=true -v /test:/soft centos /bin/bash\ndocker挂载参考地址\n启动容器 docker start Docker start命令为容器文件系统创建了一个进程隔离空间。注意，每一个容器只能够有一个进程隔离空间。\n如：\n1 2 3 4 5 #通过名字启动 $ docker start -i centos6_container ＃通过容器ID启动 $ docker start -i b3cd0b47fe3d 进入容器 docker exec 在当前容器中执行新命令，如果增加 -it参数运行bash 就和登录到容器效果一样的。 docker exec -it centos6_container bash\n停止容器 docker stop 删除容器 docker rm 运行容器 docker run docker run就是docker create和docker start两个命令的组合,支持参数也是一致的，如果指定容器 名字是，容器已经存在会报错,可以增加 –rm 参数实现容器退出时自动删除。\n如： docker create -it --rm --name centos6_container centos:centos6\n查看容器列表 docker ps docker ps 命令会列出所有运行中的容器。这隐藏了非运行态容器的存在，如果想要找出这些容器，增加-a参数。\n删除镜像 docker rmi 删除构成镜像的一个只读层。你只能够使用docker rmi来移除最顶层（top level layer） （也可以说是镜像），你也可以使用-f参数来强制删除中间的只读层。\ncommit容器 docker commit 将容器的可读写层转换为一个只读层，这样就把一个容器转换成了不可变的镜像。\n镜像保存 docker save 创建一个镜像的压缩文件，这个文件能够在另外一个主机的Docker上使用。和export命令不同，这个命令 为每一个层都保存了它们的元数据。这个命令只能对镜像生效。\n如：\n1 2 3 4 5 #保存centos镜像到centos_images.tar 文件 $ docker save -o centos_images.tar centos:centos6 ＃或者直接重定向 $ docker save -o centos_images.tar centos:centos6 \u003e centos_images.tar 容器导出 docker export 创建一个tar文件，并且移除了元数据和不必要的层，将多个层整合成了一个层，只保存了当前统一视角看到 的内容。expoxt后的容器再import到Docker中，只有一个容器当前状态的镜像；而save后的镜像则不同， 它能够看到这个镜像的历史镜像。\ninspect docker inspect or docker inspect命令会提取出容器或者镜像最顶层的元数据\ndocker安装指定版本TAG的镜像 在docker中安装镜像，一般过程是，docker search 软件名称。 本文以tomcat为例，讲解下载指定版本TAG的tomcat。\n搜索tomcat镜像： sudo docker search tomcat\n发现只有tomcat，而如果docker pull tomcat，下载下来的是最新版的tomcat,也就是tomcat11。假设希望下载的是tomcat:8-jre8。那么该如何做呢？ 如果search出来的镜像，不是自己想要的版本，可通过在docker hub上搜索好版本TAG，地址如下：https://hub.docker.com，进入之后，在页面左上角搜索框搜索tomcat， 搜索出来之后，点详情，点击标签，在下面通过翻页，找到8-jre标签，复制标签名：8-jre8，下载tomcat镜像 sudo docker pull tomcat:8-jre8\n/var/lib/docker/overlay2 占用过大 查看磁盘使用情况 sudo du -hs /var/lib/docker/\n查看Docker的磁盘使用情况 docker system df\n清理磁盘，删除关闭的容器、无用的数据卷和网络，以及dangling镜像(即无tag的镜像) docker system prune\ndocker system prune -a命令清理得更加彻底，可以将没有容器使用Docker镜像都删掉。注意，这两个命令会把你暂时关闭的容器，以及暂时没有用到的Docker镜像都删掉了…所以使用之前一定要想清楚.。我没用过，因为会清理 没有开启的 Docker 镜像。\n迁移 /var/lib/docker目录 停止docker服务 systemctl stop docker\n创建新的docker目录，执行命令df -h,找一个大的磁盘。 我在 /home目录下面建了 /home/docker/lib目录，执行的命令是： mkdir -p /home/docker/lib\n迁移/var/lib/docker目录下面的文件到 /home/docker/lib rsync -avz /var/lib/docker /home/docker/lib/\n配置 /etc/systemd/system/docker.service.d/devicemapper.conf。查看 devicemapper.conf 是否存在。如果不存在，就新建 sudo mkdir -p /etc/systemd/system/docker.service.d/ sudo vi /etc/systemd/system/docker.service.d/devicemapper.conf\n然后在 devicemapper.conf 写入：（同步的时候把父文件夹一并同步过来，实际上的目录应在 /home/docker/lib/docker）\n1 2 3 [Service] ExecStart= ExecStart=/usr/bin/dockerd --graph=/home/docker/lib/docker 重新加载 docker systemctl daemon-reload systemctl restart docker systemctl enable docker\n为了确认一切顺利，运行 docker info\n命令检查Docker 的根目录.它将被更改为 /home/docker/lib/docker\n1 2 3 4 5 6 ... Docker Root Dir: /home/docker/lib/docker Debug Mode (client): false Debug Mode (server): false Registry: https://index.docker.io/v1/ ... 启动成功后，再确认之前的镜像还在\n1 2 3 4 linlf@dacent:~$ docker images REPOSITORY TAG IMAGE ID CREATED SIZE AAA/AAA v2 7331b8651bcc 27 hours ago 3.85GB BBB/BBB v1 da4a80dd8424 28 hours ago 3.47GB 确定容器没问题后删除/var/lib/docker/目录中的文件。\nDocker和K8S 参考地址\n给已存在的docker容器添加或修改端口映射(或挂载目录) 建立完一个容器后不能增加端口映射了，因为 docker run -p 有 -p 参数，但是 docker start 没有 -p 参数。 通常会在启动docker容器的时候，指定端口映射，如：\n1 2 3 4 5 6 docker run --name jenkins -d \\ -v /usr/local/src:/share \\ -v /home/jenkins:/var/jenkins_home \\ -v /etc/localtime:/etc/localtime \\ -p 9999:8080 -p 50000:50000 \\ jenkins 如果需要新的端口映射，不必删除重建这个容器，可以通过修改容器配置文件来解决。\n首先，停止要修改配置文件的容器（可不必停止docker服务） docker stop 容器名\n通过docker inspect 容器名字找到容器的信息。 最上边的id，是一段hash值，大概记住这个id。\n找到路径/var/lib/docker/containers 通过ls可以看到，每个容器的hash值文件夹，找到刚才的文件夹，cd进去。\n修改hostconfig.json 找到\"PortBindings”:{} 这个配置项。修改： \"PortBindings\":{\"80/tcp\":[{\"HostIp\":\"\",\"HostPort\":\"8080\"}]} 这里 80 是容器端口， 8080 是本地端口。可能有多个，注意格式。\n修改挂载目录： \"Binds\": [\"/data:/opt\"], 将主机的/data目录挂载到容器的/opt目录。\n修改config.v2.json 找到配置项\"Tty\": true，前边如果有ExposedPorts，就是已经有其他端口映射了，继续添加。 如果没有，添加\"ExposedPorts\":{\"80/tcp\":{}} , 我不知道添加到别的地方会不会有影响，因为经过对比正常的端口映射配置项是在这个位置，这个就是将容器内部端口暴露出来，如果不加这一句端口映射不会成功的。 修改挂载目录：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 \"MountPoints\": { \"/import\": { \"Source\": \"/data\", \"Destination\": \"/opt\", \"RW\": true, \"Name\": \"\", \"Driver\": \"\", \"Type\": \"bind\", \"Propagation\": \"rprivate\", \"Spec\": { \"Type\": \"bind\", \"Source\": \"/data\", \"Target\": \"/opt\" }, \"SkipMountpointCreation\": false } }, 然后重启docker守护进程（并且不可先重启容器，否则你的配置文件又变回之前的了） service docker restart\ndocker服务重启后，启动容器。 docker start 容器名\n查看容器的映射端口 docker inspect 容器名 发现端口已经映射上了。\n参考\n",
+  "wordCount" : "11277",
+  "inLanguage": "en",
+  "datePublished": "2020-03-05T10:26:24Z",
+  "dateModified": "2020-03-05T10:26:24Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/about" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/links" title="🤝友链">
+                    <span>🤝友链</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title">
+      docker
+    </h1>
+    <div class="post-meta"><span title='2020-03-05 10:26:24 +0000 UTC'>2020-03-05</span>
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%a6%82%e8%bf%b0" aria-label="概述">概述</a></li>
+                <li>
+                    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%bd%bf%e7%94%a8docker" aria-label="为什么使用docker">为什么使用docker</a></li>
+                <li>
+                    <a href="#docker%e5%bc%95%e6%93%8e" aria-label="docker引擎">docker引擎</a></li>
+                <li>
+                    <a href="#docker%e6%9e%b6%e6%9e%84" aria-label="docker架构">docker架构</a></li>
+                <li>
+                    <a href="#%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5" aria-label="核心概念">核心概念</a></li>
+                <li>
+                    <a href="#docker%e5%ae%89%e8%a3%85%e9%83%a8%e7%bd%b2" aria-label="docker安装部署">docker安装部署</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4docker" aria-label="删除docker">删除docker</a></li>
+                <li>
+                    <a href="#docker%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" aria-label="docker常用命令">docker常用命令</a><ul>
+                        
+                <li>
+                    <a href="#%e8%8e%b7%e5%8f%96%e9%95%9c%e5%83%8f" aria-label="获取镜像">获取镜像</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8b%e9%95%9c%e5%83%8f%e5%88%97%e8%a1%a8" aria-label="查看镜像列表">查看镜像列表</a></li>
+                <li>
+                    <a href="#%e5%88%a9%e7%94%a8dockerfile%e6%9d%a5%e5%88%9b%e5%bb%ba%e9%95%9c%e5%83%8f" aria-label="利用dockerfile来创建镜像">利用dockerfile来创建镜像</a><ul>
+                        
+                <li>
+                    <a href="#dockerfile%e5%9f%ba%e6%9c%ac%e8%af%ad%e6%b3%95" aria-label="dockerfile基本语法：">dockerfile基本语法：</a><ul>
+                        
+                <li>
+                    <a href="#from" aria-label="FROM">FROM</a></li>
+                <li>
+                    <a href="#maintainer" aria-label="MAINTAINER">MAINTAINER</a></li>
+                <li>
+                    <a href="#run" aria-label="RUN">RUN</a></li>
+                <li>
+                    <a href="#cmd" aria-label="CMD">CMD</a></li>
+                <li>
+                    <a href="#expose" aria-label="EXPOSE">EXPOSE</a></li>
+                <li>
+                    <a href="#evn" aria-label="EVN">EVN</a></li>
+                <li>
+                    <a href="#add" aria-label="ADD">ADD</a></li>
+                <li>
+                    <a href="#copy" aria-label="COPY">COPY</a></li>
+                <li>
+                    <a href="#entrypoint" aria-label="ENTRYPOINT">ENTRYPOINT</a></li>
+                <li>
+                    <a href="#volume" aria-label="VOLUME">VOLUME</a></li>
+                <li>
+                    <a href="#user" aria-label="USER">USER</a></li>
+                <li>
+                    <a href="#workdir" aria-label="WORKDIR">WORKDIR</a></li>
+                <li>
+                    <a href="#onbuild" aria-label="ONBUILD">ONBUILD</a></li></ul>
+                </li>
+                <li>
+                    <a href="#dockerfile%e4%be%8b%e5%ad%90" aria-label="Dockerfile例子">Dockerfile例子</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%b8%8a%e4%bc%a0%e9%95%9c%e5%83%8f" aria-label="上传镜像">上传镜像</a></li>
+                <li>
+                    <a href="#%e5%88%9b%e5%bb%ba%e5%ae%b9%e5%99%a8" aria-label="创建容器">创建容器</a></li>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8%e5%ae%b9%e5%99%a8" aria-label="启动容器">启动容器</a></li>
+                <li>
+                    <a href="#%e8%bf%9b%e5%85%a5%e5%ae%b9%e5%99%a8" aria-label="进入容器">进入容器</a></li>
+                <li>
+                    <a href="#%e5%81%9c%e6%ad%a2%e5%ae%b9%e5%99%a8" aria-label="停止容器">停止容器</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e5%ae%b9%e5%99%a8" aria-label="删除容器">删除容器</a></li>
+                <li>
+                    <a href="#%e8%bf%90%e8%a1%8c%e5%ae%b9%e5%99%a8" aria-label="运行容器">运行容器</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8b%e5%ae%b9%e5%99%a8%e5%88%97%e8%a1%a8" aria-label="查看容器列表">查看容器列表</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e9%95%9c%e5%83%8f" aria-label="删除镜像">删除镜像</a></li>
+                <li>
+                    <a href="#commit%e5%ae%b9%e5%99%a8" aria-label="commit容器">commit容器</a></li>
+                <li>
+                    <a href="#%e9%95%9c%e5%83%8f%e4%bf%9d%e5%ad%98" aria-label="镜像保存">镜像保存</a></li>
+                <li>
+                    <a href="#%e5%ae%b9%e5%99%a8%e5%af%bc%e5%87%ba" aria-label="容器导出">容器导出</a></li>
+                <li>
+                    <a href="#inspect" aria-label="inspect">inspect</a></li></ul>
+                </li>
+                <li>
+                    <a href="#docker%e5%ae%89%e8%a3%85%e6%8c%87%e5%ae%9a%e7%89%88%e6%9c%actag%e7%9a%84%e9%95%9c%e5%83%8f" aria-label="docker安装指定版本TAG的镜像">docker安装指定版本TAG的镜像</a></li>
+                <li>
+                    <a href="#varlibdockeroverlay2-%e5%8d%a0%e7%94%a8%e8%bf%87%e5%a4%a7" aria-label="/var/lib/docker/overlay2 占用过大">/var/lib/docker/overlay2 占用过大</a><ul>
+                        
+                <li>
+                    <a href="#%e8%bf%81%e7%a7%bb-varlibdocker%e7%9b%ae%e5%bd%95" aria-label="迁移 /var/lib/docker目录">迁移 /var/lib/docker目录</a></li></ul>
+                </li>
+                <li>
+                    <a href="#docker%e5%92%8ck8s" aria-label="Docker和K8S">Docker和K8S</a></li>
+                <li>
+                    <a href="#%e7%bb%99%e5%b7%b2%e5%ad%98%e5%9c%a8%e7%9a%84docker%e5%ae%b9%e5%99%a8%e6%b7%bb%e5%8a%a0%e6%88%96%e4%bf%ae%e6%94%b9%e7%ab%af%e5%8f%a3%e6%98%a0%e5%b0%84%e6%88%96%e6%8c%82%e8%bd%bd%e7%9b%ae%e5%bd%95" aria-label="给已存在的docker容器添加或修改端口映射(或挂载目录)">给已存在的docker容器添加或修改端口映射(或挂载目录)</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h1>
+<p>Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。
+Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。
+下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见docker是在操作系统上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。
+<img loading="lazy" src="1.png" alt=""  />
+</p>
+<h1 id="为什么使用docker">为什么使用docker<a hidden class="anchor" aria-hidden="true" href="#为什么使用docker">#</a></h1>
+<p>作为一种新兴的虚拟化方式，docker跟传统的虚拟化方式相比具备众多的优势。</p>
+<ul>
+<li>
+<p>更快速的交付和部署
+Docker在整个开发周期都可以完美的辅助你实现快速交付。Docker允许开发者在装有应用和服务的本地容器中做开发，可以直接集成到可持续开发流程中。
+例如：开发者可以使用一个标准的镜像来构建一套开发容器，开发完成之后，运维人员可以直接使用这个容器来部署代码。 Docker 可以快速创建容器，快速迭代应用程序，并让整个过程全程可见，使团队中的其他成员更容易理解应用程序是如何创建和工作的。 Docker 容器很轻很快！容器的启动时间是秒级的，大量地节约开发、测试、部署的时间。</p>
+</li>
+<li>
+<p>高效的部署和扩容
+Docker 容器几乎可以在任意的平台上运行，包括物理机、虚拟机、公有云、私有云、个人电脑、服务器等。 这种兼容性可以让用户把一个应用程序从一个平台直接迁移到另外一个。
+Docker的兼容性和轻量特性可以很轻松的实现负载的动态管理。你可以快速扩容或方便的下线的你的应用和服务，这种速度趋近实时。</p>
+</li>
+<li>
+<p>更高的资源利用率
+Docker 对系统资源的利用率很高，一台主机上可以同时运行数千个 Docker 容器。容器除了运行其中应用外，基本不消耗额外的系统资源，使得应用的性能很高，同时系统的开销尽量小。传统虚拟机方式运行 10 个不同的应用就要起 10 个虚拟机，而Docker 只需要启动 10 个隔离的应用即可。</p>
+</li>
+<li>
+<p>更简单的管理
+使用 Docker，只需要小小的修改，就可以替代以往大量的更新工作。所有的修改都以增量的方式被分发和更新，从而实现自动化并且高效的管理。</p>
+</li>
+</ul>
+<p>举个最简单的例子：
+传统的javaWeb应用是部署在tomcat中的，一个服务器可能运行多个tomcat，每个tomcat中有一个或多个web应用，那么此时docker就可以起到应用隔离和资源独立的作用。
+<img loading="lazy" src="7.png" alt=""  />
+</p>
+<ul>
+<li>如果不使用docker，一台服务器上多个tomcat，即A1，所有的应用共享服务器的CPU、内存等资源，这时如果一个应用出现问题，导致CPU爆满等等，其他应用也会无法运行。</li>
+<li>那么这时就需要做到资源独立，一个应用一份资源，即我们所说的传统的虚拟化方式，即A2，这样需要在服务器上安装数个虚拟机，每个虚拟机运行一个应用，这样的缺点是，重启虚拟机太麻烦，迁移应用需要重装虚拟机，配置环境等等。</li>
+<li>A3即使用docker，此时服务器上运行多个容器，每个容器都拥有独立的CPU、内存等资源，完全满足了应用隔离的需求，重启容器只需要几秒，迁移应用也很方便，所有装了Docker的服务器，只需把镜像pull或者load进去，run，就可以了。</li>
+</ul>
+<p><img loading="lazy" src="8.png" alt=""  />
+
+上图是docker的运行流程</p>
+<h1 id="docker引擎">docker引擎<a hidden class="anchor" aria-hidden="true" href="#docker引擎">#</a></h1>
+<p>docker引擎是一个c/s结构的应用，主要组件见下图：
+<img loading="lazy" src="2.png" alt=""  />
+</p>
+<ul>
+<li>server是一个常驻进程</li>
+<li>REST API实现了server和client之间的交互协议</li>
+<li>CLI实现容器和镜像的管理，为用户提供统一的管理界面</li>
+</ul>
+<h1 id="docker架构">docker架构<a hidden class="anchor" aria-hidden="true" href="#docker架构">#</a></h1>
+<p>Docker使用C/S架构，Client 通过接口与Server进程通信实现容器的构建，运行和发布。client和server可以运行在同一台集群，也可以通过跨主机实现远程通信。
+<img loading="lazy" src="3.png" alt=""  />
+</p>
+<h1 id="核心概念">核心概念<a hidden class="anchor" aria-hidden="true" href="#核心概念">#</a></h1>
+<ul>
+<li>镜像(Image)</li>
+</ul>
+<p>docker镜像就是一个只读的模板，如：一个镜像可以包含一个完整的操作系统环境，里面仅安装了Apache或用户需要的其他应用程序。
+镜像可以用来创建docker容器，一个镜像可以创建很多容器。Docker 提供了一个很简单的机制来创建镜像或者更新现有的镜像，用户甚至可以直接从其他人那里下载一个已经做好的镜像来直接使用。</p>
+<p>镜像（Image）就是一堆只读层（read-only layer）的统一视角，也许这个定义有些难以理解，看看下面这张图：
+<img loading="lazy" src="4.png" alt=""  />
+
+右边我们看到了多个只读层，它们重叠在一起。除了最上面一层，其它层都会有一个指针指向下一层。这些层是Docker内部的实现细节，并且能够在docker宿主机的文件系统上访问到。统一文件系统（Union File System）技术能够将不同的层整合成一个文件系统，为这些层提供了一个统一的视角，这样就隐藏了多层的存在，在用户的角度看来，只存在一个文件系统。</p>
+<ul>
+<li>仓库(repository)
+仓库是集中存放镜像文件的场所。有时候会把仓库和仓库注册服务器混为一谈，并不严格区分。实际上，仓库注册服务器往往存放着多个仓库，每个仓库又包含了多个镜像，每个镜像有不同的标签(tag)。</li>
+</ul>
+<p>仓库分为公开仓库（Public）和私有仓库（Private）两种形式。最大的公开仓库是 Docker Hub，存放了数量庞大的镜像供用户下载。国内的公开仓库包括 时速云 、网易云 等，可以提供大陆用户更稳定快速的访问。当然，用户也可以在本地网络内创建一个私有仓库。
+当用户创建了自己的镜像之后就可以使用 push 命令将它上传到公有或者私有仓库，这样下次在另外一台机器上使用这个镜像时候，只需要从仓库上 pull 下来就可以了。
+Docker 仓库的概念跟 Git 类似，注册服务器可以理解为 GitHub 这样的托管服务。</p>
+<ul>
+<li>容器(container)
+docker利用容器来运行应用。容器时从镜像创建的运行实例。它可以被启动、开始、停止、删除。每个容器都是相互隔离的、保证安全的平台。可以把容器看做是一个简易版的 Linux 环境（包括root用户权限、进程空间、用户空间和网络空间等）和运行在其中的应用程序。
+容器的定义和镜像几乎一模一样，也是一堆层的统一视角，唯一区别在于容器的最上面那一层是可读可写的。
+<img loading="lazy" src="5.png" alt=""  />
+
+一个运行态容器被定义为一个可读写的统一文件系统加上隔离的进程空间和包含其中的进程。下面这张图片展示了一个运行中的容器。
+<img loading="lazy" src="6.png" alt=""  />
+
+正是文件系统隔离技术使得Docker成为了一个非常有潜力的虚拟化技术。一个容器中的进程可能会对文件进行修改、删除、创建，这些改变都将作用于可读写层。</li>
+</ul>
+<h1 id="docker安装部署">docker安装部署<a hidden class="anchor" aria-hidden="true" href="#docker安装部署">#</a></h1>
+<ul>
+<li>
+<p>Docker 要求 CentOS 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的CentOS 版本是否支持 Docker 。
+通过 uname -r 命令查看你当前的内核版本
+<code>uname -r</code></p>
+</li>
+<li>
+<p>使用 root 权限登录 Centos。确保 yum 包更新到最新。
+<code>sudo yum update</code></p>
+</li>
+<li>
+<p>卸载旧版本(如果安装过旧版本的话)
+<code>sudo yum remove docker  docker-common docker-selinux docker-engine</code></p>
+</li>
+<li>
+<p>安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的
+<code>sudo yum install -y yum-utils device-mapper-persistent-data lvm2</code></p>
+</li>
+<li>
+<p>设置yum源
+这是dockerHub上的镜像源：
+<code>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</code>
+我们使用阿里的镜像源：
+<code>sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</code></p>
+</li>
+<li>
+<p>查看仓库中所有docker版本，并选择特定版本安装
+<code>yum list docker-ce --showduplicates | sort -r</code></p>
+</li>
+<li>
+<p>安装docker
+<code>sudo yum install docker-ce</code>#由于repo中默认只开启stable仓库，故这里安装的是最新稳定版17.12.0
+可以指定版本安装，如：
+<code>sudo yum install docker-ce-18.03.0.ce</code></p>
+</li>
+<li>
+<p>启动并加入开机启动
+<code>sudo systemctl start docker</code>
+<code>sudo systemctl enable docker</code></p>
+</li>
+<li>
+<p>验证安装是否成功(有client和service两部分表示docker安装启动都成功了)
+<code>docker version</code></p>
+</li>
+</ul>
+<h1 id="删除docker">删除docker<a hidden class="anchor" aria-hidden="true" href="#删除docker">#</a></h1>
+<p><code>yum remove docker docker-common docker-selinux docker-engine -y</code>
+<code>/etc/systemd -name '*docker*' -exec rm -f {} ;</code>
+<code>find /etc/systemd -name '*docker*' -exec rm -f {} \;</code>
+<code>find /lib/systemd -name '*docker*' -exec rm -f {} \;</code></p>
+<h1 id="docker常用命令">docker常用命令<a hidden class="anchor" aria-hidden="true" href="#docker常用命令">#</a></h1>
+<h2 id="获取镜像">获取镜像<a hidden class="anchor" aria-hidden="true" href="#获取镜像">#</a></h2>
+<p><code>docker pull</code>
+从仓库获取所需镜像，示例如下:
+<code>docker pull centos:centos6</code></p>
+<p>实际上相当于 docker pull registry.hub.docker.com/centos:centos6
+命令，即从注册服务器 registry.hub.docker.com 中的 centos 仓库来下载标记为 centos6 的镜像。</p>
+<p>有时候官方仓库注册服务器下载较慢，可以从其他仓库下载。 从其它仓库下载时需要指定完整的仓库注册服务器地址。
+docker默认从docker自己的服务器下载镜像，在国内自然是很慢。我们可以将镜像源替换成阿里的源。通过<code>daemon.json</code>这个文件配置镜像。
+docker安装后默认没有daemon.json这个配置文件，需要进行手动创建。配置文件的默认路径：/etc/docker/daemon.json
+<code>touch /etc/docker/daemon.json</code>
+<code>vim /etc/docker/daemon.json</code>
+输入如下内容：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;registry-mirrors&#34;: [&#34;https://t21sxucj.mirror.aliyuncs.com&#34;]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>registry-mirrors后边的就是镜像的下载地址，这个地址我是怎么找到的呢？地址失效了怎么办呢？
+我们知道阿里云有提供docker镜像服务。</p>
+<ul>
+<li>登录阿里云（没有账号先注册）</li>
+<li>找到容器镜像服务</li>
+<li>点击创建镜像仓库</li>
+<li>创建之后点击<code>镜像加速器</code>选项卡
+在右侧可以看到配置镜像加速器，在下边可以看到想要的地址。</li>
+</ul>
+<p>配置完之后重启docker
+<code>systemctl restart docker</code>
+然后再<code>docker pull xxx</code>试试，贼快。
+<a href="https://blog.csdn.net/weixin_43569697/article/details/89279225">参考1</a>
+<a href="https://blog.csdn.net/u013948858/article/details/79974796">参考2</a></p>
+<h2 id="查看镜像列表">查看镜像列表<a hidden class="anchor" aria-hidden="true" href="#查看镜像列表">#</a></h2>
+<p><code>docker images</code>
+列出了所有顶层（top-level）镜像。实际上，在这里我们没有办法区分一个镜像和一个只读层，所以我们提出了top-level镜像。
+只有创建容器时使用的镜像或者是直接pull下来的镜像能被称为顶层（top-level）镜像，并且每一个顶层镜像下面都隐藏了多个镜像层。</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ docker images
+</span></span><span style="display:flex;"><span>REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+</span></span><span style="display:flex;"><span>centos                   centos6             6a77ab6655b9        8 weeks ago         194.6 MB
+</span></span><span style="display:flex;"><span>ubuntu                   latest              2fa927b5cdd3        9 weeks ago         122 MB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在列出信息中，可以看到几个字段信息</p>
+<ul>
+<li>来自于哪个仓库，比如 ubuntu</li>
+<li>镜像的标记，比如 latest</li>
+<li>它的 ID 号（唯一）</li>
+<li>创建时间</li>
+<li>镜像大小</li>
+</ul>
+<h2 id="利用dockerfile来创建镜像">利用dockerfile来创建镜像<a hidden class="anchor" aria-hidden="true" href="#利用dockerfile来创建镜像">#</a></h2>
+<p><code>docker build</code>
+使用 docker commit 来扩展一个镜像比较简单，但是不方便在一个团队中分享。我们可以使用docker build 来创建一个新的镜像。为此，首先需要创建一个Dockerfile，包含一些如何创建镜像的指令。新建一个目录和一个Dockerfile。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mkdir test_docker
+</span></span><span style="display:flex;"><span>cd test_docker
+</span></span><span style="display:flex;"><span>touch Dockerfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Dockerfile 中每一条指令都创建镜像的一层，例如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>FROM centos:centos6
+</span></span><span style="display:flex;"><span>MAINTAINER sandywei &lt;sandy@test.tech&gt;
+</span></span><span style="display:flex;"><span># move all configuration files into container
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>RUN yum install -y httpd
+</span></span><span style="display:flex;"><span>EXPOSE 80
+</span></span><span style="display:flex;"><span>CMD [&#34;sh&#34;,&#34;-c&#34;,&#34;service httpd start;bash&#34;]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dockerfile基本语法">dockerfile基本语法：<a hidden class="anchor" aria-hidden="true" href="#dockerfile基本语法">#</a></h3>
+<p>Dockfile是一个用于编写docker镜像生成过程的文件，其有特定的语法。在一个文件夹中，如果有一个名字为Dockfile的文件，其内容满足语法要求，在这个文件夹路径下执行命令:docker build &ndash;tag name:tag .，就可以按照描述构建一个镜像了。name是镜像的名称，tag是镜像的版本或者是标签号，不写就是lastest。注意后面有一个空格和点。
+Dockerfile的基本指令有十三个，分别是：FROM、MAINTAINER、RUN、CMD、EXPOSE、ENV、ADD、COPY、ENTRYPOINT、VOLUME、USER、WORKDIR、ONBUILD。下面对这些指令的用法一一说明。</p>
+<h4 id="from">FROM<a hidden class="anchor" aria-hidden="true" href="#from">#</a></h4>
+<p>用法：<code>FROM &lt;image&gt;</code>
+说明：第一个指令必须是FROM了，其指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，可以出现多次，如果需要在一个Dockerfile中构建多个镜像。</p>
+<h4 id="maintainer">MAINTAINER<a hidden class="anchor" aria-hidden="true" href="#maintainer">#</a></h4>
+<p>用法：<code>MAINTAINER &lt;name&gt; &lt;email&gt;</code>
+说明：描述镜像的创建者，名称和邮箱</p>
+<h4 id="run">RUN<a hidden class="anchor" aria-hidden="true" href="#run">#</a></h4>
+<p>用法：RUN &ldquo;command&rdquo; &ldquo;param1&rdquo; &ldquo;param2&rdquo;
+说明：RUN命令是一个常用的命令，执行完成之后会成为一个新的镜像，这里也是指镜像的分层构建。一句RUN就是一层，也相当于一个版本。这就是之前说的缓存的原理。我们知道docker是镜像层是只读的，所以你如果第一句安装了软件，用完在后面一句删除是不可能的。所以这种情况要在一句RUN命令中完成，可以通过<code>&amp;</code>符号连接多个RUN语句。RUN后面的必须是双引号不能是单引号（没引号貌似也不要紧），command是不会调用shell的，所以也不会继承相应变量，要查看输入RUN &ldquo;sh&rdquo; &ldquo;-c&rdquo; &ldquo;echo&rdquo; &ldquo;$HOME&rdquo;，而不是RUN &ldquo;echo&rdquo; &ldquo;$HOME&rdquo;。</p>
+<h4 id="cmd">CMD<a hidden class="anchor" aria-hidden="true" href="#cmd">#</a></h4>
+<p>用法：CMD command param1 param2
+说明：CMD在Dockerfile中只能出现一次，有多个，只有最后一个会有效。其作用是在启动容器的时候提供一个默认的命令项。如果用户执行docker run的时候提供了命令项，就会覆盖掉这个命令。没提供就会使用构建时的命令。</p>
+<h4 id="expose">EXPOSE<a hidden class="anchor" aria-hidden="true" href="#expose">#</a></h4>
+<p>用法：<code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code>
+说明：告诉Docker服务器容器对外映射的容器端口号，在docker run -p的时候生效。</p>
+<h4 id="evn">EVN<a hidden class="anchor" aria-hidden="true" href="#evn">#</a></h4>
+<p>用法：<code>EVN &lt;key&gt; &lt;value&gt;</code> 只能设置一个</p>
+<pre><code>  EVN &lt;key&gt;=&lt;value&gt;允许一次设置多个
+</code></pre>
+<p>说明：设置容器的环境变量，可以让其后面的RUN命令使用，容器运行的时候这个变量也会保留。</p>
+<h4 id="add">ADD<a hidden class="anchor" aria-hidden="true" href="#add">#</a></h4>
+<p>用法：<code>ADD &lt;src&gt;   &lt;dest&gt;</code>
+说明：复制本机文件或目录或远程文件，添加到指定的容器目录，支持GO的正则模糊匹配。路径是绝对路径，不存在会自动创建。如果源是一个目录，只会复制目录下的内容，目录本身不会复制。ADD命令会将复制的压缩文件夹自动解压，这也是与COPY命令最大的不同。</p>
+<h4 id="copy">COPY<a hidden class="anchor" aria-hidden="true" href="#copy">#</a></h4>
+<p>用法：<code>COPY &lt;src&gt; &lt;dest&gt;</code>
+说明：COPY除了不能自动解压，也不能复制网络文件。其它功能和ADD相同。</p>
+<h4 id="entrypoint">ENTRYPOINT<a hidden class="anchor" aria-hidden="true" href="#entrypoint">#</a></h4>
+<p>用法：ENTRYPOINT &ldquo;command&rdquo; &ldquo;param1&rdquo; &ldquo;param2&rdquo;
+说明：这个命令和CMD命令一样，唯一的区别是不能被docker run命令的执行命令覆盖，如果要覆盖需要带上选项&ndash;entrypoint，如果有多个选项，只有最后一个会生效。</p>
+<h4 id="volume">VOLUME<a hidden class="anchor" aria-hidden="true" href="#volume">#</a></h4>
+<p>用法：VOLUME [&ldquo;path&rdquo;]
+说明：在主机上创建一个挂载，挂载到容器的指定路径。docker run -v命令也能完成这个操作，而且更强大。这个命令不能指定主机的需要挂载到容器的文件夹路径。但docker run -v可以，而且其还可以挂载数据容器。</p>
+<h4 id="user">USER<a hidden class="anchor" aria-hidden="true" href="#user">#</a></h4>
+<p>用法：USER daemon
+说明：指定运行容器时的用户名或UID，后续的RUN、CMD、ENTRYPOINT也会使用指定的用户运行命令。</p>
+<h4 id="workdir">WORKDIR<a hidden class="anchor" aria-hidden="true" href="#workdir">#</a></h4>
+<p>用法:WORKDIR path
+说明：为RUN、CMD、ENTRYPOINT指令配置工作目录。可以使用多个WORKDIR指令，后续参数如果是相对路径，则会基于之前的命令指定的路径。如：WORKDIR  /home　　WORKDIR test 。最终的路径就是/home/test。path路径也可以是环境变量，比如有环境变量HOME=/home，WORKDIR $HOME/test也就是/home/test。</p>
+<h4 id="onbuild">ONBUILD<a hidden class="anchor" aria-hidden="true" href="#onbuild">#</a></h4>
+<p>用法：ONBUILD [INSTRUCTION]
+说明：配置当前所创建的镜像作为其它新创建镜像的基础镜像时，所执行的操作指令。意思就是，这个镜像创建后，如果其它镜像以这个镜像为基础，会先执行这个镜像的ONBUILD命令。</p>
+<h3 id="dockerfile例子">Dockerfile例子<a hidden class="anchor" aria-hidden="true" href="#dockerfile例子">#</a></h3>
+<p>一个使用安装包安装的tomcat例子：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>FROM centos
+</span></span><span style="display:flex;"><span>MAINTAINER nobody &#34;xx@qq.com&#34;
+</span></span><span style="display:flex;"><span>RUN mkdir -p /opt/jdk/
+</span></span><span style="display:flex;"><span>RUN mkdir -p /opt/tomcat/
+</span></span><span style="display:flex;"><span>ADD jdk1.7.0_79 /opt/jdk/
+</span></span><span style="display:flex;"><span>ADD tomcat  /opt/tomcat/
+</span></span><span style="display:flex;"><span>ENV CATALINA_HOME /opt/tomcat
+</span></span><span style="display:flex;"><span>ENV JAVA_HOME /opt/jdk
+</span></span><span style="display:flex;"><span>EXPOSE 8080
+</span></span><span style="display:flex;"><span>ENV PATH $PATH:$JAVA_HOME/bin
+</span></span><span style="display:flex;"><span>CMD [&#34;/opt/tomcat/bin/catalina.sh&#34;,&#34;run&#34;]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>更详细的语法说明请参考 <a href="https://docs.docker.com/engine/reference/builder/">https://docs.docker.com/engine/reference/builder/</a></p>
+<p>编写完成 Dockerfile 后可以使用 docker build 来生成镜像。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ docker build -t test/httpd:1.0 .
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sending build context to Docker daemon 2.048 kB
+</span></span><span style="display:flex;"><span>Step 1 : FROM centos:centos6
+</span></span><span style="display:flex;"><span> ---&gt; 6a77ab6655b9
+</span></span><span style="display:flex;"><span>Step 2 : MAINTAINER sandywei &lt;sandy@test.tech&gt;
+</span></span><span style="display:flex;"><span> ---&gt; Running in 1b26493518a7
+</span></span><span style="display:flex;"><span> ---&gt; 8877ee5f7432
+</span></span><span style="display:flex;"><span>Removing intermediate container 1b26493518a7
+</span></span><span style="display:flex;"><span>Step 3 : RUN yum install -y httpd
+</span></span><span style="display:flex;"><span> ---&gt; Running in fe5b6f1ef888
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> .....
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Step 5 : CMD sh -c service httpd start
+</span></span><span style="display:flex;"><span> ---&gt; Running in b2b94c1601c2
+</span></span><span style="display:flex;"><span> ---&gt; 5f9aa91b0c9e
+</span></span><span style="display:flex;"><span>Removing intermediate container b2b94c1601c2
+</span></span><span style="display:flex;"><span>Successfully built 5f9aa91b0c9e
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 -t 标记来添加 tag，指定新的镜像的用户信息。 “.” 是 Dockerfile 所在的路径（当前目录），
+也可以替换为一个具体的 Dockerfile 的路径。注意一个镜像不能超过 127 层。</p>
+<p>用docker images 查看镜像列表</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ docker images
+</span></span><span style="display:flex;"><span>REPOSITORY                 TAG               IMAGE ID            CREATED             SIZE
+</span></span><span style="display:flex;"><span>test/httpd               1.0               5f9aa91b0c9e        3 minutes ago       292.4 MB
+</span></span><span style="display:flex;"><span>centos                   centos6             6a77ab6655b9        8 weeks ago         194.6 MB
+</span></span><span style="display:flex;"><span>ubuntu                   latest              2fa927b5cdd3        9 weeks ago         122 MB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以发现最后一层的ID（5f9aa91b0c9e）和 image id是一样的</p>
+<h2 id="上传镜像">上传镜像<a hidden class="anchor" aria-hidden="true" href="#上传镜像">#</a></h2>
+<p><code>docker push</code>
+用户可以通过 docker push 命令，把自己创建的镜像上传到仓库中来共享。例如，用户在 Docker Hub 上完成注册后，可以推送自己的镜像到仓库中。</p>
+<p>运行实例：
+<code>$ docker push test/httpd:1.0</code></p>
+<h2 id="创建容器">创建容器<a hidden class="anchor" aria-hidden="true" href="#创建容器">#</a></h2>
+<p><code>docker create &lt;image-id&gt;</code>
+docker create 命令为指定的镜像（image）添加了一个可读写层，构成了一个新的容器。注意，这个容器并没有运行。</p>
+<p>docker create 命令提供了许多参数选项可以指定名字，硬件资源，网络配置等等。</p>
+<p>如：
+创建一个centos的容器，可以使用仓库＋标签的名字确定image，也可以使用image－id指定image。返回容器id</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>＃查看本地images列表
+</span></span><span style="display:flex;"><span>$ docker images
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>＃用仓库＋标签
+</span></span><span style="display:flex;"><span>$ docker create -it --name centos6_container centos:centos6
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>＃使用image－id
+</span></span><span style="display:flex;"><span>$ docker create -it --name centos6_container 6a77ab6655b9 bash
+</span></span><span style="display:flex;"><span>b3cd0b47fe3db0115037c5e9cf776914bd46944d1ac63c0b753a9df6944c7a67
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#可以使用 docker ps查看一件存在的容器列表,不加参数默认只显示当前运行的容器
+</span></span><span style="display:flex;"><span>$ docker ps -a
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以使用 -v 参数将本地目录挂载到容器中。
+<code>$ docker create -it --name centos6_container -v /src/webapp:/opt/webapp centos:centos6</code>
+这个功能在进行测试的时候十分方便，比如用户可以放置一些程序到本地目录中，来查看容器是否正常工作。本地目录的路径必须是绝对路径，如果目录不存在 Docker 会自动为你创建它。</p>
+<p>docker -v 挂载问题：
+Docker容器启动的时候，如果要挂载宿主机的一个目录，可以用-v参数指定。
+譬如我要启动一个centos容器，宿主机的/test目录挂载到容器的/soft目录，可通过以下方式指定：
+<code>docker run -it -v /test:/soft centos /bin/bash</code>
+这样在容器启动后，容器内会自动创建/soft的目录。通过这种方式，我们可以明确一点，即-v参数中，冒号&quot;:&ldquo;前面的目录是宿主机目录，后面的目录是容器内目录。
+貌似简单，其实不然，下面我们来验证一下：</p>
+<ul>
+<li>容器目录不可以为相对路径</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# docker run -it -v /test:soft centos /bin/bash
+</span></span><span style="display:flex;"><span>invalid value &#34;/test:soft&#34; for flag -v: soft is not an absolute path
+</span></span><span style="display:flex;"><span>See &#39;docker run --help&#39;.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>直接报错，提示soft不是一个绝对路径，所谓的绝对路径，必须以下斜线“/”开头。</p>
+<ul>
+<li>宿主机目录如果不存在，则会自动生成
+如果宿主机中存在/test目录，首先删除它</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# rm -rf /test
+</span></span><span style="display:flex;"><span>[root@localhost ~]# ls /
+</span></span><span style="display:flex;"><span>bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动容器</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# docker run -it -v /test:/soft centos /bin/bash
+</span></span><span style="display:flex;"><span>[root@a487a3ca7997 /]# ls
+</span></span><span style="display:flex;"><span>bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  soft  srv  sys  tmp  usr  var
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看宿主机，发现新增了一个/test目录</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# ls /
+</span></span><span style="display:flex;"><span>bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  test  tmp  usr  var
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>宿主机的目录如果为相对路径呢？
+这次，我们换个目录名test1试试
+<code>docker run -it -v test1:/soft centos /bin/bash</code>
+再到宿主机上查看是否新增了一个/test1目录，结果没有，是不是因为我用的是相对路径，所以生成的test1目录在当前目录下，结果发现还是没有。
+那容器内的/soft目录挂载到哪里去了？通过docker inspect命令，查看容器“Mounts”那一部分，我们可以得到这个问题的答案。</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&#34;Mounts&#34;: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            &#34;Name&#34;: &#34;test1&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Source&#34;: &#34;/var/lib/docker/volumes/test1/_data&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Destination&#34;: &#34;/soft&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Driver&#34;: &#34;local&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Mode&#34;: &#34;z&#34;,
+</span></span><span style="display:flex;"><span>            &#34;RW&#34;: true
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ],
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看出，容器内的/soft目录挂载的是宿主机上的/var/lib/docker/volumes/test1/_data目录，原来所谓的相对路径指的是/var/lib/docker/volumes/，与宿主机的当前目录无关。</p>
+<ul>
+<li>如果只是-v指定一个目录，这个又是如何对应呢？
+启动一个容器</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# docker run -it -v /test2 centos /bin/bash
+</span></span><span style="display:flex;"><span>[root@ea24067bc902 /]# ls
+</span></span><span style="display:flex;"><span>bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  test2  tmp  usr  var
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>同样使用docker inspect命令查看宿主机的挂载目录</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&#34;Mounts&#34;: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            &#34;Name&#34;: &#34;96256232eb74edb139d652746f0fe426e57fbacdf73376963e3acdb411b3d73a&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Source&#34;: &#34;/var/lib/docker/volumes/96256232eb74edb139d652746f0fe426e57fbacdf73376963e3acdb411b3d73a/_data&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Destination&#34;: &#34;/test2&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Driver&#34;: &#34;local&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Mode&#34;: &#34;&#34;,
+</span></span><span style="display:flex;"><span>            &#34;RW&#34;: true
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ],
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看出，同3中的结果类似，只不过，它不是相对路径的目录名，而是随机生成的一个目录名。</p>
+<ul>
+<li>如果在容器内修改了目录的属主和属组，那么对应的挂载点是否会修改呢？
+首先开启一个容器，查看容器内/soft目录的属性</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# docker run -it -v /test:/soft centos /bin/bash
+</span></span><span style="display:flex;"><span>[root@b5ed8216401f /]# ll -d /soft/
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root 6 Sep 24 03:48 /soft/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看宿主机内/test目录的属性</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# ll -d /test/
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root 6 Sep 24 11:48 /test/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在容器内新建用户，修改/soft的属主和属组</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@b5ed8216401f /]# useradd victor
+</span></span><span style="display:flex;"><span>[root@b5ed8216401f /]# chown -R victor.victor /soft/
+</span></span><span style="display:flex;"><span>[root@b5ed8216401f /]# ll -d /soft/
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 victor victor 6 Sep 24 03:48 /soft/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再来看看宿主机内/test目录的属主和属组是否会发生变化？</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# ll -d /test/
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 mycat mycat 6 Sep 24 11:48 /test/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>竟然变为mycat了。。。
+原来，这个与UID有关系，UID，即“用户标识号”，是一个整数，系统内部用它来标识用户。一般情况下它与用户名是一一对应的。
+首先查看容器内victor对应的UID是多少，</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@b5ed8216401f /]# cat /etc/passwd | grep victor
+</span></span><span style="display:flex;"><span>victor❌1000:1000::/home/victor:/bin/bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>victor的UID为1000，那么宿主机内1000对应的用户是谁呢？</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# cat /etc/passwd |grep 1000
+</span></span><span style="display:flex;"><span>mycat❌1000:1000::/home/mycat:/bin/bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看出，宿主机内UID 1000对应的用户是mycat。</p>
+<ul>
+<li>容器销毁了，在宿主机上新建的挂载目录是否会消失？
+在这里，主要验证两种情况：一、指定了宿主机目录，即 -v /test:/soft。二、没有指定宿主机目录，即-v /soft
+第一种情况：</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# rm -rf /test    --首先删除宿主机的/test目录
+</span></span><span style="display:flex;"><span>[root@localhost ~]# ls /    --可以看到，宿主机上无/test目录
+</span></span><span style="display:flex;"><span>bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+</span></span><span style="display:flex;"><span>[root@localhost ~]# docker run -it --name=centos_test -v /test:/soft centos /bin/bash  --启动容器，为了删除方便，我用--name参数指定了容器的名字
+</span></span><span style="display:flex;"><span>[root@82ad7f3a779a /]# exit
+</span></span><span style="display:flex;"><span>exit
+</span></span><span style="display:flex;"><span>[root@localhost ~]# docker rm centos_test   --删除容器
+</span></span><span style="display:flex;"><span>centos_test
+</span></span><span style="display:flex;"><span>[root@localhost ~]# ls /   --发现 /test目录依旧存在
+</span></span><span style="display:flex;"><span>bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  test  tmp  usr  var
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看出，即便容器销毁了，新建的挂载目录不会消失。进一步也可验证，如果宿主机目录的属主和属组发生了变化，容器销毁后，宿主机目录的属主和属组不会恢复到挂载之前的状态。</p>
+<p>第二种情况，通过上面的验证知道，如果没有指定宿主机的目录，则容器会在/var/lib/docker/volumes/随机配置一个目录，那么我们看看这种情况下的容器销毁是否会导致相应目录的删除
+首先启动容器</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# docker run -it --name=centos_test -v /soft centos /bin/bash
+</span></span><span style="display:flex;"><span>[root@6b75579ec934 /]# exit
+</span></span><span style="display:flex;"><span>exit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过docker inspect命令查看容器在宿主机上生成的挂载目录</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&#34;Mounts&#34;: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            &#34;Name&#34;: &#34;b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Source&#34;: &#34;/var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301/_data&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Destination&#34;: &#34;/soft&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Driver&#34;: &#34;local&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Mode&#34;: &#34;&#34;,
+</span></span><span style="display:flex;"><span>            &#34;RW&#34;: true
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ],
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对应的是/var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301/_data目录
+销毁容器，看目录是否存在</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# docker rm centos_test
+</span></span><span style="display:flex;"><span>centos_test
+</span></span><span style="display:flex;"><span>[root@localhost ~]# ll /var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root 6 Sep 24 14:25 _data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现该目录依旧存在，即便重启了docker服务，该目录依旧存在</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@localhost ~]# systemctl restart docker
+</span></span><span style="display:flex;"><span>[root@localhost ~]# ll /var/lib/docker/volumes/b53164cb1c9f1917788638692fb22ad11994cf1fbbc2461b6c390cd3e10ea301
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 root root 6 Sep 24 14:25 _data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>挂载宿主机已存在目录后，在容器内对其进行操作，报“Permission denied”。
+可通过两种方式解决：</li>
+</ul>
+<p>1&gt; 关闭selinux。
+临时关闭：# setenforce 0
+永久关闭：修改/etc/sysconfig/selinux文件，将SELINUX的值设置为disabled。</p>
+<p>2&gt; 以特权方式启动容器
+指定&ndash;privileged参数
+如：# docker run -it &ndash;privileged=true -v /test:/soft centos /bin/bash</p>
+<p><a href="https://www.cnblogs.com/ivictor/p/4834864.html">docker挂载参考地址</a></p>
+<h2 id="启动容器">启动容器<a hidden class="anchor" aria-hidden="true" href="#启动容器">#</a></h2>
+<p><code>docker start &lt;container-id&gt;</code>
+Docker start命令为容器文件系统创建了一个进程隔离空间。注意，每一个容器只能够有一个进程隔离空间。</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#通过名字启动
+</span></span><span style="display:flex;"><span>$ docker start -i centos6_container
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>＃通过容器ID启动
+</span></span><span style="display:flex;"><span>$ docker start -i b3cd0b47fe3d
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="进入容器">进入容器<a hidden class="anchor" aria-hidden="true" href="#进入容器">#</a></h2>
+<p><code>docker exec &lt;container-id&gt;</code></p>
+<p>在当前容器中执行新命令，如果增加 -it参数运行bash 就和登录到容器效果一样的。
+<code>docker exec -it centos6_container bash</code></p>
+<h2 id="停止容器">停止容器<a hidden class="anchor" aria-hidden="true" href="#停止容器">#</a></h2>
+<p><code>docker stop &lt;container-id&gt;</code></p>
+<h2 id="删除容器">删除容器<a hidden class="anchor" aria-hidden="true" href="#删除容器">#</a></h2>
+<p><code>docker rm &lt;container-id&gt;</code></p>
+<h2 id="运行容器">运行容器<a hidden class="anchor" aria-hidden="true" href="#运行容器">#</a></h2>
+<p><code>docker run &lt;image-id&gt;</code></p>
+<p>docker run就是docker create和docker start两个命令的组合,支持参数也是一致的，如果指定容器
+名字是，容器已经存在会报错,可以增加 &ndash;rm 参数实现容器退出时自动删除。</p>
+<p>如：
+<code>docker create -it --rm --name centos6_container centos:centos6</code></p>
+<h2 id="查看容器列表">查看容器列表<a hidden class="anchor" aria-hidden="true" href="#查看容器列表">#</a></h2>
+<p><code>docker ps</code>
+docker ps 命令会列出所有运行中的容器。这隐藏了非运行态容器的存在，如果想要找出这些容器，增加-a参数。</p>
+<h2 id="删除镜像">删除镜像<a hidden class="anchor" aria-hidden="true" href="#删除镜像">#</a></h2>
+<p><code>docker rmi &lt;image-id&gt;</code></p>
+<p>删除构成镜像的一个只读层。你只能够使用docker rmi来移除最顶层（top level layer）
+（也可以说是镜像），你也可以使用-f参数来强制删除中间的只读层。</p>
+<h2 id="commit容器">commit容器<a hidden class="anchor" aria-hidden="true" href="#commit容器">#</a></h2>
+<p><code>docker commit &lt;container-id&gt;</code>
+将容器的可读写层转换为一个只读层，这样就把一个容器转换成了不可变的镜像。</p>
+<h2 id="镜像保存">镜像保存<a hidden class="anchor" aria-hidden="true" href="#镜像保存">#</a></h2>
+<p><code>docker save &lt;image-id&gt;</code></p>
+<p>创建一个镜像的压缩文件，这个文件能够在另外一个主机的Docker上使用。和export命令不同，这个命令
+为每一个层都保存了它们的元数据。这个命令只能对镜像生效。</p>
+<p>如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>#保存centos镜像到centos_images.tar 文件
+</span></span><span style="display:flex;"><span>$ docker save  -o centos_images.tar centos:centos6
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>＃或者直接重定向
+</span></span><span style="display:flex;"><span>$ docker save  -o centos_images.tar centos:centos6 &gt; centos_images.tar
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="容器导出">容器导出<a hidden class="anchor" aria-hidden="true" href="#容器导出">#</a></h2>
+<p><code>docker export &lt;container-id&gt;</code></p>
+<p>创建一个tar文件，并且移除了元数据和不必要的层，将多个层整合成了一个层，只保存了当前统一视角看到
+的内容。expoxt后的容器再import到Docker中，只有一个容器当前状态的镜像；而save后的镜像则不同，
+它能够看到这个镜像的历史镜像。</p>
+<h2 id="inspect">inspect<a hidden class="anchor" aria-hidden="true" href="#inspect">#</a></h2>
+<p><code>docker inspect &lt;container-id&gt; or &lt;image-id&gt;</code>
+docker inspect命令会提取出容器或者镜像最顶层的元数据</p>
+<h1 id="docker安装指定版本tag的镜像">docker安装指定版本TAG的镜像<a hidden class="anchor" aria-hidden="true" href="#docker安装指定版本tag的镜像">#</a></h1>
+<p>在docker中安装镜像，一般过程是，docker search 软件名称。
+本文以tomcat为例，讲解下载指定版本TAG的tomcat。</p>
+<p>搜索tomcat镜像：
+<code>sudo docker search tomcat</code></p>
+<p>发现只有tomcat，而如果docker pull tomcat，下载下来的是最新版的tomcat,也就是tomcat11。假设希望下载的是tomcat:8-jre8。那么该如何做呢？
+如果search出来的镜像，不是自己想要的版本，可通过在docker hub上搜索好版本TAG，地址如下：https://hub.docker.com，进入之后，在页面左上角搜索框搜索<code>tomcat</code>，
+搜索出来之后，点详情，点击标签，在下面通过翻页，找到8-jre标签，复制标签名：8-jre8，下载tomcat镜像
+<code>sudo docker pull tomcat:8-jre8</code></p>
+<h1 id="varlibdockeroverlay2-占用过大">/var/lib/docker/overlay2 占用过大<a hidden class="anchor" aria-hidden="true" href="#varlibdockeroverlay2-占用过大">#</a></h1>
+<p>查看磁盘使用情况
+<code>sudo du -hs /var/lib/docker/</code></p>
+<p>查看Docker的磁盘使用情况
+<code>docker system df</code></p>
+<p>清理磁盘，删除关闭的容器、无用的数据卷和网络，以及dangling镜像(即无tag的镜像)
+<code>docker system prune</code></p>
+<p>docker system prune -a命令清理得更加彻底，可以将没有容器使用Docker镜像都删掉。注意，这两个命令会把你暂时关闭的容器，以及暂时没有用到的Docker镜像都删掉了…所以使用之前一定要想清楚.。我没用过，因为会清理 没有开启的  Docker 镜像。</p>
+<h2 id="迁移-varlibdocker目录">迁移 /var/lib/docker目录<a hidden class="anchor" aria-hidden="true" href="#迁移-varlibdocker目录">#</a></h2>
+<p>停止docker服务
+<code>systemctl stop docker</code></p>
+<p>创建新的docker目录，执行命令df -h,找一个大的磁盘。 我在 /home目录下面建了 /home/docker/lib目录，执行的命令是：
+<code>mkdir -p /home/docker/lib</code></p>
+<p>迁移/var/lib/docker目录下面的文件到 /home/docker/lib
+<code>rsync -avz /var/lib/docker /home/docker/lib/</code></p>
+<p>配置 /etc/systemd/system/docker.service.d/devicemapper.conf。查看 devicemapper.conf 是否存在。如果不存在，就新建
+<code>sudo mkdir -p /etc/systemd/system/docker.service.d/</code>
+<code>sudo vi /etc/systemd/system/docker.service.d/devicemapper.conf</code></p>
+<p>然后在 devicemapper.conf 写入：（同步的时候把父文件夹一并同步过来，实际上的目录应在 /home/docker/lib/docker）</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[Service]
+</span></span><span style="display:flex;"><span>ExecStart=
+</span></span><span style="display:flex;"><span>ExecStart=/usr/bin/dockerd  --graph=/home/docker/lib/docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重新加载 docker
+<code>systemctl daemon-reload</code>
+<code>systemctl restart docker</code>
+<code>systemctl enable docker</code></p>
+<p>为了确认一切顺利，运行
+<code>docker info</code></p>
+<p>命令检查Docker 的根目录.它将被更改为 /home/docker/lib/docker</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Docker Root Dir: /home/docker/lib/docker
+</span></span><span style="display:flex;"><span>Debug Mode (client): false
+</span></span><span style="display:flex;"><span>Debug Mode (server): false
+</span></span><span style="display:flex;"><span>Registry: https://index.docker.io/v1/
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动成功后，再确认之前的镜像还在</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>linlf@dacent:~$ docker images
+</span></span><span style="display:flex;"><span>REPOSITORY           TAG                 IMAGE ID            CREATED             SIZE
+</span></span><span style="display:flex;"><span>AAA/AAA               v2                  7331b8651bcc        27 hours ago        3.85GB
+</span></span><span style="display:flex;"><span>BBB/BBB               v1                  da4a80dd8424        28 hours ago        3.47GB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>确定容器没问题后删除/var/lib/docker/目录中的文件。</p>
+<h1 id="docker和k8s">Docker和K8S<a hidden class="anchor" aria-hidden="true" href="#docker和k8s">#</a></h1>
+<p><a href="https://my.oschina.net/jamesview/blog/2994112">参考地址</a></p>
+<h1 id="给已存在的docker容器添加或修改端口映射或挂载目录">给已存在的docker容器添加或修改端口映射(或挂载目录)<a hidden class="anchor" aria-hidden="true" href="#给已存在的docker容器添加或修改端口映射或挂载目录">#</a></h1>
+<p>建立完一个容器后不能增加端口映射了，因为 docker run -p 有 -p 参数，但是 docker start 没有 -p 参数。
+通常会在启动docker容器的时候，指定端口映射，如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>docker run --name jenkins -d \
+</span></span><span style="display:flex;"><span>-v /usr/local/src:/share \
+</span></span><span style="display:flex;"><span>-v /home/jenkins:/var/jenkins_home \
+</span></span><span style="display:flex;"><span>-v /etc/localtime:/etc/localtime \
+</span></span><span style="display:flex;"><span>-p 9999:8080 -p 50000:50000 \
+</span></span><span style="display:flex;"><span>jenkins
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果需要新的端口映射，不必删除重建这个容器，可以通过修改容器配置文件来解决。</p>
+<ul>
+<li>
+<p>首先，停止要修改配置文件的容器（可不必停止docker服务）
+<code>docker stop 容器名</code></p>
+</li>
+<li>
+<p>通过<code>docker inspect 容器名字</code>找到容器的信息。
+最上边的id，是一段hash值，大概记住这个id。</p>
+</li>
+<li>
+<p>找到路径<code>/var/lib/docker/containers</code>
+通过ls可以看到，每个容器的hash值文件夹，找到刚才的文件夹，cd进去。</p>
+</li>
+<li>
+<p>修改<code>hostconfig.json</code>
+找到&quot;PortBindings&rdquo;:{} 这个配置项。修改：
+<code>&quot;PortBindings&quot;:{&quot;80/tcp&quot;:[{&quot;HostIp&quot;:&quot;&quot;,&quot;HostPort&quot;:&quot;8080&quot;}]}</code>
+这里 80 是容器端口， 8080 是本地端口。可能有多个，注意格式。</p>
+</li>
+</ul>
+<p>修改挂载目录：
+<code>&quot;Binds&quot;: [&quot;/data:/opt&quot;],</code>
+将主机的/data目录挂载到容器的/opt目录。</p>
+<ul>
+<li>修改<code>config.v2.json</code>
+找到配置项<code>&quot;Tty&quot;: true</code>，前边如果有<code>ExposedPorts</code>，就是已经有其他端口映射了，继续添加。
+如果没有，添加<code>&quot;ExposedPorts&quot;:{&quot;80/tcp&quot;:{}} ,</code>
+我不知道添加到别的地方会不会有影响，因为经过对比正常的端口映射配置项是在这个位置，这个就是将容器内部端口暴露出来，如果不加这一句端口映射不会成功的。</li>
+</ul>
+<p>修改挂载目录：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&#34;MountPoints&#34;: {
+</span></span><span style="display:flex;"><span>&#34;/import&#34;: {
+</span></span><span style="display:flex;"><span>            &#34;Source&#34;: &#34;/data&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Destination&#34;: &#34;/opt&#34;,
+</span></span><span style="display:flex;"><span>            &#34;RW&#34;: true,
+</span></span><span style="display:flex;"><span>            &#34;Name&#34;: &#34;&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Driver&#34;: &#34;&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Type&#34;: &#34;bind&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Propagation&#34;: &#34;rprivate&#34;,
+</span></span><span style="display:flex;"><span>            &#34;Spec&#34;: {
+</span></span><span style="display:flex;"><span>                &#34;Type&#34;: &#34;bind&#34;,
+</span></span><span style="display:flex;"><span>                &#34;Source&#34;: &#34;/data&#34;,
+</span></span><span style="display:flex;"><span>                &#34;Target&#34;: &#34;/opt&#34;
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>            &#34;SkipMountpointCreation&#34;: false
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}, 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>然后重启docker守护进程（并且不可先重启容器，否则你的配置文件又变回之前的了）
+<code>service docker restart</code></p>
+</li>
+<li>
+<p>docker服务重启后，启动容器。
+<code>docker start 容器名</code></p>
+</li>
+<li>
+<p>查看容器的映射端口
+<code>docker inspect 容器名</code>
+发现端口已经映射上了。</p>
+</li>
+</ul>
+<p><a href="https://blog.csdn.net/chouzhou9701/article/details/86725203">参考</a></p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/">其他基础</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
