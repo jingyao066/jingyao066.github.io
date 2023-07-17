@@ -8,6 +8,15 @@
     <language>en</language>
     <lastBuildDate>Thu, 06 Jul 2023 05:00:00 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>IO面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <description>概述 IO 即 Input/Output，输入和输出。数据输入到计算机内存的过程即输入，反之输出到外部存储（比如数据库，文件，远程主机）的过程即输出</description>
+    </item>
+    
+    <item>
       <title>java基础面试题</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>

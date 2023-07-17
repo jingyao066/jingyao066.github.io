@@ -6,14 +6,14 @@
     <description>Recent content in Posts on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 07 Jul 2023 05:00:00 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Jul 2023 05:00:00 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>陈皓2021年直播访谈摘录</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E9%99%88%E7%9A%932021%E5%B9%B4%E7%9B%B4%E6%92%AD%E8%AE%BF%E8%B0%88%E6%91%98%E5%BD%95/</link>
-      <pubDate>Fri, 07 Jul 2023 05:00:00 +0000</pubDate>
+      <title>IO面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E9%99%88%E7%9A%932021%E5%B9%B4%E7%9B%B4%E6%92%AD%E8%AE%BF%E8%B0%88%E6%91%98%E5%BD%95/</guid>
-      <description>陈皓（左耳朵耗子）是MegaEase创始人、资深技术专家、骨灰级程序员，于2023年5月13日突发心梗逝世，享年47岁。 于2021年做过一次</description>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <description>概述 IO 即 Input/Output，输入和输出。数据输入到计算机内存的过程即输入，反之输出到外部存储（比如数据库，文件，远程主机）的过程即输出</description>
     </item>
     
     <item>
@@ -50,6 +50,15 @@
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%87%8D%E7%82%B9%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>乐观锁和悲观锁 如果将悲观锁（Pessimistic Lock）和乐观锁（PessimisticLock 或 OptimisticLock）对应到现</description>
+    </item>
+    
+    <item>
+      <title>陈皓2021年直播访谈摘录</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E9%99%88%E7%9A%932021%E5%B9%B4%E7%9B%B4%E6%92%AD%E8%AE%BF%E8%B0%88%E6%91%98%E5%BD%95/</link>
+      <pubDate>Wed, 07 Jun 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E9%99%88%E7%9A%932021%E5%B9%B4%E7%9B%B4%E6%92%AD%E8%AE%BF%E8%B0%88%E6%91%98%E5%BD%95/</guid>
+      <description>陈皓（左耳朵耗子）是MegaEase创始人、资深技术专家、骨灰级程序员，于2023年5月13日突发心梗逝世，享年47岁。 于2021年做过一次</description>
     </item>
     
     <item>
