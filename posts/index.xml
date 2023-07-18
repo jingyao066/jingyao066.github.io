@@ -35,6 +35,15 @@
     </item>
     
     <item>
+      <title>JVM面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/jvm%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/jvm%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <description>前言 对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像 C/C++程序开发程序员这样为每一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和</description>
+    </item>
+    
+    <item>
       <title>多线程基础面试题</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
