@@ -61,5 +61,14 @@
       <description>乐观锁和悲观锁 如果将悲观锁（Pessimistic Lock）和乐观锁（PessimisticLock 或 OptimisticLock）对应到现</description>
     </item>
     
+    <item>
+      <title>计算机网络面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <description>计算机网络基础 网络分层模型 OSI 七层模型是什么？每一层的作用是什么？ OSI 七层模型 是国际标准化组织提出一个网络分层模型，其大体结构以及每一层提供的功</description>
+    </item>
+    
   </channel>
 </rss>
