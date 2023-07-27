@@ -168,6 +168,46 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>web_api
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>web api 设计。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-01-24 17:40:34 +0000 UTC'>2018-01-24</span></footer>
+  <a class="entry-link" aria-label="post link to web_api" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/web_api/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>queue
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：
+把元素添加到队列末尾； 从队列头部取出元素。 超市的收银台就是一个队列。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-21 21:59:33 +0000 UTC'>2017-12-21</span></footer>
+  <a class="entry-link" aria-label="post link to queue" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/queue/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Hashtable
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 和HashMap一样，Hashtable 也是一个散列表，它存储的内容是键值对(key-value)映射。 Hashtable 继承于Dictionary，实现了Map、Cloneable、java.io.Serializable接口。 Hashtable 的函数都是同步的，这意味着它是线程安全的。它的key、value都不可以为null。此外，Hashtable中的映射不是有序的。 Hashtable 的实例有两个参数影响其性能：初始容量和加载因子。容量是哈希表中桶的数量，初始容量就是哈希表创建时的容量。 注意，哈希表的状态为open：在发生“哈希冲突”的情况下，单个桶会存储多个条目，这些条目必须按顺序搜索。加载因子是对哈希表在其容量自动增加之前可以达到多满的一个尺度。初始容量和加载因子这两个参数只是对该实现的提示。关于何时以及是否调用rehash方法的具体细节则依赖于该实现。 通常，默认加载因子是0.75，这是在时间和空间成本上寻求一种折衷。加载因子过高虽然减少了空间开销，但同时也增加了查找某个条目的时间，在大多数 Hashtable 操作中，包括get和put操作，都反映了这一点。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-21 10:35:10 +0000 UTC'>2017-12-21</span></footer>
+  <a class="entry-link" aria-label="post link to Hashtable" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashtable/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>HashMap
     </h2>
   </header>
@@ -217,45 +257,6 @@
   </div>
   <footer class="entry-footer"><span title='2017-12-19 14:38:20 +0000 UTC'>2017-12-19</span></footer>
   <a class="entry-link" aria-label="post link to Vector和Stack" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/vector/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>LinkedList
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>LinkedList概述 LinkedList是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。 LinkedList 实现List 接口，能对它进行队列操作。 LinkedList 实现Deque 接口，即能将LinkedList当作双端队列使用。 LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。 LinkedList 实现java.io.Serializable接口，这意味着LinkedList支持序列化，能通过序列化去传输。 LinkedList 是非同步的。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-19 13:44:51 +0000 UTC'>2017-12-19</span></footer>
-  <a class="entry-link" aria-label="post link to LinkedList" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/linkedlist/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>ArrayList
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>ArrayList概述 ArrayList 是容量可变的非线程安全集合。 内部使用数组进行存储，集合扩容时会创建更大的数组空间，把原有数据复制到新数组中。 ArrayList 支持对元素的快速随机访问，但是插入与删除时速度很慢，因为这个过程很有可能需要移动其他元素。
-ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。 ArrayList 实现了RandmoAccess接口，即提供了随机访问功能。可以通过元素的序号快速获取元素对象，这就是快速随机访问。 ArrayList 实现了Cloneable接口，即覆盖了函数clone()，能被克隆。 ArrayList 实现java.io.Serializable接口，这意味着ArrayList支持序列化，能通过序列化去传输。 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-16 22:01:24 +0000 UTC'>2017-12-16</span></footer>
-  <a class="entry-link" aria-label="post link to ArrayList" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/arraylist/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Collection
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 什么是集合（Collection）？集合就是“由若干个确定的元素所构成的整体”。例如，5只小兔构成的集合：
-1 2 3 4 5 6 7 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐ │ (\_(\ (\_/) (\_/) (\_/) (\(\ │ ( -.-) (•.•) (&gt;.&lt;) (^.^) (=&#39;.&#39;) │ C(&#34;)_(&#34;) (&#34;)_(&#34;) (&#34;)_(&#34;) (&#34;)_(&#34;) O(_&#34;)&#34;) │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-06 18:21:41 +0000 UTC'>2017-12-06</span></footer>
-  <a class="entry-link" aria-label="post link to Collection" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/collection/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

@@ -665,6 +665,15 @@ StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于Ab
     </item>
     
     <item>
+      <title>Shell基础</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Mon, 06 May 2019 16:21:35 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</guid>
+      <description>简介 简单来说“Shell 编程就是对一堆 Linux 命令的逻辑化处理”。W3Cschool 上的一篇文章是这样介绍 Shell 的，如下图所示。 Shell 编程的 Hello World 学习任何一</description>
+    </item>
+    
+    <item>
       <title>反射（Reflect）</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/reflect/</link>
       <pubDate>Mon, 06 May 2019 16:21:35 +0000</pubDate>
