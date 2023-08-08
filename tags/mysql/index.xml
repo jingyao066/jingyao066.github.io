@@ -6,7 +6,16 @@
     <description>Recent content in mysql on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 07 Jan 2020 22:05:33 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Jul 2023 05:00:00 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL面试题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</link>
+      <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</guid>
+      <description>概述 MySQL 日志 主要包括错误日志、查询日志、慢查询日志、事务日志、二进制日志几大类。其中，比较重要的还要属二进制日志 binlog（归档日志）和事务</description>
+    </item>
+    
     <item>
       <title>mysql进阶-索引</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95/</link>

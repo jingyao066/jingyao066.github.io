@@ -168,6 +168,67 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>SOA
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 maven&#43;dubbo&#43;zookeeper构建soa建构系统。 dubbo是目前国内最广泛的rpc框架，这是官网 本文只阐述框架的搭建过程，原理和区别对比(dubbo/cloud)会在另一篇文章中说明。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-11-09 16:51:22 +0000 UTC'>2018-11-09</span></footer>
+  <a class="entry-link" aria-label="post link to SOA" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/soa/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-11-09 00:34:23 +0000 UTC'>2018-11-09</span></footer>
+  <a class="entry-link" aria-label="post link to 算法" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>idea
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>记录自己idea的个性化设置。 记得定期将自己的setting导出，新环境直接导入就好了。 file-&gt;export setting
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-11-08 20:55:11 +0000 UTC'>2018-11-08</span></footer>
+  <a class="entry-link" aria-label="post link to idea" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/idea/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>lambda
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>函数式编程 我们先看看什么是函数。函数是一种最基本的任务，一个大型程序就是一个顶层函数调用若干底层函数，这些被调用的函数又可以调用其他函数，即大任务被一层层拆解并执行。所以函数就是面向过程的程序设计的基本单元。
+Java不支持单独定义函数，但可以把静态方法视为独立的函数，把实例方法视为自带this参数的函数。
+而函数式编程（请注意多了一个“式”字）——Functional Programming，虽然也可以归结到面向过程的程序设计，但其思想更接近数学计算。
+我们首先要搞明白计算机（Computer）和计算（Compute）的概念。
+在计算机的层次上，CPU执行的是加减乘除的指令代码，以及各种条件判断和跳转指令，所以，汇编语言是最贴近计算机的语言。
+而计算则指数学意义上的计算，越是抽象的计算，离计算机硬件越远。
+对应到编程语言，就是越低级的语言，越贴近计算机，抽象程度低，执行效率高，比如C语言；越高级的语言，越贴近计算，抽象程度高，执行效率低，比如Lisp语言。
+函数式编程就是一种抽象程度很高的编程范式，纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。而允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。
+函数式编程的一个特点就是，允许把函数本身作为参数传入另一个函数，还允许返回一个函数！
+函数式编程最早是数学家阿隆佐·邱奇研究的一套函数变换逻辑，又称Lambda Calculus（λ-Calculus），所以也经常把函数式编程称为Lambda计算。
+Java平台从Java 8开始，支持函数式编程。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-11-06 18:18:18 +0000 UTC'>2018-11-06</span></footer>
+  <a class="entry-link" aria-label="post link to lambda" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/lambda/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Hexo
     </h2>
   </header>
@@ -204,59 +265,6 @@
   </div>
   <footer class="entry-footer"><span title='2018-10-06 18:10:43 +0000 UTC'>2018-10-06</span></footer>
   <a class="entry-link" aria-label="post link to redis" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>nginx
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>nginx学习
-配置 1.下载：http://nginx.org/ 2.解压至英文路径 3.进入解压后文件夹，双击nginx.exe启动nginx，默认为80端口，nginx启动时一闪而过，启动后打开浏览器，输入localhost，看到欢迎页面证明启动成功，若看不到欢迎页面，可能是80端口被占用 解决方法：进入nginx文件夹下的conf文件夹 编辑nginx.conf，找到server{listen 80;}修改端口号，重启nginx即可
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-10-06 18:06:29 +0000 UTC'>2018-10-06</span></footer>
-  <a class="entry-link" aria-label="post link to nginx" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/nginx/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>javadoc
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。官方文档
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-09-06 17:10:20 +0000 UTC'>2018-09-06</span></footer>
-  <a class="entry-link" aria-label="post link to javadoc" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/javadoc/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>MarkDown
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>标题 总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。
-一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 和h1到h6一样，字体由大到小
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-09-06 14:48:51 +0000 UTC'>2018-09-06</span></footer>
-  <a class="entry-link" aria-label="post link to MarkDown" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/markdown/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>log
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 门面接口： 1 2 3 4 5 6 commons-logging： apache最早提供的日志门面接口，用户可以根据自己喜欢选择不同日志实现框架，而不...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-04-07 15:02:26 +0000 UTC'>2018-04-07</span></footer>
-  <a class="entry-link" aria-label="post link to log" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/log/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

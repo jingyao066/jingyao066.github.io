@@ -168,6 +168,75 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>建造者模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 类型：创建型 意图：将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。 主要解决：主要解决在软件系统中，有时候面临着&amp;q...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-12-13 15:36:01 +0000 UTC'>2018-12-13</span></footer>
+  <a class="entry-link" aria-label="post link to 建造者模式" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>责任链模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>快速学习 使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-12-10 17:41:36 +0000 UTC'>2018-12-10</span></footer>
+  <a class="entry-link" aria-label="post link to 责任链模式" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>策略模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>快速学习 定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。本模式使得算法可独立于使用它的客户而变化。
+策略模式：Strategy，是指，定义一组算法，并把其封装到一个对象中。然后在运行时，可以灵活的使用其中的一个算法。
+策略模式在Java标准库中应用非常广泛，我们以排序为例，看看如何通过Arrays.sort()实现忽略大小写排序：
+1 2 3 4 5 6 7 public class Main { public static void main(String[] args) throws InterruptedException { String[] array = { &#34;apple&#34;, &#34;Pear&#34;, &#34;Banana&#34;, &#34;orange&#34; }; Arrays.sort(array, String::compareToIgnoreCase); System.out.println(Arrays.toString(array)); } } 如果我们想忽略大小写排序，就传入String::compareToIgnoreCase，如果我们想倒序排序，就传入(s1, s2) -&gt; -s1.compareTo(s2)，这个比较两个元素大小的算法就是策略。
+我们观察Arrays.sort(T[] a, Comparator&lt;? super T&gt; c)这个排序方法，它在内部实现了TimSort排序，但是，排序算法在比较两个元素大小的时候，需要借助我们传入的Comparator对象，才能完成比较。因此，这里的策略是指比较两个元素大小的策略，可以是忽略大小写比较，可以是倒序比较，也可以根据字符串长度比较。
+因此，上述排序使用到了策略模式，它实际上指，在一个方法中，流程是确定的，但是，某些关键步骤的算法依赖调用方传入的策略，这样，传入不同的策略，即可获得不同的结果，大大增强了系统的灵活性。
+如果我们自己实现策略模式的排序，用冒泡法编写如下：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 public class Main { public static void main(String[] args) throws InterruptedException { String[] array = { &#34;apple&#34;, &#34;Pear&#34;, &#34;Banana&#34;, &#34;orange&#34; }; sort(array, String::compareToIgnoreCase); System.out.println(Arrays.toString(array)); } static &lt;T&gt; void sort(T[] a, Comparator&lt;? super T&gt; c) { for (int i = 0; i &lt; a.length - 1; i&#43;&#43;) { for (int j = 0; j &lt; a.length - 1 - i; j&#43;&#43;) { if (c.compare(a[j], a[j &#43; 1]) &gt; 0) { // 注意这里比较两个元素的大小依赖传入的策略 T temp = a[j]; a[j] = a[j &#43; 1]; a[j &#43; 1] = temp; } } } } } 一个完整的策略模式要定义策略以及使用策略的上下文。我们以购物车结算为例，假设网站针对普通会员、Prime会员有不同的折扣，同时活动期间还有一个满100减20的活动，这些就可以作为策略实现。先定义打折策略接口：
+1 2 3 4 public interface DiscountStrategy { // 计算折扣额度: BigDecimal getDiscount(BigDecimal total); } 接下来，就是实现各种策略。普通用户策略如下：
+1 2 3 4 5 6 public class UserDiscountStrategy implements DiscountStrategy { public BigDecimal getDiscount(BigDecimal total) { // 普通会员打九折: return total.multiply(new BigDecimal(&#34;0.1&#34;)).setScale(2, RoundingMode.DOWN); } } 满减策略如下：
+1 2 3 4 5 6 public class OverDiscountStrategy implements DiscountStrategy { public BigDecimal getDiscount(BigDecimal total) { // 满100减20优惠: return total.compareTo(BigDecimal.valueOf(100)) &gt;= 0 ? BigDecimal.valueOf(20) : BigDecimal.ZERO; } } 最后，要应用策略，我们需要一个DiscountContext：
+1 2 3 4 5 6 7 8 9 10 11 12 13 public class DiscountContext { // 持有某个策略: private DiscountStrategy strategy = new UserDiscountStrategy(); // 允许客户端设置新策略: public void setStrategy(DiscountStrategy strategy) { this.strategy = strategy; } public BigDecimal calculatePrice(BigDecimal total) { return total.subtract(this.strategy.getDiscount(total)).setScale(2); } } 调用方必须首先创建一个DiscountContext，并指定一个策略（或者使用默认策略），即可获得折扣后的价格：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 DiscountContext ctx = new DiscountContext(); // 默认使用普通会员折扣: BigDecimal pay1 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay1); // 使用满减折扣: ctx.setStrategy(new OverDiscountStrategy()); BigDecimal pay2 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay2); // 使用Prime会员折扣: ctx.setStrategy(new PrimeDiscountStrategy()); BigDecimal pay3 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay3); 上述完整的策略模式如下图所示：
+1 2 3 4 5 6 7 8 9 10 11 12 13 ┌───────────────┐ ┌─────────────────┐ │DiscountContext│─ ─ ─&gt;│DiscountStrategy │ └───────────────┘ └─────────────────┘ ▲ │ ┌─────────────────────┐ ├─│UserDiscountStrategy │ │ └─────────────────────┘ │ ┌─────────────────────┐ ├─│PrimeDiscountStrategy│ │ └─────────────────────┘ │ ┌─────────────────────┐ └─│OverDiscountStrategy │ └─────────────────────┘ 策略模式的核心思想是在一个计算方法中把容易变化的算法抽出来作为“策略”参数传进去，从而使得新增策略不必修改原有逻辑。
+概述 类型：行为型 意图：定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。 主要解决：在有多种算法相似的情况下，使用 if…else 所带来的复杂和难以维护。 何时使用：一个系统有许多许多类，而区分它们的只是他们直接的行为。 如何解决：将这些算法封装成一个一个的类，任意地替换。 关键代码：实现同一个接口。 应用实例：
+诸葛亮的锦囊妙计，每一个锦囊就是一个策略。 旅行的出游方式，选择骑自行车、坐汽车，每一种旅行方式都是一个策略。 JAVA AWT 中的 LayoutManager。 优点：
+算法可以自由切换。 避免使用多重条件判断。 扩展性良好。 缺点：
+策略类会增多。 所有策略类都需要对外暴露。 使用场景：
+一个系统需要动态地在几种算法中选择一种。 如果在一个系统里面有许多类，它们之间的区别仅在于它们的行为，那么使用策略模式可以动态地让一个对象在许多行为中选择一种行为。 如果一个对象有很多的行为，如果不用恰当的模式，这些行为就只好使用多重的条件选择语句来实现。 注意事项：如果一个系统的策略多于四个，就需要考虑使用混合模式，解决策略类膨胀的问题。 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-12-10 17:40:19 +0000 UTC'>2018-12-10</span></footer>
+  <a class="entry-link" aria-label="post link to 策略模式" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>代理模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>快速学习 类型：结构型
+为其他对象提供一种代理以控制对这个对象的访问。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-12-10 16:45:26 +0000 UTC'>2018-12-10</span></footer>
+  <a class="entry-link" aria-label="post link to 代理模式" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>工厂方法和抽象工厂
     </h2>
   </header>
@@ -204,67 +273,6 @@
   </div>
   <footer class="entry-footer"><span title='2018-11-09 16:54:53 +0000 UTC'>2018-11-09</span></footer>
   <a class="entry-link" aria-label="post link to Jenkins" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/jenkins/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>SOA
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 maven&#43;dubbo&#43;zookeeper构建soa建构系统。 dubbo是目前国内最广泛的rpc框架，这是官网 本文只阐述框架的搭建过程，原理和区别对比(dubbo/cloud)会在另一篇文章中说明。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-11-09 16:51:22 +0000 UTC'>2018-11-09</span></footer>
-  <a class="entry-link" aria-label="post link to SOA" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/soa/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>算法
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>排序算法 十大经典排序算法 | 菜鸟教程 (runoob.com) 排序算法可以分为： 内部排序：数据记录在内存中进行排序。 外部排序open in new window：因排序的数据很大...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-11-09 00:34:23 +0000 UTC'>2018-11-09</span></footer>
-  <a class="entry-link" aria-label="post link to 算法" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>idea
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>记录自己idea的个性化设置。 记得定期将自己的setting导出，新环境直接导入就好了。 file-&gt;export setting
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-11-08 20:55:11 +0000 UTC'>2018-11-08</span></footer>
-  <a class="entry-link" aria-label="post link to idea" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/idea/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>lambda
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>函数式编程 我们先看看什么是函数。函数是一种最基本的任务，一个大型程序就是一个顶层函数调用若干底层函数，这些被调用的函数又可以调用其他函数，即大任务被一层层拆解并执行。所以函数就是面向过程的程序设计的基本单元。
-Java不支持单独定义函数，但可以把静态方法视为独立的函数，把实例方法视为自带this参数的函数。
-而函数式编程（请注意多了一个“式”字）——Functional Programming，虽然也可以归结到面向过程的程序设计，但其思想更接近数学计算。
-我们首先要搞明白计算机（Computer）和计算（Compute）的概念。
-在计算机的层次上，CPU执行的是加减乘除的指令代码，以及各种条件判断和跳转指令，所以，汇编语言是最贴近计算机的语言。
-而计算则指数学意义上的计算，越是抽象的计算，离计算机硬件越远。
-对应到编程语言，就是越低级的语言，越贴近计算机，抽象程度低，执行效率高，比如C语言；越高级的语言，越贴近计算，抽象程度高，执行效率低，比如Lisp语言。
-函数式编程就是一种抽象程度很高的编程范式，纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。而允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。
-函数式编程的一个特点就是，允许把函数本身作为参数传入另一个函数，还允许返回一个函数！
-函数式编程最早是数学家阿隆佐·邱奇研究的一套函数变换逻辑，又称Lambda Calculus（λ-Calculus），所以也经常把函数式编程称为Lambda计算。
-Java平台从Java 8开始，支持函数式编程。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-11-06 18:18:18 +0000 UTC'>2018-11-06</span></footer>
-  <a class="entry-link" aria-label="post link to lambda" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/lambda/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
