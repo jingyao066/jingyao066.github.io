@@ -168,6 +168,45 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>mysql进阶-存储过程
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。 存储过程是可编程的函数，在数据库中(数据字典表)创建并保存，可以由SQL语句和控制结构组成。当想要在不同的应用程序或平台上执行相同的函数，或者封装特定功能时，存储过程是非常有用的。数据库中的存储过程可以看做是对编程中面向对象方法的模拟，它允许控制数据的访问方式。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-12-05 20:08:17 +0000 UTC'>2019-12-05</span></footer>
+  <a class="entry-link" aria-label="post link to mysql进阶-存储过程" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>mysql进阶-视图
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>视图 概念： 视图就是一条SELECT语句执行后返回的结果集。 视图（view）是一种虚拟存在的表，是一个逻辑表，本身并不包含数据。作为一个select语句保存在数据字典中的。 所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-12-04 18:27:30 +0000 UTC'>2019-12-04</span></footer>
+  <a class="entry-link" aria-label="post link to mysql进阶-视图" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E8%A7%86%E5%9B%BE/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>mysql数据类型
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>mysql数据类型 主要包括以下五大类：
+1 2 3 4 5 6 7 8 9 整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT 浮点数类型：FLOAT、DOUBLE、DECIMAL 字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB 日期类型：Date、DateTime、TimeStamp、Time、Year 其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-12-03 11:31:38 +0000 UTC'>2019-12-03</span></footer>
+  <a class="entry-link" aria-label="post link to mysql数据类型" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>mysql技巧
     </h2>
   </header>
@@ -216,49 +255,6 @@
   </div>
   <footer class="entry-footer"><span title='2019-11-24 13:50:44 +0000 UTC'>2019-11-24</span></footer>
   <a class="entry-link" aria-label="post link to pay" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Maven
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Maven介绍 在了解Maven之前，我们先来看看一个Java项目需要的东西。首先，我们需要确定引入哪些依赖包。例如，如果我们需要用到commons logging，我们就必须把commons logging的jar包放入classpath。如果我们还需要log4j，就需要把log4j相关的jar包都放到classpath中。这些就是依赖包的管理。
-其次，我们要确定项目的目录结构。例如，src目录存放Java源码，resources目录存放配置文件，bin目录存放编译生成的.class文件。
-此外，我们还需要配置环境，例如JDK的版本，编译打包的流程，当前代码的版本号。
-最后，除了使用Eclipse这样的IDE进行编译外，我们还必须能通过命令行工具进行编译，才能够让项目在一个独立的服务器上编译、测试、部署。
-这些工作难度不大，但是非常琐碎且耗时。如果每一个项目都自己搞一套配置，肯定会一团糟。我们需要的是一个标准化的Java项目管理和构建工具。
-Maven就是是专门为Java项目打造的管理和构建工具，它的主要功能有：
-提供了一套标准化的项目结构； 提供了一套标准化的构建流程（编译，测试，打包，发布……）； 提供了一套依赖管理机制。 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-11-11 11:41:35 +0000 UTC'>2019-11-11</span></footer>
-  <a class="entry-link" aria-label="post link to Maven" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/maven/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>后台角色授权菜单功能的实现
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>后台添加角色后，需要给角色授权菜单，不同的角色有不同的菜单。 两个点： 1.菜单表结构，父子级在一个表中。dto的使用 2.树状图插件zTree的使用，以及角色菜单的回显
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-11-10 14:51:14 +0000 UTC'>2019-11-10</span></footer>
-  <a class="entry-link" aria-label="post link to 后台角色授权菜单功能的实现" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>IO
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>IO IO是指Input/Output，即输入和输出。以内存为中心： Input指从外部读入数据到内存，例如，把文件从磁盘读取到内存，从网络读取数...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-11-02 22:46:16 +0000 UTC'>2019-11-02</span></footer>
-  <a class="entry-link" aria-label="post link to IO" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/io/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
