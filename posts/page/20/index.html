@@ -168,6 +168,46 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Hashtable
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 和HashMap一样，Hashtable 也是一个散列表，它存储的内容是键值对(key-value)映射。 Hashtable 继承于Dictionary，实现了Map、Cloneable、java.io.Serializable接口。 Hashtable 的函数都是同步的，这意味着它是线程安全的。它的key、value都不可以为null。此外，Hashtable中的映射不是有序的。 Hashtable 的实例有两个参数影响其性能：初始容量和加载因子。容量是哈希表中桶的数量，初始容量就是哈希表创建时的容量。 注意，哈希表的状态为open：在发生“哈希冲突”的情况下，单个桶会存储多个条目，这些条目必须按顺序搜索。加载因子是对哈希表在其容量自动增加之前可以达到多满的一个尺度。初始容量和加载因子这两个参数只是对该实现的提示。关于何时以及是否调用rehash方法的具体细节则依赖于该实现。 通常，默认加载因子是0.75，这是在时间和空间成本上寻求一种折衷。加载因子过高虽然减少了空间开销，但同时也增加了查找某个条目的时间，在大多数 Hashtable 操作中，包括get和put操作，都反映了这一点。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-21 10:35:10 +0000 UTC'>2017-12-21</span></footer>
+  <a class="entry-link" aria-label="post link to Hashtable" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashtable/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>HashMap
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-20 14:49:20 +0000 UTC'>2017-12-20</span></footer>
+  <a class="entry-link" aria-label="post link to HashMap" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Map
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 我们知道，List是一种顺序列表，如果有一个存储学生Student实例的List，要在List中根据name查找某个指定的Student的分数，应该怎么办？
+最简单的方法是遍历List并判断name是否相等，然后返回指定元素：
+1 2 3 4 5 6 7 8 9 List&lt;Student&gt; list = ... Student target = null; for (Student s : list) { if (&#34;Xiao Ming&#34;.equals(s.name)) { target = s; break; } } System.out.println(target.score); ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-20 13:46:07 +0000 UTC'>2017-12-20</span></footer>
+  <a class="entry-link" aria-label="post link to Map" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/map/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>List
     </h2>
   </header>
@@ -216,45 +256,6 @@ ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删
   </div>
   <footer class="entry-footer"><span title='2017-12-16 22:01:24 +0000 UTC'>2017-12-16</span></footer>
   <a class="entry-link" aria-label="post link to ArrayList" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/arraylist/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Collection
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 什么是集合（Collection）？集合就是“由若干个确定的元素所构成的整体”。例如，5只小兔构成的集合：
-1 2 3 4 5 6 7 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐ │ (\_(\ (\_/) (\_/) (\_/) (\(\ │ ( -.-) (•.•) (&gt;.&lt;) (^.^) (=&#39;.&#39;) │ C(&#34;)_(&#34;) (&#34;)_(&#34;) (&#34;)_(&#34;) (&#34;)_(&#34;) O(_&#34;)&#34;) │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-06 18:21:41 +0000 UTC'>2017-12-06</span></footer>
-  <a class="entry-link" aria-label="post link to Collection" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/collection/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Set
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 我们知道，Map用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写equals()方法，还要正确覆写hashCode()方法。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-03 10:33:47 +0000 UTC'>2017-12-03</span></footer>
-  <a class="entry-link" aria-label="post link to Set" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/set/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>WeakHashMap
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>WeakHashMap介绍 WeakHashMap 继承于AbstractMap，实现了Map接口。 和HashMap一样，WeakHashMap 也是一个散列表，它存储的内容也是键值对(key-value)映射，而且键和值都可以是null。 不过WeakHashMap的键是“弱键”。在 WeakHashMap 中，当某个键不再正常使用时，会被从WeakHashMap中被自动移除。更精确地说，对于一个给定的键，其映射的存在并不阻止垃圾回收器对该键的丢弃，这就使该键成为可终止的，被终止，然后被回收。某个键被终止时，它对应的键值对也就从映射中有效地移除了。 这个“弱键”的原理呢？大致上就是，通过WeakReference和ReferenceQueue实现的。 WeakHashMap的key是“弱键”，即是WeakReference类型的；ReferenceQueue是一个队列，它会保存被GC回收的“弱键”。实现步骤是：
-新建WeakHashMap，将“键值对”添加到WeakHashMap中。 实际上，WeakHashMap是通过数组table保存Entry(键值对)；每一个Entry实际上是一个单向链表，即Entry是键值对链表。 当某“弱键”不再被其它对象引用，并被GC回收时。在GC回收该“弱键”时，这个“弱键”也同时会被添加到ReferenceQueue(queue)队列中。 当下一次我们需要操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的键值对；同步它们，就是删除table中被GC回收的键值对。 这就是“弱键”如何被自动从WeakHashMap中删除的步骤了。 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-02 15:04:09 +0000 UTC'>2017-12-02</span></footer>
-  <a class="entry-link" aria-label="post link to WeakHashMap" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/weakhashmap/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

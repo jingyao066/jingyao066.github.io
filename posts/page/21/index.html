@@ -168,6 +168,45 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Collection
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 什么是集合（Collection）？集合就是“由若干个确定的元素所构成的整体”。例如，5只小兔构成的集合：
+1 2 3 4 5 6 7 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐ │ (\_(\ (\_/) (\_/) (\_/) (\(\ │ ( -.-) (•.•) (&gt;.&lt;) (^.^) (=&#39;.&#39;) │ C(&#34;)_(&#34;) (&#34;)_(&#34;) (&#34;)_(&#34;) (&#34;)_(&#34;) O(_&#34;)&#34;) │ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-06 18:21:41 +0000 UTC'>2017-12-06</span></footer>
+  <a class="entry-link" aria-label="post link to Collection" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/collection/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Set
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 我们知道，Map用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写equals()方法，还要正确覆写hashCode()方法。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-03 10:33:47 +0000 UTC'>2017-12-03</span></footer>
+  <a class="entry-link" aria-label="post link to Set" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/set/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>WeakHashMap
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>WeakHashMap介绍 WeakHashMap 继承于AbstractMap，实现了Map接口。 和HashMap一样，WeakHashMap 也是一个散列表，它存储的内容也是键值对(key-value)映射，而且键和值都可以是null。 不过WeakHashMap的键是“弱键”。在 WeakHashMap 中，当某个键不再正常使用时，会被从WeakHashMap中被自动移除。更精确地说，对于一个给定的键，其映射的存在并不阻止垃圾回收器对该键的丢弃，这就使该键成为可终止的，被终止，然后被回收。某个键被终止时，它对应的键值对也就从映射中有效地移除了。 这个“弱键”的原理呢？大致上就是，通过WeakReference和ReferenceQueue实现的。 WeakHashMap的key是“弱键”，即是WeakReference类型的；ReferenceQueue是一个队列，它会保存被GC回收的“弱键”。实现步骤是：
+新建WeakHashMap，将“键值对”添加到WeakHashMap中。 实际上，WeakHashMap是通过数组table保存Entry(键值对)；每一个Entry实际上是一个单向链表，即Entry是键值对链表。 当某“弱键”不再被其它对象引用，并被GC回收时。在GC回收该“弱键”时，这个“弱键”也同时会被添加到ReferenceQueue(queue)队列中。 当下一次我们需要操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的键值对；同步它们，就是删除table中被GC回收的键值对。 这就是“弱键”如何被自动从WeakHashMap中删除的步骤了。 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-02 15:04:09 +0000 UTC'>2017-12-02</span></footer>
+  <a class="entry-link" aria-label="post link to WeakHashMap" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/weakhashmap/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>TreeMap
     </h2>
   </header>
@@ -213,43 +252,6 @@
   </div>
   <footer class="entry-footer"><span title='1999-12-31 23:23:59 +0000 UTC'>1999-12-31</span></footer>
   <a class="entry-link" aria-label="post link to 小酒桌" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E5%B0%8F%E9%85%92%E6%A1%8C/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>剧
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>电影 《美国往事》 《美国丽人》 《死亡诗社》 《心灵捕手》 《末代皇帝》 《狩猎》 《小鞋子》 《一次别离》 《撞车》 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='1999-12-31 00:00:00 +0000 UTC'>1999-12-31</span></footer>
-  <a class="entry-link" aria-label="post link to 剧" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E5%89%A7/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>note2
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>中药 看了V2的这个帖子，https://www.v2ex.com/t/938788，摘抄一些论点。 1 2 3 4 5 如果一个理论是科学的，那么它至少...</p>
-  </div>
-  <footer class="entry-footer"><span title='1999-10-24 16:21:14 +0000 UTC'>1999-10-24</span></footer>
-  <a class="entry-link" aria-label="post link to note2" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>notes
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>我们都知道，如果可以回到过去，改变任何一件小事情，都将极大地改变未来。然而，几乎没有人想到，今天只要小小改变，就会改变自己的未来。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='1999-10-23 23:41:42 +0000 UTC'>1999-10-23</span></footer>
-  <a class="entry-link" aria-label="post link to notes" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/notes/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
