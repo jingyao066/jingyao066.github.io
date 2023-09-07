@@ -6,7 +6,16 @@
     <description>Recent content in java on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 06 Sep 2022 17:05:25 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Sep 2022 17:54:53 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JSR303</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsr303/</link>
+      <pubDate>Fri, 30 Sep 2022 17:54:53 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsr303/</guid>
+      <description>&lt;p&gt;JSR303是一套JavaBean参数校验的标准，定义了很多常用的校验注解。我们需要对前端传的参数进行校验。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>SPI</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/spi/</link>
@@ -18,58 +27,9 @@
     </item>
     
     <item>
-      <title>JSR303</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsr303/</link>
-      <pubDate>Tue, 30 Aug 2022 17:54:53 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsr303/</guid>
-      <description>&lt;p&gt;JSR303是一套JavaBean参数校验的标准，定义了很多常用的校验注解。我们需要对前端传的参数进行校验。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>web开发</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/web%E5%BC%80%E5%8F%91/</link>
-      <pubDate>Mon, 15 Aug 2022 15:40:43 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/web%E5%BC%80%E5%8F%91/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;什么是JavaEE？JavaEE是Java Platform Enterprise Edition的缩写，即Java企业平台。我们前面介绍的所有基于标准JDK的开发都是JavaSE，即Java Platform Standard Edition。此外，还有一个小众不太常用的JavaME：Java Platform Micro Edition，是Java移动开发平台（非Android），它们三者关系如下：&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>JDBC</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/jdbc/</link>
-      <pubDate>Fri, 12 Aug 2022 17:43:19 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/jdbc/</guid>
-      <description>&lt;h1 id=&#34;jdbc简介&#34;&gt;JDBC简介&lt;/h1&gt;
-&lt;p&gt;在介绍JDBC之前，我们先简单介绍一下关系数据库。&lt;/p&gt;
-&lt;p&gt;程序运行的时候，数据都是在内存中的。当程序终止的时候，通常都需要将数据保存到磁盘上，无论是保存到本地磁盘，还是通过网络保存到服务器上，最终都会将数据写入磁盘文件。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>网络编程</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
-      <pubDate>Fri, 12 Aug 2022 16:42:13 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;网络编程是Java最擅长的方向之一，使用Java进行网络编程时，由虚拟机实现了底层复杂的网络协议，Java程序只需要调用Java标准库提供的接口，就可以简单高效地编写网络程序。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>java核心类</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</link>
-      <pubDate>Wed, 03 Aug 2022 16:13:22 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</guid>
-      <description>&lt;h1 id=&#34;字符串和编码&#34;&gt;字符串和编码&lt;/h1&gt;</description>
-    </item>
-    
-    <item>
       <title>概念</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%A6%82%E5%BF%B5/</link>
-      <pubDate>Tue, 02 Aug 2022 18:18:52 +0000</pubDate>
+      <pubDate>Fri, 02 Sep 2022 18:18:52 +0000</pubDate>
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%A6%82%E5%BF%B5/</guid>
       <description>&lt;h1 id=&#34;java反编译&#34;&gt;java反编译&lt;/h1&gt;
@@ -519,19 +479,9 @@
     </item>
     
     <item>
-      <title>面向对象编程</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</link>
-      <pubDate>Tue, 02 Aug 2022 17:37:14 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;Java是一种面向对象的编程语言。面向对象编程，英文是Object-Oriented Programming，简称OOP。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>jvm</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/jvm/</link>
-      <pubDate>Mon, 01 Aug 2022 18:16:18 +0000</pubDate>
+      <pubDate>Thu, 01 Sep 2022 18:16:18 +0000</pubDate>
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/jvm/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.processon.com/view/link/5eea141cf346fb1ae56a44e7#map&#34;&gt;jvm全面思维导图&lt;/a&gt;
@@ -542,25 +492,6 @@
 Java 语言并不直接将代码编译成与系统有关的机器码，而是编译成一种特定的语言规范，这种语言规范我们称之为字节码。无论 Java 程序要在 Windows 系统，还是 Mac 系统，抑或是 Linux 系统，它首先都得编译成字节码文件，之后才能运行。
 但即使编译成字节码文件了，各个系统还是无法明白字节码文件的内容，这时候就需要 Java 虚拟机的帮助了。Java 虚拟机会解析字节码文件的内容，并将其翻译为各操作系统能理解的机器码。
 &lt;code&gt;java源码-&amp;gt;字节码（byte code）-&amp;gt;java Virture Machine -&amp;gt;windows\linux code&lt;/code&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>java基础</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/java%E5%9F%BA%E7%A1%80/</link>
-      <pubDate>Mon, 01 Aug 2022 17:22:05 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/java%E5%9F%BA%E7%A1%80/</guid>
-      <description>Java教程 - 廖雪峰的官方网站 (liaoxuefeng.com) 概述 为什么Java应用最广泛？ 从互联网到企业平台，Java是应用最广泛的编程语言，原因在于： Java是基于J</description>
-    </item>
-    
-    <item>
-      <title>单元测试</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
-      <pubDate>Thu, 26 Aug 2021 15:21:25 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;单元测试就是针对最小的功能单元编写测试代码。Java程序最小的功能单元是方法，因此，对Java程序进行单元测试就是针对单个Java方法的测试。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -605,25 +536,6 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     
     <item>
-      <title>IO</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/io/</link>
-      <pubDate>Sat, 02 Nov 2019 22:46:16 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/io/</guid>
-      <description>IO IO是指Input/Output，即输入和输出。以内存为中心： Input指从外部读入数据到内存，例如，把文件从磁盘读取到内存，从网络读取数</description>
-    </item>
-    
-    <item>
-      <title>Exception</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/exception/</link>
-      <pubDate>Tue, 07 May 2019 17:46:43 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/exception/</guid>
-      <description>&lt;h1 id=&#34;java异常简介&#34;&gt;Java异常简介&lt;/h1&gt;
-&lt;p&gt;Java异常机制可以使程序中异常处理代码和正常业务代码分离，保证程序代码更加优雅，并提高程序健壮性。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>StringBuilder和StringBuffer</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/stringbuilder%E5%92%8Cstringbuffer/</link>
       <pubDate>Tue, 07 May 2019 17:16:52 +0000</pubDate>
@@ -656,42 +568,12 @@ StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于Ab
     </item>
     
     <item>
-      <title>java时间</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/java%E6%97%B6%E9%97%B4/</link>
-      <pubDate>Tue, 07 May 2019 10:42:11 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/java%E6%97%B6%E9%97%B4/</guid>
-      <description>&lt;h1 id=&#34;localdatetime&#34;&gt;LocalDateTime&lt;/h1&gt;</description>
-    </item>
-    
-    <item>
       <title>Shell基础</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Mon, 06 May 2019 16:21:35 +0000</pubDate>
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</guid>
       <description>简介 简单来说“Shell 编程就是对一堆 Linux 命令的逻辑化处理”。W3Cschool 上的一篇文章是这样介绍 Shell 的，如下图所示。 Shell 编程的 Hello World 学习任何一</description>
-    </item>
-    
-    <item>
-      <title>反射（Reflect）</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/reflect/</link>
-      <pubDate>Mon, 06 May 2019 16:21:35 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/reflect/</guid>
-      <description>&lt;h1 id=&#34;反射&#34;&gt;反射&lt;/h1&gt;
-&lt;p&gt;什么是反射？
-反射就是&lt;code&gt;Reflection&lt;/code&gt;，Java的反射是指程序在运行期可以拿到一个对象的所有信息。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Annotation</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/annotation/</link>
-      <pubDate>Tue, 30 Apr 2019 16:36:38 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/annotation/</guid>
-      <description>&lt;h1 id=&#34;使用注解&#34;&gt;使用注解&lt;/h1&gt;
-&lt;p&gt;什么是注解（Annotation）？注解是放在Java源码的类、方法、字段、参数前的一种特殊“注释”：&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -734,26 +616,6 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
 &lt;p&gt;Comparable 是排序接口，若一个类实现了Comparable接口，就意味着&lt;code&gt;该类支持排序&lt;/code&gt;。
 如果 List 中的类实现了&lt;code&gt;Comparable&lt;/code&gt;接口，则该List 可以通过&lt;code&gt;Collections.sort&lt;/code&gt;排序。
 此外，一个类如果实现了&lt;code&gt;Comparable&lt;/code&gt;接口，可以用作&lt;code&gt;TreeMap&lt;/code&gt;的键，或&lt;code&gt;TreeSet&lt;/code&gt;中的元素，而不需要指定比较器。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>lambda</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/lambda/</link>
-      <pubDate>Tue, 06 Nov 2018 18:18:18 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/lambda/</guid>
-      <description>&lt;h1 id=&#34;函数式编程&#34;&gt;函数式编程&lt;/h1&gt;
-&lt;p&gt;我们先看看什么是函数。函数是一种最基本的任务，一个大型程序就是一个顶层函数调用若干底层函数，这些被调用的函数又可以调用其他函数，即大任务被一层层拆解并执行。所以函数就是面向过程的程序设计的基本单元。&lt;/p&gt;
-&lt;p&gt;Java不支持单独定义函数，但可以把静态方法视为独立的函数，把实例方法视为自带&lt;code&gt;this&lt;/code&gt;参数的函数。&lt;/p&gt;
-&lt;p&gt;而函数式编程（请注意多了一个“式”字）——Functional Programming，虽然也可以归结到面向过程的程序设计，但其思想更接近数学计算。&lt;/p&gt;
-&lt;p&gt;我们首先要搞明白计算机（Computer）和计算（Compute）的概念。&lt;/p&gt;
-&lt;p&gt;在计算机的层次上，CPU执行的是加减乘除的指令代码，以及各种条件判断和跳转指令，所以，汇编语言是最贴近计算机的语言。&lt;/p&gt;
-&lt;p&gt;而计算则指数学意义上的计算，越是抽象的计算，离计算机硬件越远。&lt;/p&gt;
-&lt;p&gt;对应到编程语言，就是越低级的语言，越贴近计算机，抽象程度低，执行效率高，比如C语言；越高级的语言，越贴近计算，抽象程度高，执行效率低，比如Lisp语言。&lt;/p&gt;
-&lt;p&gt;函数式编程就是一种抽象程度很高的编程范式，纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。而允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。&lt;/p&gt;
-&lt;p&gt;函数式编程的一个特点就是，允许把函数本身作为参数传入另一个函数，还允许返回一个函数！&lt;/p&gt;
-&lt;p&gt;函数式编程最早是数学家&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E9%98%BF%E9%9A%86%E4%BD%90%C2%B7%E9%82%B1%E5%A5%87&#34;&gt;阿隆佐·邱奇&lt;/a&gt;研究的一套函数变换逻辑，又称Lambda Calculus（λ-Calculus），所以也经常把函数式编程称为Lambda计算。&lt;/p&gt;
-&lt;p&gt;Java平台从Java 8开始，支持函数式编程。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -807,15 +669,6 @@ Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS�
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/oauth/</guid>
       <description>&lt;h1 id=&#34;oauth&#34;&gt;OAuth&lt;/h1&gt;
 &lt;p&gt;OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>泛型</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%B3%9B%E5%9E%8B/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%B3%9B%E5%9E%8B/</guid>
-      <description>&lt;p&gt;泛型是一种“代码模板”，可以用一套代码套用各种类型。&lt;/p&gt;</description>
     </item>
     
   </channel>

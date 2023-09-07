@@ -168,6 +168,34 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>multithreading-JUC锁
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>根据锁的添加到Java中的时间，Java中的锁，可以分为&#34;同步锁&#34;和&#34;JUC包中的锁&#34;。
+同步锁就是通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。 同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，从而在CPU上执行；而没有获取到同步锁的线程，必须进行等待，直到获取到同步锁之后才能继续运行。这就是多线程通过同步锁进行同步的原理。
+下面主要介绍JUC包中的锁。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-03-28 17:51:23 +0000 UTC'>2019-03-28</span></footer>
+  <a class="entry-link" aria-label="post link to multithreading-JUC锁" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-juc%E9%94%81/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>multithreading-JUC原子类
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>JUC概述 JDK1.5新增了java.util.concurrent包(简称JUC)，就是并发包，用于解决并发编程的一些问题。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-03-28 17:14:01 +0000 UTC'>2019-03-28</span></footer>
+  <a class="entry-link" aria-label="post link to multithreading-JUC原子类" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-juc%E5%8E%9F%E5%AD%90%E7%B1%BB/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>multithreading-线程优先级、守护线程、生产消费者问题
     </h2>
   </header>
@@ -231,31 +259,6 @@ wait()，notify()必须和 synchronized 配合使用。
   </div>
   <footer class="entry-footer"><span title='2019-03-02 17:44:00 +0000 UTC'>2019-03-02</span></footer>
   <a class="entry-link" aria-label="post link to multithreading-synchronized" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-synchronized/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>multithreading-basic
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 现代操作系统（Windows，macOS，Linux）都可以执行多任务。多任务就是同时运行多个任务，例如可以同时听歌、打DOTA2。CPU执行代码都是一条一条顺序执行的，但是，即使是单核cpu，也可以同时运行多个任务。因为操作系统执行多任务实际上就是让CPU对多个任务轮流交替执行。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-03-01 18:21:30 +0000 UTC'>2019-03-01</span></footer>
-  <a class="entry-link" aria-label="post link to multithreading-basic" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-basic/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>threadLocal
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>基于jdk1.8分析ThreadLocal。 ThreadLocal代码演示 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 public class ThreadLocalTest { private List&lt;String&gt;...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-03-01 18:21:30 +0000 UTC'>2019-03-01</span></footer>
-  <a class="entry-link" aria-label="post link to threadLocal" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

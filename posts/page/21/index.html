@@ -168,6 +168,19 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>ArrayList
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>ArrayList概述 ArrayList 是容量可变的非线程安全集合。 内部使用数组进行存储，集合扩容时会创建更大的数组空间，把原有数据复制到新数组中。 ArrayList 支持对元素的快速随机访问，但是插入与删除时速度很慢，因为这个过程很有可能需要移动其他元素。
+ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。 ArrayList 实现了RandmoAccess接口，即提供了随机访问功能。可以通过元素的序号快速获取元素对象，这就是快速随机访问。 ArrayList 实现了Cloneable接口，即覆盖了函数clone()，能被克隆。 ArrayList 实现java.io.Serializable接口，这意味着ArrayList支持序列化，能通过序列化去传输。 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-16 22:01:24 +0000 UTC'>2017-12-16</span></footer>
+  <a class="entry-link" aria-label="post link to ArrayList" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/arraylist/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Collection
     </h2>
   </header>
@@ -190,19 +203,6 @@
   </div>
   <footer class="entry-footer"><span title='2017-12-03 10:33:47 +0000 UTC'>2017-12-03</span></footer>
   <a class="entry-link" aria-label="post link to Set" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/set/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>WeakHashMap
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>WeakHashMap介绍 WeakHashMap 继承于AbstractMap，实现了Map接口。 和HashMap一样，WeakHashMap 也是一个散列表，它存储的内容也是键值对(key-value)映射，而且键和值都可以是null。 不过WeakHashMap的键是“弱键”。在 WeakHashMap 中，当某个键不再正常使用时，会被从WeakHashMap中被自动移除。更精确地说，对于一个给定的键，其映射的存在并不阻止垃圾回收器对该键的丢弃，这就使该键成为可终止的，被终止，然后被回收。某个键被终止时，它对应的键值对也就从映射中有效地移除了。 这个“弱键”的原理呢？大致上就是，通过WeakReference和ReferenceQueue实现的。 WeakHashMap的key是“弱键”，即是WeakReference类型的；ReferenceQueue是一个队列，它会保存被GC回收的“弱键”。实现步骤是：
-新建WeakHashMap，将“键值对”添加到WeakHashMap中。 实际上，WeakHashMap是通过数组table保存Entry(键值对)；每一个Entry实际上是一个单向链表，即Entry是键值对链表。 当某“弱键”不再被其它对象引用，并被GC回收时。在GC回收该“弱键”时，这个“弱键”也同时会被添加到ReferenceQueue(queue)队列中。 当下一次我们需要操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的键值对；同步它们，就是删除table中被GC回收的键值对。 这就是“弱键”如何被自动从WeakHashMap中删除的步骤了。 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-02 15:04:09 +0000 UTC'>2017-12-02</span></footer>
-  <a class="entry-link" aria-label="post link to WeakHashMap" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/weakhashmap/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -239,7 +239,7 @@
     <p>官网：https://ffmpeg.org/ 下载安装 去官网下载 http://www.ffmpeg.org/download.html 选择windows，选择Windows builds from gyan.dev。 直接下载版本：f...</p>
   </div>
   <footer class="entry-footer"><span title='2001-10-24 16:21:14 +0000 UTC'>2001-10-24</span></footer>
-  <a class="entry-link" aria-label="post link to ffmpeg" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/ffmpeg/"></a>
+  <a class="entry-link" aria-label="post link to ffmpeg" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/ffmpeg/"></a>
 </article>
 
 <article class="post-entry"> 

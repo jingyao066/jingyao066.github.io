@@ -182,26 +182,6 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
     </item>
     
     <item>
-      <title>WeakHashMap</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/weakhashmap/</link>
-      <pubDate>Sat, 02 Dec 2017 15:04:09 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/weakhashmap/</guid>
-      <description>&lt;h1 id=&#34;weakhashmap介绍&#34;&gt;WeakHashMap介绍&lt;/h1&gt;
-&lt;p&gt;WeakHashMap 继承于AbstractMap，实现了Map接口。
-和HashMap一样，WeakHashMap 也是一个散列表，它存储的内容也是键值对(key-value)映射，而且键和值都可以是null。
-不过WeakHashMap的键是“弱键”。在 WeakHashMap 中，当某个键不再正常使用时，会被从WeakHashMap中被自动移除。更精确地说，对于一个给定的键，其映射的存在并不阻止垃圾回收器对该键的丢弃，这就使该键成为可终止的，被终止，然后被回收。某个键被终止时，它对应的键值对也就从映射中有效地移除了。
-这个“弱键”的原理呢？大致上就是，通过WeakReference和ReferenceQueue实现的。 WeakHashMap的key是“弱键”，即是WeakReference类型的；ReferenceQueue是一个队列，它会保存被GC回收的“弱键”。实现步骤是：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;新建WeakHashMap，将“键值对”添加到WeakHashMap中。
-实际上，WeakHashMap是通过数组table保存Entry(键值对)；每一个Entry实际上是一个单向链表，即Entry是键值对链表。&lt;/li&gt;
-&lt;li&gt;当某“弱键”不再被其它对象引用，并被GC回收时。在GC回收该“弱键”时，这个“弱键”也同时会被添加到ReferenceQueue(queue)队列中。&lt;/li&gt;
-&lt;li&gt;当下一次我们需要操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的键值对；同步它们，就是删除table中被GC回收的键值对。
-这就是“弱键”如何被自动从WeakHashMap中删除的步骤了。&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
       <title>TreeMap</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/treemap/</link>
       <pubDate>Fri, 01 Dec 2017 17:21:59 +0000</pubDate>
