@@ -187,6 +187,15 @@ file-&amp;gt;export setting&lt;/p&gt;</description>
     </item>
     
     <item>
+      <title>gulimall</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/gulimall/</link>
+      <pubDate>Thu, 09 Dec 1999 00:42:45 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/gulimall/</guid>
+      <description>https://blog.csdn.net/weixin_44190665/article/details/121043585 问题 npm install 报错 不要看前边关于python的报错，不需要安装python。 直接拉到最后看报错： 1 Failed at the node-sass@6.0.1 postinstall script. 再结合网上的说法，推测是node-</description>
+    </item>
+    
+    <item>
       <title>JRebel</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/jrebel/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
