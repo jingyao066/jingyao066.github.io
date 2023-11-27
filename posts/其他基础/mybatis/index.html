@@ -191,7 +191,7 @@ xxxBean selectByPrimaryKey(Integer id);
     "其他基础"
   ],
   "articleBody": "基础 面向接口编程 Mapper文件的namespace要和dao层接口的完整路径对应 接口中的方法名字要和Mapper文件中SQL语句的ID对应 dao层接口 xxxBean selectByPrimaryKey(Integer id);\n1 2 3 4 5 6 ",
-  "wordCount" : "17284",
+  "wordCount" : "17287",
   "inLanguage": "en",
   "datePublished": "2020-03-27T15:07:56Z",
   "dateModified": "2020-03-27T15:07:56Z",
@@ -1197,15 +1197,15 @@ xml配置这样写：</p>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;update</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;updateByBatch&#34;</span> <span style="color:#007f7f">parameterType=</span><span style="color:#0ff;font-weight:bold">&#34;java.util.List&#34;</span><span style="font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span>    update t_goods
-</span></span><span style="display:flex;"><span>    set NODE_ID=
+</span></span><span style="display:flex;"><span>    set id =
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;foreach</span> <span style="color:#007f7f">collection=</span><span style="color:#0ff;font-weight:bold">&#34;list&#34;</span> <span style="color:#007f7f">item=</span><span style="color:#0ff;font-weight:bold">&#34;item&#34;</span> <span style="color:#007f7f">index=</span><span style="color:#0ff;font-weight:bold">&#34;index&#34;</span>
 </span></span><span style="display:flex;"><span>             <span style="color:#007f7f">separator=</span><span style="color:#0ff;font-weight:bold">&#34; &#34;</span> <span style="color:#007f7f">open=</span><span style="color:#0ff;font-weight:bold">&#34;case&#34;</span> <span style="color:#007f7f">close=</span><span style="color:#0ff;font-weight:bold">&#34;end&#34;</span><span style="font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span>      when GOODS_ID=#{item.goodsId} then #{item.nodeId}
+</span></span><span style="display:flex;"><span>      when id = #{item.id} then #{item.nodeId}
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/foreach&gt;</span>
-</span></span><span style="display:flex;"><span>    where GOODS_ID in
+</span></span><span style="display:flex;"><span>    where id in
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;foreach</span> <span style="color:#007f7f">collection=</span><span style="color:#0ff;font-weight:bold">&#34;list&#34;</span> <span style="color:#007f7f">index=</span><span style="color:#0ff;font-weight:bold">&#34;index&#34;</span> <span style="color:#007f7f">item=</span><span style="color:#0ff;font-weight:bold">&#34;item&#34;</span>
 </span></span><span style="display:flex;"><span>             <span style="color:#007f7f">separator=</span><span style="color:#0ff;font-weight:bold">&#34;,&#34;</span> <span style="color:#007f7f">open=</span><span style="color:#0ff;font-weight:bold">&#34;(&#34;</span> <span style="color:#007f7f">close=</span><span style="color:#0ff;font-weight:bold">&#34;)&#34;</span><span style="font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span>      #{item.goodsId,jdbcType=BIGINT}
+</span></span><span style="display:flex;"><span>      #{item.id}
 </span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/foreach&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&lt;/update&gt;</span>
 </span></span></code></pre></td></tr></table>
