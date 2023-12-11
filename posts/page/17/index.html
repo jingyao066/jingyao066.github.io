@@ -168,6 +168,20 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>模板方法模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>快速学习 类型：行为型
+定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-12-21 17:39:33 +0000 UTC'>2018-12-21</span></footer>
+  <a class="entry-link" aria-label="post link to 模板方法模式" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>迭代器模式
     </h2>
   </header>
@@ -261,36 +275,6 @@
   </div>
   <footer class="entry-footer"><span title='2018-12-10 17:41:36 +0000 UTC'>2018-12-10</span></footer>
   <a class="entry-link" aria-label="post link to 责任链模式" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>策略模式
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>快速学习 定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。本模式使得算法可独立于使用它的客户而变化。
-策略模式：Strategy，是指，定义一组算法，并把其封装到一个对象中。然后在运行时，可以灵活的使用其中的一个算法。
-策略模式在Java标准库中应用非常广泛，我们以排序为例，看看如何通过Arrays.sort()实现忽略大小写排序：
-1 2 3 4 5 6 7 public class Main { public static void main(String[] args) throws InterruptedException { String[] array = { &#34;apple&#34;, &#34;Pear&#34;, &#34;Banana&#34;, &#34;orange&#34; }; Arrays.sort(array, String::compareToIgnoreCase); System.out.println(Arrays.toString(array)); } } 如果我们想忽略大小写排序，就传入String::compareToIgnoreCase，如果我们想倒序排序，就传入(s1, s2) -&gt; -s1.compareTo(s2)，这个比较两个元素大小的算法就是策略。
-我们观察Arrays.sort(T[] a, Comparator&lt;? super T&gt; c)这个排序方法，它在内部实现了TimSort排序，但是，排序算法在比较两个元素大小的时候，需要借助我们传入的Comparator对象，才能完成比较。因此，这里的策略是指比较两个元素大小的策略，可以是忽略大小写比较，可以是倒序比较，也可以根据字符串长度比较。
-因此，上述排序使用到了策略模式，它实际上指，在一个方法中，流程是确定的，但是，某些关键步骤的算法依赖调用方传入的策略，这样，传入不同的策略，即可获得不同的结果，大大增强了系统的灵活性。
-如果我们自己实现策略模式的排序，用冒泡法编写如下：
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 public class Main { public static void main(String[] args) throws InterruptedException { String[] array = { &#34;apple&#34;, &#34;Pear&#34;, &#34;Banana&#34;, &#34;orange&#34; }; sort(array, String::compareToIgnoreCase); System.out.println(Arrays.toString(array)); } static &lt;T&gt; void sort(T[] a, Comparator&lt;? super T&gt; c) { for (int i = 0; i &lt; a.length - 1; i&#43;&#43;) { for (int j = 0; j &lt; a.length - 1 - i; j&#43;&#43;) { if (c.compare(a[j], a[j &#43; 1]) &gt; 0) { // 注意这里比较两个元素的大小依赖传入的策略 T temp = a[j]; a[j] = a[j &#43; 1]; a[j &#43; 1] = temp; } } } } } 一个完整的策略模式要定义策略以及使用策略的上下文。我们以购物车结算为例，假设网站针对普通会员、Prime会员有不同的折扣，同时活动期间还有一个满100减20的活动，这些就可以作为策略实现。先定义打折策略接口：
-1 2 3 4 public interface DiscountStrategy { // 计算折扣额度: BigDecimal getDiscount(BigDecimal total); } 接下来，就是实现各种策略。普通用户策略如下：
-1 2 3 4 5 6 public class UserDiscountStrategy implements DiscountStrategy { public BigDecimal getDiscount(BigDecimal total) { // 普通会员打九折: return total.multiply(new BigDecimal(&#34;0.1&#34;)).setScale(2, RoundingMode.DOWN); } } 满减策略如下：
-1 2 3 4 5 6 public class OverDiscountStrategy implements DiscountStrategy { public BigDecimal getDiscount(BigDecimal total) { // 满100减20优惠: return total.compareTo(BigDecimal.valueOf(100)) &gt;= 0 ? BigDecimal.valueOf(20) : BigDecimal.ZERO; } } 最后，要应用策略，我们需要一个DiscountContext：
-1 2 3 4 5 6 7 8 9 10 11 12 13 public class DiscountContext { // 持有某个策略: private DiscountStrategy strategy = new UserDiscountStrategy(); // 允许客户端设置新策略: public void setStrategy(DiscountStrategy strategy) { this.strategy = strategy; } public BigDecimal calculatePrice(BigDecimal total) { return total.subtract(this.strategy.getDiscount(total)).setScale(2); } } 调用方必须首先创建一个DiscountContext，并指定一个策略（或者使用默认策略），即可获得折扣后的价格：
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 DiscountContext ctx = new DiscountContext(); // 默认使用普通会员折扣: BigDecimal pay1 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay1); // 使用满减折扣: ctx.setStrategy(new OverDiscountStrategy()); BigDecimal pay2 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay2); // 使用Prime会员折扣: ctx.setStrategy(new PrimeDiscountStrategy()); BigDecimal pay3 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay3); 上述完整的策略模式如下图所示：
-1 2 3 4 5 6 7 8 9 10 11 12 13 ┌───────────────┐ ┌─────────────────┐ │DiscountContext│─ ─ ─&gt;│DiscountStrategy │ └───────────────┘ └─────────────────┘ ▲ │ ┌─────────────────────┐ ├─│UserDiscountStrategy │ │ └─────────────────────┘ │ ┌─────────────────────┐ ├─│PrimeDiscountStrategy│ │ └─────────────────────┘ │ ┌─────────────────────┐ └─│OverDiscountStrategy │ └─────────────────────┘ 策略模式的核心思想是在一个计算方法中把容易变化的算法抽出来作为“策略”参数传进去，从而使得新增策略不必修改原有逻辑。
-概述 类型：行为型 意图：定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。 主要解决：在有多种算法相似的情况下，使用 if…else 所带来的复杂和难以维护。 何时使用：一个系统有许多许多类，而区分它们的只是他们直接的行为。 如何解决：将这些算法封装成一个一个的类，任意地替换。 关键代码：实现同一个接口。 应用实例：
-诸葛亮的锦囊妙计，每一个锦囊就是一个策略。 旅行的出游方式，选择骑自行车、坐汽车，每一种旅行方式都是一个策略。 JAVA AWT 中的 LayoutManager。 优点：
-算法可以自由切换。 避免使用多重条件判断。 扩展性良好。 缺点：
-策略类会增多。 所有策略类都需要对外暴露。 使用场景：
-一个系统需要动态地在几种算法中选择一种。 如果在一个系统里面有许多类，它们之间的区别仅在于它们的行为，那么使用策略模式可以动态地让一个对象在许多行为中选择一种行为。 如果一个对象有很多的行为，如果不用恰当的模式，这些行为就只好使用多重的条件选择语句来实现。 注意事项：如果一个系统的策略多于四个，就需要考虑使用混合模式，解决策略类膨胀的问题。 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-12-10 17:40:19 +0000 UTC'>2018-12-10</span></footer>
-  <a class="entry-link" aria-label="post link to 策略模式" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

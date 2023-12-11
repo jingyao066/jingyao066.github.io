@@ -168,6 +168,20 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>multithreading-JUC线程池
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>美团技术团队关于线程池的文章
+线程池的使用场景 java中经常需要用到多线程来处理一些业务，我们非常不建议单纯使用继承Thread或者实现Runnable接口的方式来创建线程，那样势必有创建及销毁线程耗费资源、线程上下文切换问题。同时创建过多的线程也可能引发资源耗尽的风险，这个时候引入线程池比较合理，方便线程任务的管理。java中涉及到线程池的相关类均在jdk1.5开始的java.util.concurrent包中，涉及到的几个核心类及接口包括：Executor、Executors、ExecutorService、ThreadPoolExecutor、FutureTask、Callable、Runnable等。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-03-30 10:22:55 +0000 UTC'>2019-03-30</span></footer>
+  <a class="entry-link" aria-label="post link to multithreading-JUC线程池" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-juc%E7%BA%BF%E7%A8%8B%E6%B1%A0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>multithreading-JUC集合
     </h2>
   </header>
@@ -244,21 +258,6 @@
   </div>
   <footer class="entry-footer"><span title='2019-03-26 15:07:56 +0000 UTC'>2019-03-26</span></footer>
   <a class="entry-link" aria-label="post link to multithreading-yield&#43;sleep&#43;join" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-yield&#43;sleep&#43;join/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>multithreading-wait&#43;notify
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本章对线程的等待/唤醒方法进行介绍。
-wait(), notify(), notifyAll()等方法介绍 在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。
-wait()，notify()必须和 synchronized 配合使用。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-03-25 15:04:27 +0000 UTC'>2019-03-25</span></footer>
-  <a class="entry-link" aria-label="post link to multithreading-wait&#43;notify" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-wait&#43;notify/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
