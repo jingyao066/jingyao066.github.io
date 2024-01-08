@@ -2,16 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</loc>
-    <lastmod>2023-12-09T16:42:50+00:00</lastmod>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/other/</loc>
+    <lastmod>2023-12-22T10:17:12+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/</loc>
-    <lastmod>2023-12-09T16:42:50+00:00</lastmod>
+    <lastmod>2023-12-22T10:17:12+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/tags/</loc>
-    <lastmod>2023-12-09T16:42:50+00:00</lastmod>
+    <lastmod>2023-12-22T10:17:12+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/</loc>
+    <lastmod>2023-12-22T10:17:12+00:00</lastmod>
+  </url><url>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</loc>
+    <lastmod>2023-12-22T10:17:12+00:00</lastmod>
+  </url><url>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</loc>
     <lastmod>2023-12-09T16:42:50+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/tags/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/</loc>
@@ -105,9 +111,6 @@
     <lastmod>2023-04-13T15:50:13+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hugo/</loc>
-    <lastmod>2023-02-03T10:14:27+00:00</lastmod>
-  </url><url>
-    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/other/</loc>
     <lastmod>2023-02-03T10:14:27+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/tags/java/</loc>

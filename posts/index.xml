@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 09 Dec 2023 16:42:50 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 22 Dec 2023 10:17:12 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>登录</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</link>
+      <pubDate>Fri, 22 Dec 2023 10:17:12 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</guid>
+      <description>概述 在 Spring Security 5.7.0 中，spring 团队弃用了 WebSecurityConfigurerAdapter，因为他们鼓励用户转向基于组件的安全配置。Sp</description>
+    </item>
+    
     <item>
       <title>google高级搜索技巧</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</link>
