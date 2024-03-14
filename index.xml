@@ -6,7 +6,16 @@
     <description>Recent content on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 22 Dec 2023 10:17:12 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Mar 2024 18:18:52 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>手写Tomcat</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/</link>
+      <pubDate>Wed, 06 Mar 2024 18:18:52 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/</guid>
+      <description>对于Java后端开发的同学来说，Tomcat服务器肯定不陌生。开发Java Web App，最后通常都会部署到Tomcat这样的服务器上。 很多同学可</description>
+    </item>
+    
     <item>
       <title>登录</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</link>
@@ -1133,17 +1142,17 @@ Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Do
     </item>
     
     <item>
-      <title>sharding_sphere</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding-sphere/</link>
+      <title>sharding</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</link>
       <pubDate>Wed, 08 Jan 2020 11:57:49 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding-sphere/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://shardingsphere.apache.org/index_zh.html&#34;&gt;官网&lt;/a&gt;
 &lt;a href=&#34;https://github.com/apache/incubator-shardingsphere&#34;&gt;github&lt;/a&gt;
 Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar这3款相互独立的产品组成。
 他们均提供标准化的数据分片、读写分离、柔性事务和数据治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。
 其中&lt;code&gt;Sharding-JDBC&lt;/code&gt;最早由当当网在2016年开源，在&lt;code&gt;Sharding-JDBC 3.0&lt;/code&gt;版本，更名为&lt;code&gt;Sharding-Sphere&lt;/code&gt;，后来创始人张亮去了京东。在2018年底，项目开源给了apache基金会。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/yangstarss/article/details/80177605&#34;&gt;https://blog.csdn.net/yangstarss/article/details/80177605&lt;/a&gt;&lt;/p&gt;</description>
+&lt;p&gt;参考：&lt;a href=&#34;https://mp.weixin.qq.com/s/GawVNXjCo8qni6w4yoW7SA&#34;&gt;Sharding-JDBC源码解析与vivo的定制开发&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -2918,7 +2927,7 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <pubDate>Thu, 09 Dec 1999 00:42:45 +0000</pubDate>
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/gulimall/</guid>
-      <description>https://blog.csdn.net/weixin_44190665/article/details/121043585 问题 npm install 报错 不要看前边关于python的报错，不需要安装python。 直接拉到最后看报错： 1 Failed at the node-sass@6.0.1 postinstall script. 再结合网上的说法，推测是node-</description>
+      <description>https://blog.csdn.net/weixin_44190665/article/details/121043585 P P44 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 &amp;lt;!-- vue初始化模板 --&amp;gt; &amp;lt;template&amp;gt; &amp;lt;div class=&amp;#39;&amp;#39;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/template&amp;gt; &amp;lt;script&amp;gt; //这里可</description>
     </item>
     
     <item>
@@ -2927,7 +2936,7 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <pubDate>Sun, 24 Oct 1999 16:21:14 +0000</pubDate>
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/</guid>
-      <description>句子 这和炒股道理是一样的，那些靠杠杆堆起来的财富，必须要在周期结束之前落袋为安。但问题是暴富带来的持续正反馈很容易让人冲昏头脑，自信或者说自</description>
+      <description>有些人就像 ChatGPT 原文：https://www.geoffmulgan.com/post/human-chatgpts-and-the-vices</description>
     </item>
     
     <item>

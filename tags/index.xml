@@ -6,7 +6,16 @@
     <description>Recent content in Tags on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 22 Dec 2023 10:17:12 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Mar 2024 18:18:52 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>java</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/tags/java/</link>
+      <pubDate>Wed, 06 Mar 2024 18:18:52 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/tags/java/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>other</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/tags/other/</link>
@@ -58,15 +67,6 @@
       <pubDate>Thu, 13 Apr 2023 15:50:13 +0000</pubDate>
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/tags/spring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>java</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/tags/java/</link>
-      <pubDate>Fri, 30 Sep 2022 17:54:53 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/tags/java/</guid>
       <description></description>
     </item>
     
