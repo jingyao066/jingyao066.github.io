@@ -1019,6 +1019,15 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     
     <item>
+      <title>常见 Java 代码缺陷及规避方式</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Fri, 09 Oct 2020 17:36:57 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/</guid>
+      <description>空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编</description>
+    </item>
+    
+    <item>
       <title>编程规约</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/</link>
       <pubDate>Fri, 09 Oct 2020 17:36:56 +0000</pubDate>
