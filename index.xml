@@ -1301,6 +1301,15 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
     </item>
     
     <item>
+      <title>mysql优化</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Tue, 03 Dec 2019 18:13:55 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E4%BC%98%E5%8C%96/</guid>
+      <description>千万级数据深分页查询 如何在Mysql中实现上亿数据的遍历查询？先来介绍一下系统主角：关注系统，主要是维护京东用户和业务对象之前的关注关系；并</description>
+    </item>
+    
+    <item>
       <title>mysql数据类型</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Tue, 03 Dec 2019 11:31:38 +0000</pubDate>
@@ -2945,7 +2954,7 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <pubDate>Sun, 24 Oct 1999 16:21:14 +0000</pubDate>
       
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/</guid>
-      <description>有些人就像 ChatGPT 原文：https://www.geoffmulgan.com/post/human-chatgpts-and-the-vices</description>
+      <description>人生少走弯路的捷径，是你面对犯错时的态度 犯错没什么大不了 谁都希望自己一辈子顺顺利利，甚至宁愿错过机会，也绝不做有风险的事，结果最后落了个一事</description>
     </item>
     
     <item>
