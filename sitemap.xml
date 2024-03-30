@@ -2,16 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/java/</loc>
-    <lastmod>2024-03-06T18:18:52+00:00</lastmod>
-  </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/</loc>
-    <lastmod>2024-03-06T18:18:52+00:00</lastmod>
+    <lastmod>2024-03-29T10:57:33+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/tags/</loc>
-    <lastmod>2024-03-06T18:18:52+00:00</lastmod>
+    <lastmod>2024-03-29T10:57:33+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/</loc>
+    <lastmod>2024-03-29T10:57:33+00:00</lastmod>
+  </url><url>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</loc>
+    <lastmod>2024-03-29T10:57:33+00:00</lastmod>
+  </url><url>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2024-03-29T10:57:33+00:00</lastmod>
+  </url><url>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/java/</loc>
     <lastmod>2024-03-06T18:18:52+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/</loc>
@@ -190,9 +196,6 @@
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%88%AC%E8%99%AB/</loc>
     <lastmod>2021-12-08T10:48:12+00:00</lastmod>
-  </url><url>
-    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
-    <lastmod>2021-11-13T21:35:20+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8/</loc>
     <lastmod>2021-11-13T21:35:20+00:00</lastmod>
