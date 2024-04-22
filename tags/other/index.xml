@@ -94,10 +94,10 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     
     <item>
       <title>windows</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/windows/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/windows/</link>
       <pubDate>Mon, 28 Oct 2019 16:39:52 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/windows/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/windows/</guid>
       <description>&lt;h1 id=&#34;查看端口占用&#34;&gt;查看端口占用&lt;/h1&gt;
 &lt;p&gt;查看全部端口：
 &lt;code&gt;netstat -ano&lt;/code&gt;&lt;/p&gt;</description>
