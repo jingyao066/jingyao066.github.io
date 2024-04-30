@@ -16,5 +16,14 @@
       <description>大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好</description>
     </item>
     
+    <item>
+      <title>初识算法</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/</guid>
+      <description>初识算法 算法无处不在 当我们听到“算法”这个词时，很自然地会想到数学。然而实际上，许多算法并不涉及复杂数学，而是更多地依赖基本逻辑，这些逻辑在</description>
+    </item>
+    
   </channel>
 </rss>
