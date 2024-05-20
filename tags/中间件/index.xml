@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>中间件 on Wjy&#39;s Blog</title>
-    <link>https://funny-toffee-4aa7c3.netlify.app/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+    <link>http://localhost:1313/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
     <description>Recent content in 中间件 on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 11 Mar 2022 18:16:16 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Mar 2022 18:16:16 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>nacos</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/nacos/</link>
+      <link>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/nacos/</link>
       <pubDate>Fri, 11 Mar 2022 18:16:16 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/nacos/</guid>
+      <guid>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/nacos/</guid>
       <description>&lt;p&gt;nacos官网：&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://nacos.io/zh-cn/&#34;&gt;https://nacos.io/zh-cn/&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>MQ</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/</link>
+      <link>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/</link>
       <pubDate>Fri, 06 Mar 2020 14:51:55 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/</guid>
+      <guid>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;h2 id=&#34;什么是消息队列&#34;&gt;什么是消息队列&lt;/h2&gt;
 &lt;p&gt;消息队列(Message queue)是一种进程间通信或同一进程的不同线程间的通信方式，软件的贮列用来处理一系列的输入，通常来自用户。消息队列提供了异步的通信协议，每一个贮列中的记录包含详细说明的数据，包含发生的时间，输入设备的种类，以及特定的输入参数。也就是说：消息的发送者和接收者不需要同时与消息队列互交。消息会保存在队列中，直到接收者取回它。 &amp;ndash;维基百科&lt;/p&gt;</description>
@@ -30,10 +30,10 @@
     
     <item>
       <title>sharding</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</link>
+      <link>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</link>
       <pubDate>Wed, 08 Jan 2020 11:57:49 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</guid>
+      <guid>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://shardingsphere.apache.org/index_zh.html&#34;&gt;官网&lt;/a&gt;
 &lt;a href=&#34;https://github.com/apache/incubator-shardingsphere&#34;&gt;github&lt;/a&gt;
 Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar这3款相互独立的产品组成。
@@ -44,39 +44,39 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
     
     <item>
       <title>workflow</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/</link>
+      <link>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/</link>
       <pubDate>Wed, 23 Oct 2019 10:53:04 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/</guid>
+      <guid>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/</guid>
       <description>&lt;h1 id=&#34;activiti&#34;&gt;activiti&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.activiti.org/&#34;&gt;官网&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>搜索引擎</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</link>
+      <link>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</link>
       <pubDate>Mon, 21 Oct 2019 16:07:30 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</guid>
+      <guid>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</guid>
       <description>&lt;h1 id=&#34;全文搜索引擎&#34;&gt;全文搜索引擎&lt;/h1&gt;
 &lt;p&gt;全文搜索引擎是目前广泛应用的主流搜索引擎。它的工作原理是计算机索引程序通过扫描文章中的每一个词，对每一个词建立一个索引，指明该词在文章中出现的次数和位置，当用户查询时，检索程序就根据事先建立的索引进行查找，并将查找的结果反馈给用户的检索方式。这个过程类似于通过字典中的检索字表查字的过程。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>redis</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/</link>
+      <link>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/</link>
       <pubDate>Sat, 06 Oct 2018 18:10:43 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/</guid>
+      <guid>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/</guid>
       <description>&lt;p&gt;redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>es</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/es/</link>
+      <link>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/es/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/es/</guid>
+      <guid>http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/es/</guid>
       <description>&lt;p&gt;Elasticsearch&lt;/p&gt;</description>
     </item>
     
