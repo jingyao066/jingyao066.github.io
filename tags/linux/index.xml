@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>linux on Wjy&#39;s Blog</title>
-    <link>https://funny-toffee-4aa7c3.netlify.app/tags/linux/</link>
+    <link>http://localhost:1313/tags/linux/</link>
     <description>Recent content in linux on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 05 Mar 2017 10:49:36 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Mar 2017 10:49:36 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>linux</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</link>
       <pubDate>Sun, 05 Mar 2017 10:49:36 +0000</pubDate>
       
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</guid>
       <description>&lt;h1 id=&#34;文件目录解析&#34;&gt;文件目录解析&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;1.png&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;</description>

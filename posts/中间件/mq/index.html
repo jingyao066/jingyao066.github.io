@@ -10,15 +10,15 @@
 <meta name="description" content="概述
 什么是消息队列
 消息队列(Message queue)是一种进程间通信或同一进程的不同线程间的通信方式，软件的贮列用来处理一系列的输入，通常来自用户。消息队列提供了异步的通信协议，每一个贮列中的记录包含详细说明的数据，包含发生的时间，输入设备的种类，以及特定的输入参数。也就是说：消息的发送者和接收者不需要同时与消息队列互交。消息会保存在队列中，直到接收者取回它。 &ndash;维基百科">
-<meta name="author" content="">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/">
+<meta name="author" content="Me, You">
+<link rel="canonical" href="http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
-<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -62,7 +62,7 @@
 什么是消息队列
 消息队列(Message queue)是一种进程间通信或同一进程的不同线程间的通信方式，软件的贮列用来处理一系列的输入，通常来自用户。消息队列提供了异步的通信协议，每一个贮列中的记录包含详细说明的数据，包含发生的时间，输入设备的种类，以及特定的输入参数。也就是说：消息的发送者和接收者不需要同时与消息队列互交。消息会保存在队列中，直到接收者取回它。 &ndash;维基百科" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-03-06T14:51:55+00:00" />
 <meta property="article:modified_time" content="2020-03-06T14:51:55+00:00" />
 
@@ -82,13 +82,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "MQ",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/"
+      "item": "http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/"
     }
   ]
 }
@@ -108,29 +108,26 @@
   "inLanguage": "en",
   "datePublished": "2020-03-06T14:51:55Z",
   "dateModified": "2020-03-06T14:51:55Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Me"
+  }, {
+    "@type": "Person",
+    "name": "You"
+  }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/"
+    "@id": "http://localhost:1313/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
-</script>
-
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-<script>
-  MathJax = {
-    tex: {
-      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
-      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
-    }
-  };
 </script>
 
 </head>
@@ -150,7 +147,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -176,38 +173,28 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                <a href="http://localhost:1313/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                <a href="http://localhost:1313/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                <a href="http://localhost:1313/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/about" title="🙋🏻‍♂️关于">
-                    <span>🙋🏻‍♂️关于</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/links" title="🤝友链">
-                    <span>🤝友链</span>
                 </a>
             </li>
         </ul>
@@ -217,11 +204,11 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
     <h1 class="post-title">
       MQ
     </h1>
-    <div class="post-meta"><span title='2020-03-06 14:51:55 +0000 UTC'>2020-03-06</span>
+    <div class="post-meta"><span title='2020-03-06 14:51:55 +0000 UTC'>2020-03-06</span>&nbsp;·&nbsp;Me, You
 
 </div>
   </header> <div class="toc">
@@ -1212,14 +1199,27 @@ linux：<code>nohup sh mqbroker -n localhost:9876 -c ../conf/broker.conf &amp;</
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li>
+      <li><a href="http://localhost:1313/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>网站的扩展</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/">
+    <span class="title">Next »</span>
+    <br>
+    <span>docker</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+    <span>&copy; 2024 <a href="http://localhost:1313/">Wjy&#39;s Blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
