@@ -2,215 +2,215 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>interview on Wjy&#39;s Blog</title>
-    <link>http://localhost:1313/tags/interview/</link>
+    <link>https://funny-toffee-4aa7c3.netlify.app/tags/interview/</link>
     <description>Recent content in interview on Wjy&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 09 Aug 2023 05:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Aug 2023 05:00:00 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>高可用面试题</title>
-      <link>http://localhost:1313/posts/interview/%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Wed, 09 Aug 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>高可用系统设计指南 什么是高可用？可用性的判断标准是啥？ 高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使</description>
     </item>
     
     <item>
       <title>高性能面试题</title>
-      <link>http://localhost:1313/posts/interview/%E9%AB%98%E6%80%A7%E8%83%BD%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%AB%98%E6%80%A7%E8%83%BD%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Mon, 07 Aug 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E9%AB%98%E6%80%A7%E8%83%BD%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%AB%98%E6%80%A7%E8%83%BD%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>CDN常见问题总结 什么是 CDN ？ CDN 全称是 Content Delivery Network/Content Distribution Network，翻译过的意思是 内容分发网络 。 我们可以将内容分发网络拆开来看： 内容：指的是静态资源</description>
     </item>
     
     <item>
       <title>分布式面试题</title>
-      <link>http://localhost:1313/posts/interview/%E5%88%86%E5%B8%83%E5%BC%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%88%86%E5%B8%83%E5%BC%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sat, 05 Aug 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E5%88%86%E5%B8%83%E5%BC%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%88%86%E5%B8%83%E5%BC%8F%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>CAP 理论 CAP 理论/定理起源于 2000 年，由加州大学伯克利分校的 Eric Brewer 教授在分布式计算原理研讨会（PODC）上提出，因此 CAP 定理又被称作 布鲁尔定理（Brew</description>
     </item>
     
     <item>
       <title>系统设计_安全_面试题</title>
-      <link>http://localhost:1313/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%AE%89%E5%85%A8_%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%AE%89%E5%85%A8_%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Thu, 03 Aug 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%AE%89%E5%85%A8_%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%AE%89%E5%85%A8_%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>认证授权基础概念详解 认证 (Authentication) 和授权 (Authorization)的区别是什么？ 这是一个绝大多数人都会混淆的问题。首先先从读音上来认识这两个名词</description>
     </item>
     
     <item>
       <title>系统设计_基础_面试题</title>
-      <link>http://localhost:1313/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%9F%BA%E7%A1%80_%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%9F%BA%E7%A1%80_%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Tue, 01 Aug 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%9F%BA%E7%A1%80_%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1_%E5%9F%BA%E7%A1%80_%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>RestFul API 简明教程 何为 API？ API（Application Programming Interface） 翻译过来是应用程序编程接口的意思。 我们在进行后端开发的时候，主要</description>
     </item>
     
     <item>
       <title>MyBatis面试题</title>
-      <link>http://localhost:1313/posts/interview/mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Mon, 31 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>MyBatis基础面试题 #{} 和 ${} 的区别是什么？ 答： ${}是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于静态文本替换，比如${dri</description>
     </item>
     
     <item>
       <title>Spring面试题</title>
-      <link>http://localhost:1313/posts/interview/spring%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/spring%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sun, 30 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/spring%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/spring%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>Spring基础 什么是 Spring 框架? Spring 是一款开源的轻量级 Java 开发框架，旨在提高开发人员的开发效率以及系统的可维护性。 我们一般说 Spring 框架指的都是 Spring Fra</description>
     </item>
     
     <item>
       <title>Redis面试题</title>
-      <link>http://localhost:1313/posts/interview/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Fri, 28 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>概述 Redis 是一个基于 C 语言开发的开源数据库（BSD 许可），与传统数据库不同的是 Redis 的数据是存在内存中的（内存数据库），读写速度非常快，被广泛应用于</description>
     </item>
     
     <item>
       <title>MySQL三大日志</title>
-      <link>http://localhost:1313/posts/interview/mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</link>
       <pubDate>Wed, 26 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</guid>
       <description>概述 MySQL 日志 主要包括错误日志、查询日志、慢查询日志、事务日志、二进制日志几大类。其中，比较重要的还要属二进制日志 binlog（归档日志）和事务</description>
     </item>
     
     <item>
       <title>MySQL面试题</title>
-      <link>http://localhost:1313/posts/interview/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Mon, 24 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>MySQL字段类型 MySQL 字段类型可以简单分为三大类： 数值类型：整型（tinyint、smallint、mediumint、int 和 bigint）</description>
     </item>
     
     <item>
       <title>SQL面试题</title>
-      <link>http://localhost:1313/posts/interview/sql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/sql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sat, 22 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/sql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/sql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>SQL面试题1 检索数据 SELECT 用于从数据库中查询数据。 从 Customers 表中检索所有的 ID 现有表 Customers 如下： cust_id A B C 编写 SQL 语句，从 Customers 表中检索所有的 cust_id。 答案</description>
     </item>
     
     <item>
       <title>数据库基础面试题</title>
-      <link>http://localhost:1313/posts/interview/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Thu, 20 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>基本概念 什么是元组, 码, 候选码, 主码, 外码, 主属性, 非主属性？ 元组：元组（tuple）是关系数据库中的基本概念，关系是一张表，表中的每行（即</description>
     </item>
     
     <item>
       <title>数据结构面试题</title>
-      <link>http://localhost:1313/posts/interview/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Tue, 18 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>线性数据结构 数组 数组（Array） 是一种很常见的数据结构。它由相同类型的元素（element）组成，并且是使用一块连续的内存来存储。 我们直接</description>
     </item>
     
     <item>
       <title>Linux面试题</title>
-      <link>http://localhost:1313/posts/interview/linux%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/linux%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sun, 16 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/linux%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/linux%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>简介 通过以下三点可以概括 Linux 到底是什么： 类 Unix 系统：Linux 是一种自由、开放源码的类似 Unix 的操作系统 Linux 本质是指 Linux 内核：严格来讲，Linux 这个词</description>
     </item>
     
     <item>
       <title>操作系统面试题</title>
-      <link>http://localhost:1313/posts/interview/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sat, 15 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>操作系统基础 什么是操作系统？ 通过以下四点可以概括操作系统到底是什么： 操作系统（Operating System，简称 OS）是管理计算机硬件与软</description>
     </item>
     
     <item>
       <title>计算机网络面试题</title>
-      <link>http://localhost:1313/posts/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Fri, 14 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>计算机网络基础 网络分层模型 OSI 七层模型是什么？每一层的作用是什么？ OSI 七层模型 是国际标准化组织提出一个网络分层模型，其大体结构以及每一层提供的功</description>
     </item>
     
     <item>
       <title>JVM面试题</title>
-      <link>http://localhost:1313/posts/interview/jvm%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/jvm%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Wed, 12 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/jvm%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/jvm%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>前言 对于 Java 程序员来说，在虚拟机自动内存管理机制下，不再需要像 C/C++程序开发程序员这样为每一个 new 操作去写对应的 delete/free 操作，不容易出现内存泄漏和</description>
     </item>
     
     <item>
       <title>IO面试题</title>
-      <link>http://localhost:1313/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Mon, 10 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/io%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>概述 IO 即 Input/Output，输入和输出。数据输入到计算机内存的过程即输入，反之输出到外部存储（比如数据库，文件，远程主机）的过程即输出</description>
     </item>
     
     <item>
       <title>多线程重点面试题</title>
-      <link>http://localhost:1313/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%87%8D%E7%82%B9%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%87%8D%E7%82%B9%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sun, 09 Jul 2023 15:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%87%8D%E7%82%B9%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%87%8D%E7%82%B9%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>乐观锁和悲观锁 如果将悲观锁（Pessimistic Lock）和乐观锁（PessimisticLock 或 OptimisticLock）对应到现</description>
     </item>
     
     <item>
       <title>多线程基础面试题</title>
-      <link>http://localhost:1313/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sun, 09 Jul 2023 12:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>什么是线程和进程? 进程 进程是程序的一次执行过程，是系统运行程序的基本单位，因此进程是动态的。系统运行一个程序即是一个进程从创建，运行到消亡的</description>
     </item>
     
     <item>
       <title>java集合常见面试题</title>
-      <link>http://localhost:1313/posts/interview/%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Sat, 08 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/%E9%9B%86%E5%90%88%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>概述 List, Set, Queue, Map 四者的区别 List(对付顺序的好帮手): 存储的元素是有序的、可重复的。 Set(注重独一无二的性质): 存储的元素是无序的、不可重复</description>
     </item>
     
     <item>
       <title>java基础面试题</title>
-      <link>http://localhost:1313/posts/interview/java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/interview/java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/interview/java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/interview/java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
       <description>基础概念和常识 JVM JVM是运行 Java 字节码的虚拟机。JVM 有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节</description>
     </item>
     
     <item>
       <title>算法</title>
-      <link>http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/</link>
       <pubDate>Fri, 09 Nov 2018 00:34:23 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/</guid>
       <description>大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好</description>
     </item>
     
