@@ -12,15 +12,14 @@ java 中的线程优先级的范围是1～10，默认的优先级是5。10表示
 java 中有两种线程：用户线程和守护线程。可以通过isDaemon()方法来区别它们：如果返回false，则说明该线程是“用户线程”；否则就是“守护线程”。
 用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务，作用是为其他线程的运行提供便利服务，守护线程最典型的应用就是 GC (垃圾回收器)。
 用户线程和守护线程两者几乎没有区别，唯一的不同之处就在于虚拟机的离开。需要注意的是：Java虚拟机在“用户线程”都结束后会后退出。">
-<meta name="author" content="Me, You">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
-<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -40,7 +39,7 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -66,7 +65,7 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
 用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务，作用是为其他线程的运行提供便利服务，守护线程最典型的应用就是 GC (垃圾回收器)。
 用户线程和守护线程两者几乎没有区别，唯一的不同之处就在于虚拟机的离开。需要注意的是：Java虚拟机在“用户线程”都结束后会后退出。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-03-28T16:23:30+00:00" />
 <meta property="article:modified_time" content="2019-03-28T16:23:30+00:00" />
 
@@ -88,13 +87,13 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "multithreading-线程优先级、守护线程、生产消费者问题",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/"
+      "item": "http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/"
     }
   ]
 }
@@ -114,23 +113,20 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
   "inLanguage": "en",
   "datePublished": "2019-03-28T16:23:30Z",
   "dateModified": "2019-03-28T16:23:30Z",
-  "author":[{
+  "author":{
     "@type": "Person",
-    "name": "Me"
-  }, {
-    "@type": "Person",
-    "name": "You"
-  }],
+    "name": "Wjy"
+  },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/"
+    "@id": "http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -153,7 +149,7 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -179,27 +175,27 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
         </div>
         <ul id="menu">
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                <a href="http://localhost:1313/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                <a href="http://localhost:1313/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                <a href="http://localhost:1313/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -210,11 +206,11 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
-    <h1 class="post-title">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
       multithreading-线程优先级、守护线程、生产消费者问题
     </h1>
-    <div class="post-meta"><span title='2019-03-28 16:23:30 +0000 UTC'>2019-03-28</span>&nbsp;·&nbsp;Me, You
+    <div class="post-meta"><span title='2019-03-28 16:23:30 +0000 UTC'>2019-03-28</span>&nbsp;·&nbsp;Wjy
 
 </div>
   </header> <div class="toc">
@@ -753,27 +749,15 @@ Marks this thread as either a daemon thread or a user thread. The Java Virtual M
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/multithreading/">multithreading</a></li>
+      <li><a href="http://localhost:1313/tags/multithreading/">multithreading</a></li>
     </ul>
-<nav class="paginav">
-  <a class="prev" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-juc%E5%8E%9F%E5%AD%90%E7%B1%BB/">
-    <span class="title">« Prev</span>
-    <br>
-    <span>multithreading-JUC原子类</span>
-  </a>
-  <a class="next" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-interrupt/">
-    <span class="title">Next »</span>
-    <br>
-    <span>multithreading-interrupt</span>
-  </a>
-</nav>
-
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+        <span>&copy; 2024 <a href="http://localhost:1313/">Wjy&#39;s Blog</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

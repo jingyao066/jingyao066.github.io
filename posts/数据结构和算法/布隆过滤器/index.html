@@ -8,15 +8,14 @@
 <title>布隆过滤器 | Wjy&#39;s Blog</title>
 <meta name="keywords" content="数据结构">
 <meta name="description" content="概述 在互联网中，我们经常遇到需要在大量数据中判断目标数据是否存在的情况。例如，在网络爬虫中，我们需要判断某个网址是否已经被访问过。为了实现这">
-<meta name="author" content="Me, You">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
-<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -36,7 +35,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -58,7 +57,7 @@
 </noscript><meta property="og:title" content="布隆过滤器" />
 <meta property="og:description" content="概述 在互联网中，我们经常遇到需要在大量数据中判断目标数据是否存在的情况。例如，在网络爬虫中，我们需要判断某个网址是否已经被访问过。为了实现这" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-03-29T10:57:33+00:00" />
 <meta property="article:modified_time" content="2024-03-29T10:57:33+00:00" />
 
@@ -76,13 +75,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "布隆过滤器",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/"
+      "item": "http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/"
     }
   ]
 }
@@ -102,23 +101,20 @@
   "inLanguage": "en",
   "datePublished": "2024-03-29T10:57:33Z",
   "dateModified": "2024-03-29T10:57:33Z",
-  "author":[{
+  "author":{
     "@type": "Person",
-    "name": "Me"
-  }, {
-    "@type": "Person",
-    "name": "You"
-  }],
+    "name": "Wjy"
+  },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/"
+    "@id": "http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -141,7 +137,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -167,27 +163,27 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                <a href="http://localhost:1313/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                <a href="http://localhost:1313/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                <a href="http://localhost:1313/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -198,11 +194,11 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
-    <h1 class="post-title">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
       布隆过滤器
     </h1>
-    <div class="post-meta"><span title='2024-03-29 10:57:33 +0000 UTC'>2024-03-29</span>&nbsp;·&nbsp;Me, You
+    <div class="post-meta"><span title='2024-03-29 10:57:33 +0000 UTC'>2024-03-29</span>&nbsp;·&nbsp;Wjy
 
 </div>
   </header> <div class="toc">
@@ -219,11 +215,11 @@
                     <a href="#%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%ae%80%e4%bb%8b" aria-label="布隆过滤器简介">布隆过滤器简介</a><ul>
                         
                 <li>
-                    <a href="#%e4%bc%98%e7%82%b9" aria-label="优点"><strong>优点</strong></a></li>
+                    <a href="#%e4%bc%98%e7%82%b9" aria-label="优点">优点</a></li>
                 <li>
-                    <a href="#%e7%bc%ba%e7%82%b9" aria-label="缺点"><strong>缺点</strong></a></li>
+                    <a href="#%e7%bc%ba%e7%82%b9" aria-label="缺点">缺点</a></li>
                 <li>
-                    <a href="#%e9%80%82%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="适用场景"><strong>适用场景</strong></a></li></ul>
+                    <a href="#%e9%80%82%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="适用场景">适用场景</a></li></ul>
                 </li></ul>
                 </li>
                 <li>
@@ -1258,27 +1254,15 @@ k：哈希函数的个数。</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+      <li><a href="http://localhost:1313/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
     </ul>
-<nav class="paginav">
-  <a class="prev" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/">
-    <span class="title">« Prev</span>
-    <br>
-    <span>初识算法</span>
-  </a>
-  <a class="next" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/">
-    <span class="title">Next »</span>
-    <br>
-    <span>手写Tomcat</span>
-  </a>
-</nav>
-
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+        <span>&copy; 2024 <a href="http://localhost:1313/">Wjy&#39;s Blog</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

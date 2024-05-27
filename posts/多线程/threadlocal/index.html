@@ -8,15 +8,14 @@
 <title>threadLocal | Wjy&#39;s Blog</title>
 <meta name="keywords" content="multithreading">
 <meta name="description" content="基于jdk1.8分析ThreadLocal。 ThreadLocal代码演示 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 public class ThreadLocalTest { private List&lt;String&gt;">
-<meta name="author" content="Me, You">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
-<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -36,7 +35,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -58,7 +57,7 @@
 </noscript><meta property="og:title" content="threadLocal" />
 <meta property="og:description" content="基于jdk1.8分析ThreadLocal。 ThreadLocal代码演示 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 public class ThreadLocalTest { private List&lt;String&gt;" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-03-01T18:21:30+00:00" />
 <meta property="article:modified_time" content="2019-03-01T18:21:30+00:00" />
 
@@ -76,13 +75,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "threadLocal",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/"
+      "item": "http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/"
     }
   ]
 }
@@ -102,23 +101,20 @@
   "inLanguage": "en",
   "datePublished": "2019-03-01T18:21:30Z",
   "dateModified": "2019-03-01T18:21:30Z",
-  "author":[{
+  "author":{
     "@type": "Person",
-    "name": "Me"
-  }, {
-    "@type": "Person",
-    "name": "You"
-  }],
+    "name": "Wjy"
+  },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/"
+    "@id": "http://localhost:1313/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/threadlocal/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -141,7 +137,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -167,27 +163,27 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                <a href="http://localhost:1313/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                <a href="http://localhost:1313/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                <a href="http://localhost:1313/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -198,11 +194,11 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
-    <h1 class="post-title">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
       threadLocal
     </h1>
-    <div class="post-meta"><span title='2019-03-01 18:21:30 +0000 UTC'>2019-03-01</span>&nbsp;·&nbsp;Me, You
+    <div class="post-meta"><span title='2019-03-01 18:21:30 +0000 UTC'>2019-03-01</span>&nbsp;·&nbsp;Wjy
 
 </div>
   </header> <div class="toc">
@@ -215,44 +211,44 @@
                 <li>
                     <a href="#threadlocal%e4%bb%a3%e7%a0%81%e6%bc%94%e7%a4%ba" aria-label="ThreadLocal代码演示">ThreadLocal代码演示</a></li>
                 <li>
-                    <a href="#threadlocal%e7%9a%84%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" aria-label="ThreadLocal的数据结构"><code>ThreadLocal</code>的数据结构</a></li>
+                    <a href="#threadlocal%e7%9a%84%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" aria-label="ThreadLocal的数据结构">ThreadLocal的数据结构</a></li>
                 <li>
                     <a href="#gc-%e4%b9%8b%e5%90%8e-key-%e6%98%af%e5%90%a6%e4%b8%ba-null" aria-label="GC 之后 key 是否为 null？">GC 之后 key 是否为 null？</a></li>
                 <li>
-                    <a href="#threadlocalset%e6%96%b9%e6%b3%95%e6%ba%90%e7%a0%81%e8%af%a6%e8%a7%a3" aria-label="ThreadLocal.set()方法源码详解"><code>ThreadLocal.set()</code>方法源码详解</a></li>
+                    <a href="#threadlocalset%e6%96%b9%e6%b3%95%e6%ba%90%e7%a0%81%e8%af%a6%e8%a7%a3" aria-label="ThreadLocal.set()方法源码详解">ThreadLocal.set()方法源码详解</a></li>
                 <li>
-                    <a href="#threadlocalmap-hash-%e7%ae%97%e6%b3%95" aria-label="ThreadLocalMap Hash 算法"><code>ThreadLocalMap</code> Hash 算法</a></li>
+                    <a href="#threadlocalmap-hash-%e7%ae%97%e6%b3%95" aria-label="ThreadLocalMap Hash 算法">ThreadLocalMap Hash 算法</a></li>
                 <li>
-                    <a href="#threadlocalmap-hash-%e5%86%b2%e7%aa%81" aria-label="ThreadLocalMap Hash 冲突"><code>ThreadLocalMap</code> Hash 冲突</a></li>
+                    <a href="#threadlocalmap-hash-%e5%86%b2%e7%aa%81" aria-label="ThreadLocalMap Hash 冲突">ThreadLocalMap Hash 冲突</a></li>
                 <li>
-                    <a href="#threadlocalmapset%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.set()详解"><code>ThreadLocalMap.set()</code>详解</a><ul>
+                    <a href="#threadlocalmapset%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.set()详解">ThreadLocalMap.set()详解</a><ul>
                         
                 <li>
-                    <a href="#threadlocalmapset%e5%8e%9f%e7%90%86%e5%9b%be%e8%a7%a3" aria-label="ThreadLocalMap.set()原理图解"><code>ThreadLocalMap.set()</code>原理图解</a></li>
+                    <a href="#threadlocalmapset%e5%8e%9f%e7%90%86%e5%9b%be%e8%a7%a3" aria-label="ThreadLocalMap.set()原理图解">ThreadLocalMap.set()原理图解</a></li>
                 <li>
-                    <a href="#threadlocalmapset%e6%ba%90%e7%a0%81%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.set()源码详解"><code>ThreadLocalMap.set()</code>源码详解</a></li></ul>
+                    <a href="#threadlocalmapset%e6%ba%90%e7%a0%81%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.set()源码详解">ThreadLocalMap.set()源码详解</a></li></ul>
                 </li>
                 <li>
-                    <a href="#threadlocalmap%e8%bf%87%e6%9c%9f-key-%e7%9a%84%e6%8e%a2%e6%b5%8b%e5%bc%8f%e6%b8%85%e7%90%86%e6%b5%81%e7%a8%8b" aria-label="ThreadLocalMap过期 key 的探测式清理流程"><code>ThreadLocalMap</code>过期 key 的探测式清理流程</a></li>
+                    <a href="#threadlocalmap%e8%bf%87%e6%9c%9f-key-%e7%9a%84%e6%8e%a2%e6%b5%8b%e5%bc%8f%e6%b8%85%e7%90%86%e6%b5%81%e7%a8%8b" aria-label="ThreadLocalMap过期 key 的探测式清理流程">ThreadLocalMap过期 key 的探测式清理流程</a></li>
                 <li>
-                    <a href="#threadlocalmap%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6" aria-label="ThreadLocalMap扩容机制"><code>ThreadLocalMap</code>扩容机制</a></li>
+                    <a href="#threadlocalmap%e6%89%a9%e5%ae%b9%e6%9c%ba%e5%88%b6" aria-label="ThreadLocalMap扩容机制">ThreadLocalMap扩容机制</a></li>
                 <li>
-                    <a href="#threadlocalmapget%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.get()详解"><code>ThreadLocalMap.get()</code>详解</a><ul>
+                    <a href="#threadlocalmapget%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.get()详解">ThreadLocalMap.get()详解</a><ul>
                         
                 <li>
-                    <a href="#threadlocalmapget%e5%9b%be%e8%a7%a3" aria-label="ThreadLocalMap.get()图解"><code>ThreadLocalMap.get()</code>图解</a></li>
+                    <a href="#threadlocalmapget%e5%9b%be%e8%a7%a3" aria-label="ThreadLocalMap.get()图解">ThreadLocalMap.get()图解</a></li>
                 <li>
-                    <a href="#threadlocalmapget%e6%ba%90%e7%a0%81%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.get()源码详解"><code>ThreadLocalMap.get()</code>源码详解</a></li></ul>
+                    <a href="#threadlocalmapget%e6%ba%90%e7%a0%81%e8%af%a6%e8%a7%a3" aria-label="ThreadLocalMap.get()源码详解">ThreadLocalMap.get()源码详解</a></li></ul>
                 </li>
                 <li>
-                    <a href="#threadlocalmap%e8%bf%87%e6%9c%9f-key-%e7%9a%84%e5%90%af%e5%8f%91%e5%bc%8f%e6%b8%85%e7%90%86%e6%b5%81%e7%a8%8b" aria-label="ThreadLocalMap过期 key 的启发式清理流程"><code>ThreadLocalMap</code>过期 key 的启发式清理流程</a></li>
+                    <a href="#threadlocalmap%e8%bf%87%e6%9c%9f-key-%e7%9a%84%e5%90%af%e5%8f%91%e5%bc%8f%e6%b8%85%e7%90%86%e6%b5%81%e7%a8%8b" aria-label="ThreadLocalMap过期 key 的启发式清理流程">ThreadLocalMap过期 key 的启发式清理流程</a></li>
                 <li>
-                    <a href="#inheritablethreadlocal" aria-label="InheritableThreadLocal"><code>InheritableThreadLocal</code></a></li>
+                    <a href="#inheritablethreadlocal" aria-label="InheritableThreadLocal">InheritableThreadLocal</a></li>
                 <li>
-                    <a href="#threadlocal%e9%a1%b9%e7%9b%ae%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%ae%9e%e6%88%98" aria-label="ThreadLocal项目中使用实战"><code>ThreadLocal</code>项目中使用实战</a><ul>
+                    <a href="#threadlocal%e9%a1%b9%e7%9b%ae%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%ae%9e%e6%88%98" aria-label="ThreadLocal项目中使用实战">ThreadLocal项目中使用实战</a><ul>
                         
                 <li>
-                    <a href="#threadlocal%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="ThreadLocal使用场景"><code>ThreadLocal</code>使用场景</a></li>
+                    <a href="#threadlocal%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="ThreadLocal使用场景">ThreadLocal使用场景</a></li>
                 <li>
                     <a href="#feign-%e8%bf%9c%e7%a8%8b%e8%b0%83%e7%94%a8%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" aria-label="Feign 远程调用解决方案">Feign 远程调用解决方案</a></li>
                 <li>
@@ -1542,27 +1538,15 @@
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/multithreading/">multithreading</a></li>
+      <li><a href="http://localhost:1313/tags/multithreading/">multithreading</a></li>
     </ul>
-<nav class="paginav">
-  <a class="prev" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-basic/">
-    <span class="title">« Prev</span>
-    <br>
-    <span>multithreading-basic</span>
-  </a>
-  <a class="next" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/">
-    <span class="title">Next »</span>
-    <br>
-    <span>装饰模式</span>
-  </a>
-</nav>
-
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+        <span>&copy; 2024 <a href="http://localhost:1313/">Wjy&#39;s Blog</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

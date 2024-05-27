@@ -2,56 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>设计模式 on Wjy&#39;s Blog</title>
-    <link>https://funny-toffee-4aa7c3.netlify.app/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <link>http://localhost:1313/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
     <description>Recent content in 设计模式 on Wjy&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 29 Dec 2018 13:54:05 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 29 Dec 2018 13:54:05 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>装饰模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sat, 29 Dec 2018 13:54:05 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：结构型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;动态地给一个对象添加一些额外的职责。就增加功能来说，相比生成子类更为灵活。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>组合模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sat, 29 Dec 2018 13:50:35 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：结构型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;将对象组合成树形结构以表示“部分-整体”的层次结构，使得用户对单个对象和组合对象的使用具有一致性。&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>享元模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Fri, 28 Dec 2018 20:10:41 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：结构型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Flyweight在拳击比赛中指最轻量级，这里选择使用“享元模式”的意译，是因为这样更能反映模式的用意。享元模式以共享的方式高效地支持大量的细粒度对象。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>桥梁模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Fri, 28 Dec 2018 13:57:22 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：结构型&lt;/p&gt;
 &lt;blockquote&gt;
@@ -59,76 +53,64 @@
 &lt;/blockquote&gt;
 &lt;p&gt;桥接模式的定义非常玄乎，直接理解不太容易，所以我们还是举例子。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>外观模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Tue, 25 Dec 2018 17:47:10 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：结构型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;外观模式又称门面模式（Facade）。隐藏了系统的复杂性，并向客户端提供了一个客户端可以访问系统的接口。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>访问者模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Tue, 25 Dec 2018 10:11:10 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：行为型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;表示一个作用于某对象结构中的各元素的操作。它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>中介者模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sun, 23 Dec 2018 16:34:17 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：行为型&lt;/p&gt;
 &lt;p&gt;中介者模式又称为调停者模式，调停者模式包装了一系列对象相互作用的方式，使得这些对象不必相互明显引用。从而使它们可以较松散地耦合。当这些对象中的某些对象之间的相互作用发生改变时，不会立即影响到其他的一些对象之间的相互作用。从而保证这些相互作用可以彼此独立地变化。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>状态模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sun, 23 Dec 2018 16:00:11 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：行为型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;状态模式允许一个对象在其内部状态改变的时候改变其行为，这个对象看上去就像是改变了它的类一样。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>命令模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sun, 23 Dec 2018 11:34:27 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：行为型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;定义：将一个请求封装成一个对象，从而让你使用不同的请求把客户端参数化，对请求排队或者记录请求日志，可以提供命令的撤销和恢复功能。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>备忘录模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sat, 22 Dec 2018 13:29:39 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：行为型&lt;/p&gt;
 &lt;blockquote&gt;
@@ -136,35 +118,29 @@
 &lt;/blockquote&gt;
 &lt;p&gt;备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捕捉(Capture)住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。备忘录模式常常与命令模式和迭代器模式一同使用。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>模板方法模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Fri, 21 Dec 2018 17:39:33 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：行为型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>迭代器模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Fri, 21 Dec 2018 14:13:21 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
       <description>快速学习 提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。 迭代器模式（Iterator）实际上在Java的集合类</description>
     </item>
-    
     <item>
       <title>观察者模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Thu, 20 Dec 2018 16:02:18 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：行为型&lt;/p&gt;
 &lt;blockquote&gt;
@@ -461,52 +437,42 @@
 观察者模式是对象的行为模式，又叫发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式。&lt;/p&gt;
 &lt;p&gt;观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>适配器模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sun, 16 Dec 2018 11:54:27 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</guid>
       <description>概述 类型：结构型 适配器模式把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作。 使用场</description>
     </item>
-    
     <item>
       <title>原型模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Fri, 14 Dec 2018 16:37:16 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</guid>
       <description>概述 类型：创建型 用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。 原型模式，即Prototype，是指创建新对象的时候，根据现</description>
     </item>
-    
     <item>
       <title>建造者模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Thu, 13 Dec 2018 15:36:01 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</guid>
       <description>概述 类型：创建型 意图：将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。 主要解决：主要解决在软件系统中，有时候面临着&amp;q</description>
     </item>
-    
     <item>
       <title>责任链模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Mon, 10 Dec 2018 17:41:36 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>策略模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Mon, 10 Dec 2018 17:40:19 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。本模式使得算法可独立于使用它的客户而变化。&lt;/p&gt;
@@ -770,54 +736,45 @@
 注意事项：如果一个系统的策略多于四个，就需要考虑使用混合模式，解决策略类膨胀的问题。&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
-    
     <item>
       <title>代理模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Mon, 10 Dec 2018 16:45:26 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;快速学习&#34;&gt;快速学习&lt;/h1&gt;
 &lt;p&gt;类型：结构型&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;为其他对象提供一种代理以控制对这个对象的访问。&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
     <item>
       <title>工厂方法和抽象工厂</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Mon, 10 Dec 2018 15:39:08 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;工厂方法&#34;&gt;工厂方法&lt;/h1&gt;
 &lt;p&gt;类型：创建型
 概念：定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>单例模式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Sun, 09 Dec 2018 14:54:44 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;类型：创建型&lt;/p&gt;
 &lt;p&gt;定义：
 确保某一个类只有一个实例，并且自行实例化，并向整个系统提供这个实例，这个类称为单例类。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>设计模式概览</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</link>
+      <link>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</guid>
+      <guid>http://localhost:1313/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</guid>
       <description>&lt;h1 id=&#34;设计模式的分类&#34;&gt;设计模式的分类&lt;/h1&gt;
 &lt;p&gt;提到设计模式，不得不感谢GoF（Gang of Four，四人组），他们1995年出版的《设计模式》一书，第一次将设计模式提升到理论高度，并将之规范化。书中一共总结了23种基本的设计模式。而这23中设计模式几乎涵盖了面向对象设计过程中所有问题的解决方案。书中提到的23种设计模式分别是：&lt;/p&gt;
 &lt;p&gt;总体来说设计模式分为三大类：
 创建型(5种)：工厂、抽象工厂、单例、建造者、原型&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

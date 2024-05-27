@@ -2,28 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>spring on Wjy&#39;s Blog</title>
-    <link>https://funny-toffee-4aa7c3.netlify.app/tags/spring/</link>
+    <link>http://localhost:1313/tags/spring/</link>
     <description>Recent content in spring on Wjy&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 13 Apr 2023 15:50:13 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Apr 2023 15:50:13 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>手写Spring</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/%E6%89%8B%E5%86%99spring/</link>
+      <link>http://localhost:1313/posts/spring/%E6%89%8B%E5%86%99spring/</link>
       <pubDate>Thu, 13 Apr 2023 15:50:13 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/%E6%89%8B%E5%86%99spring/</guid>
+      <guid>http://localhost:1313/posts/spring/%E6%89%8B%E5%86%99spring/</guid>
       <description>&lt;h1 id=&#34;实现ioc容器&#34;&gt;实现IOC容器&lt;/h1&gt;
 &lt;p&gt;Spring的核心就是能管理一组Bean，并能自动配置依赖关系的IoC容器。而我们的Summer Framework的核心context模块就是要实现IoC容器。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1539348902182944&#34;&gt;手写Spring - 廖雪峰的官方网站 (liaoxuefeng.com)&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>springMVC</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</link>
+      <link>http://localhost:1313/posts/spring/springmvc/</link>
       <pubDate>Sun, 05 Jan 2020 23:35:36 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</guid>
+      <guid>http://localhost:1313/posts/spring/springmvc/</guid>
       <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
 &lt;p&gt;MVC，即 model模型，view视图，controller控制。
 spring mvc可以用来开发灵活、松散耦合的 web 应用程序。
@@ -34,22 +32,18 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;li&gt;控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
-    
     <item>
       <title>spring代码示例</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
+      <link>http://localhost:1313/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
       <pubDate>Sat, 04 Jan 2020 14:13:12 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
+      <guid>http://localhost:1313/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
       <description>&lt;h1 id=&#34;简单的hello-world&#34;&gt;简单的hello world&lt;/h1&gt;</description>
     </item>
-    
     <item>
       <title>Spring开发web应用</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</link>
+      <link>http://localhost:1313/posts/spring/spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</link>
       <pubDate>Fri, 03 Jan 2020 15:33:23 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</guid>
+      <guid>http://localhost:1313/posts/spring/spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</guid>
       <description>&lt;h1 id=&#34;开发web应用&#34;&gt;开发Web应用&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1252599548343744/1255945497738400&#34;&gt;Web开发&lt;/a&gt;一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：&lt;/p&gt;
 &lt;ol&gt;
@@ -68,25 +62,21 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;p&gt;Spring虽然都可以集成任何Web框架，但是，Spring本身也开发了一个MVC框架，就叫&lt;a href=&#34;https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html&#34;&gt;Spring MVC&lt;/a&gt;。这个MVC框架设计得足够优秀以至于我们已经不想再费劲去集成类似Struts这样的框架了。&lt;/p&gt;
 &lt;p&gt;本章我们会详细介绍如何基于Spring MVC开发Web应用。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>AOP</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/aop/</link>
+      <link>http://localhost:1313/posts/spring/aop/</link>
       <pubDate>Thu, 02 Jan 2020 16:21:14 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/aop/</guid>
+      <guid>http://localhost:1313/posts/spring/aop/</guid>
       <description>&lt;h1 id=&#34;使用aop&#34;&gt;使用AOP&lt;/h1&gt;
 &lt;p&gt;AOP是Aspect Oriented Programming，即面向切面编程。&lt;/p&gt;
 &lt;p&gt;那什么是AOP？&lt;/p&gt;
 &lt;p&gt;我们先回顾一下OOP：Object Oriented Programming，OOP作为面向对象编程的模式，获得了巨大的成功，OOP的主要功能是数据封装、继承和多态。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>IOC</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/ioc/</link>
+      <link>http://localhost:1313/posts/spring/ioc/</link>
       <pubDate>Wed, 01 Jan 2020 15:32:45 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/ioc/</guid>
+      <guid>http://localhost:1313/posts/spring/ioc/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。&lt;/p&gt;
 &lt;p&gt;Spring最早是由Rod Johnson这哥们在他的《&lt;a href=&#34;https://book.douban.com/subject/1426848/&#34;&gt;Expert One-on-One J2EE Development without EJB&lt;/a&gt;》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。&lt;/p&gt;
@@ -105,13 +95,11 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;p&gt;&lt;a href=&#34;https://spring.io/&#34;&gt;spring官网&lt;/a&gt;
 &lt;a href=&#34;https://blog.csdn.net/qq_41907991/article/details/105502255&#34;&gt;spring官网如何阅读&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>spring boot</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</link>
+      <link>http://localhost:1313/posts/spring/spring-boot/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</guid>
+      <guid>http://localhost:1313/posts/spring/spring-boot/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
 &lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
@@ -119,6 +107,5 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -8,15 +8,14 @@
 <title>Shell基础 | Wjy&#39;s Blog</title>
 <meta name="keywords" content="java">
 <meta name="description" content="简介 简单来说“Shell 编程就是对一堆 Linux 命令的逻辑化处理”。W3Cschool 上的一篇文章是这样介绍 Shell 的，如下图所示。 Shell 编程的 Hello World 学习任何一">
-<meta name="author" content="Me, You">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="http://localhost:1313/posts/java/shell%E5%9F%BA%E7%A1%80/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.js" onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
-<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -36,7 +35,7 @@
                 --secondary: rgb(155, 156, 157);
                 --tertiary: rgb(65, 66, 68);
                 --content: rgb(196, 196, 197);
-                --hljs-bg: rgb(46, 46, 51);
+                --code-block-bg: rgb(46, 46, 51);
                 --code-bg: rgb(55, 56, 62);
                 --border: rgb(51, 51, 51);
             }
@@ -58,7 +57,7 @@
 </noscript><meta property="og:title" content="Shell基础" />
 <meta property="og:description" content="简介 简单来说“Shell 编程就是对一堆 Linux 命令的逻辑化处理”。W3Cschool 上的一篇文章是这样介绍 Shell 的，如下图所示。 Shell 编程的 Hello World 学习任何一" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/posts/java/shell%E5%9F%BA%E7%A1%80/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-05-06T16:21:35+00:00" />
 <meta property="article:modified_time" content="2019-05-06T16:21:35+00:00" />
 
@@ -76,13 +75,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Shell基础",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/"
+      "item": "http://localhost:1313/posts/java/shell%E5%9F%BA%E7%A1%80/"
     }
   ]
 }
@@ -102,23 +101,20 @@
   "inLanguage": "en",
   "datePublished": "2019-05-06T16:21:35Z",
   "dateModified": "2019-05-06T16:21:35Z",
-  "author":[{
+  "author":{
     "@type": "Person",
-    "name": "Me"
-  }, {
-    "@type": "Person",
-    "name": "You"
-  }],
+    "name": "Wjy"
+  },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/"
+    "@id": "http://localhost:1313/posts/java/shell%E5%9F%BA%E7%A1%80/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -141,7 +137,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -167,27 +163,27 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                <a href="http://localhost:1313/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                <a href="http://localhost:1313/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                <a href="http://localhost:1313/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -198,11 +194,11 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
-    <h1 class="post-title">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
       Shell基础
     </h1>
-    <div class="post-meta"><span title='2019-05-06 16:21:35 +0000 UTC'>2019-05-06</span>&nbsp;·&nbsp;Me, You
+    <div class="post-meta"><span title='2019-05-06 16:21:35 +0000 UTC'>2019-05-06</span>&nbsp;·&nbsp;Wjy
 
 </div>
   </header> <div class="toc">
@@ -999,27 +995,15 @@ PS1 　基本提示符，对于 root 用户是#，对于普通用户是$</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/java/">java</a></li>
+      <li><a href="http://localhost:1313/tags/java/">java</a></li>
     </ul>
-<nav class="paginav">
-  <a class="prev" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/string/">
-    <span class="title">« Prev</span>
-    <br>
-    <span>String</span>
-  </a>
-  <a class="next" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/equals/">
-    <span class="title">Next »</span>
-    <br>
-    <span>equals</span>
-  </a>
-</nav>
-
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span>
+        <span>&copy; 2024 <a href="http://localhost:1313/">Wjy&#39;s Blog</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

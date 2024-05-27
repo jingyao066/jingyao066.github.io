@@ -2,35 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>其他基础 on Wjy&#39;s Blog</title>
-    <link>https://funny-toffee-4aa7c3.netlify.app/tags/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/</link>
+    <link>http://localhost:1313/tags/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/</link>
     <description>Recent content in 其他基础 on Wjy&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 09 Dec 2023 16:42:50 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Dec 2023 16:42:50 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>google高级搜索技巧</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Sat, 09 Dec 2023 16:42:50 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</guid>
       <description>搜索引擎 「限制语言」、「按照时间」、「精确匹配」 google 在界面上提供搜索条件查询「限制语言」、「按照时间」、「精确匹配」（百度等其他同理） site</description>
     </item>
-    
     <item>
       <title>前端基础</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Wed, 08 Nov 2023 09:00:00 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</guid>
       <description>VSCODE 官网下载：https://code.visualstudio.com/download 插件安装 1 2 3 4 5 6 7 8 9 Auto Close Tag Auto Rename Tag Chinese(Simplifie) ESLint HTML CSS Support HTML Snippets</description>
     </item>
-    
     <item>
       <title>爬虫</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%88%AC%E8%99%AB/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%88%AC%E8%99%AB/</link>
       <pubDate>Wed, 08 Dec 2021 10:48:12 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%88%AC%E8%99%AB/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%88%AC%E8%99%AB/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;无论什么爬虫，爬数据的过程都分三步，&lt;/p&gt;
 &lt;ul&gt;
@@ -39,49 +35,41 @@
 &lt;li&gt;数据保存&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
-    
     <item>
       <title>网络</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/</link>
       <pubDate>Wed, 09 Dec 2020 00:48:47 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C/</guid>
       <description>&lt;h1 id=&#34;网络通信原理&#34;&gt;网络通信原理&lt;/h1&gt;
 &lt;h2 id=&#34;tcpip五层模型详解&#34;&gt;TCP/IP五层模型详解&lt;/h2&gt;
 &lt;p&gt;计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质+互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。
 &lt;img loading=&#34;lazy&#34; src=&#34;1.jpg&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>json</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/json/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/json/</link>
       <pubDate>Fri, 07 Aug 2020 11:47:04 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/json/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/json/</guid>
       <description>&lt;p&gt;Jackson 是用来序列化和反序列化 json 的 Java 的开源框架。Spring MVC 的默认 json 解析器便是 Jackson。 Jackson 的 1.x 版本的包名是 org.codehaus.jackson ，当升级到 2.x 版本时，包名变为 com.fasterxml.jackson，本文讨论的内容是基于最新的 Jackson 的 2.9.1 版本。
 如果使用的是spring-boot项目，则spring-boot-starter-web默认会引入Jackson包，无需再次引入依赖。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>mybatis-plus</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis-plus/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis-plus/</link>
       <pubDate>Sat, 28 Mar 2020 15:07:56 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis-plus/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis-plus/</guid>
       <description>&lt;p&gt;官网
 &lt;a href=&#34;https://baomidou.com/&#34;&gt;https://baomidou.com/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;其他参考
 &lt;a href=&#34;https://www.cnblogs.com/l-y-h/p/12859477.html&#34;&gt;https://www.cnblogs.com/l-y-h/p/12859477.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Mybatis-Plus（简称MP）是一个 Mybatis 的增强工具，在 Mybatis 的基础上只做增强不做改变，为简化开发、提高效率而生。那么它是怎么增强的呢？其实就是它已经封装好了一些crud方法，我们不需要再写xml了，直接调用这些方法就行，就类似于JPA。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>mybatis</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis/</link>
       <pubDate>Fri, 27 Mar 2020 15:07:56 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis/</guid>
       <description>&lt;h1 id=&#34;基础&#34;&gt;基础&lt;/h1&gt;
 &lt;h2 id=&#34;面向接口编程&#34;&gt;面向接口编程&lt;/h2&gt;
 &lt;ol&gt;
@@ -115,13 +103,11 @@ dao层接口
 &lt;/div&gt;
 &lt;/div&gt;</description>
     </item>
-    
     <item>
       <title>docker</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/</link>
       <pubDate>Thu, 05 Mar 2020 10:26:24 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。
 Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。
@@ -129,25 +115,21 @@ Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Do
 &lt;img loading=&#34;lazy&#34; src=&#34;1.png&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>git</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/git/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/git/</link>
       <pubDate>Mon, 25 Nov 2019 10:14:46 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/git/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/git/</guid>
       <description>&lt;h1 id=&#34;常用命令&#34;&gt;常用命令&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;git%e5%91%bd%e4%bb%a4.jpg&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://git-scm.com/book/zh/v2&#34;&gt;git官方文档&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Maven</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/maven/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/maven/</link>
       <pubDate>Mon, 11 Nov 2019 11:41:35 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/maven/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/maven/</guid>
       <description>&lt;h1 id=&#34;maven介绍&#34;&gt;Maven介绍&lt;/h1&gt;
 &lt;p&gt;在了解Maven之前，我们先来看看一个Java项目需要的东西。首先，我们需要确定引入哪些依赖包。例如，如果我们需要用到&lt;a href=&#34;https://commons.apache.org/proper/commons-logging/&#34;&gt;commons logging&lt;/a&gt;，我们就必须把commons logging的jar包放入classpath。如果我们还需要&lt;a href=&#34;https://logging.apache.org/log4j/&#34;&gt;log4j&lt;/a&gt;，就需要把log4j相关的jar包都放到classpath中。这些就是依赖包的管理。&lt;/p&gt;
 &lt;p&gt;其次，我们要确定项目的目录结构。例如，&lt;code&gt;src&lt;/code&gt;目录存放Java源码，&lt;code&gt;resources&lt;/code&gt;目录存放配置文件，&lt;code&gt;bin&lt;/code&gt;目录存放编译生成的&lt;code&gt;.class&lt;/code&gt;文件。&lt;/p&gt;
@@ -161,37 +143,31 @@ Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Do
 &lt;li&gt;提供了一套依赖管理机制。&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
-    
     <item>
       <title>dubbo</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/dubbo/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/dubbo/</link>
       <pubDate>Wed, 17 Apr 2019 11:05:53 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/dubbo/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/dubbo/</guid>
       <description>&lt;h1 id=&#34;dubbo是什么&#34;&gt;dubbo是什么&lt;/h1&gt;
 &lt;p&gt;是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。
 为什么要分布式？为什么要远程调用？
 &lt;img loading=&#34;lazy&#34; src=&#34;1.jpg&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Jenkins</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/jenkins/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/jenkins/</link>
       <pubDate>Fri, 09 Nov 2018 16:54:53 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/jenkins/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/jenkins/</guid>
       <description>&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
 &lt;p&gt;Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
 &lt;a href=&#34;https://jenkins.io/zh/&#34;&gt;这是jenkins中文网&lt;/a&gt;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>nginx</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/nginx/</link>
+      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/nginx/</link>
       <pubDate>Sat, 06 Oct 2018 18:06:29 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/nginx/</guid>
+      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/nginx/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/knowledgesea/p/5175711.html&#34;&gt;nginx学习&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
 &lt;p&gt;1.下载：http://nginx.org/
@@ -200,6 +176,5 @@ Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Do
 解决方法：进入nginx文件夹下的conf文件夹
 编辑nginx.conf，找到server{listen   80;}修改端口号，重启nginx即可&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

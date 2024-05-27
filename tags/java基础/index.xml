@@ -2,27 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>java基础 on Wjy&#39;s Blog</title>
-    <link>https://funny-toffee-4aa7c3.netlify.app/tags/java%E5%9F%BA%E7%A1%80/</link>
+    <link>http://localhost:1313/tags/java%E5%9F%BA%E7%A1%80/</link>
     <description>Recent content in java基础 on Wjy&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 16 Aug 2022 15:40:43 +0000</lastBuildDate><atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Aug 2022 15:40:43 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>web开发</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/web%E5%BC%80%E5%8F%91/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/web%E5%BC%80%E5%8F%91/</link>
       <pubDate>Tue, 16 Aug 2022 15:40:43 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/web%E5%BC%80%E5%8F%91/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/web%E5%BC%80%E5%8F%91/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;什么是JavaEE？JavaEE是Java Platform Enterprise Edition的缩写，即Java企业平台。我们前面介绍的所有基于标准JDK的开发都是JavaSE，即Java Platform Standard Edition。此外，还有一个小众不太常用的JavaME：Java Platform Micro Edition，是Java移动开发平台（非Android），它们三者关系如下：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>lambda</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/lambda/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/lambda/</link>
       <pubDate>Mon, 15 Aug 2022 18:18:18 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/lambda/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/lambda/</guid>
       <description>&lt;h1 id=&#34;函数式编程&#34;&gt;函数式编程&lt;/h1&gt;
 &lt;p&gt;我们先看看什么是函数。函数是一种最基本的任务，一个大型程序就是一个顶层函数调用若干底层函数，这些被调用的函数又可以调用其他函数，即大任务被一层层拆解并执行。所以函数就是面向过程的程序设计的基本单元。&lt;/p&gt;
 &lt;p&gt;Java不支持单独定义函数，但可以把静态方法视为独立的函数，把实例方法视为自带&lt;code&gt;this&lt;/code&gt;参数的函数。&lt;/p&gt;
@@ -36,34 +34,28 @@
 &lt;p&gt;函数式编程最早是数学家&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E9%98%BF%E9%9A%86%E4%BD%90%C2%B7%E9%82%B1%E5%A5%87&#34;&gt;阿隆佐·邱奇&lt;/a&gt;研究的一套函数变换逻辑，又称Lambda Calculus（λ-Calculus），所以也经常把函数式编程称为Lambda计算。&lt;/p&gt;
 &lt;p&gt;Java平台从Java 8开始，支持函数式编程。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>JDBC</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/jdbc/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/jdbc/</link>
       <pubDate>Sun, 14 Aug 2022 17:43:19 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/jdbc/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/jdbc/</guid>
       <description>&lt;h1 id=&#34;jdbc简介&#34;&gt;JDBC简介&lt;/h1&gt;
 &lt;p&gt;在介绍JDBC之前，我们先简单介绍一下关系数据库。&lt;/p&gt;
 &lt;p&gt;程序运行的时候，数据都是在内存中的。当程序终止的时候，通常都需要将数据保存到磁盘上，无论是保存到本地磁盘，还是通过网络保存到服务器上，最终都会将数据写入磁盘文件。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>网络编程</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Sat, 13 Aug 2022 16:42:13 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;网络编程是Java最擅长的方向之一，使用Java进行网络编程时，由虚拟机实现了底层复杂的网络协议，Java程序只需要调用Java标准库提供的接口，就可以简单高效地编写网络程序。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>加密与安全</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%8A%A0%E5%AF%86%E4%B8%8E%E5%AE%89%E5%85%A8/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%8A%A0%E5%AF%86%E4%B8%8E%E5%AE%89%E5%85%A8/</link>
       <pubDate>Fri, 12 Aug 2022 17:53:20 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%8A%A0%E5%AF%86%E4%B8%8E%E5%AE%89%E5%85%A8/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%8A%A0%E5%AF%86%E4%B8%8E%E5%AE%89%E5%85%A8/</guid>
       <description>&lt;h1 id=&#34;加密与安全&#34;&gt;加密与安全&lt;/h1&gt;
 &lt;p&gt;在计算机系统中，什么是加密与安全呢？&lt;/p&gt;
 &lt;p&gt;我们举个栗子：假设Bob要给Alice发一封邮件，在邮件传送的过程中，黑客可能会窃取到邮件的内容，所以需要防窃听。黑客还可能会篡改邮件的内容，Alice必须有能力识别出邮件有没有被篡改。最后，黑客可能假冒Bob给Alice发邮件，Alice必须有能力识别出伪造的邮件。&lt;/p&gt;
@@ -81,13 +73,11 @@
 &lt;/ul&gt;
 &lt;p&gt;本章我们会介绍最常用的加密算法，以及如何通过Java代码实现。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>正则</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E6%AD%A3%E5%88%99/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E6%AD%A3%E5%88%99/</link>
       <pubDate>Thu, 11 Aug 2022 17:56:20 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E6%AD%A3%E5%88%99/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E6%AD%A3%E5%88%99/</guid>
       <description>&lt;p&gt;在了解正则表达式之前，我们先看几个非常常见的问题：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;如何判断字符串是否是有效的电话号码？例如：&lt;code&gt;010-1234567&lt;/code&gt;，&lt;code&gt;123ABC456&lt;/code&gt;，&lt;code&gt;13510001000&lt;/code&gt;&lt;/li&gt;
@@ -95,102 +85,81 @@
 &lt;li&gt;如何判断字符串是否是有效的时间？例如：&lt;code&gt;12:34&lt;/code&gt;，&lt;code&gt;09:60&lt;/code&gt;，&lt;code&gt;99:99&lt;/code&gt;等。&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
-    
     <item>
       <title>单元测试</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
       <pubDate>Wed, 10 Aug 2022 15:21:25 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;单元测试就是针对最小的功能单元编写测试代码。Java程序最小的功能单元是方法，因此，对Java程序进行单元测试就是针对单个Java方法的测试。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>java时间</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/java%E6%97%B6%E9%97%B4/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/java%E6%97%B6%E9%97%B4/</link>
       <pubDate>Tue, 09 Aug 2022 10:42:11 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/java%E6%97%B6%E9%97%B4/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/java%E6%97%B6%E9%97%B4/</guid>
       <description>&lt;h1 id=&#34;localdatetime&#34;&gt;LocalDateTime&lt;/h1&gt;</description>
     </item>
-    
     <item>
       <title>IO</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/io/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/io/</link>
       <pubDate>Mon, 08 Aug 2022 22:46:16 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/io/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/io/</guid>
       <description>IO IO是指Input/Output，即输入和输出。以内存为中心： Input指从外部读入数据到内存，例如，把文件从磁盘读取到内存，从网络读取数</description>
     </item>
-    
     <item>
       <title>泛型</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%9B%E5%9E%8B/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%9B%E5%9E%8B/</link>
       <pubDate>Sun, 07 Aug 2022 09:36:54 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%9B%E5%9E%8B/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%9B%E5%9E%8B/</guid>
       <description>&lt;p&gt;泛型是一种“代码模板”，可以用一套代码套用各种类型。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>注解</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%A8%E8%A7%A3/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%A8%E8%A7%A3/</link>
       <pubDate>Sat, 06 Aug 2022 16:36:38 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%A8%E8%A7%A3/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E6%B3%A8%E8%A7%A3/</guid>
       <description>&lt;h1 id=&#34;使用注解&#34;&gt;使用注解&lt;/h1&gt;
 &lt;p&gt;什么是注解（Annotation）？注解是放在Java源码的类、方法、字段、参数前的一种特殊“注释”：&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>反射</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%8F%8D%E5%B0%84/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%8F%8D%E5%B0%84/</link>
       <pubDate>Fri, 05 Aug 2022 16:21:35 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%8F%8D%E5%B0%84/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%8F%8D%E5%B0%84/</guid>
       <description>&lt;h1 id=&#34;反射&#34;&gt;反射&lt;/h1&gt;
 &lt;p&gt;什么是反射？
 反射就是&lt;code&gt;Reflection&lt;/code&gt;，Java的反射是指程序在运行期可以拿到一个对象的所有信息。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>异常</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%BC%82%E5%B8%B8/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%BC%82%E5%B8%B8/</link>
       <pubDate>Thu, 04 Aug 2022 17:46:43 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E5%BC%82%E5%B8%B8/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E5%BC%82%E5%B8%B8/</guid>
       <description>&lt;h1 id=&#34;java异常简介&#34;&gt;Java异常简介&lt;/h1&gt;
 &lt;p&gt;Java异常机制可以使程序中异常处理代码和正常业务代码分离，保证程序代码更加优雅，并提高程序健壮性。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>java核心类</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</link>
       <pubDate>Wed, 03 Aug 2022 16:13:22 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/java%E6%A0%B8%E5%BF%83%E7%B1%BB/</guid>
       <description>&lt;h1 id=&#34;字符串和编码&#34;&gt;字符串和编码&lt;/h1&gt;</description>
     </item>
-    
     <item>
       <title>面向对象编程</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Tue, 02 Aug 2022 17:37:14 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;Java是一种面向对象的编程语言。面向对象编程，英文是Object-Oriented Programming，简称OOP。&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>java基础</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/java%E5%9F%BA%E7%A1%80/</link>
+      <link>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/java%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Mon, 01 Aug 2022 17:22:05 +0000</pubDate>
-      
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E5%9F%BA%E7%A1%80/java%E5%9F%BA%E7%A1%80/</guid>
+      <guid>http://localhost:1313/posts/java%E5%9F%BA%E7%A1%80/java%E5%9F%BA%E7%A1%80/</guid>
       <description>Java教程 - 廖雪峰的官方网站 (liaoxuefeng.com) 概述 为什么Java应用最广泛？ 从互联网到企业平台，Java是应用最广泛的编程语言，原因在于： Java是基于J</description>
     </item>
-    
   </channel>
 </rss>
