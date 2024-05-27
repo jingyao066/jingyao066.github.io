@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>other on Wjy&#39;s Blog</title>
-    <link>http://localhost:1313/tags/other/</link>
+    <link>https://funny-toffee-4aa7c3.netlify.app/tags/other/</link>
     <description>Recent content in other on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
     <lastBuildDate>Fri, 22 Dec 2023 10:17:12 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/other/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/other/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>登录</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</link>
       <pubDate>Fri, 22 Dec 2023 10:17:12 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%99%BB%E5%BD%95/</guid>
       <description>概述 在 Spring Security 5.7.0 中，spring 团队弃用了 WebSecurityConfigurerAdapter，因为他们鼓励用户转向基于组件的安全配置。Sp</description>
     </item>
     <item>
       <title>hugo</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/hugo/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hugo/</link>
       <pubDate>Fri, 03 Feb 2023 10:14:27 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/hugo/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hugo/</guid>
       <description>&lt;h1 id=&#34;准备&#34;&gt;准备&lt;/h1&gt;
 &lt;p&gt;全程参考官方文档：https://gohugo.io/&lt;/p&gt;
 &lt;p&gt;安装git（忽略）。&lt;/p&gt;
@@ -33,9 +33,9 @@
     </item>
     <item>
       <title>网站的扩展</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/</link>
       <pubDate>Fri, 27 Mar 2020 10:28:01 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/</guid>
       <description>&lt;p&gt;原文地址：https://arcentry.com/blog/scaling-webapps-for-newbs-and-non-techies/
 通俗地解释如何拓展网站服务，承受更大的访问量。&lt;/p&gt;
 &lt;h1 id=&#34;单个服务器数据库&#34;&gt;单个服务器+数据库&lt;/h1&gt;
@@ -45,9 +45,9 @@
     </item>
     <item>
       <title>pay</title>
-      <link>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/</link>
       <pubDate>Sun, 24 Nov 2019 13:50:44 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/</guid>
       <description>&lt;p&gt;支付宝支付官网：
 &lt;a href=&#34;https://docs.open.alipay.com/catalog&#34;&gt;https://docs.open.alipay.com/catalog&lt;/a&gt;
 微信支付官网：
@@ -56,9 +56,9 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     </item>
     <item>
       <title>后台角色授权菜单功能的实现</title>
-      <link>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Sun, 10 Nov 2019 14:51:14 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
       <description>&lt;h1 id=&#34;后台添加角色后需要给角色授权菜单不同的角色有不同的菜单&#34;&gt;后台添加角色后，需要给角色授权菜单，不同的角色有不同的菜单。&lt;/h1&gt;
 &lt;p&gt;两个点：
 1.菜单表结构，父子级在一个表中。dto的使用
@@ -66,9 +66,9 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     </item>
     <item>
       <title>SKU</title>
-      <link>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/sku/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/sku/</link>
       <pubDate>Fri, 01 Nov 2019 22:52:56 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/sku/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/sku/</guid>
       <description>&lt;h1 id=&#34;sku&#34;&gt;SKU&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;1.jpg&#34; alt=&#34;&#34;  /&gt;
 
@@ -83,26 +83,26 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     </item>
     <item>
       <title>windows</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/windows/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/windows/</link>
       <pubDate>Mon, 28 Oct 2019 16:39:52 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/windows/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/windows/</guid>
       <description>&lt;h1 id=&#34;查看端口占用&#34;&gt;查看端口占用&lt;/h1&gt;
 &lt;p&gt;查看全部端口：
 &lt;code&gt;netstat -ano&lt;/code&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>jsDaily</title>
-      <link>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/jsdaily/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/jsdaily/</link>
       <pubDate>Mon, 20 May 2019 10:04:27 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/jsdaily/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/jsdaily/</guid>
       <description>&lt;h1 id=&#34;input设置为disabled后台无法接受到数据&#34;&gt;input设置为disabled，后台无法接受到数据&lt;/h1&gt;
 &lt;p&gt;W3C的规范，&lt;code&gt;disabled=”disabled”&lt;/code&gt;不能向后台提交，改为&lt;code&gt;readonly = “readonly”&lt;/code&gt;即可&lt;/p&gt;</description>
     </item>
     <item>
       <title>wx</title>
-      <link>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/wx/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/wx/</link>
       <pubDate>Thu, 25 Apr 2019 10:04:49 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/wx/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/wx/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;h2 id=&#34;公众号类型功能介绍&#34;&gt;公众号类型功能介绍&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;http://kf.qq.com/faq/170815aUZjeQ170815mU7bI7.html&#34;&gt;微信官方介绍&lt;/a&gt;
@@ -110,9 +110,9 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     </item>
     <item>
       <title>SOA</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/soa/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/soa/</link>
       <pubDate>Fri, 09 Nov 2018 16:51:22 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/soa/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/soa/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;maven+dubbo+zookeeper构建soa建构系统。
 dubbo是目前国内最广泛的rpc框架，&lt;a href=&#34;http://dubbo.apache.org/zh-cn/index.html&#34;&gt;这是官网&lt;/a&gt;
@@ -120,18 +120,18 @@ dubbo是目前国内最广泛的rpc框架，&lt;a href=&#34;http://dubbo.apache.
     </item>
     <item>
       <title>idea</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/idea/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/idea/</link>
       <pubDate>Thu, 08 Nov 2018 20:55:11 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/idea/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/idea/</guid>
       <description>&lt;p&gt;记录自己idea的个性化设置。
 记得定期将自己的setting导出，新环境直接导入就好了。
 file-&amp;gt;export setting&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hexo</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/hexo/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hexo/</link>
       <pubDate>Mon, 05 Nov 2018 13:54:31 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/hexo/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/hexo/</guid>
       <description>&lt;p&gt;总体步骤：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;安装Git Bash&lt;/li&gt;
@@ -148,9 +148,9 @@ file-&amp;gt;export setting&lt;/p&gt;</description>
     </item>
     <item>
       <title>MarkDown</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/markdown/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/markdown/</link>
       <pubDate>Thu, 06 Sep 2018 14:48:51 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/markdown/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/markdown/</guid>
       <description>&lt;h1 id=&#34;标题&#34;&gt;标题&lt;/h1&gt;
 &lt;p&gt;总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。&lt;/p&gt;
 &lt;h1 id=&#34;一级标题&#34;&gt;一级标题&lt;/h1&gt;
@@ -163,32 +163,32 @@ file-&amp;gt;export setting&lt;/p&gt;</description>
     </item>
     <item>
       <title>ffmpeg</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/ffmpeg/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/ffmpeg/</link>
       <pubDate>Wed, 24 Oct 2001 16:21:14 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/ffmpeg/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/ffmpeg/</guid>
       <description>官网：https://ffmpeg.org/ 下载安装 去官网下载 http://www.ffmpeg.org/download.html 选择windows，选择Windows builds from gyan.dev。 直接下载版本：f</description>
     </item>
     <item>
       <title>gulimall</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/gulimall/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/gulimall/</link>
       <pubDate>Thu, 09 Dec 1999 00:42:45 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/gulimall/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/gulimall/</guid>
       <description>https://blog.csdn.net/weixin_44190665/article/details/121043585 P P44 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 &amp;lt;!-- vue初始化模板 --&amp;gt; &amp;lt;template&amp;gt; &amp;lt;div class=&amp;#39;&amp;#39;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/template&amp;gt; &amp;lt;script&amp;gt; //这里可</description>
     </item>
     <item>
       <title>JRebel</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/jrebel/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/jrebel/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/jrebel/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/jrebel/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;热部署的作用是在不重启项目的情况下，使用类加载器重新加载修改过的.class文件到内存，避免花费时间在重启上。
 目前比较常用的有两种热部署，分别为&lt;code&gt;spring-boot-devtools&lt;/code&gt;和&lt;code&gt;JRebel&lt;/code&gt;。&lt;a href=&#34;https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-running-with-the-maven-plugin&#34;&gt;spring-boot-devtools官网&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>面试</title>
-      <link>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E9%9D%A2%E8%AF%95/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://snailclimb.gitee.io/javaguide-interview/#/&#34;&gt;整体参考&lt;/a&gt;
 &lt;a href=&#34;https://blog.csdn.net/HarderXin/article/details/103971493&#34;&gt;参考2&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;java基础&#34;&gt;java基础&lt;/h1&gt;
