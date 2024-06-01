@@ -6,8 +6,43 @@
     <description>Recent content on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 30 Apr 2024 12:03:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jun 2024 10:27:12 +0000</lastBuildDate>
     <atom:link href="https://funny-toffee-4aa7c3.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>树</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%A0%91/</link>
+      <pubDate>Sat, 01 Jun 2024 10:27:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%A0%91/</guid>
+      <description>二叉树 二叉树（binary tree）是一种非线性数据结构，代表“祖先”与“后代”之间的派生关系，体现了“一分为二”的分治逻辑。与链表类似，二</description>
+    </item>
+    <item>
+      <title>哈希表</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%93%88%E5%B8%8C%E8%A1%A8/</link>
+      <pubDate>Fri, 31 May 2024 11:27:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%93%88%E5%B8%8C%E8%A1%A8/</guid>
+      <description>在计算机世界中，哈希表如同一位聪慧的图书管理员。 他知道如何计算索书号，从而可以快速找到目标图书。 哈希表 哈希表（hash table），又称散列</description>
+    </item>
+    <item>
+      <title>栈与队列</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</link>
+      <pubDate>Fri, 31 May 2024 10:27:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</guid>
+      <description>栈 栈（stack）是一种遵循先入后出逻辑的线性数据结构。 我们可以将栈类比为桌面上的一摞盘子，如果想取出底部的盘子，则需要先将上面的盘子依次移</description>
+    </item>
+    <item>
+      <title>数组与链表</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</link>
+      <pubDate>Fri, 31 May 2024 09:27:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</guid>
+      <description>数据结构的世界如同一堵厚实的砖墙。 数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。 数组 数组（array）是</description>
+    </item>
+    <item>
+      <title>数据结构</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Fri, 31 May 2024 08:27:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <description>常见的数据结构包括数组、链表、栈、队列、哈希表、树、堆、图，它们可以从“逻辑结构”和“物理结构”两个维度进行分类。 数据结构分类 逻辑结构：线性</description>
+    </item>
     <item>
       <title>初识算法</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/</link>
@@ -2658,7 +2693,7 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/</link>
       <pubDate>Sun, 24 Oct 1999 16:21:14 +0000</pubDate>
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/</guid>
-      <description>日积月累的力量｜读《刻意练习》有感 《刻意学习》出现在非常多书单的toplist里面并不是徒有虚名，整体来说，它用大量的真实的数据及详细的案例</description>
+      <description>职业建议 原文：Brutally honest career advice to my younger self - Noah Kagan 感到迷茫是可以的 当我年轻的时候，我所有的朋友都成为了会计师、顾问和银行家&amp;hellip;&amp;</description>
     </item>
     <item>
       <title>notes</title>
