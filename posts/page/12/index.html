@@ -169,95 +169,97 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">IOC
+    <h2 class="entry-hint-parent">docker
     </h2>
   </header>
   <div class="entry-content">
-    <p>概述 Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。
-Spring最早是由Rod Johnson这哥们在他的《Expert One-on-One J2EE Development without EJB》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。
-随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。
-Spring Framework Spring Framework主要包括几个模块：
-支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。
-spring官网 spring官网如何阅读
+    <p>概述 Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。 Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。 下面的图片比较了 Docker 和传统虚拟化方式的不同之处，可见docker是在操作系统上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-03-05 10:26:24 +0000 UTC'>2020-03-05</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to docker" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">kit
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>ffmpeg使用 ffmpeg了解 ffmpeg官网 在使用Java调用FFmpeg处理音视频之前，需要先安装FFmpeg，安装方法分为两种：
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2020-01-01 15:32:45 +0000 UTC'>2020-01-01</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to IOC" href="https://funny-toffee-4aa7c3.netlify.app/posts/spring/ioc/"></a>
+  <footer class="entry-footer"><span title='2020-01-11 10:27:48 +0000 UTC'>2020-01-11</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to kit" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/kit/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql主从复制&#43;读写分离的实现
+    <h2 class="entry-hint-parent">sharding
     </h2>
   </header>
   <div class="entry-content">
-    <p>准备 本机，安装mysql 一台虚拟机，或内网中的另一台主机，安装mysql 需要两台机器互相可以ping通 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-12-06 18:09:14 +0000 UTC'>2019-12-06</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql主从复制&#43;读写分离的实现" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6-%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E7%9A%84%E5%AE%9E%E7%8E%B0/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql进阶-存储过程
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。 存储过程是可编程的函数，在数据库中(数据字典表)创建并保存，可以由SQL语句和控制结构组成。当想要在不同的应用程序或平台上执行相同的函数，或者封装特定功能时，存储过程是非常有用的。数据库中的存储过程可以看做是对编程中面向对象方法的模拟，它允许控制数据的访问方式。
+    <p>官网 github Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar这3款相互独立的产品组成。 他们均提供标准化的数据分片、读写分离、柔性事务和数据治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。 其中Sharding-JDBC最早由当当网在2016年开源，在Sharding-JDBC 3.0版本，更名为Sharding-Sphere，后来创始人张亮去了京东。在2018年底，项目开源给了apache基金会。
+参考：Sharding-JDBC源码解析与vivo的定制开发
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-05 20:08:17 +0000 UTC'>2019-12-05</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql进阶-存储过程" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/"></a>
+  <footer class="entry-footer"><span title='2020-01-08 11:57:49 +0000 UTC'>2020-01-08</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to sharding" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql进阶-视图
+    <h2 class="entry-hint-parent">mysql进阶-索引
     </h2>
   </header>
   <div class="entry-content">
-    <p>视图 概念： 视图就是一条SELECT语句执行后返回的结果集。 视图（view）是一种虚拟存在的表，是一个逻辑表，本身并不包含数据。作为一个select语句保存在数据字典中的。 所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。
+    <p>索引概述 在关系数据库中，索引是一种单独的、物理的对数据库表中一列或多列的值进行排序的一种存储结构，它是某个表中一列或若干列值的集合和相应的指向表中物理标识这些值的数据页的逻辑指针清单。 简单来说，索引的作用相当于图书的目录，可以根据目录中的页码快速找到所需的内容。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-04 18:27:30 +0000 UTC'>2019-12-04</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql进阶-视图" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E8%A7%86%E5%9B%BE/"></a>
+  <footer class="entry-footer"><span title='2020-01-07 22:05:33 +0000 UTC'>2020-01-07</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mysql进阶-索引" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql优化
+    <h2 class="entry-hint-parent">springMVC
     </h2>
   </header>
   <div class="entry-content">
-    <p>千万级数据深分页查询 如何在Mysql中实现上亿数据的遍历查询？先来介绍一下系统主角：关注系统，主要是维护京东用户和业务对象之前的关注关系；并...</p>
+    <p>spring mvc 概述 MVC，即 model模型，view视图，controller控制。 spring mvc可以用来开发灵活、松散耦合的 web 应用程序。 MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。
+模型封装了应用程序数据，通常由POJO组成。 视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。 控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-03 18:13:55 +0000 UTC'>2019-12-03</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql优化" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E4%BC%98%E5%8C%96/"></a>
+  <footer class="entry-footer"><span title='2020-01-05 23:35:36 +0000 UTC'>2020-01-05</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to springMVC" href="https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql数据类型
+    <h2 class="entry-hint-parent">spring代码示例
     </h2>
   </header>
   <div class="entry-content">
-    <p>mysql数据类型 主要包括以下五大类：
-1 2 3 4 5 6 7 8 9 整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT 浮点数类型：FLOAT、DOUBLE、DECIMAL 字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB 日期类型：Date、DateTime、TimeStamp、Time、Year 其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等 ...</p>
+    <p>简单的hello world...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-03 11:31:38 +0000 UTC'>2019-12-03</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql数据类型" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"></a>
+  <footer class="entry-footer"><span title='2020-01-04 14:13:12 +0000 UTC'>2020-01-04</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to spring代码示例" href="https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql技巧
+    <h2 class="entry-hint-parent">Spring开发web应用
     </h2>
   </header>
   <div class="entry-content">
-    <p>select执行顺序 1 2 3 4 5 6 7 8 9 10 (7) SELECT (8) DISTINCT &lt;select_list&gt; (1) FROM &lt;left_table&gt; (3) &lt;join_type&gt; JOIN &lt;right_table&gt; (2) ON &lt;join_condition&gt; (4) WHERE &lt;where_condition&gt; (5) GROUP BY &lt;group_by_list&gt; (6) HAVING &lt;having_condition&gt; (9) ORDER BY &lt;order_by_condition&gt; (10) LIMIT &lt;limit_number&gt; ...</p>
+    <p>开发Web应用 在Web开发一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：
+Servlet规范定义了几种标准组件：Servlet、JSP、Filter和Listener； Servlet的标准组件总是运行在Servlet容器中，如Tomcat、Jetty、WebLogic等。 直接使用Servlet进行Web开发好比直接在JDBC上操作数据库，比较繁琐，更好的方法是在Servlet基础上封装MVC框架，基于MVC开发Web应用，大部分时候，不需要接触Servlet API，开发省时省力。
+我们在MVC开发和MVC高级开发已经由浅入深地介绍了如何编写MVC框架。当然，自己写的MVC主要是理解原理，要实现一个功能全面的MVC需要大量的工作以及广泛的测试。
+因此，开发Web应用，首先要选择一个优秀的MVC框架。常用的MVC框架有：
+Struts：最古老的一个MVC框架，目前版本是2，和1.x有很大的区别； WebWork：一个比Struts设计更优秀的MVC框架，但不知道出于什么原因，从2.0开始把自己的代码全部塞给Struts 2了； Turbine：一个重度使用Velocity，强调布局的MVC框架； 其他100&#43;MVC框架……（略） Spring虽然都可以集成任何Web框架，但是，Spring本身也开发了一个MVC框架，就叫Spring MVC。这个MVC框架设计得足够优秀以至于我们已经不想再费劲去集成类似Struts这样的框架了。
+本章我们会详细介绍如何基于Spring MVC开发Web应用。
+...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-02 18:13:55 +0000 UTC'>2019-12-02</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql技巧" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%8A%80%E5%B7%A7/"></a>
+  <footer class="entry-footer"><span title='2020-01-03 15:33:23 +0000 UTC'>2020-01-03</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to Spring开发web应用" href="https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

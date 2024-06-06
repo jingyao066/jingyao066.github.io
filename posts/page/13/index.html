@@ -169,98 +169,98 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql基础
+    <h2 class="entry-hint-parent">AOP
     </h2>
   </header>
   <div class="entry-content">
-    <p>关系数据库概述 为什么需要数据库？
-因为应用程序需要保存用户的数据，比如Word需要把用户文档保存起来，以便下次继续编辑或者拷贝到另一台电脑。
+    <p>使用AOP AOP是Aspect Oriented Programming，即面向切面编程。
+那什么是AOP？
+我们先回顾一下OOP：Object Oriented Programming，OOP作为面向对象编程的模式，获得了巨大的成功，OOP的主要功能是数据封装、继承和多态。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-01 18:12:58 +0000 UTC'>2019-12-01</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql基础" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E5%9F%BA%E7%A1%80/"></a>
+  <footer class="entry-footer"><span title='2020-01-02 16:21:14 +0000 UTC'>2020-01-02</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to AOP" href="https://funny-toffee-4aa7c3.netlify.app/posts/spring/aop/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">git
+    <h2 class="entry-hint-parent">IOC
     </h2>
   </header>
   <div class="entry-content">
-    <p>常用命令 git官方文档
+    <p>概述 Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。
+Spring最早是由Rod Johnson这哥们在他的《Expert One-on-One J2EE Development without EJB》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。
+随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。
+Spring Framework Spring Framework主要包括几个模块：
+支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。
+spring官网 spring官网如何阅读
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-11-25 10:14:46 +0000 UTC'>2019-11-25</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to git" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/git/"></a>
+  <footer class="entry-footer"><span title='2020-01-01 15:32:45 +0000 UTC'>2020-01-01</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to IOC" href="https://funny-toffee-4aa7c3.netlify.app/posts/spring/ioc/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">pay
+    <h2 class="entry-hint-parent">mysql主从复制&#43;读写分离的实现
     </h2>
   </header>
   <div class="entry-content">
-    <p>支付宝支付官网： https://docs.open.alipay.com/catalog 微信支付官网： V2：https://pay.weixin.qq.com/wiki/doc/api/index.html V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml
+    <p>准备 本机，安装mysql 一台虚拟机，或内网中的另一台主机，安装mysql 需要两台机器互相可以ping通 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-12-06 18:09:14 +0000 UTC'>2019-12-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mysql主从复制&#43;读写分离的实现" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6-%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E7%9A%84%E5%AE%9E%E7%8E%B0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">mysql进阶-存储过程
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。 存储过程是可编程的函数，在数据库中(数据字典表)创建并保存，可以由SQL语句和控制结构组成。当想要在不同的应用程序或平台上执行相同的函数，或者封装特定功能时，存储过程是非常有用的。数据库中的存储过程可以看做是对编程中面向对象方法的模拟，它允许控制数据的访问方式。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-11-24 13:50:44 +0000 UTC'>2019-11-24</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to pay" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/"></a>
+  <footer class="entry-footer"><span title='2019-12-05 20:08:17 +0000 UTC'>2019-12-05</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mysql进阶-存储过程" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">Maven
+    <h2 class="entry-hint-parent">mysql进阶-视图
     </h2>
   </header>
   <div class="entry-content">
-    <p>Maven介绍 在了解Maven之前，我们先来看看一个Java项目需要的东西。首先，我们需要确定引入哪些依赖包。例如，如果我们需要用到commons logging，我们就必须把commons logging的jar包放入classpath。如果我们还需要log4j，就需要把log4j相关的jar包都放到classpath中。这些就是依赖包的管理。
-其次，我们要确定项目的目录结构。例如，src目录存放Java源码，resources目录存放配置文件，bin目录存放编译生成的.class文件。
-此外，我们还需要配置环境，例如JDK的版本，编译打包的流程，当前代码的版本号。
-最后，除了使用Eclipse这样的IDE进行编译外，我们还必须能通过命令行工具进行编译，才能够让项目在一个独立的服务器上编译、测试、部署。
-这些工作难度不大，但是非常琐碎且耗时。如果每一个项目都自己搞一套配置，肯定会一团糟。我们需要的是一个标准化的Java项目管理和构建工具。
-Maven就是是专门为Java项目打造的管理和构建工具，它的主要功能有：
-提供了一套标准化的项目结构； 提供了一套标准化的构建流程（编译，测试，打包，发布……）； 提供了一套依赖管理机制。 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-11-11 11:41:35 +0000 UTC'>2019-11-11</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to Maven" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/maven/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">后台角色授权菜单功能的实现
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>后台添加角色后，需要给角色授权菜单，不同的角色有不同的菜单。 两个点： 1.菜单表结构，父子级在一个表中。dto的使用 2.树状图插件zTree的使用，以及角色菜单的回显
+    <p>视图 概念： 视图就是一条SELECT语句执行后返回的结果集。 视图（view）是一种虚拟存在的表，是一个逻辑表，本身并不包含数据。作为一个select语句保存在数据字典中的。 所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-11-10 14:51:14 +0000 UTC'>2019-11-10</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 后台角色授权菜单功能的实现" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/"></a>
+  <footer class="entry-footer"><span title='2019-12-04 18:27:30 +0000 UTC'>2019-12-04</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mysql进阶-视图" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E8%A7%86%E5%9B%BE/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">SKU
+    <h2 class="entry-hint-parent">mysql优化
     </h2>
   </header>
   <div class="entry-content">
-    <p>SKU 淘宝购买商品时，商品有很多不同的属性和属性值，如： 颜色：白色、黑色、蓝色、紫色… 尺寸：170、175、180、185… 买衣服时，通常会发现，白色-175库存20件，但是白色-180有30件， 而且价格可能还不同，这是因为后台sku设置的价格和库存。 后台设置SKU的界面 ...</p>
+    <p>千万级数据深分页查询 如何在Mysql中实现上亿数据的遍历查询？先来介绍一下系统主角：关注系统，主要是维护京东用户和业务对象之前的关注关系；并...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-11-01 22:52:56 +0000 UTC'>2019-11-01</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to SKU" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/sku/"></a>
+  <footer class="entry-footer"><span title='2019-12-03 18:13:55 +0000 UTC'>2019-12-03</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mysql优化" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E4%BC%98%E5%8C%96/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">windows
+    <h2 class="entry-hint-parent">mysql数据类型
     </h2>
   </header>
   <div class="entry-content">
-    <p>查看端口占用 查看全部端口： netstat -ano
-...</p>
+    <p>mysql数据类型 主要包括以下五大类：
+1 2 3 4 5 6 7 8 9 整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT 浮点数类型：FLOAT、DOUBLE、DECIMAL 字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB 日期类型：Date、DateTime、TimeStamp、Time、Year 其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-10-28 16:39:52 +0000 UTC'>2019-10-28</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to windows" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/windows/"></a>
+  <footer class="entry-footer"><span title='2019-12-03 11:31:38 +0000 UTC'>2019-12-03</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mysql数据类型" href="https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

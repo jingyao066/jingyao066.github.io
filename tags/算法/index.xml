@@ -6,8 +6,64 @@
     <description>Recent content in 算法 on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Jun 2024 10:27:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jun 2024 11:32:06 +0000</lastBuildDate>
     <atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>贪心</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%BF%83/</link>
+      <pubDate>Thu, 06 Jun 2024 11:32:06 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%BF%83/</guid>
+      <description>贪心算法 贪心算法（greedy algorithm）是一种常见的解决优化问题的算法，其基本思想是在问题的每个决策阶段，都选择当前看起来最优的选</description>
+    </item>
+    <item>
+      <title>动态规划</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+      <pubDate>Thu, 06 Jun 2024 10:27:26 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
+      <description>初探动态规划 动态规划（dynamic programming）是一个重要的算法范式，它将一个问题分解为一系列更小的子问题，并通过存储子问题的解</description>
+    </item>
+    <item>
+      <title>回溯</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF/</link>
+      <pubDate>Thu, 06 Jun 2024 09:10:32 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF/</guid>
+      <description>回溯算法 回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有</description>
+    </item>
+    <item>
+      <title>分治</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%88%86%E6%B2%BB/</link>
+      <pubDate>Wed, 05 Jun 2024 11:42:32 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%88%86%E6%B2%BB/</guid>
+      <description>分治算法 分治（divide and conquer），全称分而治之，是一种非常重要且常见的算法策略。分治通常基于递归实现，包括“分”和“治”两个步骤</description>
+    </item>
+    <item>
+      <title>排序</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Tue, 04 Jun 2024 16:27:02 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/</guid>
+      <description>排序算法 排序算法（sorting algorithm）用于对一组数据按照特定顺序进行排列。排序算法有着广泛的应用，因为有序数据通常能够被更高效</description>
+    </item>
+    <item>
+      <title>搜索</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/</link>
+      <pubDate>Tue, 04 Jun 2024 15:12:51 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/</guid>
+      <description>二分查找 二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜</description>
+    </item>
+    <item>
+      <title>图</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%9B%BE/</link>
+      <pubDate>Tue, 04 Jun 2024 10:40:20 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%9B%BE/</guid>
+      <description>图 图（graph）是一种非线性数据结构，由顶点（vertex）和边（edge）组成。我们可以将图 𝐺 抽象地表示为一组顶点 𝑉 和一组边 𝐸 的集合。以</description>
+    </item>
+    <item>
+      <title>堆</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%A0%86/</link>
+      <pubDate>Sat, 01 Jun 2024 10:27:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%A0%86/</guid>
+      <description>堆 堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。 小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。 大顶堆</description>
+    </item>
     <item>
       <title>树</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%A0%91/</link>
