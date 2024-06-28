@@ -2749,7 +2749,7 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/</link>
       <pubDate>Sun, 24 Oct 1999 16:21:14 +0000</pubDate>
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/</guid>
-      <description>现在这个社会，高考到底还有多大用处？ 高考刚结束，不少人都在聊这个话题，好多人也想让我聊聊高考在现在这个社会对人生的作用。 其实我对高考的认知，</description>
+      <description>GPU简史兼论Nvidia的崛起 原文：https://www.liaoxuefeng.com/article/161941668075933</description>
     </item>
     <item>
       <title>notes</title>
@@ -2808,6 +2808,20 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
 &lt;blockquote&gt;
 &lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
 &lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>大模型技术</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/</guid>
+      <description>引言 原文：https://mp.weixin.qq.com/s/0RWIjzcB7dWhxrokWBJkdA 大模型将成为通用人工智能的重要途</description>
+    </item>
+    <item>
+      <title>提示工程指南</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E6%8F%90%E7%A4%BA%E5%B7%A5%E7%A8%8B%E6%8C%87%E5%8D%97/</guid>
+      <description>提示工程简介 原文：https://github.com/dair-ai/Prompt-Engineering-Guide 提示工程（Promp</description>
     </item>
     <item>
       <title>设计模式概览</title>

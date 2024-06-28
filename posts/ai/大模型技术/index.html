@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>大模型技术 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="AI">
+<meta name="description" content="引言 原文：https://mp.weixin.qq.com/s/0RWIjzcB7dWhxrokWBJkdA 大模型将成为通用人工智能的重要途">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="大模型技术" />
+<meta property="og:description" content="引言 原文：https://mp.weixin.qq.com/s/0RWIjzcB7dWhxrokWBJkdA 大模型将成为通用人工智能的重要途" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="大模型技术"/>
+<meta name="twitter:description" content="引言 原文：https://mp.weixin.qq.com/s/0RWIjzcB7dWhxrokWBJkdA 大模型将成为通用人工智能的重要途"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "大模型技术",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "大模型技术",
+  "name": "大模型技术",
+  "description": "引言 原文：https://mp.weixin.qq.com/s/0RWIjzcB7dWhxrokWBJkdA 大模型将成为通用人工智能的重要途",
+  "keywords": [
+    "AI"
+  ],
+  "articleBody": "引言 原文：https://mp.weixin.qq.com/s/0RWIjzcB7dWhxrokWBJkdA\n大模型将成为通用人工智能的重要途径。在这个由0和1编织的数字时代，人工智能的腾飞已不是科技梦想，而是日益切实的现实。其中，大模型作为人工智能的核心力量，正以前所未有的方式重塑着我们的生活、学习和工作。无论是智能语音助手、自动驾驶汽车，还是医疗诊断系统，大模型都是幕后英雄，让这些看似不可思议的事情变为可能。\n人工智能的发展历史 *1. 1950s-1970s：AI的诞生和早期发展*\n◦1950年，图灵测试的提出，为机器智能提供了一个评估标准。\n◦1956年，达特茅斯会议标志着人工智能作为一门学科的正式诞生。\n◦1960年代，早期的AI研究集中在逻辑推理和问题解决上。\n2. 1980s：专家系统的兴起\n◦专家系统的成功应用，如MYCIN在医学诊断领域的应用。\n◦机器学习算法开始发展，如决策树和早期的神经网络。\n3. 1990s：机器学习的进展\n◦反向传播算法的提出，极大地推动了神经网络的研究。\n◦1997年，IBM的深蓝击败国际象棋世界冠军，展示了AI在策略游戏中的能力。\n4. 2000s：大数据和计算能力的提升\n◦互联网的普及带来了海量数据，为机器学习提供了丰富的训练素材。\n◦计算能力的提升，尤其是GPU的广泛应用，加速了深度学习的发展。\n5. 2010s：深度学习革命\n◦2012年，AlexNet在ImageNet竞赛中的胜利，标志着深度学习在图像识别领域的突破。\n◦深度学习在语音识别、自然语言处理等领域取得显著进展。\n图片来源 https://blog.csdn.net/Ares_song/article/details/106880658\n6. 2017年：Transformer和自注意力机制\n◦2017年，Transformer模型的提出，引入了自注意力机制，极大地提升了模型的性能。\n◦Transformer模型在自然语言处理任务中取得了革命性的成果，如BERT、GPT等模型。\n7. 2020s：大模型和多模态学习\n◦大模型如chatGPT、Claude、Gemini、Llama、chatglm、Kimi等等都展示了强大的能力。\n◦多模态学习的发展，如CLIP模型，能够理解和生成跨模态内容。\n大模型的本质 大模型是能够从海量数据中学习、利用这些数据进行推理，并使用这些推理来回答用户的问题或是执行特定的任务。大模型（如ChatGPT、LLM等）在人工智能领域中被广泛应用，其核心理念和工作原理可以总结为以下几个方面：\n1. LLM的组成 - 两个文件 大模型由以下两个关键部分构成：一个是 参数集，另一个是 执行代码。\n•**参数集：**这是模型的\"大脑\"，包含了通过训练学习到的神经网络权重。\n•**执行代码：**这是模型的\"引擎\"，包含用于运行参数集的软件代码，可以采用任何编程语言实现。\n训练大模型需要对大量互联网数据进行有损压缩，是一项计算量更大的任务，通常需要一个巨大的GPU集群。\n有趣的是，你只需要一台标准的计算机就可以运行像Llama-3这样的LLM并得出推论。在本地服务器上运行，因此，甚至不需要互联网连接。\n2. LLM的神经网络究竟在“想”什么 - 预测下一个单词 大模型的核心功能之一是预测文本序列中的下一个单词：\n•输入一个“部分”句子，如“cat sat on a”。\n•利用分布在网络中的参数及其连接关系预测下一个最可能的单词，并给出概率。如“mat（97%）”\n•模拟了人类语言生成的方式，使得模型能够生成连贯和符合语境的句子，如生成完整的句子“cat sat on a mat”\n模型根据它所获得的大量训练数据，生成“合理的延续”，即生成符合人类语言习惯的文本。\n注：Transformer架构为这个神经网络提供了动力。\n图片来源 A Busy Person’s Introduction to Large Language Models（https://www.openculture.com/2023/12/a-busy-persons-introduction-to-large-language-models-llms.html)\n3. 神经网络“真正”的工作方式仍然是个谜 尽管我们可以将数十亿个参数输入到网络中，并通过反复微调训练这些参数，从而获得更好的预测效果，但我们并不完全理解这些参数在网络中是如何准确协作的，以及为什么它们能够生成如此准确的回答。科学上，这种现象被称为涌现。\n我们知道，这些参数构建并维护了某种形式的知识数据库。然而，这种数据库有时表现得既奇怪又不完美。例如，一个大型语言模型（LLM）可能会正确回答“谁是小明的母亲？”这个问题，但如果你问它“X的儿子是谁？”，它可能会回答“我不知道”。这种现象通常被称为递归诅咒。\n4. 训练大模型的步骤 预训练，训练需要对大量互联网数据进行有损压缩，输出参数文件\n•收集大量互联网文本数据。\n•准备强大的计算资源，如GPU集群。\n•执行训练，生成基本模型。\n微调阶段：\n•准备高质量的训练数据，如问答对。\n•在这些数据上调整模型参数，优化性能。\n•进行评估和部署，确保模型达到预期效果。\n图片来源 A Busy Person’s Introduction to Large Language Models（https://www.openculture.com/2023/12/a-busy-persons-introduction-to-large-language-models-llms.html）\n微调阶段 - 比较\n对于每个问题，人工标注者都会比较辅助模型的多个答案，并标注出最佳答案。这一步骤称为从人类反馈中强化学习（RLHF）。\n5. 模型性能提升 1）模型越大，能力越强：\n◦**参数量：**模型的规模通常与其参数量成正比。参数是模型学习到的知识的载体，参数越多，模型能够捕捉的信息和模式就越丰富，从而能够处理更复杂的任务。\n◦**学习能力：**大模型通常拥有更强的学习能力。它们能够从大量数据中学习到更深层次的特征和规律，这使得它们在诸如自然语言处理、图像识别等任务上表现更佳。\n◦**泛化能力：**大模型往往有更好的泛化能力，即在面对未见过的数据时，也能做出准确的预测和判断。\n2）工具越多，能力越强：\n◦**功能扩展：**为AI模型提供各种工具，可以使其功能得到显著扩展。例如，集成搜索引擎可以让模型访问互联网信息，增强其回答问题的能力。\n◦**多任务处理：**工具的集成使得AI模型能够同时处理多种任务。例如，集成计算器功能可以让模型执行数学计算，集成编程接口则可以让模型编写代码。\n◦**灵活性和适应性：**拥有多种工具的AI模型更加灵活和适应性强，能够根据任务需求快速调整其行为和策略。类似于人类通过使用工具解决各种任务。\n面临的问题 幻觉 幻觉问题指的是大模型在生成文本时可能会产生与现实世界事实不一致的内容。这种现象可以分为几种类型:\n**1. 事实性幻觉（Factuality Hallucination）：**模型生成的内容与可验证的现实世界事实不一致。大模型可能生成听起来合理但实际上错误的信息，例如，生成一篇关于一个不存在的历史事件的文章，模型可能生成一篇关于“拿破仑在月球上宣布法国胜利”的文章，尽管这在现实中从未发生过。\n**2. 忠实性幻觉（Faithfulness Hallucination）：**模型生成的内容与用户的指令或上下文不一致。例如在一个关于健康饮食的讨论中，模型可能突然开始讨论健身运动，尽管这与用户的问题不直接相关。\n产生幻觉的原因可能包括：\n•使用的数据集存在错误信息或偏见。\n•模型过度依赖训练数据中的模式，可能导致错误的关联。\n•预训练阶段的架构缺陷，如基于前一个token预测下一个token的方式可能阻碍模型捕获复杂的上下文关系。\n•对齐阶段的能力错位，即模型的内在能力与标注数据中描述的功能之间可能存在错位。\n为了缓解幻觉问题，研究者们提出了多种方法，如改进预训练策略、数据清理以消除偏见、知识编辑、检索增强生成（RAG）等。\n安全性问题 安全性问题涉及大模型可能遭受的恶意攻击和滥用，以及它们对用户隐私和数据安全的潜在威胁:\n1. 对抗样本攻击：攻击者可能构造特殊的输入样本，导致模型做出错误的预测。\n2. 后门攻击：在模型中植入后门，使得在特定触发条件下模型表现出异常行为。\n3. 成员推断攻击：攻击者尝试推断出训练集中是否包含特定的数据点。\n4. 模型窃取：通过查询模型来复制其功能，侵犯模型版权。\n5. 数据隐私泄露：模型可能泄露训练数据中的敏感信息。\n为了提高大模型的安全性，业界和研究界正在探索多种安全防护策略，包括：\n•加强数据的采集和清洗过程，确保数据质量和安全性。\n•对模型进行加固，提高其抗攻击能力。\n•采用加密存储和差分隐私技术来保护数据隐私。\n•增强模型的可解释性，以便更好地理解和控制模型行为。\n相关技术 Prompt Engineering (提示词工程) 是什么 提示词(prompt)是人与大模型交互的重要媒介。因此，对提示词的掌握、使用、研究，便具有非常重大的意义。从人机交互出发，将大模型视为一种特殊的、很强大的计算设备，那么，提示词之于我们：“prompt是一种新型的自然用户界面”。\n大多数的prompt具有以下的形式：由「指令」(instruction)和「内容」(content)两部分构成。其中，指令部分为我们需要大模型做的事，如“判断下列句子的情感”，而内容则为真正的句子，如“我今天很高兴”。注意，并不是所有的prompt都必须是这样的形式，如比较简短的prompt：“中国的首都在哪里”、“模仿百年孤独的开头写一段话”等这种言简意赅的prompt就只有指令、内容为空。\nPrompt的不同分类 Prompt千变万化、不可名状，其主要由以下几种常见形式构成：\n•**Zero-shot prompt:**零样本的prompt。此为最常见的使用形式。之所以叫zero-shot，是因为我们直接用大模型做任务而不给其参考示例。这也被视为评测大模型能力的重要场景之一。\n•**Few-shot prompt:**与zero-shot相对，在与大模型交互时，在prompt中给出少量示例。\n•**Role prompt:**与大模型玩“角色扮演”游戏。让大模想象自己是某方面专家、因而获得更好的任务效果。\n•**Instruction prompt:**指令形式的prompt。\n•**Chain-of-thought prompt:**常见于推理任务中，通过让大模型“Let’s think step by step”来逐步解决较难的推理问题。\n•**Multimodal prompt:**多模态prompt。顾名思义，输入不再是单一模态的prompt，而是包含了众多模态的信息。如同时输入文本和图像与多模态大模型进行交互，现在的4o就能做到。\nPrompt技巧（后续章节详解） Prompt或许并不是人类与大模型进行交互的唯一和最好的方式，但一定是当下使用最多的方式。\nRAG（Retrieval-Augmented Generation） 什么是RAG RAG（Retrieval-Augmented Generation）技术是一种结合检索和生成的方法，用于提升大语言模型（LLM）在知识密集型任务中的性能。通过一个两阶段的过程提升LLMs的输出质量：\n•检索（Retrieval）阶段，可以从各种数据源检索相关信息；\n•生成（Generation）阶段，将检索到的文档与原始查询，形成提示模板，一起输入到生成模型中，产生最终的回答。\n这种方法使模型拥有了利用实时和外部的知识库（非训练时使用的数据）的能力，提高了其在特定问题处理上的灵活性和准确性。\n图片来源 RAG流程图\nRAG解决什么问题 大型语言模型（LLM）虽然在多个领域展现出了卓越的性能，但在实际业务场景中仍面临一些挑战：\n•**知识的局限性：**LLM的知识仅限于其训练数据，对于实时性、非公开或离线数据的获取存在困难。\n•**幻觉问题：**基于概率的输出可能导致模型生成不准确的信息。\n•**数据安全性：**企业对于数据泄露风险的担忧限制了对第三方平台的依赖。\n为了解决这些问题，RAG作为一套有效的解决方案应运而生。\nRAG工作原理 分为三个部分：索引、检索、生成。\n**1. 索引 Indexing：**处理外部知识源，将知识源分割为chunk，编码为向量，存储在向量数据库 Vetor-DataBase 中。\n2. 检索 Retrieval: 接受用户问题，将问题编码为向量，用这些向量去向量数据库中找到最相关的文档库 top-k chunks。\n3. 生成 Generation: 将检索到的文档与原始问题一起作为提示 （Promot）输入到LLM中，生成回答。\nRAG的优势 •**知识丰富：**RAG能够访问和利用大量的外部知识，提供更全面的回答。\n•**上下文相关性：**通过检索到的信息，RAG能够生成与用户查询高度相关的响应。\n•**灵活性：**适用于问答系统、内容创作等多种应用场景。\n•**减少幻觉：**结合实际数据，降低生成错误信息的风险。\nRAG 的应用场景 •**问答系统：**RAG可以用于问答系统，其中检索模型可以根据用户的问题从大规模的文本数据库或者互联网中检索相关答案，生成模型则可以将检索到的信息转化为自然语言的回答。\n•**文本摘要：**RAG可以用于文本摘要任务，其中检索模型可以检索与原文相关的摘要信息，生成模型则可以基于检索到的信息生成更准确和完整的摘要。\n•**对话系统：**RAG可以应用于对话系统，其中检索模型可以检索与对话历史相关的信息，生成模型则可以基于检索到的信息生成更连贯和准确的回复。\n•**事实核查：**RAG 可以帮助识别和生成基于证据的解释，以验证陈述的真实性。\n•**内容推荐：**在推荐系统中，RAG 可以根据用户的历史行为和偏好，检索并生成个性化的内容推荐。\nRAG 是一种强大的技术，但它也有一些局限性，比如对检索系统性能的依赖，以及可能生成的答案质量受限于检索到的文档片段的质量。随着技术的进步，RAG 及其变体在处理复杂的认知任务方面展现出了巨大的潜力。\nAgent智能体 为什么出现LLM Agent 近年来，人工智能（AI）和自然语言处理（NLP）技术迅猛发展，特别是大型语言模型（LLM）的出现，如 OpenAI 的 GPT 系列。这些模型展示了在各种任务中的卓越表现，从文本生成到对话系统。然而，尽管 LLM 拥有强大的处理和理解能力，它们的应用仍然需要进一步的优化和具体化。LLM Agent 的出现正是为了解决这些需求，实现更灵活、更智能的自动化任务处理。\n**1. 复杂任务需求：**传统的 AI 系统在处理复杂任务时往往需要大量的领域知识和手工调试。LLM Agent 通过预训练模型和少量的微调，可以更好地适应各种复杂任务。\n**2. 人机交互提升：**随着用户对于智能助手和对话系统的需求不断增加，LLM Agent 可以提供更自然、更流畅的交互体验。\n**3. 自动化和效率：**在企业和个人生活中，自动化任务需求逐渐增加。LLM Agent 能够通过自然语言指令执行多种任务，提升效率。\nLLM Agent是什么 简单来说，LLM Agent是基于大型语言模型（如GPT-4）开发的智能代理。它不仅能理解和生成自然语言，还能执行一系列复杂的任务，如回答问题、生成文本、进行对话等。想象一下，你的计算机能够像人类一样理解你的问题并提供有用的答案。\nLLM充当 Agent 大脑的角色，并由几个关键组件组成：规划（Planning）、记忆（Memory）、工具（Tool Use)\n•规划\n◦**子目标拆解：**复杂任务不是一次性就能解决的，需要拆分成多个并行或串行的子任务来进行求解，任务规划的目标是找到一条最优的、能够解决问题的路线。\n◦**反思和完善：**智能体可以对过去的行为进行自我批评和自我反思，从错误中吸取教训，并针对未来的步骤进行完善，从而提高最终结果的质量。\n•记忆\n◦**短期记忆：**所有的上下文学习（提示词工程）都是利用模型的短期记忆来学习。\n◦**长期记忆：**为 Agent 提供了长时间保留和回忆（无限）信息的能力，通常是通过利用外部向量存储和快速检索。\n•工具\n◦调用外部 API 来获取模型权重中缺失的额外信息（通常在预训练后很难更改），包括当前信息、代码执行能力、对专有信息源的访问等。\nLLM Agent 的优势 **1. 高效性：**LLM Agent 可以快速理解和处理自然语言指令，减少了任务处理的时间和复杂度。\n**2. 灵活性：**通过少量的微调，LLM Agent 可以适应不同的应用场景，从而具有很高的灵活性。\n**3. 用户体验提升：**得益于强大的自然语言处理能力，LLM Agent 能够提供更加自然和智能的交互体验，提升用户满意度。\n**4. 可扩展性：**LLM Agent 可以不断学习和扩展新的功能和知识，使得它在长期使用中表现越来越好。\nLLM Agent 的应用 •**自动化客服：**LLM Agent可以提供24/7的客户服务，自动回答用户的查询，提高服务效率和用户满意度。\n•**内容创作：**从博客文章到营销文案，LLM Agent可以帮助内容创作者生成初稿或提供写作灵感。\n•**数据分析与摘要：**LLM Agent可以从大量文本数据中提取关键信息，生成报告摘要，帮助决策者快速获取信息。\n•**教育和培训：**在教育领域，LLM Agent可以提供个性化的学习材料，辅助语言学习，或者作为智能辅导员。\n•**研究助手：**对于研究人员，LLM Agent可以帮助文献搜索、信息整理，甚至参与创造性的研究过程。\n多模态 多模态定义 什么是多模态呢？简单来说，多模态就像是一个多才多艺的艺术家，能够同时使用多种艺术形式来创作作品。在AI领域，多模态模型能够同时处理和理解多种类型的数据，比如文字、图像、声音和视频。\n为什么需要多模态 为什么我们需要能够处理多种数据类型的AI模型呢？原因很简单：我们的世界是多模态的。我们交流和感知世界不仅仅通过语言，还包括视觉、听觉等多种方式。多模态模型能够更全面地理解和模拟人类的交流和感知方式，使得AI能够更自然地与人类互动。\n多模态的作用和特点 多模态模型就像是我们的大脑，能够同时处理和理解来自眼睛（视觉信息）、耳朵（听觉信息）和其他感官的数据。作用主要体现在以下几个方面：\n**1.信息整合：**能够将不同类型的信息整合在一起，提高理解和分析的准确性。\n**2. 增强表现力：**通过结合多种数据源，模型可以表现出更强的感知和认知能力。\n**3. 提高鲁棒性：**多模态模型可以在某种类型数据缺失或不完整的情况下，依靠其他数据类型来弥补，从而提高整体性能。\n与单一模态的模型相比，多模态模型具有以下特点：\n**1. 源数据处理：**能够同时处理图像、文字、声音等多种数据类型。\n**2. 更强的泛化能力：**在不同的应用场景下表现更好，因为它们能够整合更多的信息。\n多模态模型的应用案例 多模态模型在很多领域有着广泛的应用。以下是几个典型的例子：\n**1. 医疗诊断：**通过结合病人的影像数据（如X光片）、文字数据（病历）和生理数据（心电图），多模态模型可以提供更准确的诊断结果。\n**2. 自动驾驶：**多模态模型可以结合摄像头图像、雷达数据和GPS信息，帮助自动驾驶汽车更好地理解周围环境，提高安全性。\n**3. 智能客服：**通过整合语音识别、自然语言处理和情感分析，多模态模型可以提供更自然、更人性化的客服服务。\n多模态大模型是人工智能领域的重要进展，它们通过整合多种类型的数据，显著提升了模型的表现力和鲁棒性。这不仅使得人工智能系统能够更好地理解复杂的现实世界，也为未来的技术发展带来了无限可能。无论是在医疗、交通还是日常生活中，多模态大模型正逐步改变我们的生活方式。\n应用实例（简单列举） 斯坦福小镇 图片来源 Generative Agents（https://arxiv.org/pdf/2304.03442v1）\n文生图 图生图 图生视频 LLM OS 图片来源 The LLM OS（https://medium.com/@marcelheinz/the-llm-os-a-glimpse-into-the-future-of-tech-with-andrej-karpathy-3bcbc0baf339）\n上古卷轴破解 （图片来源 https://scrollprize.org/firstletters）\n未来 随着AI技术的不断发现和进步，AI与人类的协同关系将不断演进和深化。我们期待着在未来，AI能够成为我们最得力的助手和伙伴，共同迎接更加智能和高效的未来。我们可以预见以下几个趋势：\n•**更高的自主性：**AI将逐步从辅助工具发展为能够独立完成复杂任务的智能代理。这将解放人类的生产力，使我们能够专注于更具创造性和战略性的工作。\n•**更紧密的协同：**AI与人类的协同方式将更加多样化和灵活化。通过改进人机交互界面和协同算法，AI将能够更好地理解人类的意图和需求，实现更高效的合作。\n•**广泛的应用场景：**AI技术将渗透到各行各业，从医疗、教育到金融、制造业，AI将成为推动行业变革的重要力量。特别是在Agent模式下，AI将能够在更多领域中自主完成任务，带来前所未有的效率提升和创新机会。\n",
+  "wordCount" : "8285",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      大模型技术
+    </h1>
+    <div class="post-meta">Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%bc%95%e8%a8%80" aria-label="引言">引言</a></li>
+                <li>
+                    <a href="#%e4%ba%ba%e5%b7%a5%e6%99%ba%e8%83%bd%e7%9a%84%e5%8f%91%e5%b1%95%e5%8e%86%e5%8f%b2" aria-label="人工智能的发展历史">人工智能的发展历史</a></li>
+                <li>
+                    <a href="#%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%9a%84%e6%9c%ac%e8%b4%a8" aria-label="大模型的本质">大模型的本质</a><ul>
+                        
+                <li>
+                    <a href="#1-llm%e7%9a%84%e7%bb%84%e6%88%90---%e4%b8%a4%e4%b8%aa%e6%96%87%e4%bb%b6" aria-label="1. LLM的组成 - 两个文件">1. LLM的组成 - 两个文件</a></li>
+                <li>
+                    <a href="#2-llm%e7%9a%84%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%a9%b6%e7%ab%9f%e5%9c%a8%e6%83%b3%e4%bb%80%e4%b9%88---%e9%a2%84%e6%b5%8b%e4%b8%8b%e4%b8%80%e4%b8%aa%e5%8d%95%e8%af%8d" aria-label="2. LLM的神经网络究竟在“想”什么 - 预测下一个单词">2. LLM的神经网络究竟在“想”什么 - 预测下一个单词</a></li>
+                <li>
+                    <a href="#3-%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%9c%9f%e6%ad%a3%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f%e4%bb%8d%e7%84%b6%e6%98%af%e4%b8%aa%e8%b0%9c" aria-label="3. 神经网络“真正”的工作方式仍然是个谜">3. 神经网络“真正”的工作方式仍然是个谜</a></li>
+                <li>
+                    <a href="#4-%e8%ae%ad%e7%bb%83%e5%a4%a7%e6%a8%a1%e5%9e%8b%e7%9a%84%e6%ad%a5%e9%aa%a4" aria-label="4. 训练大模型的步骤">4. 训练大模型的步骤</a></li>
+                <li>
+                    <a href="#5-%e6%a8%a1%e5%9e%8b%e6%80%a7%e8%83%bd%e6%8f%90%e5%8d%87" aria-label="5. 模型性能提升">5. 模型性能提升</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%9d%a2%e4%b8%b4%e7%9a%84%e9%97%ae%e9%a2%98" aria-label="面临的问题">面临的问题</a><ul>
+                        
+                <li>
+                    <a href="#%e5%b9%bb%e8%a7%89" aria-label="幻觉">幻觉</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e5%85%a8%e6%80%a7%e9%97%ae%e9%a2%98" aria-label="安全性问题">安全性问题</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%9b%b8%e5%85%b3%e6%8a%80%e6%9c%af" aria-label="相关技术">相关技术</a><ul>
+                        
+                <li>
+                    <a href="#prompt-engineering-%e6%8f%90%e7%a4%ba%e8%af%8d%e5%b7%a5%e7%a8%8b" aria-label="Prompt Engineering (提示词工程)">Prompt Engineering (提示词工程)</a><ul>
+                        
+                <li>
+                    <a href="#%e6%98%af%e4%bb%80%e4%b9%88" aria-label="是什么">是什么</a></li>
+                <li>
+                    <a href="#prompt%e7%9a%84%e4%b8%8d%e5%90%8c%e5%88%86%e7%b1%bb" aria-label="Prompt的不同分类">Prompt的不同分类</a></li>
+                <li>
+                    <a href="#prompt%e6%8a%80%e5%b7%a7%e5%90%8e%e7%bb%ad%e7%ab%a0%e8%8a%82%e8%af%a6%e8%a7%a3" aria-label="Prompt技巧（后续章节详解）">Prompt技巧（后续章节详解）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#ragretrieval-augmented-generation" aria-label="RAG（Retrieval-Augmented Generation）">RAG（Retrieval-Augmented Generation）</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afrag" aria-label="什么是RAG">什么是RAG</a></li>
+                <li>
+                    <a href="#rag%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98" aria-label="RAG解决什么问题">RAG解决什么问题</a></li>
+                <li>
+                    <a href="#rag%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86" aria-label="RAG工作原理">RAG工作原理</a></li>
+                <li>
+                    <a href="#rag%e7%9a%84%e4%bc%98%e5%8a%bf" aria-label="RAG的优势">RAG的优势</a></li>
+                <li>
+                    <a href="#rag-%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="RAG 的应用场景">RAG 的应用场景</a></li></ul>
+                </li>
+                <li>
+                    <a href="#agent%e6%99%ba%e8%83%bd%e4%bd%93" aria-label="Agent智能体">Agent智能体</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e5%87%ba%e7%8e%b0llm-agent" aria-label="为什么出现LLM Agent">为什么出现LLM Agent</a></li>
+                <li>
+                    <a href="#llm-agent%e6%98%af%e4%bb%80%e4%b9%88" aria-label="LLM Agent是什么">LLM Agent是什么</a></li>
+                <li>
+                    <a href="#llm-agent-%e7%9a%84%e4%bc%98%e5%8a%bf" aria-label="LLM Agent 的优势">LLM Agent 的优势</a></li>
+                <li>
+                    <a href="#llm-agent-%e7%9a%84%e5%ba%94%e7%94%a8" aria-label="LLM Agent 的应用">LLM Agent 的应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%a4%9a%e6%a8%a1%e6%80%81" aria-label="多模态">多模态</a><ul>
+                        
+                <li>
+                    <a href="#%e5%a4%9a%e6%a8%a1%e6%80%81%e5%ae%9a%e4%b9%89" aria-label="多模态定义">多模态定义</a></li>
+                <li>
+                    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e5%a4%9a%e6%a8%a1%e6%80%81" aria-label="为什么需要多模态">为什么需要多模态</a></li>
+                <li>
+                    <a href="#%e5%a4%9a%e6%a8%a1%e6%80%81%e7%9a%84%e4%bd%9c%e7%94%a8%e5%92%8c%e7%89%b9%e7%82%b9" aria-label="多模态的作用和特点">多模态的作用和特点</a></li>
+                <li>
+                    <a href="#%e5%a4%9a%e6%a8%a1%e6%80%81%e6%a8%a1%e5%9e%8b%e7%9a%84%e5%ba%94%e7%94%a8%e6%a1%88%e4%be%8b" aria-label="多模态模型的应用案例">多模态模型的应用案例</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8%e5%ae%9e%e4%be%8b%e7%ae%80%e5%8d%95%e5%88%97%e4%b8%be" aria-label="应用实例（简单列举）">应用实例（简单列举）</a><ul>
+                        
+                <li>
+                    <a href="#%e6%96%af%e5%9d%a6%e7%a6%8f%e5%b0%8f%e9%95%87" aria-label="斯坦福小镇">斯坦福小镇</a></li>
+                <li>
+                    <a href="#%e6%96%87%e7%94%9f%e5%9b%be-%e5%9b%be%e7%94%9f%e5%9b%be-%e5%9b%be%e7%94%9f%e8%a7%86%e9%a2%91" aria-label="文生图 图生图 图生视频">文生图 图生图 图生视频</a></li>
+                <li>
+                    <a href="#llm-os" aria-label="LLM OS">LLM OS</a></li>
+                <li>
+                    <a href="#%e4%b8%8a%e5%8f%a4%e5%8d%b7%e8%bd%b4%e7%a0%b4%e8%a7%a3" aria-label="上古卷轴破解">上古卷轴破解</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%9c%aa%e6%9d%a5" aria-label="未来">未来</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="引言">引言<a hidden class="anchor" aria-hidden="true" href="#引言">#</a></h1>
+<p>原文：https://mp.weixin.qq.com/s/0RWIjzcB7dWhxrokWBJkdA</p>
+<p>大模型将成为通用人工智能的重要途径。在这个由0和1编织的数字时代，人工智能的腾飞已不是科技梦想，而是日益切实的现实。其中，大模型作为人工智能的核心力量，正以前所未有的方式重塑着我们的生活、学习和工作。无论是智能语音助手、自动驾驶汽车，还是医疗诊断系统，大模型都是幕后英雄，让这些看似不可思议的事情变为可能。</p>
+<h1 id="人工智能的发展历史"><strong>人工智能的发展历史</strong><a hidden class="anchor" aria-hidden="true" href="#人工智能的发展历史">#</a></h1>
+<p><em><strong>*1. 1950s-1970s：AI的诞生和早期发展*</strong></em></p>
+<p>◦1950年，图灵测试的提出，为机器智能提供了一个评估标准。</p>
+<p>◦1956年，达特茅斯会议标志着人工智能作为一门学科的正式诞生。</p>
+<p>◦1960年代，早期的AI研究集中在逻辑推理和问题解决上。</p>
+<p><strong>2. 1980s：专家系统的兴起</strong></p>
+<p>◦专家系统的成功应用，如MYCIN在医学诊断领域的应用。</p>
+<p>◦机器学习算法开始发展，如决策树和早期的神经网络。</p>
+<p><strong>3. 1990s：机器学习的进展</strong></p>
+<p>◦反向传播算法的提出，极大地推动了神经网络的研究。</p>
+<p>◦1997年，IBM的深蓝击败国际象棋世界冠军，展示了AI在策略游戏中的能力。</p>
+<p><strong>4. 2000s：大数据和计算能力的提升</strong></p>
+<p>◦互联网的普及带来了海量数据，为机器学习提供了丰富的训练素材。</p>
+<p>◦计算能力的提升，尤其是GPU的广泛应用，加速了深度学习的发展。</p>
+<p><strong>5. 2010s：深度学习革命</strong></p>
+<p>◦2012年，AlexNet在ImageNet竞赛中的胜利，标志着深度学习在图像识别领域的突破。</p>
+<p>◦深度学习在语音识别、自然语言处理等领域取得显著进展。</p>
+<p><img loading="lazy" src="1.png" alt=""  />
+</p>
+<p>图片来源  <a href="https://blog.csdn.net/Ares_song/article/details/106880658">https://blog.csdn.net/Ares_song/article/details/106880658</a></p>
+<p><strong>6. 2017年：Transformer和自注意力机制</strong></p>
+<p>◦2017年，Transformer模型的提出，引入了自注意力机制，极大地提升了模型的性能。</p>
+<p>◦Transformer模型在自然语言处理任务中取得了革命性的成果，如BERT、GPT等模型。</p>
+<p><strong>7. 2020s：大模型和多模态学习</strong></p>
+<p>◦大模型如chatGPT、Claude、Gemini、Llama、chatglm、Kimi等等都展示了强大的能力。</p>
+<p>◦多模态学习的发展，如CLIP模型，能够理解和生成跨模态内容。</p>
+<h1 id="大模型的本质"><strong>大模型的本质</strong><a hidden class="anchor" aria-hidden="true" href="#大模型的本质">#</a></h1>
+<p>大模型是能够从海量数据中学习、利用这些数据进行推理，并使用这些推理来回答用户的问题或是执行特定的任务。大模型（如ChatGPT、LLM等）在人工智能领域中被广泛应用，其核心理念和工作原理可以总结为以下几个方面：</p>
+<h2 id="1-llm的组成---两个文件"><strong>1. LLM的组成 - 两个文件</strong><a hidden class="anchor" aria-hidden="true" href="#1-llm的组成---两个文件">#</a></h2>
+<p>大模型由以下两个关键部分构成：一个是 参数集，另一个是 执行代码。</p>
+<p>•**参数集：**这是模型的&quot;大脑&quot;，包含了通过训练学习到的神经网络权重。</p>
+<p>•**执行代码：**这是模型的&quot;引擎&quot;，包含用于运行参数集的软件代码，可以采用任何编程语言实现。</p>
+<p>训练大模型需要对大量互联网数据进行有损压缩，是一项计算量更大的任务，通常需要一个巨大的GPU集群。</p>
+<p>有趣的是，你只需要一台标准的计算机就可以运行像Llama-3这样的LLM并得出推论。在本地服务器上运行，因此，甚至不需要互联网连接。</p>
+<h2 id="2-llm的神经网络究竟在想什么---预测下一个单词"><strong>2. LLM的神经网络究竟在“想”什么 - 预测下一个单词</strong><a hidden class="anchor" aria-hidden="true" href="#2-llm的神经网络究竟在想什么---预测下一个单词">#</a></h2>
+<p>大模型的核心功能之一是预测文本序列中的下一个单词：</p>
+<p>•输入一个“部分”句子，如“cat sat on a”。</p>
+<p>•利用分布在网络中的参数及其连接关系预测下一个最可能的单词，并给出<strong>概率</strong>。如“mat（97%）”</p>
+<p>•模拟了人类语言生成的方式，使得模型能够生成连贯和符合语境的句子，如生成完整的句子“cat sat on a mat”</p>
+<p>模型根据它所获得的大量训练数据，生成“合理的延续”，即生成符合人类语言习惯的文本。</p>
+<p>注：Transformer架构为这个神经网络提供了动力。</p>
+<p><img loading="lazy" src="2.png" alt=""  />
+</p>
+<p>图片来源 A Busy Person&rsquo;s Introduction to Large Language Models（https://www.openculture.com/2023/12/a-busy-persons-introduction-to-large-language-models-llms.html)</p>
+<h2 id="3-神经网络真正的工作方式仍然是个谜"><strong>3. 神经网络“真正”的工作方式仍然是个谜</strong><a hidden class="anchor" aria-hidden="true" href="#3-神经网络真正的工作方式仍然是个谜">#</a></h2>
+<p>尽管我们可以将数十亿个参数输入到网络中，并通过反复微调训练这些参数，从而获得更好的预测效果，但我们并不完全理解这些参数在网络中是如何准确协作的，以及为什么它们能够生成如此准确的回答。科学上，这种现象被称为涌现。</p>
+<p>我们知道，这些参数构建并维护了某种形式的知识数据库。然而，这种数据库有时表现得既奇怪又不完美。例如，一个大型语言模型（LLM）可能会正确回答“谁是小明的母亲？”这个问题，但如果你问它“X的儿子是谁？”，它可能会回答“我不知道”。这种现象通常被称为递归诅咒。</p>
+<h2 id="4-训练大模型的步骤"><strong>4. 训练大模型的步骤</strong><a hidden class="anchor" aria-hidden="true" href="#4-训练大模型的步骤">#</a></h2>
+<p><strong>预训练，训练需要对大量互联网数据进行有损压缩，输出参数文件</strong></p>
+<p>•收集大量互联网文本数据。</p>
+<p>•准备强大的计算资源，如GPU集群。</p>
+<p>•执行训练，生成基本模型。</p>
+<p><strong>微调阶段：</strong></p>
+<p>•准备高质量的训练数据，如问答对。</p>
+<p>•在这些数据上调整模型参数，优化性能。</p>
+<p>•进行评估和部署，确保模型达到预期效果。</p>
+<p><img loading="lazy" src="3.png" alt=""  />
+</p>
+<p>图片来源  A Busy Person&rsquo;s Introduction to Large Language Models（https://www.openculture.com/2023/12/a-busy-persons-introduction-to-large-language-models-llms.html）</p>
+<p><strong>微调阶段 - 比较</strong></p>
+<p>对于每个问题，人工标注者都会比较辅助模型的多个答案，并标注出最佳答案。这一步骤称为从人类反馈中强化学习（RLHF）。</p>
+<h2 id="5-模型性能提升"><strong>5. 模型性能提升</strong><a hidden class="anchor" aria-hidden="true" href="#5-模型性能提升">#</a></h2>
+<p><strong>1）模型越大，能力越强：</strong></p>
+<p>◦**参数量：**模型的规模通常与其参数量成正比。参数是模型学习到的知识的载体，参数越多，模型能够捕捉的信息和模式就越丰富，从而能够处理更复杂的任务。</p>
+<p>◦**学习能力：**大模型通常拥有更强的学习能力。它们能够从大量数据中学习到更深层次的特征和规律，这使得它们在诸如自然语言处理、图像识别等任务上表现更佳。</p>
+<p>◦**泛化能力：**大模型往往有更好的泛化能力，即在面对未见过的数据时，也能做出准确的预测和判断。</p>
+<p><strong>2）工具越多，能力越强：</strong></p>
+<p>◦**功能扩展：**为AI模型提供各种工具，可以使其功能得到显著扩展。例如，集成搜索引擎可以让模型访问互联网信息，增强其回答问题的能力。</p>
+<p>◦**多任务处理：**工具的集成使得AI模型能够同时处理多种任务。例如，集成计算器功能可以让模型执行数学计算，集成编程接口则可以让模型编写代码。</p>
+<p>◦**灵活性和适应性：**拥有多种工具的AI模型更加灵活和适应性强，能够根据任务需求快速调整其行为和策略。类似于人类通过使用工具解决各种任务。</p>
+<h1 id="面临的问题">面临的问题<a hidden class="anchor" aria-hidden="true" href="#面临的问题">#</a></h1>
+<h2 id="幻觉"><strong>幻觉</strong><a hidden class="anchor" aria-hidden="true" href="#幻觉">#</a></h2>
+<p>幻觉问题指的是大模型在生成文本时可能会产生与现实世界事实不一致的内容。这种现象可以分为几种类型:</p>
+<p>**1. 事实性幻觉（Factuality Hallucination）：**模型生成的内容与可验证的现实世界事实不一致。大模型可能生成听起来合理但实际上错误的信息，例如，生成一篇关于一个不存在的历史事件的文章，模型可能生成一篇关于“拿破仑在月球上宣布法国胜利”的文章，尽管这在现实中从未发生过。</p>
+<p>**2. 忠实性幻觉（Faithfulness Hallucination）：**模型生成的内容与用户的指令或上下文不一致。例如在一个关于健康饮食的讨论中，模型可能突然开始讨论健身运动，尽管这与用户的问题不直接相关。</p>
+<p>产生幻觉的原因可能包括：</p>
+<p>•使用的数据集存在错误信息或偏见。</p>
+<p>•模型过度依赖训练数据中的模式，可能导致错误的关联。</p>
+<p>•预训练阶段的架构缺陷，如基于前一个token预测下一个token的方式可能阻碍模型捕获复杂的上下文关系。</p>
+<p>•对齐阶段的能力错位，即模型的内在能力与标注数据中描述的功能之间可能存在错位。</p>
+<p>为了缓解幻觉问题，研究者们提出了多种方法，如改进预训练策略、数据清理以消除偏见、知识编辑、检索增强生成（RAG）等。</p>
+<h2 id="安全性问题"><strong>安全性问题</strong><a hidden class="anchor" aria-hidden="true" href="#安全性问题">#</a></h2>
+<p>安全性问题涉及大模型可能遭受的恶意攻击和滥用，以及它们对用户隐私和数据安全的潜在威胁:</p>
+<p><strong>1. 对抗样本攻击：攻击者可能构造特殊的输入样本，导致模型做出错误的预测。</strong></p>
+<p><strong>2. 后门攻击：在模型中植入后门，使得在特定触发条件下模型表现出异常行为。</strong></p>
+<p><strong>3. 成员推断攻击：攻击者尝试推断出训练集中是否包含特定的数据点。</strong></p>
+<p><strong>4. 模型窃取：通过查询模型来复制其功能，侵犯模型版权。</strong></p>
+<p><strong>5. 数据隐私泄露：模型可能泄露训练数据中的敏感信息。</strong></p>
+<p>为了提高大模型的安全性，业界和研究界正在探索多种安全防护策略，包括：</p>
+<p>•加强数据的采集和清洗过程，确保数据质量和安全性。</p>
+<p>•对模型进行加固，提高其抗攻击能力。</p>
+<p>•采用加密存储和差分隐私技术来保护数据隐私。</p>
+<p>•增强模型的可解释性，以便更好地理解和控制模型行为。</p>
+<h1 id="相关技术">相关技术<a hidden class="anchor" aria-hidden="true" href="#相关技术">#</a></h1>
+<h2 id="prompt-engineering-提示词工程"><strong>Prompt Engineering (提示词工程)</strong><a hidden class="anchor" aria-hidden="true" href="#prompt-engineering-提示词工程">#</a></h2>
+<h3 id="是什么"><strong>是什么</strong><a hidden class="anchor" aria-hidden="true" href="#是什么">#</a></h3>
+<p>提示词(prompt)是人与大模型交互的重要媒介。因此，对提示词的掌握、使用、研究，便具有非常重大的意义。从人机交互出发，将大模型视为一种特殊的、很强大的计算设备，那么，提示词之于我们：“prompt是一种新型的自然用户界面”。</p>
+<p>大多数的prompt具有以下的形式：由「指令」(instruction)和「内容」(content)两部分构成。其中，指令部分为我们需要大模型做的事，如“判断下列句子的情感”，而内容则为真正的句子，如“我今天很高兴”。注意，并不是所有的prompt都必须是这样的形式，如比较简短的prompt：“中国的首都在哪里”、“模仿百年孤独的开头写一段话”等这种言简意赅的prompt就只有指令、内容为空。</p>
+<p><img loading="lazy" src="4.png" alt=""  />
+</p>
+<h3 id="prompt的不同分类"><strong>Prompt的不同分类</strong><a hidden class="anchor" aria-hidden="true" href="#prompt的不同分类">#</a></h3>
+<p>Prompt千变万化、不可名状，其主要由以下几种常见形式构成：</p>
+<p>•**Zero-shot prompt:**零样本的prompt。此为最常见的使用形式。之所以叫zero-shot，是因为我们直接用大模型做任务而不给其参考示例。这也被视为评测大模型能力的重要场景之一。</p>
+<p>•**Few-shot prompt:**与zero-shot相对，在与大模型交互时，在prompt中给出少量示例。</p>
+<p>•**Role prompt:**与大模型玩“角色扮演”游戏。让大模想象自己是某方面专家、因而获得更好的任务效果。</p>
+<p>•**Instruction prompt:**指令形式的prompt。</p>
+<p>•**Chain-of-thought prompt:**常见于推理任务中，通过让大模型“Let&rsquo;s think step by step”来逐步解决较难的推理问题。</p>
+<p>•**Multimodal prompt:**多模态prompt。顾名思义，输入不再是单一模态的prompt，而是包含了众多模态的信息。如同时输入文本和图像与多模态大模型进行交互，现在的4o就能做到。</p>
+<h3 id="prompt技巧后续章节详解"><strong>Prompt技巧（后续章节详解）</strong><a hidden class="anchor" aria-hidden="true" href="#prompt技巧后续章节详解">#</a></h3>
+<p>Prompt或许并不是人类与大模型进行交互的唯一和最好的方式，但一定是当下使用最多的方式。</p>
+<h2 id="ragretrieval-augmented-generation"><strong>RAG（Retrieval-Augmented Generation）</strong><a hidden class="anchor" aria-hidden="true" href="#ragretrieval-augmented-generation">#</a></h2>
+<h3 id="什么是rag"><strong>什么是RAG</strong><a hidden class="anchor" aria-hidden="true" href="#什么是rag">#</a></h3>
+<p>RAG（Retrieval-Augmented Generation）技术是一种结合检索和生成的方法，用于提升大语言模型（LLM）在知识密集型任务中的性能。通过一个两阶段的过程提升LLMs的输出质量：</p>
+<p>•检索（Retrieval）阶段，可以从各种数据源检索相关信息；</p>
+<p>•生成（Generation）阶段，将检索到的文档与原始查询，形成提示模板，一起输入到生成模型中，产生最终的回答。</p>
+<p>这种方法使模型拥有了利用实时和外部的知识库（非训练时使用的数据）的能力，提高了其在特定问题处理上的灵活性和准确性。</p>
+<p><img loading="lazy" src="5.png" alt=""  />
+</p>
+<p>图片来源  RAG流程图</p>
+<h3 id="rag解决什么问题"><strong>RAG解决什么问题</strong><a hidden class="anchor" aria-hidden="true" href="#rag解决什么问题">#</a></h3>
+<p>大型语言模型（LLM）虽然在多个领域展现出了卓越的性能，但在实际业务场景中仍面临一些挑战：</p>
+<p>•**知识的局限性：**LLM的知识仅限于其训练数据，对于实时性、非公开或离线数据的获取存在困难。</p>
+<p>•**幻觉问题：**基于概率的输出可能导致模型生成不准确的信息。</p>
+<p>•**数据安全性：**企业对于数据泄露风险的担忧限制了对第三方平台的依赖。</p>
+<p>为了解决这些问题，RAG作为一套有效的解决方案应运而生。</p>
+<h3 id="rag工作原理"><strong>RAG工作原理</strong><a hidden class="anchor" aria-hidden="true" href="#rag工作原理">#</a></h3>
+<p>分为三个部分：索引、检索、生成。</p>
+<p>**1. 索引 Indexing：**处理外部知识源，将知识源分割为chunk，编码为向量，存储在向量数据库 Vetor-DataBase 中。</p>
+<p><strong>2. 检索 Retrieval:</strong> 接受用户问题，将问题编码为向量，用这些向量去向量数据库中找到最相关的文档库 top-k chunks。</p>
+<p><strong>3. 生成 Generation:</strong> 将检索到的文档与原始问题一起作为提示 （Promot）输入到LLM中，生成回答。</p>
+<p><img loading="lazy" src="6.png" alt=""  />
+</p>
+<h3 id="rag的优势"><strong>RAG的优势</strong><a hidden class="anchor" aria-hidden="true" href="#rag的优势">#</a></h3>
+<p>•**知识丰富：**RAG能够访问和利用大量的外部知识，提供更全面的回答。</p>
+<p>•**上下文相关性：**通过检索到的信息，RAG能够生成与用户查询高度相关的响应。</p>
+<p>•**灵活性：**适用于问答系统、内容创作等多种应用场景。</p>
+<p>•**减少幻觉：**结合实际数据，降低生成错误信息的风险。</p>
+<h3 id="rag-的应用场景"><strong>RAG 的应用场景</strong><a hidden class="anchor" aria-hidden="true" href="#rag-的应用场景">#</a></h3>
+<p>•**问答系统：**RAG可以用于问答系统，其中检索模型可以根据用户的问题从大规模的文本数据库或者互联网中检索相关答案，生成模型则可以将检索到的信息转化为自然语言的回答。</p>
+<p>•**文本摘要：**RAG可以用于文本摘要任务，其中检索模型可以检索与原文相关的摘要信息，生成模型则可以基于检索到的信息生成更准确和完整的摘要。</p>
+<p>•**对话系统：**RAG可以应用于对话系统，其中检索模型可以检索与对话历史相关的信息，生成模型则可以基于检索到的信息生成更连贯和准确的回复。</p>
+<p>•**事实核查：**RAG 可以帮助识别和生成基于证据的解释，以验证陈述的真实性。</p>
+<p>•**内容推荐：**在推荐系统中，RAG 可以根据用户的历史行为和偏好，检索并生成个性化的内容推荐。</p>
+<p>RAG 是一种强大的技术，但它也有一些局限性，比如对检索系统性能的依赖，以及可能生成的答案质量受限于检索到的文档片段的质量。随着技术的进步，RAG 及其变体在处理复杂的认知任务方面展现出了巨大的潜力。</p>
+<h2 id="agent智能体"><strong>Agent智能体</strong><a hidden class="anchor" aria-hidden="true" href="#agent智能体">#</a></h2>
+<h3 id="为什么出现llm-agent"><strong>为什么出现LLM Agent</strong><a hidden class="anchor" aria-hidden="true" href="#为什么出现llm-agent">#</a></h3>
+<p>近年来，人工智能（AI）和自然语言处理（NLP）技术迅猛发展，特别是大型语言模型（LLM）的出现，如 OpenAI 的 GPT 系列。这些模型展示了在各种任务中的卓越表现，从文本生成到对话系统。然而，尽管 LLM 拥有强大的处理和理解能力，它们的应用仍然需要进一步的优化和具体化。LLM Agent 的出现正是为了解决这些需求，实现更灵活、更智能的自动化任务处理。</p>
+<p>**1. 复杂任务需求：**传统的 AI 系统在处理复杂任务时往往需要大量的领域知识和手工调试。LLM Agent 通过预训练模型和少量的微调，可以更好地适应各种复杂任务。</p>
+<p>**2. 人机交互提升：**随着用户对于智能助手和对话系统的需求不断增加，LLM Agent 可以提供更自然、更流畅的交互体验。</p>
+<p>**3. 自动化和效率：**在企业和个人生活中，自动化任务需求逐渐增加。LLM Agent 能够通过自然语言指令执行多种任务，提升效率。</p>
+<h3 id="llm-agent是什么"><strong>LLM Agent是什么</strong><a hidden class="anchor" aria-hidden="true" href="#llm-agent是什么">#</a></h3>
+<p>简单来说，LLM Agent是基于大型语言模型（如GPT-4）开发的智能代理。它不仅能理解和生成自然语言，还能执行一系列复杂的任务，如回答问题、生成文本、进行对话等。想象一下，你的计算机能够像人类一样理解你的问题并提供有用的答案。</p>
+<p>LLM充当 Agent 大脑的角色，并由几个关键组件组成：规划（Planning）、记忆（Memory）、工具（Tool Use)</p>
+<p><img loading="lazy" src="7.png" alt=""  />
+</p>
+<p>•<strong>规划</strong></p>
+<p>◦**子目标拆解：**复杂任务不是一次性就能解决的，需要拆分成多个并行或串行的子任务来进行求解，任务规划的目标是找到一条最优的、能够解决问题的路线。</p>
+<p>◦**反思和完善：**智能体可以对过去的行为进行自我批评和自我反思，从错误中吸取教训，并针对未来的步骤进行完善，从而提高最终结果的质量。</p>
+<p><strong>•记忆</strong></p>
+<p>◦**短期记忆：**所有的上下文学习（提示词工程）都是利用模型的短期记忆来学习。</p>
+<p>◦**长期记忆：**为 Agent 提供了长时间保留和回忆（无限）信息的能力，通常是通过利用外部向量存储和快速检索。</p>
+<p><strong>•工具</strong></p>
+<p>◦<strong>调用</strong>外部 API 来获取模型权重中缺失的额外信息（通常在预训练后很难更改），包括当前信息、代码执行能力、对专有信息源的访问等。</p>
+<h3 id="llm-agent-的优势"><strong>LLM Agent 的优势</strong><a hidden class="anchor" aria-hidden="true" href="#llm-agent-的优势">#</a></h3>
+<p>**1. 高效性：**LLM Agent 可以快速理解和处理自然语言指令，减少了任务处理的时间和复杂度。</p>
+<p>**2. 灵活性：**通过少量的微调，LLM Agent 可以适应不同的应用场景，从而具有很高的灵活性。</p>
+<p>**3. 用户体验提升：**得益于强大的自然语言处理能力，LLM Agent 能够提供更加自然和智能的交互体验，提升用户满意度。</p>
+<p>**4. 可扩展性：**LLM Agent 可以不断学习和扩展新的功能和知识，使得它在长期使用中表现越来越好。</p>
+<h3 id="llm-agent-的应用"><strong>LLM Agent 的应用</strong><a hidden class="anchor" aria-hidden="true" href="#llm-agent-的应用">#</a></h3>
+<p>•**自动化客服：**LLM Agent可以提供24/7的客户服务，自动回答用户的查询，提高服务效率和用户满意度。</p>
+<p>•**内容创作：**从博客文章到营销文案，LLM Agent可以帮助内容创作者生成初稿或提供写作灵感。</p>
+<p>•**数据分析与摘要：**LLM Agent可以从大量文本数据中提取关键信息，生成报告摘要，帮助决策者快速获取信息。</p>
+<p>•**教育和培训：**在教育领域，LLM Agent可以提供个性化的学习材料，辅助语言学习，或者作为智能辅导员。</p>
+<p>•**研究助手：**对于研究人员，LLM Agent可以帮助文献搜索、信息整理，甚至参与创造性的研究过程。</p>
+<h2 id="多模态"><strong>多模态</strong><a hidden class="anchor" aria-hidden="true" href="#多模态">#</a></h2>
+<h3 id="多模态定义"><strong>多模态定义</strong><a hidden class="anchor" aria-hidden="true" href="#多模态定义">#</a></h3>
+<p>什么是多模态呢？简单来说，多模态就像是一个多才多艺的艺术家，能够同时使用多种艺术形式来创作作品。在AI领域，多模态模型能够同时处理和理解多种类型的数据，比如文字、图像、声音和视频。</p>
+<h3 id="为什么需要多模态"><strong>为什么需要多模态</strong><a hidden class="anchor" aria-hidden="true" href="#为什么需要多模态">#</a></h3>
+<p>为什么我们需要能够处理多种数据类型的AI模型呢？原因很简单：我们的世界是多模态的。我们交流和感知世界不仅仅通过语言，还包括视觉、听觉等多种方式。多模态模型能够更全面地理解和模拟人类的交流和感知方式，使得AI能够更自然地与人类互动。</p>
+<h3 id="多模态的作用和特点"><strong>多模态的作用和特点</strong><a hidden class="anchor" aria-hidden="true" href="#多模态的作用和特点">#</a></h3>
+<p>多模态模型就像是我们的大脑，能够同时处理和理解来自眼睛（视觉信息）、耳朵（听觉信息）和其他感官的数据。作用主要体现在以下几个方面：</p>
+<p>**1.信息整合：**能够将不同类型的信息整合在一起，提高理解和分析的准确性。</p>
+<p>**2. 增强表现力：**通过结合多种数据源，模型可以表现出更强的感知和认知能力。</p>
+<p>**3. 提高鲁棒性：**多模态模型可以在某种类型数据缺失或不完整的情况下，依靠其他数据类型来弥补，从而提高整体性能。</p>
+<p>与单一模态的模型相比，多模态模型具有以下特点：</p>
+<p>**1. 源数据处理：**能够同时处理图像、文字、声音等多种数据类型。</p>
+<p>**2. 更强的泛化能力：**在不同的应用场景下表现更好，因为它们能够整合更多的信息。</p>
+<h3 id="多模态模型的应用案例"><strong>多模态模型的应用案例</strong><a hidden class="anchor" aria-hidden="true" href="#多模态模型的应用案例">#</a></h3>
+<p>多模态模型在很多领域有着广泛的应用。以下是几个典型的例子：</p>
+<p>**1. 医疗诊断：**通过结合病人的影像数据（如X光片）、文字数据（病历）和生理数据（心电图），多模态模型可以提供更准确的诊断结果。</p>
+<p>**2. 自动驾驶：**多模态模型可以结合摄像头图像、雷达数据和GPS信息，帮助自动驾驶汽车更好地理解周围环境，提高安全性。</p>
+<p>**3. 智能客服：**通过整合语音识别、自然语言处理和情感分析，多模态模型可以提供更自然、更人性化的客服服务。</p>
+<p>多模态大模型是人工智能领域的重要进展，它们通过整合多种类型的数据，显著提升了模型的表现力和鲁棒性。这不仅使得人工智能系统能够更好地理解复杂的现实世界，也为未来的技术发展带来了无限可能。无论是在医疗、交通还是日常生活中，多模态大模型正逐步改变我们的生活方式。</p>
+<h1 id="应用实例简单列举"><strong>应用实例（简单列举）</strong><a hidden class="anchor" aria-hidden="true" href="#应用实例简单列举">#</a></h1>
+<h2 id="斯坦福小镇"><strong>斯坦福小镇</strong><a hidden class="anchor" aria-hidden="true" href="#斯坦福小镇">#</a></h2>
+<p><img loading="lazy" src="8.png" alt=""  />
+</p>
+<p>图片来源  Generative Agents（https://arxiv.org/pdf/2304.03442v1）</p>
+<h2 id="文生图-图生图-图生视频"><strong>文生图 图生图 图生视频</strong><a hidden class="anchor" aria-hidden="true" href="#文生图-图生图-图生视频">#</a></h2>
+<p><img loading="lazy" src="9.png" alt=""  />
+</p>
+<h2 id="llm-os"><strong>LLM OS</strong><a hidden class="anchor" aria-hidden="true" href="#llm-os">#</a></h2>
+<p><img loading="lazy" src="10.png" alt=""  />
+</p>
+<p>图片来源  The LLM OS（https://medium.com/@marcelheinz/the-llm-os-a-glimpse-into-the-future-of-tech-with-andrej-karpathy-3bcbc0baf339）</p>
+<h2 id="上古卷轴破解"><strong>上古卷轴破解</strong><a hidden class="anchor" aria-hidden="true" href="#上古卷轴破解">#</a></h2>
+<p><img loading="lazy" src="11.png" alt=""  />
+</p>
+<p>（图片来源  <a href="https://scrollprize.org/firstletters">https://scrollprize.org/firstletters</a>）</p>
+<h1 id="未来"><strong>未来</strong><a hidden class="anchor" aria-hidden="true" href="#未来">#</a></h1>
+<p><img loading="lazy" src="12.png" alt=""  />
+</p>
+<p>随着AI技术的不断发现和进步，AI与人类的协同关系将不断演进和深化。我们期待着在未来，AI能够成为我们最得力的助手和伙伴，共同迎接更加智能和高效的未来。我们可以预见以下几个趋势：</p>
+<p>•**更高的自主性：**AI将逐步从辅助工具发展为能够独立完成复杂任务的智能代理。这将解放人类的生产力，使我们能够专注于更具创造性和战略性的工作。</p>
+<p>•**更紧密的协同：**AI与人类的协同方式将更加多样化和灵活化。通过改进人机交互界面和协同算法，AI将能够更好地理解人类的意图和需求，实现更高效的合作。</p>
+<p>•**广泛的应用场景：**AI技术将渗透到各行各业，从医疗、教育到金融、制造业，AI将成为推动行业变革的重要力量。特别是在Agent模式下，AI将能够在更多领域中自主完成任务，带来前所未有的效率提升和创新机会。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/ai/">AI</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
