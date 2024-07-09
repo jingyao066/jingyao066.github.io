@@ -556,9 +556,9 @@
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;public interface DiscountStrategy {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    // 计算折扣额度:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    BigDecimal getDiscount(BigDecimal total);
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;interface&lt;/span&gt; DiscountStrategy {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#007f7f&#34;&gt;// 计算折扣额度:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;    BigDecimal getDiscount(BigDecimal total);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -573,10 +573,10 @@
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;6
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;public class UserDiscountStrategy implements DiscountStrategy {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    public BigDecimal getDiscount(BigDecimal total) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        // 普通会员打九折:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        return total.multiply(new BigDecimal(&amp;#34;0.1&amp;#34;)).setScale(2, RoundingMode.DOWN);
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;class&lt;/span&gt; UserDiscountStrategy &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;implements&lt;/span&gt; DiscountStrategy {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; BigDecimal getDiscount(BigDecimal total) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#007f7f&#34;&gt;// 普通会员打九折:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;return&lt;/span&gt; total.&lt;span style=&#34;color:#007f7f&#34;&gt;multiply&lt;/span&gt;(&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;new&lt;/span&gt; BigDecimal(&lt;span style=&#34;color:#0ff;font-weight:bold&#34;&gt;&amp;#34;0.1&amp;#34;&lt;/span&gt;)).&lt;span style=&#34;color:#007f7f&#34;&gt;setScale&lt;/span&gt;(&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;2&lt;/span&gt;, RoundingMode.&lt;span style=&#34;color:#007f7f&#34;&gt;DOWN&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
@@ -592,10 +592,10 @@
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;6
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;public class OverDiscountStrategy implements DiscountStrategy {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    public BigDecimal getDiscount(BigDecimal total) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        // 满100减20优惠:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        return total.compareTo(BigDecimal.valueOf(100)) &amp;gt;= 0 ? BigDecimal.valueOf(20) : BigDecimal.ZERO;
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;class&lt;/span&gt; OverDiscountStrategy &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;implements&lt;/span&gt; DiscountStrategy {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; BigDecimal getDiscount(BigDecimal total) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#007f7f&#34;&gt;// 满100减20优惠:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;return&lt;/span&gt; total.&lt;span style=&#34;color:#007f7f&#34;&gt;compareTo&lt;/span&gt;(BigDecimal.&lt;span style=&#34;color:#007f7f&#34;&gt;valueOf&lt;/span&gt;(&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;100&lt;/span&gt;)) &amp;gt;= &lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;0&lt;/span&gt; ? BigDecimal.&lt;span style=&#34;color:#007f7f&#34;&gt;valueOf&lt;/span&gt;(&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;20&lt;/span&gt;) : BigDecimal.&lt;span style=&#34;color:#007f7f&#34;&gt;ZERO&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
@@ -618,17 +618,17 @@
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;13
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;public class DiscountContext {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    // 持有某个策略:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    private DiscountStrategy strategy = new UserDiscountStrategy();
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;class&lt;/span&gt; DiscountContext {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#007f7f&#34;&gt;// 持有某个策略:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;private&lt;/span&gt; DiscountStrategy strategy = &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;new&lt;/span&gt; UserDiscountStrategy();
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    // 允许客户端设置新策略:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    public void setStrategy(DiscountStrategy strategy) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        this.strategy = strategy;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#007f7f&#34;&gt;// 允许客户端设置新策略:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;void&lt;/span&gt; setStrategy(DiscountStrategy strategy) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;this&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;strategy&lt;/span&gt; = strategy;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    public BigDecimal calculatePrice(BigDecimal total) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        return total.subtract(this.strategy.getDiscount(total)).setScale(2);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;public&lt;/span&gt; BigDecimal calculatePrice(BigDecimal total) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;return&lt;/span&gt; total.&lt;span style=&#34;color:#007f7f&#34;&gt;subtract&lt;/span&gt;(&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;this&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;strategy&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;getDiscount&lt;/span&gt;(total)).&lt;span style=&#34;color:#007f7f&#34;&gt;setScale&lt;/span&gt;(&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;2&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
@@ -653,21 +653,21 @@
 &lt;/span&gt;&lt;span style=&#34;white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272&#34;&gt;15
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DiscountContext ctx = new DiscountContext();
+&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DiscountContext ctx = &lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;new&lt;/span&gt; DiscountContext();
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;// 默认使用普通会员折扣:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BigDecimal pay1 = ctx.calculatePrice(BigDecimal.valueOf(105));
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;System.out.println(pay1);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;// 默认使用普通会员折扣:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;BigDecimal pay1 = ctx.&lt;span style=&#34;color:#007f7f&#34;&gt;calculatePrice&lt;/span&gt;(BigDecimal.&lt;span style=&#34;color:#007f7f&#34;&gt;valueOf&lt;/span&gt;(&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;105&lt;/span&gt;));
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(pay1);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;// 使用满减折扣:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ctx.setStrategy(new OverDiscountStrategy());
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BigDecimal pay2 = ctx.calculatePrice(BigDecimal.valueOf(105));
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;System.out.println(pay2);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;// 使用满减折扣:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;ctx.&lt;span style=&#34;color:#007f7f&#34;&gt;setStrategy&lt;/span&gt;(&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;new&lt;/span&gt; OverDiscountStrategy());
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BigDecimal pay2 = ctx.&lt;span style=&#34;color:#007f7f&#34;&gt;calculatePrice&lt;/span&gt;(BigDecimal.&lt;span style=&#34;color:#007f7f&#34;&gt;valueOf&lt;/span&gt;(&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;105&lt;/span&gt;));
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(pay2);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;// 使用Prime会员折扣:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ctx.setStrategy(new PrimeDiscountStrategy());
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BigDecimal pay3 = ctx.calculatePrice(BigDecimal.valueOf(105));
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;System.out.println(pay3);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;// 使用Prime会员折扣:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007f7f&#34;&gt;&lt;/span&gt;ctx.&lt;span style=&#34;color:#007f7f&#34;&gt;setStrategy&lt;/span&gt;(&lt;span style=&#34;color:#fff;font-weight:bold&#34;&gt;new&lt;/span&gt; PrimeDiscountStrategy());
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BigDecimal pay3 = ctx.&lt;span style=&#34;color:#007f7f&#34;&gt;calculatePrice&lt;/span&gt;(BigDecimal.&lt;span style=&#34;color:#007f7f&#34;&gt;valueOf&lt;/span&gt;(&lt;span style=&#34;color:#ff0;font-weight:bold&#34;&gt;105&lt;/span&gt;));
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;System.&lt;span style=&#34;color:#007f7f&#34;&gt;out&lt;/span&gt;.&lt;span style=&#34;color:#007f7f&#34;&gt;println&lt;/span&gt;(pay3);
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;上述完整的策略模式如下图所示：&lt;/p&gt;
