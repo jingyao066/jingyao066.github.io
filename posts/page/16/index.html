@@ -169,6 +169,20 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">String
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>String简介 String 是java中的字符串，它继承于CharSequence。 String类所包含的API接口非常多。为了便于今后的使用，我对String的API进行了分类，并都给出的演示程序。
+String 和 CharSequence 关系： String 继承于CharSequence，也就是说String也是CharSequence类型。 CharSequence是一个接口，它只包括length(), charAt(int index), subSequence(int start, int end)这几个API接口。除了String实现了CharSequence之外，StringBuffer和StringBuilder也实现了CharSequence接口。 需要说明的是，CharSequence就是字符序列，String、StringBuilder和StringBuffer本质上都是通过字符数组实现的。 StringBuilder 和 StringBuffer 的区别： StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于AbstractStringBuilder，实现了CharSequence接口。 但是，StringBuilder是非线程安全的，而StringBuffer是线程安全的。
+它们之间的关系图如下： ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-05-07 15:30:07 +0000 UTC'>2019-05-07</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to String" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/string/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Shell基础
     </h2>
   </header>
@@ -244,20 +258,6 @@
   </div>
   <footer class="entry-footer"><span title='2019-04-09 15:28:45 +0000 UTC'>2019-04-09</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to 树" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E6%A0%91/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">multithreading-JUC线程池
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>美团技术团队关于线程池的文章
-线程池的使用场景 java中经常需要用到多线程来处理一些业务，我们非常不建议单纯使用继承Thread或者实现Runnable接口的方式来创建线程，那样势必有创建及销毁线程耗费资源、线程上下文切换问题。同时创建过多的线程也可能引发资源耗尽的风险，这个时候引入线程池比较合理，方便线程任务的管理。java中涉及到线程池的相关类均在jdk1.5开始的java.util.concurrent包中，涉及到的几个核心类及接口包括：Executor、Executors、ExecutorService、ThreadPoolExecutor、FutureTask、Callable、Runnable等。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-03-30 10:22:55 +0000 UTC'>2019-03-30</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to multithreading-JUC线程池" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/multithreading-juc%E7%BA%BF%E7%A8%8B%E6%B1%A0/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
