@@ -33,6 +33,13 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;/ul&gt;</description>
     </item>
     <item>
+      <title>5、SpringBoot开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/5springboot%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Sun, 05 Jan 2020 10:15:56 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/5springboot%E5%BC%80%E5%8F%91/</guid>
+      <description>概述 我们已经在前面详细介绍了Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。 那么，</description>
+    </item>
+    <item>
       <title>spring代码示例</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
       <pubDate>Sat, 04 Jan 2020 14:13:12 +0000</pubDate>
