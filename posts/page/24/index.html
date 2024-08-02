@@ -169,6 +169,33 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">HashMap
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-20 14:49:20 +0000 UTC'>2017-12-20</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to HashMap" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Map
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 我们知道，List是一种顺序列表，如果有一个存储学生Student实例的List，要在List中根据name查找某个指定的Student的分数，应该怎么办？
+最简单的方法是遍历List并判断name是否相等，然后返回指定元素：
+1 2 3 4 5 6 7 8 9 List&lt;Student&gt; list = ... Student target = null; for (Student s : list) { if (&#34;Xiao Ming&#34;.equals(s.name)) { target = s; break; } } System.out.println(target.score); ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-12-20 13:46:07 +0000 UTC'>2017-12-20</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to Map" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/map/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">List
     </h2>
   </header>
@@ -230,32 +257,6 @@ ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删
   </div>
   <footer class="entry-footer"><span title='2017-12-06 18:21:41 +0000 UTC'>2017-12-06</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to Collection" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/collection/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Set
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 我们知道，Map用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写equals()方法，还要正确覆写hashCode()方法。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-03 10:33:47 +0000 UTC'>2017-12-03</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to Set" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/set/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">TreeMap
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 我们已经知道，HashMap是一种以空间换时间的映射表，它的实现原理决定了内部的Key是无序的，即遍历HashMap的Key时，其顺序是不可预测的（但每个Key都会遍历一次且仅遍历一次）。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-12-01 17:21:59 +0000 UTC'>2017-12-01</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to TreeMap" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/treemap/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

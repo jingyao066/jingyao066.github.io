@@ -18,9 +18,16 @@
 &lt;p&gt;&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1539348902182944&#34;&gt;手写Spring - 廖雪峰的官方网站 (liaoxuefeng.com)&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
+      <title>spring代码示例</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Wed, 15 Jan 2020 14:13:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
+      <description>&lt;h1 id=&#34;简单的hello-world&#34;&gt;简单的hello world&lt;/h1&gt;</description>
+    </item>
+    <item>
       <title>springMVC</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</link>
-      <pubDate>Sun, 05 Jan 2020 23:35:36 +0000</pubDate>
+      <pubDate>Mon, 13 Jan 2020 23:35:36 +0000</pubDate>
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</guid>
       <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
 &lt;p&gt;MVC，即 model模型，view视图，controller控制。
@@ -33,6 +40,25 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;/ul&gt;</description>
     </item>
     <item>
+      <title>spring boot</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</link>
+      <pubDate>Sun, 12 Jan 2020 17:27:28 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
+&lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>6、SpringCloud开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Mon, 06 Jan 2020 13:22:38 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</guid>
+      <description>概述 Spring是JavaEE的一个轻量级开发框架，主营IoC和AOP，集成JDBC、ORM、MVC等功能便于开发。 Spring Boot是基于Spri</description>
+    </item>
+    <item>
       <title>5、SpringBoot开发</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/5springboot%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 05 Jan 2020 10:15:56 +0000</pubDate>
@@ -40,16 +66,9 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
       <description>概述 我们已经在前面详细介绍了Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。 那么，</description>
     </item>
     <item>
-      <title>spring代码示例</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
-      <pubDate>Sat, 04 Jan 2020 14:13:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
-      <description>&lt;h1 id=&#34;简单的hello-world&#34;&gt;简单的hello world&lt;/h1&gt;</description>
-    </item>
-    <item>
       <title>4、Spring开发web应用</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 03 Jan 2020 15:33:23 +0000</pubDate>
+      <pubDate>Sat, 04 Jan 2020 18:56:17 +0000</pubDate>
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</guid>
       <description>&lt;h1 id=&#34;开发web应用&#34;&gt;开发Web应用&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1252599548343744/1255945497738400&#34;&gt;Web开发&lt;/a&gt;一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：&lt;/p&gt;
@@ -151,18 +170,6 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;p&gt;如果使用Spring的其他版本，则需要根据需要调整代码。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://spring.io/&#34;&gt;spring官网&lt;/a&gt;
 &lt;a href=&#34;https://blog.csdn.net/qq_41907991/article/details/105502255&#34;&gt;spring官网如何阅读&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>spring boot</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
-&lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;</description>
     </item>
   </channel>
 </rss>

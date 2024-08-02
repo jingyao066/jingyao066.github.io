@@ -1126,6 +1126,40 @@ Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Do
 &lt;/p&gt;</description>
     </item>
     <item>
+      <title>spring代码示例</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Wed, 15 Jan 2020 14:13:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
+      <description>&lt;h1 id=&#34;简单的hello-world&#34;&gt;简单的hello world&lt;/h1&gt;</description>
+    </item>
+    <item>
+      <title>springMVC</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</link>
+      <pubDate>Mon, 13 Jan 2020 23:35:36 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</guid>
+      <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
+&lt;p&gt;MVC，即 model模型，view视图，controller控制。
+spring mvc可以用来开发灵活、松散耦合的 web 应用程序。
+MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模型封装了应用程序数据，通常由POJO组成。&lt;/li&gt;
+&lt;li&gt;视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。&lt;/li&gt;
+&lt;li&gt;控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>spring boot</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</link>
+      <pubDate>Sun, 12 Jan 2020 17:27:28 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
+&lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    <item>
       <title>kit</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/kit/</link>
       <pubDate>Sat, 11 Jan 2020 10:27:48 +0000</pubDate>
@@ -1157,19 +1191,11 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
 简单来说，索引的作用相当于图书的目录，可以根据目录中的页码快速找到所需的内容。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>springMVC</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</link>
-      <pubDate>Sun, 05 Jan 2020 23:35:36 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/springmvc/</guid>
-      <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
-&lt;p&gt;MVC，即 model模型，view视图，controller控制。
-spring mvc可以用来开发灵活、松散耦合的 web 应用程序。
-MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;模型封装了应用程序数据，通常由POJO组成。&lt;/li&gt;
-&lt;li&gt;视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。&lt;/li&gt;
-&lt;li&gt;控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <title>6、SpringCloud开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Mon, 06 Jan 2020 13:22:38 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</guid>
+      <description>概述 Spring是JavaEE的一个轻量级开发框架，主营IoC和AOP，集成JDBC、ORM、MVC等功能便于开发。 Spring Boot是基于Spri</description>
     </item>
     <item>
       <title>5、SpringBoot开发</title>
@@ -1179,16 +1205,9 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
       <description>概述 我们已经在前面详细介绍了Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。 那么，</description>
     </item>
     <item>
-      <title>spring代码示例</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
-      <pubDate>Sat, 04 Jan 2020 14:13:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
-      <description>&lt;h1 id=&#34;简单的hello-world&#34;&gt;简单的hello world&lt;/h1&gt;</description>
-    </item>
-    <item>
       <title>4、Spring开发web应用</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Fri, 03 Jan 2020 15:33:23 +0000</pubDate>
+      <pubDate>Sat, 04 Jan 2020 18:56:17 +0000</pubDate>
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</guid>
       <description>&lt;h1 id=&#34;开发web应用&#34;&gt;开发Web应用&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1252599548343744/1255945497738400&#34;&gt;Web开发&lt;/a&gt;一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：&lt;/p&gt;
@@ -2867,18 +2886,6 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/oauth/</guid>
       <description>&lt;h1 id=&#34;oauth&#34;&gt;OAuth&lt;/h1&gt;
 &lt;p&gt;OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>spring boot</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/spring/spring-boot/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
-&lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>大模型技术</title>
