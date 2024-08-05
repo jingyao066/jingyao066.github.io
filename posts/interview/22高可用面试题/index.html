@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>22、高可用面试题 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="interview">
+<meta name="description" content="高可用系统设计指南 什么是高可用？可用性的判断标准是啥？ 高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/interview/22%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="22、高可用面试题" />
+<meta property="og:description" content="高可用系统设计指南 什么是高可用？可用性的判断标准是啥？ 高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/interview/22%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-09T05:00:00+00:00" />
+<meta property="article:modified_time" content="2023-08-09T05:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="22、高可用面试题"/>
+<meta name="twitter:description" content="高可用系统设计指南 什么是高可用？可用性的判断标准是啥？ 高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "22、高可用面试题",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/interview/22%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "22、高可用面试题",
+  "name": "22、高可用面试题",
+  "description": "高可用系统设计指南 什么是高可用？可用性的判断标准是啥？ 高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使",
+  "keywords": [
+    "interview"
+  ],
+  "articleBody": "高可用系统设计指南 什么是高可用？可用性的判断标准是啥？ 高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使在发生硬件故障或者系统升级的时候，服务仍然是可用的。\n一般情况下，我们使用多少个 9 来评判一个系统的可用性，比如 99.9999% 就是代表该系统在所有的运行时间中只有 0.0001% 的时间是不可用的，这样的系统就是非常非常高可用的了！当然，也会有系统如果可用性不太好的话，可能连 9 都上不了。\n除此之外，系统的可用性还可以用某功能的失败次数与总的请求次数之比来衡量，比如对网站请求 1000 次，其中有 10 次请求失败，那么可用性就是 99%。\n哪些情况会导致系统不可用？ 黑客攻击； 硬件故障，比如服务器坏掉。 并发量/用户请求量激增导致整个服务宕掉或者部分服务不可用。 代码中的坏味道导致内存泄漏或者其他问题导致程序挂掉。 网站架构某个重要的角色比如 Nginx 或者数据库突然不可用。 自然灾害或者人为破坏。 …… 有哪些提高系统可用性的方法？ 注重代码质量，测试严格把关 我觉得这个是最最最重要的，代码质量有问题比如比较常见的内存泄漏、循环依赖都是对系统可用性极大的损害。大家都喜欢谈限流、降级、熔断，但是我觉得从代码质量这个源头把关是首先要做好的一件很重要的事情。如何提高代码质量？比较实际可用的就是 CodeReview，不要在乎每天多花的那 1 个小时左右的时间，作用可大着呢！\n另外，安利几个对提高代码质量有实际效果的神器：\nSonarqube； Alibaba 开源的 Java 诊断工具 Arthas； 阿里巴巴 Java 代码规范（Alibaba Java Code Guidelines）； IDEA 自带的代码分析等工具。 使用集群，减少单点故障 先拿常用的 Redis 举个例子！我们如何保证我们的 Redis 缓存高可用呢？答案就是使用集群，避免单点故障。当我们使用一个 Redis 实例作为缓存的时候，这个 Redis 实例挂了之后，整个缓存服务可能就挂了。使用了集群之后，即使一台 Redis 实例挂了，不到一秒就会有另外一台 Redis 实例顶上。\n限流 流量控制（flow control），其原理是监控应用流量的 QPS 或并发线程数等指标，当达到指定的阈值时对流量进行控制，以避免被瞬时的流量高峰冲垮，从而保障应用的高可用性。——来自 alibaba-Sentinel 的 wiki。\n超时和重试机制设置 一旦用户请求超过某个时间的得不到响应，就抛出异常。这个是非常重要的，很多线上系统故障都是因为没有进行超时设置或者超时设置的方式不对导致的。我们在读取第三方服务的时候，尤其适合设置超时和重试机制。一般我们使用一些 RPC 框架的时候，这些框架都自带的超时重试的配置。如果不进行超时设置可能会导致请求响应速度慢，甚至导致请求堆积进而让系统无法再处理请求。重试的次数一般设为 3 次，再多次的重试没有好处，反而会加重服务器压力（部分场景使用失败重试机制会不太适合）。\n熔断机制 超时和重试机制设置之外，熔断机制也是很重要的。 熔断机制说的是系统自动收集所依赖服务的资源使用情况和性能指标，当所依赖的服务恶化或者调用失败次数达到某个阈值的时候就迅速失败，让当前系统立即切换依赖其他备用服务。 比较常用的流量控制和熔断降级框架是 Netflix 的 Hystrix 和 alibaba 的 Sentinel。\n异步调用 异步调用的话我们不需要关心最后的结果，这样我们就可以用户请求完成之后就立即返回结果，具体处理我们可以后续再做，秒杀场景用这个还是蛮多的。但是，使用异步之后我们可能需要 适当修改业务流程进行配合，比如用户在提交订单之后，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功。除了可以在程序中实现异步之外，我们常常还使用消息队列，消息队列可以通过异步处理提高系统性能（削峰、减少响应所需时间）并且可以降低系统耦合性。\n使用缓存 如果我们的系统属于并发量比较高的话，如果我们单纯使用数据库的话，当大量请求直接落到数据库可能数据库就会直接挂掉。使用缓存缓存热点数据，因为缓存存储在内存中，所以速度相当地快！\n其他 核心应用和服务优先使用更好的硬件 监控系统资源使用情况增加报警设置。 注意备份，必要时候回滚。 灰度发布： 将服务器集群分成若干部分，每天只发布一部分机器，观察运行稳定没有故障，第二天继续发布一部分机器，持续几天才把整个集群全部发布完毕，期间如果发现问题，只需要回滚已发布的一部分服务器即可 定期检查/更换硬件： 如果不是购买的云服务的话，定期还是需要对硬件进行一波检查的，对于一些需要更换或者升级的硬件，要及时更换或者升级。 冗余设计详解 冗余设计是保证系统和数据高可用的最常的手段。\n对于服务来说，冗余的思想就是相同的服务部署多份，如果正在使用的服务突然挂掉的话，系统可以很快切换到备份服务上，大大减少系统的不可用时间，提高系统的可用性。\n对于数据来说，冗余的思想就是相同的数据备份多份，这样就可以很简单地提高数据的安全性。\n实际上，日常生活中就有非常多的冗余思想的应用。\n拿我自己来说，我对于重要文件的保存方法就是冗余思想的应用。我日常所使用的重要文件都会同步一份在 GitHub 以及个人云盘上，这样就可以保证即使电脑硬盘损坏，我也可以通过 GitHub 或者个人云盘找回自己的重要文件。\n高可用集群（High Availability Cluster，简称 HA Cluster）、同城灾备、异地灾备、同城多活和异地多活是冗余思想在高可用系统设计中最典型的应用。\n高可用集群 : 同一份服务部署两份或者多份，当正在使用的服务突然挂掉的话，可以切换到另外一台服务，从而保证服务的高可用。 同城灾备：一整个集群可以部署在同一个机房，而同城灾备中相同服务部署在同一个城市的不同机房中。并且，备用服务不处理请求。这样可以避免机房出现意外情况比如停电、火灾。 异地灾备：类似于同城灾备，不同的是，相同服务部署在异地（通常距离较远，甚至是在不同的城市或者国家）的不同机房中 同城多活：类似于同城灾备，但备用服务可以处理请求，这样可以充分利用系统资源，提高系统的并发。 异地多活 : 将服务部署在异地的不同机房中，并且，它们可以同时对外提供服务。 高可用集群单纯是服务的冗余，并没有强调地域。同城灾备、异地灾备、同城多活和异地多活实现了地域上的冗余。\n同城和异地的主要区别在于机房之间的距离。异地通常距离较远，甚至是在不同的城市或者国家。\n和传统的灾备设计相比，同城多活和异地多活最明显的改变在于“多活”，即所有站点都是同时在对外提供服务的。异地多活是为了应对突发状况比如火灾、地震等自然或者人为灾害。\n光做好冗余还不够，必须要配合上 故障转移 才可以！ 所谓故障转移，简单来说就是实现不可用服务快速且自动地切换到可用服务，整个过程不需要人为干涉。\n举个例子：哨兵模式的 Redis 集群中，如果 Sentinel（哨兵） 检测到 master 节点出现故障的话， 它就会帮助我们实现故障转移，自动将某一台 slave 升级为 master，确保整个 Redis 系统的可用性。整个过程完全自动，不需要人工介入。我在《Java 面试指北》的「技术面试题篇」中的数据库部分详细介绍了 Redis 集群相关的知识点\u0026面试题，感兴趣的小伙伴可以看看。\n再举个例子：Nginx 可以结合 Keepalived 来实现高可用。如果 Nginx 主服务器宕机的话，Keepalived 可以自动进行故障转移，备用 Nginx 主服务器升级为主服务。并且，这个切换对外是透明的，因为使用的虚拟 IP，虚拟 IP 不会改变。我在《Java 面试指北》的「技术面试题篇」中的「服务器」部分详细介绍了 Nginx 相关的知识点\u0026面试题，感兴趣的小伙伴可以看看。\n异地多活架构实施起来非常难，需要考虑的因素非常多。本人不才，实际项目中并没有实践过异地多活架构，我对其了解还停留在书本知识。\n如果你想要深入学习异地多活相关的知识，我这里推荐几篇我觉得还不错的文章：\n搞懂异地多活，看这篇就够了- 水滴与银弹 - 2021 四步构建异地多活 《从零开始学架构》— 28 | 业务高可用的保障：异地多活架构 不过，这些文章大多也都是在介绍概念知识。目前，网上还缺少真正介绍具体要如何去实践落地异地多活架构的资料。\n服务限流详解 针对软件系统来说，限流就是对请求的速率进行限制，避免瞬时的大量请求击垮软件系统。毕竟，软件系统的处理能力是有限的。如果说超过了其处理能力的范围，软件系统可能直接就挂掉了。\n限流可能会导致用户的请求无法被正确处理，不过，这往往也是权衡了软件系统的稳定性之后得到的最优解。\n现实生活中，处处都有限流的实际应用，就比如排队买票是为了避免大量用户涌入购票而导致售票员无法处理。\n常见限流算法有哪些？ 简单介绍 4 种非常好理解并且容易实现的限流算法！\n图片来源于 InfoQ 的一篇文章《分布式服务限流实战，已经为你排好坑了》。\n固定窗口计数器算法 固定窗口其实就是时间窗口。固定窗口计数器算法 规定了我们单位时间处理的请求数量。\n假如我们规定系统中某个接口 1 分钟只能访问 33 次的话，使用固定窗口计数器算法的实现思路如下：\n给定一个变量 counter 来记录当前接口处理的请求数量，初始值为 0（代表接口当前 1 分钟内还未处理请求）。 1 分钟之内每处理一个请求之后就将 counter+1 ，当 counter=33 之后（也就是说在这 1 分钟内接口已经被访问 33 次的话），后续的请求就会被全部拒绝。 等到 1 分钟结束后，将 counter 重置 0，重新开始计数。 这种限流算法无法保证限流速率，因而无法保证突然激增的流量。\n就比如说我们限制某个接口 1 分钟只能访问 1000 次，该接口的 QPS 为 500，前 55s 这个接口 1 个请求没有接收，后 1s 突然接收了 1000 个请求。然后，在当前场景下，这 1000 个请求在 1s 内是没办法被处理的，系统直接就被瞬时的大量请求给击垮了。\n滑动窗口计数器算法 滑动窗口计数器算法 算的上是固定窗口计数器算法的升级版。\n滑动窗口计数器算法相比于固定窗口计数器算法的优化在于：它把时间以一定比例分片 。\n例如我们的接口限流每分钟处理 60 个请求，我们可以把 1 分钟分为 60 个窗口。每隔 1 秒移动一次，每个窗口一秒只能处理 不大于 60(请求数)/60（窗口数） 的请求， 如果当前窗口的请求计数总和超过了限制的数量的话就不再处理其他请求。\n很显然， 当滑动窗口的格子划分的越多，滑动窗口的滚动就越平滑，限流的统计就会越精确。\n漏桶算法 我们可以把发请求的动作比作成注水到桶中，我们处理请求的过程可以比喻为漏桶漏水。我们往桶中以任意速率流入水，以一定速率流出水。当水超过桶流量则丢弃，因为桶容量是不变的，保证了整体的速率。\n如果想要实现这个算法的话也很简单，准备一个队列用来保存请求，然后我们定期从队列中拿请求来执行就好了（和消息队列削峰/限流的思想是一样的）。\n令牌桶算法 令牌桶算法也比较简单。和漏桶算法算法一样，我们的主角还是桶（这限流算法和桶过不去啊）。不过现在桶里装的是令牌了，请求在被处理之前需要拿到一个令牌，请求处理完毕之后将这个令牌丢弃（删除）。我们根据限流大小，按照一定的速率往桶里添加令牌。如果桶装满了，就不能继续往里面继续添加令牌了。\n单机限流怎么做？ 单机限流针对的是单体架构应用。\n单机限流可以直接使用 Google Guava 自带的限流工具类 RateLimiter 。 RateLimiter 基于令牌桶算法，可以应对突发流量。\nGuava 地址：https://github.com/google/guava\n除了最基本的令牌桶算法(平滑突发限流)实现之外，Guava 的RateLimiter还提供了 平滑预热限流 的算法实现。\n平滑突发限流就是按照指定的速率放令牌到桶里，而平滑预热限流会有一段预热时间，预热时间之内，速率会逐渐提升到配置的速率。\n我们下面通过两个简单的小例子来详细了解吧！\n我们直接在项目中引入 Guava 相关的依赖即可使用。\n1 2 3 4 5 com.google.guava guava 31.0.1-jre 下面是一个简单的 Guava 平滑突发限流的 Demo。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 import com.google.common.util.concurrent.RateLimiter; /** * 微信搜 JavaGuide 回复\"面试突击\"即可免费领取个人原创的 Java 面试手册 * * @author Guide哥 * @date 2021/10/08 19:12 **/ public class RateLimiterDemo { public static void main(String[] args) { // 1s 放 5 个令牌到桶里也就是 0.2s 放 1个令牌到桶里 RateLimiter rateLimiter = RateLimiter.create(5); for (int i = 0; i \u003c 10; i++) { double sleepingTime = rateLimiter.acquire(1); System.out.printf(\"get 1 tokens: %ss%n\", sleepingTime); } } } 输出：\n1 2 3 4 5 6 7 8 9 10 get 1 tokens: 0.0s get 1 tokens: 0.188413s get 1 tokens: 0.197811s get 1 tokens: 0.198316s get 1 tokens: 0.19864s get 1 tokens: 0.199363s get 1 tokens: 0.193997s get 1 tokens: 0.199623s get 1 tokens: 0.199357s get 1 tokens: 0.195676s 下面是一个简单的 Guava 平滑预热限流的 Demo。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 import com.google.common.util.concurrent.RateLimiter; import java.util.concurrent.TimeUnit; /** * 微信搜 JavaGuide 回复\"面试突击\"即可免费领取个人原创的 Java 面试手册 * * @author Guide哥 * @date 2021/10/08 19:12 **/ public class RateLimiterDemo { public static void main(String[] args) { // 1s 放 5 个令牌到桶里也就是 0.2s 放 1个令牌到桶里 // 预热时间为3s,也就说刚开始的 3s 内发牌速率会逐渐提升到 0.2s 放 1 个令牌到桶里 RateLimiter rateLimiter = RateLimiter.create(5, 3, TimeUnit.SECONDS); for (int i = 0; i \u003c 20; i++) { double sleepingTime = rateLimiter.acquire(1); System.out.printf(\"get 1 tokens: %sds%n\", sleepingTime); } } } 输出：\n1 2 3 4 5 6 7 8 9 10 get 1 tokens: 0.0s get 1 tokens: 0.561919s get 1 tokens: 0.516931s get 1 tokens: 0.463798s get 1 tokens: 0.41286s get 1 tokens: 0.356172s get 1 tokens: 0.300489s get 1 tokens: 0.252545s get 1 tokens: 0.203996s get 1 tokens: 0.198359s 另外，Bucket4j 是一个非常不错的基于令牌/漏桶算法的限流库。\nBucket4j 地址：https://github.com/vladimir-bukhtoyarov/bucket4j\n相对于，Guava 的限流工具类来说，Bucket4j 提供的限流功能更加全面。不仅支持单机限流和分布式限流，还可以集成监控，搭配 Prometheus 和 Grafana 使用。\n不过，毕竟 Guava 也只是一个功能全面的工具类库，其提供的开箱即用的限流功能在很多单机场景下还是比较实用的。\nSpring Cloud Gateway 中自带的单机限流的早期版本就是基于 Bucket4j 实现的。后来，替换成了 Resilience4j。\nResilience4j 是一个轻量级的容错组件，其灵感来自于 Hystrix。自Netflix 宣布不再积极开发 Hystrix 之后，Spring 官方和 Netflix 都更推荐使用 Resilience4j 来做限流熔断。\nResilience4j 地址: https://github.com/resilience4j/resilience4j\n一般情况下，为了保证系统的高可用，项目的限流和熔断都是要一起做的。\nResilience4j 不仅提供限流，还提供了熔断、负载保护、自动重试等保障系统高可用开箱即用的功能。并且，Resilience4j 的生态也更好，很多网关都使用 Resilience4j 来做限流熔断的。\n因此，在绝大部分场景下 Resilience4j 或许会是更好的选择。如果是一些比较简单的限流场景的话，Guava 或者 Bucket4j 也是不错的选择。\n分布式限流怎么做？ 分布式限流针对的分布式/微服务应用架构应用，在这种架构下，单机限流就不适用了，因为会存在多种服务，并且一种服务也可能会被部署多份。\n分布式限流常见的方案：\n借助中间件架限流：可以借助 Sentinel 或者使用 Redis 来自己实现对应的限流逻辑。 网关层限流：比较常用的一种方案，直接在网关层把限流给安排上了。不过，通常网关层限流通常也需要借助到中间件/框架。就比如 Spring Cloud Gateway 的分布式限流实现RedisRateLimiter就是基于 Redis+Lua 来实现的，再比如 Spring Cloud Gateway 还可以整合 Sentinel 来做限流。 如果你要基于 Redis 来手动实现限流逻辑的话，建议配合 Lua 脚本来做。\n为什么建议 Redis+Lua 的方式？ 主要有两点原因：\n减少了网络开销：我们可以利用 Lua 脚本来批量执行多条 Redis 命令，这些 Redis 命令会被提交到 Redis 服务器一次性执行完成，大幅减小了网络开销。 原子性：一段 Lua 脚本可以视作一条命令执行，一段 Lua 脚本执行过程中不会有其他脚本或 Redis 命令同时执行，保证了操作不会被其他指令插入或打扰。 我这里就不放具体的限流脚本代码了，网上也有很多现成的优秀的限流脚本供你参考，就比如 Apache 网关项目 ShenYu 的 RateLimiter 限流插件就基于 Redis + Lua 实现了令牌桶算法/并发令牌桶算法、漏桶算法、滑动窗口算法。\nShenYu 地址: https://github.com/apache/incubator-shenyu\n相关阅读 服务治理之轻量级熔断框架 Resilience4j：https://xie.infoq.cn/article/14786e571c1a4143ad1ef8f19 超详细的 Guava RateLimiter 限流原理解析：https://cloud.tencent.com/developer/article/1408819 实战 Spring Cloud Gateway 之限流篇 👍：https://www.aneasystone.com/archives/2020/08/spring-cloud-gateway-current-limiting.html 降级\u0026熔断详解 。。。\n超时\u0026重试详解 由于网络问题、系统或者服务内部的 Bug、服务器宕机、操作系统崩溃等问题的不确定性，我们的系统或者服务永远不可能保证时刻都是可用的状态。\n为了最大限度的减小系统或者服务出现故障之后带来的影响，我们需要用到的 超时（Timeout） 和 重试（Retry） 机制。\n想要把超时和重试机制讲清楚其实很简单，因为它俩本身就不是什么高深的概念。\n虽然超时和重试机制的思想很简单，但是它俩是真的非常实用。你平时接触到的绝大部分涉及到远程调用的系统或者服务都会应用超时和重试机制。尤其是对于微服务系统来说，正确设置超时和重试非常重要。单体服务通常只涉及数据库、缓存、第三方 API、中间件等的网络调用，而微服务系统内部各个服务之间还存在着网络调用。\n超时机制 什么是超时机制？ 超时机制说的是当一个请求超过指定的时间（比如 1s）还没有被处理的话，这个请求就会直接被取消并抛出指定的异常或者错误（比如 504 Gateway Timeout）。\n我们平时接触到的超时可以简单分为下面 2 种：\n连接超时（ConnectTimeout）：客户端与服务端建立连接的最长等待时间。 读取超时（ReadTimeout）：客户端和服务端已经建立连接，客户端等待服务端处理完请求的最长时间。实际项目中，我们关注比较多的还是读取超时。 一些连接池客户端框架中可能还会有获取连接超时和空闲连接清理超时。\n如果没有设置超时的话，就可能会导致服务端连接数爆炸和大量请求堆积的问题。\n这些堆积的连接和请求会消耗系统资源，影响新收到的请求的处理。严重的情况下，甚至会拖垮整个系统或者服务。\n我之前在实际项目就遇到过类似的问题，整个网站无法正常处理请求，服务器负载直接快被拉满。后面发现原因是项目超时设置错误加上客户端请求处理异常，导致服务端连接数直接接近 40w+，这么多堆积的连接直接把系统干趴了。\n超时时间应该如何设置？ 超时到底设置多长时间是一个难题！超时值设置太高或者太低都有风险。如果设置太高的话，会降低超时机制的有效性，比如你设置超时为 10s 的话，那设置超时就没啥意义了，系统依然可能会出现大量慢请求堆积的问题。如果设置太低的话，就可能会导致在系统或者服务在某些处理请求速度变慢的情况下（比如请求突然增多），大量请求重试（超时通常会结合重试）继续加重系统或者服务的压力，进而导致整个系统或者服务被拖垮的问题。\n通常情况下，我们建议读取超时设置为 1500ms ,这是一个比较普适的值。如果你的系统或者服务对于延迟比较敏感的话，那读取超时值可以适当在 1500ms 的基础上进行缩短。反之，读取超时值也可以在 1500ms 的基础上进行加长，不过，尽量还是不要超过 1500ms 。连接超时可以适当设置长一些，建议在 1000ms ~ 5000ms 之内。\n没有银弹！超时值具体该设置多大，还是要根据实际项目的需求和情况慢慢调整优化得到。\n更上一层，参考美团的 Java 线程池参数动态配置思想，我们也可以将超时弄成可配置化的参数而不是固定的，比较简单的一种办法就是将超时的值放在配置中心中。这样的话，我们就可以根据系统或者服务的状态动态调整超时值了。\n重试机制 什么是重试机制？ 重试机制一般配合超时机制一起使用，指的是多次发送相同的请求来避免瞬态故障和偶然性故障。\n瞬态故障可以简单理解为某一瞬间系统偶然出现的故障，并不会持久。偶然性故障可以理解为哪些在某些情况下偶尔出现的故障，频率通常较低。\n重试的核心思想是通过消耗服务器的资源来尽可能获得请求更大概率被成功处理。由于瞬态故障和偶然性故障是很少发生的，因此，重试对于服务器的资源消耗几乎是可以被忽略的。\n重试的次数如何设置？ 重试的次数不宜过多，否则依然会对系统负载造成比较大的压力。\n重试的次数通常建议设为 3 次。并且，我们通常还会设置重试的间隔，比如说我们要重试 3 次的话，第 1 次请求失败后，等待 1 秒再进行重试，第 2 次请求失败后，等待 2 秒再进行重试，第 3 次请求失败后，等待 3 秒再进行重试。\n重试幂等 超时和重试机制在实际项目中使用的话，需要注意保证同一个请求没有被多次执行。\n什么情况下会出现一个请求被多次执行呢？客户端等待服务端完成请求完成超时但此时服务端已经执行了请求，只是由于短暂的网络波动导致响应在发送给客户端的过程中延迟了。\n举个例子：用户支付购买某个课程，结果用户支付的请求由于重试的问题导致用户购买同一门课程支付了两次。对于这种情况，我们在执行用户购买课程的请求的时候需要判断一下用户是否已经购买过。这样的话，就不会因为重试的问题导致重复购买了。\n参考 微服务之间调用超时的设置治理：https://www.infoq.cn/article/eyrslar53l6hjm5yjgyx 超时、重试和抖动回退：https://aws.amazon.com/cn/builders-library/timeouts-retries-and-backoff-with-jitter/ 性能测试入门 性能测试一般情况下都是由测试这个职位去做的，那还需要我们开发学这个干嘛呢？了解性能测试的指标、分类以及工具等知识有助于我们更好地去写出性能更好的程序，另外作为开发这个角色，如果你会性能测试的话，相信也会为你的履历加分不少。\n这篇文章是我会结合自己的实际经历以及在测试这里取的经所得，除此之外，我还借鉴了一些优秀书籍，希望对你有帮助。\n不同角色看网站性能 用户 当用户打开一个网站的时候，最关注的是什么？当然是网站响应速度的快慢。比如我们点击了淘宝的主页，淘宝需要多久将首页的内容呈现在我的面前，我点击了提交订单按钮需要多久返回结果等等。\n所以，用户在体验我们系统的时候往往根据你的响应速度的快慢来评判你的网站的性能。\n开发人员 用户与开发人员都关注速度，这个速度实际上就是我们的系统处理用户请求的速度。\n开发人员一般情况下很难直观的去评判自己网站的性能，我们往往会根据网站当前的架构以及基础设施情况给一个大概的值,比如：\n项目架构是分布式的吗？ 用到了缓存和消息队列没有？ 高并发的业务有没有特殊处理？ 数据库设计是否合理？ 系统用到的算法是否还需要优化？ 系统是否存在内存泄露的问题？ 项目使用的 Redis 缓存多大？服务器性能如何？用的是机械硬盘还是固态硬盘？ …… 测试人员 测试人员一般会根据性能测试工具来测试，然后一般会做出一个表格。这个表格可能会涵盖下面这些重要的内容：\n响应时间； 请求成功率； 吞吐量； …… 运维人员 运维人员会倾向于根据基础设施和资源的利用率来判断网站的性能，比如我们的服务器资源使用是否合理、数据库资源是否存在滥用的情况、当然，这是传统的运维人员，现在 Devops 火起来后，单纯干运维的很少了。我们这里暂且还保留有这个角色。\n性能测试需要注意的点 几乎没有文章在讲性能测试的时候提到这个问题，大家都会讲如何去性能测试，有哪些性能测试指标这些东西。\n了解系统的业务场景 性能测试之前更需要你了解当前的系统的业务场景。 对系统业务了解的不够深刻，我们很容易犯测试方向偏执的错误，从而导致我们忽略了对系统某些更需要性能测试的地方进行测试。比如我们的系统可以为用户提供发送邮件的功能，用户配置成功邮箱后只需输入相应的邮箱之后就能发送，系统每天大概能处理上万次发邮件的请求。很多人看到这个可能就直接开始使用相关工具测试邮箱发送接口，但是，发送邮件这个场景可能不是当前系统的性能瓶颈，这么多人用我们的系统发邮件， 还可能有很多人一起发邮件，单单这个场景就这么人用，那用户管理可能才是性能瓶颈吧！\n历史数据非常有用 当前系统所留下的历史数据非常重要，一般情况下，我们可以通过相应的些历史数据初步判定这个系统哪些接口调用的比较多、哪些 service 承受的压力最大，这样的话，我们就可以针对这些地方进行更细致的性能测试与分析。\n另外，这些地方也就像这个系统的一个短板一样，优化好了这些地方会为我们的系统带来质的提升。\n性能测试的指标 响应时间 响应时间就是用户发出请求到用户收到系统处理结果所需要的时间。 重要吗？实在太重要！\n比较出名的 2-5-8 原则是这样描述的：通常来说，2 到 5 秒，页面体验会比较好，5 到 8 秒还可以接受，8 秒以上基本就很难接受了。另外，据统计当网站慢一秒就会流失十分之一的客户。\n但是，在某些场景下我们也并不需要太看重 2-5-8 原则 ，比如我觉得系统导出导入大数据量这种就不需要，系统生成系统报告这种也不需要。\n并发数 并发数是系统能同时处理请求的数目即同时提交请求的用户数目。\n不得不说，高并发是现在后端架构中非常非常火热的一个词了，这个与当前的互联网环境以及中国整体的互联网用户量都有很大关系。一般情况下，你的系统并发量越大，说明你的产品做的就越大。但是，并不是每个系统都需要达到像淘宝、12306 这种亿级并发量的。\n吞吐量 吞吐量指的是系统单位时间内系统处理的请求数量。衡量吞吐量有几个重要的参数：QPS（TPS）、并发数、响应时间。\nQPS（Query Per Second）：服务器每秒可以执行的查询次数； TPS（Transaction Per Second）：服务器每秒处理的事务数（这里的一个事务可以理解为客户发出请求到收到服务器的过程）； 并发数；系统能同时处理请求的数目即同时提交请求的用户数目。 响应时间：一般取多次请求的平均响应时间 理清他们的概念，就很容易搞清楚他们之间的关系了。\nQPS（TPS） = 并发数/平均响应时间 并发数 = QPS*平均响应时间 书中是这样描述 QPS 和 TPS 的区别的。\nQPS vs TPS：QPS 基本类似于 TPS，但是不同的是，对于一个页面的一次访问，形成一个 TPS；但一次页面请求，可能产生多次对服务器的请求，服务器对这些请求，就可计入“QPS”之中。如，访问一个页面会请求服务器 2 次，一次访问，产生一个“T”，产生 2 个“Q”。\n性能计数器 性能计数器是描述服务器或者操作系统的一些数据指标如内存使用、CPU 使用、磁盘与网络 I/O 等情况。\n几种常见的性能测试 性能测试 性能测试方法是通过测试工具模拟用户请求系统，目的主要是为了测试系统的性能是否满足要求。通俗地说，这种方法就是要在特定的运行条件下验证系统的能力状态。\n性能测试是你在对系统性能已经有了解的前提之后进行的，并且有明确的性能指标。\n负载测试 对被测试的系统继续加大请求压力，直到服务器的某个资源已经达到饱和了，比如系统的缓存已经不够用了或者系统的响应时间已经不满足要求了。\n负载测试说白点就是测试系统的上限。\n压力测试 不去管系统资源的使用情况，对系统继续加大请求压力，直到服务器崩溃无法再继续提供服务。\n稳定性测试 模拟真实场景，给系统一定压力，看看业务是否能稳定运行。\n常用性能测试工具 这里就不多扩展了，有时间的话会单独拎一个熟悉的说一下。\n后端常用 没记错的话，除了 LoadRunner 其他几款性能测试工具都是开源免费的。\nJmeter：Apache JMeter 是 JAVA 开发的性能测试工具。 LoadRunner：一款商业的性能测试工具。 Galtling：一款基于 Scala 开发的高性能服务器性能测试工具。 ab：全称为 Apache Bench 。Apache 旗下的一款测试工具，非常实用。 前端常用 Fiddler：抓包工具，它可以修改请求的数据，甚至可以修改服务器返回的数据，功能非常强大，是 Web 调试的利器。 HttpWatch: 可用于录制 HTTP 请求信息的工具。 常见的性能优化策略 性能优化之前我们需要对请求经历的各个环节进行分析，排查出可能出现性能瓶颈的地方，定位问题。\n下面是一些性能优化时，我经常拿来自问的一些问题：\n系统是否需要缓存？ 系统架构本身是不是就有问题？ 系统是否存在死锁的地方？ 系统是否存在内存泄漏？（Java 的自动回收内存虽然很方便，但是，有时候代码写的不好真的会造成内存泄漏） 数据库索引使用是否合理？ ",
+  "wordCount" : "10951",
+  "inLanguage": "en",
+  "datePublished": "2023-08-09T05:00:00Z",
+  "dateModified": "2023-08-09T05:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/interview/22%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9D%A2%E8%AF%95%E9%A2%98/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      22、高可用面试题
+    </h1>
+    <div class="post-meta"><span title='2023-08-09 05:00:00 +0000 UTC'>2023-08-09</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e9%ab%98%e5%8f%af%e7%94%a8%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1%e6%8c%87%e5%8d%97" aria-label="高可用系统设计指南">高可用系统设计指南</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e9%ab%98%e5%8f%af%e7%94%a8%e5%8f%af%e7%94%a8%e6%80%a7%e7%9a%84%e5%88%a4%e6%96%ad%e6%a0%87%e5%87%86%e6%98%af%e5%95%a5" aria-label="什么是高可用？可用性的判断标准是啥？">什么是高可用？可用性的判断标准是啥？</a></li>
+                <li>
+                    <a href="#%e5%93%aa%e4%ba%9b%e6%83%85%e5%86%b5%e4%bc%9a%e5%af%bc%e8%87%b4%e7%b3%bb%e7%bb%9f%e4%b8%8d%e5%8f%af%e7%94%a8" aria-label="哪些情况会导致系统不可用？">哪些情况会导致系统不可用？</a></li>
+                <li>
+                    <a href="#%e6%9c%89%e5%93%aa%e4%ba%9b%e6%8f%90%e9%ab%98%e7%b3%bb%e7%bb%9f%e5%8f%af%e7%94%a8%e6%80%a7%e7%9a%84%e6%96%b9%e6%b3%95" aria-label="有哪些提高系统可用性的方法？">有哪些提高系统可用性的方法？</a><ul>
+                        
+                <li>
+                    <a href="#%e6%b3%a8%e9%87%8d%e4%bb%a3%e7%a0%81%e8%b4%a8%e9%87%8f%e6%b5%8b%e8%af%95%e4%b8%a5%e6%a0%bc%e6%8a%8a%e5%85%b3" aria-label="注重代码质量，测试严格把关">注重代码质量，测试严格把关</a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8%e9%9b%86%e7%be%a4%e5%87%8f%e5%b0%91%e5%8d%95%e7%82%b9%e6%95%85%e9%9a%9c" aria-label="使用集群，减少单点故障">使用集群，减少单点故障</a></li>
+                <li>
+                    <a href="#%e9%99%90%e6%b5%81" aria-label="限流">限流</a></li>
+                <li>
+                    <a href="#%e8%b6%85%e6%97%b6%e5%92%8c%e9%87%8d%e8%af%95%e6%9c%ba%e5%88%b6%e8%ae%be%e7%bd%ae" aria-label="超时和重试机制设置">超时和重试机制设置</a></li>
+                <li>
+                    <a href="#%e7%86%94%e6%96%ad%e6%9c%ba%e5%88%b6" aria-label="熔断机制">熔断机制</a></li>
+                <li>
+                    <a href="#%e5%bc%82%e6%ad%a5%e8%b0%83%e7%94%a8" aria-label="异步调用">异步调用</a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8%e7%bc%93%e5%ad%98" aria-label="使用缓存">使用缓存</a></li>
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96" aria-label="其他">其他</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%86%97%e4%bd%99%e8%ae%be%e8%ae%a1%e8%af%a6%e8%a7%a3" aria-label="冗余设计详解">冗余设计详解</a></li>
+                <li>
+                    <a href="#%e6%9c%8d%e5%8a%a1%e9%99%90%e6%b5%81%e8%af%a6%e8%a7%a3" aria-label="服务限流详解">服务限流详解</a><ul>
+                        
+                <li>
+                    <a href="#%e5%b8%b8%e8%a7%81%e9%99%90%e6%b5%81%e7%ae%97%e6%b3%95%e6%9c%89%e5%93%aa%e4%ba%9b" aria-label="常见限流算法有哪些？">常见限流算法有哪些？</a><ul>
+                        
+                <li>
+                    <a href="#%e5%9b%ba%e5%ae%9a%e7%aa%97%e5%8f%a3%e8%ae%a1%e6%95%b0%e5%99%a8%e7%ae%97%e6%b3%95" aria-label="固定窗口计数器算法">固定窗口计数器算法</a></li>
+                <li>
+                    <a href="#%e6%bb%91%e5%8a%a8%e7%aa%97%e5%8f%a3%e8%ae%a1%e6%95%b0%e5%99%a8%e7%ae%97%e6%b3%95" aria-label="滑动窗口计数器算法">滑动窗口计数器算法</a></li>
+                <li>
+                    <a href="#%e6%bc%8f%e6%a1%b6%e7%ae%97%e6%b3%95" aria-label="漏桶算法">漏桶算法</a></li>
+                <li>
+                    <a href="#%e4%bb%a4%e7%89%8c%e6%a1%b6%e7%ae%97%e6%b3%95" aria-label="令牌桶算法">令牌桶算法</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%8d%95%e6%9c%ba%e9%99%90%e6%b5%81%e6%80%8e%e4%b9%88%e5%81%9a" aria-label="单机限流怎么做？">单机限流怎么做？</a></li>
+                <li>
+                    <a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e9%99%90%e6%b5%81%e6%80%8e%e4%b9%88%e5%81%9a" aria-label="分布式限流怎么做？">分布式限流怎么做？</a></li>
+                <li>
+                    <a href="#%e7%9b%b8%e5%85%b3%e9%98%85%e8%af%bb" aria-label="相关阅读">相关阅读</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%99%8d%e7%ba%a7%e7%86%94%e6%96%ad%e8%af%a6%e8%a7%a3" aria-label="降级&amp;熔断详解">降级&amp;熔断详解</a></li>
+                <li>
+                    <a href="#%e8%b6%85%e6%97%b6%e9%87%8d%e8%af%95%e8%af%a6%e8%a7%a3" aria-label="超时&amp;重试详解">超时&amp;重试详解</a><ul>
+                        
+                <li>
+                    <a href="#%e8%b6%85%e6%97%b6%e6%9c%ba%e5%88%b6" aria-label="超时机制">超时机制</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e8%b6%85%e6%97%b6%e6%9c%ba%e5%88%b6" aria-label="什么是超时机制？">什么是超时机制？</a></li>
+                <li>
+                    <a href="#%e8%b6%85%e6%97%b6%e6%97%b6%e9%97%b4%e5%ba%94%e8%af%a5%e5%a6%82%e4%bd%95%e8%ae%be%e7%bd%ae" aria-label="超时时间应该如何设置？">超时时间应该如何设置？</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%87%8d%e8%af%95%e6%9c%ba%e5%88%b6" aria-label="重试机制">重试机制</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e9%87%8d%e8%af%95%e6%9c%ba%e5%88%b6" aria-label="什么是重试机制？">什么是重试机制？</a></li>
+                <li>
+                    <a href="#%e9%87%8d%e8%af%95%e7%9a%84%e6%ac%a1%e6%95%b0%e5%a6%82%e4%bd%95%e8%ae%be%e7%bd%ae" aria-label="重试的次数如何设置？">重试的次数如何设置？</a></li>
+                <li>
+                    <a href="#%e9%87%8d%e8%af%95%e5%b9%82%e7%ad%89" aria-label="重试幂等">重试幂等</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%8f%82%e8%80%83" aria-label="参考">参考</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%80%a7%e8%83%bd%e6%b5%8b%e8%af%95%e5%85%a5%e9%97%a8" aria-label="性能测试入门">性能测试入门</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%8d%e5%90%8c%e8%a7%92%e8%89%b2%e7%9c%8b%e7%bd%91%e7%ab%99%e6%80%a7%e8%83%bd" aria-label="不同角色看网站性能">不同角色看网站性能</a><ul>
+                        
+                <li>
+                    <a href="#%e7%94%a8%e6%88%b7" aria-label="用户">用户</a></li>
+                <li>
+                    <a href="#%e5%bc%80%e5%8f%91%e4%ba%ba%e5%91%98" aria-label="开发人员">开发人员</a></li>
+                <li>
+                    <a href="#%e6%b5%8b%e8%af%95%e4%ba%ba%e5%91%98" aria-label="测试人员">测试人员</a></li>
+                <li>
+                    <a href="#%e8%bf%90%e7%bb%b4%e4%ba%ba%e5%91%98" aria-label="运维人员">运维人员</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%80%a7%e8%83%bd%e6%b5%8b%e8%af%95%e9%9c%80%e8%a6%81%e6%b3%a8%e6%84%8f%e7%9a%84%e7%82%b9" aria-label="性能测试需要注意的点">性能测试需要注意的点</a><ul>
+                        
+                <li>
+                    <a href="#%e4%ba%86%e8%a7%a3%e7%b3%bb%e7%bb%9f%e7%9a%84%e4%b8%9a%e5%8a%a1%e5%9c%ba%e6%99%af" aria-label="了解系统的业务场景">了解系统的业务场景</a></li>
+                <li>
+                    <a href="#%e5%8e%86%e5%8f%b2%e6%95%b0%e6%8d%ae%e9%9d%9e%e5%b8%b8%e6%9c%89%e7%94%a8" aria-label="历史数据非常有用">历史数据非常有用</a></li>
+                <li>
+                    <a href="#%e6%80%a7%e8%83%bd%e6%b5%8b%e8%af%95%e7%9a%84%e6%8c%87%e6%a0%87" aria-label="性能测试的指标">性能测试的指标</a></li>
+                <li>
+                    <a href="#%e5%93%8d%e5%ba%94%e6%97%b6%e9%97%b4" aria-label="响应时间">响应时间</a></li>
+                <li>
+                    <a href="#%e5%b9%b6%e5%8f%91%e6%95%b0" aria-label="并发数">并发数</a></li>
+                <li>
+                    <a href="#%e5%90%9e%e5%90%90%e9%87%8f" aria-label="吞吐量">吞吐量</a></li>
+                <li>
+                    <a href="#%e6%80%a7%e8%83%bd%e8%ae%a1%e6%95%b0%e5%99%a8" aria-label="性能计数器">性能计数器</a></li>
+                <li>
+                    <a href="#%e5%87%a0%e7%a7%8d%e5%b8%b8%e8%a7%81%e7%9a%84%e6%80%a7%e8%83%bd%e6%b5%8b%e8%af%95" aria-label="几种常见的性能测试">几种常见的性能测试</a></li>
+                <li>
+                    <a href="#%e6%80%a7%e8%83%bd%e6%b5%8b%e8%af%95" aria-label="性能测试">性能测试</a></li>
+                <li>
+                    <a href="#%e8%b4%9f%e8%bd%bd%e6%b5%8b%e8%af%95" aria-label="负载测试">负载测试</a></li>
+                <li>
+                    <a href="#%e5%8e%8b%e5%8a%9b%e6%b5%8b%e8%af%95" aria-label="压力测试">压力测试</a></li>
+                <li>
+                    <a href="#%e7%a8%b3%e5%ae%9a%e6%80%a7%e6%b5%8b%e8%af%95" aria-label="稳定性测试">稳定性测试</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b8%b8%e7%94%a8%e6%80%a7%e8%83%bd%e6%b5%8b%e8%af%95%e5%b7%a5%e5%85%b7" aria-label="常用性能测试工具">常用性能测试工具</a><ul>
+                        
+                <li>
+                    <a href="#%e5%90%8e%e7%ab%af%e5%b8%b8%e7%94%a8" aria-label="后端常用">后端常用</a></li>
+                <li>
+                    <a href="#%e5%89%8d%e7%ab%af%e5%b8%b8%e7%94%a8" aria-label="前端常用">前端常用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b8%b8%e8%a7%81%e7%9a%84%e6%80%a7%e8%83%bd%e4%bc%98%e5%8c%96%e7%ad%96%e7%95%a5" aria-label="常见的性能优化策略">常见的性能优化策略</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="高可用系统设计指南">高可用系统设计指南<a hidden class="anchor" aria-hidden="true" href="#高可用系统设计指南">#</a></h1>
+<h2 id="什么是高可用可用性的判断标准是啥">什么是高可用？可用性的判断标准是啥？<a hidden class="anchor" aria-hidden="true" href="#什么是高可用可用性的判断标准是啥">#</a></h2>
+<p>高可用描述的是一个系统在大部分时间都是可用的，可以为我们提供服务的。高可用代表系统即使在发生硬件故障或者系统升级的时候，服务仍然是可用的。</p>
+<p>一般情况下，我们使用多少个 9 来评判一个系统的可用性，比如 99.9999% 就是代表该系统在所有的运行时间中只有 0.0001% 的时间是不可用的，这样的系统就是非常非常高可用的了！当然，也会有系统如果可用性不太好的话，可能连 9 都上不了。</p>
+<p>除此之外，系统的可用性还可以用某功能的失败次数与总的请求次数之比来衡量，比如对网站请求 1000 次，其中有 10 次请求失败，那么可用性就是 99%。</p>
+<h2 id="哪些情况会导致系统不可用">哪些情况会导致系统不可用？<a hidden class="anchor" aria-hidden="true" href="#哪些情况会导致系统不可用">#</a></h2>
+<ol>
+<li>黑客攻击；</li>
+<li>硬件故障，比如服务器坏掉。</li>
+<li>并发量/用户请求量激增导致整个服务宕掉或者部分服务不可用。</li>
+<li>代码中的坏味道导致内存泄漏或者其他问题导致程序挂掉。</li>
+<li>网站架构某个重要的角色比如 Nginx 或者数据库突然不可用。</li>
+<li>自然灾害或者人为破坏。</li>
+<li>&hellip;&hellip;</li>
+</ol>
+<h2 id="有哪些提高系统可用性的方法">有哪些提高系统可用性的方法？<a hidden class="anchor" aria-hidden="true" href="#有哪些提高系统可用性的方法">#</a></h2>
+<h3 id="注重代码质量测试严格把关">注重代码质量，测试严格把关<a hidden class="anchor" aria-hidden="true" href="#注重代码质量测试严格把关">#</a></h3>
+<p>我觉得这个是最最最重要的，代码质量有问题比如比较常见的内存泄漏、循环依赖都是对系统可用性极大的损害。大家都喜欢谈限流、降级、熔断，但是我觉得从代码质量这个源头把关是首先要做好的一件很重要的事情。如何提高代码质量？比较实际可用的就是 CodeReview，不要在乎每天多花的那 1 个小时左右的时间，作用可大着呢！</p>
+<p>另外，安利几个对提高代码质量有实际效果的神器：</p>
+<ul>
+<li><a href="https://www.sonarqube.org/">Sonarqube</a>；</li>
+<li>Alibaba 开源的 Java 诊断工具 <a href="https://arthas.aliyun.com/doc/">Arthas</a>；</li>
+<li><a href="https://github.com/alibaba/p3c">阿里巴巴 Java 代码规范</a>（Alibaba Java Code Guidelines）；</li>
+<li>IDEA 自带的代码分析等工具。</li>
+</ul>
+<h3 id="使用集群减少单点故障">使用集群，减少单点故障<a hidden class="anchor" aria-hidden="true" href="#使用集群减少单点故障">#</a></h3>
+<p>先拿常用的 Redis 举个例子！我们如何保证我们的 Redis 缓存高可用呢？答案就是使用集群，避免单点故障。当我们使用一个 Redis 实例作为缓存的时候，这个 Redis 实例挂了之后，整个缓存服务可能就挂了。使用了集群之后，即使一台 Redis 实例挂了，不到一秒就会有另外一台 Redis 实例顶上。</p>
+<h3 id="限流">限流<a hidden class="anchor" aria-hidden="true" href="#限流">#</a></h3>
+<p>流量控制（flow control），其原理是监控应用流量的 QPS 或并发线程数等指标，当达到指定的阈值时对流量进行控制，以避免被瞬时的流量高峰冲垮，从而保障应用的高可用性。——来自 <a href="https://github.com/alibaba/Sentinel">alibaba-Sentinel</a> 的 wiki。</p>
+<h3 id="超时和重试机制设置">超时和重试机制设置<a hidden class="anchor" aria-hidden="true" href="#超时和重试机制设置">#</a></h3>
+<p>一旦用户请求超过某个时间的得不到响应，就抛出异常。这个是非常重要的，很多线上系统故障都是因为没有进行超时设置或者超时设置的方式不对导致的。我们在读取第三方服务的时候，尤其适合设置超时和重试机制。一般我们使用一些 RPC 框架的时候，这些框架都自带的超时重试的配置。如果不进行超时设置可能会导致请求响应速度慢，甚至导致请求堆积进而让系统无法再处理请求。重试的次数一般设为 3 次，再多次的重试没有好处，反而会加重服务器压力（部分场景使用失败重试机制会不太适合）。</p>
+<h3 id="熔断机制">熔断机制<a hidden class="anchor" aria-hidden="true" href="#熔断机制">#</a></h3>
+<p>超时和重试机制设置之外，熔断机制也是很重要的。 熔断机制说的是系统自动收集所依赖服务的资源使用情况和性能指标，当所依赖的服务恶化或者调用失败次数达到某个阈值的时候就迅速失败，让当前系统立即切换依赖其他备用服务。 比较常用的流量控制和熔断降级框架是 Netflix 的 Hystrix 和 alibaba 的 Sentinel。</p>
+<h3 id="异步调用">异步调用<a hidden class="anchor" aria-hidden="true" href="#异步调用">#</a></h3>
+<p>异步调用的话我们不需要关心最后的结果，这样我们就可以用户请求完成之后就立即返回结果，具体处理我们可以后续再做，秒杀场景用这个还是蛮多的。但是，使用异步之后我们可能需要 <strong>适当修改业务流程进行配合</strong>，比如<strong>用户在提交订单之后，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功</strong>。除了可以在程序中实现异步之外，我们常常还使用消息队列，消息队列可以通过异步处理提高系统性能（削峰、减少响应所需时间）并且可以降低系统耦合性。</p>
+<h3 id="使用缓存">使用缓存<a hidden class="anchor" aria-hidden="true" href="#使用缓存">#</a></h3>
+<p>如果我们的系统属于并发量比较高的话，如果我们单纯使用数据库的话，当大量请求直接落到数据库可能数据库就会直接挂掉。使用缓存缓存热点数据，因为缓存存储在内存中，所以速度相当地快！</p>
+<h3 id="其他">其他<a hidden class="anchor" aria-hidden="true" href="#其他">#</a></h3>
+<ul>
+<li><strong>核心应用和服务优先使用更好的硬件</strong></li>
+<li><strong>监控系统资源使用情况增加报警设置。</strong></li>
+<li><strong>注意备份，必要时候回滚。</strong></li>
+<li><strong>灰度发布：</strong> 将服务器集群分成若干部分，每天只发布一部分机器，观察运行稳定没有故障，第二天继续发布一部分机器，持续几天才把整个集群全部发布完毕，期间如果发现问题，只需要回滚已发布的一部分服务器即可</li>
+<li><strong>定期检查/更换硬件：</strong> 如果不是购买的云服务的话，定期还是需要对硬件进行一波检查的，对于一些需要更换或者升级的硬件，要及时更换或者升级。</li>
+</ul>
+<h1 id="冗余设计详解">冗余设计详解<a hidden class="anchor" aria-hidden="true" href="#冗余设计详解">#</a></h1>
+<p>冗余设计是保证系统和数据高可用的最常的手段。</p>
+<p>对于服务来说，冗余的思想就是相同的服务部署多份，如果正在使用的服务突然挂掉的话，系统可以很快切换到备份服务上，大大减少系统的不可用时间，提高系统的可用性。</p>
+<p>对于数据来说，冗余的思想就是相同的数据备份多份，这样就可以很简单地提高数据的安全性。</p>
+<p>实际上，日常生活中就有非常多的冗余思想的应用。</p>
+<p>拿我自己来说，我对于重要文件的保存方法就是冗余思想的应用。我日常所使用的重要文件都会同步一份在 GitHub 以及个人云盘上，这样就可以保证即使电脑硬盘损坏，我也可以通过 GitHub 或者个人云盘找回自己的重要文件。</p>
+<p>高可用集群（High Availability Cluster，简称 HA Cluster）、同城灾备、异地灾备、同城多活和异地多活是冗余思想在高可用系统设计中最典型的应用。</p>
+<ul>
+<li><strong>高可用集群</strong> : 同一份服务部署两份或者多份，当正在使用的服务突然挂掉的话，可以切换到另外一台服务，从而保证服务的高可用。</li>
+<li><strong>同城灾备</strong>：一整个集群可以部署在同一个机房，而同城灾备中相同服务部署在同一个城市的不同机房中。并且，备用服务不处理请求。这样可以避免机房出现意外情况比如停电、火灾。</li>
+<li><strong>异地灾备</strong>：类似于同城灾备，不同的是，相同服务部署在异地（通常距离较远，甚至是在不同的城市或者国家）的不同机房中</li>
+<li><strong>同城多活</strong>：类似于同城灾备，但备用服务可以处理请求，这样可以充分利用系统资源，提高系统的并发。</li>
+<li><strong>异地多活</strong> : 将服务部署在异地的不同机房中，并且，它们可以同时对外提供服务。</li>
+</ul>
+<p>高可用集群单纯是服务的冗余，并没有强调地域。同城灾备、异地灾备、同城多活和异地多活实现了地域上的冗余。</p>
+<p>同城和异地的主要区别在于机房之间的距离。异地通常距离较远，甚至是在不同的城市或者国家。</p>
+<p>和传统的灾备设计相比，同城多活和异地多活最明显的改变在于“多活”，即所有站点都是同时在对外提供服务的。异地多活是为了应对突发状况比如火灾、地震等自然或者人为灾害。</p>
+<p>光做好冗余还不够，必须要配合上 <strong>故障转移</strong> 才可以！ 所谓故障转移，简单来说就是实现不可用服务快速且自动地切换到可用服务，整个过程不需要人为干涉。</p>
+<p>举个例子：哨兵模式的 Redis 集群中，如果 Sentinel（哨兵） 检测到 master 节点出现故障的话， 它就会帮助我们实现故障转移，自动将某一台 slave 升级为 master，确保整个 Redis 系统的可用性。整个过程完全自动，不需要人工介入。我在<a href="https://www.yuque.com/docs/share/f37fc804-bfe6-4b0d-b373-9c462188fec7">《Java 面试指北》</a>的「技术面试题篇」中的数据库部分详细介绍了 Redis 集群相关的知识点&amp;面试题，感兴趣的小伙伴可以看看。</p>
+<p>再举个例子：Nginx 可以结合 Keepalived 来实现高可用。如果 Nginx 主服务器宕机的话，Keepalived 可以自动进行故障转移，备用 Nginx 主服务器升级为主服务。并且，这个切换对外是透明的，因为使用的虚拟 IP，虚拟 IP 不会改变。我在<a href="https://www.yuque.com/docs/share/f37fc804-bfe6-4b0d-b373-9c462188fec7">《Java 面试指北》</a>的「技术面试题篇」中的「服务器」部分详细介绍了 Nginx 相关的知识点&amp;面试题，感兴趣的小伙伴可以看看。</p>
+<p>异地多活架构实施起来非常难，需要考虑的因素非常多。本人不才，实际项目中并没有实践过异地多活架构，我对其了解还停留在书本知识。</p>
+<p>如果你想要深入学习异地多活相关的知识，我这里推荐几篇我觉得还不错的文章：</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/T6mMDdtTfBuIiEowCpqu6Q">搞懂异地多活，看这篇就够了- 水滴与银弹 - 2021</a></li>
+<li><a href="https://mp.weixin.qq.com/s/hMD-IS__4JE5_nQhYPYSTg">四步构建异地多活</a></li>
+<li><a href="http://gk.link/a/10pKZ">《从零开始学架构》— 28 | 业务高可用的保障：异地多活架构</a></li>
+</ul>
+<p>不过，这些文章大多也都是在介绍概念知识。目前，网上还缺少真正介绍具体要如何去实践落地异地多活架构的资料。</p>
+<h1 id="服务限流详解">服务限流详解<a hidden class="anchor" aria-hidden="true" href="#服务限流详解">#</a></h1>
+<p>针对软件系统来说，限流就是对请求的速率进行限制，避免瞬时的大量请求击垮软件系统。毕竟，软件系统的处理能力是有限的。如果说超过了其处理能力的范围，软件系统可能直接就挂掉了。</p>
+<p>限流可能会导致用户的请求无法被正确处理，不过，这往往也是权衡了软件系统的稳定性之后得到的最优解。</p>
+<p>现实生活中，处处都有限流的实际应用，就比如排队买票是为了避免大量用户涌入购票而导致售票员无法处理。</p>
+<h2 id="常见限流算法有哪些">常见限流算法有哪些？<a hidden class="anchor" aria-hidden="true" href="#常见限流算法有哪些">#</a></h2>
+<p>简单介绍 4 种非常好理解并且容易实现的限流算法！</p>
+<blockquote>
+<p>图片来源于 InfoQ 的一篇文章<a href="https://www.infoq.cn/article/Qg2tX8fyw5Vt-f3HH673">《分布式服务限流实战，已经为你排好坑了》</a>。</p>
+</blockquote>
+<h3 id="固定窗口计数器算法">固定窗口计数器算法<a hidden class="anchor" aria-hidden="true" href="#固定窗口计数器算法">#</a></h3>
+<p>固定窗口其实就是时间窗口。<strong>固定窗口计数器算法</strong> 规定了我们单位时间处理的请求数量。</p>
+<p>假如我们规定系统中某个接口 1 分钟只能访问 33 次的话，使用固定窗口计数器算法的实现思路如下：</p>
+<ul>
+<li>给定一个变量 <code>counter</code> 来记录当前接口处理的请求数量，初始值为 0（代表接口当前 1 分钟内还未处理请求）。</li>
+<li>1 分钟之内每处理一个请求之后就将 <code>counter+1</code> ，当 <code>counter=33</code> 之后（也就是说在这 1 分钟内接口已经被访问 33 次的话），后续的请求就会被全部拒绝。</li>
+<li>等到 1 分钟结束后，将 <code>counter</code> 重置 0，重新开始计数。</li>
+</ul>
+<p><strong>这种限流算法无法保证限流速率，因而无法保证突然激增的流量。</strong></p>
+<p>就比如说我们限制某个接口 1 分钟只能访问 1000 次，该接口的 QPS 为 500，前 55s 这个接口 1 个请求没有接收，后 1s 突然接收了 1000 个请求。然后，在当前场景下，这 1000 个请求在 1s 内是没办法被处理的，系统直接就被瞬时的大量请求给击垮了。</p>
+<p><img loading="lazy" src="8ded7a2b90e1482093f92fff555b3615.webp" alt=""  />
+</p>
+<h3 id="滑动窗口计数器算法">滑动窗口计数器算法<a hidden class="anchor" aria-hidden="true" href="#滑动窗口计数器算法">#</a></h3>
+<p><strong>滑动窗口计数器算法</strong> 算的上是固定窗口计数器算法的升级版。</p>
+<p>滑动窗口计数器算法相比于固定窗口计数器算法的优化在于：<strong>它把时间以一定比例分片</strong> 。</p>
+<p>例如我们的接口限流每分钟处理 60 个请求，我们可以把 1 分钟分为 60 个窗口。每隔 1 秒移动一次，每个窗口一秒只能处理 不大于 <code>60(请求数)/60（窗口数）</code> 的请求， 如果当前窗口的请求计数总和超过了限制的数量的话就不再处理其他请求。</p>
+<p>很显然， <strong>当滑动窗口的格子划分的越多，滑动窗口的滚动就越平滑，限流的统计就会越精确。</strong></p>
+<p><img loading="lazy" src="ae4d3cd14efb8dc7046d691c90264715.webp" alt=""  />
+</p>
+<h3 id="漏桶算法">漏桶算法<a hidden class="anchor" aria-hidden="true" href="#漏桶算法">#</a></h3>
+<p>我们可以把发请求的动作比作成注水到桶中，我们处理请求的过程可以比喻为漏桶漏水。我们往桶中以任意速率流入水，以一定速率流出水。当水超过桶流量则丢弃，因为桶容量是不变的，保证了整体的速率。</p>
+<p>如果想要实现这个算法的话也很简单，准备一个队列用来保存请求，然后我们定期从队列中拿请求来执行就好了（和消息队列削峰/限流的思想是一样的）。</p>
+<p><img loading="lazy" src="75938d1010138ce66e38c6ed0392f103.webp" alt=""  />
+</p>
+<h3 id="令牌桶算法">令牌桶算法<a hidden class="anchor" aria-hidden="true" href="#令牌桶算法">#</a></h3>
+<p>令牌桶算法也比较简单。和漏桶算法算法一样，我们的主角还是桶（这限流算法和桶过不去啊）。不过现在桶里装的是令牌了，请求在被处理之前需要拿到一个令牌，请求处理完毕之后将这个令牌丢弃（删除）。我们根据限流大小，按照一定的速率往桶里添加令牌。如果桶装满了，就不能继续往里面继续添加令牌了。</p>
+<p><img loading="lazy" src="eca0e5eaa35dac938c673fecf2ec9a93.webp" alt=""  />
+</p>
+<h2 id="单机限流怎么做">单机限流怎么做？<a hidden class="anchor" aria-hidden="true" href="#单机限流怎么做">#</a></h2>
+<p>单机限流针对的是单体架构应用。</p>
+<p>单机限流可以直接使用 Google Guava 自带的限流工具类 <code>RateLimiter</code> 。 <code>RateLimiter</code> 基于令牌桶算法，可以应对突发流量。</p>
+<blockquote>
+<p>Guava 地址：<a href="https://github.com/google/guava">https://github.com/google/guava</a></p>
+</blockquote>
+<p>除了最基本的令牌桶算法(平滑突发限流)实现之外，Guava 的<code>RateLimiter</code>还提供了 <strong>平滑预热限流</strong> 的算法实现。</p>
+<p>平滑突发限流就是按照指定的速率放令牌到桶里，而平滑预热限流会有一段预热时间，预热时间之内，速率会逐渐提升到配置的速率。</p>
+<p>我们下面通过两个简单的小例子来详细了解吧！</p>
+<p>我们直接在项目中引入 Guava 相关的依赖即可使用。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;groupId&gt;</span>com.google.guava<span style="font-weight:bold">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;artifactId&gt;</span>guava<span style="font-weight:bold">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;version&gt;</span>31.0.1-jre<span style="font-weight:bold">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面是一个简单的 Guava 平滑突发限流的 Demo。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> com.google.common.util.concurrent.RateLimiter;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * 微信搜 JavaGuide 回复&#34;面试突击&#34;即可免费领取个人原创的 Java 面试手册
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * @author Guide哥
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * @date 2021/10/08 19:12
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> **/</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> RateLimiterDemo {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 1s 放 5 个令牌到桶里也就是 0.2s 放 1个令牌到桶里
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        RateLimiter rateLimiter = RateLimiter.<span style="color:#007f7f">create</span>(<span style="color:#ff0;font-weight:bold">5</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; <span style="color:#ff0;font-weight:bold">10</span>; i++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">double</span> sleepingTime = rateLimiter.<span style="color:#007f7f">acquire</span>(<span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">printf</span>(<span style="color:#0ff;font-weight:bold">&#34;get 1 tokens: %ss%n&#34;</span>, sleepingTime);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.0s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.188413s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.197811s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.198316s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.19864s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.199363s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.193997s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.199623s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.199357s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.195676s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面是一个简单的 Guava 平滑预热限流的 Demo。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> com.google.common.util.concurrent.RateLimiter;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> java.util.concurrent.TimeUnit;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * 微信搜 JavaGuide 回复&#34;面试突击&#34;即可免费领取个人原创的 Java 面试手册
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * @author Guide哥
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * @date 2021/10/08 19:12
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> **/</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> RateLimiterDemo {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 1s 放 5 个令牌到桶里也就是 0.2s 放 1个令牌到桶里
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#007f7f">// 预热时间为3s,也就说刚开始的 3s 内发牌速率会逐渐提升到 0.2s 放 1 个令牌到桶里
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        RateLimiter rateLimiter = RateLimiter.<span style="color:#007f7f">create</span>(<span style="color:#ff0;font-weight:bold">5</span>, <span style="color:#ff0;font-weight:bold">3</span>, TimeUnit.<span style="color:#007f7f">SECONDS</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; <span style="color:#ff0;font-weight:bold">20</span>; i++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">double</span> sleepingTime = rateLimiter.<span style="color:#007f7f">acquire</span>(<span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">printf</span>(<span style="color:#0ff;font-weight:bold">&#34;get 1 tokens: %sds%n&#34;</span>, sleepingTime);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.0s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.561919s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.516931s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.463798s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.41286s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.356172s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.300489s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.252545s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.203996s
+</span></span><span style="display:flex;"><span>get <span style="color:#ff0;font-weight:bold">1</span> tokens: 0.198359s
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>另外，<strong>Bucket4j</strong> 是一个非常不错的基于令牌/漏桶算法的限流库。</p>
+<blockquote>
+<p>Bucket4j 地址：<a href="https://github.com/vladimir-bukhtoyarov/bucket4j">https://github.com/vladimir-bukhtoyarov/bucket4j</a></p>
+</blockquote>
+<p>相对于，Guava 的限流工具类来说，Bucket4j 提供的限流功能更加全面。不仅支持单机限流和分布式限流，还可以集成监控，搭配 Prometheus 和 Grafana 使用。</p>
+<p>不过，毕竟 Guava 也只是一个功能全面的工具类库，其提供的开箱即用的限流功能在很多单机场景下还是比较实用的。</p>
+<p>Spring Cloud Gateway 中自带的单机限流的早期版本就是基于 Bucket4j 实现的。后来，替换成了 <strong>Resilience4j</strong>。</p>
+<p>Resilience4j 是一个轻量级的容错组件，其灵感来自于 Hystrix。自<a href="https://github.com/Netflix/Hystrix/commit/a7df971cbaddd8c5e976b3cc5f14013fe6ad00e6">Netflix 宣布不再积极开发 Hystrix</a> 之后，Spring 官方和 Netflix 都更推荐使用 Resilience4j 来做限流熔断。</p>
+<blockquote>
+<p>Resilience4j 地址: <a href="https://github.com/resilience4j/resilience4j">https://github.com/resilience4j/resilience4j</a></p>
+</blockquote>
+<p>一般情况下，为了保证系统的高可用，项目的限流和熔断都是要一起做的。</p>
+<p>Resilience4j 不仅提供限流，还提供了熔断、负载保护、自动重试等保障系统高可用开箱即用的功能。并且，Resilience4j 的生态也更好，很多网关都使用 Resilience4j 来做限流熔断的。</p>
+<p>因此，在绝大部分场景下 Resilience4j 或许会是更好的选择。如果是一些比较简单的限流场景的话，Guava 或者 Bucket4j 也是不错的选择。</p>
+<h2 id="分布式限流怎么做">分布式限流怎么做？<a hidden class="anchor" aria-hidden="true" href="#分布式限流怎么做">#</a></h2>
+<p>分布式限流针对的分布式/微服务应用架构应用，在这种架构下，单机限流就不适用了，因为会存在多种服务，并且一种服务也可能会被部署多份。</p>
+<p>分布式限流常见的方案：</p>
+<ul>
+<li><strong>借助中间件架限流</strong>：可以借助 Sentinel 或者使用 Redis 来自己实现对应的限流逻辑。</li>
+<li><strong>网关层限流</strong>：比较常用的一种方案，直接在网关层把限流给安排上了。不过，通常网关层限流通常也需要借助到中间件/框架。就比如 Spring Cloud Gateway 的分布式限流实现<code>RedisRateLimiter</code>就是基于 Redis+Lua 来实现的，再比如 Spring Cloud Gateway 还可以整合 Sentinel 来做限流。</li>
+</ul>
+<p>如果你要基于 Redis 来手动实现限流逻辑的话，建议配合 Lua 脚本来做。</p>
+<p><strong>为什么建议 Redis+Lua 的方式？</strong> 主要有两点原因：</p>
+<ul>
+<li><strong>减少了网络开销</strong>：我们可以利用 Lua 脚本来批量执行多条 Redis 命令，这些 Redis 命令会被提交到 Redis 服务器一次性执行完成，大幅减小了网络开销。</li>
+<li><strong>原子性</strong>：一段 Lua 脚本可以视作一条命令执行，一段 Lua 脚本执行过程中不会有其他脚本或 Redis 命令同时执行，保证了操作不会被其他指令插入或打扰。</li>
+</ul>
+<p>我这里就不放具体的限流脚本代码了，网上也有很多现成的优秀的限流脚本供你参考，就比如 Apache 网关项目 ShenYu 的 RateLimiter 限流插件就基于 Redis + Lua 实现了令牌桶算法/并发令牌桶算法、漏桶算法、滑动窗口算法。</p>
+<blockquote>
+<p>ShenYu 地址: <a href="https://github.com/apache/incubator-shenyu">https://github.com/apache/incubator-shenyu</a></p>
+</blockquote>
+<p><img loading="lazy" src="e1e2a75f489e4854990dabe3b6cec522.jpg" alt=""  />
+</p>
+<h2 id="相关阅读">相关阅读<a hidden class="anchor" aria-hidden="true" href="#相关阅读">#</a></h2>
+<ul>
+<li>服务治理之轻量级熔断框架 Resilience4j：<a href="https://xie.infoq.cn/article/14786e571c1a4143ad1ef8f19">https://xie.infoq.cn/article/14786e571c1a4143ad1ef8f19</a></li>
+<li>超详细的 Guava RateLimiter 限流原理解析：<a href="https://cloud.tencent.com/developer/article/1408819">https://cloud.tencent.com/developer/article/1408819</a></li>
+<li>实战 Spring Cloud Gateway 之限流篇 👍：https://www.aneasystone.com/archives/2020/08/spring-cloud-gateway-current-limiting.html</li>
+</ul>
+<h1 id="降级熔断详解">降级&amp;熔断详解<a hidden class="anchor" aria-hidden="true" href="#降级熔断详解">#</a></h1>
+<p>。。。</p>
+<h1 id="超时重试详解">超时&amp;重试详解<a hidden class="anchor" aria-hidden="true" href="#超时重试详解">#</a></h1>
+<p>由于网络问题、系统或者服务内部的 Bug、服务器宕机、操作系统崩溃等问题的不确定性，我们的系统或者服务永远不可能保证时刻都是可用的状态。</p>
+<p>为了最大限度的减小系统或者服务出现故障之后带来的影响，我们需要用到的 <strong>超时（Timeout）</strong> 和 <strong>重试（Retry）</strong> 机制。</p>
+<p>想要把超时和重试机制讲清楚其实很简单，因为它俩本身就不是什么高深的概念。</p>
+<p>虽然超时和重试机制的思想很简单，但是它俩是真的非常实用。你平时接触到的绝大部分涉及到远程调用的系统或者服务都会应用超时和重试机制。尤其是对于微服务系统来说，正确设置超时和重试非常重要。单体服务通常只涉及数据库、缓存、第三方 API、中间件等的网络调用，而微服务系统内部各个服务之间还存在着网络调用。</p>
+<h2 id="超时机制">超时机制<a hidden class="anchor" aria-hidden="true" href="#超时机制">#</a></h2>
+<h3 id="什么是超时机制">什么是超时机制？<a hidden class="anchor" aria-hidden="true" href="#什么是超时机制">#</a></h3>
+<p>超时机制说的是当一个请求超过指定的时间（比如 1s）还没有被处理的话，这个请求就会直接被取消并抛出指定的异常或者错误（比如 <code>504 Gateway Timeout</code>）。</p>
+<p>我们平时接触到的超时可以简单分为下面 2 种：</p>
+<ul>
+<li><strong>连接超时（ConnectTimeout）</strong>：客户端与服务端建立连接的最长等待时间。</li>
+<li><strong>读取超时（ReadTimeout）</strong>：客户端和服务端已经建立连接，客户端等待服务端处理完请求的最长时间。实际项目中，我们关注比较多的还是读取超时。</li>
+</ul>
+<p>一些连接池客户端框架中可能还会有获取连接超时和空闲连接清理超时。</p>
+<p>如果没有设置超时的话，就可能会导致服务端连接数爆炸和大量请求堆积的问题。</p>
+<p>这些堆积的连接和请求会消耗系统资源，影响新收到的请求的处理。严重的情况下，甚至会拖垮整个系统或者服务。</p>
+<p>我之前在实际项目就遇到过类似的问题，整个网站无法正常处理请求，服务器负载直接快被拉满。后面发现原因是项目超时设置错误加上客户端请求处理异常，导致服务端连接数直接接近 40w+，这么多堆积的连接直接把系统干趴了。</p>
+<h3 id="超时时间应该如何设置">超时时间应该如何设置？<a hidden class="anchor" aria-hidden="true" href="#超时时间应该如何设置">#</a></h3>
+<p>超时到底设置多长时间是一个难题！超时值设置太高或者太低都有风险。如果设置太高的话，会降低超时机制的有效性，比如你设置超时为 10s 的话，那设置超时就没啥意义了，系统依然可能会出现大量慢请求堆积的问题。如果设置太低的话，就可能会导致在系统或者服务在某些处理请求速度变慢的情况下（比如请求突然增多），大量请求重试（超时通常会结合重试）继续加重系统或者服务的压力，进而导致整个系统或者服务被拖垮的问题。</p>
+<p>通常情况下，我们建议读取超时设置为 <strong>1500ms</strong> ,这是一个比较普适的值。如果你的系统或者服务对于延迟比较敏感的话，那读取超时值可以适当在 <strong>1500ms</strong> 的基础上进行缩短。反之，读取超时值也可以在 <strong>1500ms</strong> 的基础上进行加长，不过，尽量还是不要超过 <strong>1500ms</strong> 。连接超时可以适当设置长一些，建议在 <strong>1000ms ~ 5000ms</strong> 之内。</p>
+<p>没有银弹！超时值具体该设置多大，还是要根据实际项目的需求和情况慢慢调整优化得到。</p>
+<p>更上一层，参考<a href="https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html">美团的 Java 线程池参数动态配置</a>思想，我们也可以将超时弄成可配置化的参数而不是固定的，比较简单的一种办法就是将超时的值放在配置中心中。这样的话，我们就可以根据系统或者服务的状态动态调整超时值了。</p>
+<h2 id="重试机制">重试机制<a hidden class="anchor" aria-hidden="true" href="#重试机制">#</a></h2>
+<h3 id="什么是重试机制">什么是重试机制？<a hidden class="anchor" aria-hidden="true" href="#什么是重试机制">#</a></h3>
+<p>重试机制一般配合超时机制一起使用，指的是多次发送相同的请求来避免瞬态故障和偶然性故障。</p>
+<p>瞬态故障可以简单理解为某一瞬间系统偶然出现的故障，并不会持久。偶然性故障可以理解为哪些在某些情况下偶尔出现的故障，频率通常较低。</p>
+<p>重试的核心思想是通过消耗服务器的资源来尽可能获得请求更大概率被成功处理。由于瞬态故障和偶然性故障是很少发生的，因此，重试对于服务器的资源消耗几乎是可以被忽略的。</p>
+<h3 id="重试的次数如何设置">重试的次数如何设置？<a hidden class="anchor" aria-hidden="true" href="#重试的次数如何设置">#</a></h3>
+<p>重试的次数不宜过多，否则依然会对系统负载造成比较大的压力。</p>
+<p>重试的次数通常建议设为 3 次。并且，我们通常还会设置重试的间隔，比如说我们要重试 3 次的话，第 1 次请求失败后，等待 1 秒再进行重试，第 2 次请求失败后，等待 2 秒再进行重试，第 3 次请求失败后，等待 3 秒再进行重试。</p>
+<h3 id="重试幂等">重试幂等<a hidden class="anchor" aria-hidden="true" href="#重试幂等">#</a></h3>
+<p>超时和重试机制在实际项目中使用的话，需要注意保证同一个请求没有被多次执行。</p>
+<p>什么情况下会出现一个请求被多次执行呢？客户端等待服务端完成请求完成超时但此时服务端已经执行了请求，只是由于短暂的网络波动导致响应在发送给客户端的过程中延迟了。</p>
+<p>举个例子：用户支付购买某个课程，结果用户支付的请求由于重试的问题导致用户购买同一门课程支付了两次。对于这种情况，我们在执行用户购买课程的请求的时候需要判断一下用户是否已经购买过。这样的话，就不会因为重试的问题导致重复购买了。</p>
+<h2 id="参考">参考<a hidden class="anchor" aria-hidden="true" href="#参考">#</a></h2>
+<ul>
+<li>微服务之间调用超时的设置治理：<a href="https://www.infoq.cn/article/eyrslar53l6hjm5yjgyx">https://www.infoq.cn/article/eyrslar53l6hjm5yjgyx</a></li>
+<li>超时、重试和抖动回退：https://aws.amazon.com/cn/builders-library/timeouts-retries-and-backoff-with-jitter/</li>
+</ul>
+<h1 id="性能测试入门">性能测试入门<a hidden class="anchor" aria-hidden="true" href="#性能测试入门">#</a></h1>
+<p>性能测试一般情况下都是由测试这个职位去做的，那还需要我们开发学这个干嘛呢？了解性能测试的指标、分类以及工具等知识有助于我们更好地去写出性能更好的程序，另外作为开发这个角色，如果你会性能测试的话，相信也会为你的履历加分不少。</p>
+<p>这篇文章是我会结合自己的实际经历以及在测试这里取的经所得，除此之外，我还借鉴了一些优秀书籍，希望对你有帮助。</p>
+<h2 id="不同角色看网站性能">不同角色看网站性能<a hidden class="anchor" aria-hidden="true" href="#不同角色看网站性能">#</a></h2>
+<h3 id="用户">用户<a hidden class="anchor" aria-hidden="true" href="#用户">#</a></h3>
+<p>当用户打开一个网站的时候，最关注的是什么？当然是网站响应速度的快慢。比如我们点击了淘宝的主页，淘宝需要多久将首页的内容呈现在我的面前，我点击了提交订单按钮需要多久返回结果等等。</p>
+<p>所以，用户在体验我们系统的时候往往根据你的响应速度的快慢来评判你的网站的性能。</p>
+<h3 id="开发人员">开发人员<a hidden class="anchor" aria-hidden="true" href="#开发人员">#</a></h3>
+<p>用户与开发人员都关注速度，这个速度实际上就是我们的系统<strong>处理用户请求的速度</strong>。</p>
+<p>开发人员一般情况下很难直观的去评判自己网站的性能，我们往往会根据网站当前的架构以及基础设施情况给一个大概的值,比如：</p>
+<ol>
+<li>项目架构是分布式的吗？</li>
+<li>用到了缓存和消息队列没有？</li>
+<li>高并发的业务有没有特殊处理？</li>
+<li>数据库设计是否合理？</li>
+<li>系统用到的算法是否还需要优化？</li>
+<li>系统是否存在内存泄露的问题？</li>
+<li>项目使用的 Redis 缓存多大？服务器性能如何？用的是机械硬盘还是固态硬盘？</li>
+<li>&hellip;&hellip;</li>
+</ol>
+<h3 id="测试人员">测试人员<a hidden class="anchor" aria-hidden="true" href="#测试人员">#</a></h3>
+<p>测试人员一般会根据性能测试工具来测试，然后一般会做出一个表格。这个表格可能会涵盖下面这些重要的内容：</p>
+<ol>
+<li>响应时间；</li>
+<li>请求成功率；</li>
+<li>吞吐量；</li>
+<li>&hellip;&hellip;</li>
+</ol>
+<h3 id="运维人员">运维人员<a hidden class="anchor" aria-hidden="true" href="#运维人员">#</a></h3>
+<p>运维人员会倾向于根据基础设施和资源的利用率来判断网站的性能，比如我们的服务器资源使用是否合理、数据库资源是否存在滥用的情况、当然，这是传统的运维人员，现在 Devops 火起来后，单纯干运维的很少了。我们这里暂且还保留有这个角色。</p>
+<h2 id="性能测试需要注意的点">性能测试需要注意的点<a hidden class="anchor" aria-hidden="true" href="#性能测试需要注意的点">#</a></h2>
+<p>几乎没有文章在讲性能测试的时候提到这个问题，大家都会讲如何去性能测试，有哪些性能测试指标这些东西。</p>
+<h3 id="了解系统的业务场景">了解系统的业务场景<a hidden class="anchor" aria-hidden="true" href="#了解系统的业务场景">#</a></h3>
+<p><strong>性能测试之前更需要你了解当前的系统的业务场景。</strong> 对系统业务了解的不够深刻，我们很容易犯测试方向偏执的错误，从而导致我们忽略了对系统某些更需要性能测试的地方进行测试。比如我们的系统可以为用户提供发送邮件的功能，用户配置成功邮箱后只需输入相应的邮箱之后就能发送，系统每天大概能处理上万次发邮件的请求。很多人看到这个可能就直接开始使用相关工具测试邮箱发送接口，但是，发送邮件这个场景可能不是当前系统的性能瓶颈，这么多人用我们的系统发邮件， 还可能有很多人一起发邮件，单单这个场景就这么人用，那用户管理可能才是性能瓶颈吧！</p>
+<h3 id="历史数据非常有用">历史数据非常有用<a hidden class="anchor" aria-hidden="true" href="#历史数据非常有用">#</a></h3>
+<p>当前系统所留下的历史数据非常重要，一般情况下，我们可以通过相应的些历史数据初步判定这个系统哪些接口调用的比较多、哪些 service 承受的压力最大，这样的话，我们就可以针对这些地方进行更细致的性能测试与分析。</p>
+<p>另外，这些地方也就像这个系统的一个短板一样，优化好了这些地方会为我们的系统带来质的提升。</p>
+<h3 id="性能测试的指标">性能测试的指标<a hidden class="anchor" aria-hidden="true" href="#性能测试的指标">#</a></h3>
+<h3 id="响应时间">响应时间<a hidden class="anchor" aria-hidden="true" href="#响应时间">#</a></h3>
+<p><strong>响应时间就是用户发出请求到用户收到系统处理结果所需要的时间。</strong> 重要吗？实在太重要！</p>
+<p>比较出名的 2-5-8 原则是这样描述的：通常来说，2 到 5 秒，页面体验会比较好，5 到 8 秒还可以接受，8 秒以上基本就很难接受了。另外，据统计当网站慢一秒就会流失十分之一的客户。</p>
+<p>但是，在某些场景下我们也并不需要太看重 2-5-8 原则 ，比如我觉得系统导出导入大数据量这种就不需要，系统生成系统报告这种也不需要。</p>
+<h3 id="并发数">并发数<a hidden class="anchor" aria-hidden="true" href="#并发数">#</a></h3>
+<p><strong>并发数是系统能同时处理请求的数目即同时提交请求的用户数目。</strong></p>
+<p>不得不说，高并发是现在后端架构中非常非常火热的一个词了，这个与当前的互联网环境以及中国整体的互联网用户量都有很大关系。一般情况下，你的系统并发量越大，说明你的产品做的就越大。但是，并不是每个系统都需要达到像淘宝、12306 这种亿级并发量的。</p>
+<h3 id="吞吐量">吞吐量<a hidden class="anchor" aria-hidden="true" href="#吞吐量">#</a></h3>
+<p>吞吐量指的是系统单位时间内系统处理的请求数量。衡量吞吐量有几个重要的参数：QPS（TPS）、并发数、响应时间。</p>
+<ol>
+<li>QPS（Query Per Second）：服务器每秒可以执行的查询次数；</li>
+<li>TPS（Transaction Per Second）：服务器每秒处理的事务数（这里的一个事务可以理解为客户发出请求到收到服务器的过程）；</li>
+<li>并发数；系统能同时处理请求的数目即同时提交请求的用户数目。</li>
+<li>响应时间：一般取多次请求的平均响应时间</li>
+</ol>
+<p>理清他们的概念，就很容易搞清楚他们之间的关系了。</p>
+<ul>
+<li><strong>QPS（TPS）</strong> = 并发数/平均响应时间</li>
+<li><strong>并发数</strong> = QPS*平均响应时间</li>
+</ul>
+<p>书中是这样描述 QPS 和 TPS 的区别的。</p>
+<blockquote>
+<p>QPS vs TPS：QPS 基本类似于 TPS，但是不同的是，对于一个页面的一次访问，形成一个 TPS；但一次页面请求，可能产生多次对服务器的请求，服务器对这些请求，就可计入“QPS”之中。如，访问一个页面会请求服务器 2 次，一次访问，产生一个“T”，产生 2 个“Q”。</p>
+</blockquote>
+<h3 id="性能计数器">性能计数器<a hidden class="anchor" aria-hidden="true" href="#性能计数器">#</a></h3>
+<p><strong>性能计数器是描述服务器或者操作系统的一些数据指标如内存使用、CPU 使用、磁盘与网络 I/O 等情况。</strong></p>
+<h3 id="几种常见的性能测试">几种常见的性能测试<a hidden class="anchor" aria-hidden="true" href="#几种常见的性能测试">#</a></h3>
+<h3 id="性能测试">性能测试<a hidden class="anchor" aria-hidden="true" href="#性能测试">#</a></h3>
+<p>性能测试方法是通过测试工具模拟用户请求系统，目的主要是为了测试系统的性能是否满足要求。通俗地说，这种方法就是要在特定的运行条件下验证系统的能力状态。</p>
+<p>性能测试是你在对系统性能已经有了解的前提之后进行的，并且有明确的性能指标。</p>
+<h3 id="负载测试">负载测试<a hidden class="anchor" aria-hidden="true" href="#负载测试">#</a></h3>
+<p>对被测试的系统继续加大请求压力，直到服务器的某个资源已经达到饱和了，比如系统的缓存已经不够用了或者系统的响应时间已经不满足要求了。</p>
+<p>负载测试说白点就是测试系统的上限。</p>
+<h3 id="压力测试">压力测试<a hidden class="anchor" aria-hidden="true" href="#压力测试">#</a></h3>
+<p>不去管系统资源的使用情况，对系统继续加大请求压力，直到服务器崩溃无法再继续提供服务。</p>
+<h3 id="稳定性测试">稳定性测试<a hidden class="anchor" aria-hidden="true" href="#稳定性测试">#</a></h3>
+<p>模拟真实场景，给系统一定压力，看看业务是否能稳定运行。</p>
+<h2 id="常用性能测试工具">常用性能测试工具<a hidden class="anchor" aria-hidden="true" href="#常用性能测试工具">#</a></h2>
+<p>这里就不多扩展了，有时间的话会单独拎一个熟悉的说一下。</p>
+<h3 id="后端常用">后端常用<a hidden class="anchor" aria-hidden="true" href="#后端常用">#</a></h3>
+<p>没记错的话，除了 LoadRunner 其他几款性能测试工具都是开源免费的。</p>
+<ol>
+<li>Jmeter：Apache JMeter 是 JAVA 开发的性能测试工具。</li>
+<li>LoadRunner：一款商业的性能测试工具。</li>
+<li>Galtling：一款基于 Scala 开发的高性能服务器性能测试工具。</li>
+<li>ab：全称为 Apache Bench 。Apache 旗下的一款测试工具，非常实用。</li>
+</ol>
+<h3 id="前端常用">前端常用<a hidden class="anchor" aria-hidden="true" href="#前端常用">#</a></h3>
+<ol>
+<li>Fiddler：抓包工具，它可以修改请求的数据，甚至可以修改服务器返回的数据，功能非常强大，是 Web 调试的利器。</li>
+<li>HttpWatch: 可用于录制 HTTP 请求信息的工具。</li>
+</ol>
+<h2 id="常见的性能优化策略">常见的性能优化策略<a hidden class="anchor" aria-hidden="true" href="#常见的性能优化策略">#</a></h2>
+<p>性能优化之前我们需要对请求经历的各个环节进行分析，排查出可能出现性能瓶颈的地方，定位问题。</p>
+<p>下面是一些性能优化时，我经常拿来自问的一些问题：</p>
+<ol>
+<li>系统是否需要缓存？</li>
+<li>系统架构本身是不是就有问题？</li>
+<li>系统是否存在死锁的地方？</li>
+<li>系统是否存在内存泄漏？（Java 的自动回收内存虽然很方便，但是，有时候代码写的不好真的会造成内存泄漏）</li>
+<li>数据库索引使用是否合理？</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/interview/">interview</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
