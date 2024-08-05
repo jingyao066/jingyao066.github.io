@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>12_回溯 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="算法">
+<meta name="description" content="回溯算法 回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="12_回溯" />
+<meta property="og:description" content="回溯算法 回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-06-06T09:10:32+00:00" />
+<meta property="article:modified_time" content="2024-06-06T09:10:32+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="12_回溯"/>
+<meta name="twitter:description" content="回溯算法 回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "12_回溯",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "12_回溯",
+  "name": "12_回溯",
+  "description": "回溯算法 回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有",
+  "keywords": [
+    "算法"
+  ],
+  "articleBody": "回溯算法 回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有可能的解决方案，当遇到正确的解则将其记录，直到找到解或者尝试了所有可能的选择都无法找到解为止。\n回溯算法通常采用“深度优先搜索”来遍历解空间。在“二叉树”章节中，我们提到前序、中序和后序遍历都属于深度优先搜索。接下来，我们利用前序遍历构造一个回溯问题，逐步了解回溯算法的工作原理。\n例题一\n给定一棵二叉树，搜索并记录所有值为 7 的节点，请返回节点列表。\n对于此题，我们前序遍历这棵树，并判断当前节点的值是否为 7 ，若是，则将该节点的值加入结果列表 res 之中。相关过程实现如图 13-1 和以下代码所示：\n1 2 3 4 5 6 7 8 9 10 11 12 /* 前序遍历：例题一 */ void preOrder(TreeNode root) { if (root == null) { return; } if (root.val == 7) { // 记录解 res.add(root); } preOrder(root.left); preOrder(root.right); } 尝试与回退 之所以称之为回溯算法，是因为该算法在搜索解空间时会采用“尝试”与“回退”的策略。当算法在搜索过程中遇到某个状态无法继续前进或无法得到满足条件的解时，它会撤销上一步的选择，退回到之前的状态，并尝试其他可能的选择。\n对于例题一，访问每个节点都代表一次“尝试”，而越过叶节点或返回父节点的 return 则表示“回退”。\n值得说明的是，回退并不仅仅包括函数返回。为解释这一点，我们对例题一稍作拓展。\n例题二\n在二叉树中搜索所有值为 7 的节点，请返回根节点到这些节点的路径。\n在例题一代码的基础上，我们需要借助一个列表 path 记录访问过的节点路径。当访问到值为 7 的节点时，则复制 path 并添加进结果列表 res 。遍历完成后，res 中保存的就是所有的解。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 /* 前序遍历：例题二 */ void preOrder(TreeNode root) { if (root == null) { return; } // 尝试 path.add(root); if (root.val == 7) { // 记录解 res.add(new ArrayList\u003c\u003e(path)); } preOrder(root.left); preOrder(root.right); // 回退 path.remove(path.size() - 1); } 在每次“尝试”中，我们通过将当前节点添加进 path 来记录路径；而在“回退”前，我们需要将该节点从 path 中弹出，以恢复本次尝试之前的状态。\n观察图 13-2 所示的过程，我们可以将尝试和回退理解为“前进”与“撤销”，两个操作互为逆向。\n剪枝 复杂的回溯问题通常包含一个或多个约束条件，约束条件通常可用于“剪枝”。\n例题三\n在二叉树中搜索所有值为 7 的节点，请返回根节点到这些节点的路径，并要求路径中不包含值为 3 的节点。\n为了满足以上约束条件，我们需要添加剪枝操作：在搜索过程中，若遇到值为 3 的节点，则提前返回，不再继续搜索。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 /* 前序遍历：例题三 */ void preOrder(TreeNode root) { // 剪枝 if (root == null || root.val == 3) { return; } // 尝试 path.add(root); if (root.val == 7) { // 记录解 res.add(new ArrayList\u003c\u003e(path)); } preOrder(root.left); preOrder(root.right); // 回退 path.remove(path.size() - 1); } “剪枝”是一个非常形象的名词。如图 13-3 所示，在搜索过程中，我们“剪掉”了不满足约束条件的搜索分支，避免许多无意义的尝试，从而提高了搜索效率。\n框架代码 接下来，我们尝试将回溯的“尝试、回退、剪枝”的主体框架提炼出来，提升代码的通用性。\n在以下框架代码中，state 表示问题的当前状态，choices 表示当前状态下可以做出的选择：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 /* 回溯算法框架 */ void backtrack(State state, List choices, List res) { // 判断是否为解 if (isSolution(state)) { // 记录解 recordSolution(state, res); // 不再继续搜索 return; } // 遍历所有选择 for (Choice choice : choices) { // 剪枝：判断选择是否合法 if (isValid(state, choice)) { // 尝试：做出选择，更新状态 makeChoice(state, choice); backtrack(state, choices, res); // 回退：撤销选择，恢复到之前的状态 undoChoice(state, choice); } } } 接下来，我们基于框架代码来解决例题三。状态 state 为节点遍历路径，选择 choices 为当前节点的左子节点和右子节点，结果 res 是路径列表：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 /* 判断当前状态是否为解 */ boolean isSolution(List state) { return !state.isEmpty() \u0026\u0026 state.get(state.size() - 1).val == 7; } /* 记录解 */ void recordSolution(List state, List",
+  "wordCount" : "10267",
+  "inLanguage": "en",
+  "datePublished": "2024-06-06T09:10:32Z",
+  "dateModified": "2024-06-06T09:10:32Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      12_回溯
+    </h1>
+    <div class="post-meta"><span title='2024-06-06 09:10:32 +0000 UTC'>2024-06-06</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%9b%9e%e6%ba%af%e7%ae%97%e6%b3%95" aria-label="回溯算法">回溯算法</a><ul>
+                        
+                <li>
+                    <a href="#%e5%b0%9d%e8%af%95%e4%b8%8e%e5%9b%9e%e9%80%80" aria-label="尝试与回退">尝试与回退</a></li>
+                <li>
+                    <a href="#%e5%89%aa%e6%9e%9d" aria-label="剪枝">剪枝</a></li>
+                <li>
+                    <a href="#%e6%a1%86%e6%9e%b6%e4%bb%a3%e7%a0%81" aria-label="框架代码">框架代码</a></li>
+                <li>
+                    <a href="#%e5%b8%b8%e7%94%a8%e6%9c%af%e8%af%ad" aria-label="常用术语">常用术语</a></li>
+                <li>
+                    <a href="#%e4%bc%98%e7%82%b9%e4%b8%8e%e5%b1%80%e9%99%90%e6%80%a7" aria-label="优点与局限性">优点与局限性</a></li>
+                <li>
+                    <a href="#%e5%9b%9e%e6%ba%af%e5%85%b8%e5%9e%8b%e4%be%8b%e9%a2%98" aria-label="回溯典型例题">回溯典型例题</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%85%a8%e6%8e%92%e5%88%97%e9%97%ae%e9%a2%98" aria-label="全排列问题">全排列问题</a><ul>
+                        
+                <li>
+                    <a href="#%e6%97%a0%e7%9b%b8%e7%ad%89%e5%85%83%e7%b4%a0%e7%9a%84%e6%83%85%e5%86%b5" aria-label="无相等元素的情况">无相等元素的情况</a><ul>
+                        
+                <li>
+                    <a href="#%e9%87%8d%e5%a4%8d%e9%80%89%e6%8b%a9%e5%89%aa%e6%9e%9d" aria-label="重复选择剪枝">重复选择剪枝</a></li>
+                <li>
+                    <a href="#%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0" aria-label="代码实现">代码实现</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e8%80%83%e8%99%91%e7%9b%b8%e7%ad%89%e5%85%83%e7%b4%a0%e7%9a%84%e6%83%85%e5%86%b5" aria-label="考虑相等元素的情况">考虑相等元素的情况</a><ul>
+                        
+                <li>
+                    <a href="#%e7%9b%b8%e7%ad%89%e5%85%83%e7%b4%a0%e5%89%aa%e6%9e%9d" aria-label="相等元素剪枝">相等元素剪枝</a></li>
+                <li>
+                    <a href="#%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0-1" aria-label="代码实现">代码实现</a></li>
+                <li>
+                    <a href="#%e4%b8%a4%e7%a7%8d%e5%89%aa%e6%9e%9d%e5%af%b9%e6%af%94" aria-label="两种剪枝对比">两种剪枝对比</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%ad%90%e9%9b%86%e5%92%8c%e7%9a%84%e9%97%ae%e9%a2%98" aria-label="子集和的问题">子集和的问题</a><ul>
+                        
+                <li>
+                    <a href="#%e6%97%a0%e9%87%8d%e5%a4%8d%e5%85%83%e7%b4%a0%e7%9a%84%e6%83%85%e5%86%b5" aria-label="无重复元素的情况">无重复元素的情况</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8f%82%e8%80%83%e5%85%a8%e6%8e%92%e5%88%97%e8%a7%a3%e6%b3%95httpswwwhello-algocomchapter_backtrackingsubset_sum_problem1" aria-label="参考全排列解法¶">参考全排列解法¶</a></li>
+                <li>
+                    <a href="#%e9%87%8d%e5%a4%8d%e5%ad%90%e9%9b%86%e5%89%aa%e6%9e%9d" aria-label="重复子集剪枝">重复子集剪枝</a></li>
+                <li>
+                    <a href="#%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0-2" aria-label="代码实现">代码实现</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e8%80%83%e8%99%91%e9%87%8d%e5%a4%8d%e5%85%83%e7%b4%a0%e7%9a%84%e6%83%85%e5%86%b5" aria-label="考虑重复元素的情况">考虑重复元素的情况</a><ul>
+                        
+                <li>
+                    <a href="#%e7%9b%b8%e7%ad%89%e5%85%83%e7%b4%a0%e5%89%aa%e6%9e%9d-1" aria-label="相等元素剪枝">相等元素剪枝</a></li>
+                <li>
+                    <a href="#%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0-3" aria-label="代码实现">代码实现</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#n-%e7%9a%87%e5%90%8e%e9%97%ae%e9%a2%98" aria-label="n 皇后问题">n 皇后问题</a><ul>
+                        
+                <li>
+                    <a href="#%e9%80%90%e8%a1%8c%e6%94%be%e7%bd%ae%e7%ad%96%e7%95%a5" aria-label="逐行放置策略">逐行放置策略</a></li>
+                <li>
+                    <a href="#%e5%88%97%e4%b8%8e%e5%af%b9%e8%a7%92%e7%ba%bf%e5%89%aa%e6%9e%9d" aria-label="列与对角线剪枝">列与对角线剪枝</a></li>
+                <li>
+                    <a href="#%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0-4" aria-label="代码实现">代码实现</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b0%8f%e7%bb%93" aria-label="小结">小结</a><ul>
+                        
+                <li>
+                    <a href="#%e9%87%8d%e7%82%b9%e5%9b%9e%e9%a1%be" aria-label="重点回顾">重点回顾</a></li>
+                <li>
+                    <a href="#q--a" aria-label="Q &amp; A">Q &amp; A</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="回溯算法">回溯算法<a hidden class="anchor" aria-hidden="true" href="#回溯算法">#</a></h1>
+<p>回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有可能的解决方案，当遇到正确的解则将其记录，直到找到解或者尝试了所有可能的选择都无法找到解为止。</p>
+<p>回溯算法通常采用“深度优先搜索”来遍历解空间。在“二叉树”章节中，我们提到前序、中序和后序遍历都属于深度优先搜索。接下来，我们利用前序遍历构造一个回溯问题，逐步了解回溯算法的工作原理。</p>
+<blockquote>
+<p>例题一</p>
+<p>给定一棵二叉树，搜索并记录所有值为 7 的节点，请返回节点列表。</p>
+</blockquote>
+<p>对于此题，我们前序遍历这棵树，并判断当前节点的值是否为 7 ，若是，则将该节点的值加入结果列表 <code>res</code> 之中。相关过程实现如图 13-1 和以下代码所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 前序遍历：例题一 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> preOrder(TreeNode root) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (root == <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (root.<span style="color:#007f7f">val</span> == <span style="color:#ff0;font-weight:bold">7</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        res.<span style="color:#007f7f">add</span>(root);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="preorder_find_nodes.png" alt=""  />
+</p>
+<h2 id="尝试与回退">尝试与回退<a hidden class="anchor" aria-hidden="true" href="#尝试与回退">#</a></h2>
+<p><strong>之所以称之为回溯算法，是因为该算法在搜索解空间时会采用“尝试”与“回退”的策略</strong>。当算法在搜索过程中遇到某个状态无法继续前进或无法得到满足条件的解时，它会撤销上一步的选择，退回到之前的状态，并尝试其他可能的选择。</p>
+<p>对于例题一，访问每个节点都代表一次“尝试”，而越过叶节点或返回父节点的 <code>return</code> 则表示“回退”。</p>
+<p>值得说明的是，<strong>回退并不仅仅包括函数返回</strong>。为解释这一点，我们对例题一稍作拓展。</p>
+<blockquote>
+<p>例题二</p>
+<p>在二叉树中搜索所有值为 7 的节点，<strong>请返回根节点到这些节点的路径</strong>。</p>
+</blockquote>
+<p>在例题一代码的基础上，我们需要借助一个列表 <code>path</code> 记录访问过的节点路径。当访问到值为 7 的节点时，则复制 <code>path</code> 并添加进结果列表 <code>res</code> 。遍历完成后，<code>res</code> 中保存的就是所有的解。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 前序遍历：例题二 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> preOrder(TreeNode root) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (root == <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 尝试
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    path.<span style="color:#007f7f">add</span>(root);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (root.<span style="color:#007f7f">val</span> == <span style="color:#ff0;font-weight:bold">7</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(path));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 回退
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    path.<span style="color:#007f7f">remove</span>(path.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在每次“尝试”中，我们通过将当前节点添加进 <code>path</code> 来记录路径；而在“回退”前，我们需要将该节点从 <code>path</code> 中弹出，<strong>以恢复本次尝试之前的状态</strong>。</p>
+<p>观察图 13-2 所示的过程，<strong>我们可以将尝试和回退理解为“前进”与“撤销”</strong>，两个操作互为逆向。</p>
+<p><img loading="lazy" src="preorder_find_paths_step1.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step2.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step3.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step4.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step5.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step6.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step7.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step8.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step9.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step10.png" alt=""  />
+
+<img loading="lazy" src="preorder_find_paths_step11.png" alt=""  />
+</p>
+<h2 id="剪枝">剪枝<a hidden class="anchor" aria-hidden="true" href="#剪枝">#</a></h2>
+<p>复杂的回溯问题通常包含一个或多个约束条件，<strong>约束条件通常可用于“剪枝”</strong>。</p>
+<blockquote>
+<p>例题三</p>
+<p>在二叉树中搜索所有值为 7 的节点，请返回根节点到这些节点的路径，<strong>并要求路径中不包含值为 3 的节点</strong>。</p>
+</blockquote>
+<p>为了满足以上约束条件，<strong>我们需要添加剪枝操作</strong>：在搜索过程中，若遇到值为 3 的节点，则提前返回，不再继续搜索。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 前序遍历：例题三 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> preOrder(TreeNode root) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 剪枝
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (root == <span style="color:#fff;font-weight:bold">null</span> || root.<span style="color:#007f7f">val</span> == <span style="color:#ff0;font-weight:bold">3</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 尝试
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    path.<span style="color:#007f7f">add</span>(root);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (root.<span style="color:#007f7f">val</span> == <span style="color:#ff0;font-weight:bold">7</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(path));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 回退
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    path.<span style="color:#007f7f">remove</span>(path.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>“剪枝”是一个非常形象的名词。如图 13-3 所示，在搜索过程中，<strong>我们“剪掉”了不满足约束条件的搜索分支</strong>，避免许多无意义的尝试，从而提高了搜索效率。</p>
+<p><img loading="lazy" src="preorder_find_constrained_paths.png" alt=""  />
+</p>
+<h2 id="框架代码">框架代码<a hidden class="anchor" aria-hidden="true" href="#框架代码">#</a></h2>
+<p>接下来，我们尝试将回溯的“尝试、回退、剪枝”的主体框架提炼出来，提升代码的通用性。</p>
+<p>在以下框架代码中，<code>state</code> 表示问题的当前状态，<code>choices</code> 表示当前状态下可以做出的选择：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法框架 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(State state, List&lt;Choice&gt; choices, List&lt;State&gt; res) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 判断是否为解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (isSolution(state)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        recordSolution(state, res);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 不再继续搜索
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (Choice choice : choices) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝：判断选择是否合法
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (isValid(state, choice)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 尝试：做出选择，更新状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            makeChoice(state, choice);
+</span></span><span style="display:flex;"><span>            backtrack(state, choices, res);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 回退：撤销选择，恢复到之前的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            undoChoice(state, choice);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接下来，我们基于框架代码来解决例题三。状态 <code>state</code> 为节点遍历路径，选择 <code>choices</code> 为当前节点的左子节点和右子节点，结果 <code>res</code> 是路径列表：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 判断当前状态是否为解 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">boolean</span> isSolution(List&lt;TreeNode&gt; state) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> !state.<span style="color:#007f7f">isEmpty</span>() &amp;&amp; state.<span style="color:#007f7f">get</span>(state.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>).<span style="color:#007f7f">val</span> == <span style="color:#ff0;font-weight:bold">7</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 记录解 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> recordSolution(List&lt;TreeNode&gt; state, List&lt;List&lt;TreeNode&gt;&gt; res) {
+</span></span><span style="display:flex;"><span>    res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(state));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 判断在当前状态下，该选择是否合法 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">boolean</span> isValid(List&lt;TreeNode&gt; state, TreeNode choice) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> choice != <span style="color:#fff;font-weight:bold">null</span> &amp;&amp; choice.<span style="color:#007f7f">val</span> != <span style="color:#ff0;font-weight:bold">3</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 更新状态 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> makeChoice(List&lt;TreeNode&gt; state, TreeNode choice) {
+</span></span><span style="display:flex;"><span>    state.<span style="color:#007f7f">add</span>(choice);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 恢复状态 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> undoChoice(List&lt;TreeNode&gt; state, TreeNode choice) {
+</span></span><span style="display:flex;"><span>    state.<span style="color:#007f7f">remove</span>(state.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法：例题三 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(List&lt;TreeNode&gt; state, List&lt;TreeNode&gt; choices, List&lt;List&lt;TreeNode&gt;&gt; res) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 检查是否为解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (isSolution(state)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        recordSolution(state, res);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (TreeNode choice : choices) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝：检查选择是否合法
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (isValid(state, choice)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 尝试：做出选择，更新状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            makeChoice(state, choice);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 进行下一轮选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            backtrack(state, Arrays.<span style="color:#007f7f">asList</span>(choice.<span style="color:#007f7f">left</span>, choice.<span style="color:#007f7f">right</span>), res);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 回退：撤销选择，恢复到之前的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            undoChoice(state, choice);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据题意，我们在找到值为 7 的节点后应该继续搜索，<strong>因此需要将记录解之后的 <code>return</code> 语句删除</strong>。图 13-4 对比了保留或删除 <code>return</code> 语句的搜索过程。</p>
+<p><img loading="lazy" src="backtrack_remove_return_or_not.png" alt=""  />
+</p>
+<p>相比基于前序遍历的代码实现，基于回溯算法框架的代码实现虽然显得啰唆，但通用性更好。实际上，<strong>许多回溯问题可以在该框架下解决</strong>。我们只需根据具体问题来定义 <code>state</code> 和 <code>choices</code> ，并实现框架中的各个方法即可。</p>
+<h2 id="常用术语">常用术语<a hidden class="anchor" aria-hidden="true" href="#常用术语">#</a></h2>
+<p>为了更清晰地分析算法问题，我们总结一下回溯算法中常用术语的含义，并对照例题三给出对应示例，如表 13-1 所示。</p>
+<p>表 13-1  常见的回溯算法术语</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名词</th>
+<th style="text-align:left">定义</th>
+<th style="text-align:left">例题三</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">解（solution）</td>
+<td style="text-align:left">解是满足问题特定条件的答案，可能有一个或多个</td>
+<td style="text-align:left">根节点到节点 7 的满足约束条件的所有路径</td>
+</tr>
+<tr>
+<td style="text-align:left">约束条件（constraint）</td>
+<td style="text-align:left">约束条件是问题中限制解的可行性的条件，通常用于剪枝</td>
+<td style="text-align:left">路径中不包含节点 3</td>
+</tr>
+<tr>
+<td style="text-align:left">状态（state）</td>
+<td style="text-align:left">状态表示问题在某一时刻的情况，包括已经做出的选择</td>
+<td style="text-align:left">当前已访问的节点路径，即 <code>path</code> 节点列表</td>
+</tr>
+<tr>
+<td style="text-align:left">尝试（attempt）</td>
+<td style="text-align:left">尝试是根据可用选择来探索解空间的过程，包括做出选择，更新状态，检查是否为解</td>
+<td style="text-align:left">递归访问左（右）子节点，将节点添加进 <code>path</code> ，判断节点的值是否为 7</td>
+</tr>
+<tr>
+<td style="text-align:left">回退（backtracking）</td>
+<td style="text-align:left">回退指遇到不满足约束条件的状态时，撤销前面做出的选择，回到上一个状态</td>
+<td style="text-align:left">当越过叶节点、结束节点访问、遇到值为 3 的节点时终止搜索，函数返回</td>
+</tr>
+<tr>
+<td style="text-align:left">剪枝（pruning）</td>
+<td style="text-align:left">剪枝是根据问题特性和约束条件避免无意义的搜索路径的方法，可提高搜索效率</td>
+<td style="text-align:left">当遇到值为 3 的节点时，则不再继续搜索</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Tip</p>
+<p>问题、解、状态等概念是通用的，在分治、回溯、动态规划、贪心等算法中都有涉及。</p>
+</blockquote>
+<h2 id="优点与局限性">优点与局限性<a hidden class="anchor" aria-hidden="true" href="#优点与局限性">#</a></h2>
+<p>回溯算法本质上是一种深度优先搜索算法，它尝试所有可能的解决方案直到找到满足条件的解。这种方法的优点在于能够找到所有可能的解决方案，而且在合理的剪枝操作下，具有很高的效率。</p>
+<p>然而，在处理大规模或者复杂问题时，<strong>回溯算法的运行效率可能难以接受</strong>。</p>
+<ul>
+<li><strong>时间</strong>：回溯算法通常需要遍历状态空间的所有可能，时间复杂度可以达到指数阶或阶乘阶。</li>
+<li><strong>空间</strong>：在递归调用中需要保存当前的状态（例如路径、用于剪枝的辅助变量等），当深度很大时，空间需求可能会变得很大。</li>
+</ul>
+<p>即便如此，<strong>回溯算法仍然是某些搜索问题和约束满足问题的最佳解决方案</strong>。对于这些问题，由于无法预测哪些选择可生成有效的解，因此我们必须对所有可能的选择进行遍历。在这种情况下，<strong>关键是如何优化效率</strong>，常见的效率优化方法有两种。</p>
+<ul>
+<li><strong>剪枝</strong>：避免搜索那些肯定不会产生解的路径，从而节省时间和空间。</li>
+<li><strong>启发式搜索</strong>：在搜索过程中引入一些策略或者估计值，从而优先搜索最有可能产生有效解的路径。</li>
+</ul>
+<h2 id="回溯典型例题">回溯典型例题<a hidden class="anchor" aria-hidden="true" href="#回溯典型例题">#</a></h2>
+<p>回溯算法可用于解决许多搜索问题、约束满足问题和组合优化问题。</p>
+<p><strong>搜索问题</strong>：这类问题的目标是找到满足特定条件的解决方案。</p>
+<ul>
+<li>全排列问题：给定一个集合，求出其所有可能的排列组合。</li>
+<li>子集和问题：给定一个集合和一个目标和，找到集合中所有和为目标和的子集。</li>
+<li>汉诺塔问题：给定三根柱子和一系列大小不同的圆盘，要求将所有圆盘从一根柱子移动到另一根柱子，每次只能移动一个圆盘，且不能将大圆盘放在小圆盘上。</li>
+</ul>
+<p><strong>约束满足问题</strong>：这类问题的目标是找到满足所有约束条件的解。</p>
+<ul>
+<li>𝑛 皇后：在 𝑛×𝑛 的棋盘上放置 𝑛 个皇后，使得它们互不攻击。</li>
+<li>数独：在 9×9 的网格中填入数字 1 ~ 9 ，使得每行、每列和每个 3×3 子网格中的数字不重复。</li>
+<li>图着色问题：给定一个无向图，用最少的颜色给图的每个顶点着色，使得相邻顶点颜色不同。</li>
+</ul>
+<p><strong>组合优化问题</strong>：这类问题的目标是在一个组合空间中找到满足某些条件的最优解。</p>
+<ul>
+<li>0-1 背包问题：给定一组物品和一个背包，每个物品有一定的价值和重量，要求在背包容量限制内，选择物品使得总价值最大。</li>
+<li>旅行商问题：在一个图中，从一个点出发，访问所有其他点恰好一次后返回起点，求最短路径。</li>
+<li>最大团问题：给定一个无向图，找到最大的完全子图，即子图中的任意两个顶点之间都有边相连。</li>
+</ul>
+<p>请注意，对于许多组合优化问题，回溯不是最优解决方案。</p>
+<ul>
+<li>0-1 背包问题通常使用动态规划解决，以达到更高的时间效率。</li>
+<li>旅行商是一个著名的 NP-Hard 问题，常用解法有遗传算法和蚁群算法等。</li>
+<li>最大团问题是图论中的一个经典问题，可用贪心算法等启发式算法来解决。</li>
+</ul>
+<h1 id="全排列问题">全排列问题<a hidden class="anchor" aria-hidden="true" href="#全排列问题">#</a></h1>
+<p>全排列问题是回溯算法的一个典型应用。它的定义是在给定一个集合（如一个数组或字符串）的情况下，找出其中元素的所有可能的排列。</p>
+<p>表 13-2 列举了几个示例数据，包括输入数组和对应的所有排列。</p>
+<p>表 13-2  全排列示例</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">输入数组</th>
+<th style="text-align:left">所有排列</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">[1]</td>
+<td style="text-align:left">[1]</td>
+</tr>
+<tr>
+<td style="text-align:left">[1,2]</td>
+<td style="text-align:left">[1,2],[2,1]</td>
+</tr>
+<tr>
+<td style="text-align:left">[1,2,3]</td>
+<td style="text-align:left">[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="无相等元素的情况">无相等元素的情况<a hidden class="anchor" aria-hidden="true" href="#无相等元素的情况">#</a></h2>
+<blockquote>
+<p>问题：输入一个整数数组，其中不包含重复元素，返回所有可能的排列。</p>
+</blockquote>
+<p>从回溯算法的角度看，<strong>我们可以把生成排列的过程想象成一系列选择的结果</strong>。假设输入数组为 [1,2,3] ，如果我们先选择 1 ，再选择 3 ，最后选择 2 ，则获得排列 [1,3,2] 。回退表示撤销一个选择，之后继续尝试其他选择。</p>
+<p>从回溯代码的角度看，候选集合 <code>choices</code> 是输入数组中的所有元素，状态 <code>state</code> 是直至目前已被选择的元素。请注意，每个元素只允许被选择一次，<strong>因此 <code>state</code> 中的所有元素都应该是唯一的</strong>。</p>
+<p>如图 13-5 所示，我们可以将搜索过程展开成一棵递归树，树中的每个节点代表当前状态 <code>state</code> 。从根节点开始，经过三轮选择后到达叶节点，每个叶节点都对应一个排列。</p>
+<p><img loading="lazy" src="permutations_i.png" alt=""  />
+</p>
+<h3 id="重复选择剪枝">重复选择剪枝<a hidden class="anchor" aria-hidden="true" href="#重复选择剪枝">#</a></h3>
+<p>为了实现每个元素只被选择一次，我们考虑引入一个布尔型数组 <code>selected</code> ，其中 <code>selected[i]</code> 表示 <code>choices[i]</code> 是否已被选择，并基于它实现以下剪枝操作。</p>
+<ul>
+<li>在做出选择 <code>choice[i]</code> 后，我们就将 <code>selected[i]</code> 赋值为 True ，代表它已被选择。</li>
+<li>遍历选择列表 <code>choices</code> 时，跳过所有已被选择的节点，即剪枝。</li>
+</ul>
+<p>如图 13-6 所示，假设我们第一轮选择 1 ，第二轮选择 3 ，第三轮选择 2 ，则需要在第二轮剪掉元素 1 的分支，在第三轮剪掉元素 1 和元素 3 的分支。</p>
+<p><img loading="lazy" src="permutations_i_pruning.png" alt="图 13-6  全排列剪枝示例"  />
+</p>
+<p>观察图 13-6 发现，该剪枝操作将搜索空间大小从 𝑂(𝑛𝑛) 减小至 𝑂(𝑛!) 。</p>
+<h3 id="代码实现">代码实现<a hidden class="anchor" aria-hidden="true" href="#代码实现">#</a></h3>
+<p>想清楚以上信息之后，我们就可以在框架代码中做“完形填空”了。为了缩短整体代码，我们不单独实现框架代码中的各个函数，而是将它们展开在 <code>backtrack()</code> 函数中：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法：全排列 I */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(List&lt;Integer&gt; state, <span style="color:#fff;font-weight:bold">int</span>[] choices, <span style="color:#fff;font-weight:bold">boolean</span>[] selected, List&lt;List&lt;Integer&gt;&gt; res) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 当状态长度等于元素数量时，记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (state.<span style="color:#007f7f">size</span>() == choices.<span style="color:#007f7f">length</span>) {
+</span></span><span style="display:flex;"><span>        res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;Integer&gt;(state));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; choices.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> choice = choices[i];
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝：不允许重复选择元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (!selected[i]) {
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 尝试：做出选择，更新状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            selected[i] = <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>            state.<span style="color:#007f7f">add</span>(choice);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 进行下一轮选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            backtrack(state, choices, selected, res);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 回退：撤销选择，恢复到之前的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            selected[i] = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>            state.<span style="color:#007f7f">remove</span>(state.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 全排列 I */</span>
+</span></span><span style="display:flex;"><span>List&lt;List&lt;Integer&gt;&gt; permutationsI(<span style="color:#fff;font-weight:bold">int</span>[] nums) {
+</span></span><span style="display:flex;"><span>    List&lt;List&lt;Integer&gt;&gt; res = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();
+</span></span><span style="display:flex;"><span>    backtrack(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;Integer&gt;(), nums, <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">boolean</span>[nums.<span style="color:#007f7f">length</span>], res);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="考虑相等元素的情况">考虑相等元素的情况<a hidden class="anchor" aria-hidden="true" href="#考虑相等元素的情况">#</a></h2>
+<blockquote>
+<p>Question：输入一个整数数组，<strong>数组中可能包含重复元素</strong>，返回所有不重复的排列。</p>
+</blockquote>
+<p>假设输入数组为 [1,1,2] 。为了方便区分两个重复元素 1 ，我们将第二个 1 记为 1^ 。</p>
+<p>如图 13-7 所示，上述方法生成的排列有一半是重复的。</p>
+<p><img loading="lazy" src="permutations_ii.png" alt=""  />
+</p>
+<p>那么如何去除重复的排列呢？最直接地，考虑借助一个哈希集合，直接对排列结果进行去重。然而这样做不够优雅，<strong>因为生成重复排列的搜索分支没有必要，应当提前识别并剪枝</strong>，这样可以进一步提升算法效率。</p>
+<h3 id="相等元素剪枝">相等元素剪枝<a hidden class="anchor" aria-hidden="true" href="#相等元素剪枝">#</a></h3>
+<p>观察图 13-8 ，在第一轮中，选择 1 或选择 1^ 是等价的，在这两个选择之下生成的所有排列都是重复的。因此应该把 1^ 剪枝。</p>
+<p>同理，在第一轮选择 2 之后，第二轮选择中的 1 和 1^ 也会产生重复分支，因此也应将第二轮的 1^ 剪枝。</p>
+<p>从本质上看，<strong>我们的目标是在某一轮选择中，保证多个相等的元素仅被选择一次</strong>。</p>
+<p><img loading="lazy" src="permutations_ii_pruning.png" alt=""  />
+</p>
+<h3 id="代码实现-1">代码实现<a hidden class="anchor" aria-hidden="true" href="#代码实现-1">#</a></h3>
+<p>在上一题的代码的基础上，我们考虑在每一轮选择中开启一个哈希集合 <code>duplicated</code> ，用于记录该轮中已经尝试过的元素，并将重复元素剪枝：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法：全排列 II */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(List&lt;Integer&gt; state, <span style="color:#fff;font-weight:bold">int</span>[] choices, <span style="color:#fff;font-weight:bold">boolean</span>[] selected, List&lt;List&lt;Integer&gt;&gt; res) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 当状态长度等于元素数量时，记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (state.<span style="color:#007f7f">size</span>() == choices.<span style="color:#007f7f">length</span>) {
+</span></span><span style="display:flex;"><span>        res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;Integer&gt;(state));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    Set&lt;Integer&gt; duplicated = <span style="color:#fff;font-weight:bold">new</span> HashSet&lt;Integer&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; choices.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> choice = choices[i];
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝：不允许重复选择元素 且 不允许重复选择相等元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (!selected[i] &amp;&amp; !duplicated.<span style="color:#007f7f">contains</span>(choice)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 尝试：做出选择，更新状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            duplicated.<span style="color:#007f7f">add</span>(choice); <span style="color:#007f7f">// 记录选择过的元素值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            selected[i] = <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>            state.<span style="color:#007f7f">add</span>(choice);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 进行下一轮选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            backtrack(state, choices, selected, res);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 回退：撤销选择，恢复到之前的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            selected[i] = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>            state.<span style="color:#007f7f">remove</span>(state.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 全排列 II */</span>
+</span></span><span style="display:flex;"><span>List&lt;List&lt;Integer&gt;&gt; permutationsII(<span style="color:#fff;font-weight:bold">int</span>[] nums) {
+</span></span><span style="display:flex;"><span>    List&lt;List&lt;Integer&gt;&gt; res = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;List&lt;Integer&gt;&gt;();
+</span></span><span style="display:flex;"><span>    backtrack(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;Integer&gt;(), nums, <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">boolean</span>[nums.<span style="color:#007f7f">length</span>], res);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>假设元素两两之间互不相同，则 𝑛 个元素共有 𝑛! 种排列（阶乘）；在记录结果时，需要复制长度为 𝑛 的列表，使用 𝑂(𝑛) 时间。<strong>因此时间复杂度为 𝑂(𝑛!𝑛)</strong> 。</p>
+<p>最大递归深度为 𝑛 ，使用 𝑂(𝑛) 栈帧空间。<code>selected</code> 使用 𝑂(𝑛) 空间。同一时刻最多共有 𝑛 个 <code>duplicated</code> ，使用 $𝑂(𝑛^2)$ 空间。<strong>因此空间复杂度为 $𝑂(𝑛^2)$</strong> 。</p>
+<h3 id="两种剪枝对比">两种剪枝对比<a hidden class="anchor" aria-hidden="true" href="#两种剪枝对比">#</a></h3>
+<p>请注意，虽然 <code>selected</code> 和 <code>duplicated</code> 都用于剪枝，但两者的目标不同。</p>
+<ul>
+<li><strong>重复选择剪枝</strong>：整个搜索过程中只有一个 <code>selected</code> 。它记录的是当前状态中包含哪些元素，其作用是避免某个元素在 <code>state</code> 中重复出现。</li>
+<li><strong>相等元素剪枝</strong>：每轮选择（每个调用的 <code>backtrack</code> 函数）都包含一个 <code>duplicated</code> 。它记录的是在本轮遍历（<code>for</code> 循环）中哪些元素已被选择过，其作用是保证相等元素只被选择一次。</li>
+</ul>
+<p>图 13-9 展示了两个剪枝条件的生效范围。注意，树中的每个节点代表一个选择，从根节点到叶节点的路径上的各个节点构成一个排列。</p>
+<p><img loading="lazy" src="permutations_ii_pruning_summary.png" alt=""  />
+</p>
+<h1 id="子集和的问题">子集和的问题<a hidden class="anchor" aria-hidden="true" href="#子集和的问题">#</a></h1>
+<h2 id="无重复元素的情况">无重复元素的情况<a hidden class="anchor" aria-hidden="true" href="#无重复元素的情况">#</a></h2>
+<blockquote>
+<p>问题：给定一个正整数数组 <code>nums</code> 和一个目标正整数 <code>target</code> ，请找出所有可能的组合，使得组合中的元素和等于 <code>target</code> 。给定数组无重复元素，每个元素可以被选取多次。请以列表形式返回这些组合，列表中不应包含重复组合。</p>
+</blockquote>
+<p>例如，输入集合 {3,4,5} 和目标整数 9 ，解为 {3,3,3},{4,5} 。需要注意以下两点。</p>
+<ul>
+<li>输入集合中的元素可以被无限次重复选取。</li>
+<li>子集不区分元素顺序，比如 {4,5} 和 {5,4} 是同一个子集。</li>
+</ul>
+<h3 id="参考全排列解法httpswwwhello-algocomchapter_backtrackingsubset_sum_problem1">参考全排列解法<a href="https://www.hello-algo.com/chapter_backtracking/subset_sum_problem/#1">¶</a><a hidden class="anchor" aria-hidden="true" href="#参考全排列解法httpswwwhello-algocomchapter_backtrackingsubset_sum_problem1">#</a></h3>
+<p>类似于全排列问题，我们可以把子集的生成过程想象成一系列选择的结果，并在选择过程中实时更新“元素和”，当元素和等于 <code>target</code> 时，就将子集记录至结果列表。</p>
+<p>而与全排列问题不同的是，<strong>本题集合中的元素可以被无限次选取</strong>，因此无须借助 <code>selected</code> 布尔列表来记录元素是否已被选择。我们可以对全排列代码进行小幅修改，初步得到解题代码：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法：子集和 I */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(List&lt;Integer&gt; state, <span style="color:#fff;font-weight:bold">int</span> target, <span style="color:#fff;font-weight:bold">int</span> total, <span style="color:#fff;font-weight:bold">int</span>[] choices, List&lt;List&lt;Integer&gt;&gt; res) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 子集和等于 target 时，记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (total == target) {
+</span></span><span style="display:flex;"><span>        res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(state));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; choices.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝：若子集和超过 target ，则跳过该选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (total + choices[i] &gt; target) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">continue</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 尝试：做出选择，更新元素和 total
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        state.<span style="color:#007f7f">add</span>(choices[i]);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 进行下一轮选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        backtrack(state, target, total + choices[i], choices, res);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 回退：撤销选择，恢复到之前的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        state.<span style="color:#007f7f">remove</span>(state.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 求解子集和 I（包含重复子集） */</span>
+</span></span><span style="display:flex;"><span>List&lt;List&lt;Integer&gt;&gt; subsetSumINaive(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    List&lt;Integer&gt; state = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(); <span style="color:#007f7f">// 状态（子集）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> total = <span style="color:#ff0;font-weight:bold">0</span>; <span style="color:#007f7f">// 子集和
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    List&lt;List&lt;Integer&gt;&gt; res = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(); <span style="color:#007f7f">// 结果列表（子集列表）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    backtrack(state, target, total, nums, res);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>向以上代码输入数组 [3,4,5] 和目标元素 9 ，输出结果为 [3,3,3],[4,5],[5,4] 。<strong>虽然成功找出了所有和为 9 的子集，但其中存在重复的子集 [4,5] 和 [5,4]</strong> 。</p>
+<p>这是因为搜索过程是区分选择顺序的，然而子集不区分选择顺序。如图 13-10 所示，先选 4 后选 5 与先选 5 后选 4 是不同的分支，但对应同一个子集。</p>
+<p><img loading="lazy" src="subset_sum_i_naive.png" alt=""  />
+</p>
+<p>为了去除重复子集，<strong>一种直接的思路是对结果列表进行去重</strong>。但这个方法效率很低，有两方面原因。</p>
+<ul>
+<li>当数组元素较多，尤其是当 <code>target</code> 较大时，搜索过程会产生大量的重复子集。</li>
+<li>比较子集（数组）的异同非常耗时，需要先排序数组，再比较数组中每个元素的异同。</li>
+</ul>
+<h3 id="重复子集剪枝">重复子集剪枝<a hidden class="anchor" aria-hidden="true" href="#重复子集剪枝">#</a></h3>
+<p><strong>我们考虑在搜索过程中通过剪枝进行去重</strong>。观察图 13-11 ，重复子集是在以不同顺序选择数组元素时产生的，例如以下情况。</p>
+<ol>
+<li>当第一轮和第二轮分别选择 3 和 4 时，会生成包含这两个元素的所有子集，记为 [3,4,…] 。</li>
+<li>之后，当第一轮选择 4 时，<strong>则第二轮应该跳过 3</strong> ，因为该选择产生的子集 [4,3,…] 和第 <code>1.</code> 步中生成的子集完全重复。</li>
+</ol>
+<p>在搜索过程中，每一层的选择都是从左到右被逐个尝试的，因此越靠右的分支被剪掉的越多。</p>
+<ol>
+<li>前两轮选择 3 和 5 ，生成子集 [3,5,…] 。</li>
+<li>前两轮选择 4 和 5 ，生成子集 [4,5,…] 。</li>
+<li>若第一轮选择 5 ，<strong>则第二轮应该跳过 3 和 4</strong> ，因为子集 [5,3,…] 和 [5,4,…] 与第 <code>1.</code> 步和第 <code>2.</code> 步中描述的子集完全重复。</li>
+</ol>
+<p><img loading="lazy" src="subset_sum_i_pruning.png" alt=""  />
+</p>
+<p>总结来看，给定输入数组 $[x_1, x_2, \dots, x_n]$ ，设搜索过程中的选择序列为 $[x_{i_1}, x_{i_2}, \dots, x_{i_m}]$ ，则该选择序列需要满足 $i_1 \leq i_2 \leq \dots \leq i_m$ ，<strong>不满足该条件的选择序列都会造成重复，应当剪枝</strong>。</p>
+<h3 id="代码实现-2">代码实现<a hidden class="anchor" aria-hidden="true" href="#代码实现-2">#</a></h3>
+<p>为实现该剪枝，我们初始化变量 <code>start</code> ，用于指示遍历起始点。<strong>当做出选择 $x_{i}$ 后，设定下一轮从索引 $i$ 开始遍历</strong>。这样做就可以让选择序列满足 $i_1 \leq i_2 \leq \dots \leq i_m$ ，从而保证子集唯一。</p>
+<p>除此之外，我们还对代码进行了以下两项优化。</p>
+<ul>
+<li>在开启搜索前，先将数组 <code>nums</code> 排序。在遍历所有选择时，<strong>当子集和超过 <code>target</code> 时直接结束循环</strong>，因为后边的元素更大，其子集和一定超过 <code>target</code> 。</li>
+<li>省去元素和变量 <code>total</code> ，<strong>通过在 <code>target</code> 上执行减法来统计元素和</strong>，当 <code>target</code> 等于 $0$ 时记录解。</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法：子集和 I */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(List&lt;Integer&gt; state, <span style="color:#fff;font-weight:bold">int</span> target, <span style="color:#fff;font-weight:bold">int</span>[] choices, <span style="color:#fff;font-weight:bold">int</span> start, List&lt;List&lt;Integer&gt;&gt; res) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 子集和等于 target 时，记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (target == <span style="color:#ff0;font-weight:bold">0</span>) {
+</span></span><span style="display:flex;"><span>        res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(state));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// 剪枝二：从 start 开始遍历，避免生成重复子集
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = start; i &lt; choices.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝一：若子集和超过 target ，则直接结束循环
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#007f7f">// 这是因为数组已排序，后边元素更大，子集和一定超过 target
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (target - choices[i] &lt; <span style="color:#ff0;font-weight:bold">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 尝试：做出选择，更新 target, start
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        state.<span style="color:#007f7f">add</span>(choices[i]);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 进行下一轮选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        backtrack(state, target - choices[i], choices, i, res);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 回退：撤销选择，恢复到之前的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        state.<span style="color:#007f7f">remove</span>(state.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 求解子集和 I */</span>
+</span></span><span style="display:flex;"><span>List&lt;List&lt;Integer&gt;&gt; subsetSumI(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    List&lt;Integer&gt; state = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(); <span style="color:#007f7f">// 状态（子集）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    Arrays.<span style="color:#007f7f">sort</span>(nums); <span style="color:#007f7f">// 对 nums 进行排序
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> start = <span style="color:#ff0;font-weight:bold">0</span>; <span style="color:#007f7f">// 遍历起始点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    List&lt;List&lt;Integer&gt;&gt; res = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(); <span style="color:#007f7f">// 结果列表（子集列表）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    backtrack(state, target, nums, start, res);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>图 13-12 所示为将数组 [3,4,5] 和目标元素 9 输入以上代码后的整体回溯过程。</p>
+<p><img loading="lazy" src="subset_sum_i.png" alt="图 13-12  子集和 I 回溯过程"  />
+</p>
+<h2 id="考虑重复元素的情况">考虑重复元素的情况<a hidden class="anchor" aria-hidden="true" href="#考虑重复元素的情况">#</a></h2>
+<blockquote>
+<p>问题：给定一个正整数数组 <code>nums</code> 和一个目标正整数 <code>target</code> ，请找出所有可能的组合，使得组合中的元素和等于 <code>target</code> 。<strong>给定数组可能包含重复元素，每个元素只可被选择一次</strong>。请以列表形式返回这些组合，列表中不应包含重复组合。</p>
+</blockquote>
+<p>相比于上题，<strong>本题的输入数组可能包含重复元素</strong>，这引入了新的问题。例如，给定数组 $[4,\hat 4^,5]$ 和目标元素 9 ，则现有代码的输出结果为 $[4,5],[\hat 4^,5]$ ，出现了重复子集。</p>
+<p><strong>造成这种重复的原因是相等元素在某轮中被多次选择</strong>。在图 13-13 中，第一轮共有三个选择，其中两个都为 4 ，会产生两个重复的搜索分支，从而输出重复子集；同理，第二轮的两个 4 也会产生重复子集。</p>
+<p><img loading="lazy" src="subset_sum_ii_repeat.png" alt=""  />
+</p>
+<h3 id="相等元素剪枝-1">相等元素剪枝<a hidden class="anchor" aria-hidden="true" href="#相等元素剪枝-1">#</a></h3>
+<p>为解决此问题，<strong>我们需要限制相等元素在每一轮中只能被选择一次</strong>。实现方式比较巧妙：由于数组是已排序的，因此相等元素都是相邻的。这意味着在某轮选择中，若当前元素与其左边元素相等，则说明它已经被选择过，因此直接跳过当前元素。</p>
+<p>与此同时，<strong>本题规定每个数组元素只能被选择一次</strong>。幸运的是，我们也可以利用变量 <code>start</code> 来满足该约束：当做出选择 𝑥𝑖 后，设定下一轮从索引 𝑖+1 开始向后遍历。这样既能去除重复子集，也能避免重复选择元素。</p>
+<h3 id="代码实现-3">代码实现<a hidden class="anchor" aria-hidden="true" href="#代码实现-3">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法：子集和 II */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(List&lt;Integer&gt; state, <span style="color:#fff;font-weight:bold">int</span> target, <span style="color:#fff;font-weight:bold">int</span>[] choices, <span style="color:#fff;font-weight:bold">int</span> start, List&lt;List&lt;Integer&gt;&gt; res) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 子集和等于 target 时，记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (target == <span style="color:#ff0;font-weight:bold">0</span>) {
+</span></span><span style="display:flex;"><span>        res.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(state));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// 剪枝二：从 start 开始遍历，避免生成重复子集
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#007f7f">// 剪枝三：从 start 开始遍历，避免重复选择同一元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = start; i &lt; choices.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝一：若子集和超过 target ，则直接结束循环
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#007f7f">// 这是因为数组已排序，后边元素更大，子集和一定超过 target
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (target - choices[i] &lt; <span style="color:#ff0;font-weight:bold">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝四：如果该元素与左边元素相等，说明该搜索分支重复，直接跳过
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (i &gt; start &amp;&amp; choices[i] == choices[i - <span style="color:#ff0;font-weight:bold">1</span>]) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">continue</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 尝试：做出选择，更新 target, start
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        state.<span style="color:#007f7f">add</span>(choices[i]);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 进行下一轮选择
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        backtrack(state, target - choices[i], choices, i + <span style="color:#ff0;font-weight:bold">1</span>, res);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 回退：撤销选择，恢复到之前的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        state.<span style="color:#007f7f">remove</span>(state.<span style="color:#007f7f">size</span>() - <span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 求解子集和 II */</span>
+</span></span><span style="display:flex;"><span>List&lt;List&lt;Integer&gt;&gt; subsetSumII(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    List&lt;Integer&gt; state = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(); <span style="color:#007f7f">// 状态（子集）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    Arrays.<span style="color:#007f7f">sort</span>(nums); <span style="color:#007f7f">// 对 nums 进行排序
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> start = <span style="color:#ff0;font-weight:bold">0</span>; <span style="color:#007f7f">// 遍历起始点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    List&lt;List&lt;Integer&gt;&gt; res = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(); <span style="color:#007f7f">// 结果列表（子集列表）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    backtrack(state, target, nums, start, res);
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>图 13-14 展示了数组 [4,4,5] 和目标元素 9 的回溯过程，共包含四种剪枝操作。请你将图示与代码注释相结合，理解整个搜索过程，以及每种剪枝操作是如何工作的。</p>
+<p><img loading="lazy" src="subset_sum_ii.png" alt=""  />
+</p>
+<h1 id="n-皇后问题">n 皇后问题<a hidden class="anchor" aria-hidden="true" href="#n-皇后问题">#</a></h1>
+<blockquote>
+<p>问题：根据国际象棋的规则，皇后可以攻击与同处一行、一列或一条斜线上的棋子。给定 𝑛 个皇后和一个 𝑛×𝑛 大小的棋盘，寻找使得所有皇后之间无法相互攻击的摆放方案。</p>
+</blockquote>
+<p>如图 13-15 所示，当 𝑛=4 时，共可以找到两个解。从回溯算法的角度看，𝑛×𝑛 大小的棋盘共有 𝑛2 个格子，给出了所有的选择 <code>choices</code> 。在逐个放置皇后的过程中，棋盘状态在不断地变化，每个时刻的棋盘就是状态 <code>state</code> 。</p>
+<p><img loading="lazy" src="solution_4_queens.png" alt=""  />
+</p>
+<p>图 13-16 展示了本题的三个约束条件：<strong>多个皇后不能在同一行、同一列、同一条对角线上</strong>。值得注意的是，对角线分为主对角线 <code>\</code> 和次对角线 <code>/</code> 两种。</p>
+<p><img loading="lazy" src="n_queens_constraints.png" alt="图 13-16  n 皇后问题的约束条件"  />
+</p>
+<h2 id="逐行放置策略">逐行放置策略<a hidden class="anchor" aria-hidden="true" href="#逐行放置策略">#</a></h2>
+<p>皇后的数量和棋盘的行数都为 𝑛 ，因此我们容易得到一个推论：<strong>棋盘每行都允许且只允许放置一个皇后</strong>。</p>
+<p>也就是说，我们可以采取逐行放置策略：从第一行开始，在每行放置一个皇后，直至最后一行结束。</p>
+<p>图 13-17 所示为 4 皇后问题的逐行放置过程。受画幅限制，图 13-17 仅展开了第一行的其中一个搜索分支，并且将不满足列约束和对角线约束的方案都进行了剪枝。</p>
+<p><img loading="lazy" src="n_queens_placing.png" alt=""  />
+</p>
+<p>从本质上看，<strong>逐行放置策略起到了剪枝的作用</strong>，它避免了同一行出现多个皇后的所有搜索分支。</p>
+<h2 id="列与对角线剪枝">列与对角线剪枝<a hidden class="anchor" aria-hidden="true" href="#列与对角线剪枝">#</a></h2>
+<p>为了满足列约束，我们可以利用一个长度为 𝑛 的布尔型数组 <code>cols</code> 记录每一列是否有皇后。在每次决定放置前，我们通过 <code>cols</code> 将已有皇后的列进行剪枝，并在回溯中动态更新 <code>cols</code> 的状态。</p>
+<p>那么，如何处理对角线约束呢？设棋盘中某个格子的行列索引为 (𝑟𝑜𝑤,𝑐𝑜𝑙) ，选定矩阵中的某条主对角线，我们发现该对角线上所有格子的行索引减列索引都相等，<strong>即对角线上所有格子的 𝑟𝑜𝑤−𝑐𝑜𝑙 为恒定值</strong>。</p>
+<p>也就是说，如果两个格子满足 𝑟𝑜𝑤1−𝑐𝑜𝑙1=𝑟𝑜𝑤2−𝑐𝑜𝑙2 ，则它们一定处在同一条主对角线上。利用该规律，我们可以借助图 13-18 所示的数组 <code>diags1</code> 记录每条主对角线上是否有皇后。</p>
+<p>同理，<strong>次对角线上的所有格子的 𝑟𝑜𝑤+𝑐𝑜𝑙 是恒定值</strong>。我们同样也可以借助数组 <code>diags2</code> 来处理次对角线约束。</p>
+<p><img loading="lazy" src="n_queens_cols_diagonals.png" alt=""  />
+</p>
+<h2 id="代码实现-4">代码实现<a hidden class="anchor" aria-hidden="true" href="#代码实现-4">#</a></h2>
+<p>请注意，𝑛 维方阵中 𝑟𝑜𝑤−𝑐𝑜𝑙 的范围是 [−𝑛+1,𝑛−1] ，𝑟𝑜𝑤+𝑐𝑜𝑙 的范围是 [0,2𝑛−2] ，所以主对角线和次对角线的数量都为 2𝑛−1 ，即数组 <code>diags1</code> 和 <code>diags2</code> 的长度都为 2𝑛−1 。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 回溯算法：n 皇后 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> backtrack(<span style="color:#fff;font-weight:bold">int</span> row, <span style="color:#fff;font-weight:bold">int</span> n, List&lt;List&lt;String&gt;&gt; state, List&lt;List&lt;List&lt;String&gt;&gt;&gt; res,
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">boolean</span>[] cols, <span style="color:#fff;font-weight:bold">boolean</span>[] diags1, <span style="color:#fff;font-weight:bold">boolean</span>[] diags2) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 当放置完所有行时，记录解
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">if</span> (row == n) {
+</span></span><span style="display:flex;"><span>        List&lt;List&lt;String&gt;&gt; copyState = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (List&lt;String&gt; sRow : state) {
+</span></span><span style="display:flex;"><span>            copyState.<span style="color:#007f7f">add</span>(<span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(sRow));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        res.<span style="color:#007f7f">add</span>(copyState);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 遍历所有列
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> col = <span style="color:#ff0;font-weight:bold">0</span>; col &lt; n; col++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 计算该格子对应的主对角线和次对角线
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">int</span> diag1 = row - col + n - <span style="color:#ff0;font-weight:bold">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> diag2 = row + col;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 剪枝：不允许该格子所在列、主对角线、次对角线上存在皇后
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (!cols[col] &amp;&amp; !diags1[diag1] &amp;&amp; !diags2[diag2]) {
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 尝试：将皇后放置在该格子
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            state.<span style="color:#007f7f">get</span>(row).<span style="color:#007f7f">set</span>(col, <span style="color:#0ff;font-weight:bold">&#34;Q&#34;</span>);
+</span></span><span style="display:flex;"><span>            cols[col] = diags1[diag1] = diags2[diag2] = <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 放置下一行
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            backtrack(row + <span style="color:#ff0;font-weight:bold">1</span>, n, state, res, cols, diags1, diags2);
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">// 回退：将该格子恢复为空位
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>            state.<span style="color:#007f7f">get</span>(row).<span style="color:#007f7f">set</span>(col, <span style="color:#0ff;font-weight:bold">&#34;#&#34;</span>);
+</span></span><span style="display:flex;"><span>            cols[col] = diags1[diag1] = diags2[diag2] = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 求解 n 皇后 */</span>
+</span></span><span style="display:flex;"><span>List&lt;List&lt;List&lt;String&gt;&gt;&gt; nQueens(<span style="color:#fff;font-weight:bold">int</span> n) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 初始化 n*n 大小的棋盘，其中 &#39;Q&#39; 代表皇后，&#39;#&#39; 代表空位
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    List&lt;List&lt;String&gt;&gt; state = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; n; i++) {
+</span></span><span style="display:flex;"><span>        List&lt;String&gt; row = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> j = <span style="color:#ff0;font-weight:bold">0</span>; j &lt; n; j++) {
+</span></span><span style="display:flex;"><span>            row.<span style="color:#007f7f">add</span>(<span style="color:#0ff;font-weight:bold">&#34;#&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        state.<span style="color:#007f7f">add</span>(row);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">boolean</span>[] cols = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">boolean</span>[n]; <span style="color:#007f7f">// 记录列是否有皇后
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">boolean</span>[] diags1 = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">boolean</span>[<span style="color:#ff0;font-weight:bold">2</span> * n - <span style="color:#ff0;font-weight:bold">1</span>]; <span style="color:#007f7f">// 记录主对角线上是否有皇后
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">boolean</span>[] diags2 = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">boolean</span>[<span style="color:#ff0;font-weight:bold">2</span> * n - <span style="color:#ff0;font-weight:bold">1</span>]; <span style="color:#007f7f">// 记录次对角线上是否有皇后
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    List&lt;List&lt;List&lt;String&gt;&gt;&gt; res = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    backtrack(<span style="color:#ff0;font-weight:bold">0</span>, n, state, res, cols, diags1, diags2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>逐行放置 𝑛 次，考虑列约束，则从第一行到最后一行分别有 𝑛、𝑛−1、…、2、1 个选择，使用 𝑂(𝑛!) 时间。当记录解时，需要复制矩阵 <code>state</code> 并添加进 <code>res</code> ，复制操作使用 $𝑂(𝑛^2)$ 时间。因此，<strong>总体时间复杂度为 $𝑂(𝑛!⋅𝑛^2)$</strong> 。实际上，根据对角线约束的剪枝也能够大幅缩小搜索空间，因而搜索效率往往优于以上时间复杂度。</p>
+<p>数组 <code>state</code> 使用 $𝑂(𝑛^2)$ 空间，数组 <code>cols</code>、<code>diags1</code> 和 <code>diags2</code> 皆使用 𝑂(𝑛) 空间。最大递归深度为 𝑛 ，使用 𝑂(𝑛) 栈帧空间。因此，<strong>空间复杂度为 $𝑂(𝑛^2)$</strong> 。</p>
+<h1 id="小结">小结<a hidden class="anchor" aria-hidden="true" href="#小结">#</a></h1>
+<h2 id="重点回顾">重点回顾<a hidden class="anchor" aria-hidden="true" href="#重点回顾">#</a></h2>
+<ul>
+<li>回溯算法本质是穷举法，通过对解空间进行深度优先遍历来寻找符合条件的解。在搜索过程中，遇到满足条件的解则记录，直至找到所有解或遍历完成后结束。</li>
+<li>回溯算法的搜索过程包括尝试与回退两个部分。它通过深度优先搜索来尝试各种选择，当遇到不满足约束条件的情况时，则撤销上一步的选择，退回到之前的状态，并继续尝试其他选择。尝试与回退是两个方向相反的操作。</li>
+<li>回溯问题通常包含多个约束条件，它们可用于实现剪枝操作。剪枝可以提前结束不必要的搜索分支，大幅提升搜索效率。</li>
+<li>回溯算法主要可用于解决搜索问题和约束满足问题。组合优化问题虽然可以用回溯算法解决，但往往存在效率更高或效果更好的解法。</li>
+<li>全排列问题旨在搜索给定集合元素的所有可能的排列。我们借助一个数组来记录每个元素是否被选择，剪掉重复选择同一元素的搜索分支，确保每个元素只被选择一次。</li>
+<li>在全排列问题中，如果集合中存在重复元素，则最终结果会出现重复排列。我们需要约束相等元素在每轮中只能被选择一次，这通常借助一个哈希集合来实现。</li>
+<li>子集和问题的目标是在给定集合中找到和为目标值的所有子集。集合不区分元素顺序，而搜索过程会输出所有顺序的结果，产生重复子集。我们在回溯前将数据进行排序，并设置一个变量来指示每一轮的遍历起始点，从而将生成重复子集的搜索分支进行剪枝。</li>
+<li>对于子集和问题，数组中的相等元素会产生重复集合。我们利用数组已排序的前置条件，通过判断相邻元素是否相等实现剪枝，从而确保相等元素在每轮中只能被选中一次。</li>
+<li>𝑛 皇后问题旨在寻找将 𝑛 个皇后放置到 𝑛×𝑛 尺寸棋盘上的方案，要求所有皇后两两之间无法攻击对方。该问题的约束条件有行约束、列约束、主对角线和次对角线约束。为满足行约束，我们采用按行放置的策略，保证每一行放置一个皇后。</li>
+<li>列约束和对角线约束的处理方式类似。对于列约束，我们利用一个数组来记录每一列是否有皇后，从而指示选中的格子是否合法。对于对角线约束，我们借助两个数组来分别记录该主、次对角线上是否存在皇后；难点在于找处在到同一主（副）对角线上格子满足的行列索引规律。</li>
+</ul>
+<h2 id="q--a">Q &amp; A<a hidden class="anchor" aria-hidden="true" href="#q--a">#</a></h2>
+<p><strong>Q</strong>：怎么理解回溯和递归的关系？</p>
+<p>总的来看，回溯是一种“算法策略”，而递归更像是一个“工具”。</p>
+<ul>
+<li>回溯算法通常基于递归实现。然而，回溯是递归的应用场景之一，是递归在搜索问题中的应用。</li>
+<li>递归的结构体现了“子问题分解”的解题范式，常用于解决分治、回溯、动态规划（记忆化递归）等问题。</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

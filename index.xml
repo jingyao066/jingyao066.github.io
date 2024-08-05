@@ -9,101 +9,101 @@
     <lastBuildDate>Thu, 06 Jun 2024 11:32:06 +0000</lastBuildDate>
     <atom:link href="https://funny-toffee-4aa7c3.netlify.app/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>14、贪心</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/14%E8%B4%AA%E5%BF%83/</link>
+      <title>14_贪心</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/14_%E8%B4%AA%E5%BF%83/</link>
       <pubDate>Thu, 06 Jun 2024 11:32:06 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/14%E8%B4%AA%E5%BF%83/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/14_%E8%B4%AA%E5%BF%83/</guid>
       <description>贪心算法 贪心算法（greedy algorithm）是一种常见的解决优化问题的算法，其基本思想是在问题的每个决策阶段，都选择当前看起来最优的选</description>
     </item>
     <item>
-      <title>13、动态规划</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/13%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+      <title>13_动态规划</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
       <pubDate>Thu, 06 Jun 2024 10:27:26 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/13%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
       <description>初探动态规划 动态规划（dynamic programming）是一个重要的算法范式，它将一个问题分解为一系列更小的子问题，并通过存储子问题的解</description>
     </item>
     <item>
-      <title>12、回溯</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12%E5%9B%9E%E6%BA%AF/</link>
+      <title>12_回溯</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/</link>
       <pubDate>Thu, 06 Jun 2024 09:10:32 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12%E5%9B%9E%E6%BA%AF/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/</guid>
       <description>回溯算法 回溯算法（backtracking algorithm）是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有</description>
     </item>
     <item>
-      <title>11、分治</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/11%E5%88%86%E6%B2%BB/</link>
+      <title>11_分治</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/11_%E5%88%86%E6%B2%BB/</link>
       <pubDate>Wed, 05 Jun 2024 11:42:32 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/11%E5%88%86%E6%B2%BB/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/11_%E5%88%86%E6%B2%BB/</guid>
       <description>分治算法 分治（divide and conquer），全称分而治之，是一种非常重要且常见的算法策略。分治通常基于递归实现，包括“分”和“治”两个步骤</description>
     </item>
     <item>
-      <title>10、排序</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/10%E6%8E%92%E5%BA%8F/</link>
+      <title>10_排序</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/</link>
       <pubDate>Tue, 04 Jun 2024 16:27:02 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/10%E6%8E%92%E5%BA%8F/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/</guid>
       <description>排序算法 排序算法（sorting algorithm）用于对一组数据按照特定顺序进行排列。排序算法有着广泛的应用，因为有序数据通常能够被更高效</description>
     </item>
     <item>
-      <title>9、搜索</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9%E6%90%9C%E7%B4%A2/</link>
+      <title>9_搜索</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/</link>
       <pubDate>Tue, 04 Jun 2024 15:12:51 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9%E6%90%9C%E7%B4%A2/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/</guid>
       <description>二分查找 二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜</description>
     </item>
     <item>
-      <title>8、图</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/8%E5%9B%BE/</link>
+      <title>8_图</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/8_%E5%9B%BE/</link>
       <pubDate>Tue, 04 Jun 2024 10:40:20 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/8%E5%9B%BE/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/8_%E5%9B%BE/</guid>
       <description>图 图（graph）是一种非线性数据结构，由顶点（vertex）和边（edge）组成。我们可以将图 𝐺 抽象地表示为一组顶点 𝑉 和一组边 𝐸 的集合。以</description>
     </item>
     <item>
-      <title>6、树</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/6%E6%A0%91/</link>
+      <title>6_树</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/</link>
       <pubDate>Sat, 01 Jun 2024 10:27:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/6%E6%A0%91/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/</guid>
       <description>二叉树 二叉树（binary tree）是一种非线性数据结构，代表“祖先”与“后代”之间的派生关系，体现了“一分为二”的分治逻辑。与链表类似，二</description>
     </item>
     <item>
-      <title>7、堆</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/7%E5%A0%86/</link>
+      <title>7_堆</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/</link>
       <pubDate>Sat, 01 Jun 2024 10:27:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/7%E5%A0%86/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/</guid>
       <description>堆 堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。 小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。 大顶堆</description>
     </item>
     <item>
-      <title>5、哈希表</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/5%E5%93%88%E5%B8%8C%E8%A1%A8/</link>
+      <title>5_哈希表</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/5_%E5%93%88%E5%B8%8C%E8%A1%A8/</link>
       <pubDate>Fri, 31 May 2024 11:27:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/5%E5%93%88%E5%B8%8C%E8%A1%A8/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/5_%E5%93%88%E5%B8%8C%E8%A1%A8/</guid>
       <description>在计算机世界中，哈希表如同一位聪慧的图书管理员。 他知道如何计算索书号，从而可以快速找到目标图书。 哈希表 哈希表（hash table），又称散列</description>
     </item>
     <item>
-      <title>4、栈与队列</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/4%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</link>
+      <title>4_栈与队列</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/4_%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</link>
       <pubDate>Fri, 31 May 2024 10:27:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/4%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/4_%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</guid>
       <description>栈 栈（stack）是一种遵循先入后出逻辑的线性数据结构。 我们可以将栈类比为桌面上的一摞盘子，如果想取出底部的盘子，则需要先将上面的盘子依次移</description>
     </item>
     <item>
-      <title>3、数组与链表</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</link>
+      <title>3_数组与链表</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3_%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</link>
       <pubDate>Fri, 31 May 2024 09:27:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3_%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/</guid>
       <description>数据结构的世界如同一堵厚实的砖墙。 数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。 数组 数组（array）是</description>
     </item>
     <item>
-      <title>2、数据结构</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/2%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <title>2_数据结构</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/2_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
       <pubDate>Fri, 31 May 2024 08:27:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/2%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/2_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
       <description>常见的数据结构包括数组、链表、栈、队列、哈希表、树、堆、图，它们可以从“逻辑结构”和“物理结构”两个维度进行分类。 数据结构分类 逻辑结构：线性</description>
     </item>
     <item>
-      <title>1、初识算法</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/1%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/</link>
+      <title>1_初识算法</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/1_%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/</link>
       <pubDate>Tue, 30 Apr 2024 12:03:30 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/1%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/1_%E5%88%9D%E8%AF%86%E7%AE%97%E6%B3%95/</guid>
       <description>初识算法 算法无处不在 当我们听到“算法”这个词时，很自然地会想到数学。然而实际上，许多算法并不涉及复杂数学，而是更多地依赖基本逻辑，这些逻辑在</description>
     </item>
     <item>
