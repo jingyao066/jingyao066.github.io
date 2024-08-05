@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>3、数组与链表 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="算法">
+<meta name="description" content="数据结构的世界如同一堵厚实的砖墙。 数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。 数组 数组（array）是">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="3、数组与链表" />
+<meta property="og:description" content="数据结构的世界如同一堵厚实的砖墙。 数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。 数组 数组（array）是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-05-31T09:27:12+00:00" />
+<meta property="article:modified_time" content="2024-05-31T09:27:12+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="3、数组与链表"/>
+<meta name="twitter:description" content="数据结构的世界如同一堵厚实的砖墙。 数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。 数组 数组（array）是"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "3、数组与链表",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "3、数组与链表",
+  "name": "3、数组与链表",
+  "description": "数据结构的世界如同一堵厚实的砖墙。 数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。 数组 数组（array）是",
+  "keywords": [
+    "算法"
+  ],
+  "articleBody": "数据结构的世界如同一堵厚实的砖墙。\n数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。\n数组 数组（array）是一种线性数据结构，其将相同类型的元素存储在连续的内存空间中。我们将元素在数组中的位置称为该元素的索引（index）。图 4-1 展示了数组的主要概念和存储方式。\n数组常用操作 初始化数组 我们可以根据需求选用数组的两种初始化方式：无初始值、给定初始值。在未指定初始值的情况下，大多数编程语言会将数组元素初始化为 0 ：\n1 2 3 /* 初始化数组 */ int[] arr = new int[5]; // { 0, 0, 0, 0, 0 } int[] nums = { 1, 3, 2, 5, 4 }; 访问元素 数组元素被存储在连续的内存空间中，这意味着计算数组元素的内存地址非常容易。给定数组内存地址（首元素内存地址）和某个元素的索引，我们可以使用图 4-2 所示的公式计算得到该元素的内存地址，从而直接访问该元素。\n观察图 4-2 ，我们发现数组首个元素的索引为 0 ，这似乎有些反直觉，因为从 1 开始计数会更自然。但从地址计算公式的角度看，索引本质上是内存地址的偏移量。首个元素的地址偏移量是 0 ，因此它的索引为 0 是合理的。\n在数组中访问元素非常高效，我们可以在 𝑂(1) 时间内随机访问数组中的任意一个元素。\n1 2 3 4 5 6 7 8 /* 随机访问元素 */ int randomAccess(int[] nums) { // 在区间 [0, nums.length) 中随机抽取一个数字 int randomIndex = ThreadLocalRandom.current().nextInt(0, nums.length); // 获取并返回随机元素 int randomNum = nums[randomIndex]; return randomNum; } 插入元素 数组元素在内存中是“紧挨着的”，它们之间没有空间再存放任何数据。如图 4-3 所示，如果想在数组中间插入一个元素，则需要将该元素之后的所有元素都向后移动一位，之后再把元素赋值给该索引。\n值得注意的是，由于数组的长度是固定的，因此插入一个元素必定会导致数组尾部元素“丢失”。我们将这个问题的解决方案留在“列表”章节中讨论。\n1 2 3 4 5 6 7 8 9 /* 在数组的索引 index 处插入元素 num */ void insert(int[] nums, int num, int index) { // 把索引 index 以及之后的所有元素向后移动一位 for (int i = nums.length - 1; i \u003e index; i--) { nums[i] = nums[i - 1]; } // 将 num 赋给 index 处的元素 nums[index] = num; } 删除元素 同理，如图 4-4 所示，若想删除索引 𝑖 处的元素，则需要把索引 𝑖 之后的元素都向前移动一位。\n请注意，删除元素完成后，原先末尾的元素变得“无意义”了，所以我们无须特意去修改它。\n总的来看，数组的插入与删除操作有以下缺点。\n时间复杂度高：数组的插入和删除的平均时间复杂度均为 𝑂(𝑛) ，其中 𝑛 为数组长度。 丢失元素：由于数组的长度不可变，因此在插入元素后，超出数组长度范围的元素会丢失。 内存浪费：我们可以初始化一个比较长的数组，只用前面一部分，这样在插入数据时，丢失的末尾元素都是“无意义”的，但这样做会造成部分内存空间浪费。 遍历数组 在大多数编程语言中，我们既可以通过索引遍历数组，也可以直接遍历获取数组中的每个元素：\n1 2 3 4 5 6 7 8 9 10 11 12 /* 遍历数组 */ void traverse(int[] nums) { int count = 0; // 通过索引遍历数组 for (int i = 0; i \u003c nums.length; i++) { count += nums[i]; } // 直接遍历数组元素 for (int num : nums) { count += num; } } 查找元素 在数组中查找指定元素需要遍历数组，每轮判断元素值是否匹配，若匹配则输出对应索引。\n因为数组是线性数据结构，所以上述查找操作被称为“线性查找”。\n1 2 3 4 5 6 7 8 /* 在数组中查找指定元素 */ int find(int[] nums, int target) { for (int i = 0; i \u003c nums.length; i++) { if (nums[i] == target) return i; } return -1; } 扩容数组 在复杂的系统环境中，程序难以保证数组之后的内存空间是可用的，从而无法安全地扩展数组容量。因此在大多数编程语言中，数组的长度是不可变的。\n如果我们希望扩容数组，则需重新建立一个更大的数组，然后把原数组元素依次复制到新数组。这是一个 𝑂(𝑛) 的操作，在数组很大的情况下非常耗时。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 /* 扩展数组长度 */ int[] extend(int[] nums, int enlarge) { // 初始化一个扩展长度后的数组 int[] res = new int[nums.length + enlarge]; // 将原数组中的所有元素复制到新数组 for (int i = 0; i \u003c nums.length; i++) { res[i] = nums[i]; } // 返回扩展后的新数组 return res; } 数组的优点与局限性 数组存储在连续的内存空间内，且元素类型相同。这种做法包含丰富的先验信息，系统可以利用这些信息来优化数据结构的操作效率。\n空间效率高：数组为数据分配了连续的内存块，无须额外的结构开销。 支持随机访问：数组允许在 𝑂(1) 时间内访问任何元素。 缓存局部性：当访问数组元素时，计算机不仅会加载它，还会缓存其周围的其他数据，从而借助高速缓存来提升后续操作的执行速度。 连续空间存储是一把双刃剑，其存在以下局限性。\n插入与删除效率低：当数组中元素较多时，插入与删除操作需要移动大量的元素。 长度不可变：数组在初始化后长度就固定了，扩容数组需要将所有数据复制到新数组，开销很大。 空间浪费：如果数组分配的大小超过实际所需，那么多余的空间就被浪费了。 数组典型应用 数组是一种基础且常见的数据结构，既频繁应用在各类算法之中，也可用于实现各种复杂数据结构。\n随机访问：如果我们想随机抽取一些样本，那么可以用数组存储，并生成一个随机序列，根据索引实现随机抽样。 排序和搜索：数组是排序和搜索算法最常用的数据结构。快速排序、归并排序、二分查找等都主要在数组上进行。 查找表：当需要快速查找一个元素或其对应关系时，可以使用数组作为查找表。假如我们想实现字符到 ASCII 码的映射，则可以将字符的 ASCII 码值作为索引，对应的元素存放在数组中的对应位置。 机器学习：神经网络中大量使用了向量、矩阵、张量之间的线性代数运算，这些数据都是以数组的形式构建的。数组是神经网络编程中最常使用的数据结构。 数据结构实现：数组可以用于实现栈、队列、哈希表、堆、图等数据结构。例如，图的邻接矩阵表示实际上是一个二维数组。 链表 内存空间是所有程序的公共资源，在一个复杂的系统运行环境下，空闲的内存空间可能散落在内存各处。我们知道，存储数组的内存空间必须是连续的，而当数组非常大时，内存可能无法提供如此大的连续空间。此时链表的灵活性优势就体现出来了。\n链表（linked list）是一种线性数据结构，其中的每个元素都是一个节点对象，各个节点通过“引用”相连接。引用记录了下一个节点的内存地址，通过它可以从当前节点访问到下一个节点。\n链表的设计使得各个节点可以分散存储在内存各处，它们的内存地址无须连续。\n观察图 4-5 ，链表的组成单位是节点（node）对象。每个节点都包含两项数据：节点的“值”和指向下一节点的“引用”。\n链表的首个节点被称为“头节点”，最后一个节点被称为“尾节点”。 尾节点指向的是“空”，它在 Java、C++ 和 Python 中分别被记为 null、nullptr 和 None 。 在 C、C++、Go 和 Rust 等支持指针的语言中，上述“引用”应被替换为“指针”。 如以下代码所示，链表节点 ListNode 除了包含值，还需额外保存一个引用（指针）。因此在相同数据量下，链表比数组占用更多的内存空间。\n1 2 3 4 5 6 /* 链表节点类 */ class ListNode { int val; // 节点值 ListNode next; // 指向下一节点的引用 ListNode(int x) { val = x; } // 构造函数 } 链表常用操作 初始化链表 建立链表分为两步，第一步是初始化各个节点对象，第二步是构建节点之间的引用关系。初始化完成后，我们就可以从链表的头节点出发，通过引用指向 next 依次访问所有节点。\n1 2 3 4 5 6 7 8 9 10 11 12 /* 初始化链表 1 -\u003e 3 -\u003e 2 -\u003e 5 -\u003e 4 */ // 初始化各个节点 ListNode n0 = new ListNode(1); ListNode n1 = new ListNode(3); ListNode n2 = new ListNode(2); ListNode n3 = new ListNode(5); ListNode n4 = new ListNode(4); // 构建节点之间的引用 n0.next = n1; n1.next = n2; n2.next = n3; n3.next = n4; 数组整体是一个变量，比如数组 nums 包含元素 nums[0] 和 nums[1] 等，而链表是由多个独立的节点对象组成的。我们通常将头节点当作链表的代称，比如以上代码中的链表可记作链表 n0 。\n插入节点 在链表中插入节点非常容易。如图 4-6 所示，假设我们想在相邻的两个节点 n0 和 n1 之间插入一个新节点 P ，则只需改变两个节点引用（指针）即可，时间复杂度为 𝑂(1) 。\n相比之下，在数组中插入元素的时间复杂度为 𝑂(𝑛) ，在大数据量下的效率较低。\n1 2 3 4 5 6 /* 在链表的节点 n0 之后插入节点 P */ void insert(ListNode n0, ListNode P) { ListNode n1 = n0.next; P.next = n1; n0.next = P; } 删除节点 如图 4-7 所示，在链表中删除节点也非常方便，只需改变一个节点的引用（指针）即可。\n请注意，尽管在删除操作完成后节点 P 仍然指向 n1 ，但实际上遍历此链表已经无法访问到 P ，这意味着 P 已经不再属于该链表了。\n1 2 3 4 5 6 7 8 9 /* 删除链表的节点 n0 之后的首个节点 */ void remove(ListNode n0) { if (n0.next == null) return; // n0 -\u003e P -\u003e n1 ListNode P = n0.next; ListNode n1 = P.next; n0.next = n1; } 访问节点 在链表中访问节点的效率较低。如上一节所述，我们可以在 𝑂(1) 时间下访问数组中的任意元素。链表则不然，程序需要从头节点出发，逐个向后遍历，直至找到目标节点。也就是说，访问链表的第 𝑖 个节点需要循环 𝑖−1 轮，时间复杂度为 𝑂(𝑛) 。\n1 2 3 4 5 6 7 8 9 /* 访问链表中索引为 index 的节点 */ ListNode access(ListNode head, int index) { for (int i = 0; i \u003c index; i++) { if (head == null) return null; head = head.next; } return head; } 查找节点 遍历链表，查找其中值为 target 的节点，输出该节点在链表中的索引。此过程也属于线性查找。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 /* 在链表中查找值为 target 的首个节点 */ int find(ListNode head, int target) { int index = 0; while (head != null) { if (head.val == target) return index; head = head.next; index++; } return -1; } 数组 vs 链表 下表总结了数组和链表的各项特点并对比了操作效率。由于它们采用两种相反的存储策略，因此各种性质和操作效率也呈现对立的特点。\n表 4-1 数组与链表的效率对比\n数组 链表 存储方式 连续内存空间 分散内存空间 容量扩展 长度不可变 可灵活扩展 内存效率 元素占用内存少、但可能浪费空间 元素占用内存多 访问元素 𝑂(1) 𝑂(𝑛) 添加元素 𝑂(𝑛) 𝑂(1) 删除元素 𝑂(𝑛) 𝑂(1) 常见的链表类型 如图 4-8 所示，常见的链表类型包括三种。\n单向链表：即前面介绍的普通链表。单向链表的节点包含值和指向下一节点的引用两项数据。我们将首个节点称为头节点，将最后一个节点称为尾节点，尾节点指向空 None 。 环形链表：如果我们令单向链表的尾节点指向头节点（首尾相接），则得到一个环形链表。在环形链表中，任意节点都可以视作头节点。 双向链表：与单向链表相比，双向链表记录了两个方向的引用。双向链表的节点定义同时包含指向后继节点（下一个节点）和前驱节点（上一个节点）的引用（指针）。相较于单向链表，双向链表更具灵活性，可以朝两个方向遍历链表，但相应地也需要占用更多的内存空间。 1 2 3 4 5 6 7 /* 双向链表节点类 */ class ListNode { int val; // 节点值 ListNode next; // 指向后继节点的引用 ListNode prev; // 指向前驱节点的引用 ListNode(int x) { val = x; } // 构造函数 } 链表典型应用 单向链表通常用于实现栈、队列、哈希表和图等数据结构。\n栈与队列：当插入和删除操作都在链表的一端进行时，它表现的特性为先进后出，对应栈；当插入操作在链表的一端进行，删除操作在链表的另一端进行，它表现的特性为先进先出，对应队列。 哈希表：链式地址是解决哈希冲突的主流方案之一，在该方案中，所有冲突的元素都会被放到一个链表中。 图：邻接表是表示图的一种常用方式，其中图的每个顶点都与一个链表相关联，链表中的每个元素都代表与该顶点相连的其他顶点。 双向链表常用于需要快速查找前一个和后一个元素的场景。\n高级数据结构：比如在红黑树、B 树中，我们需要访问节点的父节点，这可以通过在节点中保存一个指向父节点的引用来实现，类似于双向链表。 浏览器历史：在网页浏览器中，当用户点击前进或后退按钮时，浏览器需要知道用户访问过的前一个和后一个网页。双向链表的特性使得这种操作变得简单。 LRU 算法：在缓存淘汰（LRU）算法中，我们需要快速找到最近最少使用的数据，以及支持快速添加和删除节点。这时候使用双向链表就非常合适。 环形链表常用于需要周期性操作的场景，比如操作系统的资源调度。\n时间片轮转调度算法：在操作系统中，时间片轮转调度算法是一种常见的 CPU 调度算法，它需要对一组进程进行循环。每个进程被赋予一个时间片，当时间片用完时，CPU 将切换到下一个进程。这种循环操作可以通过环形链表来实现。 数据缓冲区：在某些数据缓冲区的实现中，也可能会使用环形链表。比如在音频、视频播放器中，数据流可能会被分成多个缓冲块并放入一个环形链表，以便实现无缝播放。 列表 列表（list）是一个抽象的数据结构概念，它表示元素的有序集合，支持元素访问、修改、添加、删除和遍历等操作，无须使用者考虑容量限制的问题。列表可以基于链表或数组实现。\n链表天然可以看作一个列表，其支持元素增删查改操作，并且可以灵活动态扩容。 数组也支持元素增删查改，但由于其长度不可变，因此只能看作一个具有长度限制的列表。 当使用数组实现列表时，长度不可变的性质会导致列表的实用性降低。这是因为我们通常无法事先确定需要存储多少数据，从而难以选择合适的列表长度。若长度过小，则很可能无法满足使用需求；若长度过大，则会造成内存空间浪费。\n为解决此问题，我们可以使用动态数组（dynamic array）来实现列表。它继承了数组的各项优点，并且可以在程序运行过程中进行动态扩容。\n实际上，许多编程语言中的标准库提供的列表是基于动态数组实现的，例如 Python 中的 list 、Java 中的 ArrayList 、C++ 中的 vector 和 C# 中的 List 等。在接下来的讨论中，我们将把“列表”和“动态数组”视为等同的概念。\n列表常用操作 初始化列表 我们通常使用“无初始值”和“有初始值”这两种初始化方法：\n1 2 3 4 5 6 /* 初始化列表 */ // 无初始值 List nums1 = new ArrayList\u003c\u003e(); // 有初始值（注意数组的元素类型需为 int[] 的包装类 Integer[]） Integer[] numbers = new Integer[] { 1, 3, 2, 5, 4 }; List nums = new ArrayList\u003c\u003e(Arrays.asList(numbers)); 访问元素 1 2 3 4 5 /* 访问元素 */ int num = nums.get(1); // 访问索引 1 处的元素 /* 更新元素 */ nums.set(1, 0); // 将索引 1 处的元素更新为 0 插入与删除元素 相较于数组，列表可以自由地添加与删除元素。在列表尾部添加元素的时间复杂度为 𝑂(1) ，但插入和删除元素的效率仍与数组相同，时间复杂度为 𝑂(𝑛) 。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 /* 清空列表 */ nums.clear(); /* 在尾部添加元素 */ nums.add(1); nums.add(3); nums.add(2); nums.add(5); nums.add(4); /* 在中间插入元素 */ nums.add(3, 6); // 在索引 3 处插入数字 6 /* 删除元素 */ nums.remove(3); // 删除索引 3 处的元素 遍历列表 与数组一样，列表可以根据索引遍历，也可以直接遍历各元素。\n1 2 3 4 5 6 7 8 9 10 /* 通过索引遍历列表 */ int count = 0; for (int i = 0; i \u003c nums.size(); i++) { count += nums.get(i); } /* 直接遍历列表元素 */ for (int num : nums) { count += num; } 拼接列表 给定一个新列表 nums1 ，我们可以将其拼接到原列表的尾部。\n1 2 3 /* 拼接两个列表 */ List nums1 = new ArrayList\u003c\u003e(Arrays.asList(new Integer[] { 6, 8, 7, 10, 9 })); nums.addAll(nums1); // 将列表 nums1 拼接到 nums 之后 排序列表 1 2 /* 排序列表 */ Collections.sort(nums); // 排序后，列表元素从小到大排列 列表实现 许多编程语言内置了列表，例如 Java、C++、Python 等。它们的实现比较复杂，各个参数的设定也非常考究，例如初始容量、扩容倍数等。感兴趣的读者可以查阅源码进行学习。\n为了加深对列表工作原理的理解，我们尝试实现一个简易版列表，包括以下三个重点设计。\n初始容量：选取一个合理的数组初始容量。在本示例中，我们选择 10 作为初始容量。 数量记录：声明一个变量 size ，用于记录列表当前元素数量，并随着元素插入和删除实时更新。根据此变量，我们可以定位列表尾部，以及判断是否需要扩容。 扩容机制：若插入元素时列表容量已满，则需要进行扩容。先根据扩容倍数创建一个更大的数组，再将当前数组的所有元素依次移动至新数组。在本示例中，我们规定每次将数组扩容至之前的 2 倍。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 /* 列表类 */ class MyList { private int[] arr; // 数组（存储列表元素） private int capacity = 10; // 列表容量 private int size = 0; // 列表长度（当前元素数量） private int extendRatio = 2; // 每次列表扩容的倍数 /* 构造方法 */ public MyList() { arr = new int[capacity]; } /* 获取列表长度（当前元素数量） */ public int size() { return size; } /* 获取列表容量 */ public int capacity() { return capacity; } /* 访问元素 */ public int get(int index) { // 索引如果越界，则抛出异常，下同 if (index \u003c 0 || index \u003e= size) throw new IndexOutOfBoundsException(\"索引越界\"); return arr[index]; } /* 更新元素 */ public void set(int index, int num) { if (index \u003c 0 || index \u003e= size) throw new IndexOutOfBoundsException(\"索引越界\"); arr[index] = num; } /* 在尾部添加元素 */ public void add(int num) { // 元素数量超出容量时，触发扩容机制 if (size == capacity()) extendCapacity(); arr[size] = num; // 更新元素数量 size++; } /* 在中间插入元素 */ public void insert(int index, int num) { if (index \u003c 0 || index \u003e= size) throw new IndexOutOfBoundsException(\"索引越界\"); // 元素数量超出容量时，触发扩容机制 if (size == capacity()) extendCapacity(); // 将索引 index 以及之后的元素都向后移动一位 for (int j = size - 1; j \u003e= index; j--) { arr[j + 1] = arr[j]; } arr[index] = num; // 更新元素数量 size++; } /* 删除元素 */ public int remove(int index) { if (index \u003c 0 || index \u003e= size) throw new IndexOutOfBoundsException(\"索引越界\"); int num = arr[index]; // 将将索引 index 之后的元素都向前移动一位 for (int j = index; j \u003c size - 1; j++) { arr[j] = arr[j + 1]; } // 更新元素数量 size--; // 返回被删除的元素 return num; } /* 列表扩容 */ public void extendCapacity() { // 新建一个长度为原数组 extendRatio 倍的新数组，并将原数组复制到新数组 arr = Arrays.copyOf(arr, capacity() * extendRatio); // 更新列表容量 capacity = arr.length; } /* 将列表转换为数组 */ public int[] toArray() { int size = size(); // 仅转换有效长度范围内的列表元素 int[] arr = new int[size]; for (int i = 0; i \u003c size; i++) { arr[i] = get(i); } return arr; } } 内存与缓存 在本章的前两节中，我们探讨了数组和链表这两种基础且重要的数据结构，它们分别代表了“连续存储”和“分散存储”两种物理结构。\n实际上，物理结构在很大程度上决定了程序对内存和缓存的使用效率，进而影响算法程序的整体性能。\n计算机存储设备 计算机中包括三种类型的存储设备：硬盘（hard disk）、内存（random-access memory, RAM）、缓存（cache memory）。表 4-2 展示了它们在计算机系统中的不同角色和性能特点。\n表 4-2 计算机的存储设备\n硬盘 内存 缓存 用途 长期存储数据，包括操作系统、程序、文件等 临时存储当前运行的程序和正在处理的数据 存储经常访问的数据和指令，减少 CPU 访问内存的次数 易失性 断电后数据不会丢失 断电后数据会丢失 断电后数据会丢失 容量 较大，TB 级别 较小，GB 级别 非常小，MB 级别 速度 较慢，几百到几千 MB/s 较快，几十 GB/s 非常快，几十到几百 GB/s 价格 较便宜，几毛到几元 / GB 较贵，几十到几百元 / GB 非常贵，随 CPU 打包计价 我们可以将计算机存储系统想象为图 4-9 所示的金字塔结构。越靠近金字塔顶端的存储设备的速度越快、容量越小、成本越高。这种多层级的设计并非偶然，而是计算机科学家和工程师们经过深思熟虑的结果。\n我们可以将计算机存储系统想象为图 4-9 所示的金字塔结构。越靠近金字塔顶端的存储设备的速度越快、容量越小、成本越高。这种多层级的设计并非偶然，而是计算机科学家和工程师们经过深思熟虑的结果。\n硬盘难以被内存取代。首先，内存中的数据在断电后会丢失，因此它不适合长期存储数据；其次，内存的成本是硬盘的几十倍，这使得它难以在消费者市场普及。 缓存的大容量和高速度难以兼得。随着 L1、L2、L3 缓存的容量逐步增大，其物理尺寸会变大，与 CPU 核心之间的物理距离会变远，从而导致数据传输时间增加，元素访问延迟变高。在当前技术下，多层级的缓存结构是容量、速度和成本之间的最佳平衡点。 计算机的存储层次结构体现了速度、容量和成本三者之间的精妙平衡。实际上，这种权衡普遍存在于所有工业领域，它要求我们在不同的优势和限制之间找到最佳平衡点。\n总的来说，硬盘用于长期存储大量数据，内存用于临时存储程序运行中正在处理的数据，而缓存则用于存储经常访问的数据和指令，以提高程序运行效率。三者共同协作，确保计算机系统高效运行。\n如图 4-10 所示，在程序运行时，数据会从硬盘中被读取到内存中，供 CPU 计算使用。缓存可以看作 CPU 的一部分，它通过智能地从内存加载数据，给 CPU 提供高速的数据读取，从而显著提升程序的执行效率，减少对较慢的内存的依赖。\n数据结构的内存效率 在内存空间利用方面，数组和链表各自具有优势和局限性。\n一方面，内存是有限的，且同一块内存不能被多个程序共享，因此我们希望数据结构能够尽可能高效地利用空间。数组的元素紧密排列，不需要额外的空间来存储链表节点间的引用（指针），因此空间效率更高。然而，数组需要一次性分配足够的连续内存空间，这可能导致内存浪费，数组扩容也需要额外的时间和空间成本。相比之下，链表以“节点”为单位进行动态内存分配和回收，提供了更大的灵活性。\n另一方面，在程序运行时，随着反复申请与释放内存，空闲内存的碎片化程度会越来越高，从而导致内存的利用效率降低。数组由于其连续的存储方式，相对不容易导致内存碎片化。相反，链表的元素是分散存储的，在频繁的插入与删除操作中，更容易导致内存碎片化。\n数据结构的缓存效率 缓存虽然在空间容量上远小于内存，但它比内存快得多，在程序执行速度上起着至关重要的作用。由于缓存的容量有限，只能存储一小部分频繁访问的数据，因此当 CPU 尝试访问的数据不在缓存中时，就会发生缓存未命中（cache miss），此时 CPU 不得不从速度较慢的内存中加载所需数据。\n显然，“缓存未命中”越少，CPU 读写数据的效率就越高，程序性能也就越好。我们将 CPU 从缓存中成功获取数据的比例称为缓存命中率（cache hit rate），这个指标通常用来衡量缓存效率。\n为了尽可能达到更高的效率，缓存会采取以下数据加载机制。\n缓存行：缓存不是单个字节地存储与加载数据，而是以缓存行为单位。相比于单个字节的传输，缓存行的传输形式更加高效。 预取机制：处理器会尝试预测数据访问模式（例如顺序访问、固定步长跳跃访问等），并根据特定模式将数据加载至缓存之中，从而提升命中率。 空间局部性：如果一个数据被访问，那么它附近的数据可能近期也会被访问。因此，缓存在加载某一数据时，也会加载其附近的数据，以提高命中率。 时间局部性：如果一个数据被访问，那么它在不久的将来很可能再次被访问。缓存利用这一原理，通过保留最近访问过的数据来提高命中率。 实际上，数组和链表对缓存的利用效率是不同的，主要体现在以下几个方面。\n占用空间：链表元素比数组元素占用空间更多，导致缓存中容纳的有效数据量更少。 缓存行：链表数据分散在内存各处，而缓存是“按行加载”的，因此加载到无效数据的比例更高。 预取机制：数组比链表的数据访问模式更具“可预测性”，即系统更容易猜出即将被加载的数据。 空间局部性：数组被存储在集中的内存空间中，因此被加载数据附近的数据更有可能即将被访问。 总体而言，数组具有更高的缓存命中率，因此它在操作效率上通常优于链表。这使得在解决算法问题时，基于数组实现的数据结构往往更受欢迎。\n需要注意的是，高缓存效率并不意味着数组在所有情况下都优于链表。实际应用中选择哪种数据结构，应根据具体需求来决定。例如，数组和链表都可以实现“栈”数据结构（下一章会详细介绍），但它们适用于不同场景。\n在做算法题时，我们会倾向于选择基于数组实现的栈，因为它提供了更高的操作效率和随机访问的能力，代价仅是需要预先为数组分配一定的内存空间。 如果数据量非常大、动态性很高、栈的预期大小难以估计，那么基于链表实现的栈更加合适。链表能够将大量数据分散存储于内存的不同部分，并且避免了数组扩容产生的额外开销。 小节 重点回顾 数组和链表是两种基本的数据结构，分别代表数据在计算机内存中的两种存储方式：连续空间存储和分散空间存储。两者的特点呈现出互补的特性。 数组支持随机访问、占用内存较少；但插入和删除元素效率低，且初始化后长度不可变。 链表通过更改引用（指针）实现高效的节点插入与删除，且可以灵活调整长度；但节点访问效率低、占用内存较多。常见的链表类型包括单向链表、环形链表、双向链表。 列表是一种支持增删查改的元素有序集合，通常基于动态数组实现。它保留了数组的优势，同时可以灵活调整长度。 列表的出现大幅提高了数组的实用性，但可能导致部分内存空间浪费。 程序运行时，数据主要存储在内存中。数组可提供更高的内存空间效率，而链表则在内存使用上更加灵活。 缓存通过缓存行、预取机制以及空间局部性和时间局部性等数据加载机制，为 CPU 提供快速数据访问，显著提升程序的执行效率。 由于数组具有更高的缓存命中率，因此它通常比链表更高效。在选择数据结构时，应根据具体需求和场景做出恰当选择。 Q \u0026 A Q：数组存储在栈上和存储在堆上，对时间效率和空间效率是否有影响？\n存储在栈上和堆上的数组都被存储在连续内存空间内，数据操作效率基本一致。然而，栈和堆具有各自的特点，从而导致以下不同点。\n分配和释放效率：栈是一块较小的内存，分配由编译器自动完成；而堆内存相对更大，可以在代码中动态分配，更容易碎片化。因此，堆上的分配和释放操作通常比栈上的慢。 大小限制：栈内存相对较小，堆的大小一般受限于可用内存。因此堆更加适合存储大型数组。 灵活性：栈上的数组的大小需要在编译时确定，而堆上的数组的大小可以在运行时动态确定。 Q：为什么数组要求相同类型的元素，而在链表中却没有强调相同类型呢？\n链表由节点组成，节点之间通过引用（指针）连接，各个节点可以存储不同类型的数据，例如 int、double、string、object 等。\n相对地，数组元素则必须是相同类型的，这样才能通过计算偏移量来获取对应元素位置。例如，数组同时包含 int 和 long 两种类型，单个元素分别占用 4 字节 和 8 字节 ，此时就不能用以下公式计算偏移量了，因为数组中包含了两种“元素长度”。\n1 # 元素内存地址 = 数组内存地址（首元素内存地址） + 元素长度 * 元素索引 Q：删除节点 P 后，是否需要把 P.next 设为 None 呢？\n不修改 P.next 也可以。从该链表的角度看，从头节点遍历到尾节点已经不会遇到 P 了。这意味着节点 P 已经从链表中删除了，此时节点 P 指向哪里都不会对该链表产生影响。\n从数据结构与算法（做题）的角度看，不断开没有关系，只要保证程序的逻辑是正确的就行。从标准库的角度看，断开更加安全、逻辑更加清晰。如果不断开，假设被删除节点未被正常回收，那么它会影响后继节点的内存回收。\nQ：在链表中插入和删除操作的时间复杂度是 𝑂(1) 。但是增删之前都需要 𝑂(𝑛) 的时间查找元素，那为什么时间复杂度不是 𝑂(𝑛) 呢？\n如果是先查找元素、再删除元素，时间复杂度确实是 𝑂(𝑛) 。然而，链表的 𝑂(1) 增删的优势可以在其他应用上得到体现。例如，双向队列适合使用链表实现，我们维护一个指针变量始终指向头节点、尾节点，每次插入与删除操作都是 𝑂(1) 。\nQ：图“链表定义与存储方式”中，浅蓝色的存储节点指针是占用一块内存地址吗？还是和节点值各占一半呢？\n该示意图只是定性表示，定量表示需要根据具体情况进行分析。\n不同类型的节点值占用的空间是不同的，比如 int、long、double 和实例对象等。 指针变量占用的内存空间大小根据所使用的操作系统及编译环境而定，大多为 8 字节或 4 字节。 Q：在列表末尾添加元素是否时时刻刻都为 𝑂(1) ？\n如果添加元素时超出列表长度，则需要先扩容列表再添加。系统会申请一块新的内存，并将原列表的所有元素搬运过去，这时候时间复杂度就会是 𝑂(𝑛) 。\nQ：“列表的出现极大地提高了数组的实用性，但可能导致部分内存空间浪费”，这里的空间浪费是指额外增加的变量如容量、长度、扩容倍数所占的内存吗？\n这里的空间浪费主要有两方面含义：一方面，列表都会设定一个初始长度，我们不一定需要用这么多；另一方面，为了防止频繁扩容，扩容一般会乘以一个系数，比如 ×1.5 。这样一来，也会出现很多空位，我们通常不能完全填满它们。\nQ：在 Python 中初始化 n = [1, 2, 3] 后，这 3 个元素的地址是相连的，但是初始化 m = [2, 1, 3] 会发现它们每个元素的 id 并不是连续的，而是分别跟 n 中的相同。这些元素的地址不连续，那么 m 还是数组吗？\n假如把列表元素换成链表节点 n = [n1, n2, n3, n4, n5] ，通常情况下这 5 个节点对象也分散存储在内存各处。然而，给定一个列表索引，我们仍然可以在 𝑂(1) 时间内获取节点内存地址，从而访问到对应的节点。这是因为数组中存储的是节点的引用，而非节点本身。\n与许多语言不同，Python 中的数字也被包装为对象，列表中存储的不是数字本身，而是对数字的引用。因此，我们会发现两个数组中的相同数字拥有同一个 id ，并且这些数字的内存地址无须连续。\nQ：C++ STL 里面的 std::list 已经实现了双向链表，但好像一些算法书上不怎么直接使用它，是不是因为有什么局限性呢？\n一方面，我们往往更青睐使用数组实现算法，而只在必要时才使用链表，主要有两个原因。\n空间开销：由于每个元素需要两个额外的指针（一个用于前一个元素，一个用于后一个元素），所以 std::list 通常比 std::vector 更占用空间。 缓存不友好：由于数据不是连续存放的，因此 std::list 对缓存的利用率较低。一般情况下，std::vector 的性能会更好。 另一方面，必要使用链表的情况主要是二叉树和图。栈和队列往往会使用编程语言提供的 stack 和 queue ，而非链表。\nQ：初始化列表 res = [0] * self.size() 操作，会导致 res 的每个元素引用相同的地址吗？\n不会。但二维数组会有这个问题，例如初始化二维列表 res = [[0]] * self.size() ，则多次引用了同一个列表 [0] 。\n",
+  "wordCount" : "11435",
+  "inLanguage": "en",
+  "datePublished": "2024-05-31T09:27:12Z",
+  "dateModified": "2024-05-31T09:27:12Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/3%E6%95%B0%E7%BB%84%E4%B8%8E%E9%93%BE%E8%A1%A8/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      3、数组与链表
+    </h1>
+    <div class="post-meta"><span title='2024-05-31 09:27:12 +0000 UTC'>2024-05-31</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%95%b0%e7%bb%84" aria-label="数组">数组</a><ul>
+                        
+                <li>
+                    <a href="#%e6%95%b0%e7%bb%84%e5%b8%b8%e7%94%a8%e6%93%8d%e4%bd%9c" aria-label="数组常用操作">数组常用操作</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%95%b0%e7%bb%84" aria-label="初始化数组">初始化数组</a></li>
+                <li>
+                    <a href="#%e8%ae%bf%e9%97%ae%e5%85%83%e7%b4%a0" aria-label="访问元素">访问元素</a></li>
+                <li>
+                    <a href="#%e6%8f%92%e5%85%a5%e5%85%83%e7%b4%a0" aria-label="插入元素">插入元素</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e5%85%83%e7%b4%a0" aria-label="删除元素">删除元素</a></li>
+                <li>
+                    <a href="#%e9%81%8d%e5%8e%86%e6%95%b0%e7%bb%84" aria-label="遍历数组">遍历数组</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0" aria-label="查找元素">查找元素</a></li>
+                <li>
+                    <a href="#%e6%89%a9%e5%ae%b9%e6%95%b0%e7%bb%84" aria-label="扩容数组">扩容数组</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%95%b0%e7%bb%84%e7%9a%84%e4%bc%98%e7%82%b9%e4%b8%8e%e5%b1%80%e9%99%90%e6%80%a7" aria-label="数组的优点与局限性">数组的优点与局限性</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e7%bb%84%e5%85%b8%e5%9e%8b%e5%ba%94%e7%94%a8" aria-label="数组典型应用">数组典型应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%93%be%e8%a1%a8" aria-label="链表">链表</a><ul>
+                        
+                <li>
+                    <a href="#%e9%93%be%e8%a1%a8%e5%b8%b8%e7%94%a8%e6%93%8d%e4%bd%9c" aria-label="链表常用操作">链表常用操作</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e9%93%be%e8%a1%a8" aria-label="初始化链表">初始化链表</a></li>
+                <li>
+                    <a href="#%e6%8f%92%e5%85%a5%e8%8a%82%e7%82%b9" aria-label="插入节点">插入节点</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e8%8a%82%e7%82%b9" aria-label="删除节点">删除节点</a></li>
+                <li>
+                    <a href="#%e8%ae%bf%e9%97%ae%e8%8a%82%e7%82%b9" aria-label="访问节点">访问节点</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e6%89%be%e8%8a%82%e7%82%b9" aria-label="查找节点">查找节点</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%95%b0%e7%bb%84-vs-%e9%93%be%e8%a1%a8" aria-label="数组 vs 链表">数组 vs 链表</a></li>
+                <li>
+                    <a href="#%e5%b8%b8%e8%a7%81%e7%9a%84%e9%93%be%e8%a1%a8%e7%b1%bb%e5%9e%8b" aria-label="常见的链表类型">常见的链表类型</a></li>
+                <li>
+                    <a href="#%e9%93%be%e8%a1%a8%e5%85%b8%e5%9e%8b%e5%ba%94%e7%94%a8" aria-label="链表典型应用">链表典型应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%88%97%e8%a1%a8" aria-label="列表">列表</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%97%e8%a1%a8%e5%b8%b8%e7%94%a8%e6%93%8d%e4%bd%9c" aria-label="列表常用操作">列表常用操作</a><ul>
+                        
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e5%88%97%e8%a1%a8" aria-label="初始化列表">初始化列表</a></li>
+                <li>
+                    <a href="#%e8%ae%bf%e9%97%ae%e5%85%83%e7%b4%a0-1" aria-label="访问元素">访问元素</a></li>
+                <li>
+                    <a href="#%e6%8f%92%e5%85%a5%e4%b8%8e%e5%88%a0%e9%99%a4%e5%85%83%e7%b4%a0" aria-label="插入与删除元素">插入与删除元素</a></li>
+                <li>
+                    <a href="#%e9%81%8d%e5%8e%86%e5%88%97%e8%a1%a8" aria-label="遍历列表">遍历列表</a></li>
+                <li>
+                    <a href="#%e6%8b%bc%e6%8e%a5%e5%88%97%e8%a1%a8" aria-label="拼接列表">拼接列表</a></li>
+                <li>
+                    <a href="#%e6%8e%92%e5%ba%8f%e5%88%97%e8%a1%a8" aria-label="排序列表">排序列表</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%88%97%e8%a1%a8%e5%ae%9e%e7%8e%b0" aria-label="列表实现">列表实现</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%86%85%e5%ad%98%e4%b8%8e%e7%bc%93%e5%ad%98" aria-label="内存与缓存">内存与缓存</a><ul>
+                        
+                <li>
+                    <a href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e5%ad%98%e5%82%a8%e8%ae%be%e5%a4%87" aria-label="计算机存储设备">计算机存储设备</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e7%9a%84%e5%86%85%e5%ad%98%e6%95%88%e7%8e%87" aria-label="数据结构的内存效率">数据结构的内存效率</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e7%9a%84%e7%bc%93%e5%ad%98%e6%95%88%e7%8e%87" aria-label="数据结构的缓存效率">数据结构的缓存效率</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b0%8f%e8%8a%82" aria-label="小节">小节</a><ul>
+                        
+                <li>
+                    <a href="#%e9%87%8d%e7%82%b9%e5%9b%9e%e9%a1%be" aria-label="重点回顾">重点回顾</a></li>
+                <li>
+                    <a href="#q--a" aria-label="Q &amp; A">Q &amp; A</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>数据结构的世界如同一堵厚实的砖墙。</p>
+<p>数组的砖块整齐排列，逐个紧贴。链表的砖块分散各处，连接的藤蔓自由地穿梭于砖缝之间。</p>
+<h1 id="数组">数组<a hidden class="anchor" aria-hidden="true" href="#数组">#</a></h1>
+<p>数组（array）是一种线性数据结构，其将相同类型的元素存储在连续的内存空间中。我们将元素在数组中的位置称为该元素的索引（index）。图 4-1 展示了数组的主要概念和存储方式。</p>
+<p><img loading="lazy" src="array_definition.png" alt=""  />
+</p>
+<h2 id="数组常用操作">数组常用操作<a hidden class="anchor" aria-hidden="true" href="#数组常用操作">#</a></h2>
+<h3 id="初始化数组">初始化数组<a hidden class="anchor" aria-hidden="true" href="#初始化数组">#</a></h3>
+<p>我们可以根据需求选用数组的两种初始化方式：无初始值、给定初始值。在未指定初始值的情况下，大多数编程语言会将数组元素初始化为 0 ：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 初始化数组 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span>[] arr = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[<span style="color:#ff0;font-weight:bold">5</span>]; <span style="color:#007f7f">// { 0, 0, 0, 0, 0 }
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">int</span>[] nums = { <span style="color:#ff0;font-weight:bold">1</span>, <span style="color:#ff0;font-weight:bold">3</span>, <span style="color:#ff0;font-weight:bold">2</span>, <span style="color:#ff0;font-weight:bold">5</span>, <span style="color:#ff0;font-weight:bold">4</span> };
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="访问元素">访问元素<a hidden class="anchor" aria-hidden="true" href="#访问元素">#</a></h3>
+<p>数组元素被存储在连续的内存空间中，这意味着计算数组元素的内存地址非常容易。给定数组内存地址（首元素内存地址）和某个元素的索引，我们可以使用图 4-2 所示的公式计算得到该元素的内存地址，从而直接访问该元素。</p>
+<p><img loading="lazy" src="array_memory_location_calculation.png" alt=""  />
+</p>
+<p>观察图 4-2 ，我们发现数组首个元素的索引为 0 ，这似乎有些反直觉，因为从 1 开始计数会更自然。但从地址计算公式的角度看，<strong>索引本质上是内存地址的偏移量</strong>。首个元素的地址偏移量是 0 ，因此它的索引为 0 是合理的。</p>
+<p>在数组中访问元素非常高效，我们可以在 𝑂(1) 时间内随机访问数组中的任意一个元素。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 随机访问元素 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> randomAccess(<span style="color:#fff;font-weight:bold">int</span>[] nums) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 在区间 [0, nums.length) 中随机抽取一个数字
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> randomIndex = ThreadLocalRandom.<span style="color:#007f7f">current</span>().<span style="color:#007f7f">nextInt</span>(<span style="color:#ff0;font-weight:bold">0</span>, nums.<span style="color:#007f7f">length</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 获取并返回随机元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span> randomNum = nums[randomIndex];
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> randomNum;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="插入元素">插入元素<a hidden class="anchor" aria-hidden="true" href="#插入元素">#</a></h3>
+<p>数组元素在内存中是“紧挨着的”，它们之间没有空间再存放任何数据。如图 4-3 所示，如果想在数组中间插入一个元素，则需要将该元素之后的所有元素都向后移动一位，之后再把元素赋值给该索引。</p>
+<p><img loading="lazy" src="array_insert_element.png" alt=""  />
+</p>
+<p>值得注意的是，由于数组的长度是固定的，因此插入一个元素必定会导致数组尾部元素“丢失”。我们将这个问题的解决方案留在“列表”章节中讨论。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 在数组的索引 index 处插入元素 num */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> insert(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> num, <span style="color:#fff;font-weight:bold">int</span> index) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 把索引 index 以及之后的所有元素向后移动一位
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = nums.<span style="color:#007f7f">length</span> - <span style="color:#ff0;font-weight:bold">1</span>; i &gt; index; i--) {
+</span></span><span style="display:flex;"><span>        nums[i] = nums[i - <span style="color:#ff0;font-weight:bold">1</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 将 num 赋给 index 处的元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    nums[index] = num;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="删除元素">删除元素<a hidden class="anchor" aria-hidden="true" href="#删除元素">#</a></h3>
+<p>同理，如图 4-4 所示，若想删除索引 𝑖 处的元素，则需要把索引 𝑖 之后的元素都向前移动一位。</p>
+<p><img loading="lazy" src="array_remove_element.png" alt=""  />
+</p>
+<p>请注意，删除元素完成后，原先末尾的元素变得“无意义”了，所以我们无须特意去修改它。</p>
+<p>总的来看，数组的插入与删除操作有以下缺点。</p>
+<ul>
+<li><strong>时间复杂度高</strong>：数组的插入和删除的平均时间复杂度均为 𝑂(𝑛) ，其中 𝑛 为数组长度。</li>
+<li><strong>丢失元素</strong>：由于数组的长度不可变，因此在插入元素后，超出数组长度范围的元素会丢失。</li>
+<li><strong>内存浪费</strong>：我们可以初始化一个比较长的数组，只用前面一部分，这样在插入数据时，丢失的末尾元素都是“无意义”的，但这样做会造成部分内存空间浪费。</li>
+</ul>
+<h3 id="遍历数组">遍历数组<a hidden class="anchor" aria-hidden="true" href="#遍历数组">#</a></h3>
+<p>在大多数编程语言中，我们既可以通过索引遍历数组，也可以直接遍历获取数组中的每个元素：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 遍历数组 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> traverse(<span style="color:#fff;font-weight:bold">int</span>[] nums) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> count = <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 通过索引遍历数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; nums.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        count += nums[i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 直接遍历数组元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> num : nums) {
+</span></span><span style="display:flex;"><span>        count += num;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查找元素">查找元素<a hidden class="anchor" aria-hidden="true" href="#查找元素">#</a></h3>
+<p>在数组中查找指定元素需要遍历数组，每轮判断元素值是否匹配，若匹配则输出对应索引。</p>
+<p>因为数组是线性数据结构，所以上述查找操作被称为“线性查找”。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 在数组中查找指定元素 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> find(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; nums.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (nums[i] == target)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> i;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> -<span style="color:#ff0;font-weight:bold">1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="扩容数组">扩容数组<a hidden class="anchor" aria-hidden="true" href="#扩容数组">#</a></h3>
+<p>在复杂的系统环境中，程序难以保证数组之后的内存空间是可用的，从而无法安全地扩展数组容量。因此在大多数编程语言中，<strong>数组的长度是不可变的</strong>。</p>
+<p>如果我们希望扩容数组，则需重新建立一个更大的数组，然后把原数组元素依次复制到新数组。这是一个 𝑂(𝑛) 的操作，在数组很大的情况下非常耗时。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 扩展数组长度 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span>[] extend(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> enlarge) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 初始化一个扩展长度后的数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">int</span>[] res = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[nums.<span style="color:#007f7f">length</span> + enlarge];
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 将原数组中的所有元素复制到新数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; nums.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        res[i] = nums[i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 返回扩展后的新数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="数组的优点与局限性">数组的优点与局限性<a hidden class="anchor" aria-hidden="true" href="#数组的优点与局限性">#</a></h2>
+<p>数组存储在连续的内存空间内，且元素类型相同。这种做法包含丰富的先验信息，系统可以利用这些信息来优化数据结构的操作效率。</p>
+<ul>
+<li><strong>空间效率高</strong>：数组为数据分配了连续的内存块，无须额外的结构开销。</li>
+<li><strong>支持随机访问</strong>：数组允许在 𝑂(1) 时间内访问任何元素。</li>
+<li><strong>缓存局部性</strong>：当访问数组元素时，计算机不仅会加载它，还会缓存其周围的其他数据，从而借助高速缓存来提升后续操作的执行速度。</li>
+</ul>
+<p>连续空间存储是一把双刃剑，其存在以下局限性。</p>
+<ul>
+<li><strong>插入与删除效率低</strong>：当数组中元素较多时，插入与删除操作需要移动大量的元素。</li>
+<li><strong>长度不可变</strong>：数组在初始化后长度就固定了，扩容数组需要将所有数据复制到新数组，开销很大。</li>
+<li><strong>空间浪费</strong>：如果数组分配的大小超过实际所需，那么多余的空间就被浪费了。</li>
+</ul>
+<h2 id="数组典型应用">数组典型应用<a hidden class="anchor" aria-hidden="true" href="#数组典型应用">#</a></h2>
+<p>数组是一种基础且常见的数据结构，既频繁应用在各类算法之中，也可用于实现各种复杂数据结构。</p>
+<ul>
+<li><strong>随机访问</strong>：如果我们想随机抽取一些样本，那么可以用数组存储，并生成一个随机序列，根据索引实现随机抽样。</li>
+<li><strong>排序和搜索</strong>：数组是排序和搜索算法最常用的数据结构。快速排序、归并排序、二分查找等都主要在数组上进行。</li>
+<li><strong>查找表</strong>：当需要快速查找一个元素或其对应关系时，可以使用数组作为查找表。假如我们想实现字符到 ASCII 码的映射，则可以将字符的 ASCII 码值作为索引，对应的元素存放在数组中的对应位置。</li>
+<li><strong>机器学习</strong>：神经网络中大量使用了向量、矩阵、张量之间的线性代数运算，这些数据都是以数组的形式构建的。数组是神经网络编程中最常使用的数据结构。</li>
+<li><strong>数据结构实现</strong>：数组可以用于实现栈、队列、哈希表、堆、图等数据结构。例如，图的邻接矩阵表示实际上是一个二维数组。</li>
+</ul>
+<h1 id="链表">链表<a hidden class="anchor" aria-hidden="true" href="#链表">#</a></h1>
+<p>内存空间是所有程序的公共资源，在一个复杂的系统运行环境下，空闲的内存空间可能散落在内存各处。我们知道，存储数组的内存空间必须是连续的，而当数组非常大时，内存可能无法提供如此大的连续空间。此时链表的灵活性优势就体现出来了。</p>
+<p>链表（linked list）是一种线性数据结构，其中的每个元素都是一个节点对象，各个节点通过“引用”相连接。引用记录了下一个节点的内存地址，通过它可以从当前节点访问到下一个节点。</p>
+<p>链表的设计使得各个节点可以分散存储在内存各处，它们的内存地址无须连续。</p>
+<p><img loading="lazy" src="linkedlist_definition.png" alt=""  />
+</p>
+<p>观察图 4-5 ，链表的组成单位是节点（node）对象。每个节点都包含两项数据：节点的“值”和指向下一节点的“引用”。</p>
+<ul>
+<li>链表的首个节点被称为“头节点”，最后一个节点被称为“尾节点”。</li>
+<li>尾节点指向的是“空”，它在 Java、C++ 和 Python 中分别被记为 <code>null</code>、<code>nullptr</code> 和 <code>None</code> 。</li>
+<li>在 C、C++、Go 和 Rust 等支持指针的语言中，上述“引用”应被替换为“指针”。</li>
+</ul>
+<p>如以下代码所示，链表节点 <code>ListNode</code> 除了包含值，还需额外保存一个引用（指针）。因此在相同数据量下，<strong>链表比数组占用更多的内存空间</strong>。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 链表节点类 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> ListNode {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> val;        <span style="color:#007f7f">// 节点值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ListNode next;  <span style="color:#007f7f">// 指向下一节点的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ListNode(<span style="color:#fff;font-weight:bold">int</span> x) { val = x; }  <span style="color:#007f7f">// 构造函数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="链表常用操作">链表常用操作<a hidden class="anchor" aria-hidden="true" href="#链表常用操作">#</a></h2>
+<h3 id="初始化链表">初始化链表<a hidden class="anchor" aria-hidden="true" href="#初始化链表">#</a></h3>
+<p>建立链表分为两步，第一步是初始化各个节点对象，第二步是构建节点之间的引用关系。初始化完成后，我们就可以从链表的头节点出发，通过引用指向 <code>next</code> 依次访问所有节点。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 初始化链表 1 -&gt; 3 -&gt; 2 -&gt; 5 -&gt; 4 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 初始化各个节点
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>ListNode n0 = <span style="color:#fff;font-weight:bold">new</span> ListNode(<span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>ListNode n1 = <span style="color:#fff;font-weight:bold">new</span> ListNode(<span style="color:#ff0;font-weight:bold">3</span>);
+</span></span><span style="display:flex;"><span>ListNode n2 = <span style="color:#fff;font-weight:bold">new</span> ListNode(<span style="color:#ff0;font-weight:bold">2</span>);
+</span></span><span style="display:flex;"><span>ListNode n3 = <span style="color:#fff;font-weight:bold">new</span> ListNode(<span style="color:#ff0;font-weight:bold">5</span>);
+</span></span><span style="display:flex;"><span>ListNode n4 = <span style="color:#fff;font-weight:bold">new</span> ListNode(<span style="color:#ff0;font-weight:bold">4</span>);
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 构建节点之间的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>n0.<span style="color:#007f7f">next</span> = n1;
+</span></span><span style="display:flex;"><span>n1.<span style="color:#007f7f">next</span> = n2;
+</span></span><span style="display:flex;"><span>n2.<span style="color:#007f7f">next</span> = n3;
+</span></span><span style="display:flex;"><span>n3.<span style="color:#007f7f">next</span> = n4;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>数组整体是一个变量，比如数组 <code>nums</code> 包含元素 <code>nums[0]</code> 和 <code>nums[1]</code> 等，而链表是由多个独立的节点对象组成的。<strong>我们通常将头节点当作链表的代称</strong>，比如以上代码中的链表可记作链表 <code>n0</code> 。</p>
+<h3 id="插入节点">插入节点<a hidden class="anchor" aria-hidden="true" href="#插入节点">#</a></h3>
+<p>在链表中插入节点非常容易。如图 4-6 所示，假设我们想在相邻的两个节点 <code>n0</code> 和 <code>n1</code> 之间插入一个新节点 <code>P</code> ，<strong>则只需改变两个节点引用（指针）即可</strong>，时间复杂度为 𝑂(1) 。</p>
+<p>相比之下，在数组中插入元素的时间复杂度为 𝑂(𝑛) ，在大数据量下的效率较低。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 在链表的节点 n0 之后插入节点 P */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> insert(ListNode n0, ListNode P) {
+</span></span><span style="display:flex;"><span>    ListNode n1 = n0.<span style="color:#007f7f">next</span>;
+</span></span><span style="display:flex;"><span>    P.<span style="color:#007f7f">next</span> = n1;
+</span></span><span style="display:flex;"><span>    n0.<span style="color:#007f7f">next</span> = P;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="删除节点">删除节点<a hidden class="anchor" aria-hidden="true" href="#删除节点">#</a></h3>
+<p>如图 4-7 所示，在链表中删除节点也非常方便，<strong>只需改变一个节点的引用（指针）即可</strong>。</p>
+<p>请注意，尽管在删除操作完成后节点 <code>P</code> 仍然指向 <code>n1</code> ，但实际上遍历此链表已经无法访问到 <code>P</code> ，这意味着 <code>P</code> 已经不再属于该链表了。</p>
+<p><img loading="lazy" src="linkedlist_remove_node.png" alt=""  />
+</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 删除链表的节点 n0 之后的首个节点 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> remove(ListNode n0) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (n0.<span style="color:#007f7f">next</span> == <span style="color:#fff;font-weight:bold">null</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// n0 -&gt; P -&gt; n1
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ListNode P = n0.<span style="color:#007f7f">next</span>;
+</span></span><span style="display:flex;"><span>    ListNode n1 = P.<span style="color:#007f7f">next</span>;
+</span></span><span style="display:flex;"><span>    n0.<span style="color:#007f7f">next</span> = n1;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="访问节点">访问节点<a hidden class="anchor" aria-hidden="true" href="#访问节点">#</a></h3>
+<p><strong>在链表中访问节点的效率较低</strong>。如上一节所述，我们可以在 𝑂(1) 时间下访问数组中的任意元素。链表则不然，程序需要从头节点出发，逐个向后遍历，直至找到目标节点。也就是说，访问链表的第 𝑖 个节点需要循环 𝑖−1 轮，时间复杂度为 𝑂(𝑛) 。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 访问链表中索引为 index 的节点 */</span>
+</span></span><span style="display:flex;"><span>ListNode access(ListNode head, <span style="color:#fff;font-weight:bold">int</span> index) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; index; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (head == <span style="color:#fff;font-weight:bold">null</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>        head = head.<span style="color:#007f7f">next</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> head;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="查找节点">查找节点<a hidden class="anchor" aria-hidden="true" href="#查找节点">#</a></h3>
+<p>遍历链表，查找其中值为 <code>target</code> 的节点，输出该节点在链表中的索引。此过程也属于线性查找。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 在链表中查找值为 target 的首个节点 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> find(ListNode head, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> index = <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span> (head != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (head.<span style="color:#007f7f">val</span> == target)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> index;
+</span></span><span style="display:flex;"><span>        head = head.<span style="color:#007f7f">next</span>;
+</span></span><span style="display:flex;"><span>        index++;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> -<span style="color:#ff0;font-weight:bold">1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="数组-vs-链表">数组 vs 链表<a hidden class="anchor" aria-hidden="true" href="#数组-vs-链表">#</a></h2>
+<p>下表总结了数组和链表的各项特点并对比了操作效率。由于它们采用两种相反的存储策略，因此各种性质和操作效率也呈现对立的特点。</p>
+<p>表 4-1  数组与链表的效率对比</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">数组</th>
+<th style="text-align:left">链表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">存储方式</td>
+<td style="text-align:left">连续内存空间</td>
+<td style="text-align:left">分散内存空间</td>
+</tr>
+<tr>
+<td style="text-align:left">容量扩展</td>
+<td style="text-align:left">长度不可变</td>
+<td style="text-align:left">可灵活扩展</td>
+</tr>
+<tr>
+<td style="text-align:left">内存效率</td>
+<td style="text-align:left">元素占用内存少、但可能浪费空间</td>
+<td style="text-align:left">元素占用内存多</td>
+</tr>
+<tr>
+<td style="text-align:left">访问元素</td>
+<td style="text-align:left">𝑂(1)</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+</tr>
+<tr>
+<td style="text-align:left">添加元素</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除元素</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常见的链表类型">常见的链表类型<a hidden class="anchor" aria-hidden="true" href="#常见的链表类型">#</a></h2>
+<p>如图 4-8 所示，常见的链表类型包括三种。</p>
+<ul>
+<li><strong>单向链表</strong>：即前面介绍的普通链表。单向链表的节点包含值和指向下一节点的引用两项数据。我们将首个节点称为头节点，将最后一个节点称为尾节点，尾节点指向空 <code>None</code> 。</li>
+<li><strong>环形链表</strong>：如果我们令单向链表的尾节点指向头节点（首尾相接），则得到一个环形链表。在环形链表中，任意节点都可以视作头节点。</li>
+<li><strong>双向链表</strong>：与单向链表相比，双向链表记录了两个方向的引用。双向链表的节点定义同时包含指向后继节点（下一个节点）和前驱节点（上一个节点）的引用（指针）。相较于单向链表，双向链表更具灵活性，可以朝两个方向遍历链表，但相应地也需要占用更多的内存空间。</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 双向链表节点类 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> ListNode {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> val;        <span style="color:#007f7f">// 节点值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ListNode next;  <span style="color:#007f7f">// 指向后继节点的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ListNode prev;  <span style="color:#007f7f">// 指向前驱节点的引用
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    ListNode(<span style="color:#fff;font-weight:bold">int</span> x) { val = x; }  <span style="color:#007f7f">// 构造函数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="linkedlist_common_types.png" alt=""  />
+</p>
+<h2 id="链表典型应用">链表典型应用<a hidden class="anchor" aria-hidden="true" href="#链表典型应用">#</a></h2>
+<p>单向链表通常用于实现栈、队列、哈希表和图等数据结构。</p>
+<ul>
+<li><strong>栈与队列</strong>：当插入和删除操作都在链表的一端进行时，它表现的特性为先进后出，对应栈；当插入操作在链表的一端进行，删除操作在链表的另一端进行，它表现的特性为先进先出，对应队列。</li>
+<li><strong>哈希表</strong>：链式地址是解决哈希冲突的主流方案之一，在该方案中，所有冲突的元素都会被放到一个链表中。</li>
+<li><strong>图</strong>：邻接表是表示图的一种常用方式，其中图的每个顶点都与一个链表相关联，链表中的每个元素都代表与该顶点相连的其他顶点。</li>
+</ul>
+<p>双向链表常用于需要快速查找前一个和后一个元素的场景。</p>
+<ul>
+<li><strong>高级数据结构</strong>：比如在红黑树、B 树中，我们需要访问节点的父节点，这可以通过在节点中保存一个指向父节点的引用来实现，类似于双向链表。</li>
+<li><strong>浏览器历史</strong>：在网页浏览器中，当用户点击前进或后退按钮时，浏览器需要知道用户访问过的前一个和后一个网页。双向链表的特性使得这种操作变得简单。</li>
+<li><strong>LRU 算法</strong>：在缓存淘汰（LRU）算法中，我们需要快速找到最近最少使用的数据，以及支持快速添加和删除节点。这时候使用双向链表就非常合适。</li>
+</ul>
+<p>环形链表常用于需要周期性操作的场景，比如操作系统的资源调度。</p>
+<ul>
+<li><strong>时间片轮转调度算法</strong>：在操作系统中，时间片轮转调度算法是一种常见的 CPU 调度算法，它需要对一组进程进行循环。每个进程被赋予一个时间片，当时间片用完时，CPU 将切换到下一个进程。这种循环操作可以通过环形链表来实现。</li>
+<li><strong>数据缓冲区</strong>：在某些数据缓冲区的实现中，也可能会使用环形链表。比如在音频、视频播放器中，数据流可能会被分成多个缓冲块并放入一个环形链表，以便实现无缝播放。</li>
+</ul>
+<h1 id="列表">列表<a hidden class="anchor" aria-hidden="true" href="#列表">#</a></h1>
+<p>列表（list）是一个抽象的数据结构概念，它表示元素的有序集合，支持元素访问、修改、添加、删除和遍历等操作，无须使用者考虑容量限制的问题。列表可以基于链表或数组实现。</p>
+<ul>
+<li>链表天然可以看作一个列表，其支持元素增删查改操作，并且可以灵活动态扩容。</li>
+<li>数组也支持元素增删查改，但由于其长度不可变，因此只能看作一个具有长度限制的列表。</li>
+</ul>
+<p>当使用数组实现列表时，<strong>长度不可变的性质会导致列表的实用性降低</strong>。这是因为我们通常无法事先确定需要存储多少数据，从而难以选择合适的列表长度。若长度过小，则很可能无法满足使用需求；若长度过大，则会造成内存空间浪费。</p>
+<p>为解决此问题，我们可以使用动态数组（dynamic array）来实现列表。它继承了数组的各项优点，并且可以在程序运行过程中进行动态扩容。</p>
+<p>实际上，<strong>许多编程语言中的标准库提供的列表是基于动态数组实现的</strong>，例如 Python 中的 <code>list</code> 、Java 中的 <code>ArrayList</code> 、C++ 中的 <code>vector</code> 和 C# 中的 <code>List</code> 等。在接下来的讨论中，我们将把“列表”和“动态数组”视为等同的概念。</p>
+<h2 id="列表常用操作">列表常用操作<a hidden class="anchor" aria-hidden="true" href="#列表常用操作">#</a></h2>
+<h3 id="初始化列表">初始化列表<a hidden class="anchor" aria-hidden="true" href="#初始化列表">#</a></h3>
+<p>我们通常使用“无初始值”和“有初始值”这两种初始化方法：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 初始化列表 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 无初始值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>List&lt;Integer&gt; nums1 = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 有初始值（注意数组的元素类型需为 int[] 的包装类 Integer[]）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>Integer[] numbers = <span style="color:#fff;font-weight:bold">new</span> Integer[] { <span style="color:#ff0;font-weight:bold">1</span>, <span style="color:#ff0;font-weight:bold">3</span>, <span style="color:#ff0;font-weight:bold">2</span>, <span style="color:#ff0;font-weight:bold">5</span>, <span style="color:#ff0;font-weight:bold">4</span> };
+</span></span><span style="display:flex;"><span>List&lt;Integer&gt; nums = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(Arrays.<span style="color:#007f7f">asList</span>(numbers));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="访问元素-1">访问元素<a hidden class="anchor" aria-hidden="true" href="#访问元素-1">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 访问元素 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> num = nums.<span style="color:#007f7f">get</span>(<span style="color:#ff0;font-weight:bold">1</span>);  <span style="color:#007f7f">// 访问索引 1 处的元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 更新元素 */</span>
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">set</span>(<span style="color:#ff0;font-weight:bold">1</span>, <span style="color:#ff0;font-weight:bold">0</span>);  <span style="color:#007f7f">// 将索引 1 处的元素更新为 0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="插入与删除元素">插入与删除元素<a hidden class="anchor" aria-hidden="true" href="#插入与删除元素">#</a></h3>
+<p>相较于数组，列表可以自由地添加与删除元素。在列表尾部添加元素的时间复杂度为 𝑂(1) ，但插入和删除元素的效率仍与数组相同，时间复杂度为 𝑂(𝑛) 。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 清空列表 */</span>
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">clear</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 在尾部添加元素 */</span>
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">add</span>(<span style="color:#ff0;font-weight:bold">1</span>);
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">add</span>(<span style="color:#ff0;font-weight:bold">3</span>);
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">add</span>(<span style="color:#ff0;font-weight:bold">2</span>);
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">add</span>(<span style="color:#ff0;font-weight:bold">5</span>);
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">add</span>(<span style="color:#ff0;font-weight:bold">4</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 在中间插入元素 */</span>
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">add</span>(<span style="color:#ff0;font-weight:bold">3</span>, <span style="color:#ff0;font-weight:bold">6</span>);  <span style="color:#007f7f">// 在索引 3 处插入数字 6
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 删除元素 */</span>
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">remove</span>(<span style="color:#ff0;font-weight:bold">3</span>);  <span style="color:#007f7f">// 删除索引 3 处的元素
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="遍历列表">遍历列表<a hidden class="anchor" aria-hidden="true" href="#遍历列表">#</a></h3>
+<p>与数组一样，列表可以根据索引遍历，也可以直接遍历各元素。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 通过索引遍历列表 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> count = <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; nums.<span style="color:#007f7f">size</span>(); i++) {
+</span></span><span style="display:flex;"><span>    count += nums.<span style="color:#007f7f">get</span>(i);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 直接遍历列表元素 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> num : nums) {
+</span></span><span style="display:flex;"><span>    count += num;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="拼接列表">拼接列表<a hidden class="anchor" aria-hidden="true" href="#拼接列表">#</a></h3>
+<p>给定一个新列表 <code>nums1</code> ，我们可以将其拼接到原列表的尾部。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 拼接两个列表 */</span>
+</span></span><span style="display:flex;"><span>List&lt;Integer&gt; nums1 = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(Arrays.<span style="color:#007f7f">asList</span>(<span style="color:#fff;font-weight:bold">new</span> Integer[] { <span style="color:#ff0;font-weight:bold">6</span>, <span style="color:#ff0;font-weight:bold">8</span>, <span style="color:#ff0;font-weight:bold">7</span>, <span style="color:#ff0;font-weight:bold">10</span>, <span style="color:#ff0;font-weight:bold">9</span> }));
+</span></span><span style="display:flex;"><span>nums.<span style="color:#007f7f">addAll</span>(nums1);  <span style="color:#007f7f">// 将列表 nums1 拼接到 nums 之后
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="排序列表">排序列表<a hidden class="anchor" aria-hidden="true" href="#排序列表">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 排序列表 */</span>
+</span></span><span style="display:flex;"><span>Collections.<span style="color:#007f7f">sort</span>(nums);  <span style="color:#007f7f">// 排序后，列表元素从小到大排列
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="列表实现">列表实现<a hidden class="anchor" aria-hidden="true" href="#列表实现">#</a></h2>
+<p>许多编程语言内置了列表，例如 Java、C++、Python 等。它们的实现比较复杂，各个参数的设定也非常考究，例如初始容量、扩容倍数等。感兴趣的读者可以查阅源码进行学习。</p>
+<p>为了加深对列表工作原理的理解，我们尝试实现一个简易版列表，包括以下三个重点设计。</p>
+<ul>
+<li><strong>初始容量</strong>：选取一个合理的数组初始容量。在本示例中，我们选择 10 作为初始容量。</li>
+<li><strong>数量记录</strong>：声明一个变量 <code>size</code> ，用于记录列表当前元素数量，并随着元素插入和删除实时更新。根据此变量，我们可以定位列表尾部，以及判断是否需要扩容。</li>
+<li><strong>扩容机制</strong>：若插入元素时列表容量已满，则需要进行扩容。先根据扩容倍数创建一个更大的数组，再将当前数组的所有元素依次移动至新数组。在本示例中，我们规定每次将数组扩容至之前的 2 倍。</li>
+</ul>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">97
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 列表类 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> MyList {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span>[] arr; <span style="color:#007f7f">// 数组（存储列表元素）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> capacity = <span style="color:#ff0;font-weight:bold">10</span>; <span style="color:#007f7f">// 列表容量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> size = <span style="color:#ff0;font-weight:bold">0</span>; <span style="color:#007f7f">// 列表长度（当前元素数量）
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> extendRatio = <span style="color:#ff0;font-weight:bold">2</span>; <span style="color:#007f7f">// 每次列表扩容的倍数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 构造方法 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> MyList() {
+</span></span><span style="display:flex;"><span>        arr = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[capacity];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 获取列表长度（当前元素数量） */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> size() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> size;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 获取列表容量 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> capacity() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> capacity;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 访问元素 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> get(<span style="color:#fff;font-weight:bold">int</span> index) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 索引如果越界，则抛出异常，下同
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (index &lt; <span style="color:#ff0;font-weight:bold">0</span> || index &gt;= size)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IndexOutOfBoundsException(<span style="color:#0ff;font-weight:bold">&#34;索引越界&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> arr[index];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 更新元素 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> set(<span style="color:#fff;font-weight:bold">int</span> index, <span style="color:#fff;font-weight:bold">int</span> num) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (index &lt; <span style="color:#ff0;font-weight:bold">0</span> || index &gt;= size)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IndexOutOfBoundsException(<span style="color:#0ff;font-weight:bold">&#34;索引越界&#34;</span>);
+</span></span><span style="display:flex;"><span>        arr[index] = num;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 在尾部添加元素 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> add(<span style="color:#fff;font-weight:bold">int</span> num) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 元素数量超出容量时，触发扩容机制
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (size == capacity())
+</span></span><span style="display:flex;"><span>            extendCapacity();
+</span></span><span style="display:flex;"><span>        arr[size] = num;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 更新元素数量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        size++;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 在中间插入元素 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> insert(<span style="color:#fff;font-weight:bold">int</span> index, <span style="color:#fff;font-weight:bold">int</span> num) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (index &lt; <span style="color:#ff0;font-weight:bold">0</span> || index &gt;= size)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IndexOutOfBoundsException(<span style="color:#0ff;font-weight:bold">&#34;索引越界&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 元素数量超出容量时，触发扩容机制
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">if</span> (size == capacity())
+</span></span><span style="display:flex;"><span>            extendCapacity();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 将索引 index 以及之后的元素都向后移动一位
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> j = size - <span style="color:#ff0;font-weight:bold">1</span>; j &gt;= index; j--) {
+</span></span><span style="display:flex;"><span>            arr[j + <span style="color:#ff0;font-weight:bold">1</span>] = arr[j];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        arr[index] = num;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 更新元素数量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        size++;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 删除元素 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> remove(<span style="color:#fff;font-weight:bold">int</span> index) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (index &lt; <span style="color:#ff0;font-weight:bold">0</span> || index &gt;= size)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IndexOutOfBoundsException(<span style="color:#0ff;font-weight:bold">&#34;索引越界&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> num = arr[index];
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 将将索引 index 之后的元素都向前移动一位
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> j = index; j &lt; size - <span style="color:#ff0;font-weight:bold">1</span>; j++) {
+</span></span><span style="display:flex;"><span>            arr[j] = arr[j + <span style="color:#ff0;font-weight:bold">1</span>];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 更新元素数量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        size--;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 返回被删除的元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">return</span> num;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 列表扩容 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> extendCapacity() {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 新建一个长度为原数组 extendRatio 倍的新数组，并将原数组复制到新数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        arr = Arrays.<span style="color:#007f7f">copyOf</span>(arr, capacity() * extendRatio);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 更新列表容量
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        capacity = arr.<span style="color:#007f7f">length</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/* 将列表转换为数组 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span>[] toArray() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> size = size();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 仅转换有效长度范围内的列表元素
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">int</span>[] arr = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[size];
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = <span style="color:#ff0;font-weight:bold">0</span>; i &lt; size; i++) {
+</span></span><span style="display:flex;"><span>            arr[i] = get(i);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> arr;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="内存与缓存">内存与缓存<a hidden class="anchor" aria-hidden="true" href="#内存与缓存">#</a></h1>
+<p>在本章的前两节中，我们探讨了数组和链表这两种基础且重要的数据结构，它们分别代表了“连续存储”和“分散存储”两种物理结构。</p>
+<p>实际上，<strong>物理结构在很大程度上决定了程序对内存和缓存的使用效率</strong>，进而影响算法程序的整体性能。</p>
+<h2 id="计算机存储设备">计算机存储设备<a hidden class="anchor" aria-hidden="true" href="#计算机存储设备">#</a></h2>
+<p>计算机中包括三种类型的存储设备：硬盘（hard disk）、内存（random-access memory, RAM）、缓存（cache memory）。表 4-2 展示了它们在计算机系统中的不同角色和性能特点。</p>
+<p>表 4-2  计算机的存储设备</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">硬盘</th>
+<th style="text-align:left">内存</th>
+<th style="text-align:left">缓存</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">用途</td>
+<td style="text-align:left">长期存储数据，包括操作系统、程序、文件等</td>
+<td style="text-align:left">临时存储当前运行的程序和正在处理的数据</td>
+<td style="text-align:left">存储经常访问的数据和指令，减少 CPU 访问内存的次数</td>
+</tr>
+<tr>
+<td style="text-align:left">易失性</td>
+<td style="text-align:left">断电后数据不会丢失</td>
+<td style="text-align:left">断电后数据会丢失</td>
+<td style="text-align:left">断电后数据会丢失</td>
+</tr>
+<tr>
+<td style="text-align:left">容量</td>
+<td style="text-align:left">较大，TB 级别</td>
+<td style="text-align:left">较小，GB 级别</td>
+<td style="text-align:left">非常小，MB 级别</td>
+</tr>
+<tr>
+<td style="text-align:left">速度</td>
+<td style="text-align:left">较慢，几百到几千 MB/s</td>
+<td style="text-align:left">较快，几十 GB/s</td>
+<td style="text-align:left">非常快，几十到几百 GB/s</td>
+</tr>
+<tr>
+<td style="text-align:left">价格</td>
+<td style="text-align:left">较便宜，几毛到几元 / GB</td>
+<td style="text-align:left">较贵，几十到几百元 / GB</td>
+<td style="text-align:left">非常贵，随 CPU 打包计价</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以将计算机存储系统想象为图 4-9 所示的金字塔结构。越靠近金字塔顶端的存储设备的速度越快、容量越小、成本越高。这种多层级的设计并非偶然，而是计算机科学家和工程师们经过深思熟虑的结果。</p>
+<p>我们可以将计算机存储系统想象为图 4-9 所示的金字塔结构。越靠近金字塔顶端的存储设备的速度越快、容量越小、成本越高。这种多层级的设计并非偶然，而是计算机科学家和工程师们经过深思熟虑的结果。</p>
+<ul>
+<li><strong>硬盘难以被内存取代</strong>。首先，内存中的数据在断电后会丢失，因此它不适合长期存储数据；其次，内存的成本是硬盘的几十倍，这使得它难以在消费者市场普及。</li>
+<li><strong>缓存的大容量和高速度难以兼得</strong>。随着 L1、L2、L3 缓存的容量逐步增大，其物理尺寸会变大，与 CPU 核心之间的物理距离会变远，从而导致数据传输时间增加，元素访问延迟变高。在当前技术下，多层级的缓存结构是容量、速度和成本之间的最佳平衡点。</li>
+</ul>
+<p><img loading="lazy" src="storage_pyramid.png" alt=""  />
+</p>
+<blockquote>
+<p>计算机的存储层次结构体现了速度、容量和成本三者之间的精妙平衡。实际上，这种权衡普遍存在于所有工业领域，它要求我们在不同的优势和限制之间找到最佳平衡点。</p>
+</blockquote>
+<p>总的来说，<strong>硬盘用于长期存储大量数据，内存用于临时存储程序运行中正在处理的数据，而缓存则用于存储经常访问的数据和指令</strong>，以提高程序运行效率。三者共同协作，确保计算机系统高效运行。</p>
+<p>如图 4-10 所示，在程序运行时，数据会从硬盘中被读取到内存中，供 CPU 计算使用。缓存可以看作 CPU 的一部分，<strong>它通过智能地从内存加载数据</strong>，给 CPU 提供高速的数据读取，从而显著提升程序的执行效率，减少对较慢的内存的依赖。</p>
+<p><img loading="lazy" src="computer_storage_devices.png" alt=""  />
+</p>
+<h2 id="数据结构的内存效率">数据结构的内存效率<a hidden class="anchor" aria-hidden="true" href="#数据结构的内存效率">#</a></h2>
+<p>在内存空间利用方面，数组和链表各自具有优势和局限性。</p>
+<p>一方面，<strong>内存是有限的，且同一块内存不能被多个程序共享</strong>，因此我们希望数据结构能够尽可能高效地利用空间。数组的元素紧密排列，不需要额外的空间来存储链表节点间的引用（指针），因此空间效率更高。然而，数组需要一次性分配足够的连续内存空间，这可能导致内存浪费，数组扩容也需要额外的时间和空间成本。相比之下，链表以“节点”为单位进行动态内存分配和回收，提供了更大的灵活性。</p>
+<p>另一方面，在程序运行时，<strong>随着反复申请与释放内存，空闲内存的碎片化程度会越来越高</strong>，从而导致内存的利用效率降低。数组由于其连续的存储方式，相对不容易导致内存碎片化。相反，链表的元素是分散存储的，在频繁的插入与删除操作中，更容易导致内存碎片化。</p>
+<h2 id="数据结构的缓存效率">数据结构的缓存效率<a hidden class="anchor" aria-hidden="true" href="#数据结构的缓存效率">#</a></h2>
+<p>缓存虽然在空间容量上远小于内存，但它比内存快得多，在程序执行速度上起着至关重要的作用。由于缓存的容量有限，只能存储一小部分频繁访问的数据，因此当 CPU 尝试访问的数据不在缓存中时，就会发生缓存未命中（cache miss），此时 CPU 不得不从速度较慢的内存中加载所需数据。</p>
+<p>显然，<strong>“缓存未命中”越少，CPU 读写数据的效率就越高</strong>，程序性能也就越好。我们将 CPU 从缓存中成功获取数据的比例称为缓存命中率（cache hit rate），这个指标通常用来衡量缓存效率。</p>
+<p>为了尽可能达到更高的效率，缓存会采取以下数据加载机制。</p>
+<ul>
+<li><strong>缓存行</strong>：缓存不是单个字节地存储与加载数据，而是以缓存行为单位。相比于单个字节的传输，缓存行的传输形式更加高效。</li>
+<li><strong>预取机制</strong>：处理器会尝试预测数据访问模式（例如顺序访问、固定步长跳跃访问等），并根据特定模式将数据加载至缓存之中，从而提升命中率。</li>
+<li><strong>空间局部性</strong>：如果一个数据被访问，那么它附近的数据可能近期也会被访问。因此，缓存在加载某一数据时，也会加载其附近的数据，以提高命中率。</li>
+<li><strong>时间局部性</strong>：如果一个数据被访问，那么它在不久的将来很可能再次被访问。缓存利用这一原理，通过保留最近访问过的数据来提高命中率。</li>
+</ul>
+<p>实际上，<strong>数组和链表对缓存的利用效率是不同的</strong>，主要体现在以下几个方面。</p>
+<ul>
+<li><strong>占用空间</strong>：链表元素比数组元素占用空间更多，导致缓存中容纳的有效数据量更少。</li>
+<li><strong>缓存行</strong>：链表数据分散在内存各处，而缓存是“按行加载”的，因此加载到无效数据的比例更高。</li>
+<li><strong>预取机制</strong>：数组比链表的数据访问模式更具“可预测性”，即系统更容易猜出即将被加载的数据。</li>
+<li><strong>空间局部性</strong>：数组被存储在集中的内存空间中，因此被加载数据附近的数据更有可能即将被访问。</li>
+</ul>
+<p>总体而言，<strong>数组具有更高的缓存命中率，因此它在操作效率上通常优于链表</strong>。这使得在解决算法问题时，基于数组实现的数据结构往往更受欢迎。</p>
+<p>需要注意的是，<strong>高缓存效率并不意味着数组在所有情况下都优于链表</strong>。实际应用中选择哪种数据结构，应根据具体需求来决定。例如，数组和链表都可以实现“栈”数据结构（下一章会详细介绍），但它们适用于不同场景。</p>
+<ul>
+<li>在做算法题时，我们会倾向于选择基于数组实现的栈，因为它提供了更高的操作效率和随机访问的能力，代价仅是需要预先为数组分配一定的内存空间。</li>
+<li>如果数据量非常大、动态性很高、栈的预期大小难以估计，那么基于链表实现的栈更加合适。链表能够将大量数据分散存储于内存的不同部分，并且避免了数组扩容产生的额外开销。</li>
+</ul>
+<h1 id="小节">小节<a hidden class="anchor" aria-hidden="true" href="#小节">#</a></h1>
+<h2 id="重点回顾">重点回顾<a hidden class="anchor" aria-hidden="true" href="#重点回顾">#</a></h2>
+<ul>
+<li>数组和链表是两种基本的数据结构，分别代表数据在计算机内存中的两种存储方式：连续空间存储和分散空间存储。两者的特点呈现出互补的特性。</li>
+<li>数组支持随机访问、占用内存较少；但插入和删除元素效率低，且初始化后长度不可变。</li>
+<li>链表通过更改引用（指针）实现高效的节点插入与删除，且可以灵活调整长度；但节点访问效率低、占用内存较多。常见的链表类型包括单向链表、环形链表、双向链表。</li>
+<li>列表是一种支持增删查改的元素有序集合，通常基于动态数组实现。它保留了数组的优势，同时可以灵活调整长度。</li>
+<li>列表的出现大幅提高了数组的实用性，但可能导致部分内存空间浪费。</li>
+<li>程序运行时，数据主要存储在内存中。数组可提供更高的内存空间效率，而链表则在内存使用上更加灵活。</li>
+<li>缓存通过缓存行、预取机制以及空间局部性和时间局部性等数据加载机制，为 CPU 提供快速数据访问，显著提升程序的执行效率。</li>
+<li>由于数组具有更高的缓存命中率，因此它通常比链表更高效。在选择数据结构时，应根据具体需求和场景做出恰当选择。</li>
+</ul>
+<h2 id="q--a">Q &amp; A<a hidden class="anchor" aria-hidden="true" href="#q--a">#</a></h2>
+<p><strong>Q</strong>：数组存储在栈上和存储在堆上，对时间效率和空间效率是否有影响？</p>
+<p>存储在栈上和堆上的数组都被存储在连续内存空间内，数据操作效率基本一致。然而，栈和堆具有各自的特点，从而导致以下不同点。</p>
+<ol>
+<li>分配和释放效率：栈是一块较小的内存，分配由编译器自动完成；而堆内存相对更大，可以在代码中动态分配，更容易碎片化。因此，堆上的分配和释放操作通常比栈上的慢。</li>
+<li>大小限制：栈内存相对较小，堆的大小一般受限于可用内存。因此堆更加适合存储大型数组。</li>
+<li>灵活性：栈上的数组的大小需要在编译时确定，而堆上的数组的大小可以在运行时动态确定。</li>
+</ol>
+<p><strong>Q</strong>：为什么数组要求相同类型的元素，而在链表中却没有强调相同类型呢？</p>
+<p>链表由节点组成，节点之间通过引用（指针）连接，各个节点可以存储不同类型的数据，例如 <code>int</code>、<code>double</code>、<code>string</code>、<code>object</code> 等。</p>
+<p>相对地，数组元素则必须是相同类型的，这样才能通过计算偏移量来获取对应元素位置。例如，数组同时包含 <code>int</code> 和 <code>long</code> 两种类型，单个元素分别占用 4 字节 和 8 字节 ，此时就不能用以下公式计算偏移量了，因为数组中包含了两种“元素长度”。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 元素内存地址 = 数组内存地址（首元素内存地址） + 元素长度 * 元素索引
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Q</strong>：删除节点 <code>P</code> 后，是否需要把 <code>P.next</code> 设为 <code>None</code> 呢？</p>
+<p>不修改 <code>P.next</code> 也可以。从该链表的角度看，从头节点遍历到尾节点已经不会遇到 <code>P</code> 了。这意味着节点 <code>P</code> 已经从链表中删除了，此时节点 <code>P</code> 指向哪里都不会对该链表产生影响。</p>
+<p>从数据结构与算法（做题）的角度看，不断开没有关系，只要保证程序的逻辑是正确的就行。从标准库的角度看，断开更加安全、逻辑更加清晰。如果不断开，假设被删除节点未被正常回收，那么它会影响后继节点的内存回收。</p>
+<p><strong>Q</strong>：在链表中插入和删除操作的时间复杂度是 𝑂(1) 。但是增删之前都需要 𝑂(𝑛) 的时间查找元素，那为什么时间复杂度不是 𝑂(𝑛) 呢？</p>
+<p>如果是先查找元素、再删除元素，时间复杂度确实是 𝑂(𝑛) 。然而，链表的 𝑂(1) 增删的优势可以在其他应用上得到体现。例如，双向队列适合使用链表实现，我们维护一个指针变量始终指向头节点、尾节点，每次插入与删除操作都是 𝑂(1) 。</p>
+<p><strong>Q</strong>：图“链表定义与存储方式”中，浅蓝色的存储节点指针是占用一块内存地址吗？还是和节点值各占一半呢？</p>
+<p>该示意图只是定性表示，定量表示需要根据具体情况进行分析。</p>
+<ul>
+<li>不同类型的节点值占用的空间是不同的，比如 <code>int</code>、<code>long</code>、<code>double</code> 和实例对象等。</li>
+<li>指针变量占用的内存空间大小根据所使用的操作系统及编译环境而定，大多为 8 字节或 4 字节。</li>
+</ul>
+<p><strong>Q</strong>：在列表末尾添加元素是否时时刻刻都为 𝑂(1) ？</p>
+<p>如果添加元素时超出列表长度，则需要先扩容列表再添加。系统会申请一块新的内存，并将原列表的所有元素搬运过去，这时候时间复杂度就会是 𝑂(𝑛) 。</p>
+<p><strong>Q</strong>：“列表的出现极大地提高了数组的实用性，但可能导致部分内存空间浪费”，这里的空间浪费是指额外增加的变量如容量、长度、扩容倍数所占的内存吗？</p>
+<p>这里的空间浪费主要有两方面含义：一方面，列表都会设定一个初始长度，我们不一定需要用这么多；另一方面，为了防止频繁扩容，扩容一般会乘以一个系数，比如 ×1.5 。这样一来，也会出现很多空位，我们通常不能完全填满它们。</p>
+<p><strong>Q</strong>：在 Python 中初始化 <code>n = [1, 2, 3]</code> 后，这 3 个元素的地址是相连的，但是初始化 <code>m = [2, 1, 3]</code> 会发现它们每个元素的 id 并不是连续的，而是分别跟 <code>n</code> 中的相同。这些元素的地址不连续，那么 <code>m</code> 还是数组吗？</p>
+<p>假如把列表元素换成链表节点 <code>n = [n1, n2, n3, n4, n5]</code> ，通常情况下这 5 个节点对象也分散存储在内存各处。然而，给定一个列表索引，我们仍然可以在 𝑂(1) 时间内获取节点内存地址，从而访问到对应的节点。这是因为数组中存储的是节点的引用，而非节点本身。</p>
+<p>与许多语言不同，Python 中的数字也被包装为对象，列表中存储的不是数字本身，而是对数字的引用。因此，我们会发现两个数组中的相同数字拥有同一个 id ，并且这些数字的内存地址无须连续。</p>
+<p><strong>Q</strong>：C++ STL 里面的 <code>std::list</code> 已经实现了双向链表，但好像一些算法书上不怎么直接使用它，是不是因为有什么局限性呢？</p>
+<p>一方面，我们往往更青睐使用数组实现算法，而只在必要时才使用链表，主要有两个原因。</p>
+<ul>
+<li>空间开销：由于每个元素需要两个额外的指针（一个用于前一个元素，一个用于后一个元素），所以 <code>std::list</code> 通常比 <code>std::vector</code> 更占用空间。</li>
+<li>缓存不友好：由于数据不是连续存放的，因此 <code>std::list</code> 对缓存的利用率较低。一般情况下，<code>std::vector</code> 的性能会更好。</li>
+</ul>
+<p>另一方面，必要使用链表的情况主要是二叉树和图。栈和队列往往会使用编程语言提供的 <code>stack</code> 和 <code>queue</code> ，而非链表。</p>
+<p><strong>Q</strong>：初始化列表 <code>res = [0] * self.size()</code> 操作，会导致 <code>res</code> 的每个元素引用相同的地址吗？</p>
+<p>不会。但二维数组会有这个问题，例如初始化二维列表 <code>res = [[0]] * self.size()</code> ，则多次引用了同一个列表 <code>[0]</code> 。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
