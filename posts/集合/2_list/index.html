@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>List | Wjy&#39;s Blog</title>
-<meta name="keywords" content="Collection">
+<meta name="keywords" content="Java集合">
 <meta name="description" content="概述
 在集合类中，List是最基础的一种集合：它是一种有序列表。">
 <meta name="author" content="Wjy">
@@ -97,10 +97,10 @@
   "name": "List",
   "description": "概述 在集合类中，List是最基础的一种集合：它是一种有序列表。\n",
   "keywords": [
-    "Collection"
+    "Java集合"
   ],
   "articleBody": "概述 在集合类中，List是最基础的一种集合：它是一种有序列表。\nList的行为和数组几乎完全相同：List内部按照放入元素的先后顺序存放，每个元素都可以通过索引确定自己的位置，List的索引和数组一样，从0开始。\n数组和List类似，也是有序结构，如果我们使用数组，在添加和删除元素的时候，会非常不方便。例如，从一个已有的数组{'A', 'B', 'C', 'D', 'E'}中删除索引为2的元素：\n1 2 3 4 5 6 7 8 9 10 11 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ C │ D │ E │ │ └───┴───┴───┴───┴───┴───┘ │ │ ┌───┘ │ │ ┌───┘ │ │ ▼ ▼ ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ D │ E │ │ │ └───┴───┴───┴───┴───┴───┘ 这个“删除”操作实际上是把'C'后面的元素依次往前挪一个位置，而“添加”操作实际上是把指定位置以后的元素都依次向后挪一个位置，腾出来的位置给新加的元素。这两种操作，用数组实现非常麻烦。\n因此，在实际应用中，需要增删元素的有序列表，我们使用最多的是ArrayList。实际上，ArrayList在内部使用了数组来存储所有元素。例如，一个ArrayList拥有5个元素，实际数组大小为6（即有一个空位）：\n1 2 3 4 size=5 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ C │ D │ E │ │ └───┴───┴───┴───┴───┴───┘ 当添加一个元素并指定索引到ArrayList时，ArrayList自动移动需要移动的元素：\n1 2 3 4 size=5 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ │ C │ D │ E │ └───┴───┴───┴───┴───┴───┘ 然后，往内部指定索引的数组位置添加一个元素，然后把size加1：\n1 2 3 4 size=6 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ F │ C │ D │ E │ └───┴───┴───┴───┴───┴───┘ 继续添加元素，但是数组已满，没有空闲位置的时候，ArrayList先创建一个更大的新数组，然后把旧数组的所有元素复制到新数组，紧接着用新数组取代旧数组：\n1 2 3 4 size=6 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐ │ A │ B │ F │ C │ D │ E │ │ │ │ │ │ │ └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘ 现在，新数组就有了空位，可以继续添加一个元素到数组末尾，同时size加1：\n1 2 3 4 size=7 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐ │ A │ B │ F │ C │ D │ E │ G │ │ │ │ │ │ └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘ 可见，ArrayList把添加和删除的操作封装起来，让我们操作List类似于操作数组，却不用关心内部元素如何移动。\n我们考察List接口，可以看到几个主要的接口方法：\n在末尾添加一个元素：boolean add(E e) 在指定索引添加一个元素：boolean add(int index, E e) 删除指定索引的元素：E remove(int index) 删除某个元素：boolean remove(Object e) 获取指定索引的元素：E get(int index) 获取链表大小（包含元素的个数）：int size() 但是，实现List接口并非只能通过数组（即ArrayList的实现方式）来实现，另一种LinkedList通过“链表”也实现了List接口。在LinkedList中，它的内部每个元素都指向下一个元素：\n1 2 3 ┌───┬───┐ ┌───┬───┐ ┌───┬───┐ ┌───┬───┐ HEAD ──\u003e│ A │ ●─┼──\u003e│ B │ ●─┼──\u003e│ C │ ●─┼──\u003e│ D │ │ └───┴───┘ └───┴───┘ └───┴───┘ └───┴───┘ 我们来比较一下ArrayList和LinkedList：\nArrayList LinkedList 获取指定元素 速度很快 需要从头开始查找元素 添加元素到末尾 速度很快 速度很快 在指定位置添加/删除 需要移动元素 不需要移动元素 内存占用 少 较大 通常情况下，我们总是优先使用ArrayList。\nList的特点 使用List时，我们要关注List接口的规范。List接口允许我们添加重复的元素，即List内部的元素可以重复：\n1 2 3 4 5 6 7 8 9 public class Main { public static void main(String[] args) { List list = new ArrayList\u003c\u003e(); list.add(\"apple\"); // size=1 list.add(\"pear\"); // size=2 list.add(\"apple\"); // 允许重复添加元素，size=3 System.out.println(list.size()); } } List还允许添加null：\n1 2 3 4 5 6 7 8 9 10 public class Main { public static void main(String[] args) { List list = new ArrayList\u003c\u003e(); list.add(\"apple\"); // size=1 list.add(null); // size=2 list.add(\"pear\"); // size=3 String second = list.get(1); // null System.out.println(second); } } 创建List 除了使用ArrayList和LinkedList，我们还可以通过List接口提供的of()方法，根据给定元素快速创建List：\n1 List list = List.of(1, 2, 5); 但是List.of()方法不接受null值，如果传入null，会抛出NullPointerException异常。\n遍历List 和数组类型，我们要遍历一个List，完全可以用for循环根据索引配合get(int)方法遍历：\n1 2 3 4 5 6 7 8 9 public class Main { public static void main(String[] args) { List list = List.of(\"apple\", \"pear\", \"banana\"); for (int i=0; i",
-  "wordCount" : "10954",
+  "wordCount" : "9860",
   "inLanguage": "en",
   "datePublished": "2017-12-19T16:01:54Z",
   "dateModified": "2017-12-19T16:01:54Z",
@@ -231,7 +231,9 @@
                 <li>
                     <a href="#%e9%81%8d%e5%8e%86list" aria-label="遍历List">遍历List</a></li>
                 <li>
-                    <a href="#list%e5%92%8carray%e8%bd%ac%e6%8d%a2" aria-label="List和Array转换">List和Array转换</a></li></ul>
+                    <a href="#list%e5%92%8carray%e8%bd%ac%e6%8d%a2" aria-label="List和Array转换">List和Array转换</a></li>
+                <li>
+                    <a href="#%e7%bb%83%e4%b9%a0" aria-label="练习">练习</a></li></ul>
                 </li>
                 <li>
                     <a href="#%e7%bc%96%e5%86%99equals%e6%96%b9%e6%b3%95" aria-label="编写equals()方法">编写equals()方法</a><ul>
@@ -239,7 +241,9 @@
                 <li>
                     <a href="#%e7%bc%96%e5%86%99equals" aria-label="编写equals">编写equals</a></li>
                 <li>
-                    <a href="#%e5%b0%8f%e7%bb%93" aria-label="小结">小结</a></li></ul>
+                    <a href="#%e5%b0%8f%e7%bb%93" aria-label="小结">小结</a></li>
+                <li>
+                    <a href="#%e7%bb%83%e4%b9%a0-1" aria-label="练习">练习</a></li></ul>
                 </li>
                 <li>
                     <a href="#list%e6%a6%82%e6%8b%ac" aria-label="List概括">List概括</a></li>
@@ -251,15 +255,7 @@
                 <li>
                     <a href="#linkedlistjava%e4%b8%ad%e5%90%91%e6%8c%87%e5%ae%9a%e4%bd%8d%e7%bd%ae%e6%8f%92%e5%85%a5%e5%85%83%e7%b4%a0%e7%9a%84%e4%bb%a3%e7%a0%81%e5%a6%82%e4%b8%8b" aria-label="LinkedList.java中向指定位置插入元素的代码如下">LinkedList.java中向指定位置插入元素的代码如下</a></li>
                 <li>
-                    <a href="#arraylistjava%e4%b8%ad%e5%90%91%e6%8c%87%e5%ae%9a%e4%bd%8d%e7%bd%ae%e6%8f%92%e5%85%a5%e5%85%83%e7%b4%a0%e7%9a%84%e4%bb%a3%e7%a0%81%e5%a6%82%e4%b8%8b" aria-label="ArrayList.java中向指定位置插入元素的代码。如下：">ArrayList.java中向指定位置插入元素的代码。如下：</a></li></ul>
-                </li>
-                <li>
-                    <a href="#vector%e5%92%8carraylist%e6%af%94%e8%be%83" aria-label="Vector和ArrayList比较">Vector和ArrayList比较</a><ul>
-                        
-                <li>
-                    <a href="#%e7%9b%b8%e5%90%8c%e4%b9%8b%e5%a4%84" aria-label="相同之处">相同之处</a></li>
-                <li>
-                    <a href="#%e4%b8%8d%e5%90%8c%e4%b9%8b%e5%a4%84" aria-label="不同之处">不同之处</a>
+                    <a href="#arraylistjava%e4%b8%ad%e5%90%91%e6%8c%87%e5%ae%9a%e4%bd%8d%e7%bd%ae%e6%8f%92%e5%85%a5%e5%85%83%e7%b4%a0%e7%9a%84%e4%bb%a3%e7%a0%81%e5%a6%82%e4%b8%8b" aria-label="ArrayList.java中向指定位置插入元素的代码。如下：">ArrayList.java中向指定位置插入元素的代码。如下：</a>
                 </li>
             </ul>
             </li>
@@ -660,7 +656,7 @@
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Integer[] array = list.toArray(new Integer[list.size()]);
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Integer[] array = list.<span style="color:#007f7f">toArray</span>(<span style="color:#fff;font-weight:bold">new</span> Integer[list.<span style="color:#007f7f">size</span>()]);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>最后一种更简洁的写法是通过<code>List</code>接口定义的<code>T[] toArray(IntFunction&lt;T[]&gt; generator)</code>方法：</p>
@@ -669,7 +665,7 @@
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Integer[] array = list.toArray(Integer[]::new);
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Integer[] array = list.<span style="color:#007f7f">toArray</span>(Integer[]::<span style="color:#fff;font-weight:bold">new</span>);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这种函数式写法我们会在后续讲到。</p>
@@ -680,8 +676,8 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Integer[] array = { 1, 2, 3 };
-</span></span><span style="display:flex;"><span>List&lt;Integer&gt; list = List.of(array);
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Integer[] array = { <span style="color:#ff0;font-weight:bold">1</span>, <span style="color:#ff0;font-weight:bold">2</span>, <span style="color:#ff0;font-weight:bold">3</span> };
+</span></span><span style="display:flex;"><span>List&lt;Integer&gt; list = List.<span style="color:#007f7f">of</span>(array);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>对于JDK 11之前的版本，可以使用<code>Arrays.asList(T...)</code>方法把数组转换成<code>List</code>。</p>
@@ -705,7 +701,118 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>对只读<code>List</code>调用<code>add()</code>、<code>remove()</code>方法会抛出<code>UnsupportedOperationException</code>。</p>
-<h1 id="编写equals方法">编写equals()方法<a hidden class="anchor" aria-hidden="true" href="#编写equals方法">#</a></h1>
+<h2 id="练习">练习<a hidden class="anchor" aria-hidden="true" href="#练习">#</a></h2>
+<p>给定一组连续的整数，例如：10，11，12，……，20，但其中缺失一个数字，试找出缺失的数字：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> java.util.*;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> Main {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 构造从start到end的序列：
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span> start = <span style="color:#ff0;font-weight:bold">10</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span> end = <span style="color:#ff0;font-weight:bold">20</span>;
+</span></span><span style="display:flex;"><span>        List&lt;Integer&gt; list = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = start; i &lt;= end; i++) {
+</span></span><span style="display:flex;"><span>            list.<span style="color:#007f7f">add</span>(i);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 随机删除List中的一个元素:
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">int</span> removed = list.<span style="color:#007f7f">remove</span>((<span style="color:#fff;font-weight:bold">int</span>) (Math.<span style="color:#007f7f">random</span>() * list.<span style="color:#007f7f">size</span>()));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> found = findMissingNumber(start, end, list);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(list.<span style="color:#007f7f">toString</span>());
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;missing number: &#34;</span> + found);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(removed == found ? <span style="color:#0ff;font-weight:bold">&#34;测试成功&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;测试失败&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">int</span> findMissingNumber(<span style="color:#fff;font-weight:bold">int</span> start, <span style="color:#fff;font-weight:bold">int</span> end, List&lt;Integer&gt; list) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>增强版：和上述题目一样，但整数不再有序，试找出缺失的数字：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> java.util.*;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> Main {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 构造从start到end的序列：
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span> start = <span style="color:#ff0;font-weight:bold">10</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span> end = <span style="color:#ff0;font-weight:bold">20</span>;
+</span></span><span style="display:flex;"><span>        List&lt;Integer&gt; list = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = start; i &lt;= end; i++) {
+</span></span><span style="display:flex;"><span>            list.<span style="color:#007f7f">add</span>(i);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 洗牌算法shuffle可以随机交换List中的元素位置:
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        Collections.<span style="color:#007f7f">shuffle</span>(list);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 随机删除List中的一个元素:
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">int</span> removed = list.<span style="color:#007f7f">remove</span>((<span style="color:#fff;font-weight:bold">int</span>) (Math.<span style="color:#007f7f">random</span>() * list.<span style="color:#007f7f">size</span>()));
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> found = findMissingNumber(start, end, list);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(list.<span style="color:#007f7f">toString</span>());
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;missing number: &#34;</span> + found);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(removed == found ? <span style="color:#0ff;font-weight:bold">&#34;测试成功&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;测试失败&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">int</span> findMissingNumber(<span style="color:#fff;font-weight:bold">int</span> start, <span style="color:#fff;font-weight:bold">int</span> end, List&lt;Integer&gt; list) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="编写equals方法">编写equals()方法<a hidden class="anchor" aria-hidden="true" href="#编写equals方法">#</a></h1>
 <p>我们知道<code>List</code>是一种有序链表：<code>List</code>内部按照放入元素的先后顺序存放，并且每个元素都可以通过索引确定自己的位置。</p>
 <p><code>List</code>还提供了<code>boolean contains(Object o)</code>方法来判断<code>List</code>是否包含某个指定元素。此外，<code>int indexOf(Object o)</code>方法可以返回某个元素的索引，如果元素不存在，就返回<code>-1</code>。</p>
 <p>我们来看一个例子：</p>
@@ -846,9 +953,9 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public class Person {
-</span></span><span style="display:flex;"><span>    public String name;
-</span></span><span style="display:flex;"><span>    public int age;
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> Person {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String name;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> age;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -865,12 +972,12 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public boolean equals(Object o) {
-</span></span><span style="display:flex;"><span>    if (o instanceof Person) {
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> equals(Object o) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (o <span style="color:#fff;font-weight:bold">instanceof</span> Person) {
 </span></span><span style="display:flex;"><span>        Person p = (Person) o;
-</span></span><span style="display:flex;"><span>        return this.name.equals(p.name) &amp;&amp; this.age == p.age;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">name</span>.<span style="color:#007f7f">equals</span>(p.<span style="color:#007f7f">name</span>) &amp;&amp; <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">age</span> == p.<span style="color:#007f7f">age</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    return false;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -894,19 +1001,19 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public boolean equals(Object o) {
-</span></span><span style="display:flex;"><span>    if (o instanceof Person) {
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> equals(Object o) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (o <span style="color:#fff;font-weight:bold">instanceof</span> Person) {
 </span></span><span style="display:flex;"><span>        Person p = (Person) o;
-</span></span><span style="display:flex;"><span>        boolean nameEquals = false;
-</span></span><span style="display:flex;"><span>        if (this.name == null &amp;&amp; p.name == null) {
-</span></span><span style="display:flex;"><span>            nameEquals = true;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">boolean</span> nameEquals = <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (<span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">name</span> == <span style="color:#fff;font-weight:bold">null</span> &amp;&amp; p.<span style="color:#007f7f">name</span> == <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            nameEquals = <span style="color:#fff;font-weight:bold">true</span>;
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        if (this.name != null) {
-</span></span><span style="display:flex;"><span>            nameEquals = this.name.equals(p.name);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (<span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">name</span> != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>            nameEquals = <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">name</span>.<span style="color:#007f7f">equals</span>(p.<span style="color:#007f7f">name</span>);
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        return nameEquals &amp;&amp; this.age == p.age;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> nameEquals &amp;&amp; <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">age</span> == p.<span style="color:#007f7f">age</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    return false;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -922,12 +1029,12 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public boolean equals(Object o) {
-</span></span><span style="display:flex;"><span>    if (o instanceof Person) {
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> equals(Object o) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (o <span style="color:#fff;font-weight:bold">instanceof</span> Person) {
 </span></span><span style="display:flex;"><span>        Person p = (Person) o;
-</span></span><span style="display:flex;"><span>        return Objects.equals(this.name, p.name) &amp;&amp; this.age == p.age;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> Objects.<span style="color:#007f7f">equals</span>(<span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">name</span>, p.<span style="color:#007f7f">name</span>) &amp;&amp; <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">age</span> == p.<span style="color:#007f7f">age</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    return false;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -943,7 +1050,65 @@
 <p>在<code>List</code>中查找元素时，<code>List</code>的实现类通过元素的<code>equals()</code>方法比较两个元素是否相等，因此，放入的元素必须正确覆写<code>equals()</code>方法，Java标准库提供的<code>String</code>、<code>Integer</code>等已经覆写了<code>equals()</code>方法；</p>
 <p>编写<code>equals()</code>方法可借助<code>Objects.equals()</code>判断。</p>
 <p>如果不在<code>List</code>中查找元素，就不必覆写<code>equals()</code>方法。</p>
-<h1 id="list概括">List概括<a hidden class="anchor" aria-hidden="true" href="#list概括">#</a></h1>
+<h2 id="练习-1">练习<a hidden class="anchor" aria-hidden="true" href="#练习-1">#</a></h2>
+<p>给Person类增加equals方法，使得调用indexOf()方法返回正常：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> java.util.List;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> java.util.Objects;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> Main {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>        List&lt;Person&gt; list = List.<span style="color:#007f7f">of</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">new</span> Person(<span style="color:#0ff;font-weight:bold">&#34;Xiao&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;Ming&#34;</span>, <span style="color:#ff0;font-weight:bold">18</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">new</span> Person(<span style="color:#0ff;font-weight:bold">&#34;Xiao&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;Hong&#34;</span>, <span style="color:#ff0;font-weight:bold">25</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">new</span> Person(<span style="color:#0ff;font-weight:bold">&#34;Bob&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;Smith&#34;</span>, <span style="color:#ff0;font-weight:bold">20</span>)
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">boolean</span> exist = list.<span style="color:#007f7f">contains</span>(<span style="color:#fff;font-weight:bold">new</span> Person(<span style="color:#0ff;font-weight:bold">&#34;Bob&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;Smith&#34;</span>, <span style="color:#ff0;font-weight:bold">20</span>));
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(exist ? <span style="color:#0ff;font-weight:bold">&#34;测试成功!&#34;</span> : <span style="color:#0ff;font-weight:bold">&#34;测试失败!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">class</span> Person {
+</span></span><span style="display:flex;"><span>    String firstName;
+</span></span><span style="display:flex;"><span>    String lastName;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> age;
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> Person(String firstName, String lastName, <span style="color:#fff;font-weight:bold">int</span> age) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">firstName</span> = firstName;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">lastName</span> = lastName;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">age</span> = age;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="list概括">List概括<a hidden class="anchor" aria-hidden="true" href="#list概括">#</a></h1>
 <p>List的框架图
 <img loading="lazy" src="1.jpg" alt=""  />
 </p>
@@ -1430,309 +1595,12 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>从中，我们可以看出：通过<code>get(int index)</code>获取ArrayList第index个元素时。直接返回数组中index位置的元素，而不需要像LinkedList一样进行查找。</p>
-<h1 id="vector和arraylist比较">Vector和ArrayList比较<a hidden class="anchor" aria-hidden="true" href="#vector和arraylist比较">#</a></h1>
-<h2 id="相同之处">相同之处<a hidden class="anchor" aria-hidden="true" href="#相同之处">#</a></h2>
-<ul>
-<li>都是List
-它们都继承于AbstractList，并且实现List接口。ArrayList和Vector的类定义如下：</li>
-</ul>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// ArrayList的定义
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> ArrayList&lt;E&gt; <span style="color:#fff;font-weight:bold">extends</span> AbstractList&lt;E&gt;
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">implements</span> List&lt;E&gt;, RandomAccess, Cloneable, java.<span style="color:#007f7f">io</span>.<span style="color:#007f7f">Serializable</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">// Vector的定义
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> Vector&lt;E&gt; <span style="color:#fff;font-weight:bold">extends</span> AbstractList&lt;E&gt;
-</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">implements</span> List&lt;E&gt;, RandomAccess, Cloneable, java.<span style="color:#007f7f">io</span>.<span style="color:#007f7f">Serializable</span> {}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>
-<p>它们都实现了RandomAccess和Cloneable接口
-实现RandomAccess接口，意味着它们都支持快速随机访问；
-实现Cloneable接口，意味着它们能克隆自己。</p>
-</li>
-<li>
-<p>它们都是通过数组实现的，本质上都是动态数组
-ArrayList.java中定义数组elementData用于保存元素</p>
-</li>
-</ul>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// 保存ArrayList中数据的数组
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">transient</span> Object[] elementData;
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Vector.java中也定义了数组elementData用于保存元素</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// 保存Vector中数据的数组
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">protected</span> Object[] elementData;
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>默认数组容量都是10
-若创建ArrayList或Vector时，没指定容量大小；则使用默认容量大小10。
-ArrayList的默认构造函数如下：</li>
-</ul>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// ArrayList构造函数。默认容量是10。
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> ArrayList() {
-</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">this</span>(<span style="color:#ff0;font-weight:bold">10</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Vector的默认构造函数如下：</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// Vector构造函数。默认容量是10。
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span><span style="color:#fff;font-weight:bold">public</span> Vector() {
-</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">this</span>(<span style="color:#ff0;font-weight:bold">10</span>);
-</span></span><span style="display:flex;"><span>} 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>
-<p>都支持Iterator和listIterator遍历
-它们都继承于AbstractList，而AbstractList中分别实现了 “iterator()接口返回Iterator迭代器” 和 “listIterator()返回ListIterator迭代器”。</p>
-</li>
-<li>
-<p>都支持序列化，即可以通过序列化的方式传输</p>
-</li>
-</ul>
-<h2 id="不同之处">不同之处<a hidden class="anchor" aria-hidden="true" href="#不同之处">#</a></h2>
-<ul>
-<li>
-<p>线程安全性不一样
-ArrayList是非线程安全，而Vector是线程安全的，它的函数都是synchronized的，即都是支持同步的。
-ArrayList适用于单线程，Vector适用于多线程。</p>
-</li>
-<li>
-<p>构造函数个数不同
-ArrayList有3个构造函数，Vector有4个构造函数，Vector除了包括和ArrayList类似的3个构造函数之外，另外的一个构造函数可以指定容量增加系数。</p>
-</li>
-</ul>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// ArrayList的构造函数如下：
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">// 默认构造函数
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>ArrayList()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">// capacity是ArrayList的默认容量大小。当由于增加数据导致容量不足时，容量会添加上一次容量大小的一半。
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>ArrayList(<span style="color:#fff;font-weight:bold">int</span> capacity)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 创建一个包含collection的ArrayList
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>ArrayList(Collection&lt;? <span style="color:#fff;font-weight:bold">extends</span> E&gt; collection)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// Vector的构造函数如下：
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">// 默认构造函数
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>Vector()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">// capacity是Vector的默认容量大小。当由于增加数据导致容量增加时，每次容量会增加一倍。
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>Vector(<span style="color:#fff;font-weight:bold">int</span> capacity)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 创建一个包含collection的Vector
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>Vector(Collection&lt;? <span style="color:#fff;font-weight:bold">extends</span> E&gt; collection)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">// capacity是Vector的默认容量大小，capacityIncrement是每次Vector容量增加时的增量值。
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>Vector(<span style="color:#fff;font-weight:bold">int</span> capacity, <span style="color:#fff;font-weight:bold">int</span> capacityIncrement)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>容量增加方式不同
-逐个添加元素，Arraylist扩容方式为：</li>
-</ul>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span style="color:#ff0;font-weight:bold">1</span>);
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>将其向右一位再加上原来的数，实际上是扩充了1.5倍。</p>
-<p>Vector的容量增长与“增长系数有关”。
-若指定了增长系数，且增长系数有效(即，大于0)；那么，每次容量不足时，新的容量=原始容量+增长系数。
-若增长系数无效(即，小于/等于0)，则新的容量=原始容量 x 2</p>
-<p>ArrayList中容量增长的主要函数如下：</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">void</span> grow(<span style="color:#fff;font-weight:bold">int</span> minCapacity) {
-</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// overflow-conscious code
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">int</span> oldCapacity = elementData.<span style="color:#007f7f">length</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span style="color:#ff0;font-weight:bold">1</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (newCapacity - minCapacity &lt; <span style="color:#ff0;font-weight:bold">0</span>)
-</span></span><span style="display:flex;"><span>            newCapacity = minCapacity;
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span style="color:#ff0;font-weight:bold">0</span>)
-</span></span><span style="display:flex;"><span>            newCapacity = hugeCapacity(minCapacity);
-</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// minCapacity is usually close to size, so this is a win:
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        elementData = Arrays.<span style="color:#007f7f">copyOf</span>(elementData, newCapacity);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">//注：这是jdk1.8中重构了扩容的方式，与jdk1.6中的`新的容量”=“(原始容量x3)/2 + 1`有所不同
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>Vector中容量增长的主要函数如下：</p>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">void</span> grow(<span style="color:#fff;font-weight:bold">int</span> minCapacity) {
-</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// overflow-conscious code
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">int</span> oldCapacity = elementData.<span style="color:#007f7f">length</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> newCapacity = oldCapacity + ((capacityIncrement &gt; <span style="color:#ff0;font-weight:bold">0</span>) ?
-</span></span><span style="display:flex;"><span>                                         capacityIncrement : oldCapacity);
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (newCapacity - minCapacity &lt; <span style="color:#ff0;font-weight:bold">0</span>)
-</span></span><span style="display:flex;"><span>            newCapacity = minCapacity;
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span style="color:#ff0;font-weight:bold">0</span>)
-</span></span><span style="display:flex;"><span>            newCapacity = hugeCapacity(minCapacity);
-</span></span><span style="display:flex;"><span>        elementData = Arrays.<span style="color:#007f7f">copyOf</span>(elementData, newCapacity);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span><span style="color:#007f7f">//注：jdk1.8重构了。
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>对Enumeration的支持不同。Vector支持通过Enumeration去遍历，而List不支持</li>
-</ul>
-<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> Enumeration&lt;E&gt; elements() {
-</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 通过匿名类实现Enumeration
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">new</span> Enumeration&lt;E&gt;() {
-</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> count = <span style="color:#ff0;font-weight:bold">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 是否存在下一个元素
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> hasMoreElements() {
-</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> count &lt; elementCount;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 获取下一个元素
-</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"></span>        <span style="color:#fff;font-weight:bold">public</span> E nextElement() {
-</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">synchronized</span> (Vector.<span style="color:#007f7f">this</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">if</span> (count &lt; elementCount) {
-</span></span><span style="display:flex;"><span>                    <span style="color:#fff;font-weight:bold">return</span> (E)elementData[count++];
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> NoSuchElementException(<span style="color:#0ff;font-weight:bold">&#34;Vector Enumeration&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></td></tr></table>
-</div>
-</div>
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/collection/">Collection</a></li>
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/java%E9%9B%86%E5%90%88/">Java集合</a></li>
     </ul>
   </footer>
 </article>
