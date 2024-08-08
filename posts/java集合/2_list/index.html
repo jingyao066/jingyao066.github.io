@@ -10,7 +10,7 @@
 <meta name="description" content="概述
 在集合类中，List是最基础的一种集合：它是一种有序列表。">
 <meta name="author" content="Wjy">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/2_list/">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/2_list/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
@@ -59,9 +59,9 @@
 <meta property="og:description" content="概述
 在集合类中，List是最基础的一种集合：它是一种有序列表。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/2_list/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-12-19T16:01:54+00:00" />
-<meta property="article:modified_time" content="2017-12-19T16:01:54+00:00" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/2_list/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-12-07T16:01:54+00:00" />
+<meta property="article:modified_time" content="2016-12-07T16:01:54+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="List"/>
@@ -84,7 +84,7 @@
       "@type": "ListItem",
       "position":  2 ,
       "name": "List",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/2_list/"
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/2_list/"
     }
   ]
 }
@@ -102,15 +102,15 @@
   "articleBody": "概述 在集合类中，List是最基础的一种集合：它是一种有序列表。\nList的行为和数组几乎完全相同：List内部按照放入元素的先后顺序存放，每个元素都可以通过索引确定自己的位置，List的索引和数组一样，从0开始。\n数组和List类似，也是有序结构，如果我们使用数组，在添加和删除元素的时候，会非常不方便。例如，从一个已有的数组{'A', 'B', 'C', 'D', 'E'}中删除索引为2的元素：\n1 2 3 4 5 6 7 8 9 10 11 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ C │ D │ E │ │ └───┴───┴───┴───┴───┴───┘ │ │ ┌───┘ │ │ ┌───┘ │ │ ▼ ▼ ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ D │ E │ │ │ └───┴───┴───┴───┴───┴───┘ 这个“删除”操作实际上是把'C'后面的元素依次往前挪一个位置，而“添加”操作实际上是把指定位置以后的元素都依次向后挪一个位置，腾出来的位置给新加的元素。这两种操作，用数组实现非常麻烦。\n因此，在实际应用中，需要增删元素的有序列表，我们使用最多的是ArrayList。实际上，ArrayList在内部使用了数组来存储所有元素。例如，一个ArrayList拥有5个元素，实际数组大小为6（即有一个空位）：\n1 2 3 4 size=5 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ C │ D │ E │ │ └───┴───┴───┴───┴───┴───┘ 当添加一个元素并指定索引到ArrayList时，ArrayList自动移动需要移动的元素：\n1 2 3 4 size=5 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ │ C │ D │ E │ └───┴───┴───┴───┴───┴───┘ 然后，往内部指定索引的数组位置添加一个元素，然后把size加1：\n1 2 3 4 size=6 ┌───┬───┬───┬───┬───┬───┐ │ A │ B │ F │ C │ D │ E │ └───┴───┴───┴───┴───┴───┘ 继续添加元素，但是数组已满，没有空闲位置的时候，ArrayList先创建一个更大的新数组，然后把旧数组的所有元素复制到新数组，紧接着用新数组取代旧数组：\n1 2 3 4 size=6 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐ │ A │ B │ F │ C │ D │ E │ │ │ │ │ │ │ └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘ 现在，新数组就有了空位，可以继续添加一个元素到数组末尾，同时size加1：\n1 2 3 4 size=7 ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐ │ A │ B │ F │ C │ D │ E │ G │ │ │ │ │ │ └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘ 可见，ArrayList把添加和删除的操作封装起来，让我们操作List类似于操作数组，却不用关心内部元素如何移动。\n我们考察List接口，可以看到几个主要的接口方法：\n在末尾添加一个元素：boolean add(E e) 在指定索引添加一个元素：boolean add(int index, E e) 删除指定索引的元素：E remove(int index) 删除某个元素：boolean remove(Object e) 获取指定索引的元素：E get(int index) 获取链表大小（包含元素的个数）：int size() 但是，实现List接口并非只能通过数组（即ArrayList的实现方式）来实现，另一种LinkedList通过“链表”也实现了List接口。在LinkedList中，它的内部每个元素都指向下一个元素：\n1 2 3 ┌───┬───┐ ┌───┬───┐ ┌───┬───┐ ┌───┬───┐ HEAD ──\u003e│ A │ ●─┼──\u003e│ B │ ●─┼──\u003e│ C │ ●─┼──\u003e│ D │ │ └───┴───┘ └───┴───┘ └───┴───┘ └───┴───┘ 我们来比较一下ArrayList和LinkedList：\nArrayList LinkedList 获取指定元素 速度很快 需要从头开始查找元素 添加元素到末尾 速度很快 速度很快 在指定位置添加/删除 需要移动元素 不需要移动元素 内存占用 少 较大 通常情况下，我们总是优先使用ArrayList。\nList的特点 使用List时，我们要关注List接口的规范。List接口允许我们添加重复的元素，即List内部的元素可以重复：\n1 2 3 4 5 6 7 8 9 public class Main { public static void main(String[] args) { List list = new ArrayList\u003c\u003e(); list.add(\"apple\"); // size=1 list.add(\"pear\"); // size=2 list.add(\"apple\"); // 允许重复添加元素，size=3 System.out.println(list.size()); } } List还允许添加null：\n1 2 3 4 5 6 7 8 9 10 public class Main { public static void main(String[] args) { List list = new ArrayList\u003c\u003e(); list.add(\"apple\"); // size=1 list.add(null); // size=2 list.add(\"pear\"); // size=3 String second = list.get(1); // null System.out.println(second); } } 创建List 除了使用ArrayList和LinkedList，我们还可以通过List接口提供的of()方法，根据给定元素快速创建List：\n1 List list = List.of(1, 2, 5); 但是List.of()方法不接受null值，如果传入null，会抛出NullPointerException异常。\n遍历List 和数组类型，我们要遍历一个List，完全可以用for循环根据索引配合get(int)方法遍历：\n1 2 3 4 5 6 7 8 9 public class Main { public static void main(String[] args) { List list = List.of(\"apple\", \"pear\", \"banana\"); for (int i=0; i",
   "wordCount" : "9860",
   "inLanguage": "en",
-  "datePublished": "2017-12-19T16:01:54Z",
-  "dateModified": "2017-12-19T16:01:54Z",
+  "datePublished": "2016-12-07T16:01:54Z",
+  "dateModified": "2016-12-07T16:01:54Z",
   "author":{
     "@type": "Person",
     "name": "Wjy"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/2_list/"
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/2_list/"
   },
   "publisher": {
     "@type": "Organization",
@@ -211,7 +211,7 @@
     <h1 class="post-title entry-hint-parent">
       List
     </h1>
-    <div class="post-meta"><span title='2017-12-19 16:01:54 +0000 UTC'>2017-12-19</span>&nbsp;·&nbsp;Wjy
+    <div class="post-meta"><span title='2016-12-07 16:01:54 +0000 UTC'>2016-12-07</span>&nbsp;·&nbsp;Wjy
 
 </div>
   </header> <div class="toc">

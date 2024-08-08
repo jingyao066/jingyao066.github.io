@@ -12,7 +12,7 @@ HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值
 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。">
 <meta name="author" content="Wjy">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/hashmap/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
@@ -63,9 +63,9 @@ HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值
 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-12-20T14:49:20+00:00" />
-<meta property="article:modified_time" content="2017-12-20T14:49:20+00:00" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/hashmap/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-12-12T14:49:20+00:00" />
+<meta property="article:modified_time" content="2016-12-12T14:49:20+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HashMap"/>
@@ -90,7 +90,7 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
       "@type": "ListItem",
       "position":  2 ,
       "name": "HashMap",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/"
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/hashmap/"
     }
   ]
 }
@@ -106,17 +106,17 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
     "Java集合"
   ],
   "articleBody": "概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。\nHashMap的实例有两个参数影响其性能：初始容量和加载因子 容量是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。 加载因子是哈希表在其容量自动增长之前，可以达到多满的一种尺度。 当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行rehash操作(即重建内部结构)，从而哈希表将具有两倍的桶数。 通常，默认加载因子是0.75， 这是在时间和空间成本上寻求一种折中。加载因子过高虽然减少了空间开销，但是也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。 在设置初始容量时应该考虑到映射中所需的条目数及其加载因子，以便最大限度地减少 rehash 操作次数。如果初始容量大于最大条目数除以加载因子，则不会发生 rehash 操作。\n链式哈希表 链式哈希表从根本上说是由一组链表构成。 每个链表都可以看做是一个“桶”，我们将所有的元素通过散列的方式放到具体的不同的桶中。 插入元素时，首先将其键传入一个哈希函数（该过程称为哈希键），函数通过散列的方式告知元素属于哪个“桶”，然后在相应的链表头插入元素。 查找或删除元素时，用同样的方式先找到元素的“桶”，然后遍历相应的链表，直到发现我们想要的元素。 因为每个“桶”都是一个链表，所以链式哈希表并不限制包含元素的个数。然而，如果表变得太大，它的性能将会降低。\nJDK 1.8 对 HashMap 进行了比较大的优化，底层实现由之前的 “数组+链表” 改为 “数组+链表+红黑树”。JDK 1.8 的 HashMap 的数据结构如下图所示，当链表节点较少时仍然是以链表存在，当链表节点较多时（大于8）会转为红黑树。\n1、本文中头节点指的是 table 表上索引位置的节点，也就是链表的头节点。\n2、根节点（root 节点）指的是红黑树最上面的那个节点，也就是没有父节点的节点。\n3、红黑树的根节点不一定是索引位置的头节点（也就是链表的头节点），HashMap 通过 moveRootToFront 方法来维持红黑树的根结点就是索引位置的头结点，但是在 removeTreeNode 方法中，当 movable 为 false 时，不会调用 moveRootToFront 方法，此时红黑树的根节点不一定是索引位置的头节点，该场景发生在 HashIterator 的 remove 方法中。\n4、转为红黑树节点后，链表的结构还存在，通过 next 属性维持，红黑树节点在进行操作时都会维护链表的结构，并不是转为红黑树节点，链表结构就不存在了。\n5、在红黑树上，叶子节点也可能有 next 节点，因为红黑树的结构跟链表的结构是互不影响的，不会因为是叶子节点就说该节点已经没有 next 节点。\n6、源码中一些变量定义：如果定义了一个节点 p，则 pl（p left）为 p 的左节点，pr（p right）为 p 的右节点，pp（p parent）为 p 的父节点，ph（p hash）为 p 的 hash 值，pk（p key）为 p 的 key 值，kc（key class）为 key 的类等等。源码中很喜欢在 if/for 等语句中进行赋值并判断，请注意。\n7、链表中移除一个节点只需如下图操作，其他操作同理。\n8、红黑树在维护链表结构时，移除一个节点只需如下图操作（红黑树中增加了一个 prev 属性），其他操作同理。注：此处只是红黑树维护链表结构的操作，红黑树还需要单独进行红黑树的移除或者其他操作。\n9、源码中进行红黑树的查找时，会反复用到以下两条规则：1）如果目标节点的 hash 值小于 p 节点的 hash 值，则向 p 节点的左边遍历；否则向 p 节点的右边遍历。2）如果目标节点的 key 值小于 p 节点的 key 值，则向 p 节点的左边遍历；否则向 p 节点的右边遍历。这两条规则是利用了红黑树的特性（左节点 \u003c 根节点 \u003c 右节点）。\n10、源码中进行红黑树的查找时，会用 dir（direction）来表示向左还是向右查找，dir 存储的值是目标节点的 hash/key 与 p 节点的 hash/key 的比较结果。\n构造函数 1 2 3 4 5 6 7 8 // 默认构造函数。 HashMap() // 指定“容量大小”的构造函数 HashMap(int capacity) // 指定“容量大小”和“加载因子”的构造函数 HashMap(int capacity, float loadFactor) // 包含“子Map”的构造函数 HashMap(Map\u003c? extends K, ? extends V\u003e map) API 1 2 3 4 5 6 7 8 9 10 11 12 13 void clear() Object clone() boolean containsKey(Object key) boolean containsValue(Object value) Set",
-  "wordCount" : "26358",
+  "wordCount" : "26795",
   "inLanguage": "en",
-  "datePublished": "2017-12-20T14:49:20Z",
-  "dateModified": "2017-12-20T14:49:20Z",
+  "datePublished": "2016-12-12T14:49:20Z",
+  "dateModified": "2016-12-12T14:49:20Z",
   "author":{
     "@type": "Person",
     "name": "Wjy"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/"
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/hashmap/"
   },
   "publisher": {
     "@type": "Organization",
@@ -217,7 +217,7 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
     <h1 class="post-title entry-hint-parent">
       HashMap
     </h1>
-    <div class="post-meta"><span title='2017-12-20 14:49:20 +0000 UTC'>2017-12-20</span>&nbsp;·&nbsp;Wjy
+    <div class="post-meta"><span title='2016-12-12 14:49:20 +0000 UTC'>2016-12-12</span>&nbsp;·&nbsp;Wjy
 
 </div>
   </header> <div class="toc">
@@ -261,7 +261,7 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
                 <li>
                     <a href="#%e4%bb%a3%e7%a0%81%e5%9d%976treeifybin" aria-label="代码块6：treeifyBin">代码块6：treeifyBin</a></li>
                 <li>
-                    <a href="#%e4%bb%a3%e7%a0%81%e5%9d%977treeify" aria-label="代码块7：treeify">代码块7：treeify</a></li>
+                    <a href="#xxxxxxxxxximport-javautil--desc-hashtable%e7%9a%84%e6%b5%8b%e8%af%95%e7%a8%8b%e5%ba%8f---author-skywang-public-class-hashtabletest---public-static-void-mainstring-args-----testhashtableapis-----private-static-void-testhashtableapis------%e5%88%9d%e5%a7%8b%e5%8c%96%e9%9a%8f%e6%9c%ba%e7%a7%8d%e5%ad%90----random-r--new-random-----%e6%96%b0%e5%bb%bahashtable----hashtable-table--new-hashtable-----%e6%b7%bb%e5%8a%a0%e6%93%8d%e4%bd%9c----tableputone-rnextint10----tableputtwo-rnextint10----tableputthree-rnextint10-----%e6%89%93%e5%8d%b0%e5%87%batable----systemoutprintlntabletable------%e9%80%9a%e8%bf%87iterator%e9%81%8d%e5%8e%86key-value----iterator-iter--tableentrysetiterator----whileiterhasnext-------mapentry-entry--mapentryiternext------systemoutprintlnnext---entrygetkey----entrygetvalue----------hashtable%e7%9a%84%e9%94%ae%e5%80%bc%e5%af%b9%e4%b8%aa%e6%95%b0--------systemoutprintlnsizetablesize-----containskeyobject-key-%e6%98%af%e5%90%a6%e5%8c%85%e5%90%ab%e9%94%aekey----systemoutprintlncontains-key-two--tablecontainskeytwo----systemoutprintlncontains-key-five--tablecontainskeyfive-----containsvalueobject-value-%e6%98%af%e5%90%a6%e5%8c%85%e5%90%ab%e5%80%bcvalue----systemoutprintlncontains-value-0--tablecontainsvaluenew-integer0-----removeobject-key--%e5%88%a0%e9%99%a4%e9%94%aekey%e5%af%b9%e5%ba%94%e7%9a%84%e9%94%ae%e5%80%bc%e5%af%b9----tableremovethree----systemoutprintlntabletable------clear--%e6%b8%85%e7%a9%bahashtable----tableclear-----isempty--hashtable%e6%98%af%e5%90%a6%e4%b8%ba%e7%a9%ba----systemoutprintlntableisemptytable-is-emptytable-is-not-empty----java" aria-label="xxxxxxxxxx import java.util.;​/ * @desc Hashtable的测试程序。 * * @author skywang */public class HashtableTest { public static void main(String[] args) { testHashtableAPIs(); }​ private static void testHashtableAPIs() { // 初始化随机种子 Random r = new Random(); // 新建Hashtable Hashtable table = new Hashtable(); // 添加操作 table.put(&ldquo;one&rdquo;, r.nextInt(10)); table.put(&ldquo;two&rdquo;, r.nextInt(10)); table.put(&ldquo;three&rdquo;, r.nextInt(10));​ // 打印出table System.out.println(&ldquo;table:&quot;&#43;table );​ // 通过Iterator遍历key-value Iterator iter = table.entrySet().iterator(); while(iter.hasNext()) { Map.Entry entry = (Map.Entry)iter.next(); System.out.println(&ldquo;next : &ldquo;&#43; entry.getKey() &#43;&rdquo; - &ldquo;&#43;entry.getValue()); }​ // Hashtable的键值对个数 System.out.println(&ldquo;size:&quot;&#43;table.size());​ // containsKey(Object key) :是否包含键key System.out.println(&ldquo;contains key two : &ldquo;&#43;table.containsKey(&ldquo;two&rdquo;)); System.out.println(&ldquo;contains key five : &ldquo;&#43;table.containsKey(&ldquo;five&rdquo;));​ // containsValue(Object value) :是否包含值value System.out.println(&ldquo;contains value 0 : &ldquo;&#43;table.containsValue(new Integer(0)));​ // remove(Object key) ： 删除键key对应的键值对 table.remove(&ldquo;three&rdquo;);​ System.out.println(&ldquo;table:&quot;&#43;table );​ // clear() ： 清空Hashtable table.clear();​ // isEmpty() : Hashtable是否为空 System.out.println((table.isEmpty()?&ldquo;table is empty&rdquo;:&ldquo;table is not empty&rdquo;) ); }​}java">xxxxxxxxxx import java.util.;​/ * @desc Hashtable的测试程序。 * * @author skywang */public class HashtableTest { public static void main(String[] args) { testHashtableAPIs(); }​ private static void testHashtableAPIs() { // 初始化随机种子 Random r = new Random(); // 新建Hashtable Hashtable table = new Hashtable(); // 添加操作 table.put(&ldquo;one&rdquo;, r.nextInt(10)); table.put(&ldquo;two&rdquo;, r.nextInt(10)); table.put(&ldquo;three&rdquo;, r.nextInt(10));​ // 打印出table System.out.println(&ldquo;table:&quot;+table );​ // 通过Iterator遍历key-value Iterator iter = table.entrySet().iterator(); while(iter.hasNext()) { Map.Entry entry = (Map.Entry)iter.next(); System.out.println(&ldquo;next : &ldquo;+ entry.getKey() +&rdquo; - &ldquo;+entry.getValue()); }​ // Hashtable的键值对个数 System.out.println(&ldquo;size:&quot;+table.size());​ // containsKey(Object key) :是否包含键key System.out.println(&ldquo;contains key two : &ldquo;+table.containsKey(&ldquo;two&rdquo;)); System.out.println(&ldquo;contains key five : &ldquo;+table.containsKey(&ldquo;five&rdquo;));​ // containsValue(Object value) :是否包含值value System.out.println(&ldquo;contains value 0 : &ldquo;+table.containsValue(new Integer(0)));​ // remove(Object key) ： 删除键key对应的键值对 table.remove(&ldquo;three&rdquo;);​ System.out.println(&ldquo;table:&quot;+table );​ // clear() ： 清空Hashtable table.clear();​ // isEmpty() : Hashtable是否为空 System.out.println((table.isEmpty()?&ldquo;table is empty&rdquo;:&ldquo;table is not empty&rdquo;) ); }​}java</a></li>
                 <li>
                     <a href="#%e4%bb%a3%e7%a0%81%e5%9d%978moveroottofront" aria-label="代码块8：moveRootToFront">代码块8：moveRootToFront</a></li>
                 <li>
@@ -1312,7 +1312,7 @@ modCount是用来实现fail-fast机制的。</li>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>将 table 该索引位置赋值为新转的 TreeNode 的头节点 hd，如果该节点不为空，则以 hd 为根节点，构建红黑树，<strong>见代码块7详解</strong>。</p>
-<h2 id="代码块7treeify">代码块7：treeify<a hidden class="anchor" aria-hidden="true" href="#代码块7treeify">#</a></h2>
+<h2 id="xxxxxxxxxximport-javautil--desc-hashtable的测试程序---author-skywang-public-class-hashtabletest---public-static-void-mainstring-args-----testhashtableapis-----private-static-void-testhashtableapis------初始化随机种子----random-r--new-random-----新建hashtable----hashtable-table--new-hashtable-----添加操作----tableputone-rnextint10----tableputtwo-rnextint10----tableputthree-rnextint10-----打印出table----systemoutprintlntabletable------通过iterator遍历key-value----iterator-iter--tableentrysetiterator----whileiterhasnext-------mapentry-entry--mapentryiternext------systemoutprintlnnext---entrygetkey----entrygetvalue----------hashtable的键值对个数--------systemoutprintlnsizetablesize-----containskeyobject-key-是否包含键key----systemoutprintlncontains-key-two--tablecontainskeytwo----systemoutprintlncontains-key-five--tablecontainskeyfive-----containsvalueobject-value-是否包含值value----systemoutprintlncontains-value-0--tablecontainsvaluenew-integer0-----removeobject-key--删除键key对应的键值对----tableremovethree----systemoutprintlntabletable------clear--清空hashtable----tableclear-----isempty--hashtable是否为空----systemoutprintlntableisemptytable-is-emptytable-is-not-empty----java">xxxxxxxxxx import java.util.<em>;​/</em> * @desc Hashtable的测试程序。 * * @author skywang */public class HashtableTest {    public static void main(String[] args) {        testHashtableAPIs();    }​    private static void testHashtableAPIs() {        // 初始化随机种子        Random r = new Random();        // 新建Hashtable        Hashtable table = new Hashtable();        // 添加操作        table.put(&ldquo;one&rdquo;, r.nextInt(10));        table.put(&ldquo;two&rdquo;, r.nextInt(10));        table.put(&ldquo;three&rdquo;, r.nextInt(10));​        // 打印出table        System.out.println(&ldquo;table:&quot;+table );​        // 通过Iterator遍历key-value        Iterator iter = table.entrySet().iterator();        while(iter.hasNext()) {            Map.Entry entry = (Map.Entry)iter.next();            System.out.println(&ldquo;next : &ldquo;+ entry.getKey() +&rdquo; - &ldquo;+entry.getValue());        }​        // Hashtable的键值对个数                System.out.println(&ldquo;size:&quot;+table.size());​        // containsKey(Object key) :是否包含键key        System.out.println(&ldquo;contains key two : &ldquo;+table.containsKey(&ldquo;two&rdquo;));        System.out.println(&ldquo;contains key five : &ldquo;+table.containsKey(&ldquo;five&rdquo;));​        // containsValue(Object value) :是否包含值value        System.out.println(&ldquo;contains value 0 : &ldquo;+table.containsValue(new Integer(0)));​        // remove(Object key) ： 删除键key对应的键值对        table.remove(&ldquo;three&rdquo;);​        System.out.println(&ldquo;table:&quot;+table );​        // clear() ： 清空Hashtable        table.clear();​        // isEmpty() : Hashtable是否为空        System.out.println((table.isEmpty()?&ldquo;table is empty&rdquo;:&ldquo;table is not empty&rdquo;) );    }​}java<a hidden class="anchor" aria-hidden="true" href="#xxxxxxxxxximport-javautil--desc-hashtable的测试程序---author-skywang-public-class-hashtabletest---public-static-void-mainstring-args-----testhashtableapis-----private-static-void-testhashtableapis------初始化随机种子----random-r--new-random-----新建hashtable----hashtable-table--new-hashtable-----添加操作----tableputone-rnextint10----tableputtwo-rnextint10----tableputthree-rnextint10-----打印出table----systemoutprintlntabletable------通过iterator遍历key-value----iterator-iter--tableentrysetiterator----whileiterhasnext-------mapentry-entry--mapentryiternext------systemoutprintlnnext---entrygetkey----entrygetvalue----------hashtable的键值对个数--------systemoutprintlnsizetablesize-----containskeyobject-key-是否包含键key----systemoutprintlncontains-key-two--tablecontainskeytwo----systemoutprintlncontains-key-five--tablecontainskeyfive-----containsvalueobject-value-是否包含值value----systemoutprintlncontains-value-0--tablecontainsvaluenew-integer0-----removeobject-key--删除键key对应的键值对----tableremovethree----systemoutprintlntabletable------clear--清空hashtable----tableclear-----isempty--hashtable是否为空----systemoutprintlntableisemptytable-is-emptytable-is-not-empty----java">#</a></h2>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1

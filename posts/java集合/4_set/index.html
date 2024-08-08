@@ -10,7 +10,7 @@
 <meta name="description" content="概述
 我们知道，Map用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写equals()方法，还要正确覆写hashCode()方法。">
 <meta name="author" content="Wjy">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/4_set/">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/4_set/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
@@ -59,9 +59,9 @@
 <meta property="og:description" content="概述
 我们知道，Map用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写equals()方法，还要正确覆写hashCode()方法。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/4_set/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2017-12-03T10:33:47+00:00" />
-<meta property="article:modified_time" content="2017-12-03T10:33:47+00:00" />
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/4_set/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-12-09T10:33:47+00:00" />
+<meta property="article:modified_time" content="2016-12-09T10:33:47+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Set"/>
@@ -84,7 +84,7 @@
       "@type": "ListItem",
       "position":  2 ,
       "name": "Set",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/4_set/"
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/4_set/"
     }
   ]
 }
@@ -102,15 +102,15 @@
   "articleBody": "概述 我们知道，Map用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写equals()方法，还要正确覆写hashCode()方法。\n如果我们只需要存储不重复的key，并不需要存储映射的value，那么就可以使用Set。\nSet用于存储不重复的元素集合，它主要提供以下几个方法：\n将元素添加进Set：boolean add(E e) 将元素从Set删除：boolean remove(Object e) 判断是否包含元素：boolean contains(Object e) 我们来看几个简单的例子：\n1 2 3 4 5 6 7 8 9 10 11 12 public class Main { public static void main(String[] args) { Set set = new HashSet\u003c\u003e(); System.out.println(set.add(\"abc\")); // true System.out.println(set.add(\"xyz\")); // true System.out.println(set.add(\"xyz\")); // false，添加失败，因为元素已存在 System.out.println(set.contains(\"xyz\")); // true，元素存在 System.out.println(set.contains(\"XYZ\")); // false，元素不存在 System.out.println(set.remove(\"hello\")); // false，删除失败，因为元素不存在 System.out.println(set.size()); // 2，一共两个元素 } } Set实际上相当于只存储key、不存储value的Map。我们经常用Set用于去除重复元素。\n因为放入Set的元素和Map的key类似，都要正确实现equals()和hashCode()方法，否则该元素无法正确地放入Set。\n最常用的Set实现类是HashSet，实际上，HashSet仅仅是对HashMap的一个简单封装，它的核心代码如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 public class HashSet implements Set { // 持有一个HashMap: private HashMap map = new HashMap\u003c\u003e(); // 放入HashMap的value: private static final Object PRESENT = new Object(); public boolean add(E e) { return map.put(e, PRESENT) == null; } public boolean contains(Object o) { return map.containsKey(o); } public boolean remove(Object o) { return map.remove(o) == PRESENT; } } Set接口并不保证有序，而SortedSet接口则保证元素是有序的：\nHashSet是无序的，因为它实现了Set接口，并没有实现SortedSet接口； TreeSet是有序的，因为它实现了SortedSet接口。 用一张图表示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 ┌───┐ │Set│ └───┘ ▲ ┌────┴─────┐ │ │ ┌───────┐ ┌─────────┐ │HashSet│ │SortedSet│ └───────┘ └─────────┘ ▲ │ ┌─────────┐ │ TreeSet │ └─────────┘ 我们来看HashSet的输出：\n1 2 3 4 5 6 7 8 9 10 11 12 public class Main { public static void main(String[] args) { Set set = new HashSet\u003c\u003e(); set.add(\"apple\"); set.add(\"banana\"); set.add(\"pear\"); set.add(\"orange\"); for (String s : set) { System.out.println(s); } } } 注意输出的顺序既不是添加的顺序，也不是String排序的顺序，在不同版本的JDK中，这个顺序也可能是不同的。\n把HashSet换成TreeSet，在遍历TreeSet时，输出就是有序的，这个顺序是元素的排序顺序：\n1 2 3 4 5 6 7 8 9 10 11 12 public class Main { public static void main(String[] args) { Set set = new TreeSet\u003c\u003e(); set.add(\"apple\"); set.add(\"banana\"); set.add(\"pear\"); set.add(\"orange\"); for (String s : set) { System.out.println(s); } } } 使用TreeSet和使用TreeMap的要求一样，添加的元素必须正确实现Comparable接口，如果没有实现Comparable接口，那么创建TreeSet时必须传入一个Comparator对象。\n练习 在聊天软件中，发送方发送消息时，遇到网络超时后就会自动重发，因此，接收方可能会收到重复的消息，在显示给用户看的时候，需要首先去重。请练习使用Set去除重复的消息：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 import java.util.*; public class Main { public static void main(String[] args) { List received = List.of( new Message(1, \"Hello!\"), new Message(2, \"发工资了吗？\"), new Message(2, \"发工资了吗？\"), new Message(3, \"去哪吃饭？\"), new Message(3, \"去哪吃饭？\"), new Message(4, \"Bye\") ); List displayMessages = process(received); for (Message message : displayMessages) { System.out.println(message.text); } } static List process(List received) { // TODO: 按sequence去除重复消息 return received; } } class Message { public final int sequence; public final String text; public Message(int sequence, String text) { this.sequence = sequence; this.text = text; } } 小结 Set用于存储不重复的元素集合：\n放入HashSet的元素与作为HashMap的key要求相同； 放入TreeSet的元素与作为TreeMap的Key要求相同； 利用Set可以去除重复元素；\n遍历SortedSet按照元素的排序顺序遍历，也可以自定义排序算法。\nSet架构 Set 是继承于Collection的接口。它是一个不允许有重复元素的集合。 AbstractSet 是一个抽象类，它继承于AbstractCollection，AbstractCollection实现了Set中的绝大部分函数，为Set的实现类提供了便利。 HastSet 和 TreeSet 是Set的两个实现类。 HashSet依赖于HashMap，它实际上是通过HashMap实现的。HashSet中的元素是无序的。 TreeSet依赖于TreeMap，它实际上是通过TreeMap实现的。TreeSet中的元素是有序的。 HashSet介绍 HashSet 是一个没有重复元素的集合。 它是由HashMap实现的，不保证元素的顺序，而且HashSet允许使用 null 元素。 HashSet是非同步的。如果多个线程同时访问一个哈希 set，而其中至少一个线程修改了该 set，那么它必须 保持外部同步。这通常是通过对自然封装该 set 的对象执行同步操作来完成的。如果不存在这样的对象，则应该使用 Collections.synchronizedSet 方法来“包装” set。最好在创建时完成这一操作，以防止对该 set 进行意外的不同步访问： Set s = Collections.synchronizedSet(new HashSet(...)); HashSet通过iterator()返回的迭代器是fail-fast的。\nHashSet的构造函数 1 2 3 4 5 6 7 8 9 10 11 12 13 14 // 默认构造函数 public HashSet() // 带集合的构造函数 public HashSet(Collection\u003c? extends E\u003e c) // 指定HashSet初始容量和加载因子的构造函数 public HashSet(int initialCapacity, float loadFactor) // 指定HashSet初始容量的构造函数 public HashSet(int initialCapacity) // 指定HashSet初始容量和加载因子的构造函数,dummy没有任何作用 HashSet(int initialCapacity, float loadFactor, boolean dummy) HashSet的主要API 1 2 3 4 5 6 7 8 boolean add(E object) void clear() Object clone() boolean contains(Object object) boolean isEmpty() Iterator iterator() boolean remove(Object object) int size() HashSet数据结构 HashSet的继承关系如下：\n1 2 3 4 5 6 7 8 java.lang.Object ↳ java.util.AbstractCollection ↳ java.util.AbstractSet ↳ java.util.HashSet public class HashSet extends AbstractSet implements Set, Cloneable, java.io.Serializable { } HashSet与Map关系如下图： 从图中可以看出：\nHashSet继承于AbstractSet，并且实现了Set接口。 HashSet的本质是一个\"没有重复元素\"的集合，它是通过HashMap实现的。HashSet中含有一个\"HashMap类型的成员变量\"map，HashSet的操作函数，实际上都是通过map实现的。 HashSet源码解析(基于JDK1.6.0_45) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 package java.util; public class HashSet extends AbstractSet implements Set, Cloneable, java.io.Serializable { static final long serialVersionUID = -5024744406713321676L; // HashSet是通过map(HashMap对象)保存内容的 private transient HashMap map; // PRESENT是向map中插入key-value对应的value // 因为HashSet中只需要用到key，而HashMap是key-value键值对； // 所以，向map中添加键值对时，键值对的值固定是PRESENT private static final Object PRESENT = new Object(); // 默认构造函数 public HashSet() { // 调用HashMap的默认构造函数，创建map map = new HashMap(); } // 带集合的构造函数 public HashSet(Collection\u003c? extends E\u003e c) { // 创建map。 // 为什么要调用Math.max((int) (c.size()/.75f) + 1, 16)，从 (c.size()/.75f) + 1 和 16 中选择一个比较大的树呢？ // 首先，说明(c.size()/.75f) + 1 // 因为从HashMap的效率(时间成本和空间成本)考虑，HashMap的加载因子是0.75。 // 当HashMap的“阈值”(阈值=HashMap总的大小*加载因子) \u003c “HashMap实际大小”时， // 就需要将HashMap的容量翻倍。 // 所以，(c.size()/.75f) + 1 计算出来的正好是总的空间大小。 // 接下来，说明为什么是 16 。 // HashMap的总的大小，必须是2的指数倍。若创建HashMap时，指定的大小不是2的指数倍； // HashMap的构造函数中也会重新计算，找出比“指定大小”大的最小的2的指数倍的数。 // 所以，这里指定为16是从性能考虑。避免重复计算。 map = new HashMap(Math.max((int) (c.size()/.75f) + 1, 16)); // 将集合(c)中的全部元素添加到HashSet中 addAll(c); } // 指定HashSet初始容量和加载因子的构造函数 public HashSet(int initialCapacity, float loadFactor) { map = new HashMap(initialCapacity, loadFactor); } // 指定HashSet初始容量的构造函数 public HashSet(int initialCapacity) { map = new HashMap(initialCapacity); } HashSet(int initialCapacity, float loadFactor, boolean dummy) { map = new LinkedHashMap(initialCapacity, loadFactor); } // 返回HashSet的迭代器 public Iterator iterator() { // 实际上返回的是HashMap的“key集合的迭代器” return map.keySet().iterator(); } public int size() { return map.size(); } public boolean isEmpty() { return map.isEmpty(); } public boolean contains(Object o) { return map.containsKey(o); } // 将元素(e)添加到HashSet中 public boolean add(E e) { return map.put(e, PRESENT)==null; } // 删除HashSet中的元素(o) public boolean remove(Object o) { return map.remove(o)==PRESENT; } public void clear() { map.clear(); } // 克隆一个HashSet，并返回Object对象 public Object clone() { try { HashSet newSet = (HashSet) super.clone(); newSet.map = (HashMap) map.clone(); return newSet; } catch (CloneNotSupportedException e) { throw new InternalError(); } } // java.io.Serializable的写入函数 // 将HashSet的“总的容量，加载因子，实际容量，所有的元素”都写入到输出流中 private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException { // Write out any hidden serialization magic s.defaultWriteObject(); // Write out HashMap capacity and load factor s.writeInt(map.capacity()); s.writeFloat(map.loadFactor()); // Write out size s.writeInt(map.size()); // Write out all elements in the proper order. for (Iterator i=map.keySet().iterator(); i.hasNext(); ) s.writeObject(i.next()); } // java.io.Serializable的读取函数 // 将HashSet的“总的容量，加载因子，实际容量，所有的元素”依次读出 private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException { // Read in any hidden serialization magic s.defaultReadObject(); // Read in HashMap capacity and load factor and create backing HashMap int capacity = s.readInt(); float loadFactor = s.readFloat(); map = (((HashSet)this) instanceof LinkedHashSet ? new LinkedHashMap(capacity, loadFactor) : new HashMap(capacity, loadFactor)); // Read in size int size = s.readInt(); // Read in all elements in the proper order. for (int i=0; i",
   "wordCount" : "8318",
   "inLanguage": "en",
-  "datePublished": "2017-12-03T10:33:47Z",
-  "dateModified": "2017-12-03T10:33:47Z",
+  "datePublished": "2016-12-09T10:33:47Z",
+  "dateModified": "2016-12-09T10:33:47Z",
   "author":{
     "@type": "Person",
     "name": "Wjy"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/4_set/"
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/4_set/"
   },
   "publisher": {
     "@type": "Organization",
@@ -211,7 +211,7 @@
     <h1 class="post-title entry-hint-parent">
       Set
     </h1>
-    <div class="post-meta"><span title='2017-12-03 10:33:47 +0000 UTC'>2017-12-03</span>&nbsp;·&nbsp;Wjy
+    <div class="post-meta"><span title='2016-12-09 10:33:47 +0000 UTC'>2016-12-09</span>&nbsp;·&nbsp;Wjy
 
 </div>
   </header> <div class="toc">

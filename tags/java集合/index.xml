@@ -6,13 +6,59 @@
     <description>Recent content in Java集合 on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 21 Dec 2017 21:59:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Dec 2016 17:21:59 +0000</lastBuildDate>
     <atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/java%E9%9B%86%E5%90%88/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>TreeMap</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/treemap/</link>
+      <pubDate>Mon, 12 Dec 2016 17:21:59 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/treemap/</guid>
+      <description>TreeMap介绍 TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。 TreeMap 继承于AbstractMap，所以它是一个Map，即一个ke</description>
+    </item>
+    <item>
+      <title>HashMap</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/hashmap/</link>
+      <pubDate>Mon, 12 Dec 2016 14:49:20 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/hashmap/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;HashMap是一个散列表（就是哈希表），哈希表就是一种以&lt;code&gt;键-值(key-indexed)&lt;/code&gt;存储数据的结构。
+HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
+HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>LinkedList</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/linkedlist/</link>
+      <pubDate>Sun, 11 Dec 2016 13:44:51 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/linkedlist/</guid>
+      <description>&lt;h1 id=&#34;linkedlist概述&#34;&gt;LinkedList概述&lt;/h1&gt;
+&lt;p&gt;LinkedList是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
+LinkedList 实现List 接口，能对它进行队列操作。
+LinkedList 实现Deque 接口，即能将LinkedList当作双端队列使用。
+LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。
+LinkedList 实现&lt;code&gt;java.io.Serializable&lt;/code&gt;接口，这意味着LinkedList支持序列化，能通过序列化去传输。
+LinkedList 是非同步的。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ArrayList</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/arraylist/</link>
+      <pubDate>Sun, 11 Dec 2016 09:01:24 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/arraylist/</guid>
+      <description>&lt;h1 id=&#34;arraylist概述&#34;&gt;ArrayList概述&lt;/h1&gt;
+&lt;p&gt;ArrayList 是容量可变的非线程安全集合。
+内部使用数组进行存储，集合扩容时会创建更大的数组空间，把原有数据复制到新数组中。
+ArrayList 支持对元素的快速随机访问，但是插入与删除时速度很慢，因为这个过程很有可能需要移动其他元素。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。&lt;/li&gt;
+&lt;li&gt;ArrayList 实现了RandmoAccess接口，即提供了随机访问功能。可以通过元素的序号快速获取元素对象，这就是快速随机访问。&lt;/li&gt;
+&lt;li&gt;ArrayList 实现了Cloneable接口，即覆盖了函数clone()，能被克隆。&lt;/li&gt;
+&lt;li&gt;ArrayList 实现&lt;code&gt;java.io.Serializable&lt;/code&gt;接口，这意味着ArrayList支持序列化，能通过序列化去传输。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
       <title>queue</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/5_queue/</link>
-      <pubDate>Thu, 21 Dec 2017 21:59:33 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/5_queue/</guid>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/5_queue/</link>
+      <pubDate>Sat, 10 Dec 2016 21:59:33 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/5_queue/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;Queue&lt;/code&gt;实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和&lt;code&gt;List&lt;/code&gt;的区别在于，&lt;code&gt;List&lt;/code&gt;可以在任意位置添加和删除元素，而&lt;code&gt;Queue&lt;/code&gt;只有两个操作：&lt;/p&gt;
 &lt;ul&gt;
@@ -22,33 +68,18 @@
 &lt;p&gt;超市的收银台就是一个队列。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Hashtable</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashtable/</link>
-      <pubDate>Thu, 21 Dec 2017 10:35:10 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashtable/</guid>
+      <title>Set</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/4_set/</link>
+      <pubDate>Fri, 09 Dec 2016 10:33:47 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/4_set/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;和HashMap一样，Hashtable 也是一个散列表，它存储的内容是键值对(key-value)映射。
-Hashtable 继承于Dictionary，实现了Map、Cloneable、java.io.Serializable接口。
-Hashtable 的函数都是同步的，这意味着它是线程安全的。它的key、value都不可以为null。此外，Hashtable中的映射不是有序的。
-Hashtable 的实例有两个参数影响其性能：&lt;strong&gt;初始容量&lt;/strong&gt;和&lt;strong&gt;加载因子&lt;/strong&gt;。容量是哈希表中桶的数量，初始容量就是哈希表创建时的容量。
-注意，哈希表的状态为open：在发生“哈希冲突”的情况下，单个桶会存储多个条目，这些条目必须按顺序搜索。加载因子是对哈希表在其容量自动增加之前可以达到多满的一个尺度。初始容量和加载因子这两个参数只是对该实现的提示。关于何时以及是否调用rehash方法的具体细节则依赖于该实现。
-通常，默认加载因子是0.75，这是在时间和空间成本上寻求一种折衷。加载因子过高虽然减少了空间开销，但同时也增加了查找某个条目的时间，在大多数 Hashtable 操作中，包括get和put操作，都反映了这一点。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>HashMap</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/</link>
-      <pubDate>Wed, 20 Dec 2017 14:49:20 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/hashmap/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;HashMap是一个散列表（就是哈希表），哈希表就是一种以&lt;code&gt;键-值(key-indexed)&lt;/code&gt;存储数据的结构。
-HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
-HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。&lt;/p&gt;</description>
+&lt;p&gt;我们知道，&lt;code&gt;Map&lt;/code&gt;用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写&lt;code&gt;equals()&lt;/code&gt;方法，还要正确覆写&lt;code&gt;hashCode()&lt;/code&gt;方法。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Map</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/3_map/</link>
-      <pubDate>Wed, 20 Dec 2017 13:46:07 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/3_map/</guid>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/3_map/</link>
+      <pubDate>Thu, 08 Dec 2016 13:46:07 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/3_map/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;我们知道，&lt;code&gt;List&lt;/code&gt;是一种顺序列表，如果有一个存储学生&lt;code&gt;Student&lt;/code&gt;实例的&lt;code&gt;List&lt;/code&gt;，要在&lt;code&gt;List&lt;/code&gt;中根据&lt;code&gt;name&lt;/code&gt;查找某个指定的&lt;code&gt;Student&lt;/code&gt;的分数，应该怎么办？&lt;/p&gt;
 &lt;p&gt;最简单的方法是遍历&lt;code&gt;List&lt;/code&gt;并判断&lt;code&gt;name&lt;/code&gt;是否相等，然后返回指定元素：&lt;/p&gt;
@@ -80,57 +111,17 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
     </item>
     <item>
       <title>List</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/2_list/</link>
-      <pubDate>Tue, 19 Dec 2017 16:01:54 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/2_list/</guid>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/2_list/</link>
+      <pubDate>Wed, 07 Dec 2016 16:01:54 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/2_list/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;在集合类中，&lt;code&gt;List&lt;/code&gt;是最基础的一种集合：它是一种有序列表。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Vector和Stack</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/vector/</link>
-      <pubDate>Tue, 19 Dec 2017 14:38:20 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/vector/</guid>
-      <description>&lt;h1 id=&#34;vector概述&#34;&gt;Vector概述&lt;/h1&gt;
-&lt;p&gt;Vector是矢量队列，是JDK1.0版本添加的类，继承于AbstractList，实现了List,RandomAccess,Cloneable这些接口。
-Vector继承了AbstractList，实现了List；所以，它是一个队列，支持相关的添加、删除、修改、遍历等功能。
-Vector实现了RandmoAccess接口，即提供了随机访问功能。RandmoAccess是java中用来被List实现，为List提供快速访问功能的。在Vector中，我们即可以通过元素的序号快速获取元素对象；这就是快速随机访问。
-Vector 实现了Cloneable接口，即实现clone()函数。它能被克隆。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>LinkedList</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/linkedlist/</link>
-      <pubDate>Tue, 19 Dec 2017 13:44:51 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/linkedlist/</guid>
-      <description>&lt;h1 id=&#34;linkedlist概述&#34;&gt;LinkedList概述&lt;/h1&gt;
-&lt;p&gt;LinkedList是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
-LinkedList 实现List 接口，能对它进行队列操作。
-LinkedList 实现Deque 接口，即能将LinkedList当作双端队列使用。
-LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。
-LinkedList 实现&lt;code&gt;java.io.Serializable&lt;/code&gt;接口，这意味着LinkedList支持序列化，能通过序列化去传输。
-LinkedList 是非同步的。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>ArrayList</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/arraylist/</link>
-      <pubDate>Sat, 16 Dec 2017 22:01:24 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/arraylist/</guid>
-      <description>&lt;h1 id=&#34;arraylist概述&#34;&gt;ArrayList概述&lt;/h1&gt;
-&lt;p&gt;ArrayList 是容量可变的非线程安全集合。
-内部使用数组进行存储，集合扩容时会创建更大的数组空间，把原有数据复制到新数组中。
-ArrayList 支持对元素的快速随机访问，但是插入与删除时速度很慢，因为这个过程很有可能需要移动其他元素。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。&lt;/li&gt;
-&lt;li&gt;ArrayList 实现了RandmoAccess接口，即提供了随机访问功能。可以通过元素的序号快速获取元素对象，这就是快速随机访问。&lt;/li&gt;
-&lt;li&gt;ArrayList 实现了Cloneable接口，即覆盖了函数clone()，能被克隆。&lt;/li&gt;
-&lt;li&gt;ArrayList 实现&lt;code&gt;java.io.Serializable&lt;/code&gt;接口，这意味着ArrayList支持序列化，能通过序列化去传输。&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    <item>
       <title>1_Java集合简介</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/1_java%E9%9B%86%E5%90%88%E7%AE%80%E4%BB%8B/</link>
-      <pubDate>Wed, 06 Dec 2017 18:21:41 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/1_java%E9%9B%86%E5%90%88%E7%AE%80%E4%BB%8B/</guid>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/1_java%E9%9B%86%E5%90%88%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Tue, 06 Dec 2016 18:21:41 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java%E9%9B%86%E5%90%88/1_java%E9%9B%86%E5%90%88%E7%AE%80%E4%BB%8B/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;什么是集合（Collection）？集合就是“由若干个确定的元素所构成的整体”。例如，5只小兔构成的集合：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
@@ -154,21 +145,6 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
-    </item>
-    <item>
-      <title>Set</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/4_set/</link>
-      <pubDate>Sun, 03 Dec 2017 10:33:47 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/4_set/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;我们知道，&lt;code&gt;Map&lt;/code&gt;用于存储key-value的映射，对于充当key的对象，是不能重复的，并且，不但需要正确覆写&lt;code&gt;equals()&lt;/code&gt;方法，还要正确覆写&lt;code&gt;hashCode()&lt;/code&gt;方法。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>TreeMap</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/treemap/</link>
-      <pubDate>Fri, 01 Dec 2017 17:21:59 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E9%9B%86%E5%90%88/treemap/</guid>
-      <description>TreeMap介绍 TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。 TreeMap 继承于AbstractMap，所以它是一个Map，即一个ke</description>
     </item>
   </channel>
 </rss>
