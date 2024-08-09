@@ -107,10 +107,37 @@
       <description>初识算法 算法无处不在 当我们听到“算法”这个词时，很自然地会想到数学。然而实际上，许多算法并不涉及复杂数学，而是更多地依赖基本逻辑，这些逻辑在</description>
     </item>
     <item>
-      <title>算法</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/</link>
+      <title>布隆过滤器</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</link>
+      <pubDate>Fri, 29 Mar 2024 10:57:33 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</guid>
+      <description>概述 在互联网中，我们经常遇到需要在大量数据中判断目标数据是否存在的情况。例如，在网络爬虫中，我们需要判断某个网址是否已经被访问过。为了实现这</description>
+    </item>
+    <item>
+      <title>链表</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8/</link>
+      <pubDate>Sat, 13 Nov 2021 21:35:20 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8/</guid>
+      <description>&lt;p&gt;单向链表是一种线性表，由一些节点（Node）组成。其数据在内存中存储是不连续的，它存储的数据分散在内存中，每个结点只能也只有它能知道下一个结点的存储位置。由N各节点（Node）组成单向链表，每一个Node记录本Node的数据及下一个Node。向外暴露的只有一个头节点（Head），我们对链表的所有操作，都是直接或者间接地通过其头节点来进行的。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>树</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%A0%91/</link>
+      <pubDate>Tue, 09 Apr 2019 15:28:45 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E6%A0%91/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/skywang12345/p/3603935.html&#34;&gt;完整参考&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;树tree&#34;&gt;树（tree）&lt;/h1&gt;
+&lt;p&gt;树是一种常用的数据结构，它是一个由n（n&amp;gt;=0，有限)个节点组成的一个具有层次关系的集合。
+数据就存储在树的这些节点中。
+当n&amp;gt;1时，其余结点可分为m(m&amp;gt;0)个互不相交的有限集T1、T2、&amp;hellip;&amp;hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。
+&lt;img loading=&#34;lazy&#34; src=&#34;1.png&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>算法题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/</link>
       <pubDate>Fri, 09 Nov 2018 00:34:23 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/</guid>
       <description>大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好</description>
     </item>
   </channel>
