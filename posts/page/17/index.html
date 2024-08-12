@@ -169,6 +169,22 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">equals
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>equals() 的作用 equals() 的作用是用来判断两个对象是否相等。 equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否相等(即，是否是同一个对象)来区分它们是否相等。源码如下：
+1 2 3 public boolean equals(Object obj) { return (this == obj); } 既然Object.java中定义了equals()方法，这就意味着所有的Java类都实现了equals()方法，所有的类都可以通过equals()去比较两个对象是否相等。 但是，我们已经说过，使用默认的equals()方法，等价于==方法。因此，我们通常会重写equals()方法：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。
+下面根据类是否覆盖equals()方法，将它分为2类。
+若某个类没有覆盖equals()方法，当它的通过equals()比较两个对象时，实际上是比较两个对象是不是同一个对象。这时，等价于通过==去比较这两个对象。 我们可以覆盖类的equals()方法，来让equals()通过其它方式比较两个对象是否相等。通常的做法是：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。 下面，举例对上面的2种情况进行说明。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-04-30 11:36:50 +0000 UTC'>2019-04-30</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to equals" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/equals/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">comparable和comparator
     </h2>
   </header>
@@ -243,21 +259,6 @@
   </div>
   <footer class="entry-footer"><span title='2019-03-29 15:18:33 +0000 UTC'>2019-03-29</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to 9_multithreading-JUC集合" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/9_multithreading-juc%E9%9B%86%E5%90%88/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">8_multithreading-JUC锁
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>根据锁的添加到Java中的时间，Java中的锁，可以分为&#34;同步锁&#34;和&#34;JUC包中的锁&#34;。
-同步锁就是通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。 同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，从而在CPU上执行；而没有获取到同步锁的线程，必须进行等待，直到获取到同步锁之后才能继续运行。这就是多线程通过同步锁进行同步的原理。
-下面主要介绍JUC包中的锁。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-03-28 17:51:23 +0000 UTC'>2019-03-28</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 8_multithreading-JUC锁" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

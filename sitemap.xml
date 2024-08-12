@@ -2,16 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/14_%E8%B4%AA%E5%BF%83/</loc>
-    <lastmod>2024-06-06T11:32:06+00:00</lastmod>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/life/</loc>
+    <lastmod>2024-08-12T17:22:04+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/</loc>
-    <lastmod>2024-06-06T11:32:06+00:00</lastmod>
+    <lastmod>2024-08-12T17:22:04+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/tags/</loc>
-    <lastmod>2024-06-06T11:32:06+00:00</lastmod>
+    <lastmod>2024-08-12T17:22:04+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/</loc>
+    <lastmod>2024-08-12T17:22:04+00:00</lastmod>
+  </url><url>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E4%BF%9D%E9%99%A9/</loc>
+    <lastmod>2024-08-12T17:22:04+00:00</lastmod>
+  </url><url>
+    <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/14_%E8%B4%AA%E5%BF%83/</loc>
     <lastmod>2024-06-06T11:32:06+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/tags/%E7%AE%97%E6%B3%95/</loc>
@@ -154,9 +160,6 @@
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/interview/1_java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
     <lastmod>2023-07-06T05:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://funny-toffee-4aa7c3.netlify.app/tags/life/</loc>
-    <lastmod>2023-06-07T05:00:00+00:00</lastmod>
   </url><url>
     <loc>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E9%99%88%E7%9A%932021%E5%B9%B4%E7%9B%B4%E6%92%AD%E8%AE%BF%E8%B0%88%E6%91%98%E5%BD%95/</loc>
     <lastmod>2023-06-07T05:00:00+00:00</lastmod>
