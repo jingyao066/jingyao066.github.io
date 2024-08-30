@@ -1219,6 +1219,7 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
       <pubDate>Tue, 07 Jan 2020 22:05:33 +0000</pubDate>
       <guid>https://funny-toffee-4aa7c3.netlify.app/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95/</guid>
       <description>&lt;h1 id=&#34;索引概述&#34;&gt;索引概述&lt;/h1&gt;
+&lt;p&gt;原文：https://mp.weixin.qq.com/s/rF3zP99Bqw7PzVXfqfzF0w&lt;/p&gt;
 &lt;p&gt;在关系数据库中，索引是一种单独的、物理的对数据库表中一列或多列的值进行排序的一种存储结构，它是某个表中一列或若干列值的集合和相应的指向表中物理标识这些值的数据页的逻辑指针清单。
 简单来说，索引的作用相当于图书的目录，可以根据目录中的页码快速找到所需的内容。&lt;/p&gt;</description>
     </item>
