@@ -1468,10 +1468,10 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
 &lt;p&gt;&lt;a href=&#34;https://git-scm.com/book/zh/v2&#34;&gt;git官方文档&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
-      <title>pay</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/</link>
+      <title>支付功能开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 24 Nov 2019 13:50:44 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/pay/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/</guid>
       <description>&lt;p&gt;支付宝支付官网：
 &lt;a href=&#34;https://docs.open.alipay.com/catalog&#34;&gt;https://docs.open.alipay.com/catalog&lt;/a&gt;
 微信支付官网：
@@ -1612,10 +1612,10 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
 此外，一个类如果实现了&lt;code&gt;Comparable&lt;/code&gt;接口，可以用作&lt;code&gt;TreeMap&lt;/code&gt;的键，或&lt;code&gt;TreeSet&lt;/code&gt;中的元素，而不需要指定比较器。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>wx</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/wx/</link>
+      <title>微信相关开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/</link>
       <pubDate>Thu, 25 Apr 2019 10:04:49 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/wx/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;h2 id=&#34;公众号类型功能介绍&#34;&gt;公众号类型功能介绍&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;http://kf.qq.com/faq/170815aUZjeQ170815mU7bI7.html&#34;&gt;微信官方介绍&lt;/a&gt;
