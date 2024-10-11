@@ -55,6 +55,13 @@
 &lt;/ul&gt;</description>
     </item>
     <item>
+      <title>Vaultwarden</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/vaultwarden/</link>
+      <pubDate>Thu, 30 Dec 1999 23:23:59 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/vaultwarden/</guid>
+      <description>建议结合 vaultwarden 的 wiki 使用。 前置需求 一台可以分出 200MiB 运行内存和 1GiB 硬盘空间的 Linux 服务器。 *200MB 的 RAM 能让它长期稳定运行了。另外 1GiB 的硬盘空间是极其保守的估计，如果</description>
+    </item>
+    <item>
       <title>note2</title>
       <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E7%94%9F%E6%B4%BB/note2/</link>
       <pubDate>Sun, 24 Oct 1999 16:21:14 +0000</pubDate>
