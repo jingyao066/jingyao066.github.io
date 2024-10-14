@@ -6,13 +6,24 @@
     <description>Recent content in linux on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.112.6</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 05 Mar 2017 10:49:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Apr 2019 11:05:53 +0000</lastBuildDate>
     <atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>linux服务器加固</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</link>
+      <pubDate>Wed, 17 Apr 2019 11:05:53 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</guid>
+      <description>&lt;h1 id=&#34;dubbo是什么&#34;&gt;dubbo是什么&lt;/h1&gt;
+&lt;p&gt;是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。
+为什么要分布式？为什么要远程调用？
+&lt;img loading=&#34;lazy&#34; src=&#34;1.jpg&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>linux</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux/</link>
       <pubDate>Sun, 05 Mar 2017 10:49:36 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux/</guid>
       <description>&lt;h1 id=&#34;文件目录解析&#34;&gt;文件目录解析&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;1.png&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;</description>

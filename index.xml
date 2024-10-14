@@ -136,16 +136,16 @@
     </item>
     <item>
       <title>google高级搜索技巧</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Sat, 09 Dec 2023 16:42:50 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</guid>
       <description>搜索引擎 「限制语言」、「按照时间」、「精确匹配」 google 在界面上提供搜索条件查询「限制语言」、「按照时间」、「精确匹配」（百度等其他同理） site</description>
     </item>
     <item>
       <title>前端基础</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Wed, 08 Nov 2023 09:00:00 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/</guid>
       <description>VSCODE 官网下载：https://code.visualstudio.com/download 插件安装 1 2 3 4 5 6 7 8 9 Auto Close Tag Auto Rename Tag Chinese(Simplifie) ESLint HTML CSS Support HTML Snippets</description>
     </item>
     <item>
@@ -1008,9 +1008,9 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>爬虫</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%88%AC%E8%99%AB/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%88%AC%E8%99%AB/</link>
       <pubDate>Wed, 08 Dec 2021 10:48:12 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/%E7%88%AC%E8%99%AB/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E7%88%AC%E8%99%AB/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;无论什么爬虫，爬数据的过程都分三步，&lt;/p&gt;
 &lt;ul&gt;
@@ -1037,9 +1037,9 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>《Netty实战》读书笔记</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Thu, 14 Jan 2021 09:28:13 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
       <description>第一个Netty应用程序 Netty 客户端/服务器概览 Echo 客户端和服务器之间的交互是非常简单的；在客户端建立一个连接之后，它会向服务器发送一个或多个消息</description>
     </item>
     <item>
@@ -1069,17 +1069,17 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>json</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/json/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/json/</link>
       <pubDate>Fri, 07 Aug 2020 11:47:04 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/json/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/json/</guid>
       <description>&lt;p&gt;Jackson 是用来序列化和反序列化 json 的 Java 的开源框架。Spring MVC 的默认 json 解析器便是 Jackson。 Jackson 的 1.x 版本的包名是 org.codehaus.jackson ，当升级到 2.x 版本时，包名变为 com.fasterxml.jackson，本文讨论的内容是基于最新的 Jackson 的 2.9.1 版本。
 如果使用的是spring-boot项目，则spring-boot-starter-web默认会引入Jackson包，无需再次引入依赖。&lt;/p&gt;</description>
     </item>
     <item>
       <title>mybatis-plus</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis-plus/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/mybatis-plus/</link>
       <pubDate>Sat, 28 Mar 2020 15:07:56 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis-plus/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/mybatis-plus/</guid>
       <description>&lt;p&gt;官网
 &lt;a href=&#34;https://baomidou.com/&#34;&gt;https://baomidou.com/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;其他参考
@@ -1088,9 +1088,9 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>mybatis</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/mybatis/</link>
       <pubDate>Fri, 27 Mar 2020 15:07:56 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/mybatis/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/mybatis/</guid>
       <description>&lt;h1 id=&#34;基础&#34;&gt;基础&lt;/h1&gt;
 &lt;h2 id=&#34;面向接口编程&#34;&gt;面向接口编程&lt;/h2&gt;
 &lt;ol&gt;
@@ -1147,9 +1147,9 @@ dao层接口
     </item>
     <item>
       <title>docker</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/docker/</link>
       <pubDate>Thu, 05 Mar 2020 10:26:24 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/docker/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/docker/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;Docker是一个开源项目，诞生于2013年初，最初是dotCloud公司内部的一个业余项目。它基于Google公司推出的Go语言实现。项目后来加入了Linux基金会，遵从了Apache2.0协议，项目代码在GitHub上进行维护。
 Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。Docker的基础是Linux容器(LXC)等技术。在LXC的基础上Docker进行了进一步封装，让用户不用去关心容器的管理，使得操作更为简便，用户操作docker容器就像操作一个轻量级虚拟机一样简单。
@@ -1459,9 +1459,9 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
     </item>
     <item>
       <title>git</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/git/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/git/</link>
       <pubDate>Mon, 25 Nov 2019 10:14:46 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/git/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/git/</guid>
       <description>&lt;h1 id=&#34;常用命令&#34;&gt;常用命令&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;git%e5%91%bd%e4%bb%a4.jpg&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;
@@ -1469,9 +1469,9 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
     </item>
     <item>
       <title>支付功能开发</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 24 Nov 2019 13:50:44 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/</guid>
       <description>&lt;p&gt;支付宝支付官网：
 &lt;a href=&#34;https://docs.open.alipay.com/catalog&#34;&gt;https://docs.open.alipay.com/catalog&lt;/a&gt;
 微信支付官网：
@@ -1480,9 +1480,9 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     </item>
     <item>
       <title>后台角色授权菜单功能的实现</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Sun, 10 Nov 2019 14:51:14 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
       <description>&lt;h1 id=&#34;后台添加角色后需要给角色授权菜单不同的角色有不同的菜单&#34;&gt;后台添加角色后，需要给角色授权菜单，不同的角色有不同的菜单。&lt;/h1&gt;
 &lt;p&gt;两个点：
 1.菜单表结构，父子级在一个表中。dto的使用
@@ -1490,9 +1490,9 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     </item>
     <item>
       <title>SKU</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/sku/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/sku/</link>
       <pubDate>Fri, 01 Nov 2019 22:52:56 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/sku/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/sku/</guid>
       <description>&lt;h1 id=&#34;sku&#34;&gt;SKU&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;1.jpg&#34; alt=&#34;&#34;  /&gt;
 
@@ -1532,9 +1532,9 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
     </item>
     <item>
       <title>jsDaily</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/jsdaily/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/jsdaily/</link>
       <pubDate>Mon, 20 May 2019 10:04:27 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/jsdaily/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/jsdaily/</guid>
       <description>&lt;h1 id=&#34;input设置为disabled后台无法接受到数据&#34;&gt;input设置为disabled，后台无法接受到数据&lt;/h1&gt;
 &lt;p&gt;W3C的规范，&lt;code&gt;disabled=”disabled”&lt;/code&gt;不能向后台提交，改为&lt;code&gt;readonly = “readonly”&lt;/code&gt;即可&lt;/p&gt;</description>
     </item>
@@ -1613,9 +1613,9 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
     </item>
     <item>
       <title>微信相关开发</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/</link>
       <pubDate>Thu, 25 Apr 2019 10:04:49 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;h2 id=&#34;公众号类型功能介绍&#34;&gt;公众号类型功能介绍&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;http://kf.qq.com/faq/170815aUZjeQ170815mU7bI7.html&#34;&gt;微信官方介绍&lt;/a&gt;
@@ -1623,9 +1623,20 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
     </item>
     <item>
       <title>dubbo</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/dubbo/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/dubbo/</link>
       <pubDate>Wed, 17 Apr 2019 11:05:53 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/dubbo/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/dubbo/</guid>
+      <description>&lt;h1 id=&#34;dubbo是什么&#34;&gt;dubbo是什么&lt;/h1&gt;
+&lt;p&gt;是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。
+为什么要分布式？为什么要远程调用？
+&lt;img loading=&#34;lazy&#34; src=&#34;1.jpg&#34; alt=&#34;&#34;  /&gt;
+&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>linux服务器加固</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</link>
+      <pubDate>Wed, 17 Apr 2019 11:05:53 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</guid>
       <description>&lt;h1 id=&#34;dubbo是什么&#34;&gt;dubbo是什么&lt;/h1&gt;
 &lt;p&gt;是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。
 为什么要分布式？为什么要远程调用？
@@ -2510,9 +2521,9 @@ Interrupting a thread that is not alive need not have any effect.&lt;/p&gt;</des
     </item>
     <item>
       <title>Jenkins</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/jenkins/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/jenkins/</link>
       <pubDate>Fri, 09 Nov 2018 16:54:53 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/jenkins/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/jenkins/</guid>
       <description>&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
 &lt;p&gt;Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
 &lt;a href=&#34;https://jenkins.io/zh/&#34;&gt;这是jenkins中文网&lt;/a&gt;&lt;/p&gt;</description>
@@ -2585,9 +2596,9 @@ Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS�
     </item>
     <item>
       <title>nginx</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/nginx/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/nginx/</link>
       <pubDate>Sat, 06 Oct 2018 18:06:29 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/nginx/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96/nginx/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/knowledgesea/p/5175711.html&#34;&gt;nginx学习&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
 &lt;p&gt;1.下载：http://nginx.org/
@@ -2634,9 +2645,9 @@ Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS�
     </item>
     <item>
       <title>linux</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</link>
+      <link>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux/</link>
       <pubDate>Sun, 05 Mar 2017 10:49:36 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/%E5%85%B6%E4%BB%96%E5%9F%BA%E7%A1%80/linux/</guid>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/linux/linux/</guid>
       <description>&lt;h1 id=&#34;文件目录解析&#34;&gt;文件目录解析&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;1.png&#34; alt=&#34;&#34;  /&gt;
 &lt;/p&gt;</description>
