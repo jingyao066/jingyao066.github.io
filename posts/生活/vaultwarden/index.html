@@ -1128,7 +1128,7 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">78
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#007f7f"># For more information on configuration, see:</span>
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#007f7f"># For more information on configuration, see:</span>
 </span></span><span style="display:flex;"><span><span style="color:#007f7f">#   * Official English Documentation: http://nginx.org/en/docs/</span>
 </span></span><span style="display:flex;"><span><span style="color:#007f7f">#   * Official Russian Documentation: http://nginx.org/ru/docs/</span>
 </span></span><span style="display:flex;"><span>
@@ -1147,8 +1147,8 @@
 </span></span><span style="display:flex;"><span><span style="color:#007f7f"># 屏蔽Nginx版本号减少攻击面</span>
 </span></span><span style="display:flex;"><span>server_tokens off;
 </span></span><span style="display:flex;"><span>log_format  main  <span style="color:#0ff;font-weight:bold">&#39;$remote_addr - $remote_user [$time_local] &#34;$request&#34; &#39;</span>
-</span></span><span style="display:flex;"><span>                  <span style="color:#0ff;font-weight:bold">&#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;</span>
-</span></span><span style="display:flex;"><span>                  <span style="color:#0ff;font-weight:bold">&#39;&#34;$http_user_agent&#34; &#34;$http_x_forwarded_for&#34;&#39;</span>;
+</span></span><span style="display:flex;"><span>              <span style="color:#0ff;font-weight:bold">&#39;$status $body_bytes_sent &#34;$http_referer&#34; &#39;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#0ff;font-weight:bold">&#39;&#34;$http_user_agent&#34; &#34;$http_x_forwarded_for&#34;&#39;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>access_log  /var/log/nginx/access.log  main;
 </span></span><span style="display:flex;"><span>client_body_buffer_size  1024k;
@@ -1196,13 +1196,13 @@
 </span></span><span style="display:flex;"><span><span style="color:#007f7f"># Be sure to add the trailing /, else you could have issues</span>
 </span></span><span style="display:flex;"><span><span style="color:#007f7f"># 后台url采用随机字符串</span>
 </span></span><span style="display:flex;"><span>location /abcdefg/ {
-</span></span><span style="display:flex;"><span>  limit_except GET POST { deny all; }
-</span></span><span style="display:flex;"><span>  proxy_set_header Host $host;
-</span></span><span style="display:flex;"><span>  proxy_set_header X-Real-IP $remote_addr;
-</span></span><span style="display:flex;"><span>  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-</span></span><span style="display:flex;"><span>  proxy_set_header X-Forwarded-Proto $scheme;
+</span></span><span style="display:flex;"><span>limit_except GET POST { deny all; }
+</span></span><span style="display:flex;"><span>proxy_set_header Host $host;
+</span></span><span style="display:flex;"><span>proxy_set_header X-Real-IP $remote_addr;
+</span></span><span style="display:flex;"><span>proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>proxy_set_header X-Forwarded-Proto $scheme;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  proxy_pass http://vaultwarden-default;
+</span></span><span style="display:flex;"><span>proxy_pass http://vaultwarden-default;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>}	
 </span></span><span style="display:flex;"><span>}
