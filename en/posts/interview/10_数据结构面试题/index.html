@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>10_数据结构面试题 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="interview">
+<meta name="description" content="线性数据结构 数组 数组（Array） 是一种很常见的数据结构。它由相同类型的元素（element）组成，并且是使用一块连续的内存来存储。 我们直接">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="10_数据结构面试题">
+  <meta property="og:description" content="线性数据结构 数组 数组（Array） 是一种很常见的数据结构。它由相同类型的元素（element）组成，并且是使用一块连续的内存来存储。 我们直接">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-07-18T05:00:00+00:00">
+    <meta property="article:modified_time" content="2023-07-18T05:00:00+00:00">
+    <meta property="article:tag" content="Interview">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="10_数据结构面试题">
+<meta name="twitter:description" content="线性数据结构 数组 数组（Array） 是一种很常见的数据结构。它由相同类型的元素（element）组成，并且是使用一块连续的内存来存储。 我们直接">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "10_数据结构面试题",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "10_数据结构面试题",
+  "name": "10_数据结构面试题",
+  "description": "线性数据结构 数组 数组（Array） 是一种很常见的数据结构。它由相同类型的元素（element）组成，并且是使用一块连续的内存来存储。 我们直接",
+  "keywords": [
+    "interview"
+  ],
+  "articleBody": "线性数据结构 数组 数组（Array） 是一种很常见的数据结构。它由相同类型的元素（element）组成，并且是使用一块连续的内存来存储。\n我们直接可以利用元素的索引（index）可以计算出该元素对应的存储地址。\n数组的特点是：提供随机访问 并且容量有限。\n1 2 3 4 假如数组的长度为 n。 访问：O（1）//访问特定位置的元素 插入：O（n ）//最坏的情况发生在插入发生在数组的首部并需要移动所有元素时 删除：O（n）//最坏的情况发生在删除数组的开头发生并需要移动第一元素后面所有的元素时 链表 链表（LinkedList） 虽然是一种线性表，但是并不会按线性的顺序存储数据，使用的不是连续的内存空间来存储数据。\n链表的插入和删除操作的复杂度为 O(1) ，只需要知道目标位置元素的上一个元素即可。但是，在查找一个节点或者访问特定位置的节点的时候复杂度为 O(n) 。\n使用链表结构可以克服数组需要预先知道数据大小的缺点，链表结构可以充分利用计算机内存空间，实现灵活的内存动态管理。但链表不会节省空间，相比于数组会占用更多的空间，因为链表中每个节点存放的还有指向其他节点的指针。除此之外，链表不具有数组随机读取的优点。\n常见链表分类：\n单链表 双向链表 循环链表 双向循环链表 1 2 3 假如链表中有n个元素。 访问：O（n）//访问特定位置的元素 插入删除：O（1）//必须要要知道插入元素的位置 单链表 单链表 单向链表只有一个方向，结点只有一个后继指针 next 指向后面的节点。因此，链表这种数据结构通常在物理内存上是不连续的。我们习惯性地把第一个结点叫作头结点，链表通常有一个不保存任何值的 head 节点(头结点)，通过头结点我们可以遍历整个链表。尾结点通常指向 null。\n循环链表 循环链表 其实是一种特殊的单链表，和单链表不同的是循环链表的尾结点不是指向 null，而是指向链表的头结点。\n双向链表 双向链表 包含两个指针，一个 prev 指向前一个节点，一个 next 指向后一个节点。\n双向循环链表 双向循环链表 最后一个节点的 next 指向 head，而 head 的 prev 指向最后一个节点，构成一个环。\n应用场景 如果需要支持随机访问的话，链表没办法做到。 如果需要存储的数据元素的个数不确定，并且需要经常添加和删除数据的话，使用链表比较合适。 如果需要存储的数据元素的个数确定，并且不需要经常添加和删除数据的话，使用数组比较合适。 数组 vs 链表 数组支持随机访问，而链表不支持。 数组使用的是连续内存空间对 CPU 的缓存机制友好，链表则相反。 数组的大小固定，而链表则天然支持动态扩容。如果声明的数组过小，需要另外申请一个更大的内存空间存放数组元素，然后将原数组拷贝进去，这个操作是比较耗时的！ 栈 栈 (Stack) 只允许在有序的线性数据集合的一端（称为栈顶 top）进行加入数据（push）和移除数据（pop）。因而按照 后进先出（LIFO, Last In First Out） 的原理运作。在栈中，push 和 pop 的操作都发生在栈顶。\n栈常用一维数组或链表来实现，用数组实现的栈叫作 顺序栈 ，用链表实现的栈叫作 链式栈 。\n1 2 3 假设堆栈中有n个元素。 访问：O（n）//最坏情况 插入删除：O（1）//顶端插入和删除元素 栈的应用场景 当我们我们要处理的数据只涉及在一端插入和删除数据，并且满足 后进先出（LIFO, Last In First Out） 的特性时，我们就可以使用栈这个数据结构。\n实现浏览器的回退和前进功能 我们只需要使用两个栈(Stack1 和 Stack2)和就能实现这个功能。比如你按顺序查看了 1,2,3,4 这四个页面，我们依次把 1,2,3,4 这四个页面压入 Stack1 中。当你想回头看 2 这个页面的时候，你点击回退按钮，我们依次把 4,3 这两个页面从 Stack1 弹出，然后压入 Stack2 中。假如你又想回到页面 3，你点击前进按钮，我们将 3 页面从 Stack2 弹出，然后压入到 Stack1 中。示例图如下:\n检查符号是否成对出现 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断该字符串是否有效。\n有效字符串需满足：\n左括号必须用相同类型的右括号闭合。 左括号必须以正确的顺序闭合。 比如 “()\"、”()[]{}\"、\"{[]}\" 都是有效字符串，而 “(]\"、”([)]\" 则不是。\n这个问题实际是 Leetcode 的一道题目，我们可以利用栈 Stack 来解决这个问题。\n首先我们将括号间的对应规则存放在 Map 中，这一点应该毋容置疑； 创建一个栈。遍历字符串，如果字符是左括号就直接加入stack中，否则将stack 的栈顶元素与这个括号做比较，如果不相等就直接返回 false。遍历结束，如果stack为空，返回 true。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 public boolean isValid(String s){ // 括号之间的对应规则 HashMap mappings = new HashMap(); mappings.put(')', '('); mappings.put('}', '{'); mappings.put(']', '['); Stack stack = new Stack(); char[] chars = s.toCharArray(); for (int i = 0; i \u003c chars.length; i++) { if (mappings.containsKey(chars[i])) { char topElement = stack.empty() ? '#' : stack.pop(); if (topElement != mappings.get(chars[i])) { return false; } } else { stack.push(chars[i]); } } return stack.isEmpty(); } 反转字符串 将字符串中的每个字符先入栈再出栈就可以了。\n维护函数调用 最后一个被调用的函数必须先完成执行，符合栈的 后进先出（LIFO, Last In First Out） 特性。\n栈的实现 栈既可以通过数组实现，也可以通过链表来实现。不管基于数组还是链表，入栈、出栈的时间复杂度都为 O(1)。\n下面我们使用数组来实现一个栈，并且这个栈具有push()、pop()（返回栈顶元素并出栈）、peek() （返回栈顶元素不出栈）、isEmpty()、size()这些基本的方法。\n提示：每次入栈之前先判断栈的容量是否够用，如果不够用就用Arrays.copyOf()进行扩容；\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 public class MyStack { private int[] storage;//存放栈中元素的数组 private int capacity;//栈的容量 private int count;//栈中元素数量 private static final int GROW_FACTOR = 2; //不带初始容量的构造方法。默认容量为8 public MyStack() { this.capacity = 8; this.storage=new int[8]; this.count = 0; } //带初始容量的构造方法 public MyStack(int initialCapacity) { if (initialCapacity \u003c 1) throw new IllegalArgumentException(\"Capacity too small.\"); this.capacity = initialCapacity; this.storage = new int[initialCapacity]; this.count = 0; } //入栈 public void push(int value) { if (count == capacity) { ensureCapacity(); } storage[count++] = value; } //确保容量大小 private void ensureCapacity() { int newCapacity = capacity * GROW_FACTOR; storage = Arrays.copyOf(storage, newCapacity); capacity = newCapacity; } //返回栈顶元素并出栈 private int pop() { if (count == 0) throw new IllegalArgumentException(\"Stack is empty.\"); count--; return storage[count]; } //返回栈顶元素不出栈 private int peek() { if (count == 0){ throw new IllegalArgumentException(\"Stack is empty.\"); }else { return storage[count-1]; } } //判断栈是否为空 private boolean isEmpty() { return count == 0; } //返回栈中元素的个数 private int size() { return count; } } 验证\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 MyStack myStack = new MyStack(3); myStack.push(1); myStack.push(2); myStack.push(3); myStack.push(4); myStack.push(5); myStack.push(6); myStack.push(7); myStack.push(8); System.out.println(myStack.peek());//8 System.out.println(myStack.size());//8 for (int i = 0; i \u003c 8; i++) { System.out.println(myStack.pop()); } System.out.println(myStack.isEmpty());//true myStack.pop();//报错：java.lang.IllegalArgumentException: Stack is empty. 队列 队列（Queue） 是 先进先出 (FIFO，First In, First Out) 的线性表。在具体应用中通常用链表或者数组来实现，用数组实现的队列叫作 顺序队列 ，用链表实现的队列叫作 链式队列 。队列只允许在后端（rear）进行插入操作也就是入队 enqueue，在前端（front）进行删除操作也就是出队 dequeue\n队列的操作方式和堆栈类似，唯一的区别在于队列只允许新数据在后端进行添加。\n1 2 3 假设队列中有n个元素。 访问：O（n）//最坏情况 插入删除：O（1）//后端插入前端删除元素 单队列 单队列就是常见的队列, 每次添加元素时，都是添加到队尾。单队列又分为 顺序队列（数组实现） 和 链式队列（链表实现）。\n顺序队列存在“假溢出”的问题也就是明明有位置却不能添加的情况。\n假设下图是一个顺序队列，我们将前两个元素 1,2 出队，并入队两个元素 7,8。当进行入队、出队操作的时候，front 和 rear 都会持续往后移动，当 rear 移动到最后的时候,我们无法再往队列中添加数据，即使数组中还有空余空间，这种现象就是 ”假溢出“ 。除了假溢出问题之外，如下图所示，当添加元素 8 的时候，rear 指针移动到数组之外（越界）。\n为了避免当只有一个元素的时候，队头和队尾重合使处理变得麻烦，所以引入两个指针，front 指针指向对头元素，rear 指针指向队列最后一个元素的下一个位置，这样当 front 等于 rear 时，此队列不是还剩一个元素，而是空队列。——From 《大话数据结构》\n循环队列 循环队列可以解决顺序队列的假溢出和越界问题。解决办法就是：从头开始，这样也就会形成头尾相接的循环，这也就是循环队列名字的由来。\n还是用上面的图，我们将 rear 指针指向数组下标为 0 的位置就不会有越界问题了。当我们再向队列中添加元素的时候， rear 向后移动。\n顺序队列中，我们说 front==rear 的时候队列为空，循环队列中则不一样，也可能为满，如上图所示。解决办法有两种：\n可以设置一个标志变量 flag,当 front==rear 并且 flag=0 的时候队列为空，当front==rear 并且 flag=1 的时候队列为满。 队列为空的时候就是 front==rear ，队列满的时候，我们保证数组还有一个空闲的位置，rear 就指向这个空闲位置，如下图所示，那么现在判断队列是否为满的条件就是：(rear+1) % QueueSize==front 。 应用场景 当我们需要按照一定顺序来处理数据的时候可以考虑使用队列这个数据结构。\n阻塞队列： 阻塞队列可以看成在队列基础上加了阻塞操作的队列。当队列为空的时候，出队操作阻塞，当队列满的时候，入队操作阻塞。使用阻塞队列我们可以很容易实现“生产者 - 消费者“模型。 线程池中的请求/任务队列： 线程池中没有空闲线程时，新的任务请求线程资源时，线程池该如何处理呢？答案是将这些请求放在队列中，当有空闲线程的时候，会循环中反复从队列中获取任务来执行。队列分为无界队列(基于链表)和有界队列(基于数组)。无界队列的特点就是可以一直入列，除非系统资源耗尽，比如：FixedThreadPool 使用无界队列 LinkedBlockingQueue。但是有界队列就不一样了，当队列满的话后面再有任务/请求就会拒绝，在 Java 中的体现就是会抛出java.util.concurrent.RejectedExecutionException 异常。 Linux 内核进程队列（按优先级排队） 现实生活中的派对，播放器上的播放列表; 消息队列 等等…… 图 图是一种较为复杂的非线性结构。 为啥说其较为复杂呢？\n根据前面的内容，我们知道：\n线性数据结构的元素满足唯一的线性关系，每个元素(除第一个和最后一个外)只有一个直接前趋和一个直接后继。 树形数据结构的元素之间有着明显的层次关系。 但是，图形结构的元素之间的关系是任意的。\n何为图呢？ 简单来说，图就是由顶点的有穷非空集合和顶点之间的边组成的集合。通常表示为：G(V,E)，其中，G 表示一个图，V 表示顶点的集合，E 表示边的集合。\n下图所展示的就是图这种数据结构，并且还是一张有向图。\n图的基本概念 顶点\n图中的数据元素，我们称之为顶点，图至少有一个顶点（非空有穷集合）\n对应到好友关系图，每一个用户就代表一个顶点。\n边\n顶点之间的关系用边表示。\n对应到好友关系图，两个用户是好友的话，那两者之间就存在一条边。\n度\n度表示一个顶点包含多少条边，在有向图中，还分为出度和入度，出度表示从该顶点出去的边的条数，入度表示进入该顶点的边的条数。\n对应到好友关系图，度就代表了某个人的好友数量。\n无向图和有向图\n边表示的是顶点之间的关系，有的关系是双向的，比如同学关系，A 是 B 的同学，那么 B 也肯定是 A 的同学，那么在表示 A 和 B 的关系时，就不用关注方向，用不带箭头的边表示，这样的图就是无向图。\n有的关系是有方向的，比如父子关系，师生关系，微博的关注关系，A 是 B 的爸爸，但 B 肯定不是 A 的爸爸，A 关注 B，B 不一定关注 A。在这种情况下，我们就用带箭头的边表示二者的关系，这样的图就是有向图。\n无权图和带权图\n对于一个关系，如果我们只关心关系的有无，而不关心关系有多强，那么就可以用无权图表示二者的关系。\n对于一个关系，如果我们既关心关系的有无，也关心关系的强度，比如描述地图上两个城市的关系，需要用到距离，那么就用带权图来表示，带权图中的每一条边一个数值表示权值，代表关系的强度。\n下图就是一个带权有向图。\n图的存储 邻接矩阵存储 邻接矩阵将图用二维矩阵存储，是一种较为直观的表示方式。\n如果第 i 个顶点和第 j 个顶点之间有关系，且关系权值为 n，则 A[i][j]=n 。\n在无向图中，我们只关心关系的有无，所以当顶点 i 和顶点 j 有关系时，A[i][j]=1，当顶点 i 和顶点 j 没有关系时，A[i][j]=0。如下图所示：\n值得注意的是：无向图的邻接矩阵是一个对称矩阵，因为在无向图中，顶点 i 和顶点 j 有关系，则顶点 j 和顶点 i 必有关系。\n邻接矩阵存储的方式优点是简单直接（直接使用一个二维数组即可），并且，在获取两个定点之间的关系的时候也非常高效（直接获取指定位置的数组元素的值即可）。但是，这种存储方式的缺点也比较明显，那就是比较浪费空间\n邻接表存储 针对上面邻接矩阵比较浪费内存空间的问题，诞生了图的另外一种存储方法—邻接表 。\n邻接链表使用一个链表来存储某个顶点的所有后继相邻顶点。对于图中每个顶点 Vi，把所有邻接于 Vi 的顶点 Vj 链成一个单链表，这个单链表称为顶点 Vi 的 邻接表。如下图所示：\n大家可以数一数邻接表中所存储的元素的个数以及图中边的条数，你会发现：\n在无向图中，邻接表元素个数等于边的条数的两倍，如左图所示的无向图中，边的条数为 7，邻接表存储的元素个数为 14。 在有向图中，邻接表元素个数等于边的条数，如右图所示的有向图中，边的条数为 8，邻接表存储的元素个数为 8。 图的搜索 广度优先搜索 广度优先搜索就像水面上的波纹一样一层一层向外扩展，如下图所示：\n广度优先搜索的具体实现方式用到了之前所学过的线性数据结构——队列 。具体过程如下图所示：\n第 1 步：\n第 2 步：\n第 3 步：\n第 4 步：\n第 5 步：\n第 6 步：\n深度优先搜索 深度优先搜索就是“一条路走到黑”，从源顶点开始，一直走到没有后继节点，才回溯到上一顶点，然后继续“一条路走到黑”，如下图所示：\n和广度优先搜索类似，深度优先搜索的具体实现用到了另一种线性数据结构——栈 。具体过程如下图所示：\n第 1 步：\n第 2 步：\n第 3 步：\n第 4 步：\n第 5 步：\n第 6 步：\n堆 堆是一种满足以下条件的树：\n堆中的每一个节点值都大于等于（或小于等于）子树中所有节点的值。或者说，任意一个节点的值都大于等于（或小于等于）所有子节点的值。\n大家可以把堆(最大堆)理解为一个公司,这个公司很公平,谁能力强谁就当老大,不存在弱的人当老大,老大手底下的人一定不会比他强。这样有助于理解后续堆的操作。\n!!!特别提示：\n很多博客说堆是完全二叉树，其实并非如此，堆不一定是完全二叉树，只是为了方便存储和索引，我们通常用完全二叉树的形式来表示堆，事实上，广为人知的斐波那契堆和二项堆就不是完全二叉树,它们甚至都不是二叉树。 （二叉）堆是一个数组，它可以被看成是一个 近似的完全二叉树。——《算法导论》第三版 大家可以尝试判断下面给出的图是否是堆？\n第 1 个和第 2 个是堆。第 1 个是最大堆，每个节点都比子树中所有节点大。第 2 个是最小堆，每个节点都比子树中所有节点小。\n第 3 个不是，第三个中，根结点 1 比 2 和 15 小，而 15 却比 3 大，19 比 5 大，不满足堆的性质。\n堆的用途 当我们只关心所有数据中的最大值或者最小值，存在多次获取最大值或者最小值，多次插入或删除数据时，就可以使用堆。\n有小伙伴可能会想到用有序数组，初始化一个有序数组时间复杂度是 O(nlog(n))，查找最大值或者最小值时间复杂度都是 O(1)，但是，涉及到更新（插入或删除）数据时，时间复杂度为 O(n)，即使是使用复杂度为 O(log(n)) 的二分法找到要插入或者删除的数据，在移动数据时也需要 O(n) 的时间复杂度。\n相对于有序数组而言，堆的主要优势在于插入和删除数据效率较高。 因为堆是基于完全二叉树实现的，所以在插入和删除数据时，只需要在二叉树中上下移动节点，时间复杂度为 O(log(n))，相比有序数组的 O(n)，效率更高。\n不过，需要注意的是：Heap 初始化的时间复杂度为 O(n)，而非O(nlogn)。\n堆的分类 堆分为 最大堆 和 最小堆。二者的区别在于节点的排序方式。\n最大堆：堆中的每一个节点的值都大于等于子树中所有节点的值 最小堆：堆中的每一个节点的值都小于等于子树中所有节点的值 如下图所示，图 1 是最大堆，图 2 是最小堆\n堆的存储 之前介绍树的时候说过，由于完全二叉树的优秀性质，利用数组存储二叉树即节省空间，又方便索引（若根结点的序号为 1，那么对于树中任意节点 i，其左子节点序号为 2*i，右子节点序号为 2*i+1）。\n为了方便存储和索引，（二叉）堆可以用完全二叉树的形式进行存储。存储的方式如下图所示：\n堆的操作 堆的更新操作主要包括两种 : 插入元素 和 删除堆顶元素。操作过程需要着重掌握和理解。\n在进入正题之前，再重申一遍，堆是一个公平的公司，有能力的人自然会走到与他能力所匹配的位置\n插入元素 ​\t插入元素，作为一个新入职的员工，初来乍到，这个员工需要从基层做起\n1.将要插入的元素放到最后\n有能力的人会逐渐升职加薪，是金子总会发光的！！！\n2.从底向上，如果父结点比该元素小，则该节点和父结点交换，直到无法交换\n删除堆顶元素 根据堆的性质可知，最大堆的堆顶元素为所有元素中最大的，最小堆的堆顶元素是所有元素中最小的。当我们需要多次查找最大元素或者最小元素的时候，可以利用堆来实现。\n删除堆顶元素后，为了保持堆的性质，需要对堆的结构进行调整，我们将这个过程称之为\"堆化\"，堆化的方法分为两种：\n一种是自底向上的堆化，上述的插入元素所使用的就是自底向上的堆化，元素从最底部向上移动。 另一种是自顶向下堆化，元素由最顶部向下移动。在讲解删除堆顶元素的方法时，我将阐述这两种操作的过程，大家可以体会一下二者的不同。 自底向上堆化 在堆这个公司中，会出现老大离职的现象，老大离职之后，他的位置就空出来了\n首先删除堆顶元素，使得数组中下标为 1 的位置空出。\n那么他的位置由谁来接替呢，当然是他的直接下属了，谁能力强就让谁上呗\n比较根结点的左子节点和右子节点，也就是下标为 2,3 的数组元素，将较大的元素填充到根结点(下标为 1)的位置。\n这个时候又空出一个位置了，老规矩，谁有能力谁上\n一直循环比较空出位置的左右子节点，并将较大者移至空位，直到堆的最底部\n这个时候已经完成了自底向上的堆化，没有元素可以填补空缺了，但是，我们可以看到数组中出现了“气泡”，这会导致存储空间的浪费。接下来我们试试自顶向下堆化。\n自顶向下堆化 自顶向下的堆化用一个词形容就是“石沉大海”，那么第一件事情，就是把石头抬起来，从海面扔下去。这个石头就是堆的最后一个元素，我们将最后一个元素移动到堆顶。\n然后开始将这个石头沉入海底，不停与左右子节点的值进行比较，和较大的子节点交换位置，直到无法交换位置。\n堆的操作总结 插入元素：先将元素放至数组末尾，再自底向上堆化，将末尾元素上浮 删除堆顶元素：删除堆顶元素，将末尾元素放至堆顶，再自顶向下堆化，将堆顶元素下沉。也可以自底向上堆化，只是会产生“气泡”，浪费存储空间。最好采用自顶向下堆化的方式。 堆排序 堆排序的过程分为两步：\n第一步是建堆，将一个无序的数组建立为一个堆 第二步是排序，将堆顶元素取出，然后对剩下的元素进行堆化，反复迭代，直到所有元素被取出为止。 建堆 如果你已经足够了解堆化的过程，那么建堆的过程掌握起来就比较容易了。建堆的过程就是一个对所有非叶节点的自顶向下堆化过程。\n首先要了解哪些是非叶节点，最后一个节点的父结点及它之前的元素，都是非叶节点。也就是说，如果节点个数为 n，那么我们需要对 n/2 到 1 的节点进行自顶向下（沉底）堆化。\n具体过程如下图：\n将初始的无序数组抽象为一棵树，图中的节点个数为 6，所以 4,5,6 节点为叶节点，1,2,3 节点为非叶节点，所以要对 1-3 号节点进行自顶向下（沉底）堆化，注意，顺序是从后往前堆化，从 3 号节点开始，一直到 1 号节点。 3 号节点堆化结果：\n2 号节点堆化结果：\n1 号节点堆化结果：\n至此，数组所对应的树已经成为了一个最大堆，建堆完成！\n排序 由于堆顶元素是所有元素中最大的，所以我们重复取出堆顶元素，将这个最大的堆顶元素放至数组末尾，并对剩下的元素进行堆化即可。\n现在思考两个问题：\n删除堆顶元素后需要执行自顶向下（沉底）堆化还是自底向上（上浮）堆化？ 取出的堆顶元素存在哪，新建一个数组存？ 先回答第一个问题，我们需要执行自顶向下（沉底）堆化，这个堆化一开始要将末尾元素移动至堆顶，这个时候末尾的位置就空出来了，由于堆中元素已经减小，这个位置不会再被使用，所以我们可以将取出的元素放在末尾。\n机智的小伙伴已经发现了，这其实是做了一次交换操作，将堆顶和末尾元素调换位置，从而将取出堆顶元素和堆化的第一步(将末尾元素放至根结点位置)进行合并。\n详细过程如下图所示：\n取出第一个元素并堆化：\n取出第二个元素并堆化：\n取出第三个元素并堆化：\n取出第四个元素并堆化：\n取出第五个元素并堆化：\n取出第六个元素并堆化：\n堆排序完成！\n树 树就是一种类似现实生活中的树的数据结构（倒置的树）。任何一颗非空树只有一个根节点。\n一棵树具有以下特点：\n一棵树中的任意两个结点有且仅有唯一的一条路径连通。 一棵树如果有 n 个结点，那么它一定恰好有 n-1 条边。 一棵树不包含回路。 下图就是一颗树，并且是一颗二叉树。\n如上图所示，通过上面这张图说明一下树中的常用概念：\n节点：树中的每个元素都可以统称为节点。 根节点：顶层节点或者说没有父节点的节点。上图中 A 节点就是根节点。 父节点：若一个节点含有子节点，则这个节点称为其子节点的父节点。上图中的 B 节点是 D 节点、E 节点的父节点。 子节点：一个节点含有的子树的根节点称为该节点的子节点。上图中 D 节点、E 节点是 B 节点的子节点。 兄弟节点：具有相同父节点的节点互称为兄弟节点。上图中 D 节点、E 节点的共同父节点是 B 节点，故 D 和 E 为兄弟节点。 叶子节点：没有子节点的节点。上图中的 D、F、H、I 都是叶子节点。 节点的高度：该节点到叶子节点的最长路径所包含的边数。 节点的深度：根节点到该节点的路径所包含的边数 节点的层数：节点的深度+1。 树的高度：根节点的高度。 关于树的深度和高度的定义可以看 stackoverflow 上的这个问题：What is the difference between tree depth and height? 。\n二叉树的分类 二叉树（Binary tree）是每个节点最多只有两个分支（即不存在分支度大于 2 的节点）的树结构。\n二叉树 的分支通常被称作“左子树”或“右子树”。并且，二叉树 的分支具有左右次序，不能随意颠倒。\n二叉树 的第 i 层至多拥有 2^(i-1) 个节点，深度为 k 的二叉树至多总共有 2^(k+1)-1 个节点（满二叉树的情况），至少有 2^(k) 个节点（关于节点的深度的定义国内争议比较多，我个人比较认可维基百科对节点深度的定义）。\n满二叉树 一个二叉树，如果每一个层的结点数都达到最大值，则这个二叉树就是 满二叉树。也就是说，如果一个二叉树的层数为 K，且结点总数是(2^k) -1 ，则它就是 满二叉树。如下图所示：\n完全二叉树 除最后一层外，若其余层都是满的，并且最后一层或者是满的，或者是在右边缺少连续若干节点，则这个二叉树就是 完全二叉树 。\n大家可以想象为一棵树从根结点开始扩展，扩展完左子节点才能开始扩展右子节点，每扩展完一层，才能继续扩展下一层。如下图所示：\n完全二叉树有一个很好的性质：父结点和子节点的序号有着对应关系。\n细心的小伙伴可能发现了，当根节点的值为 1 的情况下，若父结点的序号是 i，那么左子节点的序号就是 2i，右子节点的序号是 2i+1。这个性质使得完全二叉树利用数组存储时可以极大地节省空间，以及利用序号找到某个节点的父结点和子节点，后续二叉树的存储会详细介绍。\n平衡二叉树 平衡二叉树 是一棵二叉排序树，且具有以下性质：\n可以是一棵空树 如果不是空树，它的左右两个子树的高度差的绝对值不超过 1，并且左右两个子树都是一棵平衡二叉树。 平衡二叉树的常用实现方法有 红黑树、AVL 树、替罪羊树、加权平衡树、伸展树 等。\n在给大家展示平衡二叉树之前，先给大家看一棵树：\n你管这玩意儿叫树？？？\n没错，这玩意儿还真叫树，只不过这棵树已经退化为一个链表了，我们管它叫 斜树。\n如果这样，那我为啥不直接用链表呢?\n谁说不是呢？\n二叉树相比于链表，由于父子节点以及兄弟节点之间往往具有某种特殊的关系，这种关系使得我们在树中对数据进行搜索和修改时，相对于链表更加快捷便利。\n但是，如果二叉树退化为一个链表了，那么那么树所具有的优秀性质就难以表现出来，效率也会大打折，为了避免这样的情况，我们希望每个做 “家长”（父结点） 的，都 一碗水端平，分给左儿子和分给右儿子的尽可能一样多，相差最多不超过一层，如下图所示：\n二叉树的存储 二叉树的存储主要分为 链式存储 和 顺序存储 两种：\n链式存储 和链表类似，二叉树的链式存储依靠指针将各个节点串联起来，不需要连续的存储空间。\n每个节点包括三个属性：\n数据 data。data 不一定是单一的数据，根据不同情况，可以是多个具有不同类型的数据。 左节点指针 left 右节点指针 right。 可是 JAVA 没有指针啊！\n那就直接引用对象呗（别问我对象哪里找）\n顺序存储 顺序存储就是利用数组进行存储，数组中的每一个位置仅存储节点的 data，不存储左右子节点的指针，子节点的索引通过数组下标完成。根结点的序号为 1，对于每个节点 Node，假设它存储在数组中下标为 i 的位置，那么它的左子节点就存储在 2i 的位置，它的右子节点存储在下标为 2i+1 的位置。\n一棵完全二叉树的数组顺序存储如下图所示：\n大家可以试着填写一下存储如下二叉树的数组，比较一下和完全二叉树的顺序存储有何区别：\n可以看到，如果我们要存储的二叉树不是完全二叉树，在数组中就会出现空隙，导致内存利用率降低\n二叉树的遍历 先序遍历 二叉树的先序遍历，就是先输出根结点，再遍历左子树，最后遍历右子树，遍历左子树和右子树的时候，同样遵循先序遍历的规则，也就是说，我们可以递归实现先序遍历。\n代码如下：\n1 2 3 4 5 6 7 8 public void preOrder(TreeNode root){ if(root == null){ return; } system.out.println(root.data); preOrder(root.left); preOrder(root.right); } 中序遍历 二叉树的中序遍历，就是先递归中序遍历左子树，再输出根结点的值，再递归中序遍历右子树，大家可以想象成一巴掌把树压扁，父结点被拍到了左子节点和右子节点的中间，如下图所示：\n代码如下：\n1 2 3 4 5 6 7 8 public void inOrder(TreeNode root){ if(root == null){ return; } inOrder(root.left); system.out.println(root.data); inOrder(root.right); } 后序遍历 二叉树的后序遍历，就是先递归后序遍历左子树，再递归后序遍历右子树，最后输出根结点的值\n代码如下：\n1 2 3 4 5 6 7 8 public void postOrder(TreeNode root){ if(root == null){ return; } postOrder(root.right); postOrder(root.left); system.out.println(root.data); } 布隆过滤器 布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于 1970 年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。\nBloom Filter 会使用一个较大的 bit 数组来保存所有的数据，数组中的每个元素都只占用 1 bit ，并且每个元素只能是 0 或者 1（代表 false 或者 true），这也是 Bloom Filter 节省内存的核心所在。这样来算的话，申请一个 100w 个元素的位数组只占用 1000000Bit / 8 = 125000 Byte = 125000/1024 KB ≈ 122KB 的空间。\n总结：一个名叫 Bloom 的人提出了一种来检索元素是否在给定大集合中的数据结构，这种数据结构是高效且性能很好的，但缺点是具有一定的错误识别率和删除难度。并且，理论情况下，添加到集合中的元素越多，误报的可能性就越大。\n原理 当一个元素加入布隆过滤器中的时候，会进行如下操作：\n使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。 根据得到的哈希值，在位数组中把对应下标的值置为 1。 当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行如下操作：\n对给定元素再次进行相同的哈希计算； 得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。 Bloom Filter 的简单原理图如下：\n如图所示，当字符串存储要加入到布隆过滤器中时，该字符串首先由多个哈希函数生成不同的哈希值，然后将对应的位数组的下标设置为 1（当位数组初始化时，所有位置均为 0）。当第二次存储相同字符串时，因为先前的对应位置已设置为 1，所以很容易知道此值已经存在（去重非常方便）。\n如果我们需要判断某个字符串是否在布隆过滤器中时，只需要对给定字符串再次进行相同的哈希计算，得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。\n不同的字符串可能哈希出来的位置相同，这种情况我们可以适当增加位数组大小或者调整我们的哈希函数。\n综上，我们可以得出：布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。\n使用场景 判断给定数据是否存在：比如判断一个数字是否存在于包含大量数字的数字集中（数字集很大，上亿）、 防止缓存穿透（判断请求的数据是否有效避免直接绕过缓存请求数据库）等等、邮箱的垃圾邮件过滤（判断一个邮件地址是否在垃圾邮件列表中）、黑名单功能（判断一个IP地址或手机号码是否在黑名单中）等等。 去重：比如爬给定网址的时候对已经爬取过的 URL 去重、对巨量的 QQ号/订单号去重。 去重场景也需要用到判断给定数据是否存在，因此布隆过滤器主要是为了解决海量数据的存在性问题。\n编码实战 通过 Java 编程手动实现布隆过滤器 我们上面已经说了布隆过滤器的原理，知道了布隆过滤器的原理之后就可以自己手动实现一个了。\n如果你想要手动实现一个的话，你需要：\n一个合适大小的位数组保存数据 几个不同的哈希函数 添加元素到位数组（布隆过滤器）的方法实现 判断给定元素是否存在于位数组（布隆过滤器）的方法实现。 下面给出一个我觉得写的还算不错的代码（参考网上已有代码改进得到，对于所有类型对象皆适用）：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 import java.util.BitSet; public class MyBloomFilter { /** * 位数组的大小 */ private static final int DEFAULT_SIZE = 2 \u003c\u003c 24; /** * 通过这个数组可以创建 6 个不同的哈希函数 */ private static final int[] SEEDS = new int[]{3, 13, 46, 71, 91, 134}; /** * 位数组。数组中的元素只能是 0 或者 1 */ private BitSet bits = new BitSet(DEFAULT_SIZE); /** * 存放包含 hash 函数的类的数组 */ private SimpleHash[] func = new SimpleHash[SEEDS.length]; /** * 初始化多个包含 hash 函数的类的数组，每个类中的 hash 函数都不一样 */ public MyBloomFilter() { // 初始化多个不同的 Hash 函数 for (int i = 0; i \u003c SEEDS.length; i++) { func[i] = new SimpleHash(DEFAULT_SIZE, SEEDS[i]); } } /** * 添加元素到位数组 */ public void add(Object value) { for (SimpleHash f : func) { bits.set(f.hash(value), true); } } /** * 判断指定元素是否存在于位数组 */ public boolean contains(Object value) { boolean ret = true; for (SimpleHash f : func) { ret = ret \u0026\u0026 bits.get(f.hash(value)); } return ret; } /** * 静态内部类。用于 hash 操作！ */ public static class SimpleHash { private int cap; private int seed; public SimpleHash(int cap, int seed) { this.cap = cap; this.seed = seed; } /** * 计算 hash 值 */ public int hash(Object value) { int h; return (value == null) ? 0 : Math.abs(seed * (cap - 1) \u0026 ((h = value.hashCode()) ^ (h \u003e\u003e\u003e 16))); } } } 测试：\n1 2 3 4 5 6 7 8 9 String value1 = \"https://javaguide.cn/\"; String value2 = \"https://github.com/Snailclimb\"; MyBloomFilter filter = new MyBloomFilter(); System.out.println(filter.contains(value1)); System.out.println(filter.contains(value2)); filter.add(value1); filter.add(value2); System.out.println(filter.contains(value1)); System.out.println(filter.contains(value2)); 输出：\n1 2 3 4 false false true true 再测试：\n1 2 3 4 5 6 7 8 9 Integer value1 = 13423; Integer value2 = 22131; MyBloomFilter filter = new MyBloomFilter(); System.out.println(filter.contains(value1)); System.out.println(filter.contains(value2)); filter.add(value1); filter.add(value2); System.out.println(filter.contains(value1)); System.out.println(filter.contains(value2)); 输出：\n1 2 3 4 false false true true 利用 Google 开源的 Guava 中自带的布隆过滤器 自己实现的目的主要是为了让自己搞懂布隆过滤器的原理，Guava 中布隆过滤器的实现算是比较权威的，所以实际项目中我们不需要手动实现一个布隆过滤器。\n首先我们需要在项目中引入 Guava 的依赖：\n1 2 3 4 5 com.google.guava guava 28.0-jre 实际使用如下：\n我们创建了一个最多存放 最多 1500 个整数的布隆过滤器，并且我们可以容忍误判的概率为百分之（0.01）\n1 2 3 4 5 6 7 8 9 10 11 12 13 // 创建布隆过滤器对象 BloomFilter filter = BloomFilter.create( Funnels.integerFunnel(), 1500, 0.01); // 判断指定元素是否存在 System.out.println(filter.mightContain(1)); System.out.println(filter.mightContain(2)); // 将元素添加进布隆过滤器 filter.put(1); filter.put(2); System.out.println(filter.mightContain(1)); System.out.println(filter.mightContain(2)); 在我们的示例中，当 mightContain() 方法返回 true 时，我们可以 99％确定该元素在过滤器中，当过滤器返回 false 时，我们可以 100％确定该元素不存在于过滤器中。\nGuava 提供的布隆过滤器的实现还是很不错的（想要详细了解的可以看一下它的源码实现），但是它有一个重大的缺陷就是只能单机使用（另外，容量扩展也不容易），而现在互联网一般都是分布式的场景。为了解决这个问题，我们就需要用到 Redis 中的布隆过滤器了。\nRedis 中的布隆过滤器 Redis v4.0 之后有了 Module（模块/插件） 功能，Redis Modules 让 Redis 可以使用外部模块扩展其功能 。布隆过滤器就是其中的 Module。详情可以查看 Redis 官方对 Redis Modules 的介绍：https://redis.io/modules\n另外，官网推荐了一个 RedisBloom 作为 Redis 布隆过滤器的 Module，地址：https://github.com/RedisBloom/RedisBloom 其他还有：\nredis-lua-scaling-bloom-filter（lua 脚本实现）：https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter pyreBloom（Python 中的快速 Redis 布隆过滤器）：https://github.com/seomoz/pyreBloom …… RedisBloom 提供了多种语言的客户端支持，包括：Python、Java、JavaScript 和 PHP。\n使用 Docker 安装 如果我们需要体验 Redis 中的布隆过滤器非常简单，通过 Docker 就可以了！我们直接在 Google 搜索 docker redis bloomfilter 然后在排除广告的第一条搜素结果就找到了我们想要的答案（这是我平常解决问题的一种方式，分享一下），具体地址：https://hub.docker.com/r/redislabs/rebloom/ （介绍的很详细 ）。\n具体操作如下：\n1 2 3 4 ➜ ~ docker run -p 6379:6379 --name redis-redisbloom redislabs/rebloom:latest ➜ ~ docker exec -it redis-redisbloom bash root@21396d02c252:/data# redis-cli 127.0.0.1:6379\u003e 注意：当前rebloom镜像已经被废弃，官方推荐使用redis-stack\n常用命令一览 注意：key : 布隆过滤器的名称，item : 添加的元素。\nBF.ADD：将元素添加到布隆过滤器中，如果该过滤器尚不存在，则创建该过滤器。格式：BF.ADD {key} {item}。 BF.MADD : 将一个或多个元素添加到“布隆过滤器”中，并创建一个尚不存在的过滤器。该命令的操作方式BF.ADD与之相同，只不过它允许多个输入并返回多个值。格式：BF.MADD {key} {item} [item ...] 。 BF.EXISTS : 确定元素是否在布隆过滤器中存在。格式：BF.EXISTS {key} {item}。 BF.MEXISTS：确定一个或者多个元素是否在布隆过滤器中存在格式：BF.MEXISTS {key} {item} [item ...]。 另外， BF.RESERVE 命令需要单独介绍一下：\n这个命令的格式如下：\nBF.RESERVE {key} {error_rate} {capacity} [EXPANSION expansion] 。\n下面简单介绍一下每个参数的具体含义：\nkey：布隆过滤器的名称 error_rate : 期望的误报率。该值必须介于 0 到 1 之间。例如，对于期望的误报率 0.1％（1000 中为 1），error_rate 应该设置为 0.001。该数字越接近零，则每个项目的内存消耗越大，并且每个操作的 CPU 使用率越高。 capacity: 过滤器的容量。当实际存储的元素个数超过这个值之后，性能将开始下降。实际的降级将取决于超出限制的程度。随着过滤器元素数量呈指数增长，性能将线性下降。 可选参数：\nexpansion：如果创建了一个新的子过滤器，则其大小将是当前过滤器的大小乘以expansion。默认扩展值为 2。这意味着每个后续子过滤器将是前一个子过滤器的两倍。 实际使用 1 2 3 4 5 6 7 8 9 10 127.0.0.1:6379\u003e BF.ADD myFilter java (integer) 1 127.0.0.1:6379\u003e BF.ADD myFilter javaguide (integer) 1 127.0.0.1:6379\u003e BF.EXISTS myFilter java (integer) 1 127.0.0.1:6379\u003e BF.EXISTS myFilter javaguide (integer) 1 127.0.0.1:6379\u003e BF.EXISTS myFilter github (integer) 0 ",
+  "wordCount" : "14006",
+  "inLanguage": "en",
+  "datePublished": "2023-07-18T05:00:00Z",
+  "dateModified": "2023-07-18T05:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/en/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/en/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      10_数据结构面试题
+    </h1>
+    <div class="post-meta"><span title='2023-07-18 05:00:00 +0000 UTC'>2023-07-18</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%ba%bf%e6%80%a7%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" aria-label="线性数据结构">线性数据结构</a><ul>
+                        
+                <li>
+                    <a href="#%e6%95%b0%e7%bb%84" aria-label="数组">数组</a></li>
+                <li>
+                    <a href="#%e9%93%be%e8%a1%a8" aria-label="链表">链表</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8d%95%e9%93%be%e8%a1%a8" aria-label="单链表">单链表</a></li>
+                <li>
+                    <a href="#%e5%be%aa%e7%8e%af%e9%93%be%e8%a1%a8" aria-label="循环链表">循环链表</a></li>
+                <li>
+                    <a href="#%e5%8f%8c%e5%90%91%e9%93%be%e8%a1%a8" aria-label="双向链表">双向链表</a></li>
+                <li>
+                    <a href="#%e5%8f%8c%e5%90%91%e5%be%aa%e7%8e%af%e9%93%be%e8%a1%a8" aria-label="双向循环链表">双向循环链表</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="应用场景">应用场景</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e7%bb%84-vs-%e9%93%be%e8%a1%a8" aria-label="数组 vs 链表">数组 vs 链表</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a0%88" aria-label="栈">栈</a><ul>
+                        
+                <li>
+                    <a href="#%e6%a0%88%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="栈的应用场景">栈的应用场景</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e6%b5%8f%e8%a7%88%e5%99%a8%e7%9a%84%e5%9b%9e%e9%80%80%e5%92%8c%e5%89%8d%e8%bf%9b%e5%8a%9f%e8%83%bd" aria-label="实现浏览器的回退和前进功能">实现浏览器的回退和前进功能</a></li>
+                <li>
+                    <a href="#%e6%a3%80%e6%9f%a5%e7%ac%a6%e5%8f%b7%e6%98%af%e5%90%a6%e6%88%90%e5%af%b9%e5%87%ba%e7%8e%b0" aria-label="检查符号是否成对出现">检查符号是否成对出现</a></li>
+                <li>
+                    <a href="#%e5%8f%8d%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2" aria-label="反转字符串">反转字符串</a></li>
+                <li>
+                    <a href="#%e7%bb%b4%e6%8a%a4%e5%87%bd%e6%95%b0%e8%b0%83%e7%94%a8" aria-label="维护函数调用">维护函数调用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a0%88%e7%9a%84%e5%ae%9e%e7%8e%b0" aria-label="栈的实现">栈的实现</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%98%9f%e5%88%97" aria-label="队列">队列</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8d%95%e9%98%9f%e5%88%97" aria-label="单队列">单队列</a></li>
+                <li>
+                    <a href="#%e5%be%aa%e7%8e%af%e9%98%9f%e5%88%97" aria-label="循环队列">循环队列</a></li>
+                <li>
+                    <a href="#%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af-1" aria-label="应用场景">应用场景</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9b%be" aria-label="图">图</a><ul>
+                        
+                <li>
+                    <a href="#%e5%9b%be%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5" aria-label="图的基本概念">图的基本概念</a></li>
+                <li>
+                    <a href="#%e5%9b%be%e7%9a%84%e5%ad%98%e5%82%a8" aria-label="图的存储">图的存储</a><ul>
+                        
+                <li>
+                    <a href="#%e9%82%bb%e6%8e%a5%e7%9f%a9%e9%98%b5%e5%ad%98%e5%82%a8" aria-label="邻接矩阵存储">邻接矩阵存储</a></li>
+                <li>
+                    <a href="#%e9%82%bb%e6%8e%a5%e8%a1%a8%e5%ad%98%e5%82%a8" aria-label="邻接表存储">邻接表存储</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9b%be%e7%9a%84%e6%90%9c%e7%b4%a2" aria-label="图的搜索">图的搜索</a><ul>
+                        
+                <li>
+                    <a href="#%e5%b9%bf%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2" aria-label="广度优先搜索">广度优先搜索</a></li>
+                <li>
+                    <a href="#%e6%b7%b1%e5%ba%a6%e4%bc%98%e5%85%88%e6%90%9c%e7%b4%a2" aria-label="深度优先搜索">深度优先搜索</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%a0%86" aria-label="堆">堆</a><ul>
+                        
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e7%94%a8%e9%80%94" aria-label="堆的用途">堆的用途</a></li>
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e5%88%86%e7%b1%bb" aria-label="堆的分类">堆的分类</a></li>
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e5%ad%98%e5%82%a8" aria-label="堆的存储">堆的存储</a></li>
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e6%93%8d%e4%bd%9c" aria-label="堆的操作">堆的操作</a><ul>
+                        
+                <li>
+                    <a href="#%e6%8f%92%e5%85%a5%e5%85%83%e7%b4%a0" aria-label="插入元素">插入元素</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e5%a0%86%e9%a1%b6%e5%85%83%e7%b4%a0" aria-label="删除堆顶元素">删除堆顶元素</a><ul>
+                        
+                <li>
+                    <a href="#%e8%87%aa%e5%ba%95%e5%90%91%e4%b8%8a%e5%a0%86%e5%8c%96" aria-label="自底向上堆化">自底向上堆化</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e9%a1%b6%e5%90%91%e4%b8%8b%e5%a0%86%e5%8c%96" aria-label="自顶向下堆化">自顶向下堆化</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e6%93%8d%e4%bd%9c%e6%80%bb%e7%bb%93" aria-label="堆的操作总结">堆的操作总结</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%a0%86%e6%8e%92%e5%ba%8f" aria-label="堆排序">堆排序</a><ul>
+                        
+                <li>
+                    <a href="#%e5%bb%ba%e5%a0%86" aria-label="建堆">建堆</a></li>
+                <li>
+                    <a href="#%e6%8e%92%e5%ba%8f" aria-label="排序">排序</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a0%91" aria-label="树">树</a><ul>
+                        
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%88%86%e7%b1%bb" aria-label="二叉树的分类">二叉树的分类</a><ul>
+                        
+                <li>
+                    <a href="#%e6%bb%a1%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="满二叉树">满二叉树</a></li>
+                <li>
+                    <a href="#%e5%ae%8c%e5%85%a8%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="完全二叉树">完全二叉树</a></li>
+                <li>
+                    <a href="#%e5%b9%b3%e8%a1%a1%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="平衡二叉树">平衡二叉树</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%ad%98%e5%82%a8" aria-label="二叉树的存储">二叉树的存储</a><ul>
+                        
+                <li>
+                    <a href="#%e9%93%be%e5%bc%8f%e5%ad%98%e5%82%a8" aria-label="链式存储">链式存储</a></li>
+                <li>
+                    <a href="#%e9%a1%ba%e5%ba%8f%e5%ad%98%e5%82%a8" aria-label="顺序存储">顺序存储</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%81%8d%e5%8e%86" aria-label="二叉树的遍历">二叉树的遍历</a><ul>
+                        
+                <li>
+                    <a href="#%e5%85%88%e5%ba%8f%e9%81%8d%e5%8e%86" aria-label="先序遍历">先序遍历</a></li>
+                <li>
+                    <a href="#%e4%b8%ad%e5%ba%8f%e9%81%8d%e5%8e%86" aria-label="中序遍历">中序遍历</a></li>
+                <li>
+                    <a href="#%e5%90%8e%e5%ba%8f%e9%81%8d%e5%8e%86" aria-label="后序遍历">后序遍历</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8" aria-label="布隆过滤器">布隆过滤器</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8e%9f%e7%90%86" aria-label="原理">原理</a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="使用场景">使用场景</a></li>
+                <li>
+                    <a href="#%e7%bc%96%e7%a0%81%e5%ae%9e%e6%88%98" aria-label="编码实战">编码实战</a><ul>
+                        
+                <li>
+                    <a href="#%e9%80%9a%e8%bf%87-java-%e7%bc%96%e7%a8%8b%e6%89%8b%e5%8a%a8%e5%ae%9e%e7%8e%b0%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8" aria-label="通过 Java 编程手动实现布隆过滤器">通过 Java 编程手动实现布隆过滤器</a></li>
+                <li>
+                    <a href="#%e5%88%a9%e7%94%a8-google-%e5%bc%80%e6%ba%90%e7%9a%84-guava-%e4%b8%ad%e8%87%aa%e5%b8%a6%e7%9a%84%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8" aria-label="利用 Google 开源的 Guava 中自带的布隆过滤器">利用 Google 开源的 Guava 中自带的布隆过滤器</a></li></ul>
+                </li>
+                <li>
+                    <a href="#redis-%e4%b8%ad%e7%9a%84%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8" aria-label="Redis 中的布隆过滤器">Redis 中的布隆过滤器</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8-docker-%e5%ae%89%e8%a3%85" aria-label="使用 Docker 安装">使用 Docker 安装</a></li>
+                <li>
+                    <a href="#%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4%e4%b8%80%e8%a7%88" aria-label="常用命令一览">常用命令一览</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e9%99%85%e4%bd%bf%e7%94%a8" aria-label="实际使用">实际使用</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="线性数据结构">线性数据结构<a hidden class="anchor" aria-hidden="true" href="#线性数据结构">#</a></h1>
+<h2 id="数组">数组<a hidden class="anchor" aria-hidden="true" href="#数组">#</a></h2>
+<p><strong>数组（Array）</strong> 是一种很常见的数据结构。它由相同类型的元素（element）组成，并且是使用一块连续的内存来存储。</p>
+<p>我们直接可以利用元素的索引（index）可以计算出该元素对应的存储地址。</p>
+<p>数组的特点是：<strong>提供随机访问</strong> 并且容量有限。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>假如数组的长度为 n<span style="color:#f00">。</span>
+</span></span><span style="display:flex;"><span>访问<span style="color:#f00">：</span>O<span style="color:#f00">（</span>1<span style="color:#f00">）</span><span style="color:#007f7f">//访问特定位置的元素</span>
+</span></span><span style="display:flex;"><span>插入<span style="color:#f00">：</span>O<span style="color:#f00">（</span>n <span style="color:#f00">）</span><span style="color:#007f7f">//最坏的情况发生在插入发生在数组的首部并需要移动所有元素时</span>
+</span></span><span style="display:flex;"><span>删除<span style="color:#f00">：</span>O<span style="color:#f00">（</span>n<span style="color:#f00">）</span><span style="color:#007f7f">//最坏的情况发生在删除数组的开头发生并需要移动第一元素后面所有的元素时</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/array.png"></p>
+<h2 id="链表">链表<a hidden class="anchor" aria-hidden="true" href="#链表">#</a></h2>
+<p><strong>链表（LinkedList）</strong> 虽然是一种线性表，但是并不会按线性的顺序存储数据，使用的不是连续的内存空间来存储数据。</p>
+<p>链表的插入和删除操作的复杂度为 O(1) ，只需要知道目标位置元素的上一个元素即可。但是，在查找一个节点或者访问特定位置的节点的时候复杂度为 O(n) 。</p>
+<p>使用链表结构可以克服数组需要预先知道数据大小的缺点，链表结构可以充分利用计算机内存空间，实现灵活的内存动态管理。但链表不会节省空间，相比于数组会占用更多的空间，因为链表中每个节点存放的还有指向其他节点的指针。除此之外，链表不具有数组随机读取的优点。</p>
+<p><strong>常见链表分类：</strong></p>
+<ol>
+<li>单链表</li>
+<li>双向链表</li>
+<li>循环链表</li>
+<li>双向循环链表</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>假如链表中有n个元素<span style="color:#f00">。</span>
+</span></span><span style="display:flex;"><span>访问<span style="color:#f00">：</span>O<span style="color:#f00">（</span>n<span style="color:#f00">）</span><span style="color:#007f7f">//访问特定位置的元素</span>
+</span></span><span style="display:flex;"><span>插入删除<span style="color:#f00">：</span>O<span style="color:#f00">（</span>1<span style="color:#f00">）</span><span style="color:#007f7f">//必须要要知道插入元素的位置</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="单链表">单链表<a hidden class="anchor" aria-hidden="true" href="#单链表">#</a></h3>
+<p><strong>单链表</strong> 单向链表只有一个方向，结点只有一个后继指针 next 指向后面的节点。因此，链表这种数据结构通常在物理内存上是不连续的。我们习惯性地把第一个结点叫作头结点，链表通常有一个不保存任何值的 head 节点(头结点)，通过头结点我们可以遍历整个链表。尾结点通常指向 null。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/single-linkedlist.png"></p>
+<h3 id="循环链表">循环链表<a hidden class="anchor" aria-hidden="true" href="#循环链表">#</a></h3>
+<p><strong>循环链表</strong> 其实是一种特殊的单链表，和单链表不同的是循环链表的尾结点不是指向 null，而是指向链表的头结点。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/circular-linkedlist.png"></p>
+<h3 id="双向链表">双向链表<a hidden class="anchor" aria-hidden="true" href="#双向链表">#</a></h3>
+<p><strong>双向链表</strong> 包含两个指针，一个 prev 指向前一个节点，一个 next 指向后一个节点。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/bidirectional-linkedlist.png"></p>
+<h3 id="双向循环链表">双向循环链表<a hidden class="anchor" aria-hidden="true" href="#双向循环链表">#</a></h3>
+<p><strong>双向循环链表</strong> 最后一个节点的 next 指向 head，而 head 的 prev 指向最后一个节点，构成一个环。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/bidirectional-circular-linkedlist.png"></p>
+<h3 id="应用场景">应用场景<a hidden class="anchor" aria-hidden="true" href="#应用场景">#</a></h3>
+<ul>
+<li>如果需要支持随机访问的话，链表没办法做到。</li>
+<li>如果需要存储的数据元素的个数不确定，并且需要经常添加和删除数据的话，使用链表比较合适。</li>
+<li>如果需要存储的数据元素的个数确定，并且不需要经常添加和删除数据的话，使用数组比较合适。</li>
+</ul>
+<h3 id="数组-vs-链表">数组 vs 链表<a hidden class="anchor" aria-hidden="true" href="#数组-vs-链表">#</a></h3>
+<ul>
+<li>数组支持随机访问，而链表不支持。</li>
+<li>数组使用的是连续内存空间对 CPU 的缓存机制友好，链表则相反。</li>
+<li>数组的大小固定，而链表则天然支持动态扩容。如果声明的数组过小，需要另外申请一个更大的内存空间存放数组元素，然后将原数组拷贝进去，这个操作是比较耗时的！</li>
+</ul>
+<h2 id="栈">栈<a hidden class="anchor" aria-hidden="true" href="#栈">#</a></h2>
+<p><strong>栈 (Stack)</strong> 只允许在有序的线性数据集合的一端（称为栈顶 top）进行加入数据（push）和移除数据（pop）。因而按照 <strong>后进先出（LIFO, Last In First Out）</strong> 的原理运作。<strong>在栈中，push 和 pop 的操作都发生在栈顶。</strong></p>
+<p>栈常用一维数组或链表来实现，用数组实现的栈叫作 <strong>顺序栈</strong> ，用链表实现的栈叫作 <strong>链式栈</strong> 。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>假设堆栈中有n个元素<span style="color:#f00">。</span>
+</span></span><span style="display:flex;"><span>访问<span style="color:#f00">：</span>O<span style="color:#f00">（</span>n<span style="color:#f00">）</span><span style="color:#007f7f">//最坏情况</span>
+</span></span><span style="display:flex;"><span>插入删除<span style="color:#f00">：</span>O<span style="color:#f00">（</span>1<span style="color:#f00">）</span><span style="color:#007f7f">//顶端插入和删除元素</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E6%A0%88.png"></p>
+<h3 id="栈的应用场景">栈的应用场景<a hidden class="anchor" aria-hidden="true" href="#栈的应用场景">#</a></h3>
+<p>当我们我们要处理的数据只涉及在一端插入和删除数据，并且满足 <strong>后进先出（LIFO, Last In First Out）</strong> 的特性时，我们就可以使用栈这个数据结构。</p>
+<h4 id="实现浏览器的回退和前进功能">实现浏览器的回退和前进功能<a hidden class="anchor" aria-hidden="true" href="#实现浏览器的回退和前进功能">#</a></h4>
+<p>我们只需要使用两个栈(Stack1 和 Stack2)和就能实现这个功能。比如你按顺序查看了 1,2,3,4 这四个页面，我们依次把 1,2,3,4 这四个页面压入 Stack1 中。当你想回头看 2 这个页面的时候，你点击回退按钮，我们依次把 4,3 这两个页面从 Stack1 弹出，然后压入 Stack2 中。假如你又想回到页面 3，你点击前进按钮，我们将 3 页面从 Stack2 弹出，然后压入到 Stack1 中。示例图如下:</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E6%A0%88%E5%AE%9E%E7%8E%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E5%80%92%E9%80%80%E5%92%8C%E5%89%8D%E8%BF%9B.png"></p>
+<h4 id="检查符号是否成对出现">检查符号是否成对出现<a hidden class="anchor" aria-hidden="true" href="#检查符号是否成对出现">#</a></h4>
+<blockquote>
+<p>给定一个只包括 <code>'('</code>，<code>')'</code>，<code>'{'</code>，<code>'}'</code>，<code>'['</code>，<code>']'</code> 的字符串，判断该字符串是否有效。</p>
+<p>有效字符串需满足：</p>
+<ol>
+<li>左括号必须用相同类型的右括号闭合。</li>
+<li>左括号必须以正确的顺序闭合。</li>
+</ol>
+<p>比如 &ldquo;()&quot;、&rdquo;()[]{}&quot;、&quot;{[]}&quot; 都是有效字符串，而 &ldquo;(]&quot;、&rdquo;([)]&quot; 则不是。</p>
+</blockquote>
+<p>这个问题实际是 Leetcode 的一道题目，我们可以利用栈 <code>Stack</code> 来解决这个问题。</p>
+<ol>
+<li>首先我们将括号间的对应规则存放在 <code>Map</code> 中，这一点应该毋容置疑；</li>
+<li>创建一个栈。遍历字符串，如果字符是左括号就直接加入<code>stack</code>中，否则将<code>stack</code> 的栈顶元素与这个括号做比较，如果不相等就直接返回 false。遍历结束，如果<code>stack</code>为空，返回 <code>true</code>。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> isValid(String s){
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 括号之间的对应规则</span>
+</span></span><span style="display:flex;"><span>    HashMap&lt;Character, Character&gt; mappings = <span style="color:#fff;font-weight:bold">new</span> HashMap&lt;Character, Character&gt;();
+</span></span><span style="display:flex;"><span>    mappings.<span style="color:#007f7f">put</span>(<span style="color:#0ff;font-weight:bold">&#39;)&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;(&#39;</span>);
+</span></span><span style="display:flex;"><span>    mappings.<span style="color:#007f7f">put</span>(<span style="color:#0ff;font-weight:bold">&#39;}&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;{&#39;</span>);
+</span></span><span style="display:flex;"><span>    mappings.<span style="color:#007f7f">put</span>(<span style="color:#0ff;font-weight:bold">&#39;]&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;[&#39;</span>);
+</span></span><span style="display:flex;"><span>    Stack&lt;Character&gt; stack = <span style="color:#fff;font-weight:bold">new</span> Stack&lt;Character&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">char</span>[] chars = s.<span style="color:#007f7f">toCharArray</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = 0; i &lt; chars.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (mappings.<span style="color:#007f7f">containsKey</span>(chars[i])) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">char</span> topElement = stack.<span style="color:#007f7f">empty</span>() ? <span style="color:#0ff;font-weight:bold">&#39;#&#39;</span> : stack.<span style="color:#007f7f">pop</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span> (topElement != mappings.<span style="color:#007f7f">get</span>(chars[i])) {
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">false</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            stack.<span style="color:#007f7f">push</span>(chars[i]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> stack.<span style="color:#007f7f">isEmpty</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="反转字符串">反转字符串<a hidden class="anchor" aria-hidden="true" href="#反转字符串">#</a></h4>
+<p>将字符串中的每个字符先入栈再出栈就可以了。</p>
+<h4 id="维护函数调用">维护函数调用<a hidden class="anchor" aria-hidden="true" href="#维护函数调用">#</a></h4>
+<p>最后一个被调用的函数必须先完成执行，符合栈的 <strong>后进先出（LIFO, Last In First Out）</strong> 特性。</p>
+<h3 id="栈的实现">栈的实现<a hidden class="anchor" aria-hidden="true" href="#栈的实现">#</a></h3>
+<p>栈既可以通过数组实现，也可以通过链表来实现。不管基于数组还是链表，入栈、出栈的时间复杂度都为 O(1)。</p>
+<p>下面我们使用数组来实现一个栈，并且这个栈具有<code>push()</code>、<code>pop()</code>（返回栈顶元素并出栈）、<code>peek()</code> （返回栈顶元素不出栈）、<code>isEmpty()</code>、<code>size()</code>这些基本的方法。</p>
+<blockquote>
+<p>提示：每次入栈之前先判断栈的容量是否够用，如果不够用就用<code>Arrays.copyOf()</code>进行扩容；</p>
+</blockquote>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">66
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> MyStack {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span>[] storage;<span style="color:#007f7f">//存放栈中元素的数组</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> capacity;<span style="color:#007f7f">//栈的容量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> count;<span style="color:#007f7f">//栈中元素数量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span> GROW_FACTOR = 2;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//不带初始容量的构造方法。默认容量为8</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> MyStack() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">capacity</span> = 8;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">storage</span>=<span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[8];
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">count</span> = 0;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//带初始容量的构造方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> MyStack(<span style="color:#fff;font-weight:bold">int</span> initialCapacity) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (initialCapacity &lt; 1)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IllegalArgumentException(<span style="color:#0ff;font-weight:bold">&#34;Capacity too small.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">capacity</span> = initialCapacity;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">storage</span> = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[initialCapacity];
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">count</span> = 0;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//入栈</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> push(<span style="color:#fff;font-weight:bold">int</span> value) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (count == capacity) {
+</span></span><span style="display:flex;"><span>            ensureCapacity();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        storage[count++] = value;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//确保容量大小</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">void</span> ensureCapacity() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> newCapacity = capacity * GROW_FACTOR;
+</span></span><span style="display:flex;"><span>        storage = Arrays.<span style="color:#007f7f">copyOf</span>(storage, newCapacity);
+</span></span><span style="display:flex;"><span>        capacity = newCapacity;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//返回栈顶元素并出栈</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> pop() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (count == 0)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IllegalArgumentException(<span style="color:#0ff;font-weight:bold">&#34;Stack is empty.&#34;</span>);
+</span></span><span style="display:flex;"><span>        count--;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> storage[count];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//返回栈顶元素不出栈</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> peek() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (count == 0){
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IllegalArgumentException(<span style="color:#0ff;font-weight:bold">&#34;Stack is empty.&#34;</span>);
+</span></span><span style="display:flex;"><span>        }<span style="color:#fff;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> storage[count-1];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//判断栈是否为空</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">boolean</span> isEmpty() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> count == 0;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//返回栈中元素的个数</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> size() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> count;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验证</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>MyStack myStack = <span style="color:#fff;font-weight:bold">new</span> MyStack(3);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(1);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(2);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(3);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(4);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(5);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(6);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(7);
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">push</span>(8);
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(myStack.<span style="color:#007f7f">peek</span>());<span style="color:#007f7f">//8</span>
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(myStack.<span style="color:#007f7f">size</span>());<span style="color:#007f7f">//8</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = 0; i &lt; 8; i++) {
+</span></span><span style="display:flex;"><span>    System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(myStack.<span style="color:#007f7f">pop</span>());
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(myStack.<span style="color:#007f7f">isEmpty</span>());<span style="color:#007f7f">//true</span>
+</span></span><span style="display:flex;"><span>myStack.<span style="color:#007f7f">pop</span>();<span style="color:#007f7f">//报错：java.lang.IllegalArgumentException: Stack is empty.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="队列">队列<a hidden class="anchor" aria-hidden="true" href="#队列">#</a></h2>
+<p><strong>队列（Queue）</strong> 是 <strong>先进先出 (FIFO，First In, First Out)</strong> 的线性表。在具体应用中通常用链表或者数组来实现，用数组实现的队列叫作 <strong>顺序队列</strong> ，用链表实现的队列叫作 <strong>链式队列</strong> 。<strong>队列只允许在后端（rear）进行插入操作也就是入队 enqueue，在前端（front）进行删除操作也就是出队 dequeue</strong></p>
+<p>队列的操作方式和堆栈类似，唯一的区别在于队列只允许新数据在后端进行添加。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>假设队列中有n个元素<span style="color:#f00">。</span>
+</span></span><span style="display:flex;"><span>访问<span style="color:#f00">：</span>O<span style="color:#f00">（</span>n<span style="color:#f00">）</span><span style="color:#007f7f">//最坏情况</span>
+</span></span><span style="display:flex;"><span>插入删除<span style="color:#f00">：</span>O<span style="color:#f00">（</span>1<span style="color:#f00">）</span><span style="color:#007f7f">//后端插入前端删除元素</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/queue.png"></p>
+<h3 id="单队列">单队列<a hidden class="anchor" aria-hidden="true" href="#单队列">#</a></h3>
+<p>单队列就是常见的队列, 每次添加元素时，都是添加到队尾。单队列又分为 <strong>顺序队列（数组实现）</strong> 和 <strong>链式队列（链表实现）</strong>。</p>
+<p><strong>顺序队列存在“假溢出”的问题也就是明明有位置却不能添加的情况。</strong></p>
+<p>假设下图是一个顺序队列，我们将前两个元素 1,2 出队，并入队两个元素 7,8。当进行入队、出队操作的时候，front 和 rear 都会持续往后移动，当 rear 移动到最后的时候,我们无法再往队列中添加数据，即使数组中还有空余空间，这种现象就是 <strong>”假溢出“</strong> 。除了假溢出问题之外，如下图所示，当添加元素 8 的时候，rear 指针移动到数组之外（越界）。</p>
+<blockquote>
+<p>为了避免当只有一个元素的时候，队头和队尾重合使处理变得麻烦，所以引入两个指针，front 指针指向对头元素，rear 指针指向队列最后一个元素的下一个位置，这样当 front 等于 rear 时，此队列不是还剩一个元素，而是空队列。——From 《大话数据结构》</p>
+</blockquote>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/seq-queue-false-overflow.png"></p>
+<h3 id="循环队列">循环队列<a hidden class="anchor" aria-hidden="true" href="#循环队列">#</a></h3>
+<p>循环队列可以解决顺序队列的假溢出和越界问题。解决办法就是：从头开始，这样也就会形成头尾相接的循环，这也就是循环队列名字的由来。</p>
+<p>还是用上面的图，我们将 rear 指针指向数组下标为 0 的位置就不会有越界问题了。当我们再向队列中添加元素的时候， rear 向后移动。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/circular-queue.png"></p>
+<p>顺序队列中，我们说 <code>front==rear</code> 的时候队列为空，循环队列中则不一样，也可能为满，如上图所示。解决办法有两种：</p>
+<ol>
+<li>可以设置一个标志变量 <code>flag</code>,当 <code>front==rear</code> 并且 <code>flag=0</code> 的时候队列为空，当<code>front==rear</code> 并且 <code>flag=1</code> 的时候队列为满。</li>
+<li>队列为空的时候就是 <code>front==rear</code> ，队列满的时候，我们保证数组还有一个空闲的位置，rear 就指向这个空闲位置，如下图所示，那么现在判断队列是否为满的条件就是：<code>(rear+1) % QueueSize==front</code> 。</li>
+</ol>
+<h3 id="应用场景-1">应用场景<a hidden class="anchor" aria-hidden="true" href="#应用场景-1">#</a></h3>
+<p>当我们需要按照一定顺序来处理数据的时候可以考虑使用队列这个数据结构。</p>
+<ul>
+<li><strong>阻塞队列：</strong> 阻塞队列可以看成在队列基础上加了阻塞操作的队列。当队列为空的时候，出队操作阻塞，当队列满的时候，入队操作阻塞。使用阻塞队列我们可以很容易实现“生产者 - 消费者“模型。</li>
+<li><strong>线程池中的请求/任务队列：</strong> 线程池中没有空闲线程时，新的任务请求线程资源时，线程池该如何处理呢？答案是将这些请求放在队列中，当有空闲线程的时候，会循环中反复从队列中获取任务来执行。队列分为无界队列(基于链表)和有界队列(基于数组)。无界队列的特点就是可以一直入列，除非系统资源耗尽，比如：<code>FixedThreadPool</code> 使用无界队列 <code>LinkedBlockingQueue</code>。但是有界队列就不一样了，当队列满的话后面再有任务/请求就会拒绝，在 Java 中的体现就是会抛出<code>java.util.concurrent.RejectedExecutionException</code> 异常。</li>
+<li>Linux 内核进程队列（按优先级排队）</li>
+<li>现实生活中的派对，播放器上的播放列表;</li>
+<li>消息队列</li>
+<li>等等&hellip;&hellip;</li>
+</ul>
+<h1 id="图">图<a hidden class="anchor" aria-hidden="true" href="#图">#</a></h1>
+<p>图是一种较为复杂的非线性结构。 <strong>为啥说其较为复杂呢？</strong></p>
+<p>根据前面的内容，我们知道：</p>
+<ul>
+<li>线性数据结构的元素满足唯一的线性关系，每个元素(除第一个和最后一个外)只有一个直接前趋和一个直接后继。</li>
+<li>树形数据结构的元素之间有着明显的层次关系。</li>
+</ul>
+<p>但是，图形结构的元素之间的关系是任意的。</p>
+<p><strong>何为图呢？</strong> 简单来说，图就是由顶点的有穷非空集合和顶点之间的边组成的集合。通常表示为：<strong>G(V,E)</strong>，其中，G 表示一个图，V 表示顶点的集合，E 表示边的集合。</p>
+<p>下图所展示的就是图这种数据结构，并且还是一张有向图。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/directed-graph.png"></p>
+<h2 id="图的基本概念">图的基本概念<a hidden class="anchor" aria-hidden="true" href="#图的基本概念">#</a></h2>
+<p><strong>顶点</strong></p>
+<p>图中的数据元素，我们称之为顶点，图至少有一个顶点（非空有穷集合）</p>
+<p>对应到好友关系图，每一个用户就代表一个顶点。</p>
+<p><strong>边</strong></p>
+<p>顶点之间的关系用边表示。</p>
+<p>对应到好友关系图，两个用户是好友的话，那两者之间就存在一条边。</p>
+<p><strong>度</strong></p>
+<p>度表示一个顶点包含多少条边，在有向图中，还分为出度和入度，出度表示从该顶点出去的边的条数，入度表示进入该顶点的边的条数。</p>
+<p>对应到好友关系图，度就代表了某个人的好友数量。</p>
+<p><strong>无向图和有向图</strong></p>
+<p>边表示的是顶点之间的关系，有的关系是双向的，比如同学关系，A 是 B 的同学，那么 B 也肯定是 A 的同学，那么在表示 A 和 B 的关系时，就不用关注方向，用不带箭头的边表示，这样的图就是无向图。</p>
+<p>有的关系是有方向的，比如父子关系，师生关系，微博的关注关系，A 是 B 的爸爸，但 B 肯定不是 A 的爸爸，A 关注 B，B 不一定关注 A。在这种情况下，我们就用带箭头的边表示二者的关系，这样的图就是有向图。</p>
+<p><strong>无权图和带权图</strong></p>
+<p>对于一个关系，如果我们只关心关系的有无，而不关心关系有多强，那么就可以用无权图表示二者的关系。</p>
+<p>对于一个关系，如果我们既关心关系的有无，也关心关系的强度，比如描述地图上两个城市的关系，需要用到距离，那么就用带权图来表示，带权图中的每一条边一个数值表示权值，代表关系的强度。</p>
+<p>下图就是一个带权有向图。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/weighted-directed-graph.png"></p>
+<h2 id="图的存储">图的存储<a hidden class="anchor" aria-hidden="true" href="#图的存储">#</a></h2>
+<h3 id="邻接矩阵存储">邻接矩阵存储<a hidden class="anchor" aria-hidden="true" href="#邻接矩阵存储">#</a></h3>
+<p>邻接矩阵将图用二维矩阵存储，是一种较为直观的表示方式。</p>
+<p>如果第 i 个顶点和第 j 个顶点之间有关系，且关系权值为 n，则 <code>A[i][j]=n</code> 。</p>
+<p>在无向图中，我们只关心关系的有无，所以当顶点 i 和顶点 j 有关系时，<code>A[i][j]</code>=1，当顶点 i 和顶点 j 没有关系时，<code>A[i][j]</code>=0。如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/adjacency-matrix-representation-of-undirected-graph.png"></p>
+<p>值得注意的是：<strong>无向图的邻接矩阵是一个对称矩阵，因为在无向图中，顶点 i 和顶点 j 有关系，则顶点 j 和顶点 i 必有关系。</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/adjacency-matrix-representation-of-directed-graph.png"></p>
+<p>邻接矩阵存储的方式优点是简单直接（直接使用一个二维数组即可），并且，在获取两个定点之间的关系的时候也非常高效（直接获取指定位置的数组元素的值即可）。但是，这种存储方式的缺点也比较明显，那就是比较浪费空间</p>
+<h3 id="邻接表存储">邻接表存储<a hidden class="anchor" aria-hidden="true" href="#邻接表存储">#</a></h3>
+<p>针对上面邻接矩阵比较浪费内存空间的问题，诞生了图的另外一种存储方法—<strong>邻接表</strong> 。</p>
+<p>邻接链表使用一个链表来存储某个顶点的所有后继相邻顶点。对于图中每个顶点 Vi，把所有邻接于 Vi 的顶点 Vj 链成一个单链表，这个单链表称为顶点 Vi 的 <strong>邻接表</strong>。如下图所示：</p>
+<p><img alt="无向图的邻接表存储" loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/adjacency-list-representation-of-undirected-graph.png"></p>
+<p><img alt="有向图的邻接表存储" loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/adjacency-list-representation-of-directed-graph.png"></p>
+<p>大家可以数一数邻接表中所存储的元素的个数以及图中边的条数，你会发现：</p>
+<ul>
+<li>在无向图中，邻接表元素个数等于边的条数的两倍，如左图所示的无向图中，边的条数为 7，邻接表存储的元素个数为 14。</li>
+<li>在有向图中，邻接表元素个数等于边的条数，如右图所示的有向图中，边的条数为 8，邻接表存储的元素个数为 8。</li>
+</ul>
+<h2 id="图的搜索">图的搜索<a hidden class="anchor" aria-hidden="true" href="#图的搜索">#</a></h2>
+<h3 id="广度优先搜索">广度优先搜索<a hidden class="anchor" aria-hidden="true" href="#广度优先搜索">#</a></h3>
+<p>广度优先搜索就像水面上的波纹一样一层一层向外扩展，如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/breadth-first-search.png"></p>
+<p><strong>广度优先搜索的具体实现方式用到了之前所学过的线性数据结构——队列</strong> 。具体过程如下图所示：</p>
+<p><strong>第 1 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/breadth-first-search1.png"></p>
+<p><strong>第 2 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/breadth-first-search2.png"></p>
+<p><strong>第 3 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/breadth-first-search3.png"></p>
+<p><strong>第 4 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/breadth-first-search4.png"></p>
+<p><strong>第 5 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/breadth-first-search5.png"></p>
+<p><strong>第 6 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/breadth-first-search6.png"></p>
+<h3 id="深度优先搜索">深度优先搜索<a hidden class="anchor" aria-hidden="true" href="#深度优先搜索">#</a></h3>
+<p>深度优先搜索就是“一条路走到黑”，从源顶点开始，一直走到没有后继节点，才回溯到上一顶点，然后继续“一条路走到黑”，如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/depth-first-search.png"></p>
+<p><strong>和广度优先搜索类似，深度优先搜索的具体实现用到了另一种线性数据结构——栈</strong> 。具体过程如下图所示：</p>
+<p><strong>第 1 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/depth-first-search1.png"></p>
+<p><strong>第 2 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/depth-first-search2.png"></p>
+<p><strong>第 3 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/depth-first-search3.png"></p>
+<p><strong>第 4 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/depth-first-search4.png"></p>
+<p><strong>第 5 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/depth-first-search5.png"></p>
+<p><strong>第 6 步：</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/depth-first-search6.png"></p>
+<h1 id="堆">堆<a hidden class="anchor" aria-hidden="true" href="#堆">#</a></h1>
+<p>堆是一种满足以下条件的树：</p>
+<p>堆中的每一个节点值都大于等于（或小于等于）子树中所有节点的值。或者说，任意一个节点的值都大于等于（或小于等于）所有子节点的值。</p>
+<blockquote>
+<p>大家可以把堆(最大堆)理解为一个公司,这个公司很公平,谁能力强谁就当老大,不存在弱的人当老大,老大手底下的人一定不会比他强。这样有助于理解后续堆的操作。</p>
+</blockquote>
+<p><strong>!!!特别提示：</strong></p>
+<ul>
+<li>很多博客说堆是完全二叉树，其实并非如此，<strong>堆不一定是完全二叉树</strong>，只是为了方便存储和索引，我们通常用完全二叉树的形式来表示堆，事实上，广为人知的斐波那契堆和二项堆就不是完全二叉树,它们甚至都不是二叉树。</li>
+<li>（<strong>二叉</strong>）堆是一个数组，它可以被看成是一个 <strong>近似的完全二叉树</strong>。——《算法导论》第三版</li>
+</ul>
+<p>大家可以尝试判断下面给出的图是否是堆？</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%861-1da7c32c.png"></p>
+<p>第 1 个和第 2 个是堆。第 1 个是最大堆，每个节点都比子树中所有节点大。第 2 个是最小堆，每个节点都比子树中所有节点小。</p>
+<p>第 3 个不是，第三个中，根结点 1 比 2 和 15 小，而 15 却比 3 大，19 比 5 大，不满足堆的性质。</p>
+<h2 id="堆的用途">堆的用途<a hidden class="anchor" aria-hidden="true" href="#堆的用途">#</a></h2>
+<p>当我们只关心所有数据中的最大值或者最小值，存在多次获取最大值或者最小值，多次插入或删除数据时，就可以使用堆。</p>
+<p>有小伙伴可能会想到用有序数组，初始化一个有序数组时间复杂度是 <code>O(nlog(n))</code>，查找最大值或者最小值时间复杂度都是 <code>O(1)</code>，但是，涉及到更新（插入或删除）数据时，时间复杂度为 <code>O(n)</code>，即使是使用复杂度为 <code>O(log(n))</code> 的二分法找到要插入或者删除的数据，在移动数据时也需要 <code>O(n)</code> 的时间复杂度。</p>
+<p><strong>相对于有序数组而言，堆的主要优势在于插入和删除数据效率较高。</strong> 因为堆是基于完全二叉树实现的，所以在插入和删除数据时，只需要在二叉树中上下移动节点，时间复杂度为 <code>O(log(n))</code>，相比有序数组的 <code>O(n)</code>，效率更高。</p>
+<p>不过，需要注意的是：Heap 初始化的时间复杂度为 <code>O(n)</code>，而非<code>O(nlogn)</code>。</p>
+<h2 id="堆的分类">堆的分类<a hidden class="anchor" aria-hidden="true" href="#堆的分类">#</a></h2>
+<p>堆分为 <strong>最大堆</strong> 和 <strong>最小堆</strong>。二者的区别在于节点的排序方式。</p>
+<ul>
+<li><strong>最大堆</strong>：堆中的每一个节点的值都大于等于子树中所有节点的值</li>
+<li><strong>最小堆</strong>：堆中的每一个节点的值都小于等于子树中所有节点的值</li>
+</ul>
+<p>如下图所示，图 1 是最大堆，图 2 是最小堆</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%862-66dd01d8.png"></p>
+<h2 id="堆的存储">堆的存储<a hidden class="anchor" aria-hidden="true" href="#堆的存储">#</a></h2>
+<p>之前介绍树的时候说过，由于完全二叉树的优秀性质，利用数组存储二叉树即节省空间，又方便索引（若根结点的序号为 1，那么对于树中任意节点 i，其左子节点序号为 <code>2*i</code>，右子节点序号为 <code>2*i+1</code>）。</p>
+<p>为了方便存储和索引，（二叉）堆可以用完全二叉树的形式进行存储。存储的方式如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86%E7%9A%84%E5%AD%98%E5%82%A8-03237dbe.png"></p>
+<h2 id="堆的操作">堆的操作<a hidden class="anchor" aria-hidden="true" href="#堆的操作">#</a></h2>
+<p>堆的更新操作主要包括两种 : <strong>插入元素</strong> 和 <strong>删除堆顶元素</strong>。操作过程需要着重掌握和理解。</p>
+<blockquote>
+<p>在进入正题之前，再重申一遍，堆是一个公平的公司，有能力的人自然会走到与他能力所匹配的位置</p>
+</blockquote>
+<h3 id="插入元素">插入元素<a hidden class="anchor" aria-hidden="true" href="#插入元素">#</a></h3>
+<blockquote>
+<p>​	插入元素，作为一个新入职的员工，初来乍到，这个员工需要从基层做起</p>
+</blockquote>
+<p><strong>1.将要插入的元素放到最后</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86-%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A01-9a9e88c3.png"></p>
+<blockquote>
+<p>有能力的人会逐渐升职加薪，是金子总会发光的！！！</p>
+</blockquote>
+<p><strong>2.从底向上，如果父结点比该元素小，则该节点和父结点交换，直到无法交换</strong></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86-%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A02-7e937b5e.png"></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86-%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A03-8e0739cc.png"></p>
+<h3 id="删除堆顶元素">删除堆顶元素<a hidden class="anchor" aria-hidden="true" href="#删除堆顶元素">#</a></h3>
+<p>根据堆的性质可知，最大堆的堆顶元素为所有元素中最大的，最小堆的堆顶元素是所有元素中最小的。当我们需要多次查找最大元素或者最小元素的时候，可以利用堆来实现。</p>
+<p>删除堆顶元素后，为了保持堆的性质，需要对堆的结构进行调整，我们将这个过程称之为&quot;<strong>堆化</strong>&quot;，堆化的方法分为两种：</p>
+<ul>
+<li>一种是自底向上的堆化，上述的插入元素所使用的就是自底向上的堆化，元素从最底部向上移动。</li>
+<li>另一种是自顶向下堆化，元素由最顶部向下移动。在讲解删除堆顶元素的方法时，我将阐述这两种操作的过程，大家可以体会一下二者的不同。</li>
+</ul>
+<h4 id="自底向上堆化">自底向上堆化<a hidden class="anchor" aria-hidden="true" href="#自底向上堆化">#</a></h4>
+<blockquote>
+<p>在堆这个公司中，会出现老大离职的现象，老大离职之后，他的位置就空出来了</p>
+</blockquote>
+<p>首先删除堆顶元素，使得数组中下标为 1 的位置空出。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%88%A0%E9%99%A4%E5%A0%86%E9%A1%B6%E5%85%83%E7%B4%A01-cd68b7ff.png"></p>
+<blockquote>
+<p>那么他的位置由谁来接替呢，当然是他的直接下属了，谁能力强就让谁上呗</p>
+</blockquote>
+<p>比较根结点的左子节点和右子节点，也就是下标为 2,3 的数组元素，将较大的元素填充到根结点(下标为 1)的位置。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%88%A0%E9%99%A4%E5%A0%86%E9%A1%B6%E5%85%83%E7%B4%A02-59fc6629.png"></p>
+<blockquote>
+<p>这个时候又空出一个位置了，老规矩，谁有能力谁上</p>
+</blockquote>
+<p>一直循环比较空出位置的左右子节点，并将较大者移至空位，直到堆的最底部</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%88%A0%E9%99%A4%E5%A0%86%E9%A1%B6%E5%85%83%E7%B4%A03-b5c78c7d.png"></p>
+<p>这个时候已经完成了自底向上的堆化，没有元素可以填补空缺了，但是，我们可以看到数组中出现了“气泡”，这会导致存储空间的浪费。接下来我们试试自顶向下堆化。</p>
+<h4 id="自顶向下堆化">自顶向下堆化<a hidden class="anchor" aria-hidden="true" href="#自顶向下堆化">#</a></h4>
+<p>自顶向下的堆化用一个词形容就是“石沉大海”，那么第一件事情，就是把石头抬起来，从海面扔下去。这个石头就是堆的最后一个元素，我们将最后一个元素移动到堆顶。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%88%A0%E9%99%A4%E5%A0%86%E9%A1%B6%E5%85%83%E7%B4%A04-90633757.png"></p>
+<p>然后开始将这个石头沉入海底，不停与左右子节点的值进行比较，和较大的子节点交换位置，直到无法交换位置。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%88%A0%E9%99%A4%E5%A0%86%E9%A1%B6%E5%85%83%E7%B4%A05-ca1fc0c4.png"></p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%88%A0%E9%99%A4%E5%A0%86%E9%A1%B6%E5%85%83%E7%B4%A06-9549fe90.png"></p>
+<h3 id="堆的操作总结">堆的操作总结<a hidden class="anchor" aria-hidden="true" href="#堆的操作总结">#</a></h3>
+<ul>
+<li><strong>插入元素</strong>：先将元素放至数组末尾，再自底向上堆化，将末尾元素上浮</li>
+<li><strong>删除堆顶元素</strong>：删除堆顶元素，将末尾元素放至堆顶，再自顶向下堆化，将堆顶元素下沉。也可以自底向上堆化，只是会产生“气泡”，浪费存储空间。最好采用自顶向下堆化的方式。</li>
+</ul>
+<h2 id="堆排序">堆排序<a hidden class="anchor" aria-hidden="true" href="#堆排序">#</a></h2>
+<p>堆排序的过程分为两步：</p>
+<ul>
+<li>第一步是建堆，将一个无序的数组建立为一个堆</li>
+<li>第二步是排序，将堆顶元素取出，然后对剩下的元素进行堆化，反复迭代，直到所有元素被取出为止。</li>
+</ul>
+<h3 id="建堆">建堆<a hidden class="anchor" aria-hidden="true" href="#建堆">#</a></h3>
+<p>如果你已经足够了解堆化的过程，那么建堆的过程掌握起来就比较容易了。建堆的过程就是一个对所有非叶节点的自顶向下堆化过程。</p>
+<p>首先要了解哪些是非叶节点，最后一个节点的父结点及它之前的元素，都是非叶节点。也就是说，如果节点个数为 n，那么我们需要对 n/2 到 1 的节点进行自顶向下（沉底）堆化。</p>
+<p>具体过程如下图：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%BB%BA%E5%A0%861-87738933.png"></p>
+<p>将初始的无序数组抽象为一棵树，图中的节点个数为 6，所以 4,5,6 节点为叶节点，1,2,3 节点为非叶节点，所以要对 1-3 号节点进行自顶向下（沉底）堆化，注意，顺序是从后往前堆化，从 3 号节点开始，一直到 1 号节点。 3 号节点堆化结果：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%BB%BA%E5%A0%862-f6cd7436.png"></p>
+<p>2 号节点堆化结果：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%BB%BA%E5%A0%863-476a908d.png"></p>
+<p>1 号节点堆化结果：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%BB%BA%E5%A0%864-c306ac75.png"></p>
+<p>至此，数组所对应的树已经成为了一个最大堆，建堆完成！</p>
+<h3 id="排序">排序<a hidden class="anchor" aria-hidden="true" href="#排序">#</a></h3>
+<p>由于堆顶元素是所有元素中最大的，所以我们重复取出堆顶元素，将这个最大的堆顶元素放至数组末尾，并对剩下的元素进行堆化即可。</p>
+<p>现在思考两个问题：</p>
+<ul>
+<li>删除堆顶元素后需要执行自顶向下（沉底）堆化还是自底向上（上浮）堆化？</li>
+<li>取出的堆顶元素存在哪，新建一个数组存？</li>
+</ul>
+<p>先回答第一个问题，我们需要执行自顶向下（沉底）堆化，这个堆化一开始要将末尾元素移动至堆顶，这个时候末尾的位置就空出来了，由于堆中元素已经减小，这个位置不会再被使用，所以我们可以将取出的元素放在末尾。</p>
+<p>机智的小伙伴已经发现了，这其实是做了一次交换操作，将堆顶和末尾元素调换位置，从而将取出堆顶元素和堆化的第一步(将末尾元素放至根结点位置)进行合并。</p>
+<p>详细过程如下图所示：</p>
+<p>取出第一个元素并堆化：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86%E6%8E%92%E5%BA%8F1-4a22573f.png"></p>
+<p>取出第二个元素并堆化：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86%E6%8E%92%E5%BA%8F2-26994f33.png"></p>
+<p>取出第三个元素并堆化：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86%E6%8E%92%E5%BA%8F3-e411601b.png"></p>
+<p>取出第四个元素并堆化：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86%E6%8E%92%E5%BA%8F4-2b2472be.png"></p>
+<p>取出第五个元素并堆化：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86%E6%8E%92%E5%BA%8F5-3c2472be.png"></p>
+<p>取出第六个元素并堆化：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E5%A0%86%E6%8E%92%E5%BA%8F6-4e2472be.png"></p>
+<p>堆排序完成！</p>
+<h1 id="树">树<a hidden class="anchor" aria-hidden="true" href="#树">#</a></h1>
+<p>树就是一种类似现实生活中的树的数据结构（倒置的树）。任何一颗非空树只有一个根节点。</p>
+<p>一棵树具有以下特点：</p>
+<ol>
+<li>一棵树中的任意两个结点有且仅有唯一的一条路径连通。</li>
+<li>一棵树如果有 n 个结点，那么它一定恰好有 n-1 条边。</li>
+<li>一棵树不包含回路。</li>
+</ol>
+<p>下图就是一颗树，并且是一颗二叉树。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/%E4%BA%8C%E5%8F%89%E6%A0%91-2.png"></p>
+<p>如上图所示，通过上面这张图说明一下树中的常用概念：</p>
+<ul>
+<li><strong>节点</strong>：树中的每个元素都可以统称为节点。</li>
+<li><strong>根节点</strong>：顶层节点或者说没有父节点的节点。上图中 A 节点就是根节点。</li>
+<li><strong>父节点</strong>：若一个节点含有子节点，则这个节点称为其子节点的父节点。上图中的 B 节点是 D 节点、E 节点的父节点。</li>
+<li><strong>子节点</strong>：一个节点含有的子树的根节点称为该节点的子节点。上图中 D 节点、E 节点是 B 节点的子节点。</li>
+<li><strong>兄弟节点</strong>：具有相同父节点的节点互称为兄弟节点。上图中 D 节点、E 节点的共同父节点是 B 节点，故 D 和 E 为兄弟节点。</li>
+<li><strong>叶子节点</strong>：没有子节点的节点。上图中的 D、F、H、I 都是叶子节点。</li>
+<li><strong>节点的高度</strong>：该节点到叶子节点的最长路径所包含的边数。</li>
+<li><strong>节点的深度</strong>：根节点到该节点的路径所包含的边数</li>
+<li><strong>节点的层数</strong>：节点的深度+1。</li>
+<li><strong>树的高度</strong>：根节点的高度。</li>
+</ul>
+<blockquote>
+<p>关于树的深度和高度的定义可以看 stackoverflow 上的这个问题：<a href="https://stackoverflow.com/questions/2603692/what-is-the-difference-between-tree-depth-and-height">What is the difference between tree depth and height?</a> 。</p>
+</blockquote>
+<h2 id="二叉树的分类">二叉树的分类<a hidden class="anchor" aria-hidden="true" href="#二叉树的分类">#</a></h2>
+<p><strong>二叉树</strong>（Binary tree）是每个节点最多只有两个分支（即不存在分支度大于 2 的节点）的树结构。</p>
+<p><strong>二叉树</strong> 的分支通常被称作“<strong>左子树</strong>”或“<strong>右子树</strong>”。并且，<strong>二叉树</strong> 的分支具有左右次序，不能随意颠倒。</p>
+<p><strong>二叉树</strong> 的第 i 层至多拥有 <code>2^(i-1)</code> 个节点，深度为 k 的二叉树至多总共有 <code>2^(k+1)-1</code> 个节点（满二叉树的情况），至少有 2^(k) 个节点（关于节点的深度的定义国内争议比较多，我个人比较认可维基百科对<a href="https://zh.wikipedia.org/wiki/%E6%A0%91_%28%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%29#/%E6%9C%AF%E8%AF%AD">节点深度的定义</a>）。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/image-20220119112736158.png"></p>
+<h3 id="满二叉树">满二叉树<a hidden class="anchor" aria-hidden="true" href="#满二叉树">#</a></h3>
+<p>一个二叉树，如果每一个层的结点数都达到最大值，则这个二叉树就是 <strong>满二叉树</strong>。也就是说，如果一个二叉树的层数为 K，且结点总数是(2^k) -1 ，则它就是 <strong>满二叉树</strong>。如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/full-binary-tree.png"></p>
+<h3 id="完全二叉树">完全二叉树<a hidden class="anchor" aria-hidden="true" href="#完全二叉树">#</a></h3>
+<p>除最后一层外，若其余层都是满的，并且最后一层或者是满的，或者是在右边缺少连续若干节点，则这个二叉树就是 <strong>完全二叉树</strong> 。</p>
+<p>大家可以想象为一棵树从根结点开始扩展，扩展完左子节点才能开始扩展右子节点，每扩展完一层，才能继续扩展下一层。如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/complete-binary-tree.png"></p>
+<p>完全二叉树有一个很好的性质：<strong>父结点和子节点的序号有着对应关系。</strong></p>
+<p>细心的小伙伴可能发现了，当根节点的值为 1 的情况下，若父结点的序号是 i，那么左子节点的序号就是 2i，右子节点的序号是 2i+1。这个性质使得完全二叉树利用数组存储时可以极大地节省空间，以及利用序号找到某个节点的父结点和子节点，后续二叉树的存储会详细介绍。</p>
+<h3 id="平衡二叉树">平衡二叉树<a hidden class="anchor" aria-hidden="true" href="#平衡二叉树">#</a></h3>
+<p><strong>平衡二叉树</strong> 是一棵二叉排序树，且具有以下性质：</p>
+<ol>
+<li>可以是一棵空树</li>
+<li>如果不是空树，它的左右两个子树的高度差的绝对值不超过 1，并且左右两个子树都是一棵平衡二叉树。</li>
+</ol>
+<p>平衡二叉树的常用实现方法有 <strong>红黑树</strong>、<strong>AVL 树</strong>、<strong>替罪羊树</strong>、<strong>加权平衡树</strong>、<strong>伸展树</strong> 等。</p>
+<p>在给大家展示平衡二叉树之前，先给大家看一棵树：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/oblique-tree.png"></p>
+<p><strong>你管这玩意儿叫树？？？</strong></p>
+<p>没错，这玩意儿还真叫树，只不过这棵树已经退化为一个链表了，我们管它叫 <strong>斜树</strong>。</p>
+<p><strong>如果这样，那我为啥不直接用链表呢?</strong></p>
+<p>谁说不是呢？</p>
+<p>二叉树相比于链表，由于父子节点以及兄弟节点之间往往具有某种特殊的关系，这种关系使得我们在树中对数据进行<strong>搜索</strong>和<strong>修改</strong>时，相对于链表更加快捷便利。</p>
+<p>但是，如果二叉树退化为一个链表了，那么那么树所具有的优秀性质就难以表现出来，效率也会大打折，为了避免这样的情况，我们希望每个做 “家长”（父结点） 的，都 <strong>一碗水端平</strong>，分给左儿子和分给右儿子的尽可能一样多，相差最多不超过一层，如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/balanced-binary-tree.png"></p>
+<h2 id="二叉树的存储">二叉树的存储<a hidden class="anchor" aria-hidden="true" href="#二叉树的存储">#</a></h2>
+<p>二叉树的存储主要分为 <strong>链式存储</strong> 和 <strong>顺序存储</strong> 两种：</p>
+<h3 id="链式存储">链式存储<a hidden class="anchor" aria-hidden="true" href="#链式存储">#</a></h3>
+<p>和链表类似，二叉树的链式存储依靠指针将各个节点串联起来，不需要连续的存储空间。</p>
+<p>每个节点包括三个属性：</p>
+<ul>
+<li>数据 data。data 不一定是单一的数据，根据不同情况，可以是多个具有不同类型的数据。</li>
+<li>左节点指针 left</li>
+<li>右节点指针 right。</li>
+</ul>
+<p>可是 JAVA 没有指针啊！</p>
+<p>那就直接引用对象呗（别问我对象哪里找）</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/chain-store-binary-tree.png"></p>
+<h3 id="顺序存储">顺序存储<a hidden class="anchor" aria-hidden="true" href="#顺序存储">#</a></h3>
+<p>顺序存储就是利用数组进行存储，数组中的每一个位置仅存储节点的 data，不存储左右子节点的指针，子节点的索引通过数组下标完成。根结点的序号为 1，对于每个节点 Node，假设它存储在数组中下标为 i 的位置，那么它的左子节点就存储在 2i 的位置，它的右子节点存储在下标为 2i+1 的位置。</p>
+<p>一棵完全二叉树的数组顺序存储如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/sequential-storage.png"></p>
+<p>大家可以试着填写一下存储如下二叉树的数组，比较一下和完全二叉树的顺序存储有何区别：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/sequential-storage2.png"></p>
+<p>可以看到，如果我们要存储的二叉树不是完全二叉树，在数组中就会出现空隙，导致内存利用率降低</p>
+<h2 id="二叉树的遍历">二叉树的遍历<a hidden class="anchor" aria-hidden="true" href="#二叉树的遍历">#</a></h2>
+<h3 id="先序遍历">先序遍历<a hidden class="anchor" aria-hidden="true" href="#先序遍历">#</a></h3>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/preorder-traversal.png"></p>
+<p>二叉树的先序遍历，就是先输出根结点，再遍历左子树，最后遍历右子树，遍历左子树和右子树的时候，同样遵循先序遍历的规则，也就是说，我们可以递归实现先序遍历。</p>
+<p>代码如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> preOrder(TreeNode root){
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span>(root == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    system.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(root.<span style="color:#007f7f">data</span>);
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>    preOrder(root.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="中序遍历">中序遍历<a hidden class="anchor" aria-hidden="true" href="#中序遍历">#</a></h3>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/inorder-traversal.png"></p>
+<p>二叉树的中序遍历，就是先递归中序遍历左子树，再输出根结点的值，再递归中序遍历右子树，大家可以想象成一巴掌把树压扁，父结点被拍到了左子节点和右子节点的中间，如下图所示：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/inorder-traversal2.png"></p>
+<p>代码如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> inOrder(TreeNode root){
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span>(root == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    inOrder(root.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>    system.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(root.<span style="color:#007f7f">data</span>);
+</span></span><span style="display:flex;"><span>    inOrder(root.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="后序遍历">后序遍历<a hidden class="anchor" aria-hidden="true" href="#后序遍历">#</a></h3>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/postorder-traversal.png"></p>
+<p>二叉树的后序遍历，就是先递归后序遍历左子树，再递归后序遍历右子树，最后输出根结点的值</p>
+<p>代码如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> postOrder(TreeNode root){
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span>(root == <span style="color:#fff;font-weight:bold">null</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    postOrder(root.<span style="color:#007f7f">right</span>);
+</span></span><span style="display:flex;"><span>    postOrder(root.<span style="color:#007f7f">left</span>);
+</span></span><span style="display:flex;"><span>    system.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(root.<span style="color:#007f7f">data</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="布隆过滤器">布隆过滤器<a hidden class="anchor" aria-hidden="true" href="#布隆过滤器">#</a></h1>
+<p>布隆过滤器（Bloom Filter）是一个叫做 Bloom 的老哥于 1970 年提出的。我们可以把它看作由二进制向量（或者说位数组）和一系列随机映射函数（哈希函数）两部分组成的数据结构。相比于我们平时常用的的 List、Map、Set 等数据结构，它占用空间更少并且效率更高，但是缺点是其返回的结果是概率性的，而不是非常准确的。理论情况下添加到集合中的元素越多，误报的可能性就越大。并且，存放在布隆过滤器的数据不容易删除。</p>
+<p>Bloom Filter 会使用一个较大的 bit 数组来保存所有的数据，数组中的每个元素都只占用 1 bit ，并且每个元素只能是 0 或者 1（代表 false 或者 true），这也是 Bloom Filter 节省内存的核心所在。这样来算的话，申请一个 100w 个元素的位数组只占用 1000000Bit / 8 = 125000 Byte = 125000/1024 KB ≈ 122KB 的空间。</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/bloom-filter-bit-table.png"></p>
+<p>总结：<strong>一个名叫 Bloom 的人提出了一种来检索元素是否在给定大集合中的数据结构，这种数据结构是高效且性能很好的，但缺点是具有一定的错误识别率和删除难度。并且，理论情况下，添加到集合中的元素越多，误报的可能性就越大。</strong></p>
+<h2 id="原理">原理<a hidden class="anchor" aria-hidden="true" href="#原理">#</a></h2>
+<p><strong>当一个元素加入布隆过滤器中的时候，会进行如下操作：</strong></p>
+<ol>
+<li>使用布隆过滤器中的哈希函数对元素值进行计算，得到哈希值（有几个哈希函数得到几个哈希值）。</li>
+<li>根据得到的哈希值，在位数组中把对应下标的值置为 1。</li>
+</ol>
+<p><strong>当我们需要判断一个元素是否存在于布隆过滤器的时候，会进行如下操作：</strong></p>
+<ol>
+<li>对给定元素再次进行相同的哈希计算；</li>
+<li>得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</li>
+</ol>
+<p>Bloom Filter 的简单原理图如下：</p>
+<p><img loading="lazy" src="/en/posts/interview/10_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%9D%A2%E8%AF%95%E9%A2%98/bloom-filter-simple-schematic-diagram.png"></p>
+<p>如图所示，当字符串存储要加入到布隆过滤器中时，该字符串首先由多个哈希函数生成不同的哈希值，然后将对应的位数组的下标设置为 1（当位数组初始化时，所有位置均为 0）。当第二次存储相同字符串时，因为先前的对应位置已设置为 1，所以很容易知道此值已经存在（去重非常方便）。</p>
+<p>如果我们需要判断某个字符串是否在布隆过滤器中时，只需要对给定字符串再次进行相同的哈希计算，得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</p>
+<p><strong>不同的字符串可能哈希出来的位置相同，这种情况我们可以适当增加位数组大小或者调整我们的哈希函数。</strong></p>
+<p>综上，我们可以得出：<strong>布隆过滤器说某个元素存在，小概率会误判。布隆过滤器说某个元素不在，那么这个元素一定不在。</strong></p>
+<h2 id="使用场景">使用场景<a hidden class="anchor" aria-hidden="true" href="#使用场景">#</a></h2>
+<ol>
+<li>判断给定数据是否存在：比如判断一个数字是否存在于包含大量数字的数字集中（数字集很大，上亿）、 防止缓存穿透（判断请求的数据是否有效避免直接绕过缓存请求数据库）等等、邮箱的垃圾邮件过滤（判断一个邮件地址是否在垃圾邮件列表中）、黑名单功能（判断一个IP地址或手机号码是否在黑名单中）等等。</li>
+<li>去重：比如爬给定网址的时候对已经爬取过的 URL 去重、对巨量的 QQ号/订单号去重。</li>
+</ol>
+<p>去重场景也需要用到判断给定数据是否存在，因此布隆过滤器主要是为了解决海量数据的存在性问题。</p>
+<h2 id="编码实战">编码实战<a hidden class="anchor" aria-hidden="true" href="#编码实战">#</a></h2>
+<h3 id="通过-java-编程手动实现布隆过滤器">通过 Java 编程手动实现布隆过滤器<a hidden class="anchor" aria-hidden="true" href="#通过-java-编程手动实现布隆过滤器">#</a></h3>
+<p>我们上面已经说了布隆过滤器的原理，知道了布隆过滤器的原理之后就可以自己手动实现一个了。</p>
+<p>如果你想要手动实现一个的话，你需要：</p>
+<ol>
+<li>一个合适大小的位数组保存数据</li>
+<li>几个不同的哈希函数</li>
+<li>添加元素到位数组（布隆过滤器）的方法实现</li>
+<li>判断给定元素是否存在于位数组（布隆过滤器）的方法实现。</li>
+</ol>
+<p>下面给出一个我觉得写的还算不错的代码（参考网上已有代码改进得到，对于所有类型对象皆适用）：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">76
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> java.util.BitSet;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> MyBloomFilter {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 位数组的大小
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span> DEFAULT_SIZE = 2 &lt;&lt; 24;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 通过这个数组可以创建 6 个不同的哈希函数
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">final</span> <span style="color:#fff;font-weight:bold">int</span>[] SEEDS = <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[]{3, 13, 46, 71, 91, 134};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 位数组。数组中的元素只能是 0 或者 1
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> BitSet bits = <span style="color:#fff;font-weight:bold">new</span> BitSet(DEFAULT_SIZE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 存放包含 hash 函数的类的数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> SimpleHash[] func = <span style="color:#fff;font-weight:bold">new</span> SimpleHash[SEEDS.<span style="color:#007f7f">length</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 初始化多个包含 hash 函数的类的数组，每个类中的 hash 函数都不一样
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> MyBloomFilter() {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 初始化多个不同的 Hash 函数</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = 0; i &lt; SEEDS.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>            func[i] = <span style="color:#fff;font-weight:bold">new</span> SimpleHash(DEFAULT_SIZE, SEEDS[i]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 添加元素到位数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> add(Object value) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (SimpleHash f : func) {
+</span></span><span style="display:flex;"><span>            bits.<span style="color:#007f7f">set</span>(f.<span style="color:#007f7f">hash</span>(value), <span style="color:#fff;font-weight:bold">true</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 判断指定元素是否存在于位数组
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">boolean</span> contains(Object value) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">boolean</span> ret = <span style="color:#fff;font-weight:bold">true</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (SimpleHash f : func) {
+</span></span><span style="display:flex;"><span>            ret = ret &amp;&amp; bits.<span style="color:#007f7f">get</span>(f.<span style="color:#007f7f">hash</span>(value));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> ret;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 静态内部类。用于 hash 操作！
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">class</span> SimpleHash {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> cap;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">int</span> seed;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">public</span> SimpleHash(<span style="color:#fff;font-weight:bold">int</span> cap, <span style="color:#fff;font-weight:bold">int</span> seed) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">cap</span> = cap;
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">seed</span> = seed;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">         * 计算 hash 值
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">         */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">int</span> hash(Object value) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">int</span> h;
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> (value == <span style="color:#fff;font-weight:bold">null</span>) ? 0 : Math.<span style="color:#007f7f">abs</span>(seed * (cap - 1) &amp; ((h = value.<span style="color:#007f7f">hashCode</span>()) ^ (h &gt;&gt;&gt; 16)));
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String value1 = <span style="color:#0ff;font-weight:bold">&#34;https://javaguide.cn/&#34;</span>;
+</span></span><span style="display:flex;"><span>String value2 = <span style="color:#0ff;font-weight:bold">&#34;https://github.com/Snailclimb&#34;</span>;
+</span></span><span style="display:flex;"><span>MyBloomFilter filter = <span style="color:#fff;font-weight:bold">new</span> MyBloomFilter();
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value1));
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value2));
+</span></span><span style="display:flex;"><span>filter.<span style="color:#007f7f">add</span>(value1);
+</span></span><span style="display:flex;"><span>filter.<span style="color:#007f7f">add</span>(value2);
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value1));
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value2));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>false
+</span></span><span style="display:flex;"><span>false
+</span></span><span style="display:flex;"><span>true
+</span></span><span style="display:flex;"><span>true
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再测试：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Integer value1 = 13423;
+</span></span><span style="display:flex;"><span>Integer value2 = 22131;
+</span></span><span style="display:flex;"><span>MyBloomFilter filter = <span style="color:#fff;font-weight:bold">new</span> MyBloomFilter();
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value1));
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value2));
+</span></span><span style="display:flex;"><span>filter.<span style="color:#007f7f">add</span>(value1);
+</span></span><span style="display:flex;"><span>filter.<span style="color:#007f7f">add</span>(value2);
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value1));
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">contains</span>(value2));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输出：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>false
+</span></span><span style="display:flex;"><span>false
+</span></span><span style="display:flex;"><span>true
+</span></span><span style="display:flex;"><span>true
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="利用-google-开源的-guava-中自带的布隆过滤器">利用 Google 开源的 Guava 中自带的布隆过滤器<a hidden class="anchor" aria-hidden="true" href="#利用-google-开源的-guava-中自带的布隆过滤器">#</a></h3>
+<p>自己实现的目的主要是为了让自己搞懂布隆过滤器的原理，Guava 中布隆过滤器的实现算是比较权威的，所以实际项目中我们不需要手动实现一个布隆过滤器。</p>
+<p>首先我们需要在项目中引入 Guava 的依赖：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>&lt;dependency&gt;
+</span></span><span style="display:flex;"><span>    &lt;groupId&gt;com.<span style="color:#007f7f">google</span>.<span style="color:#007f7f">guava</span>&lt;/groupId&gt;
+</span></span><span style="display:flex;"><span>    &lt;artifactId&gt;guava&lt;/artifactId&gt;
+</span></span><span style="display:flex;"><span>    &lt;version&gt;28.<span style="color:#007f7f">0</span>-jre&lt;/version&gt;
+</span></span><span style="display:flex;"><span>&lt;/dependency&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实际使用如下：</p>
+<p>我们创建了一个最多存放 最多 1500 个整数的布隆过滤器，并且我们可以容忍误判的概率为百分之（0.01）</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">// 创建布隆过滤器对象</span>
+</span></span><span style="display:flex;"><span>BloomFilter&lt;Integer&gt; filter = BloomFilter.<span style="color:#007f7f">create</span>(
+</span></span><span style="display:flex;"><span>    Funnels.<span style="color:#007f7f">integerFunnel</span>(),
+</span></span><span style="display:flex;"><span>    1500,
+</span></span><span style="display:flex;"><span>    0.<span style="color:#007f7f">01</span>);
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 判断指定元素是否存在</span>
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">mightContain</span>(1));
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">mightContain</span>(2));
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 将元素添加进布隆过滤器</span>
+</span></span><span style="display:flex;"><span>filter.<span style="color:#007f7f">put</span>(1);
+</span></span><span style="display:flex;"><span>filter.<span style="color:#007f7f">put</span>(2);
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">mightContain</span>(1));
+</span></span><span style="display:flex;"><span>System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(filter.<span style="color:#007f7f">mightContain</span>(2));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在我们的示例中，当 <code>mightContain()</code> 方法返回 <em>true</em> 时，我们可以 99％确定该元素在过滤器中，当过滤器返回 <em>false</em> 时，我们可以 100％确定该元素不存在于过滤器中。</p>
+<p><strong>Guava 提供的布隆过滤器的实现还是很不错的（想要详细了解的可以看一下它的源码实现），但是它有一个重大的缺陷就是只能单机使用（另外，容量扩展也不容易），而现在互联网一般都是分布式的场景。为了解决这个问题，我们就需要用到 Redis 中的布隆过滤器了。</strong></p>
+<h2 id="redis-中的布隆过滤器">Redis 中的布隆过滤器<a hidden class="anchor" aria-hidden="true" href="#redis-中的布隆过滤器">#</a></h2>
+<p>Redis v4.0 之后有了 Module（模块/插件） 功能，Redis Modules 让 Redis 可以使用外部模块扩展其功能 。布隆过滤器就是其中的 Module。详情可以查看 Redis 官方对 Redis Modules 的介绍：https://redis.io/modules</p>
+<p>另外，官网推荐了一个 RedisBloom 作为 Redis 布隆过滤器的 Module，地址：https://github.com/RedisBloom/RedisBloom 其他还有：</p>
+<ul>
+<li>redis-lua-scaling-bloom-filter（lua 脚本实现）：https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter</li>
+<li>pyreBloom（Python 中的快速 Redis 布隆过滤器）：https://github.com/seomoz/pyreBloom</li>
+<li>&hellip;&hellip;</li>
+</ul>
+<p>RedisBloom 提供了多种语言的客户端支持，包括：Python、Java、JavaScript 和 PHP。</p>
+<h3 id="使用-docker-安装">使用 Docker 安装<a hidden class="anchor" aria-hidden="true" href="#使用-docker-安装">#</a></h3>
+<p>如果我们需要体验 Redis 中的布隆过滤器非常简单，通过 Docker 就可以了！我们直接在 Google 搜索 <strong>docker redis bloomfilter</strong> 然后在排除广告的第一条搜素结果就找到了我们想要的答案（这是我平常解决问题的一种方式，分享一下），具体地址：https://hub.docker.com/r/redislabs/rebloom/ （介绍的很详细 ）。</p>
+<p><strong>具体操作如下：</strong></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker run -p 6379:6379 --name redis-redisbloom redislabs/rebloom:latest
+</span></span><span style="display:flex;"><span>➜  ~ docker <span style="color:#fff;font-weight:bold">exec</span> -it redis-redisbloom bash
+</span></span><span style="display:flex;"><span>root@21396d02c252:/data# redis-cli
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意：当前rebloom镜像已经被废弃，官方推荐使用<a href="https://hub.docker.com/r/redis/redis-stack">redis-stack</a></strong></p>
+<h3 id="常用命令一览">常用命令一览<a hidden class="anchor" aria-hidden="true" href="#常用命令一览">#</a></h3>
+<blockquote>
+<p>注意：key : 布隆过滤器的名称，item : 添加的元素。</p>
+</blockquote>
+<ol>
+<li><strong><code>BF.ADD</code></strong>：将元素添加到布隆过滤器中，如果该过滤器尚不存在，则创建该过滤器。格式：<code>BF.ADD {key} {item}</code>。</li>
+<li><strong><code>BF.MADD</code></strong> : 将一个或多个元素添加到“布隆过滤器”中，并创建一个尚不存在的过滤器。该命令的操作方式<code>BF.ADD</code>与之相同，只不过它允许多个输入并返回多个值。格式：<code>BF.MADD {key} {item} [item ...]</code> 。</li>
+<li><strong><code>BF.EXISTS</code></strong> : 确定元素是否在布隆过滤器中存在。格式：<code>BF.EXISTS {key} {item}</code>。</li>
+<li><strong><code>BF.MEXISTS</code></strong>：确定一个或者多个元素是否在布隆过滤器中存在格式：<code>BF.MEXISTS {key} {item} [item ...]</code>。</li>
+</ol>
+<p>另外， <code>BF.RESERVE</code> 命令需要单独介绍一下：</p>
+<p>这个命令的格式如下：</p>
+<p><code>BF.RESERVE {key} {error_rate} {capacity} [EXPANSION expansion]</code> 。</p>
+<p>下面简单介绍一下每个参数的具体含义：</p>
+<ol>
+<li>key：布隆过滤器的名称</li>
+<li>error_rate : 期望的误报率。该值必须介于 0 到 1 之间。例如，对于期望的误报率 0.1％（1000 中为 1），error_rate 应该设置为 0.001。该数字越接近零，则每个项目的内存消耗越大，并且每个操作的 CPU 使用率越高。</li>
+<li>capacity: 过滤器的容量。当实际存储的元素个数超过这个值之后，性能将开始下降。实际的降级将取决于超出限制的程度。随着过滤器元素数量呈指数增长，性能将线性下降。</li>
+</ol>
+<p>可选参数：</p>
+<ul>
+<li>expansion：如果创建了一个新的子过滤器，则其大小将是当前过滤器的大小乘以<code>expansion</code>。默认扩展值为 2。这意味着每个后续子过滤器将是前一个子过滤器的两倍。</li>
+</ul>
+<h3 id="实际使用">实际使用<a hidden class="anchor" aria-hidden="true" href="#实际使用">#</a></h3>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>127.0.0.1:6379&gt; BF.ADD myFilter java
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; BF.ADD myFilter javaguide
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; BF.EXISTS myFilter java
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; BF.EXISTS myFilter javaguide
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>127.0.0.1:6379&gt; BF.EXISTS myFilter github
+</span></span><span style="display:flex;"><span>(integer) <span style="color:#ff0;font-weight:bold">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/en/tags/interview/">Interview</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/en/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

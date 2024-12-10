@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Multithreading on Wjy&#39;s Blog</title>
+    <link>https://funny-toffee-4aa7c3.netlify.app/en/tags/multithreading/</link>
+    <description>Recent content in Multithreading on Wjy&#39;s Blog</description>
+    <generator>Hugo -- 0.125.7</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 30 Mar 2019 10:22:55 +0000</lastBuildDate>
+    <atom:link href="https://funny-toffee-4aa7c3.netlify.app/en/tags/multithreading/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>10_multithreading-JUC线程池</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/10_multithreading-juc%E7%BA%BF%E7%A8%8B%E6%B1%A0/</link>
+      <pubDate>Sat, 30 Mar 2019 10:22:55 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/10_multithreading-juc%E7%BA%BF%E7%A8%8B%E6%B1%A0/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html&#34;&gt;美团技术团队关于线程池的文章&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;线程池的使用场景&#34;&gt;线程池的使用场景&lt;/h1&gt;
+&lt;p&gt;java中经常需要用到多线程来处理一些业务，我们非常不建议单纯使用继承Thread或者实现Runnable接口的方式来创建线程，那样势必有创建及销毁线程耗费资源、线程上下文切换问题。同时创建过多的线程也可能引发资源耗尽的风险，这个时候引入线程池比较合理，方便线程任务的管理。java中涉及到线程池的相关类均在jdk1.5开始的java.util.concurrent包中，涉及到的几个核心类及接口包括：Executor、Executors、ExecutorService、ThreadPoolExecutor、FutureTask、Callable、Runnable等。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>9_multithreading-JUC集合</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/9_multithreading-juc%E9%9B%86%E5%90%88/</link>
+      <pubDate>Fri, 29 Mar 2019 15:18:33 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/9_multithreading-juc%E9%9B%86%E5%90%88/</guid>
+      <description>&lt;h1 id=&#34;juc集合概述&#34;&gt;JUC集合概述&lt;/h1&gt;
+&lt;h2 id=&#34;java集合包&#34;&gt;Java集合包&lt;/h2&gt;
+&lt;p&gt;java集合主要包括&lt;code&gt;Collection&lt;/code&gt;和&lt;code&gt;Map&lt;/code&gt;类，而Collection集合又可以划分为List(队列)和Set(集合)。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>8_multithreading-JUC锁</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/</link>
+      <pubDate>Thu, 28 Mar 2019 17:51:23 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/</guid>
+      <description>&lt;p&gt;根据锁的添加到Java中的时间，Java中的锁，可以分为&amp;quot;同步锁&amp;quot;和&amp;quot;JUC包中的锁&amp;quot;。&lt;/p&gt;
+&lt;p&gt;同步锁就是通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。
+同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，从而在CPU上执行；而没有获取到同步锁的线程，必须进行等待，直到获取到同步锁之后才能继续运行。这就是多线程通过同步锁进行同步的原理。&lt;/p&gt;
+&lt;p&gt;下面主要介绍JUC包中的锁。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>7_multithreading-JUC原子类</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/7_multithreading-juc%E5%8E%9F%E5%AD%90%E7%B1%BB/</link>
+      <pubDate>Thu, 28 Mar 2019 17:14:01 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/7_multithreading-juc%E5%8E%9F%E5%AD%90%E7%B1%BB/</guid>
+      <description>&lt;h1 id=&#34;juc概述&#34;&gt;JUC概述&lt;/h1&gt;
+&lt;p&gt;JDK1.5新增了&lt;code&gt;java.util.concurrent&lt;/code&gt;包(简称JUC)，就是并发包，用于解决并发编程的一些问题。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>6_multithreading-线程优先级、守护线程、生产消费者问题</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/6_multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 28 Mar 2019 16:23:30 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/6_multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/</guid>
+      <description>&lt;h1 id=&#34;线程优先级&#34;&gt;线程优先级&lt;/h1&gt;
+&lt;p&gt;java 中的线程优先级的范围是1～10，默认的优先级是5。10表示最高优先级，1表示最低优先级，5是普通优先级。“高优先级线程”会优先于“低优先级线程”执行。
+java 中有两种线程：用户线程和守护线程。可以通过isDaemon()方法来区别它们：如果返回false，则说明该线程是“用户线程”；否则就是“守护线程”。
+用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务，作用是为其他线程的运行提供便利服务，守护线程最典型的应用就是 GC (垃圾回收器)。
+用户线程和守护线程两者几乎没有区别，唯一的不同之处就在于虚拟机的离开。需要注意的是：Java虚拟机在“用户线程”都结束后会后退出。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>5_multithreading-interrupt</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/5_multithreading-interrupt/</link>
+      <pubDate>Tue, 26 Mar 2019 16:50:17 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/5_multithreading-interrupt/</guid>
+      <description>&lt;h1 id=&#34;interrupt介绍&#34;&gt;interrupt介绍&lt;/h1&gt;
+&lt;p&gt;JDK1.8官方文档描述如下：
+Interrupts this thread.
+Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown.
+If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException.
+If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread&amp;rsquo;s interrupt status will be set, and the thread will receive a ClosedByInterruptException.
+If this thread is blocked in a Selector then the thread&amp;rsquo;s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector&amp;rsquo;s wakeup method were invoked.
+If none of the previous conditions hold then this thread&amp;rsquo;s interrupt status will be set.
+Interrupting a thread that is not alive need not have any effect.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>4_multithreading-yield&#43;sleep&#43;join</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/4_multithreading-yield&#43;sleep&#43;join/</link>
+      <pubDate>Tue, 26 Mar 2019 15:07:56 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/4_multithreading-yield&#43;sleep&#43;join/</guid>
+      <description>&lt;h1 id=&#34;yield介绍&#34;&gt;yield()介绍&lt;/h1&gt;
+&lt;p&gt;yield()的作用是让步。它能让当前线程由&lt;code&gt;运行状态&lt;/code&gt;进入&lt;code&gt;就绪状态&lt;/code&gt;，从而让其他具有相同优先级的等待线程获取执行权。
+但是，并不能保证当前线程调佣yield()之后，其他具有相同优先级的线程就一定能获得执行权，也有可能是当前线程又进入到运行状态继续运行。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>3_multithreading-wait&#43;notify</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/</link>
+      <pubDate>Mon, 25 Mar 2019 15:04:27 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/</guid>
+      <description>&lt;p&gt;本章对线程的等待/唤醒方法进行介绍。&lt;/p&gt;
+&lt;h1 id=&#34;wait-notify-notifyall等方法介绍&#34;&gt;wait(), notify(), notifyAll()等方法介绍&lt;/h1&gt;
+&lt;p&gt;在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。&lt;/p&gt;
+&lt;p&gt;wait()，notify()必须和 synchronized 配合使用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>2_multithreading-synchronized</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/2_multithreading-synchronized/</link>
+      <pubDate>Sat, 02 Mar 2019 17:44:00 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/2_multithreading-synchronized/</guid>
+      <description>&lt;h1 id=&#34;synchronized原理&#34;&gt;synchronized原理&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;在java中，每一个对象都有且仅有一个同步锁，这也意味着，同步锁是依赖对象而存在的。&lt;/strong&gt;
+当调用对象的synchronized方法时，就获取了该对象的同步锁。如：&lt;code&gt;synchronized(obj)&lt;/code&gt;，就获取了obj这个对象的同步锁。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>1_multithreading-basic</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/1_multithreading-basic/</link>
+      <pubDate>Fri, 01 Mar 2019 18:21:30 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/1_multithreading-basic/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;现代操作系统（Windows，macOS，Linux）都可以执行多任务。多任务就是同时运行多个任务，例如可以同时听歌、打DOTA2。CPU执行代码都是一条一条顺序执行的，但是，即使是单核cpu，也可以同时运行多个任务。因为操作系统执行多任务实际上就是让CPU对多个任务轮流交替执行。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>0_threadLocal</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/0_threadlocal/</link>
+      <pubDate>Fri, 01 Mar 2019 17:21:30 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/0_threadlocal/</guid>
+      <description>基于jdk1.8分析ThreadLocal。 ThreadLocal代码演示 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 public class ThreadLocalTest { private List&amp;lt;String&amp;gt;</description>
+    </item>
+  </channel>
+</rss>

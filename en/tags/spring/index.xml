@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Spring on Wjy&#39;s Blog</title>
+    <link>https://funny-toffee-4aa7c3.netlify.app/en/tags/spring/</link>
+    <description>Recent content in Spring on Wjy&#39;s Blog</description>
+    <generator>Hugo -- 0.125.7</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 13 Apr 2023 15:50:13 +0000</lastBuildDate>
+    <atom:link href="https://funny-toffee-4aa7c3.netlify.app/en/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>手写Spring</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/%E6%89%8B%E5%86%99spring/</link>
+      <pubDate>Thu, 13 Apr 2023 15:50:13 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/%E6%89%8B%E5%86%99spring/</guid>
+      <description>&lt;h1 id=&#34;实现ioc容器&#34;&gt;实现IOC容器&lt;/h1&gt;
+&lt;p&gt;Spring的核心就是能管理一组Bean，并能自动配置依赖关系的IoC容器。而我们的Summer Framework的核心context模块就是要实现IoC容器。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1539348902182944&#34;&gt;手写Spring - 廖雪峰的官方网站 (liaoxuefeng.com)&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>spring代码示例</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Wed, 15 Jan 2020 14:13:12 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
+      <description>&lt;h1 id=&#34;简单的hello-world&#34;&gt;简单的hello world&lt;/h1&gt;</description>
+    </item>
+    <item>
+      <title>springMVC</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/springmvc/</link>
+      <pubDate>Mon, 13 Jan 2020 23:35:36 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/springmvc/</guid>
+      <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
+&lt;p&gt;MVC，即 model模型，view视图，controller控制。
+spring mvc可以用来开发灵活、松散耦合的 web 应用程序。
+MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模型封装了应用程序数据，通常由POJO组成。&lt;/li&gt;
+&lt;li&gt;视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。&lt;/li&gt;
+&lt;li&gt;控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>spring boot</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/spring-boot/</link>
+      <pubDate>Sun, 12 Jan 2020 17:27:28 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/spring-boot/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
+&lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    <item>
+      <title>6、SpringCloud开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Mon, 06 Jan 2020 13:22:38 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</guid>
+      <description>概述 Spring是JavaEE的一个轻量级开发框架，主营IoC和AOP，集成JDBC、ORM、MVC等功能便于开发。 Spring Boot是基于Spri</description>
+    </item>
+    <item>
+      <title>5、SpringBoot开发</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/5springboot%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Sun, 05 Jan 2020 10:15:56 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/5springboot%E5%BC%80%E5%8F%91/</guid>
+      <description>概述 我们已经在前面详细介绍了Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。 那么，</description>
+    </item>
+    <item>
+      <title>4、Spring开发web应用</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Sat, 04 Jan 2020 18:56:17 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</guid>
+      <description>&lt;h1 id=&#34;开发web应用&#34;&gt;开发Web应用&lt;/h1&gt;
+&lt;p&gt;在&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1252599548343744/1255945497738400&#34;&gt;Web开发&lt;/a&gt;一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Servlet规范定义了几种标准组件：Servlet、JSP、Filter和Listener；&lt;/li&gt;
+&lt;li&gt;Servlet的标准组件总是运行在Servlet容器中，如Tomcat、Jetty、WebLogic等。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;直接使用Servlet进行Web开发好比直接在JDBC上操作数据库，比较繁琐，更好的方法是在Servlet基础上封装MVC框架，基于MVC开发Web应用，大部分时候，不需要接触Servlet API，开发省时省力。&lt;/p&gt;
+&lt;p&gt;我们在&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1252599548343744/1266264917931808&#34;&gt;MVC开发&lt;/a&gt;和&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1252599548343744/1337408645759009&#34;&gt;MVC高级开发&lt;/a&gt;已经由浅入深地介绍了如何编写MVC框架。当然，自己写的MVC主要是理解原理，要实现一个功能全面的MVC需要大量的工作以及广泛的测试。&lt;/p&gt;
+&lt;p&gt;因此，开发Web应用，首先要选择一个优秀的MVC框架。常用的MVC框架有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://struts.apache.org/&#34;&gt;Struts&lt;/a&gt;：最古老的一个MVC框架，目前版本是2，和1.x有很大的区别；&lt;/li&gt;
+&lt;li&gt;WebWork：一个比Struts设计更优秀的MVC框架，但不知道出于什么原因，从2.0开始把自己的代码全部塞给Struts 2了；&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://turbine.apache.org/&#34;&gt;Turbine&lt;/a&gt;：一个重度使用Velocity，强调布局的MVC框架；&lt;/li&gt;
+&lt;li&gt;其他100+MVC框架……（略）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Spring虽然都可以集成任何Web框架，但是，Spring本身也开发了一个MVC框架，就叫&lt;a href=&#34;https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html&#34;&gt;Spring MVC&lt;/a&gt;。这个MVC框架设计得足够优秀以至于我们已经不想再费劲去集成类似Struts这样的框架了。&lt;/p&gt;
+&lt;p&gt;本章我们会详细介绍如何基于Spring MVC开发Web应用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>3、访问数据库</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Fri, 03 Jan 2020 09:25:58 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>概述 数据库基本上是现代应用程序的标准存储，绝大多数程序都把自己的业务数据存储在关系数据库中，可见，访问数据库几乎是所有应用程序必备能力。 我们</description>
+    </item>
+    <item>
+      <title>2、AOP</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/2aop/</link>
+      <pubDate>Thu, 02 Jan 2020 16:21:14 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/2aop/</guid>
+      <description>&lt;h1 id=&#34;使用aop&#34;&gt;使用AOP&lt;/h1&gt;
+&lt;p&gt;AOP是Aspect Oriented Programming，即面向切面编程。&lt;/p&gt;
+&lt;p&gt;那什么是AOP？&lt;/p&gt;
+&lt;p&gt;我们先回顾一下OOP：Object Oriented Programming，OOP作为面向对象编程的模式，获得了巨大的成功，OOP的主要功能是数据封装、继承和多态。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>1、IOC容器</title>
+      <link>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Wed, 01 Jan 2020 15:32:45 +0000</pubDate>
+      <guid>https://funny-toffee-4aa7c3.netlify.app/en/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</guid>
+      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
+&lt;p&gt;Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。&lt;/p&gt;
+&lt;p&gt;Spring最早是由Rod Johnson这哥们在他的《&lt;a href=&#34;https://book.douban.com/subject/1426848/&#34;&gt;Expert One-on-One J2EE Development without EJB&lt;/a&gt;》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。&lt;/p&gt;
+&lt;p&gt;随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。&lt;/p&gt;
+&lt;h2 id=&#34;spring-framework&#34;&gt;Spring Framework&lt;/h2&gt;
+&lt;p&gt;Spring Framework主要包括几个模块：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;支持IoC和AOP的容器；&lt;/li&gt;
+&lt;li&gt;支持JDBC和ORM的数据访问模块；&lt;/li&gt;
+&lt;li&gt;支持声明式事务的模块；&lt;/li&gt;
+&lt;li&gt;支持基于Servlet的MVC开发；&lt;/li&gt;
+&lt;li&gt;支持基于Reactive的Web开发；&lt;/li&gt;
+&lt;li&gt;以及集成JMS、JavaMail、JMX、缓存等其他模块。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们会依次介绍Spring Framework的主要功能。&lt;/p&gt;
+&lt;p&gt;本教程使用的Spring版本是6.x版，如果使用Spring 5.x则需注意，两者有以下不同（主要是包名由javax变为了jakarta）：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;Spring 5.x&lt;/th&gt;
+&lt;th&gt;Spring 6.x&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;JDK版本&lt;/td&gt;
+&lt;td&gt;&amp;gt;= 1.8&lt;/td&gt;
+&lt;td&gt;&amp;gt;= 17&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tomcat版本&lt;/td&gt;
+&lt;td&gt;9.x&lt;/td&gt;
+&lt;td&gt;10.x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Annotation包&lt;/td&gt;
+&lt;td&gt;javax.annotation&lt;/td&gt;
+&lt;td&gt;jakarta.annotation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Servlet包&lt;/td&gt;
+&lt;td&gt;javax.servlet&lt;/td&gt;
+&lt;td&gt;jakarta.servlet&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;JMS包&lt;/td&gt;
+&lt;td&gt;javax.jms&lt;/td&gt;
+&lt;td&gt;jakarta.jms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;JavaMail包&lt;/td&gt;
+&lt;td&gt;javax.mail&lt;/td&gt;
+&lt;td&gt;jakarta.mail&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;如果使用Spring的其他版本，则需要根据需要调整代码。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://spring.io/&#34;&gt;spring官网&lt;/a&gt;
+&lt;a href=&#34;https://blog.csdn.net/qq_41907991/article/details/105502255&#34;&gt;spring官网如何阅读&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

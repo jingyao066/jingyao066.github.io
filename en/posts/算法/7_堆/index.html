@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>7_堆 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="算法">
+<meta name="description" content="堆 堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。 小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。 大顶堆">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="7_堆">
+  <meta property="og:description" content="堆 堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。 小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。 大顶堆">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-01T10:27:12+00:00">
+    <meta property="article:modified_time" content="2024-06-01T10:27:12+00:00">
+    <meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7_堆">
+<meta name="twitter:description" content="堆 堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。 小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。 大顶堆">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "7_堆",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "7_堆",
+  "name": "7_堆",
+  "description": "堆 堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。 小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。 大顶堆",
+  "keywords": [
+    "算法"
+  ],
+  "articleBody": "堆 堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。\n小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。 大顶堆（max heap）：任意节点的值 ≥ 其子节点的值。 堆作为完全二叉树的一个特例，具有以下特性。\n最底层节点靠左填充，其他层的节点都被填满。 我们将二叉树的根节点称为“堆顶”，将底层最靠右的节点称为“堆底”。 对于大顶堆（小顶堆），堆顶元素（根节点）的值是最大（最小）的。 堆的常用操作 需要指出的是，许多编程语言提供的是优先队列（priority queue），这是一种抽象的数据结构，定义为具有优先级排序的队列。\n实际上，堆通常用于实现优先队列，大顶堆相当于元素按从大到小的顺序出队的优先队列。从使用角度来看，我们可以将“优先队列”和“堆”看作等价的数据结构。因此，本书对两者不做特别区分，统一称作“堆”。\n堆的常用操作见表 8-1 ，方法名需要根据编程语言来确定。\n表 8-1 堆的操作效率\n方法名 描述 时间复杂度 push() 元素入堆 𝑂(log⁡𝑛) pop() 堆顶元素出堆 𝑂(log⁡𝑛) peek() 访问堆顶元素（对于大 / 小顶堆分别为最大 / 小值） 𝑂(1) size() 获取堆的元素数量 𝑂(1) isEmpty() 判断堆是否为空 𝑂(1) 在实际应用中，我们可以直接使用编程语言提供的堆类（或优先队列类）。\n类似于排序算法中的“从小到大排列”和“从大到小排列”，我们可以通过设置一个 flag 或修改 Comparator 实现“小顶堆”与“大顶堆”之间的转换。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 /* 初始化堆 */ // 初始化小顶堆 Queue minHeap = new PriorityQueue\u003c\u003e(); // 初始化大顶堆（使用 lambda 表达式修改 Comparator 即可） Queue maxHeap = new PriorityQueue\u003c\u003e((a, b) -\u003e b - a); /* 元素入堆 */ maxHeap.offer(1); maxHeap.offer(3); maxHeap.offer(2); maxHeap.offer(5); maxHeap.offer(4); /* 获取堆顶元素 */ int peek = maxHeap.peek(); // 5 /* 堆顶元素出堆 */ // 出堆元素会形成一个从大到小的序列 peek = maxHeap.poll(); // 5 peek = maxHeap.poll(); // 4 peek = maxHeap.poll(); // 3 peek = maxHeap.poll(); // 2 peek = maxHeap.poll(); // 1 /* 获取堆大小 */ int size = maxHeap.size(); /* 判断堆是否为空 */ boolean isEmpty = maxHeap.isEmpty(); /* 输入列表并建堆 */ minHeap = new PriorityQueue\u003c\u003e(Arrays.asList(1, 3, 2, 5, 4)); 堆的实现 下文实现的是大顶堆。若要将其转换为小顶堆，只需将所有大小逻辑判断进行逆转（例如，将 ≥ 替换为 ≤ ）。感兴趣的读者可以自行实现。\n堆的存储与表示 二叉树”章节讲过，完全二叉树非常适合用数组来表示。由于堆正是一种完全二叉树，因此我们将采用数组来存储堆。\n当使用数组表示二叉树时，元素代表节点值，索引代表节点在二叉树中的位置。节点指针通过索引映射公式来实现。\n如图 8-2 所示，给定索引 𝑖 ，其左子节点的索引为 2𝑖+1 ，右子节点的索引为 2𝑖+2 ，父节点的索引为 (𝑖−1)/2（向下整除）。当索引越界时，表示空节点或节点不存在。\n我们可以将索引映射公式封装成函数，方便后续使用：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 /* 获取左子节点的索引 */ int left(int i) { return 2 * i + 1; } /* 获取右子节点的索引 */ int right(int i) { return 2 * i + 2; } /* 获取父节点的索引 */ int parent(int i) { return (i - 1) / 2; // 向下整除 } 访问堆顶元素 堆顶元素即为二叉树的根节点，也就是列表的首个元素：\n1 2 3 4 /* 访问堆顶元素 */ int peek() { return maxHeap.get(0); } 元素入堆 给定元素 val ，我们首先将其添加到堆底。添加之后，由于 val 可能大于堆中其他元素，堆的成立条件可能已被破坏，因此需要修复从插入节点到根节点的路径上的各个节点，这个操作被称为堆化（heapify）。\n考虑从入堆节点开始，从底至顶执行堆化。如图 8-3 所示，我们比较插入节点与其父节点的值，如果插入节点更大，则将它们交换。然后继续执行此操作，从底至顶修复堆中的各个节点，直至越过根节点或遇到无须交换的节点时结束。\n设节点总数为 𝑛 ，则树的高度为 𝑂(log⁡𝑛) 。由此可知，堆化操作的循环轮数最多为 𝑂(log⁡𝑛) ，元素入堆操作的时间复杂度为 𝑂(log⁡𝑛) 。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 /* 元素入堆 */ void push(int val) { // 添加节点 maxHeap.add(val); // 从底至顶堆化 siftUp(size() - 1); } /* 从节点 i 开始，从底至顶堆化 */ void siftUp(int i) { while (true) { // 获取节点 i 的父节点 int p = parent(i); // 当“越过根节点”或“节点无须修复”时，结束堆化 if (p \u003c 0 || maxHeap.get(i) \u003c= maxHeap.get(p)) break; // 交换两节点 swap(i, p); // 循环向上堆化 i = p; } } 堆顶元素出堆 堆顶元素是二叉树的根节点，即列表首元素。如果我们直接从列表中删除首元素，那么二叉树中所有节点的索引都会发生变化，这将使得后续使用堆化进行修复变得困难。为了尽量减少元素索引的变动，我们采用以下操作步骤。\n交换堆顶元素与堆底元素（交换根节点与最右叶节点）。 交换完成后，将堆底从列表中删除（注意，由于已经交换，因此实际上删除的是原来的堆顶元素）。 从根节点开始，从顶至底执行堆化。 如图 8-4 所示，“从顶至底堆化”的操作方向与“从底至顶堆化”相反，我们将根节点的值与其两个子节点的值进行比较，将最大的子节点与根节点交换。然后循环执行此操作，直到越过叶节点或遇到无须交换的节点时结束。\n与元素入堆操作相似，堆顶元素出堆操作的时间复杂度也为 𝑂(log⁡𝑛) 。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 /* 元素出堆 */ int pop() { // 判空处理 if (isEmpty()) throw new IndexOutOfBoundsException(); // 交换根节点与最右叶节点（交换首元素与尾元素） swap(0, size() - 1); // 删除节点 int val = maxHeap.remove(size() - 1); // 从顶至底堆化 siftDown(0); // 返回堆顶元素 return val; } /* 从节点 i 开始，从顶至底堆化 */ void siftDown(int i) { while (true) { // 判断节点 i, l, r 中值最大的节点，记为 ma int l = left(i), r = right(i), ma = i; if (l \u003c size() \u0026\u0026 maxHeap.get(l) \u003e maxHeap.get(ma)) ma = l; if (r \u003c size() \u0026\u0026 maxHeap.get(r) \u003e maxHeap.get(ma)) ma = r; // 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出 if (ma == i) break; // 交换两节点 swap(i, ma); // 循环向下堆化 i = ma; } } 堆的常见应用 优先队列：堆通常作为实现优先队列的首选数据结构，其入队和出队操作的时间复杂度均为 𝑂(log⁡𝑛) ，而建堆操作为 𝑂(𝑛) ，这些操作都非常高效。 堆排序：给定一组数据，我们可以用它们建立一个堆，然后不断地执行元素出堆操作，从而得到有序数据。然而，我们通常会使用一种更优雅的方式实现堆排序，详见“堆排序”章节。 获取最大的 𝑘 个元素：这是一个经典的算法问题，同时也是一种典型应用，例如选择热度前 10 的新闻作为微博热搜，选取销量前 10 的商品等。 建堆操作 在某些情况下，我们希望使用一个列表的所有元素来构建一个堆，这个过程被称为“建堆操作”。\n借助入堆操作实现 我们首先创建一个空堆，然后遍历列表，依次对每个元素执行“入堆操作”，即先将元素添加至堆的尾部，再对该元素执行“从底至顶”堆化。\n每当一个元素入堆，堆的长度就加一。由于节点是从顶到底依次被添加进二叉树的，因此堆是“自上而下”构建的。\n设元素数量为 𝑛 ，每个元素的入堆操作使用 𝑂(log⁡𝑛) 时间，因此该建堆方法的时间复杂度为 𝑂(𝑛log⁡𝑛) 。\n通过遍历堆化实现 实际上，我们可以实现一种更为高效的建堆方法，共分为两步。\n将列表所有元素原封不动地添加到堆中，此时堆的性质尚未得到满足。 倒序遍历堆（层序遍历的倒序），依次对每个非叶节点执行“从顶至底堆化”。 每当堆化一个节点后，以该节点为根节点的子树就形成一个合法的子堆。而由于是倒序遍历，因此堆是“自下而上”构建的。\n之所以选择倒序遍历，是因为这样能够保证当前节点之下的子树已经是合法的子堆，这样堆化当前节点才是有效的。\n值得说明的是，由于叶节点没有子节点，因此它们天然就是合法的子堆，无须堆化。如以下代码所示，最后一个非叶节点是最后一个节点的父节点，我们从它开始倒序遍历并执行堆化：\n1 2 3 4 5 6 7 8 9 /* 构造方法，根据输入列表建堆 */ MaxHeap(List nums) { // 将列表元素原封不动添加进堆 maxHeap = new ArrayList\u003c\u003e(nums); // 堆化除叶节点以外的其他所有节点 for (int i = parent(size() - 1); i \u003e= 0; i--) { siftDown(i); } } 复杂度分析 下面，我们来尝试推算第二种建堆方法的时间复杂度。\n假设完全二叉树的节点数量为 𝑛 ，则叶节点数量为 (𝑛+1)/2 ，其中 / 为向下整除。因此需要堆化的节点数量为 (𝑛−1)/2 。 在从顶至底堆化的过程中，每个节点最多堆化到叶节点，因此最大迭代次数为二叉树高度 log⁡𝑛 。 将上述两者相乘，可得到建堆过程的时间复杂度为 𝑂(𝑛log⁡𝑛) 。但这个估算结果并不准确，因为我们没有考虑到二叉树底层节点数量远多于顶层节点的性质。\n接下来我们来进行更为准确的计算。为了降低计算难度，假设给定一个节点数量为 𝑛 、高度为 ℎ 的“完美二叉树”，该假设不会影响计算结果的正确性。\n如图 8-5 所示，节点“从顶至底堆化”的最大迭代次数等于该节点到叶节点的距离，而该距离正是“节点高度”。因此，我们可以对各层的“节点数量 × 节点高度”求和，得到所有节点的堆化迭代次数的总和。 $$ 𝑇(ℎ)=2^0ℎ+2^1(ℎ−1)+2^2(ℎ−2)+⋯+2^{ℎ−1}×1 $$ 化简上式需要借助中学的数列知识，先将 𝑇(ℎ) 乘以 2 ，得到： $$ 𝑇(ℎ)=2^0ℎ+2^1(ℎ−1)+2^2(ℎ−2)+⋯+2^{ℎ−1}×1 $$ $$ 2𝑇(ℎ)=2^1ℎ+2^2(ℎ−1)+2^3(ℎ−2)+⋯+2^ℎ×1 $$ 使用错位相减法，用下式 2𝑇(ℎ) 减去上式 𝑇(ℎ) ，可得： $$ 2𝑇(ℎ)−𝑇(ℎ)=𝑇(ℎ)=−2^0ℎ+2^1+2^2+⋯+2^{ℎ−1}+2^ℎ $$ 观察上式，发现 𝑇(ℎ) 是一个等比数列，可直接使用求和公式，得到时间复杂度为： $$ 𝑇(ℎ)=21−2ℎ1−2−ℎ \\\\=2ℎ+1−ℎ−2 \\\\=𝑂(2ℎ) $$ 进一步，高度为 ℎ 的完美二叉树的节点数量为 𝑛=2ℎ+1−1 ，易得复杂度为 𝑂(2ℎ)=𝑂(𝑛) 。以上推算表明，输入列表并建堆的时间复杂度为 𝑂(𝑛) ，非常高效。\nTop-k 问题 给定一个长度为 𝑛 的无序数组 nums ，请返回数组中最大的 𝑘 个元素。\n对于该问题，我们先介绍两种思路比较直接的解法，再介绍效率更高的堆解法。\n方法一：遍历选择 我们可以进行图 8-6 所示的 𝑘 轮遍历，分别在每轮中提取第 1、2、…、𝑘 大的元素，时间复杂度为 𝑂(𝑛𝑘) 。\n此方法只适用于 𝑘≪𝑛 的情况，因为当 𝑘 与 𝑛 比较接近时，其时间复杂度趋向于 𝑂(𝑛2) ，非常耗时。\n当 𝑘=𝑛 时，我们可以得到完整的有序序列，此时等价于“选择排序”算法。\n方法二：排序 如图 8-7 所示，我们可以先对数组 nums 进行排序，再返回最右边的 𝑘 个元素，时间复杂度为 $𝑂(𝑛 log⁡ 𝑛) $。\n显然，该方法“超额”完成任务了，因为我们只需找出最大的 𝑘 个元素即可，而不需要排序其他元素。\n方法三：堆 我们可以基于堆更加高效地解决 Top-k 问题，流程如图 8-8 所示。\n初始化一个小顶堆，其堆顶元素最小。 先将数组的前 𝑘 个元素依次入堆。 从第 𝑘+1 个元素开始，若当前元素大于堆顶元素，则将堆顶元素出堆，并将当前元素入堆。 遍历完成后，堆中保存的就是最大的 𝑘 个元素。 示例代码如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 /* 基于堆查找数组中最大的 k 个元素 */ Queue topKHeap(int[] nums, int k) { // 初始化小顶堆 Queue heap = new PriorityQueue(); // 将数组的前 k 个元素入堆 for (int i = 0; i \u003c k; i++) { heap.offer(nums[i]); } // 从第 k+1 个元素开始，保持堆的长度为 k for (int i = k; i \u003c nums.length; i++) { // 若当前元素大于堆顶元素，则将堆顶元素出堆、当前元素入堆 if (nums[i] \u003e heap.peek()) { heap.poll(); heap.offer(nums[i]); } } return heap; } 总共执行了 𝑛 轮入堆和出堆，堆的最大长度为 𝑘 ，因此时间复杂度为 𝑂(𝑛log⁡𝑘) 。该方法的效率很高，当 𝑘 较小时，时间复杂度趋向 𝑂(𝑛) ；当 𝑘 较大时，时间复杂度不会超过 𝑂(𝑛log⁡𝑛) 。\n另外，该方法适用于动态数据流的使用场景。在不断加入数据时，我们可以持续维护堆内的元素，从而实现最大的 𝑘 个元素的动态更新。\n小结 重点回顾 堆是一棵完全二叉树，根据成立条件可分为大顶堆和小顶堆。大（小）顶堆的堆顶元素是最大（小）的。 优先队列的定义是具有出队优先级的队列，通常使用堆来实现。 堆的常用操作及其对应的时间复杂度包括：元素入堆 𝑂(log⁡𝑛)、堆顶元素出堆 𝑂(log⁡𝑛) 和访问堆顶元素 𝑂(1) 等。 完全二叉树非常适合用数组表示，因此我们通常使用数组来存储堆。 堆化操作用于维护堆的性质，在入堆和出堆操作中都会用到。 输入 𝑛 个元素并建堆的时间复杂度可以优化至 𝑂(𝑛) ，非常高效。 Top-k 是一个经典算法问题，可以使用堆数据结构高效解决，时间复杂度为 𝑂(𝑛log⁡𝑘) 。 Q \u0026 A Q：数据结构的“堆”与内存管理的“堆”是同一个概念吗？\n两者不是同一个概念，只是碰巧都叫“堆”。计算机系统内存中的堆是动态内存分配的一部分，程序在运行时可以使用它来存储数据。程序可以请求一定量的堆内存，用于存储如对象和数组等复杂结构。当这些数据不再需要时，程序需要释放这些内存，以防止内存泄漏。相较于栈内存，堆内存的管理和使用需要更谨慎，使用不当可能会导致内存泄漏和野指针等问题。\n",
+  "wordCount" : "4912",
+  "inLanguage": "en",
+  "datePublished": "2024-06-01T10:27:12Z",
+  "dateModified": "2024-06-01T10:27:12Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/en/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/en/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      7_堆
+    </h1>
+    <div class="post-meta"><span title='2024-06-01 10:27:12 +0000 UTC'>2024-06-01</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%a0%86" aria-label="堆">堆</a><ul>
+                        
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e5%b8%b8%e7%94%a8%e6%93%8d%e4%bd%9c" aria-label="堆的常用操作">堆的常用操作</a></li>
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e5%ae%9e%e7%8e%b0" aria-label="堆的实现">堆的实现</a><ul>
+                        
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e5%ad%98%e5%82%a8%e4%b8%8e%e8%a1%a8%e7%a4%ba" aria-label="堆的存储与表示">堆的存储与表示</a></li>
+                <li>
+                    <a href="#%e8%ae%bf%e9%97%ae%e5%a0%86%e9%a1%b6%e5%85%83%e7%b4%a0" aria-label="访问堆顶元素">访问堆顶元素</a></li>
+                <li>
+                    <a href="#%e5%85%83%e7%b4%a0%e5%85%a5%e5%a0%86" aria-label="元素入堆">元素入堆</a></li>
+                <li>
+                    <a href="#%e5%a0%86%e9%a1%b6%e5%85%83%e7%b4%a0%e5%87%ba%e5%a0%86" aria-label="堆顶元素出堆">堆顶元素出堆</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%a0%86%e7%9a%84%e5%b8%b8%e8%a7%81%e5%ba%94%e7%94%a8" aria-label="堆的常见应用">堆的常见应用</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%bb%ba%e5%a0%86%e6%93%8d%e4%bd%9c" aria-label="建堆操作">建堆操作</a><ul>
+                        
+                <li>
+                    <a href="#%e5%80%9f%e5%8a%a9%e5%85%a5%e5%a0%86%e6%93%8d%e4%bd%9c%e5%ae%9e%e7%8e%b0" aria-label="借助入堆操作实现">借助入堆操作实现</a></li>
+                <li>
+                    <a href="#%e9%80%9a%e8%bf%87%e9%81%8d%e5%8e%86%e5%a0%86%e5%8c%96%e5%ae%9e%e7%8e%b0" aria-label="通过遍历堆化实现">通过遍历堆化实现</a></li>
+                <li>
+                    <a href="#%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%88%86%e6%9e%90" aria-label="复杂度分析">复杂度分析</a></li></ul>
+                </li>
+                <li>
+                    <a href="#top-k-%e9%97%ae%e9%a2%98" aria-label="Top-k 问题">Top-k 问题</a><ul>
+                        
+                <li>
+                    <a href="#%e6%96%b9%e6%b3%95%e4%b8%80%e9%81%8d%e5%8e%86%e9%80%89%e6%8b%a9" aria-label="方法一：遍历选择">方法一：遍历选择</a></li>
+                <li>
+                    <a href="#%e6%96%b9%e6%b3%95%e4%ba%8c%e6%8e%92%e5%ba%8f" aria-label="方法二：排序">方法二：排序</a></li>
+                <li>
+                    <a href="#%e6%96%b9%e6%b3%95%e4%b8%89%e5%a0%86" aria-label="方法三：堆">方法三：堆</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b0%8f%e7%bb%93" aria-label="小结">小结</a><ul>
+                        
+                <li>
+                    <a href="#%e9%87%8d%e7%82%b9%e5%9b%9e%e9%a1%be" aria-label="重点回顾">重点回顾</a></li>
+                <li>
+                    <a href="#q--a" aria-label="Q &amp; A">Q &amp; A</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="堆">堆<a hidden class="anchor" aria-hidden="true" href="#堆">#</a></h1>
+<p>堆（heap）是一种满足特定条件的完全二叉树，主要可分为两种类型，如图 8-1 所示。</p>
+<ul>
+<li>小顶堆（min heap）：任意节点的值 ≤ 其子节点的值。</li>
+<li>大顶堆（max heap）：任意节点的值 ≥ 其子节点的值。</li>
+</ul>
+<p><img alt="图 8-1  小顶堆与大顶堆" loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/min_heap_and_max_heap.png"></p>
+<p>堆作为完全二叉树的一个特例，具有以下特性。</p>
+<ul>
+<li>最底层节点靠左填充，其他层的节点都被填满。</li>
+<li>我们将二叉树的根节点称为“堆顶”，将底层最靠右的节点称为“堆底”。</li>
+<li>对于大顶堆（小顶堆），堆顶元素（根节点）的值是最大（最小）的。</li>
+</ul>
+<h2 id="堆的常用操作">堆的常用操作<a hidden class="anchor" aria-hidden="true" href="#堆的常用操作">#</a></h2>
+<p>需要指出的是，许多编程语言提供的是优先队列（priority queue），这是一种抽象的数据结构，定义为具有优先级排序的队列。</p>
+<p>实际上，<strong>堆通常用于实现优先队列，大顶堆相当于元素按从大到小的顺序出队的优先队列</strong>。从使用角度来看，我们可以将“优先队列”和“堆”看作等价的数据结构。因此，本书对两者不做特别区分，统一称作“堆”。</p>
+<p>堆的常用操作见表 8-1 ，方法名需要根据编程语言来确定。</p>
+<p>表 8-1  堆的操作效率</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法名</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>push()</code></td>
+<td style="text-align:left">元素入堆</td>
+<td style="text-align:left">𝑂(log⁡𝑛)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>pop()</code></td>
+<td style="text-align:left">堆顶元素出堆</td>
+<td style="text-align:left">𝑂(log⁡𝑛)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>peek()</code></td>
+<td style="text-align:left">访问堆顶元素（对于大 / 小顶堆分别为最大 / 小值）</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>size()</code></td>
+<td style="text-align:left">获取堆的元素数量</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>isEmpty()</code></td>
+<td style="text-align:left">判断堆是否为空</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+</tbody>
+</table>
+<p>在实际应用中，我们可以直接使用编程语言提供的堆类（或优先队列类）。</p>
+<p>类似于排序算法中的“从小到大排列”和“从大到小排列”，我们可以通过设置一个 <code>flag</code> 或修改 <code>Comparator</code> 实现“小顶堆”与“大顶堆”之间的转换。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 初始化堆 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 初始化小顶堆</span>
+</span></span><span style="display:flex;"><span>Queue&lt;Integer&gt; minHeap = <span style="color:#fff;font-weight:bold">new</span> PriorityQueue&lt;&gt;();
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 初始化大顶堆（使用 lambda 表达式修改 Comparator 即可）</span>
+</span></span><span style="display:flex;"><span>Queue&lt;Integer&gt; maxHeap = <span style="color:#fff;font-weight:bold">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 元素入堆 */</span>
+</span></span><span style="display:flex;"><span>maxHeap.<span style="color:#007f7f">offer</span>(1);
+</span></span><span style="display:flex;"><span>maxHeap.<span style="color:#007f7f">offer</span>(3);
+</span></span><span style="display:flex;"><span>maxHeap.<span style="color:#007f7f">offer</span>(2);
+</span></span><span style="display:flex;"><span>maxHeap.<span style="color:#007f7f">offer</span>(5);
+</span></span><span style="display:flex;"><span>maxHeap.<span style="color:#007f7f">offer</span>(4);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 获取堆顶元素 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> peek = maxHeap.<span style="color:#007f7f">peek</span>(); <span style="color:#007f7f">// 5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 堆顶元素出堆 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">// 出堆元素会形成一个从大到小的序列</span>
+</span></span><span style="display:flex;"><span>peek = maxHeap.<span style="color:#007f7f">poll</span>(); <span style="color:#007f7f">// 5</span>
+</span></span><span style="display:flex;"><span>peek = maxHeap.<span style="color:#007f7f">poll</span>(); <span style="color:#007f7f">// 4</span>
+</span></span><span style="display:flex;"><span>peek = maxHeap.<span style="color:#007f7f">poll</span>(); <span style="color:#007f7f">// 3</span>
+</span></span><span style="display:flex;"><span>peek = maxHeap.<span style="color:#007f7f">poll</span>(); <span style="color:#007f7f">// 2</span>
+</span></span><span style="display:flex;"><span>peek = maxHeap.<span style="color:#007f7f">poll</span>(); <span style="color:#007f7f">// 1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 获取堆大小 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> size = maxHeap.<span style="color:#007f7f">size</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 判断堆是否为空 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">boolean</span> isEmpty = maxHeap.<span style="color:#007f7f">isEmpty</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 输入列表并建堆 */</span>
+</span></span><span style="display:flex;"><span>minHeap = <span style="color:#fff;font-weight:bold">new</span> PriorityQueue&lt;&gt;(Arrays.<span style="color:#007f7f">asList</span>(1, 3, 2, 5, 4));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="堆的实现">堆的实现<a hidden class="anchor" aria-hidden="true" href="#堆的实现">#</a></h2>
+<p>下文实现的是大顶堆。若要将其转换为小顶堆，只需将所有大小逻辑判断进行逆转（例如，将 ≥ 替换为 ≤ ）。感兴趣的读者可以自行实现。</p>
+<h3 id="堆的存储与表示">堆的存储与表示<a hidden class="anchor" aria-hidden="true" href="#堆的存储与表示">#</a></h3>
+<p>二叉树”章节讲过，完全二叉树非常适合用数组来表示。由于堆正是一种完全二叉树，<strong>因此我们将采用数组来存储堆</strong>。</p>
+<p>当使用数组表示二叉树时，元素代表节点值，索引代表节点在二叉树中的位置。<strong>节点指针通过索引映射公式来实现</strong>。</p>
+<p>如图 8-2 所示，给定索引 𝑖 ，其左子节点的索引为 2𝑖+1 ，右子节点的索引为 2𝑖+2 ，父节点的索引为 (𝑖−1)/2（向下整除）。当索引越界时，表示空节点或节点不存在。</p>
+<p><img alt="图 8-2  堆的表示与存储" loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/representation_of_heap.png"></p>
+<p>我们可以将索引映射公式封装成函数，方便后续使用：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 获取左子节点的索引 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> left(<span style="color:#fff;font-weight:bold">int</span> i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> 2 * i + 1;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 获取右子节点的索引 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> right(<span style="color:#fff;font-weight:bold">int</span> i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> 2 * i + 2;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 获取父节点的索引 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> parent(<span style="color:#fff;font-weight:bold">int</span> i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> (i - 1) / 2; <span style="color:#007f7f">// 向下整除</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="访问堆顶元素">访问堆顶元素<a hidden class="anchor" aria-hidden="true" href="#访问堆顶元素">#</a></h3>
+<p>堆顶元素即为二叉树的根节点，也就是列表的首个元素：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 访问堆顶元素 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> peek() {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> maxHeap.<span style="color:#007f7f">get</span>(0);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="元素入堆">元素入堆<a hidden class="anchor" aria-hidden="true" href="#元素入堆">#</a></h3>
+<p>给定元素 <code>val</code> ，我们首先将其添加到堆底。添加之后，由于 <code>val</code> 可能大于堆中其他元素，堆的成立条件可能已被破坏，<strong>因此需要修复从插入节点到根节点的路径上的各个节点</strong>，这个操作被称为堆化（heapify）。</p>
+<p>考虑从入堆节点开始，<strong>从底至顶执行堆化</strong>。如图 8-3 所示，我们比较插入节点与其父节点的值，如果插入节点更大，则将它们交换。然后继续执行此操作，从底至顶修复堆中的各个节点，直至越过根节点或遇到无须交换的节点时结束。</p>
+<p><img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step1.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step2.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step3.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step4.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step5.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step6.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step7.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step8.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_push_step9.png"></p>
+<p>设节点总数为 𝑛 ，则树的高度为 𝑂(log⁡𝑛) 。由此可知，堆化操作的循环轮数最多为 𝑂(log⁡𝑛) ，<strong>元素入堆操作的时间复杂度为 𝑂(log⁡𝑛)</strong> 。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 元素入堆 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> push(<span style="color:#fff;font-weight:bold">int</span> val) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 添加节点</span>
+</span></span><span style="display:flex;"><span>    maxHeap.<span style="color:#007f7f">add</span>(val);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 从底至顶堆化</span>
+</span></span><span style="display:flex;"><span>    siftUp(size() - 1);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 从节点 i 开始，从底至顶堆化 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> siftUp(<span style="color:#fff;font-weight:bold">int</span> i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span> (<span style="color:#fff;font-weight:bold">true</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 获取节点 i 的父节点</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> p = parent(i);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 当“越过根节点”或“节点无须修复”时，结束堆化</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (p &lt; 0 || maxHeap.<span style="color:#007f7f">get</span>(i) &lt;= maxHeap.<span style="color:#007f7f">get</span>(p))
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 交换两节点</span>
+</span></span><span style="display:flex;"><span>        swap(i, p);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 循环向上堆化</span>
+</span></span><span style="display:flex;"><span>        i = p;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="堆顶元素出堆">堆顶元素出堆<a hidden class="anchor" aria-hidden="true" href="#堆顶元素出堆">#</a></h3>
+<p>堆顶元素是二叉树的根节点，即列表首元素。如果我们直接从列表中删除首元素，那么二叉树中所有节点的索引都会发生变化，这将使得后续使用堆化进行修复变得困难。为了尽量减少元素索引的变动，我们采用以下操作步骤。</p>
+<ol>
+<li>交换堆顶元素与堆底元素（交换根节点与最右叶节点）。</li>
+<li>交换完成后，将堆底从列表中删除（注意，由于已经交换，因此实际上删除的是原来的堆顶元素）。</li>
+<li>从根节点开始，<strong>从顶至底执行堆化</strong>。</li>
+</ol>
+<p>如图 8-4 所示，<strong>“从顶至底堆化”的操作方向与“从底至顶堆化”相反</strong>，我们将根节点的值与其两个子节点的值进行比较，将最大的子节点与根节点交换。然后循环执行此操作，直到越过叶节点或遇到无须交换的节点时结束。</p>
+<p><img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step1.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step2.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step3.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step4.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step5.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step6.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step7.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step8.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step9.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heap_pop_step10.png"></p>
+<p>与元素入堆操作相似，堆顶元素出堆操作的时间复杂度也为 𝑂(log⁡𝑛) 。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 元素出堆 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> pop() {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 判空处理</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (isEmpty())
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> IndexOutOfBoundsException();
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 交换根节点与最右叶节点（交换首元素与尾元素）</span>
+</span></span><span style="display:flex;"><span>    swap(0, size() - 1);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 删除节点</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> val = maxHeap.<span style="color:#007f7f">remove</span>(size() - 1);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 从顶至底堆化</span>
+</span></span><span style="display:flex;"><span>    siftDown(0);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 返回堆顶元素</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> val;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">/* 从节点 i 开始，从顶至底堆化 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">void</span> siftDown(<span style="color:#fff;font-weight:bold">int</span> i) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span> (<span style="color:#fff;font-weight:bold">true</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 判断节点 i, l, r 中值最大的节点，记为 ma</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> l = left(i), r = right(i), ma = i;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (l &lt; size() &amp;&amp; maxHeap.<span style="color:#007f7f">get</span>(l) &gt; maxHeap.<span style="color:#007f7f">get</span>(ma))
+</span></span><span style="display:flex;"><span>            ma = l;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (r &lt; size() &amp;&amp; maxHeap.<span style="color:#007f7f">get</span>(r) &gt; maxHeap.<span style="color:#007f7f">get</span>(ma))
+</span></span><span style="display:flex;"><span>            ma = r;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (ma == i)
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">break</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 交换两节点</span>
+</span></span><span style="display:flex;"><span>        swap(i, ma);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 循环向下堆化</span>
+</span></span><span style="display:flex;"><span>        i = ma;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="堆的常见应用">堆的常见应用<a hidden class="anchor" aria-hidden="true" href="#堆的常见应用">#</a></h2>
+<ul>
+<li><strong>优先队列</strong>：堆通常作为实现优先队列的首选数据结构，其入队和出队操作的时间复杂度均为 𝑂(log⁡𝑛) ，而建堆操作为 𝑂(𝑛) ，这些操作都非常高效。</li>
+<li><strong>堆排序</strong>：给定一组数据，我们可以用它们建立一个堆，然后不断地执行元素出堆操作，从而得到有序数据。然而，我们通常会使用一种更优雅的方式实现堆排序，详见“堆排序”章节。</li>
+<li><strong>获取最大的 𝑘 个元素</strong>：这是一个经典的算法问题，同时也是一种典型应用，例如选择热度前 10 的新闻作为微博热搜，选取销量前 10 的商品等。</li>
+</ul>
+<h1 id="建堆操作">建堆操作<a hidden class="anchor" aria-hidden="true" href="#建堆操作">#</a></h1>
+<p>在某些情况下，我们希望使用一个列表的所有元素来构建一个堆，这个过程被称为“建堆操作”。</p>
+<h2 id="借助入堆操作实现">借助入堆操作实现<a hidden class="anchor" aria-hidden="true" href="#借助入堆操作实现">#</a></h2>
+<p>我们首先创建一个空堆，然后遍历列表，依次对每个元素执行“入堆操作”，即先将元素添加至堆的尾部，再对该元素执行“从底至顶”堆化。</p>
+<p>每当一个元素入堆，堆的长度就加一。由于节点是从顶到底依次被添加进二叉树的，因此堆是“自上而下”构建的。</p>
+<p>设元素数量为 𝑛 ，每个元素的入堆操作使用 𝑂(log⁡𝑛) 时间，因此该建堆方法的时间复杂度为 𝑂(𝑛log⁡𝑛) 。</p>
+<h2 id="通过遍历堆化实现">通过遍历堆化实现<a hidden class="anchor" aria-hidden="true" href="#通过遍历堆化实现">#</a></h2>
+<p>实际上，我们可以实现一种更为高效的建堆方法，共分为两步。</p>
+<ol>
+<li>将列表所有元素原封不动地添加到堆中，此时堆的性质尚未得到满足。</li>
+<li>倒序遍历堆（层序遍历的倒序），依次对每个非叶节点执行“从顶至底堆化”。</li>
+</ol>
+<p><strong>每当堆化一个节点后，以该节点为根节点的子树就形成一个合法的子堆</strong>。而由于是倒序遍历，因此堆是“自下而上”构建的。</p>
+<p>之所以选择倒序遍历，是因为这样能够保证当前节点之下的子树已经是合法的子堆，这样堆化当前节点才是有效的。</p>
+<p>值得说明的是，<strong>由于叶节点没有子节点，因此它们天然就是合法的子堆，无须堆化</strong>。如以下代码所示，最后一个非叶节点是最后一个节点的父节点，我们从它开始倒序遍历并执行堆化：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 构造方法，根据输入列表建堆 */</span>
+</span></span><span style="display:flex;"><span>MaxHeap(List&lt;Integer&gt; nums) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 将列表元素原封不动添加进堆</span>
+</span></span><span style="display:flex;"><span>    maxHeap = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;&gt;(nums);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 堆化除叶节点以外的其他所有节点</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = parent(size() - 1); i &gt;= 0; i--) {
+</span></span><span style="display:flex;"><span>        siftDown(i);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="复杂度分析">复杂度分析<a hidden class="anchor" aria-hidden="true" href="#复杂度分析">#</a></h2>
+<p>下面，我们来尝试推算第二种建堆方法的时间复杂度。</p>
+<ul>
+<li>假设完全二叉树的节点数量为 𝑛 ，则叶节点数量为 (𝑛+1)/2 ，其中 / 为向下整除。因此需要堆化的节点数量为 (𝑛−1)/2 。</li>
+<li>在从顶至底堆化的过程中，每个节点最多堆化到叶节点，因此最大迭代次数为二叉树高度 log⁡𝑛 。</li>
+</ul>
+<p>将上述两者相乘，可得到建堆过程的时间复杂度为 𝑂(𝑛log⁡𝑛) 。<strong>但这个估算结果并不准确，因为我们没有考虑到二叉树底层节点数量远多于顶层节点的性质</strong>。</p>
+<p>接下来我们来进行更为准确的计算。为了降低计算难度，假设给定一个节点数量为 𝑛 、高度为 ℎ 的“完美二叉树”，该假设不会影响计算结果的正确性。</p>
+<p><img alt="图 8-5  完美二叉树的各层节点数量" loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/heapify_operations_count.png"></p>
+<p>如图 8-5 所示，节点“从顶至底堆化”的最大迭代次数等于该节点到叶节点的距离，而该距离正是“节点高度”。因此，我们可以对各层的“节点数量 × 节点高度”求和，<strong>得到所有节点的堆化迭代次数的总和</strong>。
+</p>
+$$
+𝑇(ℎ)=2^0ℎ+2^1(ℎ−1)+2^2(ℎ−2)+⋯+2^{ℎ−1}×1
+$$
+<p>
+化简上式需要借助中学的数列知识，先将 𝑇(ℎ) 乘以 2 ，得到：
+</p>
+$$
+𝑇(ℎ)=2^0ℎ+2^1(ℎ−1)+2^2(ℎ−2)+⋯+2^{ℎ−1}×1
+$$
+$$
+2𝑇(ℎ)=2^1ℎ+2^2(ℎ−1)+2^3(ℎ−2)+⋯+2^ℎ×1
+$$
+<p>使用错位相减法，用下式 2𝑇(ℎ) 减去上式 𝑇(ℎ) ，可得：
+</p>
+$$
+2𝑇(ℎ)−𝑇(ℎ)=𝑇(ℎ)=−2^0ℎ+2^1+2^2+⋯+2^{ℎ−1}+2^ℎ
+$$
+<p>
+观察上式，发现 𝑇(ℎ) 是一个等比数列，可直接使用求和公式，得到时间复杂度为：
+</p>
+$$
+𝑇(ℎ)=21−2ℎ1−2−ℎ
+\\=2ℎ+1−ℎ−2
+\\=𝑂(2ℎ)
+$$
+<p>
+进一步，高度为 ℎ 的完美二叉树的节点数量为 𝑛=2ℎ+1−1 ，易得复杂度为 𝑂(2ℎ)=𝑂(𝑛) 。以上推算表明，<strong>输入列表并建堆的时间复杂度为 𝑂(𝑛) ，非常高效</strong>。</p>
+<h1 id="top-k-问题">Top-k 问题<a hidden class="anchor" aria-hidden="true" href="#top-k-问题">#</a></h1>
+<blockquote>
+<p>给定一个长度为 𝑛 的无序数组 <code>nums</code> ，请返回数组中最大的 𝑘 个元素。</p>
+</blockquote>
+<p>对于该问题，我们先介绍两种思路比较直接的解法，再介绍效率更高的堆解法。</p>
+<h2 id="方法一遍历选择">方法一：遍历选择<a hidden class="anchor" aria-hidden="true" href="#方法一遍历选择">#</a></h2>
+<p>我们可以进行图 8-6 所示的 𝑘 轮遍历，分别在每轮中提取第 1、2、…、𝑘 大的元素，时间复杂度为 𝑂(𝑛𝑘) 。</p>
+<p>此方法只适用于 𝑘≪𝑛 的情况，因为当 𝑘 与 𝑛 比较接近时，其时间复杂度趋向于 𝑂(𝑛2) ，非常耗时。</p>
+<p><img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_traversal.png"></p>
+<blockquote>
+<p>当 𝑘=𝑛 时，我们可以得到完整的有序序列，此时等价于“选择排序”算法。</p>
+</blockquote>
+<h2 id="方法二排序">方法二：排序<a hidden class="anchor" aria-hidden="true" href="#方法二排序">#</a></h2>
+<p>如图 8-7 所示，我们可以先对数组 <code>nums</code> 进行排序，再返回最右边的 𝑘 个元素，时间复杂度为 $𝑂(𝑛 log⁡ 𝑛) $。</p>
+<p>显然，该方法“超额”完成任务了，因为我们只需找出最大的 𝑘 个元素即可，而不需要排序其他元素。</p>
+<p><img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_sorting.png"></p>
+<h2 id="方法三堆">方法三：堆<a hidden class="anchor" aria-hidden="true" href="#方法三堆">#</a></h2>
+<p>我们可以基于堆更加高效地解决 Top-k 问题，流程如图 8-8 所示。</p>
+<ol>
+<li>初始化一个小顶堆，其堆顶元素最小。</li>
+<li>先将数组的前 𝑘 个元素依次入堆。</li>
+<li>从第 𝑘+1 个元素开始，若当前元素大于堆顶元素，则将堆顶元素出堆，并将当前元素入堆。</li>
+<li>遍历完成后，堆中保存的就是最大的 𝑘 个元素。</li>
+</ol>
+<p><img alt="图 8-8  基于堆寻找最大的 k 个元素" loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step1.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step2.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step3.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step4.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step5.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step6.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step7.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step8.png">
+<img loading="lazy" src="/en/posts/%E7%AE%97%E6%B3%95/7_%E5%A0%86/top_k_heap_step9.png"></p>
+<p>示例代码如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 基于堆查找数组中最大的 k 个元素 */</span>
+</span></span><span style="display:flex;"><span>Queue&lt;Integer&gt; topKHeap(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> k) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 初始化小顶堆</span>
+</span></span><span style="display:flex;"><span>    Queue&lt;Integer&gt; heap = <span style="color:#fff;font-weight:bold">new</span> PriorityQueue&lt;Integer&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 将数组的前 k 个元素入堆</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = 0; i &lt; k; i++) {
+</span></span><span style="display:flex;"><span>        heap.<span style="color:#007f7f">offer</span>(nums[i]);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 从第 k+1 个元素开始，保持堆的长度为 k</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = k; i &lt; nums.<span style="color:#007f7f">length</span>; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 若当前元素大于堆顶元素，则将堆顶元素出堆、当前元素入堆</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (nums[i] &gt; heap.<span style="color:#007f7f">peek</span>()) {
+</span></span><span style="display:flex;"><span>            heap.<span style="color:#007f7f">poll</span>();
+</span></span><span style="display:flex;"><span>            heap.<span style="color:#007f7f">offer</span>(nums[i]);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> heap;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>总共执行了 𝑛 轮入堆和出堆，堆的最大长度为 𝑘 ，因此时间复杂度为 𝑂(𝑛log⁡𝑘) 。该方法的效率很高，当 𝑘 较小时，时间复杂度趋向 𝑂(𝑛) ；当 𝑘 较大时，时间复杂度不会超过 𝑂(𝑛log⁡𝑛) 。</p>
+<p>另外，该方法适用于动态数据流的使用场景。在不断加入数据时，我们可以持续维护堆内的元素，从而实现最大的 𝑘 个元素的动态更新。</p>
+<h1 id="小结">小结<a hidden class="anchor" aria-hidden="true" href="#小结">#</a></h1>
+<h2 id="重点回顾">重点回顾<a hidden class="anchor" aria-hidden="true" href="#重点回顾">#</a></h2>
+<ul>
+<li>堆是一棵完全二叉树，根据成立条件可分为大顶堆和小顶堆。大（小）顶堆的堆顶元素是最大（小）的。</li>
+<li>优先队列的定义是具有出队优先级的队列，通常使用堆来实现。</li>
+<li>堆的常用操作及其对应的时间复杂度包括：元素入堆 𝑂(log⁡𝑛)、堆顶元素出堆 𝑂(log⁡𝑛) 和访问堆顶元素 𝑂(1) 等。</li>
+<li>完全二叉树非常适合用数组表示，因此我们通常使用数组来存储堆。</li>
+<li>堆化操作用于维护堆的性质，在入堆和出堆操作中都会用到。</li>
+<li>输入 𝑛 个元素并建堆的时间复杂度可以优化至 𝑂(𝑛) ，非常高效。</li>
+<li>Top-k 是一个经典算法问题，可以使用堆数据结构高效解决，时间复杂度为 𝑂(𝑛log⁡𝑘) 。</li>
+</ul>
+<h2 id="q--a">Q &amp; A<a hidden class="anchor" aria-hidden="true" href="#q--a">#</a></h2>
+<p><strong>Q</strong>：数据结构的“堆”与内存管理的“堆”是同一个概念吗？</p>
+<p>两者不是同一个概念，只是碰巧都叫“堆”。计算机系统内存中的堆是动态内存分配的一部分，程序在运行时可以使用它来存储数据。程序可以请求一定量的堆内存，用于存储如对象和数组等复杂结构。当这些数据不再需要时，程序需要释放这些内存，以防止内存泄漏。相较于栈内存，堆内存的管理和使用需要更谨慎，使用不当可能会导致内存泄漏和野指针等问题。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/en/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/en/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

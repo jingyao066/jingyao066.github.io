@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Jenkins | Wjy&#39;s Blog</title>
+<meta name="keywords" content="其他">
+<meta name="description" content="简介
+Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
+这是jenkins中文网">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%85%B6%E4%BB%96/jenkins/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%85%B6%E4%BB%96/jenkins/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%85%B6%E4%BB%96/jenkins/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="Jenkins">
+  <meta property="og:description" content="简介 Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。 这是jenkins中文网">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-11-09T16:54:53+00:00">
+    <meta property="article:modified_time" content="2018-11-09T16:54:53+00:00">
+    <meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins">
+<meta name="twitter:description" content="简介
+Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
+这是jenkins中文网">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Jenkins",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%85%B6%E4%BB%96/jenkins/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Jenkins",
+  "name": "Jenkins",
+  "description": "简介 Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。 这是jenkins中文网\n",
+  "keywords": [
+    "其他"
+  ],
+  "articleBody": "简介 Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。 这是jenkins中文网\n安装部署 Jenkins主要有三种安装方式，yum安装、使用官方docker镜像和官方war包，放到tomcat中直接运行。我们采用比较熟悉的方式进行安装，即将Jenkins部署在Tomcat容器中，无需任何配置，直接启动tomcat即可。\n安装tomcat和jdk这里不再赘述。 官网下载 左侧列表是稳定版，右侧是开发版，这里我们下载左侧列表的稳定版。找到适合自己系统的版本下载，这里我下载Generic Java package (.war)，通用的java-war包。 下载并上传到tomcat的webapps目录下，将war包更名为ROOT.war，然后启动tomcat，./startup.sh\n或者通过wget直接在服务器上下载：\n1 sudo wget https://get.jenkins.io/war-stable/2.319.3/jenkins.war 注意更换最新版本。\ndocker版的Jenkins 要使用docker镜像，首先安装docker，本文默认已经安装docker。我们可以到Jenkins官网寻找docker镜像地址。 注意：官方jenkins镜像本身自带openjdk。 找到Download jenkins xxx for下边的docker，点击后会跳转到docker hub，该网站是docker的官方镜像仓库，就像github是代码仓库一个道理。\n网页右侧可以看到Jenkins的docker下载命令： docker pull jenkins/jenkins\n等待下载完成，输入命令查看下载完成的镜像： docker images\n可以看到jenkins已经被下载到服务器。镜像下载完成，下面就要开始启动容器了。 启动容器前，建议大家仔细阅读前面寻找镜像时Docker Hub上关于jenkins镜像的详细说明。 启动之前，我们还需要在宿主机创建一个目录，一会方便镜像挂载。 mkdir /home/jenkins 还要给创建的目录赋予权限，这一步是必须的，否则启动镜像会报错： chmod 777 /home/jenkins 在镜像文档里，我们知道Jenkins访问的默认端口号是8080，这里我改成9999，另外还需要暴露一个tcp的端口号50000。我们使用如下命令启动Jenkins镜像。\n1 2 3 4 5 6 docker run --name jenkins -d \\ -v /usr/local/src:/share \\ -v /home/jenkins:/var/jenkins_home \\ -v /etc/localtime:/etc/localtime \\ -p 9999:8080 -p 50000:50000 \\ jenkins 这里逐条解释下各参数的意义。\n-d后台运行镜像 -p 9999:8080 将镜像的8080端口映射到服务器的9999端口 -p 50000:50000 将镜像的50000端口映射到服务器的50000端口 -v /usr/local/src:/share 将/usr/local/src目录作为共享文件夹，方便向docker容器中传输安装包等。 -v /home/jenkins:/var/jenkins_home /var/jenkins_home目录为jenkins工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。 -v /etc/localtime:/etc/localtime 让容器使用和服务器同样的时间设置。 --name jenkins 给容器起一个别名 jenkins 指定一个镜像，这个必须，否则会报错，建议直接填写IMAGE，就是类似f32b4bb22e4d，而不是名字，否则会去重新下载镜像。 注意：如果你需要映射多个端口或挂载多个目录，最好在启动时都指定好，不然容器启动后，修改映射端口或挂载目录不太方便，修改可以参考我的docker文章。\n启动后输入命令docker ps -a查看所有容器，可以看到jenkins已成功启动。 在浏览器输入ip+端口进入Jenkins登录页面。页面会提示你到服务器的指定位置获取初始化密码。 进入jenkins容器：docker exec -it jenkins /bin/bash 查看密码：cat /var/jenkins_home/secrets/initialAdminPassword 把密码复制到浏览器，然后和正常安装步骤一致。\n注意，docker容器使用的环境，如jdk，maven等等，都应该在容器中单独安装。不要想着和宿主机共用一套环境。\n生成SSHKey 这里再补充一章说明如何生成SSHKey。容器从github上面下载代码的时候需要用到。因为咱们这个Jenkins是基于docker的，不是直接安装在服务器上，这里有很大的不同。 要生成容器的SSHKey，首先要先进入容器 docker exec -it jenkins /bin/bash 进入容器后生成sshkey ssh-keygen -t rsa -C \"123@qq.com\" 在容器内输入exit离开容器，使用如下命令获取公钥 tail /var/lib/docker/volumes/jenkins/_data/.ssh/id_rsa.pub 参考地址\n后续步骤 想部署java项目，还需要安装Maven和jdk环境。 Manage Jenkins -\u003e Global Tool Configuration\n选择自动安装jdk1.8，需要你填入oracle的账号密码。 选择自动安装Maven 选择自动安装git 其他可选操作 已root方式进入容器 docker exec -it --user root /bin/bash\n也可以普通进入，再切换root，不过也需要提前再root用户下设置好密码。 root用户进入容器之后，设置密码： sudo passwd 连续输入两次密码就可以了。\n先查看容器是什么操作系统，直接试指令，yum或apt-get，哪个说command not found，就不用哪个。 发现apt-get可用，那么必须先升级apt-get：apt-get update，反之要升级yum：yum update\n安装vim apt-get install vim\n安装sudo apt-get install sudo\n可选是否卸载自带的openjdk，不卸载Openjdk也可以直接安装oracle的jdk，然后修改/etc/profile的环境变量。\nJenkins配置 访问Jenkins地址，初次进入会要求输入密码，密码已经显示在页面中。 一般情况下，Linux上存储密码的位置： /root/.jenkins/secrets/initialAdminPassword windows下密码的位置： C:\\Users\\59923\\.jenkins\\secrets\\initialAdminPassword\n找到该文件复制里面的内容，进入到初始化页面，会提示安装插件。我们不在这里安装插件，不要选Install suggested plugins(安装推荐插件)，因为会安装很多我们用不到的插件，而且巨慢。 选择自定义，然后将勾全部去掉，然后点击下一步。按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，就进入到了jenkins的控制台。长时间没反应，请重启jenkins。\n安装插件 这里我们只需要安装我们需要的插件即可。\n选择左侧列表的Manage Jenkins 然后在右侧列表找到Manage Plugins 在右侧可以看到上边有四个选项卡，我们选择Avaliable 这里我们需要安装三个插件： git maven集成插件：Maven Integration Jenkins语言插件（可选）：Locale 远程部署插件：Publish Over SSH 然后选择install without restart。 如果安装了语言插件，还配置成中文才可以，点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System，找到local配置，输入：ZH_cn 简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。\n安装插件提速 看到好多加速Jenkins安装插件速度的文章，大多数教程中都是在插件配置里使用 https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json 替换原来的官方的json，替换之后通过url全局搜索，发现每个插件下载路径依旧没有改变，配置内写死的插件下载地址是没有变的，还是从官网下载！这真是令人心痛！💔​ 以上的配置Json其实在Jenkins的工作目录中。 进入更新配置位置 cd /root/.jenkins/updates\nvim default.json 这个Json文件与上边的配置文件是相同的。\n使用vim的命令，如下，替换所有插件下载的url :1,$s/http:\\/\\/updates.jenkins-ci.org\\/download/https:\\/\\/mirrors.tuna.tsinghua.edu.cn\\/jenkins/g 替换连接测试url :1,$s/http:\\/\\/www.google.com/https:\\/\\/www.baidu.com/g 进入vim先输入：然后再粘贴上边的：后边的命令，注意不要写两个冒号！ 保存退出，并重启jenkins。\n方式二：使用sed $ sed -i 's/http:\\/\\/updates.jenkins-ci.org\\/download/https:\\/\\/mirrors.tuna.tsinghua.edu.cn\\/jenkins/g' default.json \u0026\u0026 sed -i 's/http:\\/\\/www.google.com/https:\\/\\/www.baidu.com/g' default.json 这是直接修改的配置文件，如果前边Jenkins用sudo启动的话，那么这里的两个sed前均需要加上sudo。 重启Jenkins，安装插件试试，简直光速。\n安装插件提速参考\nJenkins升级 今天发现旧版本的jenkins已经无法安装插件了，必须升级成新版本。 如果是通过tomcat运行的war包，只需在官网下载最新的war包，然后替换到tomcat的webapps里的root.war，重启tomcat即可。\n持续集成配置 服务器需要安装：jdk、git、maven，安装好之后，需要在jenkins中进行配置。\n系统管理 -\u003e全局工具配置 Manage Jenkins -\u003e Global Tool Configuration\n然后填入本机git/maven/jdk的安装路径。 jdk： 不要勾选自动安装，因为我们已经手动安装好，这里只需要填写JAVA_HOME即可，别名可不填。 /usr/local/jdk1.8.0_211\ngit： 不勾选自动安装，只填写Path to Git executable /usr/local/git/bin/git\n查找git安装路径 whereis git git: /usr/local/git /usr/local/git/bin/git\n如上面whereis git的地址为/usr/local/git，则应该填入/usr/local/git/bin/git\nmaven： 不勾选自动安装，只填写MAVEN_HOME /usr/local/maven\n本地部署 本地部署是指：部署运行在本机的服务，若项目部署在其他服务器，则需要远程部署。\n在主页选择新建任务，选择构建一个自由风格的软件项目。需要说明的是，由于公司项目结构为父子项目 所有的子项目都在tubitu_project一个代码仓库里，如果配置了webhook(作用是接收远程仓库push的提交信息)的话，任何一个子项目的代码推送，都会导致所有服务的自动重启，而由于公司没有正规的代码提交审查流程，所以如果提交错误代码，会导致所有服务一同崩溃，因此，推荐每一个服务都是一个单独的部署任务，提交代码后只需要更新提交代码的服务即可。最终结果如下： 配置流程： 首先新建一个任务，选择构建maven项目，输入名称，然后进入配置页面。 注意，如果没有安装上边提到的maven插件，这里是看不到构建maven项目选项的。\n也可以选一个自由风格的软件\nGeneral选项卡： 勾选丢弃旧的构建，策略只能默认。\n保持构建天数 保持构建的最大个数 Jenkins会自动删除第一项之前的安装包，节约服务器空间。 源码管理： 勾选git，Repository URL输入远程仓库地址，Credentials添加个人远程仓库的账户密码。 (注：这里建议使用公司公用的账户密码，避免员工离职或更改密码带来不必要的麻烦)\n构建触发器 勾选：Build whenever a SNAPSHOT dependency is built（触发远程构建 (例如,使用脚本)）\n构建环境 勾选：Add timestamps to the Console Output（非必选）\n注意：构建maven项目和构建自由风格的软件，这里的选项是不一样的。 5. Pre Steps 不用选\nBuild(构建) Root POM：默认 Goals and options：clean install -pl tubitu_service_api -am 注意更改模块的名称。其中-pl 代表打包指定module，可以-pl module_name -pl module_name指定打包多个项目，-am 代表自动打包指定module所依赖的模块。\n注意：-pl xxx(模块名)，必须在项目的根目录执行。\nPost Steps 勾选Run only if build succeeds\n点击Add post-build step，然后选择执行shell，这里一步是重中之重。 可以先随便用个指令实验一下： ifconfig\n然后点击保存，点击构建，看jenkins控制台是否输入了服务器的ip地址。\n完整的更新项目shell脚本：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 #首先停止项目 pid=`ps -ef | grep zjx_admin-1.0.0.jar | grep -v grep | awk '{print $2}'` if [ -n \"$pid\" ] then kill -9 $pid fi #删除旧的项目，注意更改此处的jar包名称 rm -rf /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar #清除并打包指定项目，-am表示连同依赖模块一同打包 cd $WORKSPACE mvn clean package -pl zjx_admin -am #复制Jenkins工作空间里的项目(打包好)到指定目录下 cp $WORKSPACE/zjx_admin/target/zjx_admin-0.0.1-SNAPSHOT.jar /usr/local/zjx/admin/ #授权，该步骤可以省略 chmod u+x /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar #指定log日志位置，并通过java -jar启动项目 BUILD_ID=donKillme nohup java -jar -Dspring.profiles.active=dev \u003e/usr/local/zjx/service/logs/zjx.log /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar \u0026 两种打印日志的设置 \u003e/usr/local/zjx/service/logs/zjx.log 下边这种死活打不出日志，不知道为啥。 -Dlogging.file=/usr/local/zjx/admin/logs/zjx.log\n2019/12/13更新： 终于知道为啥不能打印日志了。其实上述两种方式都可以打印日志，只不过我是分布式应用，提供者有多个，但是同时向一个日志文件中写日志。 所以造成了死锁问题，多个程序都在争抢日志文件的锁，然后导致谁都无法写入。 解决办法： 每个服务，单独配置日志文件。\n这个-D是 java命令的参数-D。意指加入全局属性，比如-Djdbc.driver=表示在程序里可用System.getProperty(“jdbc.driver”)获得，以此类推。 -Dspring.profiles.active=dev：指定启动配置文件，可以用来区分测试环境和生产环境。\nBUILD_ID=dontKillme：指的是不要杀死最后一步启动项目产生的子进程。 官网说明\n1 2 3 To reliably kill processes spawned by a job during a build, Jenkins contains a bit of native code to list up such processes and kill them. This is tested on several platforms and architectures, but if you find a show-stopper problem because of this, you can disable this feature by setting a Java property named \"hudson.util.ProcessTree.disable\" to the value \"true\". 译：为了可靠地终止构建过程中滋生出来的进程，Jenkins包含了一系列的本地代码去查出这些子进程并且杀死它们。这个已经在一些平台上进行了测试，如果你发现由此引发的停止显示的问题，你可以设置名为“hudson.util.ProcessTree.disable\" 的java property为true来禁止使用ProcessTreeKiller自动杀死。 通常情况下，我们保持官方默认配置，所以推荐使用BUILD_ID=dontKillme 表示该进程不是由Jenkins来生成，也就不会被ProcessTreeKiller杀死。\n然后回到首页，点击任务列表项右侧的图标：表盘上有个绿色小箭头，或者点击模块名旁的小箭头，点击立即构建。点击#1，1这个数字每次构建都会+1，代表该模块的构建次数。 鼠标悬浮在该项上，点击向下的小箭头，点击控制台输出，可以看到正在构建或已经完成构建的linux控制台信息。\n构建过程中可以看到构建进度： #10代表第十次构建，鼠标移到10旁边，即可查看控制台输入的构建和启动信息。看到Finshed：SUCCESS，表示构建完成。\n此时返回到Jenkins主页，可以看到S下的一列圆形图标， 蓝色：成功 灰色：尚未构建 红色：构建失败 黄色：不稳定构建(Jenkins不确定状态)\nW下有天气图标，代表近期构建状态： 小太阳：近期成功 多云：少数失败，以此类推\n远程部署 远程部署是由于项目所有的服务并不都部署在本机，有可能部署在其他服务器，所以需要远程部署。 说白了，就是把jar包传到远程服务器，然后通过脚本来启动jar包。\n远程部署需要配置远程服务器的ip地址和用户凭证。 返回主页，点击系统管理，然后点击系统设置，在Publish over SSH下找到SSH Servers，点击新增，分别配置好IP地址和用户名密码： 这里Remote Directory为Jenkins默认远程根目录，点击高级，勾选使用用户密码，并输入密码，然后点击Test Configuration测试是否连接成功： 新建一个任务tubitu_service_mall，前面基本保持一致，但是在Post Steps时，不再选择执行脚本，而是选择 send files or execute commands over SSH name选择上一步配置好的远程服务器，一般来说会自动填充上。 Source files默认会以本地当前任务的Jenkins工作空间+任务名为根路径。所以Source files只能配置相对路径，而Jenkins每一个任务默认的工作空间为/root/.jenkins/workspace/任务名， 所以高级任务在本文中的工作空间全路径即为： /root/.jenkins/workspace/tubitu_service_mall 而由于构建依赖的pom文件又是父项目的pom文件，所以Source files为 tubitu_service_mall/target/*.jar *代表所有的jar包。\nRemove prefix： 代表传输到远程时需要移除的前缀，即到远程时会自动移除tubitu_service_mall/target/，只保留文件名。 Remote directory： 远程服务器路径。注意：这个目标路径也是相对路径，相对的是你在一开始配置SSH server时 Remote Directory的目录，由于本文配置的是/，所以实际传输的远程目为/usr/local/meilong/mall， 如果一开始配置的是/usr/local/meilong，那么这里只需要配置Remote directory为mall。\nExec command执行的脚本内容为：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 #restart.sh #!/bin/bash APP_PATH=/usr/local/meilong/mall APP_NAME=tubitu_service_mall-1.0.jar LOG_FILE=$APP_PATH/logs/tubitu.log echo \"Restarting $APP_NAME SpringBoot Application\" pid=`ps -ef | grep $APP_NAME | grep -v grep | awk '{print $2}'` source /etc/profile if [ -n \"$pid\" ] then kill -9 $pid echo \"关闭进程：\"$pid fi echo \"授予当前用户权限\" chmod u+x $APP_PATH/$APP_NAME echo \"执行.....\" nohup java -jar -Dlogging.file=$LOG_FILE $APP_PATH/$APP_NAME \u003e\u003e /dev/null \u0026 respid=`ps -ef | grep $APP_NAME | grep -v grep | awk '{print $2}'` if [ -n \"$respid\" ] then echo \"启动成功，进程号：$respid\" exit 0 else echo \"启动失败\" exit 1 fi done 需要注意的是第8行，之所以要执行第8行，是因为Jenkins在执行远程脚本时，它是不会携带本机环境变量的，所以执行java会报command not found的错导致构建失败，解决办法有两个：\n执行java命令时输入java的全路径，本文为/usr/local/jdk1.8.0_161/bin/java; 执行该脚本时，脚本内调用source /etc/profile，当然前提是在profile里配置java的环境变量。 如果没有遇到command not found的错，那么可以不加第8行。\n推荐在Transfers里的高级选项里勾选[Flatten files]，代表扁平化传输文件，即只传输文件而不建立远程目录，避免创建一堆杂乱目录，前提是远程目录自己已经手动创建。\n3.综合部署 综合部署：建立一个公共服务，其中包括项目中所有的模块，实现一键部署、启动所有模块。 本地部署+远程部署，基本步骤与前面两种应用一致，不再赘述，只贴出配置。 权限分配 考虑到Jenkins中的模块可能需要交给不同的人去维护，例如h5、后台系统、api等等，我们可以给不同的账号分配不同的角色，实现权限分配。\n安装插件：Role-based Authorization Strategy 进入到全局安全配置，启用该插件： 然后进入到系统管理，此时出现了Manage And Assign Roles的选项，首先选择manage roles。比如我想新增一个前端的角色，这个前端角色只能看到前端的构建任务，输入h5，点击新增，然后勾选全部/overall里的Read选项，该选项必选，否则会提示该角色没有所有的读取权限。\n然后新增一个项目权限，也命名为h5，Pattern里写正则，h5_.*代表显示所有以h5_开头的构建项目，选择任务里的Build，Configure，Read，启用该角色对于任务的构建，配置和读权限，点击save。\n然后在Jenkins的用户管理里新建一个用户，命名为h5，我这里的全名为tubitu_h5： 最后返回到Manage And Assign Roles主界面，选择Assign roles分配角色。 User/group to add框里输入h5（不需要输入全名，Jenkins会根据userId来找，userId=h5），然后点击Add，并勾选刚刚新建的h5的角色。\n注销当前用户，使用h5用户登录，只能看到h5_的任务。\n如果不小心分配错了权限，可以到jenkins的主目录下，例如Linux上的/root/.jenkins/目录下有一个config.xml文件，修改authorizationStrategy为hudson.security.FullControlOnceLoggedInAuthorizationStrategy，即可禁用基于角色的权限策略：\n1 2 3 4 5 6 7 8 true true true false 问题 temp/jenkins138035565033548290.sh: line 5: mvn: command not found 原因： java或maven的路径的环境变量是放在/etc/profile中的，而/etc/profile只有在用户登录的时候才会被load，Jenkins在运行命令时，使用的是Non-login的方式，而这种方式在运行命令时，/etc/profile是不会被load进来的，所以jenkins只能在当前路径下寻找可执行文件。\n解决方法1： 在脚本头部添加： #!/bin/bash -il\n解决方法2： 查询系统环境变量： echo $PATH\n1 /root/jenkins_home/downloads/apache-maven-3.6.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin jenkins主页面-\u003eManage Jenkins-\u003eConfigure System-\u003eGlobal Properties name：PATH vlaue：刚才查出来的。\njenkins卸载 因为我们使用的是tomcat运行jenkins.war的方式，所以：\n停止tomcat ./shutdown.sh\n删除ROOT rm -rf ROOT\n删除jenkins工作空间 cd /root\n查看jenkins是否在root下面 ls\n发现有，直接删除 rm -rf .jenkins\n清除缓存 jenkins占用服务器硬盘过大 jenkins在服务器跑了一个月了，8个服务，每天都要构建几次，今天发现mysql不能插入数据了，报磁盘空间不足。第一反应就是jenkins的问题。 先查看linux服务器的磁盘使用状况：df -h\njenkins的文件都存储在/root/.jenkins，使用指令查看文件夹大小du -sh，发现占了86G，天哪…我硬盘一共才95G，再加上其他程序占用的内存，直接就100%使用了。\n解决： 找到.jenkins/jobs，进到jobs目录，可以看到jenkins的各个模块。找到builds，里面放着各个版本的 构建，删除不需要的。能否直接删掉builds文件夹，存疑。 然后删掉.jenkins/workspace删掉，mkdir一个，这个也占了1G多。 在配置时，一定要选择丢弃旧的构建，并且保持构建的天数和保持构建的最大个数一定要写，反正我都写1。\n自动化脚本错误 cannot create regular file xxx，Permission denied\n查看自己是谁whoami 如果不是root用户，需要在cp前加上sudo，注意这里我已经提前安装了sudu。 We trust you have received the usual lecture from the local System 不是root用户，使用sudo时，出现该问题。 编辑/etc/sudoers文件 vim /etc/sudoers 找到这行： root ALL=(ALL) ALL 在起下面添加xxx ALL=(ALL) ALL(这里的xxx是你的用户名)，然后强制保存退出，因为该文件是只读文件，也可以在修改之前更改该文件的读写权限。\n然而还是不行，迷之错误，改变思路，给jenkins-workspace下的jar包赋予权限： chmod u+x $WORKSPACE/target/archive-1.0.jar 然后就可以直接使用cp指令，然而只是Terminal可以使用，jenkins的脚本还是无法使用，我日… 暂时放弃，使用tomcat安装jenkins…\n重装jenkins 删除安装jenkins用户的主目录（~）下的（.jenkins）文件夹，然后重启，就可以重新配置jenkins\njenkins指定spring boot的配置文件 在启动脚本加如下代码： -Dspring.profiles.active=dev\njenkins配置分布式应用时日志文件问题。 因为分布式是多个服务分开部署，所以如果多个服务向同时向一个日志文件写内容，会造成死锁问题，导致谁都无法写入日志。 所以，分布式服务，一定要每个服务单独写自己的日志文件。\n部署普通spring boot 项目 General 勾选Discard old builds(丢弃旧的构建)，后边两个空填1。\n多分支构建。 jenkins在部署时候，可以选择分支构建。\n下载插件Git Parameter 下载完，在项目构建时，可以看到多了个选项参数化构建过程 勾选参数化构建，然后选择git 参数 名称：gitBranch，描述：git多分支选择，参数类型：branch or tag（分支或标签） Branches to build：$gitBranch 然后构建时，会让你选择分支，然后构建即可。\nSource Code Management 选择git 分别填入仓库地址和保存账号密码\nBuild Triggers 勾选Build whenever a SNAPSHOT dependency is built\nPre Steps(之前的步骤) 不动\nBuild Root POM： pom.xml 注意：默认部署项目根目录下的pom.xml\nGoals and options： clean install -Dmaven.test.skip=true -am\nPost Steps（发布步骤） 勾选Run only if build succeeds\nAdd post-build step下拉选，选择Execute shell 然后输入\n1 sh /usr/local/xxx.sh 表示执行服务器上的sh脚本。然后在服务器上创建sh脚本，脚本的内容为：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 #!/bin/bash -il # 可选参数，指定配置文件 config=-Dspring.profiles.active=prod # 可选参数，指定日志文件 # 1\u003e$project_path/logs/`date + %Y-%m-%d`.log\\ # 2\u003e$project_path/logs/log.error\\ log_path=1\u003ea.log 2\u003e\u00261 # jdk具体路径。可能需要具体路径，看情况，不是具体路径出现过无法使用java -jar的情况 jdk_path=/usr/lib/jvm/java-1.8.0-openjdk/bin/java # 项目名称 project_name=zw-search # 项目地址 project_path=/data/matrix/search # jar包名称 jar_name=zw-search-1.0-SNAPSHOT.jar # 启动参数 JAVA_OPTS='-server -Xms512m -Xmx512m' # 启动jar包命令，日志位置要写绝对路径，否则会没有日志。 runjar=\"BUILD_ID=dontKillMe sudo nohup $jdk_path -jar ${JAVA_OPTS} $project_path/${jar_name} 1\u003e${project_path}a.log 2\u003e\u00261 \u0026\" # jenkins根目录 WORKSPACE=/root/.jenkins/workspace # 查看这个jar是否已经启动 pid=`ps -ef | grep $jar_name | grep -v grep | awk '{print $2}'` if [ -n \"$pid\" ] then kill -9 $pid fi # 删除旧的jar包 rm -f $project_path/$jar_name echo \"删除旧的jar包\" $project_path/$jar_name # 复制jar包 sudo cp $WORKSPACE/zw-search/zw-search/target/$jar_name $project_path echo \"复制jar包\" $WORKSPACE/zw-search/zw-search/target/$jar_name # 授权 # sudo chmod 777 $project_path/$jar_name # sudo chmod u+x /data/matrix/search/zw-search-1.0-SNAPSHOT.jar #启动jar eval $runjar echo \"启动jar完成\" 需要注意：脚本中的路径，都需要用绝对路径。\n如果没有日志，多半是因为日志文件路径写错了。 可以先找到进程id，ps -ef。然后查看程序的标准输出：/proc//fd 目录中有很多数字，每一项都是一个符号链接，指向打开的文件，数字则代表文件描述符。其中1 = stdout, 2 = stderr，用cat或tail查看即可。\n1 2 3 4 5 6 7 8 9 10 11 12 13 /dev/null 表示空设备文件 0 表示stdin标准输入 1 表示stdout标准输出 2 表示stderr标准错误 \u003e file 表示将标准输出输出到file中，也就相当于 1\u003efile 2\u003e error 表示将错误输出到error文件中 2\u003e\u00261 也就表示将错误重定向到标准输出上 2\u003e\u00261 \u003efile ：错误输出到终端，标准输出重定向到文件file，等于 \u003e file 2\u003e\u00261(标准输出重定向到文件，错误重定向到标准输出)。 \u0026 放在命令到结尾，表示后台运行，防止终端一直被某个进程占用，这样终端可以执行别到任务，配合 \u003efile 2\u003e\u00261可以将log保存到某个文件中，但如果终端关闭，则进程也停止运行。如 command \u003e file.log 2\u003e\u00261 \u0026 。 nohup放在命令的开头，表示不挂起（no hang up），也即，关闭终端或者退出某个账号，进程也继续保持运行状态，一般配合\u0026符号一起使用。如nohup command \u0026。 部署到远程服务器 publish over ssh 插件无法在jenkins插件中心搜索到的解决办法： https://juejin.cn/post/7063299349572222983/\n参考：https://www.jianshu.com/p/3ec12f561a9c\nManage Jenkins-\u003eConfigure System 把要部署的远程服务器信息填好。 Hostname：远程服务器的ip Port：22 Credentials：服务器的用户名和密码\n最后点Check connection，测试是否连接成功。\n我们不使用Publish Over SSH插件，因为jenkins插件中心已经搜索不到这个插件了。 所以要在安装jenkins机器上安装expect，用shell脚本实现把文件发送到服务器。\n安装expect yum -y install expect\n在jenkins服务器的创建脚本文件：expect_scp.sh\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 #!/usr/bin/expect set timeout 100 set host [lindex $argv 0] set username [lindex $argv 1] set password [lindex $argv 2] set src_file [lindex $argv 3] set dest_file [lindex $argv 4] spawn scp $src_file $username@$host:$dest_file expect { \"(yes/no)?\" { send \"yes\\n\" expect \"*assword:\" { send \"$password\\n\"} } \"*assword:\" { send \"$password\\n\" } } expect \"100%\" expect eof 给此文件执行权限 chmod +x expect_scp\n如上所示，通过脚本依次传入主机 用户名 密码 源文件路径 目标文件路径就可以自动填充密码通过scp命令把文件发送到目标服务器路径。\n新建expect_ssh脚本文件\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 #!/usr/bin/expect set timeout 100 set host [lindex $argv 0] set username [lindex $argv 1] set password [lindex $argv 2] set shellinfo [lindex $argv 3] spawn ssh $username@$host expect { \"(yes/no)?\" { send \"yes\\n\" expect \"*assword:\" { send \"$password\\n\"} } \"*assword:\" { send \"$password\\n\" } } expect \"*]#\" send \"$shellinfo\\r\" expect \"*]#\" send \"exit\\r\" expect eof 给expect_ssh执行权限 chmod +x expect_ssh\n如上所示，脚本中依次传入主机 用户名 密码 远程命令 就可以在远程服务器上执行命令了。\n在jenkins上创建一个item，选择Freestyle project。\nGeneral 这里有一个This project is parameterized选项，这个选项可以构建key value参数，在这里添加的参数在后续步骤中都可以用$参数名的方式直接引用参数的值，就是个自己声明的变量。 有boolean、string、text、password等常用类型的参数。点击This project is parameterized添加几个参数，可根据自身需要灵活声明。\nstring类型的jarName，默认值是maven打包后jar包的名字，例如： zw-zzw-1.0-SNAPSHOT.jar string类型的projectName，即项目名。 string类型的expectScpPath，上面新建的expect_scp可运行脚本的路径。 string类型的scpHost，scp发送文件的服务器地址。 string类型的scpUserName，scp发送服务器的用户名。 password类型的scpPwd，scp发送服务器的密码。 string类型的scpTargetPath，scp远程服务器目标路径地址。\nSource Code Management：填写git仓库的地址，用户名和密码。\nBuild Triggers：啥都不选。 Build Environment： 这里可以配置远程服务器构建之前或之后的操作，这里把构建完成之后对服务器jar包的备份和重启shell命令配置在这里。 勾选Execute shell script on remote host using ssh\n填写Post build script，内容如下：\n1 2 3 4 5 cd $scpTargetPath cp $jarName backup/$projectName_$(date +%F-%T).jar pid=$(ps -ef|grep $jarName |egrep -v grep|awk '{print $2}') kill -9 $pid nohup java -jar $jarName \u003e/dev/null 2\u003e\u00261 \u0026 build： 把maven打包命令和打包完毕之后把包发布到服务器的shell命令配置在这。\n1 2 3 4 5 #!/bin/bash -il pwd cd $projectName/ mvn clean package -Dmaven.test.skip=true $expectScpPath $scpHost $scpUserName $scpPwd target/*.jar $scpTargetPath Post-build Actions（构建后操作）： 构建完成后删除workspace下本任务下载的代码文件，视需要而定，也可以不删除。\n",
+  "wordCount" : "11528",
+  "inLanguage": "en",
+  "datePublished": "2018-11-09T16:54:53Z",
+  "dateModified": "2018-11-09T16:54:53Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E5%85%B6%E4%BB%96/jenkins/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/en/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/en/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Jenkins
+    </h1>
+    <div class="post-meta"><span title='2018-11-09 16:54:53 +0000 UTC'>2018-11-09</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%ae%80%e4%bb%8b" aria-label="简介">简介</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85%e9%83%a8%e7%bd%b2" aria-label="安装部署">安装部署</a></li>
+                <li>
+                    <a href="#docker%e7%89%88%e7%9a%84jenkins" aria-label="docker版的Jenkins">docker版的Jenkins</a><ul>
+                        
+                <li>
+                    <a href="#%e7%94%9f%e6%88%90sshkey" aria-label="生成SSHKey">生成SSHKey</a></li>
+                <li>
+                    <a href="#%e5%90%8e%e7%bb%ad%e6%ad%a5%e9%aa%a4" aria-label="后续步骤">后续步骤</a></li>
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96%e5%8f%af%e9%80%89%e6%93%8d%e4%bd%9c" aria-label="其他可选操作">其他可选操作</a></li></ul>
+                </li>
+                <li>
+                    <a href="#jenkins%e9%85%8d%e7%bd%ae" aria-label="Jenkins配置">Jenkins配置</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85%e6%8f%92%e4%bb%b6" aria-label="安装插件">安装插件</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85%e6%8f%92%e4%bb%b6%e6%8f%90%e9%80%9f" aria-label="安装插件提速">安装插件提速</a></li>
+                <li>
+                    <a href="#jenkins%e5%8d%87%e7%ba%a7" aria-label="Jenkins升级">Jenkins升级</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%8c%81%e7%bb%ad%e9%9b%86%e6%88%90%e9%85%8d%e7%bd%ae" aria-label="持续集成配置">持续集成配置</a><ul>
+                        
+                <li>
+                    <a href="#%e6%9c%ac%e5%9c%b0%e9%83%a8%e7%bd%b2" aria-label="本地部署">本地部署</a></li>
+                <li>
+                    <a href="#%e8%bf%9c%e7%a8%8b%e9%83%a8%e7%bd%b2" aria-label="远程部署">远程部署</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%9d%83%e9%99%90%e5%88%86%e9%85%8d" aria-label="权限分配">权限分配</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98" aria-label="问题">问题</a><ul>
+                        
+                <li>
+                    <a href="#tempjenkins138035565033548290sh-line-5-mvn-command-not-found" aria-label="temp/jenkins138035565033548290.sh: line 5: mvn: command not found">temp/jenkins138035565033548290.sh: line 5: mvn: command not found</a></li>
+                <li>
+                    <a href="#jenkins%e5%8d%b8%e8%bd%bd" aria-label="jenkins卸载">jenkins卸载</a></li>
+                <li>
+                    <a href="#jenkins%e5%8d%a0%e7%94%a8%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%a1%ac%e7%9b%98%e8%bf%87%e5%a4%a7" aria-label="jenkins占用服务器硬盘过大">jenkins占用服务器硬盘过大</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e5%8a%a8%e5%8c%96%e8%84%9a%e6%9c%ac%e9%94%99%e8%af%af" aria-label="自动化脚本错误">自动化脚本错误</a></li>
+                <li>
+                    <a href="#we-trust-you-have-received-the-usual-lecture-from-the-local-system" aria-label="We trust you have received the usual lecture from the local System">We trust you have received the usual lecture from the local System</a></li>
+                <li>
+                    <a href="#%e9%87%8d%e8%a3%85jenkins" aria-label="重装jenkins">重装jenkins</a></li></ul>
+                </li>
+                <li>
+                    <a href="#jenkins%e6%8c%87%e5%ae%9aspring-boot%e7%9a%84%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="jenkins指定spring boot的配置文件">jenkins指定spring boot的配置文件</a></li>
+                <li>
+                    <a href="#jenkins%e9%85%8d%e7%bd%ae%e5%88%86%e5%b8%83%e5%bc%8f%e5%ba%94%e7%94%a8%e6%97%b6%e6%97%a5%e5%bf%97%e6%96%87%e4%bb%b6%e9%97%ae%e9%a2%98" aria-label="jenkins配置分布式应用时日志文件问题。">jenkins配置分布式应用时日志文件问题。</a></li>
+                <li>
+                    <a href="#%e9%83%a8%e7%bd%b2%e6%99%ae%e9%80%9aspring-boot-%e9%a1%b9%e7%9b%ae" aria-label="部署普通spring boot 项目">部署普通spring boot 项目</a><ul>
+                        
+                <li>
+                    <a href="#general" aria-label="General">General</a></li>
+                <li>
+                    <a href="#source-code-management" aria-label="Source Code Management">Source Code Management</a></li>
+                <li>
+                    <a href="#build-triggers" aria-label="Build Triggers">Build Triggers</a></li>
+                <li>
+                    <a href="#pre-steps%e4%b9%8b%e5%89%8d%e7%9a%84%e6%ad%a5%e9%aa%a4" aria-label="Pre Steps(之前的步骤)">Pre Steps(之前的步骤)</a></li>
+                <li>
+                    <a href="#build" aria-label="Build">Build</a></li>
+                <li>
+                    <a href="#post-steps%e5%8f%91%e5%b8%83%e6%ad%a5%e9%aa%a4" aria-label="Post Steps（发布步骤）">Post Steps（发布步骤）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%83%a8%e7%bd%b2%e5%88%b0%e8%bf%9c%e7%a8%8b%e6%9c%8d%e5%8a%a1%e5%99%a8" aria-label="部署到远程服务器">部署到远程服务器</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="简介">简介<a hidden class="anchor" aria-hidden="true" href="#简介">#</a></h1>
+<p>Jenkins是一个开源的自动部署服务器，提供了上百个插件用于自动构建、部署、发布任意项目。本文描述的是Jenkins本地部署以及远程部署等功能的实现。
+<a href="https://jenkins.io/zh/">这是jenkins中文网</a></p>
+<h1 id="安装部署">安装部署<a hidden class="anchor" aria-hidden="true" href="#安装部署">#</a></h1>
+<p>Jenkins主要有三种安装方式，yum安装、使用官方docker镜像和官方war包，放到tomcat中直接运行。我们采用比较熟悉的方式进行安装，即将Jenkins部署在Tomcat容器中，无需任何配置，直接启动tomcat即可。</p>
+<p>安装tomcat和jdk这里不再赘述。
+<a href="https://jenkins.io/download/">官网下载</a>
+左侧列表是稳定版，右侧是开发版，这里我们下载左侧列表的稳定版。找到适合自己系统的版本下载，这里我下载<code>Generic Java package (.war)</code>，通用的java-war包。
+下载并上传到tomcat的webapps目录下，将war包更名为<code>ROOT.war</code>，然后启动tomcat，<code>./startup.sh</code></p>
+<p>或者通过wget直接在服务器上下载：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo wget https://get.jenkins.io/war-stable/2.319.3/jenkins.war
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意更换最新版本。</p>
+<h1 id="docker版的jenkins">docker版的Jenkins<a hidden class="anchor" aria-hidden="true" href="#docker版的jenkins">#</a></h1>
+<p>要使用docker镜像，首先安装docker，本文默认已经安装docker。我们可以到<a href="https://jenkins.io/download/">Jenkins官网</a>寻找docker镜像地址。
+注意：官方jenkins镜像本身自带openjdk。
+找到<code>Download jenkins xxx for</code>下边的<code>docker</code>，点击后会跳转到docker hub，该网站是docker的官方镜像仓库，就像github是代码仓库一个道理。</p>
+<p>网页右侧可以看到Jenkins的docker下载命令：
+<code>docker pull jenkins/jenkins</code></p>
+<p>等待下载完成，输入命令查看下载完成的镜像：
+<code>docker images</code></p>
+<p>可以看到jenkins已经被下载到服务器。镜像下载完成，下面就要开始启动容器了。
+启动容器前，建议大家仔细阅读前面寻找镜像时<a href="https://github.com/jenkinsci/docker/blob/master/README.md">Docker Hub上关于jenkins镜像的详细说明</a>。
+启动之前，我们还需要在宿主机创建一个目录，一会方便镜像挂载。
+<code>mkdir /home/jenkins</code>
+还要给创建的目录赋予权限，这一步是必须的，否则启动镜像会报错：
+<code>chmod 777 /home/jenkins</code>
+在镜像文档里，我们知道Jenkins访问的默认端口号是8080，这里我改成9999，另外还需要暴露一个tcp的端口号50000。我们使用如下命令启动Jenkins镜像。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>docker run --name jenkins -d \
+</span></span><span style="display:flex;"><span>-v /usr/local/src:/share \
+</span></span><span style="display:flex;"><span>-v /home/jenkins:/<span style="color:#fff;font-weight:bold">var</span>/jenkins_home \
+</span></span><span style="display:flex;"><span>-v /etc/localtime:/etc/localtime \
+</span></span><span style="display:flex;"><span>-p <span style="color:#ff0;font-weight:bold">9999</span>:<span style="color:#ff0;font-weight:bold">8080</span> -p <span style="color:#ff0;font-weight:bold">50000</span>:<span style="color:#ff0;font-weight:bold">50000</span> \
+</span></span><span style="display:flex;"><span>jenkins
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里逐条解释下各参数的意义。</p>
+<ul>
+<li><code>-d</code>后台运行镜像</li>
+<li><code>-p 9999:8080</code> 将镜像的8080端口映射到服务器的9999端口</li>
+<li><code>-p 50000:50000</code> 将镜像的50000端口映射到服务器的50000端口</li>
+<li><code>-v /usr/local/src:/share</code> 将<code>/usr/local/src</code>目录作为共享文件夹，方便向docker容器中传输安装包等。</li>
+<li><code>-v /home/jenkins:/var/jenkins_home</code> /var/jenkins_home目录为jenkins工作目录，我们将硬盘上的一个目录挂载到这个位置，方便后续更新镜像后继续使用原来的工作目录。</li>
+<li><code>-v /etc/localtime:/etc/localtime</code> 让容器使用和服务器同样的时间设置。</li>
+<li><code>--name jenkins</code> 给容器起一个别名</li>
+<li><code>jenkins</code> 指定一个镜像，这个必须，否则会报错，建议直接填写<code>IMAGE</code>，就是类似<code>f32b4bb22e4d</code>，而不是名字，否则会去重新下载镜像。</li>
+</ul>
+<p>注意：如果你需要映射多个端口或挂载多个目录，最好在启动时都指定好，不然容器启动后，修改映射端口或挂载目录不太方便，修改可以参考我的docker文章。</p>
+<p>启动后输入命令docker ps -a查看所有容器，可以看到jenkins已成功启动。
+在浏览器输入ip+端口进入Jenkins登录页面。页面会提示你到服务器的指定位置获取初始化密码。
+进入jenkins容器：<code>docker exec -it jenkins /bin/bash</code>
+查看密码：<code>cat /var/jenkins_home/secrets/initialAdminPassword</code>
+把密码复制到浏览器，然后和正常安装步骤一致。</p>
+<p>注意，docker容器使用的环境，如jdk，maven等等，都应该在容器中单独安装。不要想着和宿主机共用一套环境。</p>
+<h2 id="生成sshkey">生成SSHKey<a hidden class="anchor" aria-hidden="true" href="#生成sshkey">#</a></h2>
+<p>这里再补充一章说明如何生成SSHKey。容器从github上面下载代码的时候需要用到。因为咱们这个Jenkins是基于docker的，不是直接安装在服务器上，这里有很大的不同。
+要生成容器的SSHKey，首先要先进入容器
+<code>docker exec -it jenkins /bin/bash</code>
+进入容器后生成sshkey
+<code>ssh-keygen -t rsa -C &quot;123@qq.com&quot;</code>
+在容器内输入exit离开容器，使用如下命令获取公钥
+<code>tail /var/lib/docker/volumes/jenkins/_data/.ssh/id_rsa.pub</code>
+<a href="https://www.jianshu.com/p/0391e225e4a6">参考地址</a></p>
+<h2 id="后续步骤">后续步骤<a hidden class="anchor" aria-hidden="true" href="#后续步骤">#</a></h2>
+<p>想部署java项目，还需要安装Maven和jdk环境。
+Manage Jenkins -&gt; Global Tool Configuration</p>
+<ul>
+<li>选择自动安装jdk1.8，需要你填入oracle的账号密码。</li>
+<li>选择自动安装Maven</li>
+<li>选择自动安装git</li>
+</ul>
+<h2 id="其他可选操作">其他可选操作<a hidden class="anchor" aria-hidden="true" href="#其他可选操作">#</a></h2>
+<ul>
+<li>
+<p>已root方式进入容器
+<code>docker exec -it --user root &lt;container id&gt; /bin/bash</code></p>
+</li>
+<li>
+<p>也可以普通进入，再切换root，不过也需要提前再root用户下设置好密码。
+root用户进入容器之后，设置密码：
+<code>sudo passwd</code>
+连续输入两次密码就可以了。</p>
+</li>
+<li>
+<p>先查看容器是什么操作系统，直接试指令，<code>yum</code>或<code>apt-get</code>，哪个说<code>command not found</code>，就不用哪个。
+发现<code>apt-get可用</code>，那么必须先升级<code>apt-get</code>：<code>apt-get update</code>，反之要升级<code>yum</code>：<code>yum update</code></p>
+</li>
+<li>
+<p>安装vim
+<code>apt-get install vim</code></p>
+</li>
+<li>
+<p>安装sudo
+<code>apt-get install sudo</code></p>
+</li>
+<li>
+<p>可选是否卸载自带的openjdk，不卸载Openjdk也可以直接安装oracle的jdk，然后修改<code>/etc/profile</code>的环境变量。</p>
+</li>
+</ul>
+<h1 id="jenkins配置">Jenkins配置<a hidden class="anchor" aria-hidden="true" href="#jenkins配置">#</a></h1>
+<p>访问Jenkins地址，初次进入会要求输入密码，密码已经显示在页面中。
+一般情况下，Linux上存储密码的位置：
+<code>/root/.jenkins/secrets/initialAdminPassword</code>
+windows下密码的位置：
+<code>C:\Users\59923\.jenkins\secrets\initialAdminPassword</code></p>
+<p>找到该文件复制里面的内容，进入到初始化页面，会提示安装插件。我们不在这里安装插件，不要选<code>Install suggested plugins(安装推荐插件)</code>，因为会安装很多我们用不到的插件，而且巨慢。
+选择自定义，然后将勾全部去掉，然后点击下一步。按照提示输入内容，管理员的用户名密码等要牢记。最后点击完成，就进入到了jenkins的控制台。长时间没反应，请重启jenkins。</p>
+<h1 id="安装插件">安装插件<a hidden class="anchor" aria-hidden="true" href="#安装插件">#</a></h1>
+<p>这里我们只需要安装我们需要的插件即可。</p>
+<ul>
+<li>选择左侧列表的<code>Manage Jenkins</code></li>
+<li>然后在右侧列表找到<code>Manage Plugins</code></li>
+<li>在右侧可以看到上边有四个选项卡，我们选择<code>Avaliable</code>
+这里我们需要安装三个插件：
+<ul>
+<li>git</li>
+<li>maven集成插件：Maven Integration</li>
+<li>Jenkins语言插件（可选）：Locale</li>
+<li>远程部署插件：Publish Over SSH</li>
+</ul>
+</li>
+</ul>
+<p>然后选择<code>install without restart</code>。
+如果安装了语言插件，还配置成中文才可以，点击左上角的Jenkins图标返回主页，再次进入Jenkins配置页面，选择系统设置Configure System，找到local配置，输入：ZH_cn
+简体中文为ZH_cn，英文为EN_us，然后勾选Ignore brower preference and force this language to all users。</p>
+<h2 id="安装插件提速">安装插件提速<a hidden class="anchor" aria-hidden="true" href="#安装插件提速">#</a></h2>
+<p>看到好多加速Jenkins安装插件速度的文章，大多数教程中都是在插件配置里使用
+<code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</code>
+替换原来的官方的json，替换之后通过url全局搜索，发现每个插件下载路径依旧没有改变，配置内写死的插件下载地址是没有变的，还是从官网下载！这真是令人心痛！💔​
+以上的配置Json其实在Jenkins的工作目录中。
+进入更新配置位置
+<code>cd /root/.jenkins/updates</code></p>
+<p><code>vim default.json</code>
+这个Json文件与上边的配置文件是相同的。</p>
+<p>使用vim的命令，如下，替换所有插件下载的url
+<code>:1,$s/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g</code>
+替换连接测试url
+<code>:1,$s/http:\/\/www.google.com/https:\/\/www.baidu.com/g</code>
+进入vim先输入：然后再粘贴上边的：后边的命令，注意不要写两个冒号！
+保存退出，并重启jenkins。</p>
+<p>方式二：使用sed
+<code>$ sed -i 's/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json &amp;&amp; sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g' default.json</code>
+这是直接修改的配置文件，如果前边Jenkins用sudo启动的话，那么这里的两个sed前均需要加上sudo。
+重启Jenkins，安装插件试试，简直光速。</p>
+<p><a href="https://www.cnblogs.com/hellxz/p/jenkins_install_plugins_faster.html">安装插件提速参考</a></p>
+<h2 id="jenkins升级">Jenkins升级<a hidden class="anchor" aria-hidden="true" href="#jenkins升级">#</a></h2>
+<p>今天发现旧版本的jenkins已经无法安装插件了，必须升级成新版本。
+如果是通过tomcat运行的war包，只需在官网下载最新的war包，然后替换到tomcat的webapps里的root.war，重启tomcat即可。</p>
+<h1 id="持续集成配置">持续集成配置<a hidden class="anchor" aria-hidden="true" href="#持续集成配置">#</a></h1>
+<p>服务器需要安装：jdk、git、maven，安装好之后，需要在jenkins中进行配置。</p>
+<p>系统管理 -&gt;全局工具配置
+Manage Jenkins -&gt; Global Tool Configuration</p>
+<p>然后填入本机git/maven/jdk的安装路径。
+jdk：
+不要勾选自动安装，因为我们已经手动安装好，这里只需要填写<code>JAVA_HOME</code>即可，别名可不填。
+<code>/usr/local/jdk1.8.0_211</code></p>
+<p>git：
+不勾选自动安装，只填写<code>Path to Git executable</code>
+<code>/usr/local/git/bin/git</code></p>
+<p>查找git安装路径
+<code>whereis git</code>
+<code>git: /usr/local/git /usr/local/git/bin/git</code></p>
+<p>如上面<code>whereis git</code>的地址为<code>/usr/local/git</code>，则应该填入<code>/usr/local/git/bin/git</code></p>
+<p>maven：
+不勾选自动安装，只填写<code>MAVEN_HOME</code>
+<code>/usr/local/maven</code></p>
+<h2 id="本地部署">本地部署<a hidden class="anchor" aria-hidden="true" href="#本地部署">#</a></h2>
+<p>本地部署是指：部署运行在本机的服务，若项目部署在其他服务器，则需要远程部署。</p>
+<p>在主页选择新建任务，选择构建一个自由风格的软件项目。需要说明的是，由于公司项目结构为父子项目
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/1.png">
+所有的子项目都在tubitu_project一个代码仓库里，如果配置了webhook(作用是接收远程仓库push的提交信息)的话，任何一个子项目的代码推送，都会导致所有服务的自动重启，而由于公司没有正规的代码提交审查流程，所以如果提交错误代码，会导致所有服务一同崩溃，因此，推荐每一个服务都是一个单独的部署任务，提交代码后只需要更新提交代码的服务即可。最终结果如下：
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/2.png"></p>
+<p>配置流程：
+首先新建一个任务，选择<code>构建maven项目</code>，输入名称，然后进入配置页面。
+注意，如果没有安装上边提到的maven插件，这里是看不到<code>构建maven项目</code>选项的。</p>
+<p>也可以选<code>一个自由风格的软件</code></p>
+<ol>
+<li>
+<p>General选项卡：
+勾选<code>丢弃旧的构建</code>，策略只能默认。</p>
+<ul>
+<li>保持构建天数</li>
+<li>保持构建的最大个数
+Jenkins会自动删除第一项之前的安装包，节约服务器空间。</li>
+</ul>
+</li>
+<li>
+<p>源码管理：
+勾选git，<code>Repository URL</code>输入远程仓库地址，<code>Credentials</code>添加个人远程仓库的账户密码。
+(注：这里建议使用公司公用的账户密码，避免员工离职或更改密码带来不必要的麻烦)</p>
+</li>
+<li>
+<p>构建触发器
+勾选：Build whenever a SNAPSHOT dependency is built（触发远程构建 (例如,使用脚本)）</p>
+</li>
+<li>
+<p>构建环境
+勾选：Add timestamps to the Console Output（非必选）</p>
+</li>
+</ol>
+<p>注意：<code>构建maven项目</code>和<code>构建自由风格的软件</code>，这里的选项是不一样的。
+5. Pre Steps
+不用选</p>
+<ol start="6">
+<li>Build(构建)
+Root POM：默认</li>
+</ol>
+<p>Goals and options：<code>clean install -pl tubitu_service_api -am</code>
+注意更改模块的名称。其中-pl 代表打包指定module，可以<code>-pl module_name -pl module_name</code>指定打包多个项目，-am 代表自动打包指定module所依赖的模块。</p>
+<p>注意：-pl xxx(模块名)，必须在项目的根目录执行。</p>
+<ol start="7">
+<li>
+<p>Post Steps
+勾选Run only if build succeeds</p>
+</li>
+<li>
+<p>点击Add post-build step，然后选择执行shell，这里一步是重中之重。
+可以先随便用个指令实验一下：
+<code>ifconfig</code></p>
+</li>
+</ol>
+<p>然后点击保存，点击构建，看jenkins控制台是否输入了服务器的ip地址。</p>
+<p>完整的更新项目shell脚本：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#007f7f">#首先停止项目</span>
+</span></span><span style="display:flex;"><span>pid=<span style="color:#0ff;font-weight:bold">`</span>ps -ef | grep zjx_admin-1.0.0.jar | grep -v grep | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#0ff;font-weight:bold">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> [ -n <span style="color:#0ff;font-weight:bold">&#34;</span>$pid<span style="color:#0ff;font-weight:bold">&#34;</span> ]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#fff;font-weight:bold">kill</span> -9 $pid
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#删除旧的项目，注意更改此处的jar包名称</span>
+</span></span><span style="display:flex;"><span>rm -rf /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#清除并打包指定项目，-am表示连同依赖模块一同打包</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">cd</span> $WORKSPACE
+</span></span><span style="display:flex;"><span>mvn clean package -pl zjx_admin -am
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#复制Jenkins工作空间里的项目(打包好)到指定目录下</span>
+</span></span><span style="display:flex;"><span>cp $WORKSPACE/zjx_admin/target/zjx_admin-0.0.1-SNAPSHOT.jar /usr/local/zjx/admin/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#授权，该步骤可以省略</span>
+</span></span><span style="display:flex;"><span>chmod u+x /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#指定log日志位置，并通过java -jar启动项目</span>
+</span></span><span style="display:flex;"><span>BUILD_ID=donKillme nohup java -jar -Dspring.profiles.active=dev &gt;/usr/local/zjx/service/logs/zjx.log /usr/local/zjx/admin/zjx_admin-0.0.1-SNAPSHOT.jar &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>两种打印日志的设置
+<code>&gt;/usr/local/zjx/service/logs/zjx.log</code>
+下边这种死活打不出日志，不知道为啥。
+<code>-Dlogging.file=/usr/local/zjx/admin/logs/zjx.log</code></p>
+<p>2019/12/13更新：
+终于知道为啥不能打印日志了。其实上述两种方式都可以打印日志，只不过我是分布式应用，提供者有多个，但是同时向一个日志文件中写日志。
+所以造成了死锁问题，多个程序都在争抢日志文件的锁，然后导致谁都无法写入。
+解决办法：
+每个服务，单独配置日志文件。</p>
+<p>这个-D是 java命令的参数-D。意指加入全局属性，比如<code>-Djdbc.driver=&lt;jdbc driver classpath&gt;</code>表示在程序里可用System.getProperty(&ldquo;jdbc.driver&rdquo;)获得<code>&lt;jdbc driver classpath&gt;</code>，以此类推。
+<code>-Dspring.profiles.active=dev</code>：指定启动配置文件，可以用来区分测试环境和生产环境。</p>
+<p><code>BUILD_ID=dontKillme</code>：指的是不要杀死最后一步启动项目产生的子进程。
+<a href="https://wiki.jenkins.io/display/JENKINS/ProcessTreeKiller">官网说明</a></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>To reliably kill processes spawned by a job during a build, Jenkins contains a bit of native code to list up such processes and kill them. 
+</span></span><span style="display:flex;"><span>This is tested on several platforms and architectures, but if you find a show-stopper problem because of this, 
+</span></span><span style="display:flex;"><span>you can disable this feature by setting a Java property named &#34;hudson.util.ProcessTree.disable&#34; to the value &#34;true&#34;.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>译：为了可靠地终止构建过程中滋生出来的进程，Jenkins包含了一系列的本地代码去查出这些子进程并且杀死它们。这个已经在一些平台上进行了测试，如果你发现由此引发的停止显示的问题，你可以设置名为“hudson.util.ProcessTree.disable&quot; 的java property为true来禁止使用ProcessTreeKiller自动杀死。
+通常情况下，我们保持官方默认配置，所以推荐使用BUILD_ID=dontKillme 表示该进程不是由Jenkins来生成，也就不会被ProcessTreeKiller杀死。</p>
+<p>然后回到首页，点击任务列表项右侧的图标：表盘上有个绿色小箭头，或者点击模块名旁的小箭头，点击立即构建。点击<code>#1</code>，1这个数字每次构建都会+1，代表该模块的构建次数。
+鼠标悬浮在该项上，点击向下的小箭头，点击控制台输出，可以看到正在构建或已经完成构建的linux控制台信息。</p>
+<p>构建过程中可以看到构建进度：
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/3.png">
+<code>#10</code>代表第十次构建，鼠标移到10旁边，即可查看控制台输入的构建和启动信息。看到<code>Finshed：SUCCESS</code>，表示构建完成。</p>
+<p>此时返回到Jenkins主页，可以看到S下的一列圆形图标，
+蓝色：成功
+灰色：尚未构建
+红色：构建失败
+黄色：不稳定构建(Jenkins不确定状态)</p>
+<p>W下有天气图标，代表近期构建状态：
+小太阳：近期成功
+多云：少数失败，以此类推</p>
+<h2 id="远程部署">远程部署<a hidden class="anchor" aria-hidden="true" href="#远程部署">#</a></h2>
+<p>远程部署是由于项目所有的服务并不都部署在本机，有可能部署在其他服务器，所以需要远程部署。
+说白了，就是把jar包传到远程服务器，然后通过脚本来启动jar包。</p>
+<p>远程部署需要配置远程服务器的ip地址和用户凭证。
+返回主页，点击系统管理，然后点击系统设置，在Publish over SSH下找到SSH Servers，点击新增，分别配置好IP地址和用户名密码：
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/4.png"></p>
+<p>这里Remote Directory为Jenkins默认远程根目录，点击高级，勾选使用用户密码，并输入密码，然后点击Test Configuration测试是否连接成功：
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/5.png"></p>
+<p>新建一个任务tubitu_service_mall，前面基本保持一致，但是在Post Steps时，不再选择执行脚本，而是选择
+<code>send files or execute commands over SSH</code>
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/6.png">
+name选择上一步配置好的远程服务器，一般来说会自动填充上。
+Source files默认会以本地当前任务的Jenkins工作空间+任务名为根路径。所以Source files只能配置相对路径，而Jenkins每一个任务默认的工作空间为<code>/root/.jenkins/workspace/任务名</code>，
+所以高级任务在本文中的工作空间全路径即为：
+<code>/root/.jenkins/workspace/tubitu_service_mall</code>
+而由于构建依赖的pom文件又是父项目的pom文件，所以Source files为
+<code>tubitu_service_mall/target/*.jar</code>
+<code>*</code>代表所有的jar包。</p>
+<p>Remove prefix：
+代表传输到远程时需要移除的前缀，即到远程时会自动移除<code>tubitu_service_mall/target/</code>，只保留文件名。
+Remote directory：
+远程服务器路径。注意：这个目标路径也是相对路径，相对的是你在一开始配置SSH server时
+Remote Directory的目录，由于本文配置的是/，所以实际传输的远程目为/usr/local/meilong/mall，
+如果一开始配置的是/usr/local/meilong，那么这里只需要配置Remote directory为mall。</p>
+<p>Exec command执行的脚本内容为：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#007f7f">#restart.sh</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>APP_PATH=/usr/local/meilong/mall
+</span></span><span style="display:flex;"><span>APP_NAME=tubitu_service_mall-1.0.jar
+</span></span><span style="display:flex;"><span>LOG_FILE=$APP_PATH/logs/tubitu.log
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;Restarting </span>$APP_NAME<span style="color:#0ff;font-weight:bold"> SpringBoot Application&#34;</span>
+</span></span><span style="display:flex;"><span>pid=<span style="color:#0ff;font-weight:bold">`</span>ps -ef | grep $APP_NAME | grep -v grep | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#0ff;font-weight:bold">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">source</span> /etc/profile
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> [ -n <span style="color:#0ff;font-weight:bold">&#34;</span>$pid<span style="color:#0ff;font-weight:bold">&#34;</span> ]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#fff;font-weight:bold">kill</span> -9 $pid
+</span></span><span style="display:flex;"><span>   <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;关闭进程：&#34;</span>$pid
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;授予当前用户权限&#34;</span>
+</span></span><span style="display:flex;"><span>chmod u+x $APP_PATH/$APP_NAME
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;执行.....&#34;</span>
+</span></span><span style="display:flex;"><span>nohup java -jar -Dlogging.file=$LOG_FILE $APP_PATH/$APP_NAME &gt;&gt; /dev/null &amp;
+</span></span><span style="display:flex;"><span>respid=<span style="color:#0ff;font-weight:bold">`</span>ps -ef | grep $APP_NAME | grep -v grep | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#0ff;font-weight:bold">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> [ -n <span style="color:#0ff;font-weight:bold">&#34;</span>$respid<span style="color:#0ff;font-weight:bold">&#34;</span> ]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;启动成功，进程号：</span>$respid<span style="color:#0ff;font-weight:bold">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">exit</span> <span style="color:#ff0;font-weight:bold">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;启动失败&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">exit</span> <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意的是第8行，之所以要执行第8行，是因为Jenkins在执行远程脚本时，它是不会携带本机环境变量的，所以执行java会报command not found的错导致构建失败，解决办法有两个：</p>
+<p>执行java命令时输入java的全路径，本文为/usr/local/jdk1.8.0_161/bin/java;
+执行该脚本时，脚本内调用source /etc/profile，当然前提是在profile里配置java的环境变量。
+如果没有遇到command not found的错，那么可以不加第8行。</p>
+<p>推荐在Transfers里的高级选项里勾选[Flatten files]，代表扁平化传输文件，即只传输文件而不建立远程目录，避免创建一堆杂乱目录，前提是远程目录自己已经手动创建。</p>
+<p>3.综合部署
+综合部署：建立一个公共服务，其中包括项目中所有的模块，实现一键部署、启动所有模块。
+本地部署+远程部署，基本步骤与前面两种应用一致，不再赘述，只贴出配置。
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/7.png">
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/8.png"></p>
+<h1 id="权限分配">权限分配<a hidden class="anchor" aria-hidden="true" href="#权限分配">#</a></h1>
+<p>考虑到Jenkins中的模块可能需要交给不同的人去维护，例如h5、后台系统、api等等，我们可以给不同的账号分配不同的角色，实现权限分配。</p>
+<p>安装插件：Role-based Authorization Strategy
+进入到全局安全配置，启用该插件：
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/9.png"></p>
+<p>然后进入到系统管理，此时出现了Manage And Assign Roles的选项，首先选择manage roles。比如我想新增一个前端的角色，这个前端角色只能看到前端的构建任务，输入h5，点击新增，然后勾选全部/overall里的Read选项，该选项必选，否则会提示该角色没有所有的读取权限。</p>
+<p>然后新增一个项目权限，也命名为h5，Pattern里写正则，h5_.*代表显示所有以h5_开头的构建项目，选择任务里的Build，Configure，Read，启用该角色对于任务的构建，配置和读权限，点击save。</p>
+<p>然后在Jenkins的用户管理里新建一个用户，命名为h5，我这里的全名为tubitu_h5：
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/10.png"></p>
+<p>最后返回到Manage And Assign Roles主界面，选择Assign roles分配角色。
+<img loading="lazy" src="/en/posts/%E5%85%B6%E4%BB%96/jenkins/11.png"></p>
+<p>User/group to add框里输入h5（不需要输入全名，Jenkins会根据userId来找，userId=h5），然后点击Add，并勾选刚刚新建的h5的角色。</p>
+<p>注销当前用户，使用h5用户登录，只能看到h5_的任务。</p>
+<p>如果不小心分配错了权限，可以到jenkins的主目录下，例如Linux上的/root/.jenkins/目录下有一个config.xml文件，修改authorizationStrategy为hudson.security.FullControlOnceLoggedInAuthorizationStrategy，即可禁用基于角色的权限策略：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;useSecurity&gt;true&lt;/useSecurity&gt;
+</span></span><span style="display:flex;"><span>  &lt;authorizationStrategy class=&#34;hudson.security.FullControlOnceLoggedInAuthorizationStrategy&#34;&gt;
+</span></span><span style="display:flex;"><span>    &lt;denyAnonymousReadAccess&gt;true&lt;/denyAnonymousReadAccess&gt;
+</span></span><span style="display:flex;"><span>  &lt;/authorizationStrategy&gt;
+</span></span><span style="display:flex;"><span>  &lt;securityRealm class=&#34;hudson.security.HudsonPrivateSecurityRealm&#34;&gt;
+</span></span><span style="display:flex;"><span>    &lt;disableSignup&gt;true&lt;/disableSignup&gt;
+</span></span><span style="display:flex;"><span>    &lt;enableCaptcha&gt;false&lt;/enableCaptcha&gt;
+</span></span><span style="display:flex;"><span>  &lt;/securityRealm&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="问题">问题<a hidden class="anchor" aria-hidden="true" href="#问题">#</a></h1>
+<h2 id="tempjenkins138035565033548290sh-line-5-mvn-command-not-found">temp/jenkins138035565033548290.sh: line 5: mvn: command not found<a hidden class="anchor" aria-hidden="true" href="#tempjenkins138035565033548290sh-line-5-mvn-command-not-found">#</a></h2>
+<p>原因：
+java或maven的路径的环境变量是放在/etc/profile中的，而/etc/profile只有在用户登录的时候才会被load，Jenkins在运行命令时，使用的是Non-login的方式，而这种方式在运行命令时，/etc/profile是不会被load进来的，所以jenkins只能在当前路径下寻找可执行文件。</p>
+<p>解决方法1：
+在脚本头部添加：
+<code>#!/bin/bash -il</code></p>
+<p>解决方法2：
+查询系统环境变量：
+<code>echo $PATH</code></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>/root/jenkins_home/downloads/apache-maven-<span style="color:#ff0;font-weight:bold">3.6</span>.<span style="color:#ff0;font-weight:bold">3</span>/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>jenkins主页面-&gt;Manage Jenkins-&gt;Configure System-&gt;Global Properties
+name：PATH
+vlaue：刚才查出来的。</p>
+<h2 id="jenkins卸载">jenkins卸载<a hidden class="anchor" aria-hidden="true" href="#jenkins卸载">#</a></h2>
+<p>因为我们使用的是tomcat运行jenkins.war的方式，所以：</p>
+<ol>
+<li>
+<p>停止tomcat
+<code>./shutdown.sh</code></p>
+</li>
+<li>
+<p>删除ROOT
+<code>rm -rf ROOT</code></p>
+</li>
+<li>
+<p>删除jenkins工作空间
+<code>cd /root</code></p>
+</li>
+</ol>
+<p>查看jenkins是否在root下面
+<code>ls</code></p>
+<p>发现有，直接删除
+<code>rm -rf .jenkins</code></p>
+<ol start="4">
+<li>清除缓存</li>
+</ol>
+<h2 id="jenkins占用服务器硬盘过大">jenkins占用服务器硬盘过大<a hidden class="anchor" aria-hidden="true" href="#jenkins占用服务器硬盘过大">#</a></h2>
+<p>jenkins在服务器跑了一个月了，8个服务，每天都要构建几次，今天发现mysql不能插入数据了，报磁盘空间不足。第一反应就是jenkins的问题。
+先查看linux服务器的磁盘使用状况：<code>df -h</code></p>
+<p>jenkins的文件都存储在<code>/root/.jenkins</code>，使用指令查看文件夹大小<code>du -sh</code>，发现占了86G，天哪&hellip;我硬盘一共才95G，再加上其他程序占用的内存，直接就100%使用了。</p>
+<p>解决：
+找到<code>.jenkins/jobs</code>，进到jobs目录，可以看到jenkins的各个模块。找到<code>builds</code>，里面放着各个版本的
+构建，删除不需要的。能否直接删掉<code>builds</code>文件夹，存疑。
+然后删掉<code>.jenkins/workspace</code>删掉，mkdir一个，这个也占了1G多。
+在配置时，一定要选择<code>丢弃旧的构建</code>，并且<code>保持构建的天数</code>和<code>保持构建的最大个数</code>一定要写，反正我都写1。</p>
+<h2 id="自动化脚本错误">自动化脚本错误<a hidden class="anchor" aria-hidden="true" href="#自动化脚本错误">#</a></h2>
+<p><code>cannot create regular file xxx，Permission denied</code></p>
+<ul>
+<li>查看自己是谁<code>whoami</code></li>
+<li>如果不是root用户，需要在cp前加上<code>sudo</code>，注意这里我已经提前安装了sudu。</li>
+</ul>
+<h2 id="we-trust-you-have-received-the-usual-lecture-from-the-local-system">We trust you have received the usual lecture from the local System<a hidden class="anchor" aria-hidden="true" href="#we-trust-you-have-received-the-usual-lecture-from-the-local-system">#</a></h2>
+<p>不是root用户，使用<code>sudo</code>时，出现该问题。
+编辑/etc/sudoers文件
+<code>vim /etc/sudoers</code>
+找到这行：
+<code>root ALL=(ALL) ALL</code>
+在起下面添加<code>xxx ALL=(ALL) ALL</code>(这里的xxx是你的用户名)，然后强制保存退出，因为该文件是只读文件，也可以在修改之前更改该文件的读写权限。</p>
+<p>然而还是不行，迷之错误，改变思路，给jenkins-workspace下的jar包赋予权限：
+<code>chmod u+x $WORKSPACE/target/archive-1.0.jar</code>
+然后就可以直接使用<code>cp</code>指令，然而只是Terminal可以使用，jenkins的脚本还是无法使用，我日&hellip;
+暂时放弃，使用tomcat安装jenkins&hellip;</p>
+<h2 id="重装jenkins">重装jenkins<a hidden class="anchor" aria-hidden="true" href="#重装jenkins">#</a></h2>
+<p>删除安装jenkins用户的主目录（~）下的（.jenkins）文件夹，然后重启，就可以重新配置jenkins</p>
+<h1 id="jenkins指定spring-boot的配置文件">jenkins指定spring boot的配置文件<a hidden class="anchor" aria-hidden="true" href="#jenkins指定spring-boot的配置文件">#</a></h1>
+<p>在启动脚本加如下代码：
+<code>-Dspring.profiles.active=dev</code></p>
+<h1 id="jenkins配置分布式应用时日志文件问题">jenkins配置分布式应用时日志文件问题。<a hidden class="anchor" aria-hidden="true" href="#jenkins配置分布式应用时日志文件问题">#</a></h1>
+<p>因为分布式是多个服务分开部署，所以如果多个服务向同时向一个日志文件写内容，会造成死锁问题，导致谁都无法写入日志。
+所以，分布式服务，一定要每个服务单独写自己的日志文件。</p>
+<h1 id="部署普通spring-boot-项目">部署普通spring boot 项目<a hidden class="anchor" aria-hidden="true" href="#部署普通spring-boot-项目">#</a></h1>
+<h2 id="general">General<a hidden class="anchor" aria-hidden="true" href="#general">#</a></h2>
+<p>勾选Discard old builds(丢弃旧的构建)，后边两个空填1。</p>
+<p>多分支构建。
+jenkins在部署时候，可以选择分支构建。</p>
+<ol>
+<li>下载插件<code>Git Parameter</code></li>
+<li>下载完，在项目构建时，可以看到多了个选项<code>参数化构建过程</code></li>
+<li>勾选参数化构建，然后选择<code>git 参数</code></li>
+<li>名称：gitBranch，描述：git多分支选择，参数类型：branch or tag（分支或标签）</li>
+<li>Branches to build：<code>$gitBranch</code></li>
+</ol>
+<p>然后构建时，会让你选择分支，然后构建即可。</p>
+<h2 id="source-code-management">Source Code Management<a hidden class="anchor" aria-hidden="true" href="#source-code-management">#</a></h2>
+<p>选择git
+分别填入仓库地址和保存账号密码</p>
+<h2 id="build-triggers">Build Triggers<a hidden class="anchor" aria-hidden="true" href="#build-triggers">#</a></h2>
+<p>勾选<code>Build whenever a SNAPSHOT dependency is built</code></p>
+<h2 id="pre-steps之前的步骤">Pre Steps(之前的步骤)<a hidden class="anchor" aria-hidden="true" href="#pre-steps之前的步骤">#</a></h2>
+<p>不动</p>
+<h2 id="build">Build<a hidden class="anchor" aria-hidden="true" href="#build">#</a></h2>
+<p>Root POM：
+<code>pom.xml</code>
+注意：默认部署项目根目录下的pom.xml</p>
+<p>Goals and options：
+<code>clean install -Dmaven.test.skip=true -am</code></p>
+<h2 id="post-steps发布步骤">Post Steps（发布步骤）<a hidden class="anchor" aria-hidden="true" href="#post-steps发布步骤">#</a></h2>
+<p>勾选Run only if build succeeds</p>
+<p>Add post-build step下拉选，选择<code>Execute shell</code>
+然后输入</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sh /usr/local/xxx.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示执行服务器上的sh脚本。然后在服务器上创建sh脚本，脚本的内容为：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">#!/bin/bash -il
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold"></span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 可选参数，指定配置文件</span>
+</span></span><span style="display:flex;"><span>config=-Dspring.profiles.active=prod
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 可选参数，指定日志文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 1&gt;$project_path/logs/`date + %Y-%m-%d`.log\</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 2&gt;$project_path/logs/log.error\</span>
+</span></span><span style="display:flex;"><span>log_path=1&gt;a.log 2&gt;&amp;<span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># jdk具体路径。可能需要具体路径，看情况，不是具体路径出现过无法使用java -jar的情况</span>
+</span></span><span style="display:flex;"><span>jdk_path=/usr/lib/jvm/java-1.8.0-openjdk/bin/java
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 项目名称</span>
+</span></span><span style="display:flex;"><span>project_name=zw-search
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 项目地址</span>
+</span></span><span style="display:flex;"><span>project_path=/data/matrix/search
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># jar包名称</span>
+</span></span><span style="display:flex;"><span>jar_name=zw-search-1.0-SNAPSHOT.jar
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 启动参数</span>
+</span></span><span style="display:flex;"><span>JAVA_OPTS=<span style="color:#0ff;font-weight:bold">&#39;-server -Xms512m -Xmx512m&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 启动jar包命令，日志位置要写绝对路径，否则会没有日志。</span>
+</span></span><span style="display:flex;"><span>runjar=<span style="color:#0ff;font-weight:bold">&#34;BUILD_ID=dontKillMe sudo nohup </span>$jdk_path<span style="color:#0ff;font-weight:bold"> -jar </span><span style="color:#0ff;font-weight:bold">${</span>JAVA_OPTS<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold"> </span>$project_path<span style="color:#0ff;font-weight:bold">/</span><span style="color:#0ff;font-weight:bold">${</span>jar_name<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold"> 1&gt;</span><span style="color:#0ff;font-weight:bold">${</span>project_path<span style="color:#0ff;font-weight:bold">}</span><span style="color:#0ff;font-weight:bold">a.log 2&gt;&amp;1 &amp;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># jenkins根目录</span>
+</span></span><span style="display:flex;"><span>WORKSPACE=/root/.jenkins/workspace
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 查看这个jar是否已经启动</span>
+</span></span><span style="display:flex;"><span>pid=<span style="color:#0ff;font-weight:bold">`</span>ps -ef | grep $jar_name | grep -v grep | awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#0ff;font-weight:bold">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">if</span> [ -n <span style="color:#0ff;font-weight:bold">&#34;</span>$pid<span style="color:#0ff;font-weight:bold">&#34;</span> ]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#fff;font-weight:bold">kill</span> -9 $pid
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 删除旧的jar包</span>
+</span></span><span style="display:flex;"><span>rm -f $project_path/$jar_name
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;删除旧的jar包&#34;</span> $project_path/$jar_name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 复制jar包</span>
+</span></span><span style="display:flex;"><span>sudo cp $WORKSPACE/zw-search/zw-search/target/$jar_name $project_path
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;复制jar包&#34;</span> $WORKSPACE/zw-search/zw-search/target/$jar_name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># 授权</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># sudo chmod 777 $project_path/$jar_name</span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f"># sudo chmod u+x /data/matrix/search/zw-search-1.0-SNAPSHOT.jar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">#启动jar</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">eval</span> $runjar
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">echo</span> <span style="color:#0ff;font-weight:bold">&#34;启动jar完成&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要注意：脚本中的路径，都需要用<strong>绝对路径</strong>。</p>
+<p>如果没有日志，多半是因为日志文件路径写错了。
+可以先找到进程id，<code>ps -ef</code>。然后查看程序的标准输出：<code>/proc/&lt;pid&gt;/fd</code>
+目录中有很多数字，每一项都是一个符号链接，指向打开的文件，数字则代表文件描述符。其中1 = stdout, 2 = stderr，用cat或tail查看即可。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>/dev/null 表示空设备文件
+</span></span><span style="display:flex;"><span>0 表示stdin标准输入
+</span></span><span style="display:flex;"><span>1 表示stdout标准输出
+</span></span><span style="display:flex;"><span>2 表示stderr标准错误
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; file 表示将标准输出输出到file中，也就相当于 1&gt;file
+</span></span><span style="display:flex;"><span>2&gt; error 表示将错误输出到error文件中
+</span></span><span style="display:flex;"><span>2&gt;&amp;1 也就表示将错误重定向到标准输出上
+</span></span><span style="display:flex;"><span>2&gt;&amp;1 &gt;file ：错误输出到终端，标准输出重定向到文件file，等于 &gt; file 2&gt;&amp;1(标准输出重定向到文件，错误重定向到标准输出)。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&amp; 放在命令到结尾，表示后台运行，防止终端一直被某个进程占用，这样终端可以执行别到任务，配合 &gt;file 2&gt;&amp;1可以将log保存到某个文件中，但如果终端关闭，则进程也停止运行。如 command &gt; file.log 2&gt;&amp;1 &amp; 。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nohup放在命令的开头，表示不挂起（no hang up），也即，关闭终端或者退出某个账号，进程也继续保持运行状态，一般配合&amp;符号一起使用。如nohup command &amp;。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="部署到远程服务器">部署到远程服务器<a hidden class="anchor" aria-hidden="true" href="#部署到远程服务器">#</a></h1>
+<p>publish over ssh 插件无法在jenkins插件中心搜索到的解决办法：
+<a href="https://juejin.cn/post/7063299349572222983/">https://juejin.cn/post/7063299349572222983/</a></p>
+<p>参考：https://www.jianshu.com/p/3ec12f561a9c</p>
+<p><code>Manage Jenkins-&gt;Configure System</code>
+把要部署的远程服务器信息填好。
+Hostname：远程服务器的ip
+Port：22
+Credentials：服务器的用户名和密码</p>
+<p>最后点<code>Check connection</code>，测试是否连接成功。</p>
+<p>我们不使用Publish Over SSH插件，因为jenkins插件中心已经搜索不到这个插件了。
+所以要在安装jenkins机器上安装expect，用shell脚本实现把文件发送到服务器。</p>
+<p>安装expect
+<code>yum -y install expect</code></p>
+<p>在jenkins服务器的创建脚本文件：expect_scp.sh</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">#!/usr/bin/expect
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold"></span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> timeout <span style="color:#ff0;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> host [lindex $argv 0]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> username [lindex $argv 1]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> password [lindex $argv 2]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> src_file [lindex $argv 3]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> dest_file [lindex $argv 4]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>spawn scp $src_file $username@$host:$dest_file  
+</span></span><span style="display:flex;"><span> expect {  
+</span></span><span style="display:flex;"><span> <span style="color:#0ff;font-weight:bold">&#34;(yes/no)?&#34;</span>  
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>   send <span style="color:#0ff;font-weight:bold">&#34;yes\n&#34;</span>
+</span></span><span style="display:flex;"><span>  expect <span style="color:#0ff;font-weight:bold">&#34;*assword:&#34;</span> { send <span style="color:#0ff;font-weight:bold">&#34;</span>$password<span style="color:#0ff;font-weight:bold">\n&#34;</span>}
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#0ff;font-weight:bold">&#34;*assword:&#34;</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    send <span style="color:#0ff;font-weight:bold">&#34;</span>$password<span style="color:#0ff;font-weight:bold">\n&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>expect <span style="color:#0ff;font-weight:bold">&#34;100%&#34;</span>  
+</span></span><span style="display:flex;"><span>expect eof
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>给此文件执行权限
+<code>chmod +x expect_scp</code></p>
+<p>如上所示，通过脚本依次传入主机 用户名 密码 源文件路径 目标文件路径就可以自动填充密码通过scp命令把文件发送到目标服务器路径。</p>
+<p>新建expect_ssh脚本文件</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">#!/usr/bin/expect
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold"></span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> timeout <span style="color:#ff0;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> host [lindex $argv 0]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> username [lindex $argv 1]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> password [lindex $argv 2]
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> shellinfo [lindex $argv 3]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>spawn ssh $username@$host
+</span></span><span style="display:flex;"><span> expect {
+</span></span><span style="display:flex;"><span> <span style="color:#0ff;font-weight:bold">&#34;(yes/no)?&#34;</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>   send <span style="color:#0ff;font-weight:bold">&#34;yes\n&#34;</span>
+</span></span><span style="display:flex;"><span>  expect <span style="color:#0ff;font-weight:bold">&#34;*assword:&#34;</span> { send <span style="color:#0ff;font-weight:bold">&#34;</span>$password<span style="color:#0ff;font-weight:bold">\n&#34;</span>}
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#0ff;font-weight:bold">&#34;*assword:&#34;</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    send <span style="color:#0ff;font-weight:bold">&#34;</span>$password<span style="color:#0ff;font-weight:bold">\n&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}  
+</span></span><span style="display:flex;"><span>expect <span style="color:#0ff;font-weight:bold">&#34;*]#&#34;</span>
+</span></span><span style="display:flex;"><span>send <span style="color:#0ff;font-weight:bold">&#34;</span>$shellinfo<span style="color:#0ff;font-weight:bold">\r&#34;</span>
+</span></span><span style="display:flex;"><span>expect <span style="color:#0ff;font-weight:bold">&#34;*]#&#34;</span>
+</span></span><span style="display:flex;"><span>send <span style="color:#0ff;font-weight:bold">&#34;exit\r&#34;</span>
+</span></span><span style="display:flex;"><span>expect eof
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>给expect_ssh执行权限
+<code>chmod +x expect_ssh</code></p>
+<p>如上所示，脚本中依次传入主机 用户名 密码 远程命令 就可以在远程服务器上执行命令了。</p>
+<p>在jenkins上创建一个item，选择<code>Freestyle project</code>。</p>
+<p>General
+这里有一个This project is parameterized选项，这个选项可以构建key value参数，在这里添加的参数在后续步骤中都可以用<code>$参数名</code>的方式直接引用参数的值，就是个自己声明的变量。
+有boolean、string、text、password等常用类型的参数。点击This project is parameterized添加几个参数，可根据自身需要灵活声明。</p>
+<p>string类型的jarName，默认值是maven打包后jar包的名字，例如：
+<code>zw-zzw-1.0-SNAPSHOT.jar</code>
+string类型的projectName，即项目名。
+string类型的expectScpPath，上面新建的expect_scp可运行脚本的路径。
+string类型的scpHost，scp发送文件的服务器地址。
+string类型的scpUserName，scp发送服务器的用户名。
+password类型的scpPwd，scp发送服务器的密码。
+string类型的scpTargetPath，scp远程服务器目标路径地址。</p>
+<p>Source Code Management：填写git仓库的地址，用户名和密码。</p>
+<p>Build Triggers：啥都不选。
+Build Environment：
+这里可以配置远程服务器构建之前或之后的操作，这里把构建完成之后对服务器jar包的备份和重启shell命令配置在这里。
+勾选<code>Execute shell script on remote host using ssh</code></p>
+<p>填写<code>Post build script</code>，内容如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">cd</span> $scpTargetPath
+</span></span><span style="display:flex;"><span>cp $jarName backup/$projectName_<span style="color:#fff;font-weight:bold">$(</span>date +%F-%T<span style="color:#fff;font-weight:bold">)</span>.jar
+</span></span><span style="display:flex;"><span>pid=<span style="color:#fff;font-weight:bold">$(</span>ps -ef|grep $jarName |egrep -v grep|awk <span style="color:#0ff;font-weight:bold">&#39;{print $2}&#39;</span><span style="color:#fff;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">kill</span> -9 $pid
+</span></span><span style="display:flex;"><span>nohup java -jar $jarName &gt;/dev/null 2&gt;&amp;<span style="color:#ff0;font-weight:bold">1</span> &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>build：
+把maven打包命令和打包完毕之后把包发布到服务器的shell命令配置在这。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">#!/bin/bash -il
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold"></span><span style="color:#fff;font-weight:bold">pwd</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">cd</span> $projectName/
+</span></span><span style="display:flex;"><span>mvn clean package -Dmaven.test.skip=<span style="color:#fff;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>$expectScpPath $scpHost $scpUserName $scpPwd target/*.jar $scpTargetPath
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Post-build Actions（构建后操作）：
+构建完成后删除workspace下本任务下载的代码文件，视需要而定，也可以不删除。</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/en/tags/%E5%85%B6%E4%BB%96/">其他</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/en/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>桥梁模式 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="设计模式">
+<meta name="description" content="快速学习
+类型：结构型
+
+桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。
+
+桥接模式的定义非常玄乎，直接理解不太容易，所以我们还是举例子。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="桥梁模式">
+  <meta property="og:description" content="快速学习 类型：结构型
+桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。
+桥接模式的定义非常玄乎，直接理解不太容易，所以我们还是举例子。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-12-28T13:57:22+00:00">
+    <meta property="article:modified_time" content="2018-12-28T13:57:22+00:00">
+    <meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="桥梁模式">
+<meta name="twitter:description" content="快速学习
+类型：结构型
+
+桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。
+
+桥接模式的定义非常玄乎，直接理解不太容易，所以我们还是举例子。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "桥梁模式",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "桥梁模式",
+  "name": "桥梁模式",
+  "description": "快速学习 类型：结构型\n桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。\n桥接模式的定义非常玄乎，直接理解不太容易，所以我们还是举例子。\n",
+  "keywords": [
+    "设计模式"
+  ],
+  "articleBody": "快速学习 类型：结构型\n桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。\n桥接模式的定义非常玄乎，直接理解不太容易，所以我们还是举例子。\n假设某个汽车厂商生产三种品牌的汽车：Big、Tiny和Boss，每种品牌又可以选择燃油、纯电和混合动力。如果用传统的继承来表示各个最终车型，一共有3个抽象类加9个最终子类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ┌───────┐ │ Car │ └───────┘ ▲ ┌──────────────────┼───────────────────┐ │ │ │ ┌───────┐ ┌───────┐ ┌───────┐ │BigCar │ │TinyCar│ │BossCar│ └───────┘ └───────┘ └───────┘ ▲ ▲ ▲ │ │ │ │ ┌───────────────┐│ ┌───────────────┐│ ┌───────────────┐ ├─│ BigFuelCar │├─│ TinyFuelCar │├─│ BossFuelCar │ │ └───────────────┘│ └───────────────┘│ └───────────────┘ │ ┌───────────────┐│ ┌───────────────┐│ ┌───────────────┐ ├─│BigElectricCar │├─│TinyElectricCar│├─│BossElectricCar│ │ └───────────────┘│ └───────────────┘│ └───────────────┘ │ ┌───────────────┐│ ┌───────────────┐│ ┌───────────────┐ └─│ BigHybridCar │└─│ TinyHybridCar │└─│ BossHybridCar │ └───────────────┘ └───────────────┘ └───────────────┘ 如果要新增一个品牌，或者加一个新的引擎（比如核动力），那么子类的数量增长更快。\n所以，桥接模式就是为了避免直接继承带来的子类爆炸。\n我们来看看桥接模式如何解决上述问题。\n在桥接模式中，首先把Car按品牌进行子类化，但是，每个品牌选择什么发动机，不再使用子类扩充，而是通过一个抽象的“修正”类，以组合的形式引入。我们来看看具体的实现。\n首先定义抽象类Car，它引用一个Engine：\n1 2 3 4 5 6 7 8 9 10 public abstract class Car { // 引用Engine: protected Engine engine; public Car(Engine engine) { this.engine = engine; } public abstract void drive(); } Engine的定义如下：\n1 2 3 public interface Engine { void start(); } 紧接着，在一个“修正”的抽象类RefinedCar中定义一些额外操作：\n1 2 3 4 5 6 7 8 9 10 11 12 public abstract class RefinedCar extends Car { public RefinedCar(Engine engine) { super(engine); } public void drive() { this.engine.start(); System.out.println(\"Drive \" + getBrand() + \" car...\"); } public abstract String getBrand(); } 这样一来，最终的不同品牌继承自RefinedCar，例如BossCar：\n1 2 3 4 5 6 7 8 9 public class BossCar extends RefinedCar { public BossCar(Engine engine) { super(engine); } public String getBrand() { return \"Boss\"; } } 而针对每一种引擎，继承自Engine，例如HybridEngine：\n1 2 3 4 5 public class HybridEngine implements Engine { public void start() { System.out.println(\"Start Hybrid Engine...\"); } } 客户端通过自己选择一个品牌，再配合一种引擎，得到最终的Car：\n1 2 RefinedCar car = new BossCar(new HybridEngine()); car.drive(); 使用桥接模式的好处在于，如果要增加一种引擎，只需要针对Engine派生一个新的子类，如果要增加一个品牌，只需要针对RefinedCar派生一个子类，任何RefinedCar的子类都可以和任何一种Engine自由组合，即一辆汽车的两个维度：品牌和引擎都可以独立地变化。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ┌───────────┐ │ Car │ └───────────┘ ▲ │ ┌───────────┐ ┌─────────┐ │RefinedCar │ ─ ─ ─\u003e│ Engine │ └───────────┘ └─────────┘ ▲ ▲ ┌────────┼────────┐ │ ┌──────────────┐ │ │ │ ├─│ FuelEngine │ ┌───────┐┌───────┐┌───────┐ │ └──────────────┘ │BigCar ││TinyCar││BossCar│ │ ┌──────────────┐ └───────┘└───────┘└───────┘ ├─│ElectricEngine│ │ └──────────────┘ │ ┌──────────────┐ └─│ HybridEngine │ └──────────────┘ 桥接模式实现比较复杂，实际应用也非常少，但它提供的设计思想值得借鉴，即不要过度使用继承，而是优先拆分某些部件，使用组合的方式来扩展功能。\n概述 优点 分离抽象和实现部分 桥梁模式分离了抽象部分和实现部分，从而极大地提供了系统的灵活性。让抽象部分和实现部分独立出来，分别定义接口，这有助于对系统进行分层，从而产生更好的结构化的系统。\n更好的扩展性 桥梁模式使得抽象部分和实现部分可以分别独立地扩展，而不会相互影响，从而大大提高了系统的可扩展性。\n桥梁模式的用意 桥梁模式虽然不是一个使用频率很高的模式，但是熟悉这个模式对于理解面向对象的设计原则，包括“开-闭”原则以及组合/聚合复用原则都很有帮助。理解好这两个原则，有助于形成正确的设计思想和培养良好的设计风格。\n桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。这句话很短，但是第一次读到这句话的人很可能都会思考良久而不解其意。这句话有三个关键词，也就是抽象化、实现化和脱耦。理解这三个词所代表的概念是理解桥梁模式用意的关键。\n抽象化 从众多的事物中抽取出共同的、本质性的特征，而舍弃其非本质的特征，就是抽象化。例如苹果、香蕉、梨、桃子等，它们共同的特性就是水果。得出水果概念的过程，就是一个抽象化的过程。要抽象，就必须进行比较，没有比较就无法找到在本质上共同的部分。 共同特征是指那些能把一类事物与他类事物区分开来的特征，这些具有区分作用的特征又称本质特征。因此抽取事物的共同特征就是抽取事物的本质特征，舍弃非本质的特征。 所以抽象化的过程也是一个裁剪的过程。在抽象时，同与不同，决定于从什么角度上来抽象。抽象的角度取决于分析问题的目的。 通常情况下，一组对象如果具有相同的特征，那么它们就可以通过一个共同的类来描述。如果一些类具有相同的特征，往往可以通过一个共同的抽象类来描述。\n实现化 抽象化给出的具体实现，就是实现化。 一个类的实例就是这个类的实例化，一个具体子类是它的抽象超类的实例化。\n脱耦 所谓耦合，就是两个实体的行为的某种强关联。将它们的强关联去掉，就是脱耦。 在这里，脱耦是指将抽象化和实现化之间的耦合解开，或者说是将它们之间的强关联改换成弱关联。所谓强关联，就是在编译时期已经确定的，无法在运行时期动态改变的关联； 所谓弱关联，就是可以动态地确定并且可以在运行时期动态地改变的关联。 显然，在Java语言中，继承关系是强关联，而聚合关系是弱关联。\n桥梁模式的结构 可以看出，这个系统含有两个等级结构： 一、由抽象化角色和修正抽象化角色组成的抽象化等级结构。 二、由实现化角色和两个具体实现化角色所组成的实现化等级结构。\n桥梁模式所涉及的角色有：\n抽象化(Abstraction)角色：抽象化给出的定义，并保存一个对实现化对象的引用。 修正抽象化(RefinedAbstraction)角色：扩展抽象化角色，改变和修正父类对抽象化的定义。 实现化(Implementor)角色：这个角色给出实现化角色的接口，但不给出具体的实现。必须指出的是，这个接口不一定和抽象化角色的接口定义相同，实际上，这两个接口可以非常不一样。实现化角色应当只给出底层操作，而抽象化角色应当只给出基于底层操作的更高一层的操作。 具体实现化(ConcreteImplementor)角色：这个角色给出实现化角色接口的具体实现。 抽象化角色就像是一个水杯的手柄，而实现化角色和具体实现化角色就像是水杯的杯身。手柄控制杯身，这就是此模式别名“柄体”的来源。\n对象是对行为的封装，而行为是由方法实现的。 在这个示意性系统里，抽象化等级结构中的类封装了operation()方法；而实现化等级结构中的类封装的是operationImpl()方法。当然，在实际的系统中往往会有多于一个的方法。 抽象化等级结构中的方法通过向对应的实现化对象的委派实现自己的功能，这意味着抽象化角色可以通过向不同的实现化对象委派，来达到动态地转换自己的功能的目的。\n简单实现 抽象化角色类，它声明了一个方法operation()，并给出了它的实现。这个实现是通过向实现化对象的委派(调用operationImpl()方法)实现的。\n1 2 3 4 5 6 7 8 9 10 11 public abstract class Abstraction { protected Implementor impl; public Abstraction(Implementor impl){ this.impl = impl; } //示例方法 public void operation(){ impl.operationImpl(); } } 修正抽象化角色\n1 2 3 4 5 6 7 8 9 10 public class RefinedAbstraction extends Abstraction { public RefinedAbstraction(Implementor impl) { super(impl); } //其他的操作方法 public void otherOperation(){ } } 实现化角色\n1 2 3 4 5 6 public abstract class Implementor { /** * 示例方法，实现抽象部分需要的某些具体功能 */ public abstract void operationImpl(); } 具体实现化角色\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class ConcreteImplementorA extends Implementor { @Override public void operationImpl() { //具体操作 } } public class ConcreteImplementorB extends Implementor { @Override public void operationImpl() { //具体操作 } } 一般而言，实现化角色中的每个方法都应当有一个抽象化角色中的某一个方法与之对应，但是反过来则不一定。换言之，抽象化角色的接口比实现化角色的接口宽。抽象化角色除了提供与实现化角色相关的方法之外，还有可能提供其他的方法；而实现化角色则往往仅为实现抽象化角色的相关行为而存在。\n使用场景 考虑这样一个实际的业务功能：发送提示消息。基本上所有带业务流程处理的系统都会有这样的功能，比如OA上有尚未处理完毕的文件，需要发送一条消息提示他。\n从业务上看，消息又分成普通消息、加急消息和特急消息多种，不同的消息类型，业务功能处理是不一样的，比如加急消息是在消息上添加加急，而特急消息除了添加特急外，还会做一条催促的记录，多久不完成会继续催促；从发送消息的手段上看，又有系统内短消息、手机短信息、邮件等。\n不使用桥梁模式 实现发送普通消息 先考虑实现一个简单点的版本，比如，消息只是实现发送普通消息，发送的方式只实现系统内短消息和邮件。其他的功能，等这个版本完成后，再继续添加。 消息的统一接口\n1 2 3 4 5 6 7 8 public interface Message { /** * 发送消息 * @param message 要发送消息的内容 * @param toUser 消息的接受者 */ public void send(String message , String toUser); } 系统内短消息示例类\n1 2 3 4 5 6 7 8 public class CommonMessageSMS implements Message { @Override public void send(String message, String toUser) { System.out.println(\"使用系统内短消息的方法，发送消息'\"+message+\"'给\"+toUser); } } 邮件消息示例类\n1 2 3 4 5 6 7 8 public class CommonMessageEmail implements Message{ @Override public void send(String message, String toUser) { System.out.println(\"使用邮件短消息的方法，发送消息'\"+message+\"'给\"+toUser); } } 实现发送加急消息 发送加急消息同样有两种方式，系统内短消息和邮件方式。但是加急消息的实现不同于普通消息，加急消息会自动在消息上添加加急，然后在再发送消息；另外加急消息会提供监控的方法，让客户端可以随时通过这个方法来了解对于加急消息的处理进度。比如，相应的人员是否接收到这个信息，相应的处理工作是否已经展开。因此加急消息需要扩展出一个新的接口，除了基本的发送消息的功能，还需要添加监控功能。 加急消息的接口\n1 2 3 4 5 6 7 8 public interface UrgencyMessage extends Message { /** * 监控指定消息的处理过程 * @param messageId 被监控的消息编号 * @return 监控到的消息的处理状态 */ public Object watch(String messageId); } 系统内加急短消息示例类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class UrgencyMessageSMS implements UrgencyMessage { @Override public Object watch(String messageId) { // 根据消息id获取消息的状态，组织成监控的数据对象，然后返回 return null; } @Override public void send(String message, String toUser) { message = \"加急：\" + message; System.out.println(\"使用系统内短消息的方法，发送消息'\"+message+\"'给\"+toUser); } } 邮件加急短消息示例类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class UrgencyMessageEmail implements UrgencyMessage { @Override public Object watch(String messageId) { // 根据消息id获取消息的状态，组织成监控的数据对象，然后返回 return null; } @Override public void send(String message, String toUser) { message = \"加急：\" + message; System.out.println(\"使用邮件短消息的方法，发送消息'\"+message+\"'给\"+toUser); } } 实现发送特急消息 特急消息不需要查看处理进程，只有没有完成，就直接催促，也就是说，对于特急消息，在普通消息的处理基础上，需要添加催促的功能。 观察上面的系统结构图，会发现一个很明显的问题，那就是通过这种继承的方式来扩展消息处理，会非常不方便。实现加急消息处理的时候，必须实现系统内短消息和邮件两种处理方式，因为业务处理可能不同，在实现特急消息处理的时候，又必须实现系统内短信息和邮件两种处理方式。这意味着，以后每次扩展一下消息处理，都必须要实现这两种处理方式，这还不算完，如果要添加新的实现方式呢？\n添加发送手机消息的处理方式 如果要添加一种新的发送消息的方式，是需要在每一种抽象的具体实现中，都添加发送手机消息的处理的。也就是说，发送普通消息、加急消息和特急消息的处理，都可以通过手机来发送。 采用通过继承来扩展的实现方式，有个明显的缺点，扩展消息的种类不太容易。不同种类的消息具有不同的业务，也就是有不同的实现，在这种情况下，每一种类的消息，需要实现所有不同的消息发送方式。更可怕的是，如果要新加入一种消息的发送方式，那么会要求所有的消息种类都有加入这种新的发送方式的实现。\n使用桥梁模式 根据业务的功能要求，业务的变化具有两个维度，一个维度是抽象的消息，包括普通消息、加急消息和特急消息，这几个抽象的消息本身就具有一定的关系，加急消息和特急消息会扩展普通消息；另一个维度是在具体的消息发送方式上，包括系统内短消息、邮件和手机短消息，这几个方式是平等的，可被切换的方式。 现在出现问题的根本原因，就在于消息的抽象和实现是混杂在一起的，这就导致了一个纬度的变化会引起另一个纬度进行相应的变化，从而使得程序扩展起来非常困难。\n要想解决这个问题，就必须把这两个纬度分开，也就是将抽象部分和实现部分分开，让它们相互独立，这样就可以实现独立的变化，使扩展变得简单。抽象部分就是各个消息的类型所对应的功能，而实现部分就是各种发送消息的方式。按照桥梁模式的结构，给抽象部分和实现部分分别定义接口，然后分别实现它们就可以了。 抽象消息类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 public abstract class AbstractMessage { //持有一个实现部分的对象 MessageImplementor impl; /** * 构造方法，传入实现部分的对象 * @param impl 实现部分的对象 */ public AbstractMessage(MessageImplementor impl){ this.impl = impl; } /** * 发送消息，委派给实现部分的方法 * @param message 要发送消息的内容 * @param toUser 消息的接受者 */ public void sendMessage(String message , String toUser){ this.impl.send(message, toUser); } } 普通消息类\n1 2 3 4 5 6 7 8 9 10 11 public class CommonMessage extends AbstractMessage { public CommonMessage(MessageImplementor impl) { super(impl); } @Override public void sendMessage(String message, String toUser) { // 对于普通消息，直接调用父类方法，发送消息即可 super.sendMessage(message, toUser); } } 加急消息类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 public class UrgencyMessage extends AbstractMessage { public UrgencyMessage(MessageImplementor impl) { super(impl); } @Override public void sendMessage(String message, String toUser) { message = \"加急：\" + message; super.sendMessage(message, toUser); } /** * 扩展自己的新功能，监控某消息的处理状态 * @param messageId 被监控的消息编号 * @return 监控到的消息的处理状态 */ public Object watch(String messageId) { // 根据消息id获取消息的状态，组织成监控的数据对象，然后返回 return null; } } 实现发送消息的统一接口\n1 2 3 4 5 6 7 8 public interface MessageImplementor { /** * 发送消息 * @param message 要发送消息的内容 * @param toUser 消息的接受者 */ public void send(String message , String toUser); } 系统内短消息的实现类\n1 2 3 4 5 6 7 8 public class MessageSMS implements MessageImplementor { @Override public void send(String message, String toUser) { System.out.println(\"使用系统内短消息的方法，发送消息'\"+message+\"'给\"+toUser); } } 邮件短消息的实现类\n1 2 3 4 5 6 7 8 public class MessageEmail implements MessageImplementor { @Override public void send(String message, String toUser) { System.out.println(\"使用邮件短消息的方法，发送消息'\"+message+\"'给\"+toUser); } } 客户端类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 public class Client { public static void main(String[] args) { //创建具体的实现对象 MessageImplementor impl = new MessageSMS(); //创建普通消息对象 AbstractMessage message = new CommonMessage(impl); message.sendMessage(\"加班申请速批\",\"李总\"); //将实现方式切换成邮件，再次发送 impl = new MessageEmail(); //创建加急消息对象 message = new UrgencyMessage(impl); message.sendMessage(\"加班申请速批\",\"李总\"); } } 观察上面的例子会发现，采用桥梁模式来实现，抽象部分和实现部分分离开了，可以相互独立的变化，而不会相互影响。因此在抽象部分添加新的消息处理（特急消息），对发送消息的实现部分是没有影响的；反过来增加发送消息的方式（手机短消息），对消息处理部分也是没有影响的。\n桥梁模式在Java中的使用 桥梁模式在Java应用中的一个非常典型的例子就是JDBC驱动器。JDBC为所有的关系型数据库提供一个通用的界面。一个应用系统动态地选择一个合适的驱动器，然后通过驱动器向数据库引擎发出指令。这个过程就是将抽象角色的行为委派给实现角色的过程。\n抽象角色可以针对任何数据库引擎发出查询指令，因为抽象角色并不直接与数据库引擎打交道，JDBC驱动器负责这个底层的工作。由于JDBC驱动器的存在，应用系统可以不依赖于数据库引擎的细节而独立地演化；同时数据库引擎也可以独立于应用系统的细节而独立的演化。两个独立的等级结构如下图所示，左边是JDBC API的等级结构，右边是JDBC驱动器的等级结构。应用程序是建立在JDBC API的基础之上的。 应用系统作为一个等级结构，与JDBC驱动器这个等级结构是相对独立的，它们之间没有静态的强关联。应用系统通过委派与JDBC驱动器相互作用，这是一个桥梁模式的例子。\nJDBC的这种架构，把抽象部分和具体部分分离开来，从而使得抽象部分和具体部分都可以独立地扩展。对于应用程序而言，只要选用不同的驱动，就可以让程序操作不同的数据库，而无需更改应用程序，从而实现在不同的数据库上移植；对于驱动程序而言，为数据库实现不同的驱动程序，并不会影响应用程序。\n参考 参考\n",
+  "wordCount" : "7325",
+  "inLanguage": "en",
+  "datePublished": "2018-12-28T13:57:22Z",
+  "dateModified": "2018-12-28T13:57:22Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/en/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/en/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      桥梁模式
+    </h1>
+    <div class="post-meta"><span title='2018-12-28 13:57:22 +0000 UTC'>2018-12-28</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%bf%ab%e9%80%9f%e5%ad%a6%e4%b9%a0" aria-label="快速学习">快速学习</a></li>
+                <li>
+                    <a href="#%e6%a6%82%e8%bf%b0" aria-label="概述">概述</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bc%98%e7%82%b9" aria-label="优点">优点</a></li>
+                <li>
+                    <a href="#%e6%a1%a5%e6%a2%81%e6%a8%a1%e5%bc%8f%e7%9a%84%e7%94%a8%e6%84%8f" aria-label="桥梁模式的用意">桥梁模式的用意</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a1%a5%e6%a2%81%e6%a8%a1%e5%bc%8f%e7%9a%84%e7%bb%93%e6%9e%84" aria-label="桥梁模式的结构">桥梁模式的结构</a></li>
+                <li>
+                    <a href="#%e7%ae%80%e5%8d%95%e5%ae%9e%e7%8e%b0" aria-label="简单实现">简单实现</a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="使用场景">使用场景</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%8d%e4%bd%bf%e7%94%a8%e6%a1%a5%e6%a2%81%e6%a8%a1%e5%bc%8f" aria-label="不使用桥梁模式">不使用桥梁模式</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e5%8f%91%e9%80%81%e6%99%ae%e9%80%9a%e6%b6%88%e6%81%af" aria-label="实现发送普通消息">实现发送普通消息</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e5%8f%91%e9%80%81%e5%8a%a0%e6%80%a5%e6%b6%88%e6%81%af" aria-label="实现发送加急消息">实现发送加急消息</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e5%8f%91%e9%80%81%e7%89%b9%e6%80%a5%e6%b6%88%e6%81%af" aria-label="实现发送特急消息">实现发送特急消息</a></li>
+                <li>
+                    <a href="#%e6%b7%bb%e5%8a%a0%e5%8f%91%e9%80%81%e6%89%8b%e6%9c%ba%e6%b6%88%e6%81%af%e7%9a%84%e5%a4%84%e7%90%86%e6%96%b9%e5%bc%8f" aria-label="添加发送手机消息的处理方式">添加发送手机消息的处理方式</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8%e6%a1%a5%e6%a2%81%e6%a8%a1%e5%bc%8f" aria-label="使用桥梁模式">使用桥梁模式</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a1%a5%e6%a2%81%e6%a8%a1%e5%bc%8f%e5%9c%a8java%e4%b8%ad%e7%9a%84%e4%bd%bf%e7%94%a8" aria-label="桥梁模式在Java中的使用">桥梁模式在Java中的使用</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="快速学习">快速学习<a hidden class="anchor" aria-hidden="true" href="#快速学习">#</a></h1>
+<p>类型：结构型</p>
+<blockquote>
+<p>桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。</p>
+</blockquote>
+<p>桥接模式的定义非常玄乎，直接理解不太容易，所以我们还是举例子。</p>
+<p>假设某个汽车厂商生产三种品牌的汽车：Big、Tiny和Boss，每种品牌又可以选择燃油、纯电和混合动力。如果用传统的继承来表示各个最终车型，一共有3个抽象类加9个最终子类：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>                   ┌───────┐
+</span></span><span style="display:flex;"><span>                   │  Car  │
+</span></span><span style="display:flex;"><span>                   └───────┘
+</span></span><span style="display:flex;"><span>                       ▲
+</span></span><span style="display:flex;"><span>    ┌──────────────────┼───────────────────┐
+</span></span><span style="display:flex;"><span>    │                  │                   │
+</span></span><span style="display:flex;"><span>┌───────┐          ┌───────┐          ┌───────┐
+</span></span><span style="display:flex;"><span>│BigCar │          │TinyCar│          │BossCar│
+</span></span><span style="display:flex;"><span>└───────┘          └───────┘          └───────┘
+</span></span><span style="display:flex;"><span>    ▲                  ▲                  ▲
+</span></span><span style="display:flex;"><span>    │                  │                  │
+</span></span><span style="display:flex;"><span>    │ ┌───────────────┐│ ┌───────────────┐│ ┌───────────────┐
+</span></span><span style="display:flex;"><span>    ├─│  BigFuelCar   │├─│  TinyFuelCar  │├─│  BossFuelCar  │
+</span></span><span style="display:flex;"><span>    │ └───────────────┘│ └───────────────┘│ └───────────────┘
+</span></span><span style="display:flex;"><span>    │ ┌───────────────┐│ ┌───────────────┐│ ┌───────────────┐
+</span></span><span style="display:flex;"><span>    ├─│BigElectricCar │├─│TinyElectricCar│├─│BossElectricCar│
+</span></span><span style="display:flex;"><span>    │ └───────────────┘│ └───────────────┘│ └───────────────┘
+</span></span><span style="display:flex;"><span>    │ ┌───────────────┐│ ┌───────────────┐│ ┌───────────────┐
+</span></span><span style="display:flex;"><span>    └─│ BigHybridCar  │└─│ TinyHybridCar │└─│ BossHybridCar │
+</span></span><span style="display:flex;"><span>      └───────────────┘  └───────────────┘  └───────────────┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果要新增一个品牌，或者加一个新的引擎（比如核动力），那么子类的数量增长更快。</p>
+<p>所以，桥接模式就是为了避免直接继承带来的子类爆炸。</p>
+<p>我们来看看桥接模式如何解决上述问题。</p>
+<p>在桥接模式中，首先把<code>Car</code>按品牌进行子类化，但是，每个品牌选择什么发动机，不再使用子类扩充，而是通过一个抽象的“修正”类，以组合的形式引入。我们来看看具体的实现。</p>
+<p>首先定义抽象类<code>Car</code>，它引用一个<code>Engine</code>：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> Car {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 引用Engine:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">protected</span> Engine engine;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> Car(Engine engine) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">engine</span> = engine;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">void</span> drive();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Engine</code>的定义如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> Engine {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">void</span> start();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>紧接着，在一个“修正”的抽象类<code>RefinedCar</code>中定义一些额外操作：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> RefinedCar <span style="color:#fff;font-weight:bold">extends</span> Car {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> RefinedCar(Engine engine) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">super</span>(engine);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> drive() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">engine</span>.<span style="color:#007f7f">start</span>();
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;Drive &#34;</span> + getBrand() + <span style="color:#0ff;font-weight:bold">&#34; car...&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> String getBrand();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样一来，最终的不同品牌继承自<code>RefinedCar</code>，例如<code>BossCar</code>：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> BossCar <span style="color:#fff;font-weight:bold">extends</span> RefinedCar {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> BossCar(Engine engine) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">super</span>(engine);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String getBrand() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;Boss&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>而针对每一种引擎，继承自<code>Engine</code>，例如<code>HybridEngine</code>：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> HybridEngine <span style="color:#fff;font-weight:bold">implements</span> Engine {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> start() {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;Start Hybrid Engine...&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>客户端通过自己选择一个品牌，再配合一种引擎，得到最终的Car：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>RefinedCar car = <span style="color:#fff;font-weight:bold">new</span> BossCar(<span style="color:#fff;font-weight:bold">new</span> HybridEngine());
+</span></span><span style="display:flex;"><span>car.<span style="color:#007f7f">drive</span>();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用桥接模式的好处在于，如果要增加一种引擎，只需要针对<code>Engine</code>派生一个新的子类，如果要增加一个品牌，只需要针对<code>RefinedCar</code>派生一个子类，任何<code>RefinedCar</code>的子类都可以和任何一种<code>Engine</code>自由组合，即一辆汽车的两个维度：品牌和引擎都可以独立地变化。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>       ┌───────────┐
+</span></span><span style="display:flex;"><span>       │    Car    │
+</span></span><span style="display:flex;"><span>       └───────────┘
+</span></span><span style="display:flex;"><span>             ▲
+</span></span><span style="display:flex;"><span>             │
+</span></span><span style="display:flex;"><span>       ┌───────────┐       ┌─────────┐
+</span></span><span style="display:flex;"><span>       │RefinedCar │ ─ ─ ─&gt;│ Engine  │
+</span></span><span style="display:flex;"><span>       └───────────┘       └─────────┘
+</span></span><span style="display:flex;"><span>             ▲                  ▲
+</span></span><span style="display:flex;"><span>    ┌────────┼────────┐         │ ┌──────────────┐
+</span></span><span style="display:flex;"><span>    │        │        │         ├─│  FuelEngine  │
+</span></span><span style="display:flex;"><span>┌───────┐┌───────┐┌───────┐     │ └──────────────┘
+</span></span><span style="display:flex;"><span>│BigCar ││TinyCar││BossCar│     │ ┌──────────────┐
+</span></span><span style="display:flex;"><span>└───────┘└───────┘└───────┘     ├─│ElectricEngine│
+</span></span><span style="display:flex;"><span>                                │ └──────────────┘
+</span></span><span style="display:flex;"><span>                                │ ┌──────────────┐
+</span></span><span style="display:flex;"><span>                                └─│ HybridEngine │
+</span></span><span style="display:flex;"><span>                                  └──────────────┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>桥接模式实现比较复杂，实际应用也非常少，但它提供的设计思想值得借鉴，即不要过度使用继承，而是优先拆分某些部件，使用组合的方式来扩展功能。</p>
+<h1 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h1>
+<h2 id="优点">优点<a hidden class="anchor" aria-hidden="true" href="#优点">#</a></h2>
+<ul>
+<li>
+<p>分离抽象和实现部分
+桥梁模式分离了抽象部分和实现部分，从而极大地提供了系统的灵活性。让抽象部分和实现部分独立出来，分别定义接口，这有助于对系统进行分层，从而产生更好的结构化的系统。</p>
+</li>
+<li>
+<p>更好的扩展性
+桥梁模式使得抽象部分和实现部分可以分别独立地扩展，而不会相互影响，从而大大提高了系统的可扩展性。</p>
+</li>
+</ul>
+<h2 id="桥梁模式的用意">桥梁模式的用意<a hidden class="anchor" aria-hidden="true" href="#桥梁模式的用意">#</a></h2>
+<p>桥梁模式虽然不是一个使用频率很高的模式，但是熟悉这个模式对于理解面向对象的设计原则，包括“开-闭”原则以及组合/聚合复用原则都很有帮助。理解好这两个原则，有助于形成正确的设计思想和培养良好的设计风格。</p>
+<p>桥梁模式的用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。这句话很短，但是第一次读到这句话的人很可能都会思考良久而不解其意。这句话有三个关键词，也就是抽象化、实现化和脱耦。理解这三个词所代表的概念是理解桥梁模式用意的关键。</p>
+<ul>
+<li>
+<p>抽象化
+从众多的事物中抽取出共同的、本质性的特征，而舍弃其非本质的特征，就是抽象化。例如苹果、香蕉、梨、桃子等，它们共同的特性就是水果。得出水果概念的过程，就是一个抽象化的过程。要抽象，就必须进行比较，没有比较就无法找到在本质上共同的部分。
+共同特征是指那些能把一类事物与他类事物区分开来的特征，这些具有区分作用的特征又称本质特征。因此抽取事物的共同特征就是抽取事物的本质特征，舍弃非本质的特征。
+所以抽象化的过程也是一个裁剪的过程。在抽象时，同与不同，决定于从什么角度上来抽象。抽象的角度取决于分析问题的目的。
+通常情况下，一组对象如果具有相同的特征，那么它们就可以通过一个共同的类来描述。如果一些类具有相同的特征，往往可以通过一个共同的抽象类来描述。</p>
+</li>
+<li>
+<p>实现化
+抽象化给出的具体实现，就是实现化。
+一个类的实例就是这个类的实例化，一个具体子类是它的抽象超类的实例化。</p>
+</li>
+<li>
+<p>脱耦
+所谓耦合，就是两个实体的行为的某种强关联。将它们的强关联去掉，就是脱耦。
+在这里，脱耦是指将抽象化和实现化之间的耦合解开，或者说是将它们之间的强关联改换成弱关联。所谓强关联，就是在编译时期已经确定的，无法在运行时期动态改变的关联；
+所谓弱关联，就是可以动态地确定并且可以在运行时期动态地改变的关联。
+显然，在Java语言中，继承关系是强关联，而聚合关系是弱关联。</p>
+</li>
+</ul>
+<h1 id="桥梁模式的结构">桥梁模式的结构<a hidden class="anchor" aria-hidden="true" href="#桥梁模式的结构">#</a></h1>
+<p><img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/1.png"></p>
+<p>可以看出，这个系统含有两个等级结构：
+一、由抽象化角色和修正抽象化角色组成的抽象化等级结构。
+二、由实现化角色和两个具体实现化角色所组成的实现化等级结构。</p>
+<p>桥梁模式所涉及的角色有：</p>
+<ul>
+<li>抽象化(Abstraction)角色：抽象化给出的定义，并保存一个对实现化对象的引用。</li>
+<li>修正抽象化(RefinedAbstraction)角色：扩展抽象化角色，改变和修正父类对抽象化的定义。</li>
+<li>实现化(Implementor)角色：这个角色给出实现化角色的接口，但不给出具体的实现。必须指出的是，这个接口不一定和抽象化角色的接口定义相同，实际上，这两个接口可以非常不一样。实现化角色应当只给出底层操作，而抽象化角色应当只给出基于底层操作的更高一层的操作。</li>
+<li>具体实现化(ConcreteImplementor)角色：这个角色给出实现化角色接口的具体实现。</li>
+</ul>
+<p>抽象化角色就像是一个水杯的手柄，而实现化角色和具体实现化角色就像是水杯的杯身。手柄控制杯身，这就是此模式别名“柄体”的来源。</p>
+<p>对象是对行为的封装，而行为是由方法实现的。
+在这个示意性系统里，抽象化等级结构中的类封装了operation()方法；而实现化等级结构中的类封装的是operationImpl()方法。当然，在实际的系统中往往会有多于一个的方法。
+抽象化等级结构中的方法通过向对应的实现化对象的委派实现自己的功能，这意味着抽象化角色可以通过向不同的实现化对象委派，来达到动态地转换自己的功能的目的。</p>
+<h1 id="简单实现">简单实现<a hidden class="anchor" aria-hidden="true" href="#简单实现">#</a></h1>
+<p>抽象化角色类，它声明了一个方法operation()，并给出了它的实现。这个实现是通过向实现化对象的委派(调用operationImpl()方法)实现的。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> Abstraction {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">protected</span> Implementor impl;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> Abstraction(Implementor impl){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">impl</span> = impl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//示例方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> operation(){
+</span></span><span style="display:flex;"><span>        impl.<span style="color:#007f7f">operationImpl</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修正抽象化角色</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> RefinedAbstraction <span style="color:#fff;font-weight:bold">extends</span> Abstraction {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> RefinedAbstraction(Implementor impl) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">super</span>(impl);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//其他的操作方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> otherOperation(){
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实现化角色</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> Implementor {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 示例方法，实现抽象部分需要的某些具体功能
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">void</span> operationImpl();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具体实现化角色</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> ConcreteImplementorA <span style="color:#fff;font-weight:bold">extends</span> Implementor {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> operationImpl() {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//具体操作</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> ConcreteImplementorB <span style="color:#fff;font-weight:bold">extends</span> Implementor {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> operationImpl() {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//具体操作</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一般而言，实现化角色中的每个方法都应当有一个抽象化角色中的某一个方法与之对应，但是反过来则不一定。换言之，抽象化角色的接口比实现化角色的接口宽。抽象化角色除了提供与实现化角色相关的方法之外，还有可能提供其他的方法；而实现化角色则往往仅为实现抽象化角色的相关行为而存在。</p>
+<h1 id="使用场景">使用场景<a hidden class="anchor" aria-hidden="true" href="#使用场景">#</a></h1>
+<p>考虑这样一个实际的业务功能：发送提示消息。基本上所有带业务流程处理的系统都会有这样的功能，比如OA上有尚未处理完毕的文件，需要发送一条消息提示他。</p>
+<p>从业务上看，消息又分成普通消息、加急消息和特急消息多种，不同的消息类型，业务功能处理是不一样的，比如加急消息是在消息上添加加急，而特急消息除了添加特急外，还会做一条催促的记录，多久不完成会继续催促；从发送消息的手段上看，又有系统内短消息、手机短信息、邮件等。</p>
+<h2 id="不使用桥梁模式">不使用桥梁模式<a hidden class="anchor" aria-hidden="true" href="#不使用桥梁模式">#</a></h2>
+<h3 id="实现发送普通消息">实现发送普通消息<a hidden class="anchor" aria-hidden="true" href="#实现发送普通消息">#</a></h3>
+<p>先考虑实现一个简单点的版本，比如，消息只是实现发送普通消息，发送的方式只实现系统内短消息和邮件。其他的功能，等这个版本完成后，再继续添加。
+<img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/2.png"></p>
+<p>消息的统一接口</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> Message {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 发送消息
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param message 要发送消息的内容
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param toUser  消息的接受者
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message , String toUser);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>系统内短消息示例类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> CommonMessageSMS <span style="color:#fff;font-weight:bold">implements</span> Message {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message, String toUser) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;使用系统内短消息的方法，发送消息&#39;&#34;</span>+message+<span style="color:#0ff;font-weight:bold">&#34;&#39;给&#34;</span>+toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>邮件消息示例类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> CommonMessageEmail <span style="color:#fff;font-weight:bold">implements</span> Message{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message, String toUser) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;使用邮件短消息的方法，发送消息&#39;&#34;</span>+message+<span style="color:#0ff;font-weight:bold">&#34;&#39;给&#34;</span>+toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="实现发送加急消息">实现发送加急消息<a hidden class="anchor" aria-hidden="true" href="#实现发送加急消息">#</a></h3>
+<p>发送加急消息同样有两种方式，系统内短消息和邮件方式。但是加急消息的实现不同于普通消息，加急消息会自动在消息上添加加急，然后在再发送消息；另外加急消息会提供监控的方法，让客户端可以随时通过这个方法来了解对于加急消息的处理进度。比如，相应的人员是否接收到这个信息，相应的处理工作是否已经展开。因此加急消息需要扩展出一个新的接口，除了基本的发送消息的功能，还需要添加监控功能。
+<img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/3.png"></p>
+<p>加急消息的接口</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> UrgencyMessage <span style="color:#fff;font-weight:bold">extends</span> Message {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 监控指定消息的处理过程
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param messageId  被监控的消息编号
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @return    监控到的消息的处理状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> Object watch(String messageId);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>系统内加急短消息示例类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> UrgencyMessageSMS <span style="color:#fff;font-weight:bold">implements</span> UrgencyMessage {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> Object watch(String messageId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 根据消息id获取消息的状态，组织成监控的数据对象，然后返回</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message, String toUser) {
+</span></span><span style="display:flex;"><span>        message = <span style="color:#0ff;font-weight:bold">&#34;加急：&#34;</span> + message;
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;使用系统内短消息的方法，发送消息&#39;&#34;</span>+message+<span style="color:#0ff;font-weight:bold">&#34;&#39;给&#34;</span>+toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>邮件加急短消息示例类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> UrgencyMessageEmail <span style="color:#fff;font-weight:bold">implements</span> UrgencyMessage {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> Object watch(String messageId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 根据消息id获取消息的状态，组织成监控的数据对象，然后返回</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message, String toUser) {
+</span></span><span style="display:flex;"><span>        message = <span style="color:#0ff;font-weight:bold">&#34;加急：&#34;</span> + message;
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;使用邮件短消息的方法，发送消息&#39;&#34;</span>+message+<span style="color:#0ff;font-weight:bold">&#34;&#39;给&#34;</span>+toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="实现发送特急消息">实现发送特急消息<a hidden class="anchor" aria-hidden="true" href="#实现发送特急消息">#</a></h3>
+<p>特急消息不需要查看处理进程，只有没有完成，就直接催促，也就是说，对于特急消息，在普通消息的处理基础上，需要添加催促的功能。
+<img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/4.png">
+观察上面的系统结构图，会发现一个很明显的问题，那就是通过这种继承的方式来扩展消息处理，会非常不方便。实现加急消息处理的时候，必须实现系统内短消息和邮件两种处理方式，因为业务处理可能不同，在实现特急消息处理的时候，又必须实现系统内短信息和邮件两种处理方式。这意味着，以后每次扩展一下消息处理，都必须要实现这两种处理方式，这还不算完，如果要添加新的实现方式呢？</p>
+<h3 id="添加发送手机消息的处理方式">添加发送手机消息的处理方式<a hidden class="anchor" aria-hidden="true" href="#添加发送手机消息的处理方式">#</a></h3>
+<p>如果要添加一种新的发送消息的方式，是需要在每一种抽象的具体实现中，都添加发送手机消息的处理的。也就是说，发送普通消息、加急消息和特急消息的处理，都可以通过手机来发送。
+<img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/5.png"></p>
+<p>采用通过继承来扩展的实现方式，有个明显的缺点，扩展消息的种类不太容易。不同种类的消息具有不同的业务，也就是有不同的实现，在这种情况下，每一种类的消息，需要实现所有不同的消息发送方式。更可怕的是，如果要新加入一种消息的发送方式，那么会要求所有的消息种类都有加入这种新的发送方式的实现。</p>
+<h2 id="使用桥梁模式">使用桥梁模式<a hidden class="anchor" aria-hidden="true" href="#使用桥梁模式">#</a></h2>
+<p>根据业务的功能要求，业务的变化具有两个维度，一个维度是抽象的消息，包括普通消息、加急消息和特急消息，这几个抽象的消息本身就具有一定的关系，加急消息和特急消息会扩展普通消息；另一个维度是在具体的消息发送方式上，包括系统内短消息、邮件和手机短消息，这几个方式是平等的，可被切换的方式。
+<img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/6.png"></p>
+<p>现在出现问题的根本原因，就在于消息的抽象和实现是混杂在一起的，这就导致了一个纬度的变化会引起另一个纬度进行相应的变化，从而使得程序扩展起来非常困难。</p>
+<p>要想解决这个问题，就必须把这两个纬度分开，也就是将抽象部分和实现部分分开，让它们相互独立，这样就可以实现独立的变化，使扩展变得简单。抽象部分就是各个消息的类型所对应的功能，而实现部分就是各种发送消息的方式。按照桥梁模式的结构，给抽象部分和实现部分分别定义接口，然后分别实现它们就可以了。
+<img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/7.png"></p>
+<p>抽象消息类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> AbstractMessage {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//持有一个实现部分的对象</span>
+</span></span><span style="display:flex;"><span>    MessageImplementor impl;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 构造方法，传入实现部分的对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param impl  实现部分的对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> AbstractMessage(MessageImplementor impl){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">impl</span> = impl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 发送消息，委派给实现部分的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param message    要发送消息的内容
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param toUser    消息的接受者
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> sendMessage(String message , String toUser){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">impl</span>.<span style="color:#007f7f">send</span>(message, toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>普通消息类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> CommonMessage <span style="color:#fff;font-weight:bold">extends</span> AbstractMessage {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> CommonMessage(MessageImplementor impl) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">super</span>(impl);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> sendMessage(String message, String toUser) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 对于普通消息，直接调用父类方法，发送消息即可</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">super</span>.<span style="color:#007f7f">sendMessage</span>(message, toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>加急消息类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> UrgencyMessage <span style="color:#fff;font-weight:bold">extends</span> AbstractMessage {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> UrgencyMessage(MessageImplementor impl) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">super</span>(impl);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> sendMessage(String message, String toUser) {
+</span></span><span style="display:flex;"><span>        message = <span style="color:#0ff;font-weight:bold">&#34;加急：&#34;</span> + message;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">super</span>.<span style="color:#007f7f">sendMessage</span>(message, toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 扩展自己的新功能，监控某消息的处理状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param messageId    被监控的消息编号
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @return    监控到的消息的处理状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> Object watch(String messageId) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">// 根据消息id获取消息的状态，组织成监控的数据对象，然后返回</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实现发送消息的统一接口</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> MessageImplementor {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 发送消息
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param message 要发送消息的内容
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param toUser  消息的接受者
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message , String toUser);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>系统内短消息的实现类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> MessageSMS <span style="color:#fff;font-weight:bold">implements</span> MessageImplementor {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message, String toUser) {        
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;使用系统内短消息的方法，发送消息&#39;&#34;</span>+message+<span style="color:#0ff;font-weight:bold">&#34;&#39;给&#34;</span>+toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>邮件短消息的实现类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> MessageEmail <span style="color:#fff;font-weight:bold">implements</span> MessageImplementor {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> send(String message, String toUser) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;使用邮件短消息的方法，发送消息&#39;&#34;</span>+message+<span style="color:#0ff;font-weight:bold">&#34;&#39;给&#34;</span>+toUser);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>客户端类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> Client {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//创建具体的实现对象</span>
+</span></span><span style="display:flex;"><span>        MessageImplementor impl = <span style="color:#fff;font-weight:bold">new</span> MessageSMS();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//创建普通消息对象</span>
+</span></span><span style="display:flex;"><span>        AbstractMessage message = <span style="color:#fff;font-weight:bold">new</span>  CommonMessage(impl);
+</span></span><span style="display:flex;"><span>        message.<span style="color:#007f7f">sendMessage</span>(<span style="color:#0ff;font-weight:bold">&#34;加班申请速批&#34;</span>,<span style="color:#0ff;font-weight:bold">&#34;李总&#34;</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//将实现方式切换成邮件，再次发送</span>
+</span></span><span style="display:flex;"><span>        impl = <span style="color:#fff;font-weight:bold">new</span> MessageEmail();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//创建加急消息对象</span>
+</span></span><span style="display:flex;"><span>        message = <span style="color:#fff;font-weight:bold">new</span> UrgencyMessage(impl);
+</span></span><span style="display:flex;"><span>        message.<span style="color:#007f7f">sendMessage</span>(<span style="color:#0ff;font-weight:bold">&#34;加班申请速批&#34;</span>,<span style="color:#0ff;font-weight:bold">&#34;李总&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>观察上面的例子会发现，采用桥梁模式来实现，抽象部分和实现部分分离开了，可以相互独立的变化，而不会相互影响。因此在抽象部分添加新的消息处理（特急消息），对发送消息的实现部分是没有影响的；反过来增加发送消息的方式（手机短消息），对消息处理部分也是没有影响的。</p>
+<h1 id="桥梁模式在java中的使用">桥梁模式在Java中的使用<a hidden class="anchor" aria-hidden="true" href="#桥梁模式在java中的使用">#</a></h1>
+<p>桥梁模式在Java应用中的一个非常典型的例子就是JDBC驱动器。JDBC为所有的关系型数据库提供一个通用的界面。一个应用系统动态地选择一个合适的驱动器，然后通过驱动器向数据库引擎发出指令。这个过程就是将抽象角色的行为委派给实现角色的过程。</p>
+<p>抽象角色可以针对任何数据库引擎发出查询指令，因为抽象角色并不直接与数据库引擎打交道，JDBC驱动器负责这个底层的工作。由于JDBC驱动器的存在，应用系统可以不依赖于数据库引擎的细节而独立地演化；同时数据库引擎也可以独立于应用系统的细节而独立的演化。两个独立的等级结构如下图所示，左边是JDBC API的等级结构，右边是JDBC驱动器的等级结构。应用程序是建立在JDBC API的基础之上的。
+<img loading="lazy" src="/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A1%A5%E6%A2%81%E6%A8%A1%E5%BC%8F/8.png"></p>
+<p>应用系统作为一个等级结构，与JDBC驱动器这个等级结构是相对独立的，它们之间没有静态的强关联。应用系统通过委派与JDBC驱动器相互作用，这是一个桥梁模式的例子。</p>
+<p>JDBC的这种架构，把抽象部分和具体部分分离开来，从而使得抽象部分和具体部分都可以独立地扩展。对于应用程序而言，只要选用不同的驱动，就可以让程序操作不同的数据库，而无需更改应用程序，从而实现在不同的数据库上移植；对于驱动程序而言，为数据库实现不同的驱动程序，并不会影响应用程序。</p>
+<p><a href="https://www.cnblogs.com/java-my-life/archive/2012/05/07/2480938.html">参考</a>
+<a href="https://www.cnblogs.com/adamjwh/p/9033548.html">参考</a></p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/en/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/en/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

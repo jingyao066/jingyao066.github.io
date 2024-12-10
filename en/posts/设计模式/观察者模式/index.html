@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>观察者模式 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="设计模式">
+<meta name="description" content="快速学习
+类型：行为型
+
+定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+
+观察者模式（Observer）又称发布-订阅模式（Publish-Subscribe：Pub/Sub）。它是一种通知机制，让发送通知的一方（被观察方）和接收通知的一方（观察者）能彼此分离，互不影响。
+要理解观察者模式，我们还是看例子。
+假设一个电商网站，有多种Product（商品），同时，Customer（消费者）和Admin（管理员）对商品上架、价格改变都感兴趣，希望能第一时间获得通知。于是，Store（商场）可以这么写：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+
+
+public class Store {
+    Customer customer;
+    Admin admin;
+
+    private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;();
+
+    public void addNewProduct(String name, double price) {
+        Product p = new Product(name, price);
+        products.put(p.getName(), p);
+        // 通知用户:
+        customer.onPublished(p);
+        // 通知管理员:
+        admin.onPublished(p);
+    }
+
+    public void setProductPrice(String name, double price) {
+        Product p = products.get(name);
+        p.setPrice(price);
+        // 通知用户:
+        customer.onPriceChanged(p);
+        // 通知管理员:
+        admin.onPriceChanged(p);
+    }
+}
+
+
+我们观察上述Store类的问题：它直接引用了Customer和Admin。先不考虑多个Customer或多个Admin的问题，上述Store类最大的问题是，如果要加一个新的观察者类型，例如工商局管理员，Store类就必须继续改动。
+因此，上述问题的本质是Store希望发送通知给那些关心Product的对象，但Store并不想知道这些人是谁。观察者模式就是要分离被观察者和观察者之间的耦合关系。
+要实现这一目标也很简单，Store不能直接引用Customer和Admin，相反，它引用一个ProductObserver接口，任何人想要观察Store，只要实现该接口，并且把自己注册到Store即可：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+
+
+public class Store {
+    private List&lt;ProductObserver&gt; observers = new ArrayList&lt;&gt;();
+    private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;();
+
+    // 注册观察者:
+    public void addObserver(ProductObserver observer) {
+        this.observers.add(observer);
+    }
+
+    // 取消注册:
+    public void removeObserver(ProductObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    public void addNewProduct(String name, double price) {
+        Product p = new Product(name, price);
+        products.put(p.getName(), p);
+        // 通知观察者:
+        observers.forEach(o -&gt; o.onPublished(p));
+    }
+
+    public void setProductPrice(String name, double price) {
+        Product p = products.get(name);
+        p.setPrice(price);
+        // 通知观察者:
+        observers.forEach(o -&gt; o.onPriceChanged(p));
+    }
+}
+
+
+就是这么一个小小的改动，使得观察者类型就可以无限扩充，而且，观察者的定义可以放到客户端：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+
+// observer:
+Admin a = new Admin();
+Customer c = new Customer();
+// store:
+Store store = new Store();
+// 注册观察者:
+store.addObserver(a);
+store.addObserver(c);
+
+
+甚至可以注册匿名观察者：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+store.addObserver(new ProductObserver() {
+    public void onPublished(Product product) {
+        System.out.println(&#34;[Log] on product published: &#34; &#43; product);
+    }
+
+    public void onPriceChanged(Product product) {
+        System.out.println(&#34;[Log] on product price changed: &#34; &#43; product);
+    }
+});
+
+
+用一张图画出观察者模式：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+
+
+┌─────────┐      ┌───────────────┐
+│  Store  │─ ─ ─&gt;│ProductObserver│
+└─────────┘      └───────────────┘
+     │                   ▲
+                         │
+     │             ┌─────┴─────┐
+     ▼             │           │
+┌─────────┐   ┌─────────┐ ┌─────────┐
+│ Product │   │  Admin  │ │Customer │ ...
+└─────────┘   └─────────┘ └─────────┘
+
+
+观察者模式也有很多变体形式。有的观察者模式把被观察者也抽象出接口：
+
+
+1
+2
+3
+4
+
+
+public interface ProductObservable { // 注意此处拼写是Observable不是Observer!
+    void addObserver(ProductObserver observer);
+    void removeObserver(ProductObserver observer);
+}
+
+
+对应的实体被观察者就要实现该接口：
+
+
+1
+2
+3
+
+
+public class Store implements ProductObservable {
+    ...
+}
+
+
+有些观察者模式把通知变成一个Event对象，从而不再有多种方法通知，而是统一成一种：
+
+
+1
+2
+3
+
+
+public interface ProductObserver {
+    void onEvent(ProductEvent event);
+}
+
+
+让观察者自己从Event对象中读取通知类型和通知数据。
+广义的观察者模式包括所有消息系统。所谓消息系统，就是把观察者和被观察者完全分离，通过消息系统本身来通知：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+
+
+                 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+                   Messaging System
+                 │                       │
+                   ┌──────────────────┐
+              ┌──┼&gt;│Topic:newProduct  │──┼─┐    ┌─────────┐
+              │    └──────────────────┘    ├───&gt;│ConsumerA│
+┌─────────┐   │  │ ┌──────────────────┐  │ │    └─────────┘
+│Producer │───┼───&gt;│Topic:priceChanged│────┘
+└─────────┘   │  │ └──────────────────┘  │
+              │    ┌──────────────────┐         ┌─────────┐
+              └──┼&gt;│Topic:soldOut     │──┼─────&gt;│ConsumerB│
+                   └──────────────────┘         └─────────┘
+                 └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+
+
+消息发送方称为Producer，消息接收方称为Consumer，Producer发送消息的时候，必须选择发送到哪个Topic。Consumer可以订阅自己感兴趣的Topic，从而只获得特定类型的消息。
+使用消息系统实现观察者模式时，Producer和Consumer甚至经常不在同一台机器上，并且双方对对方完全一无所知，因为注册观察者这个动作本身都在消息系统中完成，而不是在Producer内部完成。
+此外，注意到我们在编写观察者模式的时候，通知Observer是依靠语句：
+
+
+1
+
+
+observers.forEach(o -&gt; o.onPublished(p));
+
+
+这说明各个观察者是依次获得的同步通知，如果上一个观察者处理太慢，会导致下一个观察者不能及时获得通知。此外，如果观察者在处理通知的时候，发生了异常，还需要被观察者处理异常，才能保证继续通知下一个观察者。
+思考：如何改成异步通知，使得所有观察者可以并发同时处理？
+有的童鞋可能发现Java标准库有个java.util.Observable类和一个Observer接口，用来帮助我们实现观察者模式。但是，这个类非常不！好！用！实现观察者模式的时候，也不推荐借助这两个东东。
+概述
+在阎宏博士的《JAVA与模式》一书中开头是这样描述观察者（Observer）模式的：
+观察者模式是对象的行为模式，又叫发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式。
+观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="观察者模式">
+  <meta property="og:description" content="快速学习 类型：行为型
+定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+观察者模式（Observer）又称发布-订阅模式（Publish-Subscribe：Pub/Sub）。它是一种通知机制，让发送通知的一方（被观察方）和接收通知的一方（观察者）能彼此分离，互不影响。
+要理解观察者模式，我们还是看例子。
+假设一个电商网站，有多种Product（商品），同时，Customer（消费者）和Admin（管理员）对商品上架、价格改变都感兴趣，希望能第一时间获得通知。于是，Store（商场）可以这么写：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 public class Store { Customer customer; Admin admin; private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;(); public void addNewProduct(String name, double price) { Product p = new Product(name, price); products.put(p.getName(), p); // 通知用户: customer.onPublished(p); // 通知管理员: admin.onPublished(p); } public void setProductPrice(String name, double price) { Product p = products.get(name); p.setPrice(price); // 通知用户: customer.onPriceChanged(p); // 通知管理员: admin.onPriceChanged(p); } } 我们观察上述Store类的问题：它直接引用了Customer和Admin。先不考虑多个Customer或多个Admin的问题，上述Store类最大的问题是，如果要加一个新的观察者类型，例如工商局管理员，Store类就必须继续改动。
+因此，上述问题的本质是Store希望发送通知给那些关心Product的对象，但Store并不想知道这些人是谁。观察者模式就是要分离被观察者和观察者之间的耦合关系。
+要实现这一目标也很简单，Store不能直接引用Customer和Admin，相反，它引用一个ProductObserver接口，任何人想要观察Store，只要实现该接口，并且把自己注册到Store即可：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 public class Store { private List&lt;ProductObserver&gt; observers = new ArrayList&lt;&gt;(); private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;(); // 注册观察者: public void addObserver(ProductObserver observer) { this.observers.add(observer); } // 取消注册: public void removeObserver(ProductObserver observer) { this.observers.remove(observer); } public void addNewProduct(String name, double price) { Product p = new Product(name, price); products.put(p.getName(), p); // 通知观察者: observers.forEach(o -&gt; o.onPublished(p)); } public void setProductPrice(String name, double price) { Product p = products.get(name); p.setPrice(price); // 通知观察者: observers.forEach(o -&gt; o.onPriceChanged(p)); } } 就是这么一个小小的改动，使得观察者类型就可以无限扩充，而且，观察者的定义可以放到客户端：
+1 2 3 4 5 6 7 8 // observer: Admin a = new Admin(); Customer c = new Customer(); // store: Store store = new Store(); // 注册观察者: store.addObserver(a); store.addObserver(c); 甚至可以注册匿名观察者：
+1 2 3 4 5 6 7 8 9 store.addObserver(new ProductObserver() { public void onPublished(Product product) { System.out.println(&#34;[Log] on product published: &#34; &#43; product); } public void onPriceChanged(Product product) { System.out.println(&#34;[Log] on product price changed: &#34; &#43; product); } }); 用一张图画出观察者模式：
+1 2 3 4 5 6 7 8 9 10 ┌─────────┐ ┌───────────────┐ │ Store │─ ─ ─&gt;│ProductObserver│ └─────────┘ └───────────────┘ │ ▲ │ │ ┌─────┴─────┐ ▼ │ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ Product │ │ Admin │ │Customer │ ... └─────────┘ └─────────┘ └─────────┘ 观察者模式也有很多变体形式。有的观察者模式把被观察者也抽象出接口：
+1 2 3 4 public interface ProductObservable { // 注意此处拼写是Observable不是Observer! void addObserver(ProductObserver observer); void removeObserver(ProductObserver observer); } 对应的实体被观察者就要实现该接口：
+1 2 3 public class Store implements ProductObservable { ... } 有些观察者模式把通知变成一个Event对象，从而不再有多种方法通知，而是统一成一种：
+1 2 3 public interface ProductObserver { void onEvent(ProductEvent event); } 让观察者自己从Event对象中读取通知类型和通知数据。
+广义的观察者模式包括所有消息系统。所谓消息系统，就是把观察者和被观察者完全分离，通过消息系统本身来通知：
+1 2 3 4 5 6 7 8 9 10 11 12 13 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐ Messaging System │ │ ┌──────────────────┐ ┌──┼&gt;│Topic:newProduct │──┼─┐ ┌─────────┐ │ └──────────────────┘ ├───&gt;│ConsumerA│ ┌─────────┐ │ │ ┌──────────────────┐ │ │ └─────────┘ │Producer │───┼───&gt;│Topic:priceChanged│────┘ └─────────┘ │ │ └──────────────────┘ │ │ ┌──────────────────┐ ┌─────────┐ └──┼&gt;│Topic:soldOut │──┼─────&gt;│ConsumerB│ └──────────────────┘ └─────────┘ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ 消息发送方称为Producer，消息接收方称为Consumer，Producer发送消息的时候，必须选择发送到哪个Topic。Consumer可以订阅自己感兴趣的Topic，从而只获得特定类型的消息。
+使用消息系统实现观察者模式时，Producer和Consumer甚至经常不在同一台机器上，并且双方对对方完全一无所知，因为注册观察者这个动作本身都在消息系统中完成，而不是在Producer内部完成。
+此外，注意到我们在编写观察者模式的时候，通知Observer是依靠语句：
+1 observers.forEach(o -&gt; o.onPublished(p)); 这说明各个观察者是依次获得的同步通知，如果上一个观察者处理太慢，会导致下一个观察者不能及时获得通知。此外，如果观察者在处理通知的时候，发生了异常，还需要被观察者处理异常，才能保证继续通知下一个观察者。
+思考：如何改成异步通知，使得所有观察者可以并发同时处理？
+有的童鞋可能发现Java标准库有个java.util.Observable类和一个Observer接口，用来帮助我们实现观察者模式。但是，这个类非常不！好！用！实现观察者模式的时候，也不推荐借助这两个东东。
+概述 在阎宏博士的《JAVA与模式》一书中开头是这样描述观察者（Observer）模式的： 观察者模式是对象的行为模式，又叫发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式。
+观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-12-20T16:02:18+00:00">
+    <meta property="article:modified_time" content="2018-12-20T16:02:18+00:00">
+    <meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="观察者模式">
+<meta name="twitter:description" content="快速学习
+类型：行为型
+
+定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+
+观察者模式（Observer）又称发布-订阅模式（Publish-Subscribe：Pub/Sub）。它是一种通知机制，让发送通知的一方（被观察方）和接收通知的一方（观察者）能彼此分离，互不影响。
+要理解观察者模式，我们还是看例子。
+假设一个电商网站，有多种Product（商品），同时，Customer（消费者）和Admin（管理员）对商品上架、价格改变都感兴趣，希望能第一时间获得通知。于是，Store（商场）可以这么写：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+
+
+public class Store {
+    Customer customer;
+    Admin admin;
+
+    private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;();
+
+    public void addNewProduct(String name, double price) {
+        Product p = new Product(name, price);
+        products.put(p.getName(), p);
+        // 通知用户:
+        customer.onPublished(p);
+        // 通知管理员:
+        admin.onPublished(p);
+    }
+
+    public void setProductPrice(String name, double price) {
+        Product p = products.get(name);
+        p.setPrice(price);
+        // 通知用户:
+        customer.onPriceChanged(p);
+        // 通知管理员:
+        admin.onPriceChanged(p);
+    }
+}
+
+
+我们观察上述Store类的问题：它直接引用了Customer和Admin。先不考虑多个Customer或多个Admin的问题，上述Store类最大的问题是，如果要加一个新的观察者类型，例如工商局管理员，Store类就必须继续改动。
+因此，上述问题的本质是Store希望发送通知给那些关心Product的对象，但Store并不想知道这些人是谁。观察者模式就是要分离被观察者和观察者之间的耦合关系。
+要实现这一目标也很简单，Store不能直接引用Customer和Admin，相反，它引用一个ProductObserver接口，任何人想要观察Store，只要实现该接口，并且把自己注册到Store即可：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+
+
+public class Store {
+    private List&lt;ProductObserver&gt; observers = new ArrayList&lt;&gt;();
+    private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;();
+
+    // 注册观察者:
+    public void addObserver(ProductObserver observer) {
+        this.observers.add(observer);
+    }
+
+    // 取消注册:
+    public void removeObserver(ProductObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    public void addNewProduct(String name, double price) {
+        Product p = new Product(name, price);
+        products.put(p.getName(), p);
+        // 通知观察者:
+        observers.forEach(o -&gt; o.onPublished(p));
+    }
+
+    public void setProductPrice(String name, double price) {
+        Product p = products.get(name);
+        p.setPrice(price);
+        // 通知观察者:
+        observers.forEach(o -&gt; o.onPriceChanged(p));
+    }
+}
+
+
+就是这么一个小小的改动，使得观察者类型就可以无限扩充，而且，观察者的定义可以放到客户端：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+
+// observer:
+Admin a = new Admin();
+Customer c = new Customer();
+// store:
+Store store = new Store();
+// 注册观察者:
+store.addObserver(a);
+store.addObserver(c);
+
+
+甚至可以注册匿名观察者：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+store.addObserver(new ProductObserver() {
+    public void onPublished(Product product) {
+        System.out.println(&#34;[Log] on product published: &#34; &#43; product);
+    }
+
+    public void onPriceChanged(Product product) {
+        System.out.println(&#34;[Log] on product price changed: &#34; &#43; product);
+    }
+});
+
+
+用一张图画出观察者模式：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+
+
+┌─────────┐      ┌───────────────┐
+│  Store  │─ ─ ─&gt;│ProductObserver│
+└─────────┘      └───────────────┘
+     │                   ▲
+                         │
+     │             ┌─────┴─────┐
+     ▼             │           │
+┌─────────┐   ┌─────────┐ ┌─────────┐
+│ Product │   │  Admin  │ │Customer │ ...
+└─────────┘   └─────────┘ └─────────┘
+
+
+观察者模式也有很多变体形式。有的观察者模式把被观察者也抽象出接口：
+
+
+1
+2
+3
+4
+
+
+public interface ProductObservable { // 注意此处拼写是Observable不是Observer!
+    void addObserver(ProductObserver observer);
+    void removeObserver(ProductObserver observer);
+}
+
+
+对应的实体被观察者就要实现该接口：
+
+
+1
+2
+3
+
+
+public class Store implements ProductObservable {
+    ...
+}
+
+
+有些观察者模式把通知变成一个Event对象，从而不再有多种方法通知，而是统一成一种：
+
+
+1
+2
+3
+
+
+public interface ProductObserver {
+    void onEvent(ProductEvent event);
+}
+
+
+让观察者自己从Event对象中读取通知类型和通知数据。
+广义的观察者模式包括所有消息系统。所谓消息系统，就是把观察者和被观察者完全分离，通过消息系统本身来通知：
+
+
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+
+
+                 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+                   Messaging System
+                 │                       │
+                   ┌──────────────────┐
+              ┌──┼&gt;│Topic:newProduct  │──┼─┐    ┌─────────┐
+              │    └──────────────────┘    ├───&gt;│ConsumerA│
+┌─────────┐   │  │ ┌──────────────────┐  │ │    └─────────┘
+│Producer │───┼───&gt;│Topic:priceChanged│────┘
+└─────────┘   │  │ └──────────────────┘  │
+              │    ┌──────────────────┐         ┌─────────┐
+              └──┼&gt;│Topic:soldOut     │──┼─────&gt;│ConsumerB│
+                   └──────────────────┘         └─────────┘
+                 └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+
+
+消息发送方称为Producer，消息接收方称为Consumer，Producer发送消息的时候，必须选择发送到哪个Topic。Consumer可以订阅自己感兴趣的Topic，从而只获得特定类型的消息。
+使用消息系统实现观察者模式时，Producer和Consumer甚至经常不在同一台机器上，并且双方对对方完全一无所知，因为注册观察者这个动作本身都在消息系统中完成，而不是在Producer内部完成。
+此外，注意到我们在编写观察者模式的时候，通知Observer是依靠语句：
+
+
+1
+
+
+observers.forEach(o -&gt; o.onPublished(p));
+
+
+这说明各个观察者是依次获得的同步通知，如果上一个观察者处理太慢，会导致下一个观察者不能及时获得通知。此外，如果观察者在处理通知的时候，发生了异常，还需要被观察者处理异常，才能保证继续通知下一个观察者。
+思考：如何改成异步通知，使得所有观察者可以并发同时处理？
+有的童鞋可能发现Java标准库有个java.util.Observable类和一个Observer接口，用来帮助我们实现观察者模式。但是，这个类非常不！好！用！实现观察者模式的时候，也不推荐借助这两个东东。
+概述
+在阎宏博士的《JAVA与模式》一书中开头是这样描述观察者（Observer）模式的：
+观察者模式是对象的行为模式，又叫发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式。
+观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "观察者模式",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "观察者模式",
+  "name": "观察者模式",
+  "description": "快速学习 类型：行为型\n定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。\n观察者模式（Observer）又称发布-订阅模式（Publish-Subscribe：Pub/Sub）。它是一种通知机制，让发送通知的一方（被观察方）和接收通知的一方（观察者）能彼此分离，互不影响。\n要理解观察者模式，我们还是看例子。\n假设一个电商网站，有多种Product（商品），同时，Customer（消费者）和Admin（管理员）对商品上架、价格改变都感兴趣，希望能第一时间获得通知。于是，Store（商场）可以这么写：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 public class Store { Customer customer; Admin admin; private Map\u0026lt;String, Product\u0026gt; products = new HashMap\u0026lt;\u0026gt;(); public void addNewProduct(String name, double price) { Product p = new Product(name, price); products.put(p.getName(), p); // 通知用户: customer.onPublished(p); // 通知管理员: admin.onPublished(p); } public void setProductPrice(String name, double price) { Product p = products.get(name); p.setPrice(price); // 通知用户: customer.onPriceChanged(p); // 通知管理员: admin.onPriceChanged(p); } } 我们观察上述Store类的问题：它直接引用了Customer和Admin。先不考虑多个Customer或多个Admin的问题，上述Store类最大的问题是，如果要加一个新的观察者类型，例如工商局管理员，Store类就必须继续改动。\n因此，上述问题的本质是Store希望发送通知给那些关心Product的对象，但Store并不想知道这些人是谁。观察者模式就是要分离被观察者和观察者之间的耦合关系。\n要实现这一目标也很简单，Store不能直接引用Customer和Admin，相反，它引用一个ProductObserver接口，任何人想要观察Store，只要实现该接口，并且把自己注册到Store即可：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 public class Store { private List\u0026lt;ProductObserver\u0026gt; observers = new ArrayList\u0026lt;\u0026gt;(); private Map\u0026lt;String, Product\u0026gt; products = new HashMap\u0026lt;\u0026gt;(); // 注册观察者: public void addObserver(ProductObserver observer) { this.observers.add(observer); } // 取消注册: public void removeObserver(ProductObserver observer) { this.observers.remove(observer); } public void addNewProduct(String name, double price) { Product p = new Product(name, price); products.put(p.getName(), p); // 通知观察者: observers.forEach(o -\u0026gt; o.onPublished(p)); } public void setProductPrice(String name, double price) { Product p = products.get(name); p.setPrice(price); // 通知观察者: observers.forEach(o -\u0026gt; o.onPriceChanged(p)); } } 就是这么一个小小的改动，使得观察者类型就可以无限扩充，而且，观察者的定义可以放到客户端：\n1 2 3 4 5 6 7 8 // observer: Admin a = new Admin(); Customer c = new Customer(); // store: Store store = new Store(); // 注册观察者: store.addObserver(a); store.addObserver(c); 甚至可以注册匿名观察者：\n1 2 3 4 5 6 7 8 9 store.addObserver(new ProductObserver() { public void onPublished(Product product) { System.out.println(\u0026#34;[Log] on product published: \u0026#34; + product); } public void onPriceChanged(Product product) { System.out.println(\u0026#34;[Log] on product price changed: \u0026#34; + product); } }); 用一张图画出观察者模式：\n1 2 3 4 5 6 7 8 9 10 ┌─────────┐ ┌───────────────┐ │ Store │─ ─ ─\u0026gt;│ProductObserver│ └─────────┘ └───────────────┘ │ ▲ │ │ ┌─────┴─────┐ ▼ │ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ Product │ │ Admin │ │Customer │ ... └─────────┘ └─────────┘ └─────────┘ 观察者模式也有很多变体形式。有的观察者模式把被观察者也抽象出接口：\n1 2 3 4 public interface ProductObservable { // 注意此处拼写是Observable不是Observer! void addObserver(ProductObserver observer); void removeObserver(ProductObserver observer); } 对应的实体被观察者就要实现该接口：\n1 2 3 public class Store implements ProductObservable { ... } 有些观察者模式把通知变成一个Event对象，从而不再有多种方法通知，而是统一成一种：\n1 2 3 public interface ProductObserver { void onEvent(ProductEvent event); } 让观察者自己从Event对象中读取通知类型和通知数据。\n广义的观察者模式包括所有消息系统。所谓消息系统，就是把观察者和被观察者完全分离，通过消息系统本身来通知：\n1 2 3 4 5 6 7 8 9 10 11 12 13 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐ Messaging System │ │ ┌──────────────────┐ ┌──┼\u0026gt;│Topic:newProduct │──┼─┐ ┌─────────┐ │ └──────────────────┘ ├───\u0026gt;│ConsumerA│ ┌─────────┐ │ │ ┌──────────────────┐ │ │ └─────────┘ │Producer │───┼───\u0026gt;│Topic:priceChanged│────┘ └─────────┘ │ │ └──────────────────┘ │ │ ┌──────────────────┐ ┌─────────┐ └──┼\u0026gt;│Topic:soldOut │──┼─────\u0026gt;│ConsumerB│ └──────────────────┘ └─────────┘ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ 消息发送方称为Producer，消息接收方称为Consumer，Producer发送消息的时候，必须选择发送到哪个Topic。Consumer可以订阅自己感兴趣的Topic，从而只获得特定类型的消息。\n使用消息系统实现观察者模式时，Producer和Consumer甚至经常不在同一台机器上，并且双方对对方完全一无所知，因为注册观察者这个动作本身都在消息系统中完成，而不是在Producer内部完成。\n此外，注意到我们在编写观察者模式的时候，通知Observer是依靠语句：\n1 observers.forEach(o -\u0026gt; o.onPublished(p)); 这说明各个观察者是依次获得的同步通知，如果上一个观察者处理太慢，会导致下一个观察者不能及时获得通知。此外，如果观察者在处理通知的时候，发生了异常，还需要被观察者处理异常，才能保证继续通知下一个观察者。\n思考：如何改成异步通知，使得所有观察者可以并发同时处理？\n有的童鞋可能发现Java标准库有个java.util.Observable类和一个Observer接口，用来帮助我们实现观察者模式。但是，这个类非常不！好！用！实现观察者模式的时候，也不推荐借助这两个东东。\n概述 在阎宏博士的《JAVA与模式》一书中开头是这样描述观察者（Observer）模式的： 观察者模式是对象的行为模式，又叫发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式。\n观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己。\n",
+  "keywords": [
+    "设计模式"
+  ],
+  "articleBody": "快速学习 类型：行为型\n定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。\n观察者模式（Observer）又称发布-订阅模式（Publish-Subscribe：Pub/Sub）。它是一种通知机制，让发送通知的一方（被观察方）和接收通知的一方（观察者）能彼此分离，互不影响。\n要理解观察者模式，我们还是看例子。\n假设一个电商网站，有多种Product（商品），同时，Customer（消费者）和Admin（管理员）对商品上架、价格改变都感兴趣，希望能第一时间获得通知。于是，Store（商场）可以这么写：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 public class Store { Customer customer; Admin admin; private Map products = new HashMap\u003c\u003e(); public void addNewProduct(String name, double price) { Product p = new Product(name, price); products.put(p.getName(), p); // 通知用户: customer.onPublished(p); // 通知管理员: admin.onPublished(p); } public void setProductPrice(String name, double price) { Product p = products.get(name); p.setPrice(price); // 通知用户: customer.onPriceChanged(p); // 通知管理员: admin.onPriceChanged(p); } } 我们观察上述Store类的问题：它直接引用了Customer和Admin。先不考虑多个Customer或多个Admin的问题，上述Store类最大的问题是，如果要加一个新的观察者类型，例如工商局管理员，Store类就必须继续改动。\n因此，上述问题的本质是Store希望发送通知给那些关心Product的对象，但Store并不想知道这些人是谁。观察者模式就是要分离被观察者和观察者之间的耦合关系。\n要实现这一目标也很简单，Store不能直接引用Customer和Admin，相反，它引用一个ProductObserver接口，任何人想要观察Store，只要实现该接口，并且把自己注册到Store即可：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 public class Store { private List observers = new ArrayList\u003c\u003e(); private Map products = new HashMap\u003c\u003e(); // 注册观察者: public void addObserver(ProductObserver observer) { this.observers.add(observer); } // 取消注册: public void removeObserver(ProductObserver observer) { this.observers.remove(observer); } public void addNewProduct(String name, double price) { Product p = new Product(name, price); products.put(p.getName(), p); // 通知观察者: observers.forEach(o -\u003e o.onPublished(p)); } public void setProductPrice(String name, double price) { Product p = products.get(name); p.setPrice(price); // 通知观察者: observers.forEach(o -\u003e o.onPriceChanged(p)); } } 就是这么一个小小的改动，使得观察者类型就可以无限扩充，而且，观察者的定义可以放到客户端：\n1 2 3 4 5 6 7 8 // observer: Admin a = new Admin(); Customer c = new Customer(); // store: Store store = new Store(); // 注册观察者: store.addObserver(a); store.addObserver(c); 甚至可以注册匿名观察者：\n1 2 3 4 5 6 7 8 9 store.addObserver(new ProductObserver() { public void onPublished(Product product) { System.out.println(\"[Log] on product published: \" + product); } public void onPriceChanged(Product product) { System.out.println(\"[Log] on product price changed: \" + product); } }); 用一张图画出观察者模式：\n1 2 3 4 5 6 7 8 9 10 ┌─────────┐ ┌───────────────┐ │ Store │─ ─ ─\u003e│ProductObserver│ └─────────┘ └───────────────┘ │ ▲ │ │ ┌─────┴─────┐ ▼ │ │ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ Product │ │ Admin │ │Customer │ ... └─────────┘ └─────────┘ └─────────┘ 观察者模式也有很多变体形式。有的观察者模式把被观察者也抽象出接口：\n1 2 3 4 public interface ProductObservable { // 注意此处拼写是Observable不是Observer! void addObserver(ProductObserver observer); void removeObserver(ProductObserver observer); } 对应的实体被观察者就要实现该接口：\n1 2 3 public class Store implements ProductObservable { ... } 有些观察者模式把通知变成一个Event对象，从而不再有多种方法通知，而是统一成一种：\n1 2 3 public interface ProductObserver { void onEvent(ProductEvent event); } 让观察者自己从Event对象中读取通知类型和通知数据。\n广义的观察者模式包括所有消息系统。所谓消息系统，就是把观察者和被观察者完全分离，通过消息系统本身来通知：\n1 2 3 4 5 6 7 8 9 10 11 12 13 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐ Messaging System │ │ ┌──────────────────┐ ┌──┼\u003e│Topic:newProduct │──┼─┐ ┌─────────┐ │ └──────────────────┘ ├───\u003e│ConsumerA│ ┌─────────┐ │ │ ┌──────────────────┐ │ │ └─────────┘ │Producer │───┼───\u003e│Topic:priceChanged│────┘ └─────────┘ │ │ └──────────────────┘ │ │ ┌──────────────────┐ ┌─────────┐ └──┼\u003e│Topic:soldOut │──┼─────\u003e│ConsumerB│ └──────────────────┘ └─────────┘ └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ 消息发送方称为Producer，消息接收方称为Consumer，Producer发送消息的时候，必须选择发送到哪个Topic。Consumer可以订阅自己感兴趣的Topic，从而只获得特定类型的消息。\n使用消息系统实现观察者模式时，Producer和Consumer甚至经常不在同一台机器上，并且双方对对方完全一无所知，因为注册观察者这个动作本身都在消息系统中完成，而不是在Producer内部完成。\n此外，注意到我们在编写观察者模式的时候，通知Observer是依靠语句：\n1 observers.forEach(o -\u003e o.onPublished(p)); 这说明各个观察者是依次获得的同步通知，如果上一个观察者处理太慢，会导致下一个观察者不能及时获得通知。此外，如果观察者在处理通知的时候，发生了异常，还需要被观察者处理异常，才能保证继续通知下一个观察者。\n思考：如何改成异步通知，使得所有观察者可以并发同时处理？\n有的童鞋可能发现Java标准库有个java.util.Observable类和一个Observer接口，用来帮助我们实现观察者模式。但是，这个类非常不！好！用！实现观察者模式的时候，也不推荐借助这两个东东。\n概述 在阎宏博士的《JAVA与模式》一书中开头是这样描述观察者（Observer）模式的： 观察者模式是对象的行为模式，又叫发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式。\n观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己。\n一个软件系统里面包含了各种对象，就像一片欣欣向荣的森林充满了各种生物一样。在一片森林中，各种生物彼此依赖和约束，形成一个个生物链。一种生物的状态变化会造成其他一些生物的相应行动，每一个生物都处于别的生物的互动之中。\n同样，一个软件系统常常要求在某一个对象的状态发生变化的时候，某些其他的对象做出相应的改变。做到这一点的设计方案有很多，但是为了使系统能够易于复用，应该选择低耦合度的设计方案。减少对象之间的耦合有利于系统的复用，但是同时设计师需要使这些低耦合度的对象之间能够维持行动的协调一致，保证高度的协作。观察者模式是满足这一要求的各种设计方案中最重要的一种。\n优点\n观察者和被观察者是抽象耦合的。 建立一套触发机制。 缺点\n观察者耗时越多，耗时越长。 观察者模式所涉及的角色有：\n抽象主题(Subject)角色：抽象主题角色把所有对观察者对象的引用保存在一个聚集（比如ArrayList对象）里，每个主题都可以有任何数量的观察者。抽象主题提供一个接口，可以增加和删除观察者对象，抽象主题角色又叫做抽象被观察者(Observable)角色。\n具体主题(ConcreteSubject)角色：将有关状态存入具体观察者对象；在具体主题的内部状态改变时，给所有登记过的观察者发出通知。具体主题角色又叫做具体被观察者(Concrete Observable)角色。\n抽象观察者(Observer)角色：为所有的具体观察者定义一个接口，在得到主题的通知时更新自己，这个接口叫做更新接口。\n具体观察者(ConcreteObserver)角色：存储与主题的状态自恰的状态。具体观察者角色实现抽象观察者角色所要求的更新接口，以便使本身的状态与主题的状态 像协调。如果需要，具体观察者角色可以保持一个指向具体主题对象的引用。\n简单示例 观察者接口\n1 2 3 4 5 6 7 public interface Observer { /** * 更新状态 * @param state 更新的状态 */ public void update(String state); } 观察者实现类\n1 2 3 4 5 6 7 8 9 10 11 12 public class ConcreteObserver implements Observer { //观察者的状态 private String observerState; @Override public void update(String state) { //更新观察者的状态，使其与目标的状态保持一致 observerState = state; System.out.println(\"观察者收到信息，并进行处理，状态为：\"+observerState); } } 抽象主题角色类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 public abstract class Subject { /** * 用来保存注册的观察者对象 */ private List list = new ArrayList(); /** * 注册观察者对象 * @param observer 观察者对象 */ public void addObserver(Observer observer){ list.add(observer); System.out.println(\"Attached an observer\"); } /** * 删除观察者对象 * @param observer 观察者对象 */ public void delObserver(Observer observer){ list.remove(observer); } /** * 通知所有注册的观察者对象 */ public void nodifyObservers(String newState){ for(Observer observer : list){ observer.update(newState); } } public abstract void change(String newState); } 具体主题角色类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class ConcreteSubject extends Subject{ private String state; public String getState() { return state; } public void change(String newState){ state = newState; System.out.println(\"被观察者事件反生，状态为：\" + state); //状态发生改变，通知各个观察者 this.nodifyObservers(state); } } 客户端\n1 2 3 4 5 6 7 8 9 10 11 12 public class Test { public static void main(String[] args) { //创建主题对象 ConcreteSubject subject = new ConcreteSubject(); //创建观察者对象 Observer observer = new ConcreteObserver(); //将观察者对象登记到主题对象上 subject.addObserver(observer); //改变主题对象的状态 subject.change(\"new state\"); } } 我们只调用了Subject的方法，但同时两个观察者的相关方法都被同时调用了。仔细看一下代码，其实很简单，无非就是在Subject类中关联一下Observer类，并且在doSomething方法中遍历一下Observer的update方法就行了。\n推模型和拉模型 在观察者模式中，又分为推模型和拉模型两种方式。\n推模型 主题对象向观察者推送主题的详细信息，不管观察者是否需要，推送的信息通常是主题对象的全部或部分数据。\n拉模型 主题对象在通知观察者的时候，只传递少量信息。如果观察者需要更具体的信息，由观察者主动到主题对象中获取，相当于是观察者从主题对象中拉数据。一般这种模型的实现中，会把主题对象自身通过update()方法传递给观察者，这样在观察者需要获取数据的时候，就可以通过这个引用来获取了。\n根据上面的描述，发现前面的例子就是典型的推模型，下面给出一个拉模型的实例。\n观察者接口(拉模型)\n1 2 3 4 5 6 7 public interface Observer { /** * 更新接口 * @param subject 传入主题对象，方便获取相应的主题对象的状态 */ public void update(Subject subject); } 具体观察者(拉模型)\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class ConcreteObserver implements Observer { //观察者的状态 private String observerState; @Override public void update(Subject subject) { /** * 更新观察者的状态，使其与目标的状态保持一致 */ observerState = ((ConcreteSubject)subject).getState(); System.out.println(\"观察者收到信息，并进行处理，状态为：\"+observerState); } } 抽象主题类(拉模型)，主要的改变是nodifyObservers()方法，在循环通知观察者的时候，也就是循环调用观察者的update()方法的时候，传入的参数不同了。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 public abstract class Subject { /** * 用来保存注册的观察者对象 */ private List list = new ArrayList(); /** * 注册观察者对象 * @param observer 观察者对象 */ public void addObserver(Observer observer){ list.add(observer); System.out.println(\"Attached an observer\"); } /** * 删除观察者对象 * @param observer 观察者对象 */ public void delObserver(Observer observer){ list.remove(observer); } /** * 通知所有注册的观察者对象 */ public void nodifyObservers(){ for(Observer observer : list){ observer.update(this); } } public abstract void change(String newState); } 具体主题类（拉模型），通知观察者的方法的时候，不需要传入参数了。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class ConcreteSubject extends Subject{ private String state; public String getState() { return state; } public void change(String newState){ state = newState; System.out.println(\"被观察者事件反生，状态为：\" + state); //状态发生改变，通知各个观察者 this.nodifyObservers(); } } 其实 newState 这个参数也是传不传无所谓了。\n两种模式的比较 推模型是假定主题对象知道观察者需要的数据；而拉模型是主题对象不知道观察者具体需要什么数据，没有办法的情况下，干脆把自身传递给观察者，让观察者自己去按需要取值。\n推模型可能会使得观察者对象难以复用，因为观察者的update()方法是按需要定义的参数，可能无法兼顾没有考虑到的使用情况。这就意味着出现新情况的时候，就可能提供新的update()方法，或者是干脆重新实现观察者；而拉模型就不会造成这样的情况，因为拉模型下，update()方法的参数是主题对象本身，这基本上是主题对象能传递的最大数据集合了，基本上可以适应各种情况的需要。\n参考 参考\n",
+  "wordCount" : "4918",
+  "inLanguage": "en",
+  "datePublished": "2018-12-20T16:02:18Z",
+  "dateModified": "2018-12-20T16:02:18Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/en/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/en/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/en/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      观察者模式
+    </h1>
+    <div class="post-meta"><span title='2018-12-20 16:02:18 +0000 UTC'>2018-12-20</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%bf%ab%e9%80%9f%e5%ad%a6%e4%b9%a0" aria-label="快速学习">快速学习</a></li>
+                <li>
+                    <a href="#%e6%a6%82%e8%bf%b0" aria-label="概述">概述</a></li>
+                <li>
+                    <a href="#%e7%ae%80%e5%8d%95%e7%a4%ba%e4%be%8b" aria-label="简单示例">简单示例</a></li>
+                <li>
+                    <a href="#%e6%8e%a8%e6%a8%a1%e5%9e%8b%e5%92%8c%e6%8b%89%e6%a8%a1%e5%9e%8b" aria-label="推模型和拉模型">推模型和拉模型</a></li>
+                <li>
+                    <a href="#%e4%b8%a4%e7%a7%8d%e6%a8%a1%e5%bc%8f%e7%9a%84%e6%af%94%e8%be%83" aria-label="两种模式的比较">两种模式的比较</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="快速学习">快速学习<a hidden class="anchor" aria-hidden="true" href="#快速学习">#</a></h1>
+<p>类型：行为型</p>
+<blockquote>
+<p>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</p>
+</blockquote>
+<p>观察者模式（Observer）又称发布-订阅模式（Publish-Subscribe：Pub/Sub）。它是一种通知机制，让发送通知的一方（被观察方）和接收通知的一方（观察者）能彼此分离，互不影响。</p>
+<p>要理解观察者模式，我们还是看例子。</p>
+<p>假设一个电商网站，有多种<code>Product</code>（商品），同时，<code>Customer</code>（消费者）和<code>Admin</code>（管理员）对商品上架、价格改变都感兴趣，希望能第一时间获得通知。于是，<code>Store</code>（商场）可以这么写：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public class Store {
+</span></span><span style="display:flex;"><span>    Customer customer;
+</span></span><span style="display:flex;"><span>    Admin admin;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    public void addNewProduct(String name, double price) {
+</span></span><span style="display:flex;"><span>        Product p = new Product(name, price);
+</span></span><span style="display:flex;"><span>        products.put(p.getName(), p);
+</span></span><span style="display:flex;"><span>        // 通知用户:
+</span></span><span style="display:flex;"><span>        customer.onPublished(p);
+</span></span><span style="display:flex;"><span>        // 通知管理员:
+</span></span><span style="display:flex;"><span>        admin.onPublished(p);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    public void setProductPrice(String name, double price) {
+</span></span><span style="display:flex;"><span>        Product p = products.get(name);
+</span></span><span style="display:flex;"><span>        p.setPrice(price);
+</span></span><span style="display:flex;"><span>        // 通知用户:
+</span></span><span style="display:flex;"><span>        customer.onPriceChanged(p);
+</span></span><span style="display:flex;"><span>        // 通知管理员:
+</span></span><span style="display:flex;"><span>        admin.onPriceChanged(p);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们观察上述<code>Store</code>类的问题：它直接引用了<code>Customer</code>和<code>Admin</code>。先不考虑多个<code>Customer</code>或多个<code>Admin</code>的问题，上述<code>Store</code>类最大的问题是，如果要加一个新的观察者类型，例如工商局管理员，<code>Store</code>类就必须继续改动。</p>
+<p>因此，上述问题的本质是<code>Store</code>希望发送通知给那些关心<code>Product</code>的对象，但<code>Store</code>并不想知道这些人是谁。观察者模式就是要分离被观察者和观察者之间的耦合关系。</p>
+<p>要实现这一目标也很简单，<code>Store</code>不能直接引用<code>Customer</code>和<code>Admin</code>，相反，它引用一个<code>ProductObserver</code>接口，任何人想要观察<code>Store</code>，只要实现该接口，并且把自己注册到<code>Store</code>即可：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public class Store {
+</span></span><span style="display:flex;"><span>    private List&lt;ProductObserver&gt; observers = new ArrayList&lt;&gt;();
+</span></span><span style="display:flex;"><span>    private Map&lt;String, Product&gt; products = new HashMap&lt;&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // 注册观察者:
+</span></span><span style="display:flex;"><span>    public void addObserver(ProductObserver observer) {
+</span></span><span style="display:flex;"><span>        this.observers.add(observer);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    // 取消注册:
+</span></span><span style="display:flex;"><span>    public void removeObserver(ProductObserver observer) {
+</span></span><span style="display:flex;"><span>        this.observers.remove(observer);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    public void addNewProduct(String name, double price) {
+</span></span><span style="display:flex;"><span>        Product p = new Product(name, price);
+</span></span><span style="display:flex;"><span>        products.put(p.getName(), p);
+</span></span><span style="display:flex;"><span>        // 通知观察者:
+</span></span><span style="display:flex;"><span>        observers.forEach(o -&gt; o.onPublished(p));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    public void setProductPrice(String name, double price) {
+</span></span><span style="display:flex;"><span>        Product p = products.get(name);
+</span></span><span style="display:flex;"><span>        p.setPrice(price);
+</span></span><span style="display:flex;"><span>        // 通知观察者:
+</span></span><span style="display:flex;"><span>        observers.forEach(o -&gt; o.onPriceChanged(p));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就是这么一个小小的改动，使得观察者类型就可以无限扩充，而且，观察者的定义可以放到客户端：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// observer:
+</span></span><span style="display:flex;"><span>Admin a = new Admin();
+</span></span><span style="display:flex;"><span>Customer c = new Customer();
+</span></span><span style="display:flex;"><span>// store:
+</span></span><span style="display:flex;"><span>Store store = new Store();
+</span></span><span style="display:flex;"><span>// 注册观察者:
+</span></span><span style="display:flex;"><span>store.addObserver(a);
+</span></span><span style="display:flex;"><span>store.addObserver(c);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>甚至可以注册匿名观察者：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>store.addObserver(new ProductObserver() {
+</span></span><span style="display:flex;"><span>    public void onPublished(Product product) {
+</span></span><span style="display:flex;"><span>        System.out.println(&#34;[Log] on product published: &#34; + product);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    public void onPriceChanged(Product product) {
+</span></span><span style="display:flex;"><span>        System.out.println(&#34;[Log] on product price changed: &#34; + product);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用一张图画出观察者模式：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>┌─────────┐      ┌───────────────┐
+</span></span><span style="display:flex;"><span>│  Store  │─ ─ ─&gt;│ProductObserver│
+</span></span><span style="display:flex;"><span>└─────────┘      └───────────────┘
+</span></span><span style="display:flex;"><span>     │                   ▲
+</span></span><span style="display:flex;"><span>                         │
+</span></span><span style="display:flex;"><span>     │             ┌─────┴─────┐
+</span></span><span style="display:flex;"><span>     ▼             │           │
+</span></span><span style="display:flex;"><span>┌─────────┐   ┌─────────┐ ┌─────────┐
+</span></span><span style="display:flex;"><span>│ Product │   │  Admin  │ │Customer │ ...
+</span></span><span style="display:flex;"><span>└─────────┘   └─────────┘ └─────────┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>观察者模式也有很多变体形式。有的观察者模式把被观察者也抽象出接口：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public interface ProductObservable { // 注意此处拼写是Observable不是Observer!
+</span></span><span style="display:flex;"><span>    void addObserver(ProductObserver observer);
+</span></span><span style="display:flex;"><span>    void removeObserver(ProductObserver observer);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对应的实体被观察者就要实现该接口：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public class Store implements ProductObservable {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有些观察者模式把通知变成一个Event对象，从而不再有多种方法通知，而是统一成一种：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>public interface ProductObserver {
+</span></span><span style="display:flex;"><span>    void onEvent(ProductEvent event);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>让观察者自己从Event对象中读取通知类型和通知数据。</p>
+<p>广义的观察者模式包括所有消息系统。所谓消息系统，就是把观察者和被观察者完全分离，通过消息系统本身来通知：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>                 ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+</span></span><span style="display:flex;"><span>                   Messaging System
+</span></span><span style="display:flex;"><span>                 │                       │
+</span></span><span style="display:flex;"><span>                   ┌──────────────────┐
+</span></span><span style="display:flex;"><span>              ┌──┼&gt;│Topic:newProduct  │──┼─┐    ┌─────────┐
+</span></span><span style="display:flex;"><span>              │    └──────────────────┘    ├───&gt;│ConsumerA│
+</span></span><span style="display:flex;"><span>┌─────────┐   │  │ ┌──────────────────┐  │ │    └─────────┘
+</span></span><span style="display:flex;"><span>│Producer │───┼───&gt;│Topic:priceChanged│────┘
+</span></span><span style="display:flex;"><span>└─────────┘   │  │ └──────────────────┘  │
+</span></span><span style="display:flex;"><span>              │    ┌──────────────────┐         ┌─────────┐
+</span></span><span style="display:flex;"><span>              └──┼&gt;│Topic:soldOut     │──┼─────&gt;│ConsumerB│
+</span></span><span style="display:flex;"><span>                   └──────────────────┘         └─────────┘
+</span></span><span style="display:flex;"><span>                 └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>消息发送方称为Producer，消息接收方称为Consumer，Producer发送消息的时候，必须选择发送到哪个Topic。Consumer可以订阅自己感兴趣的Topic，从而只获得特定类型的消息。</p>
+<p>使用消息系统实现观察者模式时，Producer和Consumer甚至经常不在同一台机器上，并且双方对对方完全一无所知，因为注册观察者这个动作本身都在消息系统中完成，而不是在Producer内部完成。</p>
+<p>此外，注意到我们在编写观察者模式的时候，通知Observer是依靠语句：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>observers.forEach(o -&gt; o.onPublished(p));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这说明各个观察者是依次获得的同步通知，如果上一个观察者处理太慢，会导致下一个观察者不能及时获得通知。此外，如果观察者在处理通知的时候，发生了异常，还需要被观察者处理异常，才能保证继续通知下一个观察者。</p>
+<p>思考：如何改成异步通知，使得所有观察者可以并发同时处理？</p>
+<p>有的童鞋可能发现Java标准库有个<code>java.util.Observable</code>类和一个<code>Observer</code>接口，用来帮助我们实现观察者模式。但是，这个类非常不！好！用！实现观察者模式的时候，也不推荐借助这两个东东。</p>
+<h1 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h1>
+<p>在阎宏博士的《JAVA与模式》一书中开头是这样描述观察者（Observer）模式的：
+观察者模式是对象的行为模式，又叫发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式。</p>
+<p>观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己。</p>
+<p>一个软件系统里面包含了各种对象，就像一片欣欣向荣的森林充满了各种生物一样。在一片森林中，各种生物彼此依赖和约束，形成一个个生物链。一种生物的状态变化会造成其他一些生物的相应行动，每一个生物都处于别的生物的互动之中。</p>
+<p>同样，一个软件系统常常要求在某一个对象的状态发生变化的时候，某些其他的对象做出相应的改变。做到这一点的设计方案有很多，但是为了使系统能够易于复用，应该选择低耦合度的设计方案。减少对象之间的耦合有利于系统的复用，但是同时设计师需要使这些低耦合度的对象之间能够维持行动的协调一致，保证高度的协作。观察者模式是满足这一要求的各种设计方案中最重要的一种。</p>
+<p>优点</p>
+<ul>
+<li>观察者和被观察者是抽象耦合的。</li>
+<li>建立一套触发机制。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>观察者耗时越多，耗时越长。</li>
+</ul>
+<p>观察者模式所涉及的角色有：</p>
+<ul>
+<li>
+<p>抽象主题(Subject)角色：抽象主题角色把所有对观察者对象的引用保存在一个聚集（比如ArrayList对象）里，每个主题都可以有任何数量的观察者。抽象主题提供一个接口，可以增加和删除观察者对象，抽象主题角色又叫做抽象被观察者(Observable)角色。</p>
+</li>
+<li>
+<p>具体主题(ConcreteSubject)角色：将有关状态存入具体观察者对象；在具体主题的内部状态改变时，给所有登记过的观察者发出通知。具体主题角色又叫做具体被观察者(Concrete Observable)角色。</p>
+</li>
+<li>
+<p>抽象观察者(Observer)角色：为所有的具体观察者定义一个接口，在得到主题的通知时更新自己，这个接口叫做更新接口。</p>
+</li>
+<li>
+<p>具体观察者(ConcreteObserver)角色：存储与主题的状态自恰的状态。具体观察者角色实现抽象观察者角色所要求的更新接口，以便使本身的状态与主题的状态 像协调。如果需要，具体观察者角色可以保持一个指向具体主题对象的引用。</p>
+</li>
+</ul>
+<h1 id="简单示例">简单示例<a hidden class="anchor" aria-hidden="true" href="#简单示例">#</a></h1>
+<p>观察者接口</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> Observer {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 更新状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param state    更新的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> update(String state);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>观察者实现类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> ConcreteObserver <span style="color:#fff;font-weight:bold">implements</span> Observer {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//观察者的状态</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> String observerState;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> update(String state) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//更新观察者的状态，使其与目标的状态保持一致</span>
+</span></span><span style="display:flex;"><span>        observerState = state;
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;观察者收到信息，并进行处理，状态为：&#34;</span>+observerState);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>抽象主题角色类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> Subject {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 用来保存注册的观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> List&lt;Observer&gt; list = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;Observer&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 注册观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param observer    观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> addObserver(Observer observer){
+</span></span><span style="display:flex;"><span>        list.<span style="color:#007f7f">add</span>(observer);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;Attached an observer&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 删除观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param observer    观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> delObserver(Observer observer){
+</span></span><span style="display:flex;"><span>        list.<span style="color:#007f7f">remove</span>(observer);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 通知所有注册的观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> nodifyObservers(String newState){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span>(Observer observer : list){
+</span></span><span style="display:flex;"><span>            observer.<span style="color:#007f7f">update</span>(newState);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">void</span> change(String newState);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具体主题角色类</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> ConcreteSubject <span style="color:#fff;font-weight:bold">extends</span> Subject{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> String state;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String getState() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> state;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> change(String newState){
+</span></span><span style="display:flex;"><span>        state = newState;
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;被观察者事件反生，状态为：&#34;</span> + state);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//状态发生改变，通知各个观察者</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">nodifyObservers</span>(state);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>客户端</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> Test {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">void</span> main(String[] args) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//创建主题对象</span>
+</span></span><span style="display:flex;"><span>        ConcreteSubject subject = <span style="color:#fff;font-weight:bold">new</span> ConcreteSubject();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//创建观察者对象</span>
+</span></span><span style="display:flex;"><span>        Observer observer = <span style="color:#fff;font-weight:bold">new</span> ConcreteObserver();
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//将观察者对象登记到主题对象上</span>
+</span></span><span style="display:flex;"><span>        subject.<span style="color:#007f7f">addObserver</span>(observer);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//改变主题对象的状态</span>
+</span></span><span style="display:flex;"><span>        subject.<span style="color:#007f7f">change</span>(<span style="color:#0ff;font-weight:bold">&#34;new state&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们只调用了Subject的方法，但同时两个观察者的相关方法都被同时调用了。仔细看一下代码，其实很简单，无非就是在Subject类中关联一下Observer类，并且在doSomething方法中遍历一下Observer的update方法就行了。</p>
+<h1 id="推模型和拉模型">推模型和拉模型<a hidden class="anchor" aria-hidden="true" href="#推模型和拉模型">#</a></h1>
+<p>在观察者模式中，又分为推模型和拉模型两种方式。</p>
+<ul>
+<li>
+<p>推模型
+主题对象向观察者推送主题的详细信息，不管观察者是否需要，推送的信息通常是主题对象的全部或部分数据。</p>
+</li>
+<li>
+<p>拉模型
+主题对象在通知观察者的时候，只传递少量信息。如果观察者需要更具体的信息，由观察者主动到主题对象中获取，相当于是观察者从主题对象中拉数据。一般这种模型的实现中，会把主题对象自身通过update()方法传递给观察者，这样在观察者需要获取数据的时候，就可以通过这个引用来获取了。</p>
+</li>
+</ul>
+<p>根据上面的描述，发现前面的例子就是典型的推模型，下面给出一个拉模型的实例。</p>
+<p>观察者接口(拉模型)</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> Observer {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 更新接口
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param subject 传入主题对象，方便获取相应的主题对象的状态
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> update(Subject subject);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具体观察者(拉模型)</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> ConcreteObserver <span style="color:#fff;font-weight:bold">implements</span> Observer {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">//观察者的状态</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> String observerState;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> update(Subject subject) {
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">         * 更新观察者的状态，使其与目标的状态保持一致
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">         */</span>
+</span></span><span style="display:flex;"><span>        observerState = ((ConcreteSubject)subject).<span style="color:#007f7f">getState</span>();
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;观察者收到信息，并进行处理，状态为：&#34;</span>+observerState);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>抽象主题类(拉模型)，主要的改变是nodifyObservers()方法，在循环通知观察者的时候，也就是循环调用观察者的update()方法的时候，传入的参数不同了。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> Subject {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 用来保存注册的观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> List&lt;Observer&gt; list = <span style="color:#fff;font-weight:bold">new</span> ArrayList&lt;Observer&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 注册观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param observer    观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> addObserver(Observer observer){
+</span></span><span style="display:flex;"><span>        list.<span style="color:#007f7f">add</span>(observer);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;Attached an observer&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 删除观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * @param observer    观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> delObserver(Observer observer){
+</span></span><span style="display:flex;"><span>        list.<span style="color:#007f7f">remove</span>(observer);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     * 通知所有注册的观察者对象
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> nodifyObservers(){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span>(Observer observer : list){
+</span></span><span style="display:flex;"><span>            observer.<span style="color:#007f7f">update</span>(<span style="color:#fff;font-weight:bold">this</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">void</span> change(String newState);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具体主题类（拉模型），通知观察者的方法的时候，不需要传入参数了。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> ConcreteSubject <span style="color:#fff;font-weight:bold">extends</span> Subject{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> String state;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String getState() {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> state;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> change(String newState){
+</span></span><span style="display:flex;"><span>        state = newState;
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;被观察者事件反生，状态为：&#34;</span> + state);
+</span></span><span style="display:flex;"><span>        <span style="color:#007f7f">//状态发生改变，通知各个观察者</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">nodifyObservers</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实 newState 这个参数也是传不传无所谓了。</p>
+<h1 id="两种模式的比较">两种模式的比较<a hidden class="anchor" aria-hidden="true" href="#两种模式的比较">#</a></h1>
+<ul>
+<li>
+<p>推模型是假定主题对象知道观察者需要的数据；而拉模型是主题对象不知道观察者具体需要什么数据，没有办法的情况下，干脆把自身传递给观察者，让观察者自己去按需要取值。</p>
+</li>
+<li>
+<p>推模型可能会使得观察者对象难以复用，因为观察者的update()方法是按需要定义的参数，可能无法兼顾没有考虑到的使用情况。这就意味着出现新情况的时候，就可能提供新的update()方法，或者是干脆重新实现观察者；而拉模型就不会造成这样的情况，因为拉模型下，update()方法的参数是主题对象本身，这基本上是主题对象能传递的最大数据集合了，基本上可以适应各种情况的需要。</p>
+</li>
+</ul>
+<p><a href="https://www.cnblogs.com/java-my-life/archive/2012/05/16/2502279.html">参考</a>
+<a href="https://whirlys.blog.csdn.net/article/details/83317973">参考</a></p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/en/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/en/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

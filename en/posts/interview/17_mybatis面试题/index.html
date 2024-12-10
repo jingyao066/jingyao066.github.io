@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>17_MyBatis面试题 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="interview">
+<meta name="description" content="MyBatis基础面试题 #{} 和 ${} 的区别是什么？ 答： ${}是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于静态文本替换，比如${dri">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/17_mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/17_mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/17_mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="17_MyBatis面试题">
+  <meta property="og:description" content="MyBatis基础面试题 #{} 和 ${} 的区别是什么？ 答： ${}是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于静态文本替换，比如${dri">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-07-31T05:00:00+00:00">
+    <meta property="article:modified_time" content="2023-07-31T05:00:00+00:00">
+    <meta property="article:tag" content="Interview">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="17_MyBatis面试题">
+<meta name="twitter:description" content="MyBatis基础面试题 #{} 和 ${} 的区别是什么？ 答： ${}是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于静态文本替换，比如${dri">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "17_MyBatis面试题",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/17_mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "17_MyBatis面试题",
+  "name": "17_MyBatis面试题",
+  "description": "MyBatis基础面试题 #{} 和 ${} 的区别是什么？ 答： ${}是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于静态文本替换，比如${dri",
+  "keywords": [
+    "interview"
+  ],
+  "articleBody": "MyBatis基础面试题 #{} 和 ${} 的区别是什么？ 答：\n${}是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于静态文本替换，比如${driver}会被静态替换为com.mysql.jdbc. Driver。 #{}是 sql 的参数占位符，MyBatis 会将 sql 中的#{}替换为? 号，在 sql 执行前会使用 PreparedStatement 的参数设置方法，按序给 sql 的? 号占位符设置参数值，比如 ps.setInt(0, parameterValue)，#{item.name} 的取值方式为使用反射从参数对象中获取 item 对象的 name 属性值，相当于 param.getItem().getName()。 xml 映射文件中，除了常见的 select、insert、update、delete 标签之外，还有哪些标签？ 注：这道题是京东面试官面试我时问的。\n答：还有很多其他的标签， 、 、 、 、 ，加上动态 sql 的 9 个标签， trim|where|set|foreach|if|choose|when|otherwise|bind 等，其中 为 sql 片段标签，通过 标签引入 sql 片段， 为不支持自增的主键生成策略标签。\nDao 接口的工作原理是什么？Dao 接口里的方法，参数不同时，方法能重载吗？ 注：这道题也是京东面试官面试我被问的。\n答：最佳实践中，通常一个 xml 映射文件，都会写一个 Dao 接口与之对应。Dao 接口就是人们常说的 Mapper 接口，接口的全限名，就是映射文件中的 namespace 的值，接口的方法名，就是映射文件中 MappedStatement 的 id 值，接口方法内的参数，就是传递给 sql 的参数。 Mapper 接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为 key 值，可唯一定位一个 MappedStatement ，举例：com.mybatis3.mappers. StudentDao.findStudentById ，可以唯一找到 namespace 为 com.mybatis3.mappers. StudentDao 下面 id = findStudentById 的 MappedStatement 。在 MyBatis 中，每一个 、 、 、 标签，都会被解析为一个 MappedStatement 对象。\nDao 接口里的方法，是不能重载的，因为是全限名+方法名的保存和寻找策略。\nDao 接口里的方法可以重载，但是 Mybatis 的 xml 里面的 ID 不允许重复。\nMybatis 版本 3.3.0，亲测如下：\n1 2 3 4 5 6 7 8 9 /** * Mapper接口里面方法重载 */ public interface StuMapper { List getAllStu(); List getAllStu(@Param(\"id\") Integer id); } 然后在 StuMapper.xml 中利用 Mybatis 的动态 sql 就可以实现。\n1 2 3 4 5 6 7 8 ",
+  "wordCount" : "5350",
+  "inLanguage": "en",
+  "datePublished": "2023-07-31T05:00:00Z",
+  "dateModified": "2023-07-31T05:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/en/posts/interview/17_mybatis%E9%9D%A2%E8%AF%95%E9%A2%98/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/en/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/en/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/en/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/en/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      17_MyBatis面试题
+    </h1>
+    <div class="post-meta"><span title='2023-07-31 05:00:00 +0000 UTC'>2023-07-31</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#mybatis%e5%9f%ba%e7%a1%80%e9%9d%a2%e8%af%95%e9%a2%98" aria-label="MyBatis基础面试题">MyBatis基础面试题</a><ul>
+                        
+                <li>
+                    <a href="#-%e5%92%8c--%e7%9a%84%e5%8c%ba%e5%88%ab%e6%98%af%e4%bb%80%e4%b9%88" aria-label="#{} 和 ${} 的区别是什么？">#{} 和 ${} 的区别是什么？</a></li>
+                <li>
+                    <a href="#xml-%e6%98%a0%e5%b0%84%e6%96%87%e4%bb%b6%e4%b8%ad%e9%99%a4%e4%ba%86%e5%b8%b8%e8%a7%81%e7%9a%84-selectinsertupdatedelete-%e6%a0%87%e7%ad%be%e4%b9%8b%e5%a4%96%e8%bf%98%e6%9c%89%e5%93%aa%e4%ba%9b%e6%a0%87%e7%ad%be" aria-label="xml 映射文件中，除了常见的 select、insert、update、delete 标签之外，还有哪些标签？">xml 映射文件中，除了常见的 select、insert、update、delete 标签之外，还有哪些标签？</a></li>
+                <li>
+                    <a href="#dao-%e6%8e%a5%e5%8f%a3%e7%9a%84%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86%e6%98%af%e4%bb%80%e4%b9%88dao-%e6%8e%a5%e5%8f%a3%e9%87%8c%e7%9a%84%e6%96%b9%e6%b3%95%e5%8f%82%e6%95%b0%e4%b8%8d%e5%90%8c%e6%97%b6%e6%96%b9%e6%b3%95%e8%83%bd%e9%87%8d%e8%bd%bd%e5%90%97" aria-label="Dao 接口的工作原理是什么？Dao 接口里的方法，参数不同时，方法能重载吗？">Dao 接口的工作原理是什么？Dao 接口里的方法，参数不同时，方法能重载吗？</a></li>
+                <li>
+                    <a href="#mybatis-%e6%98%af%e5%a6%82%e4%bd%95%e8%bf%9b%e8%a1%8c%e5%88%86%e9%a1%b5%e7%9a%84%e5%88%86%e9%a1%b5%e6%8f%92%e4%bb%b6%e7%9a%84%e5%8e%9f%e7%90%86%e6%98%af%e4%bb%80%e4%b9%88" aria-label="MyBatis 是如何进行分页的？分页插件的原理是什么？">MyBatis 是如何进行分页的？分页插件的原理是什么？</a></li>
+                <li>
+                    <a href="#%e7%ae%80%e8%bf%b0-mybatis-%e7%9a%84%e6%8f%92%e4%bb%b6%e8%bf%90%e8%a1%8c%e5%8e%9f%e7%90%86%e4%bb%a5%e5%8f%8a%e5%a6%82%e4%bd%95%e7%bc%96%e5%86%99%e4%b8%80%e4%b8%aa%e6%8f%92%e4%bb%b6" aria-label="简述 MyBatis 的插件运行原理，以及如何编写一个插件">简述 MyBatis 的插件运行原理，以及如何编写一个插件</a></li>
+                <li>
+                    <a href="#mybatis-%e6%89%a7%e8%a1%8c%e6%89%b9%e9%87%8f%e6%8f%92%e5%85%a5%e8%83%bd%e8%bf%94%e5%9b%9e%e6%95%b0%e6%8d%ae%e5%ba%93%e4%b8%bb%e9%94%ae%e5%88%97%e8%a1%a8%e5%90%97" aria-label="MyBatis 执行批量插入，能返回数据库主键列表吗？">MyBatis 执行批量插入，能返回数据库主键列表吗？</a></li>
+                <li>
+                    <a href="#mybatis-%e5%8a%a8%e6%80%81-sql-%e6%98%af%e5%81%9a%e4%bb%80%e4%b9%88%e7%9a%84%e9%83%bd%e6%9c%89%e5%93%aa%e4%ba%9b%e5%8a%a8%e6%80%81-sql%e8%83%bd%e7%ae%80%e8%bf%b0%e4%b8%80%e4%b8%8b%e5%8a%a8%e6%80%81-sql-%e7%9a%84%e6%89%a7%e8%a1%8c%e5%8e%9f%e7%90%86%e4%b8%8d" aria-label="MyBatis 动态 sql 是做什么的？都有哪些动态 sql？能简述一下动态 sql 的执行原理不？">MyBatis 动态 sql 是做什么的？都有哪些动态 sql？能简述一下动态 sql 的执行原理不？</a></li>
+                <li>
+                    <a href="#mybatis-%e6%98%af%e5%a6%82%e4%bd%95%e5%b0%86-sql-%e6%89%a7%e8%a1%8c%e7%bb%93%e6%9e%9c%e5%b0%81%e8%a3%85%e4%b8%ba%e7%9b%ae%e6%a0%87%e5%af%b9%e8%b1%a1%e5%b9%b6%e8%bf%94%e5%9b%9e%e7%9a%84%e9%83%bd%e6%9c%89%e5%93%aa%e4%ba%9b%e6%98%a0%e5%b0%84%e5%bd%a2%e5%bc%8f" aria-label="MyBatis 是如何将 sql 执行结果封装为目标对象并返回的？都有哪些映射形式？">MyBatis 是如何将 sql 执行结果封装为目标对象并返回的？都有哪些映射形式？</a></li>
+                <li>
+                    <a href="#mybatis-%e8%83%bd%e6%89%a7%e8%a1%8c%e4%b8%80%e5%af%b9%e4%b8%80%e4%b8%80%e5%af%b9%e5%a4%9a%e7%9a%84%e5%85%b3%e8%81%94%e6%9f%a5%e8%af%a2%e5%90%97%e9%83%bd%e6%9c%89%e5%93%aa%e4%ba%9b%e5%ae%9e%e7%8e%b0%e6%96%b9%e5%bc%8f%e4%bb%a5%e5%8f%8a%e5%ae%83%e4%bb%ac%e4%b9%8b%e9%97%b4%e7%9a%84%e5%8c%ba%e5%88%ab" aria-label="MyBatis 能执行一对一、一对多的关联查询吗？都有哪些实现方式，以及它们之间的区别">MyBatis 能执行一对一、一对多的关联查询吗？都有哪些实现方式，以及它们之间的区别</a></li>
+                <li>
+                    <a href="#mybatis-%e6%98%af%e5%90%a6%e6%94%af%e6%8c%81%e5%bb%b6%e8%bf%9f%e5%8a%a0%e8%bd%bd%e5%a6%82%e6%9e%9c%e6%94%af%e6%8c%81%e5%ae%83%e7%9a%84%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86%e6%98%af%e4%bb%80%e4%b9%88" aria-label="MyBatis 是否支持延迟加载？如果支持，它的实现原理是什么？">MyBatis 是否支持延迟加载？如果支持，它的实现原理是什么？</a></li>
+                <li>
+                    <a href="#mybatis-%e7%9a%84-xml-%e6%98%a0%e5%b0%84%e6%96%87%e4%bb%b6%e4%b8%ad%e4%b8%8d%e5%90%8c%e7%9a%84-xml-%e6%98%a0%e5%b0%84%e6%96%87%e4%bb%b6id-%e6%98%af%e5%90%a6%e5%8f%af%e4%bb%a5%e9%87%8d%e5%a4%8d" aria-label="MyBatis 的 xml 映射文件中，不同的 xml 映射文件，id 是否可以重复？">MyBatis 的 xml 映射文件中，不同的 xml 映射文件，id 是否可以重复？</a></li>
+                <li>
+                    <a href="#mybatis-%e4%b8%ad%e5%a6%82%e4%bd%95%e6%89%a7%e8%a1%8c%e6%89%b9%e5%a4%84%e7%90%86" aria-label="MyBatis 中如何执行批处理？">MyBatis 中如何执行批处理？</a></li>
+                <li>
+                    <a href="#mybatis-%e9%83%bd%e6%9c%89%e5%93%aa%e4%ba%9b-executor-%e6%89%a7%e8%a1%8c%e5%99%a8%e5%ae%83%e4%bb%ac%e4%b9%8b%e9%97%b4%e7%9a%84%e5%8c%ba%e5%88%ab%e6%98%af%e4%bb%80%e4%b9%88" aria-label="MyBatis 都有哪些 Executor 执行器？它们之间的区别是什么？">MyBatis 都有哪些 Executor 执行器？它们之间的区别是什么？</a></li>
+                <li>
+                    <a href="#mybatis-%e4%b8%ad%e5%a6%82%e4%bd%95%e6%8c%87%e5%ae%9a%e4%bd%bf%e7%94%a8%e5%93%aa%e4%b8%80%e7%a7%8d-executor-%e6%89%a7%e8%a1%8c%e5%99%a8" aria-label="MyBatis 中如何指定使用哪一种 Executor 执行器？">MyBatis 中如何指定使用哪一种 Executor 执行器？</a></li>
+                <li>
+                    <a href="#mybatis-%e6%98%af%e5%90%a6%e5%8f%af%e4%bb%a5%e6%98%a0%e5%b0%84-enum-%e6%9e%9a%e4%b8%be%e7%b1%bb" aria-label="MyBatis 是否可以映射 Enum 枚举类？">MyBatis 是否可以映射 Enum 枚举类？</a></li>
+                <li>
+                    <a href="#mybatis-%e6%98%a0%e5%b0%84%e6%96%87%e4%bb%b6%e4%b8%ad%e5%a6%82%e6%9e%9c-a-%e6%a0%87%e7%ad%be%e9%80%9a%e8%bf%87-include-%e5%bc%95%e7%94%a8%e4%ba%86-b-%e6%a0%87%e7%ad%be%e7%9a%84%e5%86%85%e5%ae%b9%e8%af%b7%e9%97%aeb-%e6%a0%87%e7%ad%be%e8%83%bd%e5%90%a6%e5%ae%9a%e4%b9%89%e5%9c%a8-a-%e6%a0%87%e7%ad%be%e7%9a%84%e5%90%8e%e9%9d%a2%e8%bf%98%e6%98%af%e8%af%b4%e5%bf%85%e9%a1%bb%e5%ae%9a%e4%b9%89%e5%9c%a8-a-%e6%a0%87%e7%ad%be%e7%9a%84%e5%89%8d%e9%9d%a2" aria-label="MyBatis 映射文件中，如果 A 标签通过 include 引用了 B 标签的内容，请问，B 标签能否定义在 A 标签的后面，还是说必须定义在 A 标签的前面？">MyBatis 映射文件中，如果 A 标签通过 include 引用了 B 标签的内容，请问，B 标签能否定义在 A 标签的后面，还是说必须定义在 A 标签的前面？</a></li>
+                <li>
+                    <a href="#%e7%ae%80%e8%bf%b0-mybatis-%e7%9a%84-xml-%e6%98%a0%e5%b0%84%e6%96%87%e4%bb%b6%e5%92%8c-mybatis-%e5%86%85%e9%83%a8%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e4%b9%8b%e9%97%b4%e7%9a%84%e6%98%a0%e5%b0%84%e5%85%b3%e7%b3%bb" aria-label="简述 MyBatis 的 xml 映射文件和 MyBatis 内部数据结构之间的映射关系？">简述 MyBatis 的 xml 映射文件和 MyBatis 内部数据结构之间的映射关系？</a></li>
+                <li>
+                    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e8%af%b4-mybatis-%e6%98%af%e5%8d%8a%e8%87%aa%e5%8a%a8-orm-%e6%98%a0%e5%b0%84%e5%b7%a5%e5%85%b7%e5%ae%83%e4%b8%8e%e5%85%a8%e8%87%aa%e5%8a%a8%e7%9a%84%e5%8c%ba%e5%88%ab%e5%9c%a8%e5%93%aa%e9%87%8c" aria-label="为什么说 MyBatis 是半自动 ORM 映射工具？它与全自动的区别在哪里？">为什么说 MyBatis 是半自动 ORM 映射工具？它与全自动的区别在哪里？</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="mybatis基础面试题">MyBatis基础面试题<a hidden class="anchor" aria-hidden="true" href="#mybatis基础面试题">#</a></h1>
+<h2 id="-和--的区别是什么">#{} 和 ${} 的区别是什么？<a hidden class="anchor" aria-hidden="true" href="#-和--的区别是什么">#</a></h2>
+<p>答：</p>
+<ul>
+<li><code>${}</code>是 Properties 文件中的变量占位符，它可以用于标签属性值和 sql 内部，属于静态文本替换，比如${driver}会被静态替换为<code>com.mysql.jdbc. Driver</code>。</li>
+<li><code>#{}</code>是 sql 的参数占位符，MyBatis 会将 sql 中的<code>#{}</code>替换为? 号，在 sql 执行前会使用 PreparedStatement 的参数设置方法，按序给 sql 的? 号占位符设置参数值，比如 ps.setInt(0, parameterValue)，<code>#{item.name}</code> 的取值方式为使用反射从参数对象中获取 item 对象的 name 属性值，相当于 <code>param.getItem().getName()</code>。</li>
+</ul>
+<h2 id="xml-映射文件中除了常见的-selectinsertupdatedelete-标签之外还有哪些标签">xml 映射文件中，除了常见的 select、insert、update、delete 标签之外，还有哪些标签？<a hidden class="anchor" aria-hidden="true" href="#xml-映射文件中除了常见的-selectinsertupdatedelete-标签之外还有哪些标签">#</a></h2>
+<p>注：这道题是京东面试官面试我时问的。</p>
+<p>答：还有很多其他的标签， <code>&lt;resultMap&gt;</code>、 <code>&lt;parameterMap&gt;</code>、 <code>&lt;sql&gt;</code>、 <code>&lt;include&gt;</code>、 <code>&lt;selectKey&gt;</code> ，加上动态 sql 的 9 个标签， <code>trim|where|set|foreach|if|choose|when|otherwise|bind</code> 等，其中 <code>&lt;sql&gt;</code> 为 sql 片段标签，通过 <code>&lt;include&gt;</code> 标签引入 sql 片段， <code>&lt;selectKey&gt;</code> 为不支持自增的主键生成策略标签。</p>
+<h2 id="dao-接口的工作原理是什么dao-接口里的方法参数不同时方法能重载吗">Dao 接口的工作原理是什么？Dao 接口里的方法，参数不同时，方法能重载吗？<a hidden class="anchor" aria-hidden="true" href="#dao-接口的工作原理是什么dao-接口里的方法参数不同时方法能重载吗">#</a></h2>
+<p>注：这道题也是京东面试官面试我被问的。</p>
+<p>答：最佳实践中，通常一个 xml 映射文件，都会写一个 Dao 接口与之对应。Dao 接口就是人们常说的 <code>Mapper</code> 接口，接口的全限名，就是映射文件中的 namespace 的值，接口的方法名，就是映射文件中 <code>MappedStatement</code> 的 id 值，接口方法内的参数，就是传递给 sql 的参数。 <code>Mapper</code> 接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为 key 值，可唯一定位一个 <code>MappedStatement</code> ，举例：<code>com.mybatis3.mappers. StudentDao.findStudentById</code> ，可以唯一找到 namespace 为 <code>com.mybatis3.mappers. StudentDao</code> 下面 <code>id = findStudentById</code> 的 <code>MappedStatement</code> 。在 MyBatis 中，每一个 <code>&lt;select&gt;</code>、 <code>&lt;insert&gt;</code>、 <code>&lt;update&gt;</code>、 <code>&lt;delete&gt;</code> 标签，都会被解析为一个 <code>MappedStatement</code> 对象。</p>
+<p>Dao 接口里的方法，是不能重载的，因为是全限名+方法名的保存和寻找策略。</p>
+<p>Dao 接口里的方法可以重载，但是 Mybatis 的 xml 里面的 ID 不允许重复。</p>
+<p>Mybatis 版本 3.3.0，亲测如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> * Mapper接口里面方法重载
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> StuMapper {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> List&lt;Student&gt; getAllStu();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> List&lt;Student&gt; getAllStu(@Param(<span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>) Integer id);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在 <code>StuMapper.xml</code> 中利用 Mybatis 的动态 sql 就可以实现。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;select</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;getAllStu&#34;</span> <span style="color:#007f7f">resultType=</span><span style="color:#0ff;font-weight:bold">&#34;com.pojo.Student&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>  select * from student
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&lt;where&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;if</span> <span style="color:#007f7f">test=</span><span style="color:#0ff;font-weight:bold">&#34;id != null&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>      id = #{id}
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&lt;/where&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/select&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>能正常运行，并能得到相应的结果，这样就实现了在 Dao 接口中写重载方法。</p>
+<p><strong>Mybatis 的 Dao 接口可以有多个重载方法，但是多个接口对应的映射必须只有一个，否则启动会报错。</strong></p>
+<p>相关 issue：<a href="https://github.com/Snailclimb/JavaGuide/issues/1122">更正：Dao 接口里的方法可以重载，但是 Mybatis 的 xml 里面的 ID 不允许重复！</a>。</p>
+<p>Dao 接口的工作原理是 JDK 动态代理，MyBatis 运行时会使用 JDK 动态代理为 Dao 接口生成代理 proxy 对象，代理对象 proxy 会拦截接口方法，转而执行 <code>MappedStatement</code> 所代表的 sql，然后将 sql 执行结果返回。</p>
+<p><strong>补充</strong>：</p>
+<p>Dao 接口方法可以重载，但是需要满足以下条件：</p>
+<ol>
+<li>仅有一个无参方法和一个有参方法</li>
+<li>多个有参方法时，参数数量必须一致。且使用相同的 <code>@Param</code> ，或者使用 <code>param1</code> 这种</li>
+</ol>
+<p><strong>测试如下</strong>：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>PersonDao.java
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Person queryById();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Person queryById(@Param(<span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>) Long id);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Person queryById(@Param(<span style="color:#0ff;font-weight:bold">&#34;id&#34;</span>) Long id, @Param(<span style="color:#0ff;font-weight:bold">&#34;name&#34;</span>) String name);
+</span></span><span style="display:flex;"><span>PersonMapper.<span style="color:#007f7f">xml</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;select</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;queryById&#34;</span> <span style="color:#007f7f">resultMap=</span><span style="color:#0ff;font-weight:bold">&#34;PersonMap&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    select
+</span></span><span style="display:flex;"><span>      id, name, age, address
+</span></span><span style="display:flex;"><span>    from person
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;where&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;if</span> <span style="color:#007f7f">test=</span><span style="color:#0ff;font-weight:bold">&#34;id != null&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            id = #{id}
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;if</span> <span style="color:#007f7f">test=</span><span style="color:#0ff;font-weight:bold">&#34;name != null and name != &#39;&#39;&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            name = #{name}
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;/if&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/where&gt;</span>
+</span></span><span style="display:flex;"><span>    limit 1
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/select&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>org.apache.ibatis.scripting.xmltags. DynamicContext. ContextAccessor#getProperty</code> 方法用于获取 <code>&lt;if&gt;</code> 标签中的条件值</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> Object getProperty(Map context, Object target, Object name) {
+</span></span><span style="display:flex;"><span>  Map map = (Map) target;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Object result = map.<span style="color:#007f7f">get</span>(name);
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">if</span> (map.<span style="color:#007f7f">containsKey</span>(name) || result != <span style="color:#fff;font-weight:bold">null</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> result;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Object parameterObject = map.<span style="color:#007f7f">get</span>(PARAMETER_OBJECT_KEY);
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">if</span> (parameterObject <span style="color:#fff;font-weight:bold">instanceof</span> Map) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> ((Map)parameterObject).<span style="color:#007f7f">get</span>(name);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">null</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>parameterObject</code> 为 map，存放的是 Dao 接口中参数相关信息。</p>
+<p><code>((Map)parameterObject).get(name)</code> 方法如下</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> V get(Object key) {
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">if</span> (!<span style="color:#fff;font-weight:bold">super</span>.<span style="color:#007f7f">containsKey</span>(key)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">throw</span> <span style="color:#fff;font-weight:bold">new</span> BindingException(<span style="color:#0ff;font-weight:bold">&#34;Parameter &#39;&#34;</span> + key + <span style="color:#0ff;font-weight:bold">&#34;&#39; not found. Available parameters are &#34;</span> + keySet());
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">super</span>.<span style="color:#007f7f">get</span>(key);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li><code>queryById()</code>方法执行时，<code>parameterObject</code>为 null，<code>getProperty</code>方法返回 null 值，<code>&lt;if&gt;</code>标签获取的所有条件值都为 null，所有条件不成立，动态 sql 可以正常执行。</li>
+<li><code>queryById(1L)</code>方法执行时，<code>parameterObject</code>为 map，包含了<code>id</code>和<code>param1</code>两个 key 值。当获取<code>&lt;if&gt;</code>标签中<code>name</code>的属性值时，进入<code>((Map)parameterObject).get(name)</code>方法中，map 中 key 不包含<code>name</code>，所以抛出异常。</li>
+<li><code>queryById(1L,&quot;1&quot;)</code>方法执行时，<code>parameterObject</code>中包含<code>id</code>,<code>param1</code>,<code>name</code>,<code>param2</code>四个 key 值，<code>id</code>和<code>name</code>属性都可以获取到，动态 sql 正常执行。</li>
+</ol>
+<h2 id="mybatis-是如何进行分页的分页插件的原理是什么">MyBatis 是如何进行分页的？分页插件的原理是什么？<a hidden class="anchor" aria-hidden="true" href="#mybatis-是如何进行分页的分页插件的原理是什么">#</a></h2>
+<p>注：我出的。</p>
+<p>答：<strong>(1)</strong> MyBatis 使用 RowBounds 对象进行分页，它是针对 ResultSet 结果集执行的内存分页，而非物理分页；<strong>(2)</strong> 可以在 sql 内直接书写带有物理分页的参数来完成物理分页功能，<strong>(3)</strong> 也可以使用分页插件来完成物理分页。</p>
+<p>分页插件的基本原理是使用 MyBatis 提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的 sql，然后重写 sql，根据 dialect 方言，添加对应的物理分页语句和物理分页参数。</p>
+<p>举例：<code>select _ from student</code> ，拦截 sql 后重写为：<code>select t._ from （select \* from student）t limit 0，10</code></p>
+<h2 id="简述-mybatis-的插件运行原理以及如何编写一个插件">简述 MyBatis 的插件运行原理，以及如何编写一个插件<a hidden class="anchor" aria-hidden="true" href="#简述-mybatis-的插件运行原理以及如何编写一个插件">#</a></h2>
+<p>注：我出的。</p>
+<p>答：MyBatis 仅可以编写针对 <code>ParameterHandler</code>、 <code>ResultSetHandler</code>、 <code>StatementHandler</code>、 <code>Executor</code> 这 4 种接口的插件，MyBatis 使用 JDK 的动态代理，为需要拦截的接口生成代理对象以实现接口方法拦截功能，每当执行这 4 种接口对象的方法时，就会进入拦截方法，具体就是 <code>InvocationHandler</code> 的 <code>invoke()</code> 方法，当然，只会拦截那些你指定需要拦截的方法。</p>
+<p>实现 MyBatis 的 <code>Interceptor</code> 接口并复写 <code>intercept()</code> 方法，然后在给插件编写注解，指定要拦截哪一个接口的哪些方法即可，记住，别忘了在配置文件中配置你编写的插件。</p>
+<h2 id="mybatis-执行批量插入能返回数据库主键列表吗">MyBatis 执行批量插入，能返回数据库主键列表吗？<a hidden class="anchor" aria-hidden="true" href="#mybatis-执行批量插入能返回数据库主键列表吗">#</a></h2>
+<p>注：我出的。</p>
+<p>答：能，JDBC 都能，MyBatis 当然也能。</p>
+<h2 id="mybatis-动态-sql-是做什么的都有哪些动态-sql能简述一下动态-sql-的执行原理不">MyBatis 动态 sql 是做什么的？都有哪些动态 sql？能简述一下动态 sql 的执行原理不？<a hidden class="anchor" aria-hidden="true" href="#mybatis-动态-sql-是做什么的都有哪些动态-sql能简述一下动态-sql-的执行原理不">#</a></h2>
+<p>注：我出的。</p>
+<p>答：MyBatis 动态 sql 可以让我们在 xml 映射文件内，以标签的形式编写动态 sql，完成逻辑判断和动态拼接 sql 的功能。其执行原理为，使用 OGNL 从 sql 参数对象中计算表达式的值，根据表达式的值动态拼接 sql，以此来完成动态 sql 的功能。</p>
+<p>MyBatis 提供了 9 种动态 sql 标签:</p>
+<ul>
+<li><code>&lt;if&gt;&lt;/if&gt;</code></li>
+<li><code>&lt;where&gt;&lt;/where&gt;(trim,set)</code></li>
+<li><code>&lt;choose&gt;&lt;/choose&gt;（when, otherwise）</code></li>
+<li><code>&lt;foreach&gt;&lt;/foreach&gt;</code></li>
+<li><code>&lt;bind/&gt;</code></li>
+</ul>
+<p>关于 MyBatis 动态 SQL 的详细介绍，请看这篇文章：<a href="https://segmentfault.com/a/1190000039335704">Mybatis 系列全解（八）：Mybatis 的 9 大动态 SQL 标签你知道几个？</a> 。</p>
+<p>关于这些动态 SQL 的具体使用方法，请看这篇文章：<a href="https://cloud.tencent.com/developer/article/1943349">Mybatis【13】&ndash; Mybatis 动态 sql 标签怎么使用？</a></p>
+<h2 id="mybatis-是如何将-sql-执行结果封装为目标对象并返回的都有哪些映射形式">MyBatis 是如何将 sql 执行结果封装为目标对象并返回的？都有哪些映射形式？<a hidden class="anchor" aria-hidden="true" href="#mybatis-是如何将-sql-执行结果封装为目标对象并返回的都有哪些映射形式">#</a></h2>
+<p>注：我出的。</p>
+<p>答：第一种是使用 <code>&lt;resultMap&gt;</code> 标签，逐一定义列名和对象属性名之间的映射关系。第二种是使用 sql 列的别名功能，将列别名书写为对象属性名，比如 T_NAME AS NAME，对象属性名一般是 name，小写，但是列名不区分大小写，MyBatis 会忽略列名大小写，智能找到与之对应对象属性名，你甚至可以写成 T_NAME AS NaMe，MyBatis 一样可以正常工作。</p>
+<p>有了列名与属性名的映射关系后，MyBatis 通过反射创建对象，同时使用反射给对象的属性逐一赋值并返回，那些找不到映射关系的属性，是无法完成赋值的。</p>
+<h2 id="mybatis-能执行一对一一对多的关联查询吗都有哪些实现方式以及它们之间的区别">MyBatis 能执行一对一、一对多的关联查询吗？都有哪些实现方式，以及它们之间的区别<a hidden class="anchor" aria-hidden="true" href="#mybatis-能执行一对一一对多的关联查询吗都有哪些实现方式以及它们之间的区别">#</a></h2>
+<p>注：我出的。</p>
+<p>答：能，MyBatis 不仅可以执行一对一、一对多的关联查询，还可以执行多对一，多对多的关联查询，多对一查询，其实就是一对一查询，只需要把 <code>selectOne()</code> 修改为 <code>selectList()</code> 即可；多对多查询，其实就是一对多查询，只需要把 <code>selectOne()</code> 修改为 <code>selectList()</code> 即可。</p>
+<p>关联对象查询，有两种实现方式，一种是单独发送一个 sql 去查询关联对象，赋给主对象，然后返回主对象。另一种是使用嵌套查询，嵌套查询的含义为使用 join 查询，一部分列是 A 对象的属性值，另外一部分列是关联对象 B 的属性值，好处是只发一个 sql 查询，就可以把主对象和其关联对象查出来。</p>
+<p>那么问题来了，join 查询出来 100 条记录，如何确定主对象是 5 个，而不是 100 个？其去重复的原理是 <code>&lt;resultMap&gt;</code> 标签内的 <code>&lt;id&gt;</code> 子标签，指定了唯一确定一条记录的 id 列，MyBatis 根据 <code>&lt;id&gt;</code> 列值来完成 100 条记录的去重复功能， <code>&lt;id&gt;</code> 可以有多个，代表了联合主键的语意。</p>
+<p>同样主对象的关联对象，也是根据这个原理去重复的，尽管一般情况下，只有主对象会有重复记录，关联对象一般不会重复。</p>
+<p>举例：下面 join 查询出来 6 条记录，一、二列是 Teacher 对象列，第三列为 Student 对象列，MyBatis 去重复处理后，结果为 1 个老师 6 个学生，而不是 6 个老师 6 个学生。</p>
+<table>
+<thead>
+<tr>
+<th>t_id</th>
+<th>t_name</th>
+<th>s_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>teacher</td>
+<td>38</td>
+</tr>
+<tr>
+<td>1</td>
+<td>teacher</td>
+<td>39</td>
+</tr>
+<tr>
+<td>1</td>
+<td>teacher</td>
+<td>40</td>
+</tr>
+<tr>
+<td>1</td>
+<td>teacher</td>
+<td>41</td>
+</tr>
+<tr>
+<td>1</td>
+<td>teacher</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1</td>
+<td>teacher</td>
+<td>43</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mybatis-是否支持延迟加载如果支持它的实现原理是什么">MyBatis 是否支持延迟加载？如果支持，它的实现原理是什么？<a hidden class="anchor" aria-hidden="true" href="#mybatis-是否支持延迟加载如果支持它的实现原理是什么">#</a></h2>
+<p>注：我出的。</p>
+<p>答：MyBatis 仅支持 association 关联对象和 collection 关联集合对象的延迟加载，association 指的就是一对一，collection 指的就是一对多查询。在 MyBatis 配置文件中，可以配置是否启用延迟加载 <code>lazyLoadingEnabled=true|false。</code></p>
+<p>它的原理是，使用 <code>CGLIB</code> 创建目标对象的代理对象，当调用目标方法时，进入拦截器方法，比如调用 <code>a.getB().getName()</code> ，拦截器 <code>invoke()</code> 方法发现 <code>a.getB()</code> 是 null 值，那么就会单独发送事先保存好的查询关联 B 对象的 sql，把 B 查询上来，然后调用 a.setB(b)，于是 a 的对象 b 属性就有值了，接着完成 <code>a.getB().getName()</code> 方法的调用。这就是延迟加载的基本原理。</p>
+<p>当然了，不光是 MyBatis，几乎所有的包括 Hibernate，支持延迟加载的原理都是一样的。</p>
+<h2 id="mybatis-的-xml-映射文件中不同的-xml-映射文件id-是否可以重复">MyBatis 的 xml 映射文件中，不同的 xml 映射文件，id 是否可以重复？<a hidden class="anchor" aria-hidden="true" href="#mybatis-的-xml-映射文件中不同的-xml-映射文件id-是否可以重复">#</a></h2>
+<p>注：我出的。</p>
+<p>答：不同的 xml 映射文件，如果配置了 namespace，那么 id 可以重复；如果没有配置 namespace，那么 id 不能重复；毕竟 namespace 不是必须的，只是最佳实践而已。</p>
+<p>原因就是 namespace+id 是作为 <code>Map&lt;String, MappedStatement&gt;</code> 的 key 使用的，如果没有 namespace，就剩下 id，那么，id 重复会导致数据互相覆盖。有了 namespace，自然 id 就可以重复，namespace 不同，namespace+id 自然也就不同。</p>
+<h2 id="mybatis-中如何执行批处理">MyBatis 中如何执行批处理？<a hidden class="anchor" aria-hidden="true" href="#mybatis-中如何执行批处理">#</a></h2>
+<p>注：我出的。</p>
+<p>答：使用 <code>BatchExecutor</code> 完成批处理。</p>
+<h2 id="mybatis-都有哪些-executor-执行器它们之间的区别是什么">MyBatis 都有哪些 Executor 执行器？它们之间的区别是什么？<a hidden class="anchor" aria-hidden="true" href="#mybatis-都有哪些-executor-执行器它们之间的区别是什么">#</a></h2>
+<p>注：我出的</p>
+<p>答：MyBatis 有三种基本的 <code>Executor</code> 执行器：</p>
+<ul>
+<li><strong><code>SimpleExecutor</code>：</strong> 每执行一次 update 或 select，就开启一个 Statement 对象，用完立刻关闭 Statement 对象。</li>
+<li><strong><code>ReuseExecutor</code>：</strong> 执行 update 或 select，以 sql 作为 key 查找 Statement 对象，存在就使用，不存在就创建，用完后，不关闭 Statement 对象，而是放置于 Map&lt;String, Statement&gt;内，供下一次使用。简言之，就是重复使用 Statement 对象。</li>
+<li><strong><code>BatchExecutor</code></strong>：执行 update（没有 select，JDBC 批处理不支持 select），将所有 sql 都添加到批处理中（addBatch()），等待统一执行（executeBatch()），它缓存了多个 Statement 对象，每个 Statement 对象都是 addBatch()完毕后，等待逐一执行 executeBatch()批处理。与 JDBC 批处理相同。</li>
+</ul>
+<p>作用范围：<code>Executor</code> 的这些特点，都严格限制在 SqlSession 生命周期范围内。</p>
+<h2 id="mybatis-中如何指定使用哪一种-executor-执行器">MyBatis 中如何指定使用哪一种 Executor 执行器？<a hidden class="anchor" aria-hidden="true" href="#mybatis-中如何指定使用哪一种-executor-执行器">#</a></h2>
+<p>注：我出的</p>
+<p>答：在 MyBatis 配置文件中，可以指定默认的 <code>ExecutorType</code> 执行器类型，也可以手动给 <code>DefaultSqlSessionFactory</code> 的创建 SqlSession 的方法传递 <code>ExecutorType</code> 类型参数。</p>
+<h2 id="mybatis-是否可以映射-enum-枚举类">MyBatis 是否可以映射 Enum 枚举类？<a hidden class="anchor" aria-hidden="true" href="#mybatis-是否可以映射-enum-枚举类">#</a></h2>
+<p>注：我出的</p>
+<p>答：MyBatis 可以映射枚举类，不单可以映射枚举类，MyBatis 可以映射任何对象到表的一列上。映射方式为自定义一个 <code>TypeHandler</code> ，实现 <code>TypeHandler</code> 的 <code>setParameter()</code> 和 <code>getResult()</code> 接口方法。 <code>TypeHandler</code> 有两个作用：</p>
+<ul>
+<li>一是完成从 javaType 至 jdbcType 的转换；</li>
+<li>二是完成 jdbcType 至 javaType 的转换，体现为 <code>setParameter()</code> 和 <code>getResult()</code> 两个方法，分别代表设置 sql 问号占位符参数和获取列查询结果。</li>
+</ul>
+<h2 id="mybatis-映射文件中如果-a-标签通过-include-引用了-b-标签的内容请问b-标签能否定义在-a-标签的后面还是说必须定义在-a-标签的前面">MyBatis 映射文件中，如果 A 标签通过 include 引用了 B 标签的内容，请问，B 标签能否定义在 A 标签的后面，还是说必须定义在 A 标签的前面？<a hidden class="anchor" aria-hidden="true" href="#mybatis-映射文件中如果-a-标签通过-include-引用了-b-标签的内容请问b-标签能否定义在-a-标签的后面还是说必须定义在-a-标签的前面">#</a></h2>
+<p>注：我出的</p>
+<p>答：虽然 MyBatis 解析 xml 映射文件是按照顺序解析的，但是，被引用的 B 标签依然可以定义在任何地方，MyBatis 都可以正确识别。</p>
+<p>原理是，MyBatis 解析 A 标签，发现 A 标签引用了 B 标签，但是 B 标签尚未解析到，尚不存在，此时，MyBatis 会将 A 标签标记为未解析状态，然后继续解析余下的标签，包含 B 标签，待所有标签解析完毕，MyBatis 会重新解析那些被标记为未解析的标签，此时再解析 A 标签时，B 标签已经存在，A 标签也就可以正常解析完成了。</p>
+<h2 id="简述-mybatis-的-xml-映射文件和-mybatis-内部数据结构之间的映射关系">简述 MyBatis 的 xml 映射文件和 MyBatis 内部数据结构之间的映射关系？<a hidden class="anchor" aria-hidden="true" href="#简述-mybatis-的-xml-映射文件和-mybatis-内部数据结构之间的映射关系">#</a></h2>
+<p>注：我出的</p>
+<p>答：MyBatis 将所有 xml 配置信息都封装到 All-In-One 重量级对象 Configuration 内部。在 xml 映射文件中， <code>&lt;parameterMap&gt;</code> 标签会被解析为 <code>ParameterMap</code> 对象，其每个子元素会被解析为 ParameterMapping 对象。 <code>&lt;resultMap&gt;</code> 标签会被解析为 <code>ResultMap</code> 对象，其每个子元素会被解析为 <code>ResultMapping</code> 对象。每一个 <code>&lt;select&gt;、&lt;insert&gt;、&lt;update&gt;、&lt;delete&gt;</code> 标签均会被解析为 <code>MappedStatement</code> 对象，标签内的 sql 会被解析为 BoundSql 对象。</p>
+<h2 id="为什么说-mybatis-是半自动-orm-映射工具它与全自动的区别在哪里">为什么说 MyBatis 是半自动 ORM 映射工具？它与全自动的区别在哪里？<a hidden class="anchor" aria-hidden="true" href="#为什么说-mybatis-是半自动-orm-映射工具它与全自动的区别在哪里">#</a></h2>
+<p>注：我出的</p>
+<p>答：Hibernate 属于全自动 ORM 映射工具，使用 Hibernate 查询关联对象或者关联集合对象时，可以根据对象关系模型直接获取，所以它是全自动的。而 MyBatis 在查询关联对象或关联集合对象时，需要手动编写 sql 来完成，所以，称之为半自动 ORM 映射工具。</p>
+<p>面试题看似都很简单，但是想要能正确回答上来，必定是研究过源码且深入的人，而不是仅会使用的人或者用的很熟的人，以上所有面试题及其答案所涉及的内容，在我的 MyBatis 系列博客中都有详细讲解和原理分析。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/en/tags/interview/">Interview</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/en/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
