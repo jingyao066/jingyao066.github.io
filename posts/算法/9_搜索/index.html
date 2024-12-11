@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>9_搜索 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="算法">
+<meta name="description" content="二分查找 二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="9_搜索">
+  <meta property="og:description" content="二分查找 二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-04T15:12:51+00:00">
+    <meta property="article:modified_time" content="2024-06-04T15:12:51+00:00">
+    <meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="9_搜索">
+<meta name="twitter:description" content="二分查找 二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "9_搜索",
+      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "9_搜索",
+  "name": "9_搜索",
+  "description": "二分查找 二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜",
+  "keywords": [
+    "算法"
+  ],
+  "articleBody": "二分查找 二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜索区间为空为止。\n问题：给定一个长度为 𝑛 的数组 nums ，元素按从小到大的顺序排列且不重复。请查找并返回元素 target 在该数组中的索引。若数组不包含该元素，则返回 −1 。示例如图 10-1 所示。\n如图 10-2 所示，我们先初始化指针 𝑖=0 和 𝑗=𝑛−1 ，分别指向数组首元素和尾元素，代表搜索区间 [0,𝑛−1] 。请注意，中括号表示闭区间，其包含边界值本身。\n接下来，循环执行以下两步。\n计算中点索引 𝑚=⌊(𝑖+𝑗)/2⌋ ，其中 ⌊⌋ 表示向下取整操作。\n判断 nums[m] 和 target的大小关系，分为以下三种情况。\n当 nums[m] \u003c target 时，说明 target 在区间 [𝑚+1,𝑗] 中，因此执行 𝑖=𝑚+1 。 当 nums[m] \u003e target 时，说明 target 在区间 [𝑖,𝑚−1] 中，因此执行 𝑗=𝑚−1 。 当 nums[m] = target 时，说明找到 target ，因此返回索引 𝑚 。 若数组不包含目标元素，搜索区间最终会缩小为空。此时返回 −1 。\n值得注意的是，由于 𝑖 和 𝑗 都是 int 类型，因此 𝑖+𝑗 可能会超出 int 类型的取值范围。为了避免大数越界，我们通常采用公式 𝑚=⌊𝑖+(𝑗−𝑖)/2⌋ 来计算中点。\n代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 /* 二分查找（双闭区间） */ int binarySearch(int[] nums, int target) { // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素 int i = 0, j = nums.length - 1; // 循环，当搜索区间为空时跳出（当 i \u003e j 时为空） while (i \u003c= j) { int m = i + (j - i) / 2; // 计算中点索引 m if (nums[m] \u003c target) // 此情况说明 target 在区间 [m+1, j] 中 i = m + 1; else if (nums[m] \u003e target) // 此情况说明 target 在区间 [i, m-1] 中 j = m - 1; else // 找到目标元素，返回其索引 return m; } // 未找到目标元素，返回 -1 return -1; } 时间复杂度为 𝑂(log⁡𝑛) ：在二分循环中，区间每轮缩小一半，因此循环次数为 log2⁡𝑛 。\n空间复杂度为 𝑂(1) ：指针 𝑖 和 𝑗 使用常数大小空间。\n区间表示方法 除了上述双闭区间外，常见的区间表示还有“左闭右开”区间，定义为 [0,𝑛) ，即左边界包含自身，右边界不包含自身。在该表示下，区间 [𝑖,𝑗) 在 𝑖=𝑗 时为空。\n我们可以基于该表示实现具有相同功能的二分查找算法：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 /* 二分查找（左闭右开区间） */ int binarySearchLCRO(int[] nums, int target) { // 初始化左闭右开区间 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1 int i = 0, j = nums.length; // 循环，当搜索区间为空时跳出（当 i = j 时为空） while (i \u003c j) { int m = i + (j - i) / 2; // 计算中点索引 m if (nums[m] \u003c target) // 此情况说明 target 在区间 [m+1, j) 中 i = m + 1; else if (nums[m] \u003e target) // 此情况说明 target 在区间 [i, m) 中 j = m; else // 找到目标元素，返回其索引 return m; } // 未找到目标元素，返回 -1 return -1; } 如图 10-3 所示，在两种区间表示下，二分查找算法的初始化、循环条件和缩小区间操作皆有所不同。\n由于“双闭区间”表示中的左右边界都被定义为闭区间，因此通过指针 𝑖 和指针 𝑗 缩小区间的操作也是对称的。这样更不容易出错，因此一般建议采用“双闭区间”的写法。\n优点与局限性 二分查找在时间和空间方面都有较好的性能。\n二分查找的时间效率高。在大数据量下，对数阶的时间复杂度具有显著优势。例如，当数据大小 $𝑛=2^{20}$ 时，线性查找需要 $2^{20}$=1048576 轮循环，而二分查找仅需 $log_2⁡2^{20}=20$ 轮循环。 二分查找无须额外空间。相较于需要借助额外空间的搜索算法（例如哈希查找），二分查找更加节省空间。 然而，二分查找并非适用于所有情况，主要有以下原因。\n二分查找仅适用于有序数据。若输入数据无序，为了使用二分查找而专门进行排序，得不偿失。因为排序算法的时间复杂度通常为 𝑂(𝑛log⁡𝑛) ，比线性查找和二分查找都更高。对于频繁插入元素的场景，为保持数组有序性，需要将元素插入到特定位置，时间复杂度为 𝑂(𝑛) ，也是非常昂贵的。 二分查找仅适用于数组。二分查找需要跳跃式（非连续地）访问元素，而在链表中执行跳跃式访问的效率较低，因此不适合应用在链表或基于链表实现的数据结构。 小数据量下，线性查找性能更佳。在线性查找中，每轮只需 1 次判断操作；而在二分查找中，需要 1 次加法、1 次除法、1 ~ 3 次判断操作、1 次加法（减法），共 4 ~ 6 个单元操作；因此，当数据量 𝑛 较小时，线性查找反而比二分查找更快。 二分查找插入点 二分查找不仅可用于搜索目标元素，还可用于解决许多变种问题，比如搜索目标元素的插入位置。\n无重复元素的情况 问题：\n给定一个长度为 𝑛 的有序数组 nums 和一个元素 target ，数组不存在重复元素。现将 target 插入数组 nums 中，并保持其有序性。若数组中已存在元素 target ，则插入到其左方。请返回插入后 target 在数组中的索引。示例如图 10-4 所示。\n如果想复用上一节的二分查找代码，则需要回答以下两个问题。\n问题一：当数组中包含 target 时，插入点的索引是否是该元素的索引？\n题目要求将 target 插入到相等元素的左边，这意味着新插入的 target 替换了原来 target 的位置。也就是说，当数组包含 target 时，插入点的索引就是该 target 的索引。\n问题二：当数组中不存在 target 时，插入点是哪个元素的索引？\n进一步思考二分查找过程：当 nums[m] \u003c target 时 𝑖 移动，这意味着指针 𝑖 在向大于等于 target 的元素靠近。同理，指针 𝑗 始终在向小于等于 target 的元素靠近。\n因此二分结束时一定有：𝑖 指向首个大于 target 的元素，𝑗 指向首个小于 target 的元素。易得当数组不包含 target 时，插入索引为 𝑖 。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 /* 二分查找插入点（无重复元素） */ int binarySearchInsertionSimple(int[] nums, int target) { int i = 0, j = nums.length - 1; // 初始化双闭区间 [0, n-1] while (i \u003c= j) { int m = i + (j - i) / 2; // 计算中点索引 m if (nums[m] \u003c target) { i = m + 1; // target 在区间 [m+1, j] 中 } else if (nums[m] \u003e target) { j = m - 1; // target 在区间 [i, m-1] 中 } else { return m; // 找到 target ，返回插入点 m } } // 未找到 target ，返回插入点 i return i; } 存在重复元素的情况 问题：在上一题的基础上，规定数组可能包含重复元素，其余不变。\n假设数组中存在多个 target ，则普通二分查找只能返回其中一个 target 的索引，而无法确定该元素的左边和右边还有多少 target。\n题目要求将目标元素插入到最左边，所以我们需要查找数组中最左一个 target 的索引。初步考虑通过图 10-5 所示的步骤实现。\n执行二分查找，得到任意一个 target 的索引，记为 𝑘 。 从索引 𝑘 开始，向左进行线性遍历，当找到最左边的 target 时返回。 此方法虽然可用，但其包含线性查找，因此时间复杂度为 𝑂(𝑛) 。当数组中存在很多重复的 target 时，该方法效率很低。\n现考虑拓展二分查找代码。如图 10-6 所示，整体流程保持不变，每轮先计算中点索引 𝑚 ，再判断 target 和 nums[m] 的大小关系，分为以下几种情况。\n当 nums[m] \u003c target 或 nums[m] \u003e target 时，说明还没有找到 target ，因此采用普通二分查找的缩小区间操作，从而使指针 𝑖 和 𝑗 向 target 靠近。 当 nums[m] == target 时，说明小于 target 的元素在区间 [𝑖,𝑚−1] 中，因此采用 𝑗=𝑚−1 来缩小区间，从而使指针 𝑗 向小于 target 的元素靠近。 循环完成后，𝑖 指向最左边的 target ，𝑗 指向首个小于 target 的元素，因此索引 𝑖 就是插入点。\n观察以下代码，判断分支 nums[m] \u003e target 和 nums[m] == target 的操作相同，因此两者可以合并。\n即便如此，我们仍然可以将判断条件保持展开，因为其逻辑更加清晰、可读性更好。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 /* 二分查找插入点（存在重复元素） */ int binarySearchInsertion(int[] nums, int target) { int i = 0, j = nums.length - 1; // 初始化双闭区间 [0, n-1] while (i \u003c= j) { int m = i + (j - i) / 2; // 计算中点索引 m if (nums[m] \u003c target) { i = m + 1; // target 在区间 [m+1, j] 中 } else if (nums[m] \u003e target) { j = m - 1; // target 在区间 [i, m-1] 中 } else { j = m - 1; // 首个小于 target 的元素在区间 [i, m-1] 中 } } // 返回插入点 i return i; } 本节的代码都是“双闭区间”写法。有兴趣的读者可以自行实现“左闭右开”写法。\n总的来看，二分查找无非就是给指针 𝑖 和 𝑗 分别设定搜索目标，目标可能是一个具体的元素（例如 target ），也可能是一个元素范围（例如小于 target 的元素）。\n在不断的循环二分中，指针 𝑖 和 𝑗 都逐渐逼近预先设定的目标。最终，它们或是成功找到答案，或是越过边界后停止。\n二分查找边界 查找左边界 问题：\n给定一个长度为 𝑛 的有序数组 nums ，其中可能包含重复元素。请返回数组中最左一个元素 target 的索引。若数组中不包含该元素，则返回 −1 。\n回忆二分查找插入点的方法，搜索完成后 𝑖 指向最左一个 target ，因此查找插入点本质上是在查找最左一个 target 的索引。\n考虑通过查找插入点的函数实现查找左边界。请注意，数组中可能不包含 target ，这种情况可能导致以下两种结果。\n插入点的索引 𝑖 越界。 元素 nums[i] 与 target 不相等。 当遇到以上两种情况时，直接返回 −1 即可。代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 /* 二分查找最左一个 target */ int binarySearchLeftEdge(int[] nums, int target) { // 等价于查找 target 的插入点 int i = binary_search_insertion.binarySearchInsertion(nums, target); // 未找到 target ，返回 -1 if (i == nums.length || nums[i] != target) { return -1; } // 找到 target ，返回索引 i return i; } 查找右边界 那么如何查找最右一个 target 呢？最直接的方式是修改代码，替换在 nums[m] == target 情况下的指针收缩操作。代码在此省略，有兴趣的读者可以自行实现。\n下面我们介绍两种更加取巧的方法。\n复用查找左边界 实际上，我们可以利用查找最左元素的函数来查找最右元素，具体方法为：将查找最右一个 target 转化为查找最左一个 target + 1。\n如图 10-7 所示，查找完成后，指针 𝑖 指向最左一个 target + 1（如果存在），而 𝑗 指向最右一个 target ，因此返回 𝑗 即可。\n请注意，返回的插入点是 𝑖 ，因此需要将其减 1 ，从而获得 𝑗 ：\n1 2 3 4 5 6 7 8 9 10 11 12 13 /* 二分查找最右一个 target */ int binarySearchRightEdge(int[] nums, int target) { // 转化为查找最左一个 target + 1 int i = binary_search_insertion.binarySearchInsertion(nums, target + 1); // j 指向最右一个 target ，i 指向首个大于 target 的元素 int j = i - 1; // 未找到 target ，返回 -1 if (j == -1 || nums[j] != target) { return -1; } // 找到 target ，返回索引 j return j; } 转化为查找元素 我们知道，当数组不包含 target 时，最终 𝑖 和 𝑗 会分别指向首个大于、小于 target 的元素。\n因此，如图 10-8 所示，我们可以构造一个数组中不存在的元素，用于查找左右边界。\n查找最左一个 target ：可以转化为查找 target - 0.5 ，并返回指针 𝑖 。 查找最右一个 target ：可以转化为查找 target + 0.5 ，并返回指针 𝑗 。 代码在此省略，以下两点值得注意。\n给定数组不包含小数，这意味着我们无须关心如何处理相等的情况。 因为该方法引入了小数，所以需要将函数中的变量 target 改为浮点数类型（Python 无须改动）。 哈希优化策略 在算法题中，我们常通过将线性查找替换为哈希查找来降低算法的时间复杂度。我们借助一个算法题来加深理解。\n问题：\n给定一个整数数组 nums 和一个目标元素 target ，请在数组中搜索“和”为 target 的两个元素，并返回它们的数组索引。返回任意一个解即可。\n线性查找：以时间换空间 考虑直接遍历所有可能的组合。如图 10-9 所示，我们开启一个两层循环，在每轮中判断两个整数的和是否为 target ，若是，则返回它们的索引。\n代码如下所示：\n1 2 3 4 5 6 7 8 9 10 11 12 /* 方法一：暴力枚举 */ int[] twoSumBruteForce(int[] nums, int target) { int size = nums.length; // 两层循环，时间复杂度为 O(n^2) for (int i = 0; i \u003c size - 1; i++) { for (int j = i + 1; j \u003c size; j++) { if (nums[i] + nums[j] == target) return new int[] { i, j }; } } return new int[0]; } 此方法的时间复杂度为 $𝑂(𝑛^2)$ ，空间复杂度为 𝑂(1) ，在大数据量下非常耗时。\n哈希查找：以空间换时间 考虑借助一个哈希表，键值对分别为数组元素和元素索引。循环遍历数组，每轮执行图 10-10 所示的步骤。\n判断数字 target - nums[i] 是否在哈希表中，若是，则直接返回这两个元素的索引。 将键值对 nums[i] 和索引 i 添加进哈希表。 实现代码如下所示，仅需单层循环即可：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 /* 方法二：辅助哈希表 */ int[] twoSumHashTable(int[] nums, int target) { int size = nums.length; // 辅助哈希表，空间复杂度为 O(n) Map dic = new HashMap\u003c\u003e(); // 单层循环，时间复杂度为 O(n) for (int i = 0; i \u003c size; i++) { if (dic.containsKey(target - nums[i])) { return new int[] { dic.get(target - nums[i]), i }; } dic.put(nums[i], i); } return new int[0]; } 此方法通过哈希查找将时间复杂度从 $𝑂(𝑛^2)$ 降至 𝑂(𝑛) ，大幅提升运行效率。\n由于需要维护一个额外的哈希表，因此空间复杂度为 𝑂(𝑛) 。尽管如此，该方法的整体时空效率更为均衡，因此它是本题的最优解法。\n重识搜索算法 搜索算法（searching algorithm）用于在数据结构（例如数组、链表、树或图）中搜索一个或一组满足特定条件的元素。\n搜索算法可根据实现思路分为以下两类。\n通过遍历数据结构来定位目标元素，例如数组、链表、树和图的遍历等。 利用数据组织结构或数据包含的先验信息，实现高效元素查找，例如二分查找、哈希查找和二叉搜索树查找等。 不难发现，这些知识点都已在前面的章节中介绍过，因此搜索算法对于我们来说并不陌生。在本节中，我们将从更加系统的视角切入，重新审视搜索算法。\n暴力搜索 暴力搜索通过遍历数据结构的每个元素来定位目标元素。\n“线性搜索”适用于数组和链表等线性数据结构。它从数据结构的一端开始，逐个访问元素，直到找到目标元素或到达另一端仍没有找到目标元素为止。 “广度优先搜索”和“深度优先搜索”是图和树的两种遍历策略。广度优先搜索从初始节点开始逐层搜索，由近及远地访问各个节点。深度优先搜索从初始节点开始，沿着一条路径走到头，再回溯并尝试其他路径，直到遍历完整个数据结构。 暴力搜索的优点是简单且通用性好，无须对数据做预处理和借助额外的数据结构。\n然而，此类算法的时间复杂度为 𝑂(𝑛) ，其中 𝑛 为元素数量，因此在数据量较大的情况下性能较差。\n自适应搜索 自适应搜索利用数据的特有属性（例如有序性）来优化搜索过程，从而更高效地定位目标元素。\n“二分查找”利用数据的有序性实现高效查找，仅适用于数组。 “哈希查找”利用哈希表将搜索数据和目标数据建立为键值对映射，从而实现查询操作。 “树查找”在特定的树结构（例如二叉搜索树）中，基于比较节点值来快速排除节点，从而定位目标元素。 此类算法的优点是效率高，时间复杂度可达到 𝑂(log⁡𝑛) 甚至 𝑂(1) 。\n然而，使用这些算法往往需要对数据进行预处理。例如，二分查找需要预先对数组进行排序，哈希查找和树查找都需要借助额外的数据结构，维护这些数据结构也需要额外的时间和空间开销。\n自适应搜索算法常被称为查找算法，主要用于在特定数据结构中快速检索目标元素。\n搜索方法选取 给定大小为 𝑛 的一组数据，我们可以使用线性搜索、二分查找、树查找、哈希查找等多种方法从中搜索目标元素。各个方法的工作原理如图 10-11 所示。\n上述几种方法的操作效率与特性如表 10-1 所示。\n表 10-1 查找算法效率对比\n线性搜索 二分查找 树查找 哈希查找 查找元素 𝑂(𝑛) 𝑂(log⁡𝑛) 𝑂(log⁡𝑛) 𝑂(1) 插入元素 𝑂(1) 𝑂(𝑛) 𝑂(log⁡𝑛) 𝑂(1) 删除元素 𝑂(𝑛) 𝑂(𝑛) 𝑂(log⁡𝑛) 𝑂(1) 额外空间 𝑂(1) 𝑂(1) 𝑂(𝑛) 𝑂(𝑛) 数据预处理 / 排序 𝑂(𝑛log⁡𝑛) 建树 𝑂(𝑛log⁡𝑛) 建哈希表 𝑂(𝑛) 数据是否有序 无序 有序 有序 无序 搜索算法的选择还取决于数据体量、搜索性能要求、数据查询与更新频率等。\n线性搜索\n通用性较好，无须任何数据预处理操作。假如我们仅需查询一次数据，那么其他三种方法的数据预处理的时间比线性搜索的时间还要更长。 适用于体量较小的数据，此情况下时间复杂度对效率影响较小。 适用于数据更新频率较高的场景，因为该方法不需要对数据进行任何额外维护。 二分查找\n适用于大数据量的情况，效率表现稳定，最差时间复杂度为 𝑂(log⁡𝑛) 。 数据量不能过大，因为存储数组需要连续的内存空间。 不适用于高频增删数据的场景，因为维护有序数组的开销较大。 哈希查找\n适合对查询性能要求很高的场景，平均时间复杂度为 𝑂(1) 。 不适合需要有序数据或范围查找的场景，因为哈希表无法维护数据的有序性。 对哈希函数和哈希冲突处理策略的依赖性较高，具有较大的性能劣化风险。 不适合数据量过大的情况，因为哈希表需要额外空间来最大程度地减少冲突，从而提供良好的查询性能。 树查找\n适用于海量数据，因为树节点在内存中是分散存储的。 适合需要维护有序数据或范围查找的场景。 在持续增删节点的过程中，二叉搜索树可能产生倾斜，时间复杂度劣化至 𝑂(𝑛) 。 若使用 AVL 树或红黑树，则各项操作可在 𝑂(log⁡𝑛) 效率下稳定运行，但维护树平衡的操作会增加额外的开销。 小结 二分查找依赖数据的有序性，通过循环逐步缩减一半搜索区间来进行查找。它要求输入数据有序，且仅适用于数组或基于数组实现的数据结构。 暴力搜索通过遍历数据结构来定位数据。线性搜索适用于数组和链表，广度优先搜索和深度优先搜索适用于图和树。此类算法通用性好，无须对数据进行预处理，但时间复杂度 𝑂(𝑛) 较高。 哈希查找、树查找和二分查找属于高效搜索方法，可在特定数据结构中快速定位目标元素。此类算法效率高，时间复杂度可达 𝑂(log⁡𝑛) 甚至 𝑂(1) ，但通常需要借助额外数据结构。 实际中，我们需要对数据体量、搜索性能要求、数据查询和更新频率等因素进行具体分析，从而选择合适的搜索方法。 线性搜索适用于小型或频繁更新的数据；二分查找适用于大型、排序的数据；哈希查找适用于对查询效率要求较高且无须范围查询的数据；树查找适用于需要维护顺序和支持范围查询的大型动态数据。 用哈希查找替换线性查找是一种常用的优化运行时间的策略，可将时间复杂度从 𝑂(𝑛) 降至 𝑂(1) 。 ",
+  "wordCount" : "6624",
+  "inLanguage": "en",
+  "datePublished": "2024-06-04T15:12:51Z",
+  "dateModified": "2024-06-04T15:12:51Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      9_搜索
+    </h1>
+    <div class="post-meta"><span title='2024-06-04 15:12:51 +0000 UTC'>2024-06-04</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%ba%8c%e5%88%86%e6%9f%a5%e6%89%be" aria-label="二分查找">二分查找</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8c%ba%e9%97%b4%e8%a1%a8%e7%a4%ba%e6%96%b9%e6%b3%95" aria-label="区间表示方法">区间表示方法</a></li>
+                <li>
+                    <a href="#%e4%bc%98%e7%82%b9%e4%b8%8e%e5%b1%80%e9%99%90%e6%80%a7" aria-label="优点与局限性">优点与局限性</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%88%86%e6%9f%a5%e6%89%be%e6%8f%92%e5%85%a5%e7%82%b9" aria-label="二分查找插入点">二分查找插入点</a><ul>
+                        
+                <li>
+                    <a href="#%e6%97%a0%e9%87%8d%e5%a4%8d%e5%85%83%e7%b4%a0%e7%9a%84%e6%83%85%e5%86%b5" aria-label="无重复元素的情况">无重复元素的情况</a></li>
+                <li>
+                    <a href="#%e5%ad%98%e5%9c%a8%e9%87%8d%e5%a4%8d%e5%85%83%e7%b4%a0%e7%9a%84%e6%83%85%e5%86%b5" aria-label="存在重复元素的情况">存在重复元素的情况</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%88%86%e6%9f%a5%e6%89%be%e8%be%b9%e7%95%8c" aria-label="二分查找边界">二分查找边界</a><ul>
+                        
+                <li>
+                    <a href="#%e6%9f%a5%e6%89%be%e5%b7%a6%e8%be%b9%e7%95%8c" aria-label="查找左边界">查找左边界</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e6%89%be%e5%8f%b3%e8%be%b9%e7%95%8c" aria-label="查找右边界">查找右边界</a><ul>
+                        
+                <li>
+                    <a href="#%e5%a4%8d%e7%94%a8%e6%9f%a5%e6%89%be%e5%b7%a6%e8%be%b9%e7%95%8c" aria-label="复用查找左边界">复用查找左边界</a></li>
+                <li>
+                    <a href="#%e8%bd%ac%e5%8c%96%e4%b8%ba%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0" aria-label="转化为查找元素">转化为查找元素</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%93%88%e5%b8%8c%e4%bc%98%e5%8c%96%e7%ad%96%e7%95%a5" aria-label="哈希优化策略">哈希优化策略</a><ul>
+                        
+                <li>
+                    <a href="#%e7%ba%bf%e6%80%a7%e6%9f%a5%e6%89%be%e4%bb%a5%e6%97%b6%e9%97%b4%e6%8d%a2%e7%a9%ba%e9%97%b4" aria-label="线性查找：以时间换空间">线性查找：以时间换空间</a></li>
+                <li>
+                    <a href="#%e5%93%88%e5%b8%8c%e6%9f%a5%e6%89%be%e4%bb%a5%e7%a9%ba%e9%97%b4%e6%8d%a2%e6%97%b6%e9%97%b4" aria-label="哈希查找：以空间换时间">哈希查找：以空间换时间</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%87%8d%e8%af%86%e6%90%9c%e7%b4%a2%e7%ae%97%e6%b3%95" aria-label="重识搜索算法">重识搜索算法</a><ul>
+                        
+                <li>
+                    <a href="#%e6%9a%b4%e5%8a%9b%e6%90%9c%e7%b4%a2" aria-label="暴力搜索">暴力搜索</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e9%80%82%e5%ba%94%e6%90%9c%e7%b4%a2" aria-label="自适应搜索">自适应搜索</a></li>
+                <li>
+                    <a href="#%e6%90%9c%e7%b4%a2%e6%96%b9%e6%b3%95%e9%80%89%e5%8f%96" aria-label="搜索方法选取">搜索方法选取</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%b0%8f%e7%bb%93" aria-label="小结">小结</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="二分查找">二分查找<a hidden class="anchor" aria-hidden="true" href="#二分查找">#</a></h1>
+<p>二分查找（binary search）是一种基于分治策略的高效搜索算法。它利用数据的有序性，每轮缩小一半搜索范围，直至找到目标元素或搜索区间为空为止。</p>
+<p>问题：给定一个长度为 𝑛 的数组 <code>nums</code> ，元素按从小到大的顺序排列且不重复。请查找并返回元素 <code>target</code> 在该数组中的索引。若数组不包含该元素，则返回 −1 。示例如图 10-1 所示。</p>
+<p><img alt="图 10-1  二分查找示例数据" loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_example.png"></p>
+<p>如图 10-2 所示，我们先初始化指针 𝑖=0 和 𝑗=𝑛−1 ，分别指向数组首元素和尾元素，代表搜索区间 [0,𝑛−1] 。请注意，中括号表示闭区间，其包含边界值本身。</p>
+<p>接下来，循环执行以下两步。</p>
+<ol>
+<li>
+<p>计算中点索引 𝑚=⌊(𝑖+𝑗)/2⌋ ，其中 ⌊⌋ 表示向下取整操作。</p>
+</li>
+<li>
+<p>判断 <code>nums[m]</code> 和 <code>target</code>的大小关系，分为以下三种情况。</p>
+<ol>
+<li>当 <code>nums[m] &lt; target</code> 时，说明 <code>target</code> 在区间 [𝑚+1,𝑗] 中，因此执行 𝑖=𝑚+1 。</li>
+<li>当 <code>nums[m] &gt; target</code> 时，说明 <code>target</code> 在区间 [𝑖,𝑚−1] 中，因此执行 𝑗=𝑚−1 。</li>
+<li>当 <code>nums[m] = target</code> 时，说明找到 <code>target</code> ，因此返回索引 𝑚 。</li>
+</ol>
+</li>
+</ol>
+<p>若数组不包含目标元素，搜索区间最终会缩小为空。此时返回 −1 。</p>
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step1.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step2.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step3.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step4.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step5.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step6.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step7.png"></p>
+<p>值得注意的是，由于 𝑖 和 𝑗 都是 <code>int</code> 类型，<strong>因此 𝑖+𝑗 可能会超出 <code>int</code> 类型的取值范围</strong>。为了避免大数越界，我们通常采用公式 𝑚=⌊𝑖+(𝑗−𝑖)/2⌋ 来计算中点。</p>
+<p>代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 二分查找（双闭区间） */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> binarySearch(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> i = 0, j = nums.<span style="color:#007f7f">length</span> - 1;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 循环，当搜索区间为空时跳出（当 i &gt; j 时为空）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span> (i &lt;= j) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> m = i + (j - i) / 2; <span style="color:#007f7f">// 计算中点索引 m</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (nums[m] &lt; target) <span style="color:#007f7f">// 此情况说明 target 在区间 [m+1, j] 中</span>
+</span></span><span style="display:flex;"><span>            i = m + 1;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span> (nums[m] &gt; target) <span style="color:#007f7f">// 此情况说明 target 在区间 [i, m-1] 中</span>
+</span></span><span style="display:flex;"><span>            j = m - 1;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">else</span> <span style="color:#007f7f">// 找到目标元素，返回其索引</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> m;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 未找到目标元素，返回 -1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> -1;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>时间复杂度为 𝑂(log⁡𝑛)</strong> ：在二分循环中，区间每轮缩小一半，因此循环次数为 log2⁡𝑛 。</p>
+<p><strong>空间复杂度为 𝑂(1)</strong> ：指针 𝑖 和 𝑗 使用常数大小空间。</p>
+<h2 id="区间表示方法">区间表示方法<a hidden class="anchor" aria-hidden="true" href="#区间表示方法">#</a></h2>
+<p>除了上述双闭区间外，常见的区间表示还有“左闭右开”区间，定义为 [0,𝑛) ，即左边界包含自身，右边界不包含自身。在该表示下，区间 [𝑖,𝑗) 在 𝑖=𝑗 时为空。</p>
+<p>我们可以基于该表示实现具有相同功能的二分查找算法：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 二分查找（左闭右开区间） */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> binarySearchLCRO(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 初始化左闭右开区间 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> i = 0, j = nums.<span style="color:#007f7f">length</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 循环，当搜索区间为空时跳出（当 i = j 时为空）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span> (i &lt; j) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> m = i + (j - i) / 2; <span style="color:#007f7f">// 计算中点索引 m</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (nums[m] &lt; target) <span style="color:#007f7f">// 此情况说明 target 在区间 [m+1, j) 中</span>
+</span></span><span style="display:flex;"><span>            i = m + 1;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span> (nums[m] &gt; target) <span style="color:#007f7f">// 此情况说明 target 在区间 [i, m) 中</span>
+</span></span><span style="display:flex;"><span>            j = m;
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">else</span> <span style="color:#007f7f">// 找到目标元素，返回其索引</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> m;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 未找到目标元素，返回 -1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> -1;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如图 10-3 所示，在两种区间表示下，二分查找算法的初始化、循环条件和缩小区间操作皆有所不同。</p>
+<p>由于“双闭区间”表示中的左右边界都被定义为闭区间，因此通过指针 𝑖 和指针 𝑗 缩小区间的操作也是对称的。这样更不容易出错，<strong>因此一般建议采用“双闭区间”的写法</strong>。</p>
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_ranges.png"></p>
+<h2 id="优点与局限性">优点与局限性<a hidden class="anchor" aria-hidden="true" href="#优点与局限性">#</a></h2>
+<p>二分查找在时间和空间方面都有较好的性能。</p>
+<ul>
+<li>二分查找的时间效率高。在大数据量下，对数阶的时间复杂度具有显著优势。例如，当数据大小 $𝑛=2^{20}$ 时，线性查找需要 $2^{20}$=1048576 轮循环，而二分查找仅需 $log_2⁡2^{20}=20$ 轮循环。</li>
+<li>二分查找无须额外空间。相较于需要借助额外空间的搜索算法（例如哈希查找），二分查找更加节省空间。</li>
+</ul>
+<p>然而，二分查找并非适用于所有情况，主要有以下原因。</p>
+<ul>
+<li>二分查找仅适用于有序数据。若输入数据无序，为了使用二分查找而专门进行排序，得不偿失。因为排序算法的时间复杂度通常为 𝑂(𝑛log⁡𝑛) ，比线性查找和二分查找都更高。对于频繁插入元素的场景，为保持数组有序性，需要将元素插入到特定位置，时间复杂度为 𝑂(𝑛) ，也是非常昂贵的。</li>
+<li>二分查找仅适用于数组。二分查找需要跳跃式（非连续地）访问元素，而在链表中执行跳跃式访问的效率较低，因此不适合应用在链表或基于链表实现的数据结构。</li>
+<li>小数据量下，线性查找性能更佳。在线性查找中，每轮只需 1 次判断操作；而在二分查找中，需要 1 次加法、1 次除法、1 ~ 3 次判断操作、1 次加法（减法），共 4 ~ 6 个单元操作；因此，当数据量 𝑛 较小时，线性查找反而比二分查找更快。</li>
+</ul>
+<h1 id="二分查找插入点">二分查找插入点<a hidden class="anchor" aria-hidden="true" href="#二分查找插入点">#</a></h1>
+<p>二分查找不仅可用于搜索目标元素，还可用于解决许多变种问题，比如搜索目标元素的插入位置。</p>
+<h2 id="无重复元素的情况">无重复元素的情况<a hidden class="anchor" aria-hidden="true" href="#无重复元素的情况">#</a></h2>
+<p>问题：</p>
+<p>给定一个长度为 𝑛 的有序数组 <code>nums</code> 和一个元素 <code>target</code> ，数组不存在重复元素。现将 <code>target</code> 插入数组 <code>nums</code> 中，并保持其有序性。若数组中已存在元素 <code>target</code> ，则插入到其左方。请返回插入后 <code>target</code> 在数组中的索引。示例如图 10-4 所示。</p>
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_example.png"></p>
+<p>如果想复用上一节的二分查找代码，则需要回答以下两个问题。</p>
+<p><strong>问题一</strong>：当数组中包含 <code>target</code> 时，插入点的索引是否是该元素的索引？</p>
+<p>题目要求将 <code>target</code> 插入到相等元素的左边，这意味着新插入的 <code>target</code> 替换了原来 <code>target</code> 的位置。也就是说，<strong>当数组包含 <code>target</code> 时，插入点的索引就是该 <code>target</code> 的索引</strong>。</p>
+<p><strong>问题二</strong>：当数组中不存在 <code>target</code> 时，插入点是哪个元素的索引？</p>
+<p>进一步思考二分查找过程：当 <code>nums[m] &lt; target</code> 时 𝑖 移动，这意味着指针 𝑖 在向大于等于 <code>target</code> 的元素靠近。同理，指针 𝑗 始终在向小于等于 <code>target</code> 的元素靠近。</p>
+<p>因此二分结束时一定有：𝑖 指向首个大于 <code>target</code> 的元素，𝑗 指向首个小于 <code>target</code> 的元素。<strong>易得当数组不包含 <code>target</code> 时，插入索引为 𝑖</strong> 。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 二分查找插入点（无重复元素） */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> binarySearchInsertionSimple(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> i = 0, j = nums.<span style="color:#007f7f">length</span> - 1; <span style="color:#007f7f">// 初始化双闭区间 [0, n-1]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span> (i &lt;= j) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> m = i + (j - i) / 2; <span style="color:#007f7f">// 计算中点索引 m</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (nums[m] &lt; target) {
+</span></span><span style="display:flex;"><span>            i = m + 1; <span style="color:#007f7f">// target 在区间 [m+1, j] 中</span>
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span> (nums[m] &gt; target) {
+</span></span><span style="display:flex;"><span>            j = m - 1; <span style="color:#007f7f">// target 在区间 [i, m-1] 中</span>
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> m; <span style="color:#007f7f">// 找到 target ，返回插入点 m</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 未找到 target ，返回插入点 i</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> i;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="存在重复元素的情况">存在重复元素的情况<a hidden class="anchor" aria-hidden="true" href="#存在重复元素的情况">#</a></h2>
+<p>问题：在上一题的基础上，规定数组可能包含重复元素，其余不变。</p>
+<p>假设数组中存在多个 <code>target</code> ，则普通二分查找只能返回其中一个 <code>target</code> 的索引，<strong>而无法确定该元素的左边和右边还有多少 <code>target</code></strong>。</p>
+<p>题目要求将目标元素插入到最左边，<strong>所以我们需要查找数组中最左一个 <code>target</code> 的索引</strong>。初步考虑通过图 10-5 所示的步骤实现。</p>
+<ol>
+<li>执行二分查找，得到任意一个 <code>target</code> 的索引，记为 𝑘 。</li>
+<li>从索引 𝑘 开始，向左进行线性遍历，当找到最左边的 <code>target</code> 时返回。</li>
+</ol>
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_naive.png"></p>
+<p>此方法虽然可用，但其包含线性查找，因此时间复杂度为 𝑂(𝑛) 。当数组中存在很多重复的 <code>target</code> 时，该方法效率很低。</p>
+<p>现考虑拓展二分查找代码。如图 10-6 所示，整体流程保持不变，每轮先计算中点索引 𝑚 ，再判断 <code>target</code> 和 <code>nums[m]</code> 的大小关系，分为以下几种情况。</p>
+<ul>
+<li>当 <code>nums[m] &lt; target</code> 或 <code>nums[m] &gt; target</code> 时，说明还没有找到 <code>target</code> ，因此采用普通二分查找的缩小区间操作，<strong>从而使指针 𝑖 和 𝑗 向 <code>target</code> 靠近</strong>。</li>
+<li>当 <code>nums[m] == target</code> 时，说明小于 <code>target</code> 的元素在区间 [𝑖,𝑚−1] 中，因此采用 𝑗=𝑚−1 来缩小区间，<strong>从而使指针 𝑗 向小于 <code>target</code> 的元素靠近</strong>。</li>
+</ul>
+<p>循环完成后，𝑖 指向最左边的 <code>target</code> ，𝑗 指向首个小于 <code>target</code> 的元素，<strong>因此索引 𝑖 就是插入点</strong>。</p>
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step1.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step2.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step3.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step4.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step5.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step6.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step7.png">
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step8.png"></p>
+<p>观察以下代码，判断分支 <code>nums[m] &gt; target</code> 和 <code>nums[m] == target</code> 的操作相同，因此两者可以合并。</p>
+<p>即便如此，我们仍然可以将判断条件保持展开，因为其逻辑更加清晰、可读性更好。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 二分查找插入点（存在重复元素） */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> binarySearchInsertion(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> i = 0, j = nums.<span style="color:#007f7f">length</span> - 1; <span style="color:#007f7f">// 初始化双闭区间 [0, n-1]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">while</span> (i &lt;= j) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">int</span> m = i + (j - i) / 2; <span style="color:#007f7f">// 计算中点索引 m</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (nums[m] &lt; target) {
+</span></span><span style="display:flex;"><span>            i = m + 1; <span style="color:#007f7f">// target 在区间 [m+1, j] 中</span>
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">else</span> <span style="color:#fff;font-weight:bold">if</span> (nums[m] &gt; target) {
+</span></span><span style="display:flex;"><span>            j = m - 1; <span style="color:#007f7f">// target 在区间 [i, m-1] 中</span>
+</span></span><span style="display:flex;"><span>        } <span style="color:#fff;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>            j = m - 1; <span style="color:#007f7f">// 首个小于 target 的元素在区间 [i, m-1] 中</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 返回插入点 i</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> i;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>本节的代码都是“双闭区间”写法。有兴趣的读者可以自行实现“左闭右开”写法。</p>
+</blockquote>
+<p>总的来看，二分查找无非就是给指针 𝑖 和 𝑗 分别设定搜索目标，目标可能是一个具体的元素（例如 <code>target</code> ），也可能是一个元素范围（例如小于 <code>target</code> 的元素）。</p>
+<p>在不断的循环二分中，指针 𝑖 和 𝑗 都逐渐逼近预先设定的目标。最终，它们或是成功找到答案，或是越过边界后停止。</p>
+<h1 id="二分查找边界">二分查找边界<a hidden class="anchor" aria-hidden="true" href="#二分查找边界">#</a></h1>
+<h2 id="查找左边界">查找左边界<a hidden class="anchor" aria-hidden="true" href="#查找左边界">#</a></h2>
+<p>问题：</p>
+<p>给定一个长度为 𝑛 的有序数组 <code>nums</code> ，其中可能包含重复元素。请返回数组中最左一个元素 <code>target</code> 的索引。若数组中不包含该元素，则返回 −1 。</p>
+<p>回忆二分查找插入点的方法，搜索完成后 𝑖 指向最左一个 <code>target</code> ，<strong>因此查找插入点本质上是在查找最左一个 <code>target</code> 的索引</strong>。</p>
+<p>考虑通过查找插入点的函数实现查找左边界。请注意，数组中可能不包含 <code>target</code> ，这种情况可能导致以下两种结果。</p>
+<ul>
+<li>插入点的索引 𝑖 越界。</li>
+<li>元素 <code>nums[i]</code> 与 <code>target</code> 不相等。</li>
+</ul>
+<p>当遇到以上两种情况时，直接返回 −1 即可。代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 二分查找最左一个 target */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> binarySearchLeftEdge(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 等价于查找 target 的插入点</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> i = binary_search_insertion.<span style="color:#007f7f">binarySearchInsertion</span>(nums, target);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 未找到 target ，返回 -1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (i == nums.<span style="color:#007f7f">length</span> || nums[i] != target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> -1;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 找到 target ，返回索引 i</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> i;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="查找右边界">查找右边界<a hidden class="anchor" aria-hidden="true" href="#查找右边界">#</a></h2>
+<p>那么如何查找最右一个 <code>target</code> 呢？最直接的方式是修改代码，替换在 <code>nums[m] == target</code> 情况下的指针收缩操作。代码在此省略，有兴趣的读者可以自行实现。</p>
+<p>下面我们介绍两种更加取巧的方法。</p>
+<h3 id="复用查找左边界">复用查找左边界<a hidden class="anchor" aria-hidden="true" href="#复用查找左边界">#</a></h3>
+<p>实际上，我们可以利用查找最左元素的函数来查找最右元素，具体方法为：<strong>将查找最右一个 <code>target</code> 转化为查找最左一个 <code>target + 1</code></strong>。</p>
+<p>如图 10-7 所示，查找完成后，指针 𝑖 指向最左一个 <code>target + 1</code>（如果存在），而 𝑗 指向最右一个 <code>target</code> ，<strong>因此返回 𝑗 即可</strong>。</p>
+<p><img alt="图 10-7  将查找右边界转化为查找左边界" loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_right_edge_by_left_edge.png"></p>
+<p>请注意，返回的插入点是 𝑖 ，因此需要将其减 1 ，从而获得 𝑗 ：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 二分查找最右一个 target */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span> binarySearchRightEdge(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 转化为查找最左一个 target + 1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> i = binary_search_insertion.<span style="color:#007f7f">binarySearchInsertion</span>(nums, target + 1);
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// j 指向最右一个 target ，i 指向首个大于 target 的元素</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> j = i - 1;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 未找到 target ，返回 -1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">if</span> (j == -1 || nums[j] != target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> -1;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 找到 target ，返回索引 j</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> j;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="转化为查找元素">转化为查找元素<a hidden class="anchor" aria-hidden="true" href="#转化为查找元素">#</a></h3>
+<p>我们知道，当数组不包含 <code>target</code> 时，最终 𝑖 和 𝑗 会分别指向首个大于、小于 <code>target</code> 的元素。</p>
+<p>因此，如图 10-8 所示，我们可以构造一个数组中不存在的元素，用于查找左右边界。</p>
+<ul>
+<li>查找最左一个 <code>target</code> ：可以转化为查找 <code>target - 0.5</code> ，并返回指针 𝑖 。</li>
+<li>查找最右一个 <code>target</code> ：可以转化为查找 <code>target + 0.5</code> ，并返回指针 𝑗 。</li>
+</ul>
+<p><img alt="图 10-8  将查找边界转化为查找元素" loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_edge_by_element.png"></p>
+<p>代码在此省略，以下两点值得注意。</p>
+<ul>
+<li>给定数组不包含小数，这意味着我们无须关心如何处理相等的情况。</li>
+<li>因为该方法引入了小数，所以需要将函数中的变量 <code>target</code> 改为浮点数类型（Python 无须改动）。</li>
+</ul>
+<h1 id="哈希优化策略">哈希优化策略<a hidden class="anchor" aria-hidden="true" href="#哈希优化策略">#</a></h1>
+<p>在算法题中，<strong>我们常通过将线性查找替换为哈希查找来降低算法的时间复杂度</strong>。我们借助一个算法题来加深理解。</p>
+<p>问题：</p>
+<p>给定一个整数数组 <code>nums</code> 和一个目标元素 <code>target</code> ，请在数组中搜索“和”为 <code>target</code> 的两个元素，并返回它们的数组索引。返回任意一个解即可。</p>
+<h2 id="线性查找以时间换空间">线性查找：以时间换空间<a hidden class="anchor" aria-hidden="true" href="#线性查找以时间换空间">#</a></h2>
+<p>考虑直接遍历所有可能的组合。如图 10-9 所示，我们开启一个两层循环，在每轮中判断两个整数的和是否为 <code>target</code> ，若是，则返回它们的索引。</p>
+<p><img alt="图 10-9  线性查找求解两数之和" loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/two_sum_brute_force.png"></p>
+<p>代码如下所示：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 方法一：暴力枚举 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span>[] twoSumBruteForce(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> size = nums.<span style="color:#007f7f">length</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 两层循环，时间复杂度为 O(n^2)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = 0; i &lt; size - 1; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> j = i + 1; j &lt; size; j++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">if</span> (nums[i] + nums[j] == target)
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[] { i, j };
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[0];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此方法的时间复杂度为 $𝑂(𝑛^2)$ ，空间复杂度为 𝑂(1) ，在大数据量下非常耗时。</p>
+<h2 id="哈希查找以空间换时间">哈希查找：以空间换时间<a hidden class="anchor" aria-hidden="true" href="#哈希查找以空间换时间">#</a></h2>
+<p>考虑借助一个哈希表，键值对分别为数组元素和元素索引。循环遍历数组，每轮执行图 10-10 所示的步骤。</p>
+<ol>
+<li>判断数字 <code>target - nums[i]</code> 是否在哈希表中，若是，则直接返回这两个元素的索引。</li>
+<li>将键值对 <code>nums[i]</code> 和索引 <code>i</code> 添加进哈希表。</li>
+</ol>
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/two_sum_hashtable_step1.png">
+<img loading="lazy" src="two_sum_hashtable_step2.png">
+<img loading="lazy" src="two_sum_hashtable_step3.png"></p>
+<p>实现代码如下所示，仅需单层循环即可：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#007f7f">/* 方法二：辅助哈希表 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">int</span>[] twoSumHashTable(<span style="color:#fff;font-weight:bold">int</span>[] nums, <span style="color:#fff;font-weight:bold">int</span> target) {
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">int</span> size = nums.<span style="color:#007f7f">length</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 辅助哈希表，空间复杂度为 O(n)</span>
+</span></span><span style="display:flex;"><span>    Map&lt;Integer, Integer&gt; dic = <span style="color:#fff;font-weight:bold">new</span> HashMap&lt;&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">// 单层循环，时间复杂度为 O(n)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">for</span> (<span style="color:#fff;font-weight:bold">int</span> i = 0; i &lt; size; i++) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">if</span> (dic.<span style="color:#007f7f">containsKey</span>(target - nums[i])) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[] { dic.<span style="color:#007f7f">get</span>(target - nums[i]), i };
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        dic.<span style="color:#007f7f">put</span>(nums[i], i);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#fff;font-weight:bold">new</span> <span style="color:#fff;font-weight:bold">int</span>[0];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此方法通过哈希查找将时间复杂度从 $𝑂(𝑛^2)$ 降至 𝑂(𝑛) ，大幅提升运行效率。</p>
+<p>由于需要维护一个额外的哈希表，因此空间复杂度为 𝑂(𝑛) 。<strong>尽管如此，该方法的整体时空效率更为均衡，因此它是本题的最优解法</strong>。</p>
+<h1 id="重识搜索算法">重识搜索算法<a hidden class="anchor" aria-hidden="true" href="#重识搜索算法">#</a></h1>
+<p>搜索算法（searching algorithm）用于在数据结构（例如数组、链表、树或图）中搜索一个或一组满足特定条件的元素。</p>
+<p>搜索算法可根据实现思路分为以下两类。</p>
+<ul>
+<li><strong>通过遍历数据结构来定位目标元素</strong>，例如数组、链表、树和图的遍历等。</li>
+<li><strong>利用数据组织结构或数据包含的先验信息，实现高效元素查找</strong>，例如二分查找、哈希查找和二叉搜索树查找等。</li>
+</ul>
+<p>不难发现，这些知识点都已在前面的章节中介绍过，因此搜索算法对于我们来说并不陌生。在本节中，我们将从更加系统的视角切入，重新审视搜索算法。</p>
+<h2 id="暴力搜索">暴力搜索<a hidden class="anchor" aria-hidden="true" href="#暴力搜索">#</a></h2>
+<p>暴力搜索通过遍历数据结构的每个元素来定位目标元素。</p>
+<ul>
+<li>“线性搜索”适用于数组和链表等线性数据结构。它从数据结构的一端开始，逐个访问元素，直到找到目标元素或到达另一端仍没有找到目标元素为止。</li>
+<li>“广度优先搜索”和“深度优先搜索”是图和树的两种遍历策略。广度优先搜索从初始节点开始逐层搜索，由近及远地访问各个节点。深度优先搜索从初始节点开始，沿着一条路径走到头，再回溯并尝试其他路径，直到遍历完整个数据结构。</li>
+</ul>
+<p>暴力搜索的优点是简单且通用性好，<strong>无须对数据做预处理和借助额外的数据结构</strong>。</p>
+<p>然而，<strong>此类算法的时间复杂度为 𝑂(𝑛)</strong> ，其中 𝑛 为元素数量，因此在数据量较大的情况下性能较差。</p>
+<h2 id="自适应搜索">自适应搜索<a hidden class="anchor" aria-hidden="true" href="#自适应搜索">#</a></h2>
+<p>自适应搜索利用数据的特有属性（例如有序性）来优化搜索过程，从而更高效地定位目标元素。</p>
+<ul>
+<li>“二分查找”利用数据的有序性实现高效查找，仅适用于数组。</li>
+<li>“哈希查找”利用哈希表将搜索数据和目标数据建立为键值对映射，从而实现查询操作。</li>
+<li>“树查找”在特定的树结构（例如二叉搜索树）中，基于比较节点值来快速排除节点，从而定位目标元素。</li>
+</ul>
+<p>此类算法的优点是效率高，<strong>时间复杂度可达到 𝑂(log⁡𝑛) 甚至 𝑂(1)</strong> 。</p>
+<p>然而，<strong>使用这些算法往往需要对数据进行预处理</strong>。例如，二分查找需要预先对数组进行排序，哈希查找和树查找都需要借助额外的数据结构，维护这些数据结构也需要额外的时间和空间开销。</p>
+<blockquote>
+<p>自适应搜索算法常被称为查找算法，<strong>主要用于在特定数据结构中快速检索目标元素</strong>。</p>
+</blockquote>
+<h2 id="搜索方法选取">搜索方法选取<a hidden class="anchor" aria-hidden="true" href="#搜索方法选取">#</a></h2>
+<p>给定大小为 𝑛 的一组数据，我们可以使用线性搜索、二分查找、树查找、哈希查找等多种方法从中搜索目标元素。各个方法的工作原理如图 10-11 所示。</p>
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/searching_algorithms.png"></p>
+<p>上述几种方法的操作效率与特性如表 10-1 所示。</p>
+<p>表 10-1  查找算法效率对比</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">线性搜索</th>
+<th style="text-align:left">二分查找</th>
+<th style="text-align:left">树查找</th>
+<th style="text-align:left">哈希查找</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">查找元素</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+<td style="text-align:left">𝑂(log⁡𝑛)</td>
+<td style="text-align:left">𝑂(log⁡𝑛)</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">插入元素</td>
+<td style="text-align:left">𝑂(1)</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+<td style="text-align:left">𝑂(log⁡𝑛)</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除元素</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+<td style="text-align:left">𝑂(log⁡𝑛)</td>
+<td style="text-align:left">𝑂(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">额外空间</td>
+<td style="text-align:left">𝑂(1)</td>
+<td style="text-align:left">𝑂(1)</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+<td style="text-align:left">𝑂(𝑛)</td>
+</tr>
+<tr>
+<td style="text-align:left">数据预处理</td>
+<td style="text-align:left">/</td>
+<td style="text-align:left">排序 𝑂(𝑛log⁡𝑛)</td>
+<td style="text-align:left">建树 𝑂(𝑛log⁡𝑛)</td>
+<td style="text-align:left">建哈希表 𝑂(𝑛)</td>
+</tr>
+<tr>
+<td style="text-align:left">数据是否有序</td>
+<td style="text-align:left">无序</td>
+<td style="text-align:left">有序</td>
+<td style="text-align:left">有序</td>
+<td style="text-align:left">无序</td>
+</tr>
+</tbody>
+</table>
+<p>搜索算法的选择还取决于数据体量、搜索性能要求、数据查询与更新频率等。</p>
+<p><strong>线性搜索</strong></p>
+<ul>
+<li>通用性较好，无须任何数据预处理操作。假如我们仅需查询一次数据，那么其他三种方法的数据预处理的时间比线性搜索的时间还要更长。</li>
+<li>适用于体量较小的数据，此情况下时间复杂度对效率影响较小。</li>
+<li>适用于数据更新频率较高的场景，因为该方法不需要对数据进行任何额外维护。</li>
+</ul>
+<p><strong>二分查找</strong></p>
+<ul>
+<li>适用于大数据量的情况，效率表现稳定，最差时间复杂度为 𝑂(log⁡𝑛) 。</li>
+<li>数据量不能过大，因为存储数组需要连续的内存空间。</li>
+<li>不适用于高频增删数据的场景，因为维护有序数组的开销较大。</li>
+</ul>
+<p><strong>哈希查找</strong></p>
+<ul>
+<li>适合对查询性能要求很高的场景，平均时间复杂度为 𝑂(1) 。</li>
+<li>不适合需要有序数据或范围查找的场景，因为哈希表无法维护数据的有序性。</li>
+<li>对哈希函数和哈希冲突处理策略的依赖性较高，具有较大的性能劣化风险。</li>
+<li>不适合数据量过大的情况，因为哈希表需要额外空间来最大程度地减少冲突，从而提供良好的查询性能。</li>
+</ul>
+<p><strong>树查找</strong></p>
+<ul>
+<li>适用于海量数据，因为树节点在内存中是分散存储的。</li>
+<li>适合需要维护有序数据或范围查找的场景。</li>
+<li>在持续增删节点的过程中，二叉搜索树可能产生倾斜，时间复杂度劣化至 𝑂(𝑛) 。</li>
+<li>若使用 AVL 树或红黑树，则各项操作可在 𝑂(log⁡𝑛) 效率下稳定运行，但维护树平衡的操作会增加额外的开销。</li>
+</ul>
+<h1 id="小结">小结<a hidden class="anchor" aria-hidden="true" href="#小结">#</a></h1>
+<ul>
+<li>二分查找依赖数据的有序性，通过循环逐步缩减一半搜索区间来进行查找。它要求输入数据有序，且仅适用于数组或基于数组实现的数据结构。</li>
+<li>暴力搜索通过遍历数据结构来定位数据。线性搜索适用于数组和链表，广度优先搜索和深度优先搜索适用于图和树。此类算法通用性好，无须对数据进行预处理，但时间复杂度 𝑂(𝑛) 较高。</li>
+<li>哈希查找、树查找和二分查找属于高效搜索方法，可在特定数据结构中快速定位目标元素。此类算法效率高，时间复杂度可达 𝑂(log⁡𝑛) 甚至 𝑂(1) ，但通常需要借助额外数据结构。</li>
+<li>实际中，我们需要对数据体量、搜索性能要求、数据查询和更新频率等因素进行具体分析，从而选择合适的搜索方法。</li>
+<li>线性搜索适用于小型或频繁更新的数据；二分查找适用于大型、排序的数据；哈希查找适用于对查询效率要求较高且无须范围查询的数据；树查找适用于需要维护顺序和支持范围查询的大型动态数据。</li>
+<li>用哈希查找替换线性查找是一种常用的优化运行时间的策略，可将时间复杂度从 𝑂(𝑛) 降至 𝑂(1) 。</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
