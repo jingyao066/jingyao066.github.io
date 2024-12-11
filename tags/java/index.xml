@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Java on Wjy&#39;s Blog</title>
-    <link>https://funny-toffee-4aa7c3.netlify.app/tags/java/</link>
+    <link>https://wjy6.netlify.app/tags/java/</link>
     <description>Recent content in Java on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
     <lastBuildDate>Wed, 06 Mar 2024 18:18:52 +0000</lastBuildDate>
-    <atom:link href="https://funny-toffee-4aa7c3.netlify.app/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://wjy6.netlify.app/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>手写Tomcat</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/</link>
+      <link>https://wjy6.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/</link>
       <pubDate>Wed, 06 Mar 2024 18:18:52 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/%E6%89%8B%E5%86%99tomcat/</guid>
       <description>对于Java后端开发的同学来说，Tomcat服务器肯定不陌生。开发Java Web App，最后通常都会部署到Tomcat这样的服务器上。 很多同学可</description>
     </item>
     <item>
       <title>JSR303</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsr303/</link>
+      <link>https://wjy6.netlify.app/posts/java/jsr303/</link>
       <pubDate>Fri, 30 Sep 2022 17:54:53 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsr303/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/jsr303/</guid>
       <description>&lt;p&gt;JSR303是一套JavaBean参数校验的标准，定义了很多常用的校验注解。我们需要对前端传的参数进行校验。&lt;/p&gt;</description>
     </item>
     <item>
       <title>SPI</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/spi/</link>
+      <link>https://wjy6.netlify.app/posts/java/spi/</link>
       <pubDate>Tue, 06 Sep 2022 17:05:25 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/spi/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/spi/</guid>
       <description>&lt;p&gt;SPI ，全称为 Service Provider Interface，是一种服务发现机制。它通过在ClassPath路径下的META-INF/services文件夹查找文件，自动加载文件里所定义的类。
 这一机制为很多框架扩展提供了可能，比如在Dubbo、JDBC中都使用到了SPI机制。我们先通过一个很简单的例子来看下它是怎么用的。&lt;/p&gt;</description>
     </item>
     <item>
       <title>概念</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%A6%82%E5%BF%B5/</link>
+      <link>https://wjy6.netlify.app/posts/java/%E6%A6%82%E5%BF%B5/</link>
       <pubDate>Fri, 02 Sep 2022 18:18:52 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E6%A6%82%E5%BF%B5/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/%E6%A6%82%E5%BF%B5/</guid>
       <description>&lt;h1 id=&#34;java反编译&#34;&gt;java反编译&lt;/h1&gt;
 &lt;p&gt;在介绍编译和反编译之前，我们先来简单介绍下编程语言（Programming Language）。编程语言（Programming Language）分为低级语言（Low-level Language）和高级语言（High-level Language）。&lt;/p&gt;
 &lt;p&gt;机器语言（Machine Language）和汇编语言（Assembly Language）属于低级语言，直接用计算机指令编写程序。&lt;/p&gt;
@@ -482,9 +482,9 @@
     </item>
     <item>
       <title>jvm</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/jvm/</link>
+      <link>https://wjy6.netlify.app/posts/java/jvm/</link>
       <pubDate>Thu, 01 Sep 2022 18:16:18 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/jvm/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/jvm/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.processon.com/view/link/5eea141cf346fb1ae56a44e7#map&#34;&gt;jvm全面思维导图&lt;/a&gt;
 &lt;a href=&#34;https://blog.csdn.net/suifeng3051/article/details/52611310&#34;&gt;java内存模型&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;什么是虚拟机&#34;&gt;什么是虚拟机&lt;/h1&gt;
@@ -496,47 +496,47 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>OAuth</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/oauth/</link>
+      <link>https://wjy6.netlify.app/posts/java/oauth/</link>
       <pubDate>Wed, 17 Mar 2021 10:24:53 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/oauth/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/oauth/</guid>
       <description>&lt;h1 id=&#34;oauth&#34;&gt;OAuth&lt;/h1&gt;
 &lt;p&gt;OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。&lt;/p&gt;</description>
     </item>
     <item>
       <title>《effective java》读书笔记</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <link>https://wjy6.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Tue, 09 Feb 2021 15:50:13 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
       <description>&lt;h1 id=&#34;chapter_02-创建和销毁对象&#34;&gt;chapter_02 创建和销毁对象&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Creating and Destroying Objects&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;本章涉及创建和销毁对象：何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们被及时销毁，以及如何管理在销毁之前必须执行的清理操作。&lt;/p&gt;</description>
     </item>
     <item>
       <title>《Netty实战》读书笔记</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <link>https://wjy6.netlify.app/posts/java/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Thu, 14 Jan 2021 09:28:13 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
       <description>第一个Netty应用程序 Netty 客户端/服务器概览 Echo 客户端和服务器之间的交互是非常简单的；在客户端建立一个连接之后，它会向服务器发送一个或多个消息</description>
     </item>
     <item>
       <title>常见 Java 代码缺陷及规避方式</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/</link>
+      <link>https://wjy6.netlify.app/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/</link>
       <pubDate>Fri, 09 Oct 2020 17:36:57 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/</guid>
       <description>空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编</description>
     </item>
     <item>
       <title>编程规约</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/</link>
+      <link>https://wjy6.netlify.app/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/</link>
       <pubDate>Fri, 09 Oct 2020 17:36:56 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/</guid>
       <description>&lt;p&gt;养成良好的编程习惯。&lt;/p&gt;</description>
     </item>
     <item>
       <title>kit</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/kit/</link>
+      <link>https://wjy6.netlify.app/posts/java/kit/</link>
       <pubDate>Sat, 11 Jan 2020 10:27:48 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/kit/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/kit/</guid>
       <description>&lt;h1 id=&#34;ffmpeg使用&#34;&gt;ffmpeg使用&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://baike.baidu.com/item/ffmpeg&#34;&gt;ffmpeg了解&lt;/a&gt;
 &lt;a href=&#34;http://ffmpeg.org/&#34;&gt;ffmpeg官网&lt;/a&gt;
@@ -544,18 +544,18 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>StringBuilder和StringBuffer</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/stringbuilder%E5%92%8Cstringbuffer/</link>
+      <link>https://wjy6.netlify.app/posts/java/stringbuilder%E5%92%8Cstringbuffer/</link>
       <pubDate>Tue, 07 May 2019 17:16:52 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/stringbuilder%E5%92%8Cstringbuffer/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/stringbuilder%E5%92%8Cstringbuffer/</guid>
       <description>&lt;h1 id=&#34;stringbuilder-简介&#34;&gt;StringBuilder 简介&lt;/h1&gt;
 &lt;p&gt;StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。
 StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。&lt;/p&gt;</description>
     </item>
     <item>
       <title>String</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/string/</link>
+      <link>https://wjy6.netlify.app/posts/java/string/</link>
       <pubDate>Tue, 07 May 2019 15:30:07 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/string/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/string/</guid>
       <description>&lt;h1 id=&#34;string简介&#34;&gt;String简介&lt;/h1&gt;
 &lt;p&gt;String 是java中的字符串，它继承于CharSequence。
 String类所包含的API接口非常多。为了便于今后的使用，我对String的API进行了分类，并都给出的演示程序。&lt;/p&gt;
@@ -567,20 +567,20 @@ StringBuilder 和 StringBuffer 的区别：
 StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于AbstractStringBuilder，实现了CharSequence接口。
 但是，StringBuilder是非线程安全的，而StringBuffer是线程安全的。&lt;/p&gt;
 &lt;p&gt;它们之间的关系图如下：
-&lt;img loading=&#34;lazy&#34; src=&#34;https://funny-toffee-4aa7c3.netlify.app/posts/java/string/1.jpg&#34;&gt;&lt;/p&gt;</description>
+&lt;img loading=&#34;lazy&#34; src=&#34;https://wjy6.netlify.app/posts/java/string/1.jpg&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Shell基础</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</link>
+      <link>https://wjy6.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Mon, 06 May 2019 16:21:35 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/shell%E5%9F%BA%E7%A1%80/</guid>
       <description>简介 简单来说“Shell 编程就是对一堆 Linux 命令的逻辑化处理”。W3Cschool 上的一篇文章是这样介绍 Shell 的，如下图所示。 Shell 编程的 Hello World 学习任何一</description>
     </item>
     <item>
       <title>equals</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/equals/</link>
+      <link>https://wjy6.netlify.app/posts/java/equals/</link>
       <pubDate>Tue, 30 Apr 2019 11:36:50 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/equals/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/equals/</guid>
       <description>&lt;h1 id=&#34;equals-的作用&#34;&gt;equals() 的作用&lt;/h1&gt;
 &lt;p&gt;equals() 的作用是&lt;code&gt;用来判断两个对象是否相等&lt;/code&gt;。
 equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否相等(即，是否是同一个对象)来区分它们是否相等。源码如下：&lt;/p&gt;
@@ -606,9 +606,9 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
     </item>
     <item>
       <title>comparable和comparator</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/comparable%E5%92%8Ccomparator/</link>
+      <link>https://wjy6.netlify.app/posts/java/comparable%E5%92%8Ccomparator/</link>
       <pubDate>Tue, 30 Apr 2019 09:53:16 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/comparable%E5%92%8Ccomparator/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/comparable%E5%92%8Ccomparator/</guid>
       <description>&lt;h1 id=&#34;comparable简介&#34;&gt;Comparable简介&lt;/h1&gt;
 &lt;p&gt;Comparable 是排序接口，若一个类实现了Comparable接口，就意味着&lt;code&gt;该类支持排序&lt;/code&gt;。
 如果 List 中的类实现了&lt;code&gt;Comparable&lt;/code&gt;接口，则该List 可以通过&lt;code&gt;Collections.sort&lt;/code&gt;排序。
@@ -616,9 +616,9 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
     </item>
     <item>
       <title>JSP&#43;Servlet</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsp&#43;servlet/</link>
+      <link>https://wjy6.netlify.app/posts/java/jsp&#43;servlet/</link>
       <pubDate>Sat, 06 Oct 2018 18:14:43 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/jsp&#43;servlet/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/jsp&#43;servlet/</guid>
       <description>&lt;h1 id=&#34;web应用服务器&#34;&gt;web应用服务器&lt;/h1&gt;
 &lt;p&gt;目前较为主流的Web应用服务器
 Tomcat  &amp;mdash;&amp;mdash;  Apache软件基金会
@@ -630,23 +630,23 @@ Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS�
     </item>
     <item>
       <title>javadoc</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/javadoc/</link>
+      <link>https://wjy6.netlify.app/posts/java/javadoc/</link>
       <pubDate>Thu, 06 Sep 2018 17:10:20 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/javadoc/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/javadoc/</guid>
       <description>&lt;p&gt;Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。&lt;a href=&#34;https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html&#34;&gt;官方文档&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>log</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/log/</link>
+      <link>https://wjy6.netlify.app/posts/java/log/</link>
       <pubDate>Sat, 07 Apr 2018 15:02:26 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/log/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/log/</guid>
       <description>概述 门面接口： 1 2 3 4 5 6 commons-logging： apache最早提供的日志门面接口，用户可以根据自己喜欢选择不同日志实现框架，而不</description>
     </item>
     <item>
       <title>web_api</title>
-      <link>https://funny-toffee-4aa7c3.netlify.app/posts/java/web_api/</link>
+      <link>https://wjy6.netlify.app/posts/java/web_api/</link>
       <pubDate>Wed, 24 Jan 2018 17:40:34 +0000</pubDate>
-      <guid>https://funny-toffee-4aa7c3.netlify.app/posts/java/web_api/</guid>
+      <guid>https://wjy6.netlify.app/posts/java/web_api/</guid>
       <description>&lt;p&gt;web api 设计。&lt;/p&gt;</description>
     </item>
   </channel>

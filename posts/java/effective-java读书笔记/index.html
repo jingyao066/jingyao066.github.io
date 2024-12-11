@@ -11,16 +11,16 @@
 Creating and Destroying Objects
 本章涉及创建和销毁对象：何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们被及时销毁，以及如何管理在销毁之前必须执行的清理操作。">
 <meta name="author" content="Wjy">
-<link rel="canonical" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+<link rel="canonical" href="https://wjy6.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://funny-toffee-4aa7c3.netlify.app/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://funny-toffee-4aa7c3.netlify.app/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://funny-toffee-4aa7c3.netlify.app/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://funny-toffee-4aa7c3.netlify.app/apple-touch-icon.png">
-<link rel="mask-icon" href="https://funny-toffee-4aa7c3.netlify.app/safari-pinned-tab.svg">
+<link rel="icon" href="https://wjy6.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://wjy6.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://wjy6.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://wjy6.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://wjy6.netlify.app/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://funny-toffee-4aa7c3.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+<link rel="alternate" hreflang="en" href="https://wjy6.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
 <noscript>
     <style>
         #theme-toggle,
@@ -60,7 +60,7 @@ Creating and Destroying Objects
 </noscript>
   
 
-<meta property="og:url" content="https://funny-toffee-4aa7c3.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
+<meta property="og:url" content="https://wjy6.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="《effective java》读书笔记">
   <meta property="og:description" content="chapter_02 创建和销毁对象 Creating and Destroying Objects
@@ -87,13 +87,13 @@ Creating and Destroying Objects
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/"
+      "item": "https://wjy6.netlify.app/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "《effective java》读书笔记",
-      "item": "https://funny-toffee-4aa7c3.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"
+      "item": "https://wjy6.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"
     }
   ]
 }
@@ -119,14 +119,14 @@ Creating and Destroying Objects
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://funny-toffee-4aa7c3.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"
+    "@id": "https://wjy6.netlify.app/posts/java/effective-java%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://funny-toffee-4aa7c3.netlify.app/favicon.ico"
+      "url": "https://wjy6.netlify.app/favicon.ico"
     }
   }
 }
@@ -159,7 +159,7 @@ Creating and Destroying Objects
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://funny-toffee-4aa7c3.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="https://wjy6.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -185,27 +185,27 @@ Creating and Destroying Objects
         </div>
         <ul id="menu">
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/" title="🏠主页">
+                <a href="https://wjy6.netlify.app/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/posts" title="📚文章">
+                <a href="https://wjy6.netlify.app/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/archives/" title="⏱时间轴">
+                <a href="https://wjy6.netlify.app/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/tags" title="🔖标签">
+                <a href="https://wjy6.netlify.app/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://funny-toffee-4aa7c3.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://wjy6.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -216,7 +216,7 @@ Creating and Destroying Objects
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://funny-toffee-4aa7c3.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://funny-toffee-4aa7c3.netlify.app/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://wjy6.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://wjy6.netlify.app/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       《effective java》读书笔记
     </h1>
@@ -3599,14 +3599,14 @@ toString 方法应该返回对象中包含的所有有用信息。如果对象�
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://funny-toffee-4aa7c3.netlify.app/tags/java/">Java</a></li>
+      <li><a href="https://wjy6.netlify.app/tags/java/">Java</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="https://funny-toffee-4aa7c3.netlify.app/">Wjy&#39;s Blog</a></span> · 
+        <span>&copy; 2024 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
 
     <span>
         Powered by
