@@ -2918,6 +2918,13 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
 目前比较常用的有两种热部署，分别为&lt;code&gt;spring-boot-devtools&lt;/code&gt;和&lt;code&gt;JRebel&lt;/code&gt;。&lt;a href=&#34;https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#using-boot-running-with-the-maven-plugin&#34;&gt;spring-boot-devtools官网&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
+      <title>wsl2</title>
+      <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/</guid>
+      <description>win11开启wsl2 WSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用</description>
+    </item>
+    <item>
       <title>大模型技术</title>
       <link>https://wjy6.netlify.app/posts/ai/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8A%80%E6%9C%AF/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

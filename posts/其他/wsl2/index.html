@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>wsl2 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="其他">
+<meta name="description" content="win11开启wsl2 WSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://wjy6.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://wjy6.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://wjy6.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://wjy6.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://wjy6.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="wsl2">
+  <meta property="og:description" content="win11开启wsl2 WSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wsl2">
+<meta name="twitter:description" content="win11开启wsl2 WSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://wjy6.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "wsl2",
+      "item": "https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "wsl2",
+  "name": "wsl2",
+  "description": "win11开启wsl2 WSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用",
+  "keywords": [
+    "其他"
+  ],
+  "articleBody": "win11开启wsl2 WSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。\n首先确保虚拟化选项开启。ctrl+alt+del进任务管理器，查看虚拟化是启用状态，这个如果没有开启的话，需要进电脑的BIOS设置里开启。\n控制面板-\u003e程序-\u003e启用或关闭 windows 功能，勾选适用于linux的windows子系统、虚拟机平台、Hyper-V。勾选完成后，Windows11 会自己下载些东西，并提示你重启。等电脑彻底重启完以后，进行后续操作。\n「开发者选项」→「开发人员模式」，打开开关。\n安装Ubuntu发行版\n命令行安装，wsl --list --online可以安装的版本，然后选择需要版本通过 wsl –install -d \u003c发行版名称\u003e 进行安装。或者直接通过wsl --install安装最新的发行版。 通过Microsoft Store安装，直接在商店搜索wsl，选择相安装的版本安装即可。 安装成功后，按照提示重启电脑。启动 Ubuntu 按照提示，创建账户与密码即可。\nWSL2迁移至其他目录 wsl存放的发行版文件系统位于C盘，根据自己的需求，可选择将其跟文件系统迁移至其他目录，例如D盘等。\n停止正在运行的wsl：wsl --shutdown 将需要迁移的Linux，进行导出。先查看所有WSL：wsl -l --all -v，然后导出到D盘：wsl --export 发行版Linux tar包路径。示例：wsl --export Ubuntu-20.04 d:\\ubuntu20.04.tar 导出完成之后，将原有的Linux注销。wsl --unregister 发行版Linux。示例执行：wsl --unregister Ubuntu-20.04 然后将导出的文件放到需要保存的地方，进行导入即可。wsl --import \u003c安装位置\u003e 。示例执行：wsl --import Ubuntu-20.04 d:\\ubuntu d:\\ubuntu20.04.tar --version 2 可以在D盘看到linux系统磁盘文件。至此，完成了在win平台上的WSL中创建linux子系统。 wsl2安装mysql 更新：\n1 sudo apt update 安装mysql：\n1 sudo apt install mysql-server 确认安装并获取版本号：\n1 mysql --version 启动 MySQL Server / 检查状态：\n1 systemctl status mysql 登录mysql：\n1 mysql -u root -p root默认没有密码，可以直接登录成功。\n修改root用户密码\n1 2 3 show databases; use mysql; show tables; 用户信息都在user表中。\n1 2 3 4 5 select user, host, plugin from user; localhost说明只允许本地登录。\nMySQL8.0 中用户默认认证方式为 caching_sha2_password，虽然安全性有保障，但是对于使用本地或者远程连接都造成了一定困扰。因此可以将用户认证方式改为MySQL5.X常用的mysql_native_password方式，只有此种方式才能在MySQL8.0中更改用户密码。\n1 2 # 修改root用户的密码为root，认证方式为mysql_native_password alter user 'root'@'localhost' identified with mysql_native_password by 'root'; 刷新\n1 flush privileges; 现在可以使用dataGrip等数据库链接工具链接这个mysql了。\nurl：jdbc:mysql://localhost:3306\nuser：root\npassword：root\n设置root用户的远程访问 此时root用户的host属性仍然是localhost，也就是只能从本地访问，因此可以将root用户的访问权限由本地改为本地和外部都可以访问，将host的值由localhost改为 %。\n1 2 3 4 update user set user.host='%' where user.user='root'; # 刷新 flush privileges 此时root用户的host访问权限已经改为本地和外部都可以。\n修改MySQL配置文件实现真正的远程访问 此时使用127.0.0.1或者localhost连接都没有问题，但是在外部一旦换成Ubuntu真正的IP地址访问就会报错。\n这时还需要修改MySQL配置文件中的相关配置项\n1 /etc/mysql//mysql.conf.d/mysqld.cnf 修改 bind-address = 0.0.0.0 。\n重启MySQL后，再次通过IP地址远程连接。\nMySQL8.0卸载 1 2 3 4 sudo apt purge mysql-* sudo rm -rf /etc/mysql/ /var/lib/mysql sudo apt autoremove sudo apt autoclean ",
+  "wordCount" : "1526",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wjy6.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+
+  <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],  
+      inlineMath:  [['\\(', '\\)'], ['$', '$']],  
+    }
+  };
+</script>
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://wjy6.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://wjy6.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://wjy6.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://wjy6.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      wsl2
+    </h1>
+    <div class="post-meta">Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#win11%e5%bc%80%e5%90%afwsl2" aria-label="win11开启wsl2">win11开启wsl2</a></li>
+                <li>
+                    <a href="#wsl2%e8%bf%81%e7%a7%bb%e8%87%b3%e5%85%b6%e4%bb%96%e7%9b%ae%e5%bd%95" aria-label="WSL2迁移至其他目录">WSL2迁移至其他目录</a></li>
+                <li>
+                    <a href="#wsl2%e5%ae%89%e8%a3%85mysql" aria-label="wsl2安装mysql">wsl2安装mysql</a><ul>
+                        
+                <li>
+                    <a href="#%e8%ae%be%e7%bd%aeroot%e7%94%a8%e6%88%b7%e7%9a%84%e8%bf%9c%e7%a8%8b%e8%ae%bf%e9%97%ae" aria-label="设置root用户的远程访问">设置root用户的远程访问</a></li>
+                <li>
+                    <a href="#%e4%bf%ae%e6%94%b9mysql%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6%e5%ae%9e%e7%8e%b0%e7%9c%9f%e6%ad%a3%e7%9a%84%e8%bf%9c%e7%a8%8b%e8%ae%bf%e9%97%ae" aria-label="修改MySQL配置文件实现真正的远程访问">修改MySQL配置文件实现真正的远程访问</a></li>
+                <li>
+                    <a href="#mysql80%e5%8d%b8%e8%bd%bd" aria-label="MySQL8.0卸载">MySQL8.0卸载</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="win11开启wsl2">win11开启wsl2<a hidden class="anchor" aria-hidden="true" href="#win11开启wsl2">#</a></h1>
+<p>WSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。</p>
+<ol>
+<li>
+<p>首先确保虚拟化选项开启。ctrl+alt+del进任务管理器，查看虚拟化是启用状态，这个如果没有开启的话，需要进电脑的BIOS设置里开启。</p>
+</li>
+<li>
+<p>控制面板-&gt;程序-&gt;启用或关闭 windows 功能，勾选<code>适用于linux的windows子系统、虚拟机平台、Hyper-V</code>。勾选完成后，Windows11 会自己下载些东西，并提示你重启。等电脑彻底重启完以后，进行后续操作。</p>
+</li>
+<li>
+<p>「开发者选项」→「开发人员模式」，打开开关。</p>
+</li>
+<li>
+<p>安装Ubuntu发行版</p>
+<ol>
+<li>命令行安装，<code>wsl --list --online</code>可以安装的版本，然后选择需要版本通过 wsl &ndash;install -d &lt;发行版名称&gt; 进行安装。或者直接通过<code>wsl --install</code>安装最新的发行版。</li>
+<li>通过Microsoft Store安装，直接在商店搜索wsl，选择相安装的版本安装即可。</li>
+</ol>
+</li>
+<li>
+<p>安装成功后，按照提示重启电脑。启动 Ubuntu 按照提示，创建账户与密码即可。</p>
+</li>
+</ol>
+<h1 id="wsl2迁移至其他目录">WSL2迁移至其他目录<a hidden class="anchor" aria-hidden="true" href="#wsl2迁移至其他目录">#</a></h1>
+<p>wsl存放的发行版文件系统位于C盘，根据自己的需求，可选择将其跟文件系统迁移至其他目录，例如D盘等。</p>
+<ol>
+<li>停止正在运行的wsl：<code>wsl --shutdown</code></li>
+<li>将需要迁移的Linux，进行导出。先查看所有WSL：<code>wsl -l --all  -v</code>，然后导出到D盘：<code>wsl --export 发行版Linux tar包路径</code>。示例：<code>wsl --export Ubuntu-20.04 d:\ubuntu20.04.tar</code></li>
+<li>导出完成之后，将原有的Linux注销。<code>wsl --unregister 发行版Linux</code>。示例执行：<code>wsl --unregister Ubuntu-20.04</code></li>
+<li>然后将导出的文件放到需要保存的地方，进行导入即可。<code>wsl --import &lt;DistributionName&gt;  &lt;安装位置&gt;  &lt;tar文件名&gt;</code>。示例执行：<code>wsl --import Ubuntu-20.04 d:\ubuntu d:\ubuntu20.04.tar --version 2</code></li>
+<li>可以在D盘看到linux系统磁盘文件。至此，完成了在win平台上的WSL中创建linux子系统。</li>
+</ol>
+<h1 id="wsl2安装mysql">wsl2安装mysql<a hidden class="anchor" aria-hidden="true" href="#wsl2安装mysql">#</a></h1>
+<p>更新：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo apt update
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装mysql：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo apt install mysql-server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>确认安装并获取版本号：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysql --version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动 MySQL Server / 检查状态：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>systemctl status mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>登录mysql：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysql -u root -p
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>root默认没有密码，可以直接登录成功。</p>
+<p>修改root用户密码</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>show databases;
+</span></span><span style="display:flex;"><span>use mysql;
+</span></span><span style="display:flex;"><span>show tables;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用户信息都在user表中。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">select</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">user</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">host</span>,
+</span></span><span style="display:flex;"><span>    plugin
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">from</span> <span style="color:#fff;font-weight:bold">user</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>localhost说明只允许本地登录。</p>
+<p>MySQL8.0 中用户默认认证方式为 caching_sha2_password，虽然安全性有保障，但是对于使用本地或者远程连接都造成了一定困扰。因此可以将用户认证方式改为MySQL5.X常用的<code>mysql_native_password</code>方式，只有此种方式才能在MySQL8.0中更改用户密码。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 修改root用户的密码为root，认证方式为mysql_native_password
+</span></span><span style="display:flex;"><span>alter user &#39;root&#39;@&#39;localhost&#39; identified with mysql_native_password by &#39;root&#39;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>刷新</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>flush privileges;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在可以使用<code>dataGrip</code>等数据库链接工具链接这个mysql了。</p>
+<p>url：jdbc:mysql://localhost:3306</p>
+<p>user：root</p>
+<p>password：root</p>
+<h2 id="设置root用户的远程访问">设置root用户的远程访问<a hidden class="anchor" aria-hidden="true" href="#设置root用户的远程访问">#</a></h2>
+<p>此时root用户的host属性仍然是localhost，也就是只能从本地访问，因此可以将root用户的访问权限由本地改为本地和外部都可以访问，将host的值由localhost改为 %。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">update</span> <span style="color:#fff;font-weight:bold">user</span> <span style="color:#fff;font-weight:bold">set</span> <span style="color:#fff;font-weight:bold">user</span>.<span style="color:#fff;font-weight:bold">host</span>=<span style="color:#0ff;font-weight:bold">&#39;%&#39;</span> <span style="color:#fff;font-weight:bold">where</span> <span style="color:#fff;font-weight:bold">user</span>.<span style="color:#fff;font-weight:bold">user</span>=<span style="color:#0ff;font-weight:bold">&#39;root&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># <span style="color:#f00">刷新</span>
+</span></span><span style="display:flex;"><span>flush <span style="color:#fff;font-weight:bold">privileges</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时root用户的host访问权限已经改为本地和外部都可以。</p>
+<h2 id="修改mysql配置文件实现真正的远程访问">修改MySQL配置文件实现真正的远程访问<a hidden class="anchor" aria-hidden="true" href="#修改mysql配置文件实现真正的远程访问">#</a></h2>
+<p>此时使用127.0.0.1或者localhost连接都没有问题，但是在外部一旦换成Ubuntu真正的IP地址访问就会报错。</p>
+<p>这时还需要修改MySQL配置文件中的相关配置项</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>/etc/mysql//mysql.conf.d/mysqld.cnf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改 bind-address = 0.0.0.0 。</p>
+<p>重启MySQL后，再次通过IP地址远程连接。</p>
+<h2 id="mysql80卸载">MySQL8.0卸载<a hidden class="anchor" aria-hidden="true" href="#mysql80卸载">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> sudo apt purge mysql-*
+</span></span><span style="display:flex;"><span> sudo rm -rf /etc/mysql/ /var/lib/mysql
+</span></span><span style="display:flex;"><span> sudo apt autoremove
+</span></span><span style="display:flex;"><span> sudo apt autoclean
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://wjy6.netlify.app/tags/%E5%85%B6%E4%BB%96/">其他</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
