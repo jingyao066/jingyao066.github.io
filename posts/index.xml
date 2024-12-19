@@ -1542,8 +1542,7 @@ V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml&lt;/p&gt;<
       <link>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/</link>
       <pubDate>Wed, 23 Oct 2019 10:53:04 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/</guid>
-      <description>&lt;h1 id=&#34;activiti&#34;&gt;activiti&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.activiti.org/&#34;&gt;官网&lt;/a&gt;&lt;/p&gt;</description>
+      <description>为什么需要工作流 假设我有一个请假需求，流程如下： 请假可以提交给我的上司，上司可以选择批准或者拒绝，无论批准还是拒绝，都会给我一个通知。 这个流</description>
     </item>
     <item>
       <title>搜索引擎</title>
