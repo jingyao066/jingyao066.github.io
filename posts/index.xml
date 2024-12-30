@@ -2915,6 +2915,13 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <description>&lt;p&gt;Elasticsearch&lt;/p&gt;</description>
     </item>
     <item>
+      <title>httpClient</title>
+      <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/httpclient/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/httpclient/</guid>
+      <description>概述 官方介绍：https://www.jetbrains.com/help/idea/http-client-in-product-code</description>
+    </item>
+    <item>
       <title>JRebel</title>
       <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/jrebel/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
