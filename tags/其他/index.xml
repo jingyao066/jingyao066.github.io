@@ -285,13 +285,7 @@ file-&amp;gt;export setting&lt;/p&gt;</description>
       <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/nginx/</link>
       <pubDate>Sat, 06 Oct 2018 18:06:29 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/nginx/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/knowledgesea/p/5175711.html&#34;&gt;nginx学习&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;配置&#34;&gt;配置&lt;/h1&gt;
-&lt;p&gt;1.下载：http://nginx.org/
-2.解压至英文路径
-3.进入解压后文件夹，双击nginx.exe启动nginx，默认为80端口，nginx启动时一闪而过，启动后打开浏览器，输入localhost，看到欢迎页面证明启动成功，若看不到欢迎页面，可能是80端口被占用
-解决方法：进入nginx文件夹下的conf文件夹
-编辑nginx.conf，找到server{listen   80;}修改端口号，重启nginx即可&lt;/p&gt;</description>
+      <description>nginx.conf 讲解 默认配置如下： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60</description>
     </item>
     <item>
       <title>MarkDown</title>
