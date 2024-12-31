@@ -6,8 +6,15 @@
     <description>Recent content on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 13 Dec 2024 17:37:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Dec 2024 17:58:58 +0000</lastBuildDate>
     <atom:link href="https://wjy6.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>httpClient</title>
+      <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/httpclient/</link>
+      <pubDate>Mon, 30 Dec 2024 17:58:58 +0000</pubDate>
+      <guid>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/httpclient/</guid>
+      <description>概述 官方介绍：https://www.jetbrains.com/help/idea/http-client-in-product-code</description>
+    </item>
     <item>
       <title>wsl2</title>
       <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/wsl2/</link>
@@ -2913,13 +2920,6 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/es/</guid>
       <description>&lt;p&gt;Elasticsearch&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>httpClient</title>
-      <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/httpclient/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/httpclient/</guid>
-      <description>概述 官方介绍：https://www.jetbrains.com/help/idea/http-client-in-product-code</description>
     </item>
     <item>
       <title>JRebel</title>
