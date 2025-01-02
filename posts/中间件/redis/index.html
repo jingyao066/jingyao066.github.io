@@ -1,8 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>redis | Wjy&#39;s Blog</title>
+<meta name="keywords" content="中间件">
+<meta name="description" content="redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="redis">
+  <meta property="og:description" content="redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-10-06T18:10:43+00:00">
+    <meta property="article:modified_time" content="2018-10-06T18:10:43+00:00">
+    <meta property="article:tag" content="中间件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis">
+<meta name="twitter:description" content="redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "redis",
+      "item": "https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "redis",
+  "name": "redis",
+  "description": "redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。\n",
+  "keywords": [
+    "中间件"
+  ],
+  "articleBody": "redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。\n概念 缓存处理流程\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 // 先从redis中获取数据 String data = redisGet(\"xxx\"); // redis中没有数据 if(data == null) { // 从数据库中获取数据 data = dbGet(\"xxx\"); // 数据库也没有数据，返回空结果 if(data == null) { return \"\"; } // 设置到缓存中 redis.set(\"xxx\",\"xxx\"); } // 返回数据 return data; redis缓存穿透 缓存穿透是指：查询一个缓存和数据库中都不存在的数据，由于缓存不命中（因为数据根本就不存在），请求就会穿过缓存，直接请求数据库。如果有大量此类请求，数据库压力会突然增大，严重时可能会拖垮数据库。 例如：用户（这时的用户很可能是攻击者）发起为id为-1或id为特别大不存在的请求。 解决方案：\n接口层增加校验，如用户鉴权校验，id做基础校验，id\u003c=0的直接拦截； 从缓存取不到的数据，在数据库中也没有取到，这时也可以将key-value对写为key-null，缓存有效时间可以设置短点，如30秒（设置太长会导致正常情况也没法使用）。这样可以防止攻击用户反复用同一个id暴力攻击。 缓存雪崩 缓存雪崩是指：在某一个时间段内，大量的缓存键集中过期，导致所有的请求都落到数据库上，造成数据库瞬间压力过大，可能到达崩溃的状态。和缓存击穿不同的是，缓存击穿指并发查同一条数据，缓存雪崩是不同数据都过期了，很多数据从缓存查不到从而查数据库。 解决方案：\n缓存数据的过期时间设置随机，防止同一时间大量缓存过期。 热点数据不设置过期时间。 缓存击穿 缓存击穿，是指一个key非常热点，在不停的扛着大并发，大并发集中对这一个key进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，造成数据库压力过大，就像在一个屏障上凿开了一个洞。缓存击穿指并发查同一条数据。 解决方案：\n热点数据不设置过期时间：这要求系统能准确判断哪些是热点数据。 加锁或队列：当热点key过期时，不是所有请求都去数据库查询，而是让某一个请求去数据库查询并更新缓存，其他请求等待缓存更新后再访问缓存。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 public static String getData(String key) throws InterruptedException{ //从缓存中读取数据 String result = getDataFromRedis(key); //缓存中不存在数据 if(null == result){ //获取锁，获取成功，取数据库获取数据 if(reenLock.tryLock()){ //从数据库获取数据 result = getDataFromMysql(key); //更新缓存数据 if(result != null){ setDataToCache(key,result); } //释放锁 reenLock.unlock(); }else{//获取锁失败 //暂停100ms再重新获取数据 Thread.sleep(100); result = getData(key); } } return result; } 说明：\n缓存中有数据，直接走上述代码13行后就返回结果了 缓存中没有数据，第1个进入的线程，获取锁并从数据库去取数据，没释放锁之前，其他并行进入的线程会等待100ms，再重新去缓存取数据。这样就防止都去数据库重复取数据，重复往缓存中更新数据情况出现。 当然这是简化处理，理论上如果能根据key值加锁就更好了，就是线程A从数据库取key1的数据并不妨碍线程B取key2的数据，上面代码明显做不到这点。 数据一致性 数据一致性问题是指当数据在多个地方（如缓存和数据库）存储时，这些地方的数据可能会出现不一致的情况。这种不一致可能是由于缓存更新滞后、系统故障或其他原因引起的。数据一致性是分布式系统设计中的一项挑战，尤其是在读写非常频繁的系统中。\n数据一致性的问题所在\n当数据被更新时，如果缓存中的相应数据没有立即更新，那么缓存系统将向应用程序提供旧数据。这会导致应用程序得到不一致的结果，影响用户体验和数据的准确性。\n实时强一致性和最终一致性\n在分布式系统中，数据一致性是一个核心问题。根据系统的设计与需求，可以选择实时强一致性(Strong Consistency)或最终一致性(Eventual Consistency)。\n实时强一致性 **定义：**实时强一致性保证了任何时刻，所有的客户端看到的数据都是一样的。在分布式系统中实现强一致性意味着，一个操作一旦完成，所有的客户端立即都能看到这个操作的结果。\n**适用场景：**事务性强、对数据一致性要求高的系统，如银行系统或任何财务系统。\n保障策略：\n三阶段提交（3PC）等分布式事务协议：在分布式系统中保证操作要么全部成功，要么全部失败。 分布式锁：通过在操作前获取全局锁，保证同一时刻只有一个操作可以修改数据，从而保障数据一致性。 强一致性算法：如Paxos或Raft算法，通过一系列严格的消息传递和确认机制，确保分布式系统中的多个副本能够达到一致状态。 最终一致性 **定义：**最终一致性是指，系统会保证在没有新的更新操作的情况下，经过足够的时间后，数据将达到一致的状态。在这种模型下，数据的副本之间可能会暂时存在不一致。\n**适用场景：**对实时性要求不高，可以容忍短时间内数据不一致的场景，如社交网络、推荐系统等。\n保障策略：\n异步复制：当数据更新发生时，首先更新主副本，然后异步地将更新同步到其他副本。 读取修复（Read Repair）：在读取数据的时候检测副本之间的不一致，并在后台异步修复不一致的数据。 后台一致性修复进程：定期在后台运行的进程检查和同步数据副本之间的差异，以达到最终一致性。 版本控制：每次更新数据时附加一个时间戳或版本号，用于解决更新冲突和保持数据的最终一致性。 缓存更新策略 Write through cache（直写缓存）：首先将数据写入缓存，然后立即将新的缓存数据复制到数据库。这种方式可以保证写操作的一致性，但可能会影响写操作的性能。 Write back cache（写回缓存）：数据首先写入缓存，然后由缓存异步写入数据库。这种方式可以提高写操作的性能，但增加了数据丢失的风险。 Write around cache（饶写缓存）：绕过缓存，直接写数据库，然后依据需要更新缓存或使缓存失效。这适用于更频繁读取操作的场景。 缓存失效策略 主动更新：当数据库数据变化时，主动更新缓存中的数据。这可以保持缓存数据的实时性，但可能会增加系统的复杂性。 定时失效：为缓存数据设置一个过期时间。定期从数据库中重新加载数据，以保持数据的新鲜度。但这无法解决数据在两次加载之间变化导致的一致性问题。 惰性加载：只有在请求特定数据且发现缓存失效或缓存中没有该数据时，才去数据库加载该数据。这种策略简单，但在高并发场景下可能会导致缓存击穿。 使用缓存一致性协议 基于订阅的更新：使用消息队列（如Kafka，RabbitMQ）来发布数据库更新，然后相关服务订阅这些更新消息来同步更新缓存。 最终一致性：采用最终一致性模型，允许系统在一段时间内是不一致的，但保证经过足够的时间后，系统中的所有复制数据最终将达到一致的状态。 分布式缓存系统 使用如Redis Cluster、Apache Ignite、Tair等分布式缓存系统，这些系统内置了处理缓存一致性的机制，（但是无法解决缓存和数据库之间的数据一致性问题）。\n缓存一致性场景和问题 原文：https://mp.weixin.qq.com/s/6-TAG8s5tgefs-5Qdt4tzQ\n为了使各应用职责及整体的架构设计更加清晰，Push中心整体将后台配置端（后台管理）和前台投放端（用户端）分别部署在了两个应用中，两个应用需要分别配置数据库连接，分别配置缓存。\n投放段（用户端） 投放端对于投放计划pushPlan，只有查询流量，没有增删改。\n由于投放端qps较高，为减少数据库压力，必须使用缓存。同时，为了避免缓存击穿和缓存穿透，我们用本地缓存和tair组成了二级缓存，并使用定时任务定时将数据库中的数据刷新到tair。（注：不了解tair的话，可以简单理解为和redis类似）\n配置段（后台管理） 配置端会增删改pushPlan。\n问题描述 梳理到这里，其实很容易发现潜在的不一致性问题：\ntair和数据库不一致 投放端的本地缓存和Tair缓存不一致 投放端和配置端都用到了Tair缓存，需要是同一个，且key的拼写规则要保持一致 配置端采用的缓存一致性方案是：“修改前删缓存，查询后刷新”，删除后会导致投放端的缓存也被删除 本次的问题便出现在第4点：一旦数据在配置端被修改，那么在投放端本地缓存过期后，定时任务刷新tair前，查询出来的数据便是null，导致异常。\n至于前3点，此前的方案为：\n配置端通过“修改前删缓存，查询后刷新”解决，投放端使用定时任务刷新 减少本地缓存过期时间（本地缓存主要是避免缓存穿透和缓存击穿，过期时间可以设置地比较短，业务上可以接受短暂的不一致性） 谜题就在谜面上 问题原因 由于配置端每次更新是先删除缓存，再写数据库，此时在投放端定时任务刷新tair之前，查询缓存便是null。\n解决方案 写完数据库后刷新缓存。\n这是最直接的解决方案，既然之前删缓存不行，那就不删除，而是直接刷新缓存。刷新缓存后，配置端从数据库中取出的数据便为最新的数据。\n此处涉及到一个先刷新数据库，还是先刷新缓存之类的问题，这里简单列一下各方案及优缺点：\n方案 特点 先更新数据库，再更新缓存（建议） 优点：一致性更强：如果数据库更新成功，而缓存更新失败，可以通过重试机制解决，或者直接让缓存过期，保证了最终一致性。减少数据不一致的窗口期：因为更新缓存的操作通常比更新数据库快得多，所以更新完数据库后马上更新缓存，可以尽快保持它们之间的一致性。缺点：更新窗口期中的读操作可能导致脏读：如果在更新数据库后、更新缓存前有新的读请求，这时会读到旧的缓存数据。 先更新缓存，再更新数据库 优点：减少了脏读的可能：因为缓存是最先被更新的，读请求总是能读到最新的数据。缺点：一致性问题更为复杂：如果缓存更新成功，但是数据库更新失败，这会导致缓存和数据库之间出现长期的不一致状态，解决这种不一致状态需要额外的回滚操作，增加了系统的复杂性。需要处理回滚操作：如上所述，更新缓存成功而数据库更新失败时，需要有一套策略来回滚已经更新的缓存，确保数据一致性。 先删缓存，再更新数据库（不建议） 这种策略是指在更新数据之前，首先删除缓存中的数据，然后再更新数据库。优点：简单直接，逻辑清晰。缺点：可能导致窗口期一致性问题。在删除成功和数据库更新期间，如果有读操作发生，将会读取到旧的数据并且可能回填到缓存中，导致数据库与缓存数据不一致。 延时双删策略 延时双删涉及三个步骤：先删除缓存、更新数据库，然后过一段时间后再次删除缓存。优点：相对于“先删缓存，再更新数据库”策略，这种方法可以减少由于缓存窗口期造成的不一致概率。延迟第二次删除可以覆盖到那些在数据库更新过程中请求旧缓存的读操作，从而阻止这些操作将旧数据回填到缓存。缺点：增加了系统的复杂度，需要合适的机制来定时执行第二次删除操作。第二次删除的延迟时间不易确定，太短可能无效，太长则可能导致长时间的数据不一致。 安装redis linux安装redis 连接redis ./redis-cli 127.0.0.1:6379\u003e\n配置redis redis的配置文件位于Redis安装目录下，文件名为 redis.conf，可以通过CONFIG命令查看或者设置配置项。\n1 2 3 127.0.0.1:6379\u003e config get loglevel 1) \"loglevel\" 2) \"notice\" 使用*获取所有配置项 config get * 很多配置，这里就不贴了。参考这里 可以通过修改redis.conf文件或者使用config set 命令来修改配置\n1 2 127.0.0.1:6379\u003e config set loglevel 'notice' OK 如何停止/启动/重启redis服务 如果是用apt-get或者yum install安装的redis，可以直接通过下面的命令停止/启动/重启redis\n1 2 3 /etc/init.d/redis-server stop /etc/init.d/redis-server start /etc/init.d/redis-server restart 如果是通过源码安装的redis，可以通过redis的客户端程序redis-cli的shutdown命令来停止redis\nredis-cli -h 127.0.0.1 -p 6379 shutdown 或 ./redis-cli shutdown 没错，虽然启动的是server，但是这里停止的是redis-cli 如果上述方式都没有成功停止redis，则可以使用终极武器 kill -9\n启动redis： cd src ./redis-server 上面这种启动redis使用的是默认配置，也可以通过启动参数告诉redis使用指定配置 ./redis-server ../redis.conf\n让redis后台运行 ./redis-server \u0026 然后输入bg\nwindows安装redis5.x 参考 下载地址：https://github.com/tporadowski/redis/releases 这里下载的是 Redis-x64-5.0.10.msi 直接安装，安装过程勾选添加环境变量，其他都 next。 安装目录下，git bush执行命令： ./redis-server.exe redis.windows.conf\n如果显示： Redis is starting 就是redis已经在运行了。两种解决办法：\n运行redis安装目录的redis-cli.exe，shutdown，显示not connected\u003eexit。 找到windows服务，找到redis，停止，禁用自启。 redis设置密码，修改配置文件 redis.windows.conf：\n1 2 # requirepass foobared requirepass 123456 之后启动 redis 需要指定配置文件： redis-server.exe redis.windows.conf\nredis命令 参考redis中文官网\nkey del del用于删除已存在的键，不存在的 key 会被忽略 del key_name 返回被删除key的数量\ndump DUMP 命令用于序列化给定 key ，并返回被序列化的值 DUMP KEY_NAME 如果 key 不存在，那么返回 nil 。 否则，返回序列化之后的值。\nexist EXISTS 命令用于检查给定 key 是否存在。 EXISTS KEY_NAME 若 key 存在返回 1 ，否则返回 0 。\nexpire Expire 命令用于设置 key 的过期时间。key 过期后将不再可用。 Expire KEY_NAME TIME_IN_SECONDS 设置成功返回1， 当key不存在或者不能为key设置过期时间时返回0。\nexpireat Expireat 命令用于以 UNIX 时间戳(unix timestamp)格式设置 key 的过期时间。key 过期后将不再可用。 Expireat KEY_NAME TIME_IN_UNIX_TIMESTAMP 设置成功返回1，不成功或不存在返回0。 示例： EXPIREAT w3ckey 1293840000\nkeys Keys 命令用于查找所有符合给定模式 pattern 的 key KEYS PATTERN 返回符合给定模式的 key 列表 (Array)。\n查找以w3c开头的key： keys w3c* 查找所有的key keys *\nmove move命令用于将当前数据库的key移动到给定的数据库db当中。 MOVE KEY_NAME DESTINATION_DATABASE 移动成功返回 1 ，失败则返回 0 。\n示例：\n1 2 3 4 5 6 SELECT 0 # redis默认使用数据库 0，为了清晰起见，这里再显式指定一次。 set w3c redis #设置一个key move w3c 1 #转移到1库 exist w3c #发现w3c已经没有了 select 1 #选择1库 exist w3c #发现w3c已经转移到1库中 不存在的key无法转移 当源数据库和目标数据库有相同的 key 时，key无法转移。 persist persist命令用于移除给定 key 的过期时间，使得 key 永不过期。 PERSIST KEY_NAME 当过期时间移除成功时，返回 1 。 如果 key 不存在或 key 没有设置过期时间，返回 0 。\npttl Pttl 命令以毫秒为单位返回 key 的剩余过期时间。 PTTL KEY_NAME 当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以毫秒为单位，返回 key 的剩余生存时间。\nTTL TTL 命令以秒为单位返回 key 的剩余过期时间。 TTL KEY_NAME 当 key 不存在时，返回 -2 。 当 key 存在但没有设置剩余生存时间时，返回 -1 。 否则，以秒为单位，返回 key 的剩余生存时间。\nrandomkey RANDOMKEY 命令从当前数据库中随机返回一个 key 。 randomkey 当数据库不为空时，返回一个 key 。 当数据库为空时，返回 nil 。\nrename Rename 命令用于修改 key 的名称 。 RENAME OLD_KEY_NAME NEW_KEY_NAME 改名成功时提示 OK ，失败时候返回一个错误。 当 OLD_KEY_NAME 和 NEW_KEY_NAME 相同，或者 OLD_KEY_NAME 不存在时，返回一个错误。 当 NEW_KEY_NAME 已经存在时， RENAME 命令将覆盖旧值。\nrenamenx Renamenx 命令用于在新的 key 不存在时修改 key 的名称 。 RENAMENX OLD_KEY_NAME NEW_KEY_NAME 修改成功时，返回 1 。 如果 NEW_KEY_NAME 已经存在，返回 0 。\ntype Type 命令用于返回 key 所储存的值的类型。 TYPE KEY_NAME 返回 key 的数据类型，数据类型有：\n1 2 3 4 5 6 none (key不存在) string (字符串) list (列表) set (集合) zset (有序集) hash (哈希表) string set SET 命令用于设置给定 key 的值。如果 key 已经存储其他值， SET 就覆写旧值，且无视类型。 SET KEY_NAME VALUE 从 Redis 2.6.12 版本开始， SET 在设置操作成功完成时，才返回 OK 。\nget Get 命令用于获取指定 key 的值。 GET KEY_NAME 如果 key 不存在，返回 nil 。如果key 储存的值不是字符串类型，返回一个错误。\ngetrange getrange命令用于获取存储在指定 key 中字符串的子字符串。字符串的截取范围由 start 和 end 两个偏移量决定(包括 start 和 end 在内)。 getrange KEY_NAME start end\n示例：首先，设置 mykey 的值并截取字符串。\n1 2 3 4 5 6 redis 127.0.0.1:6379\u003e SET mykey \"This is my test key\" OK redis 127.0.0.1:6379\u003e GETRANGE mykey 0 3 \"This\" redis 127.0.0.1:6379\u003e GETRANGE mykey 0 -1 \"This is my test key\" getset getset 命令用于设置指定 key 的值，并返回 key 旧的值。 getset key_name value 返回给定 key 的旧值。 当 key 没有旧值时，即 key 不存在时，返回 nil 。 当 key 存在但不是字符串类型时，返回一个错误。 示例：首先，设置 mykey 的值并截取字符串。\n1 2 3 4 redis 127.0.0.1:6379\u003e GETSET mynewkey \"This is my test key\" (nil) redis 127.0.0.1:6379\u003e GETSET mynewkey \"This is my new value to test getset\" \"This is my test key\" getbit getbit 命令用于对 key 所储存的字符串值，获取指定偏移量上的位(bit)。 getbit key_name offset 返回字符串值指定偏移量上的位(bit)。 当偏移量 OFFSET 比字符串值的长度大，或者 key 不存在时，返回 0 。\nsetbit setbit命令用于对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。 setbit key_name offset 返回指定偏移量原来储存的位。\nmget mget命令返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil 。 MGET KEY1 KEY2 .. KEYN\nsetex setex 命令为指定的 key 设置值及其过期时间。如果 key 已经存在， SETEX 命令将会替换旧的值。 setex key_name timeout value 设置成功时返回 OK 。 说白了就是在设置一个值的时候直接就指定了过期时间。\nsetnx setnx(SET if Not eXists)命令在指定的 key 不存在时，为 key 设置指定的值。 setnx key_name value 设置成功，返回 1 。 设置失败，返回 0 。\n1 2 3 4 5 6 7 8 redis\u003e EXISTS job # job 不存在 (integer) 0 redis\u003e SETNX job \"programmer\" # job 设置成功 (integer) 1 redis\u003e SETNX job \"code-farmer\" # 尝试覆盖 job ，失败 (integer) 0 redis\u003e GET job # 没有被覆盖 \"programmer\" setrange setrange 命令用指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量 offset 开始。 SETRANGE KEY_NAME OFFSET VALUE 返回被修改后的字符串长度。 就是从指定位置修改字符串的内容。\nstrlen strlen 命令用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误。 strlen key_name 返回字符串值的长度。 当 key 不存在时，返回 0。\nmset mset 命令用于同时设置一个或多个 key-value 对。 MSET key1 value1 key2 value2 .. keyN valueN 总是返回OK\nmsetnx msetnx 命令用于所有给定 key 都不存在时，同时设置一个或多个 key-value 对。 MSETNX key1 value1 key2 value2 .. keyN valueN 当所有 key 都成功设置，返回 1 。 如果所有给定 key 都设置失败(至少有一个 key 已经存在)，那么返回 0 。\nmsetnx是原子性操作，只要有一个值失败，所有的值都不会被设置。\npsetex psetex 命令以毫秒为单位设置 key 的生存时间。 PSETEX key1 EXPIRY_IN_MILLISECONDS value1 设置成功时返回 OK 。\nincr incr 命令将 key 中储存的数字值增一。 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。 本操作的值限制在 64 位(bit)有符号数字表示之内。 incr key_name 返回执行incr命令之后 key 的值。\nincrby incrby命令将 key 中储存的数字加上指定的增量值。 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCRBY 命令。 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。 本操作的值限制在 64 位(bit)有符号数字表示之内。 incr key_name incr_amount 返回加上指定的增量值之后， key 的值。\nincrbyfloat incrbyfloat命令为 key 中所储存的值加上指定的浮点数增量值。 incrbyfloat key_name incr_amount 返回执行命令之后 key 的值。\n用 SET 设置的值可以是指数符号314e-2，但执行 INCRBYFLOAT 之后格式会被改成非指数符号3.14 SET 设置的值小数部分可以是 03.0，但 INCRBYFLOAT 会将无用的 0 忽略掉，有需要的话，将浮点变为整数4\ndecr decr 命令将 key 中储存的数字值减一。 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECR 操作。 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。 本操作的值限制在 64 位(bit)有符号数字表示之内。 decr key_name 返回执行命令之后 key 的值。\ndecrby decrby 命令将 key 所储存的值减去指定的减量值。 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 DECRBY 操作。 如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。 本操作的值限制在 64 位(bit)有符号数字表示之内。 decrby key_name decrement_amount 返回减去指定减量值之后， key 的值。\nappend append 命令用于为指定的 key 追加值。 如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾。 如果 key 不存在， APPEND 就简单地将给定 key 设为 value ，就像执行 SET key value 一样。 append key_name new_value 返回追加指定值之后， key 中字符串的长度。\nhash hdel hdel 命令用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略。 HDEL KEY_NAME FIELD1.. FIELDN 被成功删除字段的数量，不包括被忽略的字段。\nhexists hexists 命令用于查看哈希表的指定字段是否存在。 HEXISTS KEY_NAME FIELD_NAME 如果哈希表含有给定字段，返回 1 。 如果哈希表不含有给定字段，或 key 不存在，返回 0 。\nhget hget 命令用于返回哈希表中指定字段的值。 HGET KEY_NAME FIELD_NAME 返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 。\nhgetall hgetall 命令用于返回哈希表中，所有的字段和值。 在返回值里，紧跟每个字段名(field name)之后是字段的值(value)，所以返回值的长度是哈希表大小的两倍。 HGETALL KEY_NAME 以列表形式返回哈希表的字段及字段值。 若 key 不存在，返回空列表。\nhincrby hincrby 命令用于为哈希表中的字段值加上指定增量值。 增量也可以为负数，相当于对指定字段进行减法操作。 如果哈希表的 key 不存在，一个新的哈希表被创建并执行 HINCRBY 命令。 如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0 。 对一个储存字符串值的字段执行 HINCRBY 命令将造成一个错误。 本操作的值被限制在 64 位(bit)有符号数字表示之内。 HINCRBY KEY_NAME FIELD_NAME INCR_BY_NUMBER hincrbyfloat hincrbyfloat 命令用于为哈希表中的字段值加上指定浮点数增量值。 如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0 。 HINCRBYFLOAT KEY_NAME FIELD_NAME INCR_BY_NUMBER 返回执行 Hincrbyfloat 命令之后，哈希表中字段的值。\nhkeys hkeys 命令用于获取哈希表中的所有字段名。 HKEYS KEY_NAME FIELD_NAME INCR_BY_NUMBER 包含哈希表中所有字段的列表。 当 key 不存在时，返回一个空列表。\nhlen hlen 命令用于获取哈希表中字段的数量。 HLEN KEY_NAME 返回哈希表中字段的数量。 当 key 不存在时，返回 0 。\nhmget hmget 命令用于返回哈希表中，一个或多个给定字段的值。 如果指定的字段不存在于哈希表，那么返回一个 nil 值。 HMGET KEY_NAME FIELD1...FIELDN 返回一个包含多个给定字段关联值的表，表值的排列顺序和指定字段的请求顺序一样。\nhmset hmset 命令用于同时将多个 field-value (字段-值)对设置到哈希表中。 此命令会覆盖哈希表中已存在的字段。 如果哈希表不存在，会创建一个空哈希表，并执行 HMSET 操作。 HMSET KEY_NAME FIELD1 VALUE1 ...FIELDN VALUEN\nhset hset 命令用于为哈希表中的字段赋值 。 如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。 如果字段已经存在于哈希表中，旧值将被覆盖。 HSET KEY_NAME FIELD VALUE 返回如果字段是哈希表中的一个新建字段，并且值设置成功，返回 1 。 如果哈希表中域字段已经存在且旧值已被新值覆盖，返回 0 。\nhsetnx hsetnx 命令用于为哈希表中不存在的的字段赋值 。 如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作。 如果字段已经存在于哈希表中，操作无效。 如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令。 HSETNX KEY_NAME FIELD VALUE 设置成功，返回 1 。 如果给定字段已经存在且没有操作被执行，返回 0 。\nhvals hvals 命令返回哈希表所有字段的值。 HVALS KEY_NAME FIELD VALUE 返回一个包含哈希表中所有值的表。 当 key 不存在时，返回一个空表。\n连接操作命令 quit：关闭连接（connection） auth：简单密码认证 help cmd： 查看cmd帮助，例如：help quit\n持久化 save：将数据同步保存到磁盘 bgsave：将数据异步保存到磁盘 lastsave：返回上次成功将数据保存到磁盘的Unix时戳 shundown：将数据同步保存到磁盘，然后关闭服务\n远程服务控制 info：提供服务器的信息和统计 monitor：实时转储收到的请求 slaveof：改变复制策略设置 config：在运行时配置Redis服务器\n对value操作的命令 exists(key)：确认一个key是否存在 del(key)：删除一个key type(key)：返回值的类型 keys(pattern)：返回满足给定pattern的所有key randomkey：随机返回key空间的一个 keyrename(oldname, newname)：重命名key dbsize：返回当前数据库中key的数目 expire：设定一个key的活动时间（s） ttl：获得一个key的活动时间 select(index)：按索引查询 move(key, dbindex)：移动当前数据库中的key到dbindex数据库 flushdb：删除当前选择数据库中的所有key flushall：删除所有数据库中的所有key\nString set(key, value)：给数据库中名称为key的string赋予值value get(key)：返回数据库中名称为key的string的value getset(key, value)：给名称为key的string赋予上一次的value mget(key1, key2,…, key N)：返回库中多个string的value setnx(key, value)：添加string，名称为key，值为value setex(key, time, value)：向库中添加string，设定过期时间time mset(key N, value N)：批量设置多个string的值 msetnx(key N, value N)：如果所有名称为key i的string都不存在 incr(key)：名称为key的string增1操作 incrby(key, integer)：名称为key的string增加integer decr(key)：名称为key的string减1操作 decrby(key, integer)：名称为key的string减少integer append(key, value)：名称为key的string的值附加value substr(key, start, end)：返回名称为key的string的value的子串\nList rpush(key, value)：在名称为key的list尾添加一个值为value的元素 lpush(key, value)：在名称为key的list头添加一个值为value的 元素 llen(key)：返回名称为key的list的长度 lrange(key, start, end)：返回名称为key的list中start至end之间的元素 ltrim(key, start, end)：截取名称为key的list lindex(key, index)：返回名称为key的list中index位置的元素 lset(key, index, value)：给名称为key的list中index位置的元素赋值 lrem(key, count, value)：删除count个key的list中值为value的元素 lpop(key)：返回并删除名称为key的list中的首元素 rpop(key)：返回并删除名称为key的list中的尾元素 blpop(key1, key2,… key N, timeout)：lpop命令的block版本。 brpop(key1, key2,… key N, timeout)：rpop的block版本。 rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，并将该元素添加到名称为dstkey的list的头部\nSet sadd(key, member)：向名称为key的set中添加元素member srem(key, member) ：删除名称为key的set中的元素member spop(key) ：随机返回并删除名称为key的set中一个元素 smove(srckey, dstkey, member) ：移到集合元素 scard(key) ：返回名称为key的set的基数 sismember(key, member) ：member是否是名称为key的set的元素 sinter(key1, key2,…key N) ：求交集 sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合 sunion(key1, (keys)) ：求并集 sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合 sdiff(key1, (keys)) ：求差集 sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合 smembers(key) ：返回名称为key的set的所有元素 srandmember(key) ：随机返回名称为key的set的一个元素\nHash hset(key, field, value)：向名称为key的hash中添加元素field hget(key, field)：返回名称为key的hash中field对应的value hmget(key, (fields))：返回名称为key的hash中field i对应的value hmset(key, (fields))：向名称为key的hash中添加元素field hincrby(key, field, integer)：将名称为key的hash中field的value增加integer hexists(key, field)：名称为key的hash中是否存在键为field的域 hdel(key, field)：删除名称为key的hash中键为field的域 hlen(key)：返回名称为key的hash中元素个数 hkeys(key)：返回名称为key的hash中所有键 hvals(key)：返回名称为key的hash中所有键对应的value hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value\n功能实现 使用RedisTemplate 存储键值出现乱码 最近使用spring-data-redis RedisTemplate 操作redis时发现存储在redis中的key不是设置的string值，前面还多出了许多类似\\xac\\xed\\x00\\x05t\\x00这种字符串，如下\n1 2 3 4 127.0.0.1:6379\u003e keys * 1) \"\\xac\\xed\\x00\\x05t\\x00\\x04pass\" 2) \"\\xac\\xed\\x00\\x05t\\x00\\x04name\" 3) \"name\" 解决：使用StringRedisTemplate，而不是RedisTemplate。\nRedisTemplate和StringRedisTemplate的区别 StringRedisTemplate继承RedisTemplate StringRedisTemplate只能管理StringRedisTemplate里面的数据，RedisTemplate只能管理RedisTemplate中的数据。 SDR(spring-date-redis)默认采用的序列化策略有两种，一种是String的序列化策略，一种是JDK的序列化策略。 StringRedisTemplate默认采用的是String的序列化策略，保存的key和value都是采用此策略序列化保存的。 RedisTemplate默认采用的是JDK的序列化策略，保存的key和value都是采用此策略序列化保存的。 RedisTemplate使用的序列类在在操作数据的时候，比如说存入数据会将数据先序列化成字节数组然后在存入Redis数据库，这个时候打开Redis查看的时候，你会看到你的数据不是以可读的形式展现的，而是以字节数组显示，类似下面 key: \\xAC\\xED\\x00\\x05sr\\x00\nvalue: \\xAC\\xED\\x00\\x05sr\\x00\\x13java.util.ArrayList...\n总结： 当redis中本来存的是字符串数据，或者你要存取的数据就是字符串类型数据的时候，那么你就使用StringRedisTemplate即可，但是如果你的数据是复杂的对象类型，而取出的时候又不想做任何的数据转换，直接从Redis里面取出一个对象，那么使用RedisTemplate是更好的选择。\n通过notify-keyspace-events实现订单自动关闭功能 修改Redis配置文件，开启过期通知功能。 在配置文件中搜索notify，找到# notify-keyspace-events Ex这一行，将注释去掉。 同时注释掉下面一行notify-keyspace-events \"\"， 为了节约cup资源，事件通知默认是没有开启的，即notify-keyspace-events \"\"\n修改之后在需要重启redis，然后通过cli查看配置是否生效，config get notify-keyspace-events，如果显示Ex（或者xE），就生效了。\n在程序中使用redis：\n1 2 3 //引入redis @Resource private RedisTemplate redisTemplate; 设置key redisTemplate.opsForValue().set(orderNo, \"value是随便写的，因为过期通知无法取得value\", 10, TimeUnit.SECONDS);\n配置过期监听\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 @Slf4j @Component public class RedisTask extends KeyExpirationEventMessageListener { @Autowired private ExecuteHandle executeHandle; /** * * @param listenerContainer must not be {@literal null}. */ public RedisTask(RedisMessageListenerContainer listenerContainer) { super(listenerContainer); } @Override public void onMessage(Message message, byte[] pattern) { String channel = new String(message.getChannel(), StandardCharsets.UTF_8); //过期的key String key = new String(message.getBody(), StandardCharsets.UTF_8); //在这里，可以过滤调我们不需要的key if(key.startsWith(\"shiro_redis_session\")){ return; } log.info(\"redis key 过期：pattern={},channel={},key={}\",new String(pattern),channel,key); //业务逻辑，取消订单什么的 executeHandle.handle(key); } } 因为我们会有很多类型的过期key，所以需要区分\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 //处理基类， public abstract class AbstractRedisExpireHandle { //通过前缀区分过期的key private String prefix; public String getPrefix() { return prefix; } public void setPrefix(String prefix) { this.prefix = prefix; } public AbstractRedisExpireHandle(){} //处理redis过期的key abstract void expireHandle(String redisKey); } /** * 商品订单过期 */ @Component public class OrderExpireHandle extends AbstractRedisExpireHandle { private static final String PREFIX = \"12\"; public OrderExpireHandle(){ setPrefix(PREFIX); } @Reference(version = \"1.0.0\") private TaskService taskService; @Override void expireHandle(String redisKey) { //业务逻辑 taskService.orderExpireHandle(redisKey); } } 具体处理类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 @Slf4j @Component public class ExecuteHandle implements ApplicationContextAware, InitializingBean { //spring容器 private ApplicationContext context; //过期key处理器 private List expireHandles = new ArrayList\u003c\u003e(); /** * 程序启动，将各个处理类，放到list中 * @throws Exception */ @Override public void afterPropertiesSet() throws Exception { String[] beanNames = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context,AbstractRedisExpireHandle.class); for(int i=0;i",
+  "wordCount" : "45837",
+  "inLanguage": "en",
+  "datePublished": "2018-10-06T18:10:43Z",
+  "dateModified": "2018-10-06T18:10:43Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

@@ -1,8 +1,137 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>微信相关开发 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="其他">
+<meta name="description" content="概述
+公众号类型功能介绍
+微信官方介绍
+公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="微信相关开发">
+  <meta property="og:description" content="概述 公众号类型功能介绍 微信官方介绍 公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-04-25T10:04:49+00:00">
+    <meta property="article:modified_time" content="2019-04-25T10:04:49+00:00">
+    <meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信相关开发">
+<meta name="twitter:description" content="概述
+公众号类型功能介绍
+微信官方介绍
+公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "微信相关开发",
+      "item": "https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "微信相关开发",
+  "name": "微信相关开发",
+  "description": "概述 公众号类型功能介绍 微信官方介绍 公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。\n",
+  "keywords": [
+    "其他"
+  ],
+  "articleBody": "概述 公众号类型功能介绍 微信官方介绍 公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。\n订阅号：偏于为用户传达资讯，每天只可以发送一条群发，用户不会收到即时消息提醒，因为所有的订阅号都被收在了订阅号文件夹中。订阅号适用于个人和组织。 想看一个订阅号的消息，有两种方法：\n打开订阅号文件夹查看订阅号有没有更新消息； 打开微信手机通讯录，点开公众号选项，是你关注的所有公众号(包括订阅号和服务号)。 服务号：偏于服务交互(如：招商银行信用卡、微信读书、京东白条)，每月可群发四条消息，收费，不适用于个人，微信支付需要微信认证服务号才可以。\n选择： 想简单的发送消息，达到宣传效果，建议选择订阅号。 想用公众号获得更多功能，如开通微信支付，建议选择服务号。\n服务号、订阅号功能对比： 微信开放平台、公众平台区别 公众平台 官网 技术文档 微信公众平台是运营者通过公众号为微信用户提供资讯和服务的平台，登录公众平台账号后，可以看到它有一个不错的交互界面。可以提供给公司的运营人员使用，用来发布消息和提供服务。\n开放平台 官网 是为开发者（程序员）提供的一个平台，在这里你可以将你的公众平台下的公众号（订阅号、服务号）绑定到你的开放平台账号下，从而可以基于订阅号、服务号做更多的开发。公众号中的订阅号接口权限是有限的，比如它无法获得网页授权的权限，也就无法通过网页授权获取用户的基本信息（比如openID、unionID等）。\n微信h5分享 参考地址\n流程图： 准备：公众号、已经备案好的域名\n步骤：\n配置JS回调域名和ip白名单 获取appId和secret 从官方代码copy签名函数 获取access_token、ticket 获取url，并进行签名 集成进java web 前端config函数配置 获取appId和secret 可以在基本配置中找到AppID和AppSecret。\n配置JS回调域名： 登录微信公众平台-\u003e公众号设置-\u003e功能设置-\u003eJS接口安全域名。填写你要分享的网页所在的域名。\n配置ip白名单： 登录微信公众平台-\u003e基本配置-\u003eIP白名单。 必须配置ip白名单，否则无法获取access_token\n从官方代码copy签名函数 打开微信分享官方文档，在页面最下面找到并下载示例代码 我们将java中的sign.java直接放到项目中备用。\n公众号获取access_token官方文档 小程序获取access_token官方文档\n获取access_token、ticket 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 public static WxShare getWxEntity(String url,StringRedisTemplate template) { String access_token = template.opsForValue().get(\"wx_base_access_token\"); String ticket = template.opsForValue().get(\"wx_jsapi_ticket\"); if(StringUtils.isEmpty(access_token)){ System.out.println(\"\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e重新获取access_token和ticket\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\"); //已经超时，重新获取 access_token = getAccessToken(template); //如果重新获取了access_token，ticket也要重新获取 ticket = getTicket(access_token,template); } Map resultMap = Sign.sign(ticket, url); WxShare wx = new WxShare(); wx.setTicket(resultMap.get(\"jsapi_ticket\")); wx.setSignature(resultMap.get(\"signature\")); wx.setNoncestr(resultMap.get(\"nonceStr\")); wx.setTimestamp(resultMap.get(\"timestamp\")); return wx; } //获取token private static String getAccessToken(StringRedisTemplate template) { String access_token = \"\"; //获取access_token填写client_credential String grant_type = \"client_credential\"; //第三方用户唯一凭证 String AppId= PayConstant.WX_H5_APPID; //第三方用户唯一凭证密钥，即appsecret String secret=PayConstant.WX_H5_APPSECRET; //访问链接,这个url链接地址和参数皆不能变 String url = \"https://api.weixin.qq.com/cgi-bin/token?grant_type=\"+grant_type+\"\u0026appid=\"+AppId+\"\u0026secret=\"+secret; try { URL urlGet = new URL(url); HttpURLConnection http = (HttpURLConnection) urlGet.openConnection(); http.setRequestMethod(\"GET\"); // 必须是get方式请求 http.setRequestProperty(\"Content-Type\",\"application/x-www-form-urlencoded\"); http.setDoOutput(true); http.setDoInput(true); /*System.setProperty(\"sun.net.client.defaultConnectTimeout\", \"30000\");// 连接超时30秒 System.setProperty(\"sun.net.client.defaultReadTimeout\", \"30000\"); // 读取超时30秒 */ http.connect(); InputStream is = http.getInputStream(); int size = is.available(); byte[] jsonBytes = new byte[size]; is.read(jsonBytes); String message = new String(jsonBytes, \"UTF-8\"); JSONObject demoJson = JSONObject.fromObject(message); access_token = demoJson.getString(\"access_token\"); //缓存到redis，一定要缓存，每天只能请求2000次 template.opsForValue().set(\"wx_base_access_token\",access_token,2, TimeUnit.HOURS); is.close(); } catch (Exception e) { e.printStackTrace(); } return access_token; } //获取ticket private static String getTicket(String access_token,StringRedisTemplate template) { String ticket = null; //这个url链接和参数不能变 String url = \"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=\"+ access_token +\"\u0026type=jsapi\"; try { URL urlGet = new URL(url); HttpURLConnection http = (HttpURLConnection) urlGet.openConnection(); http.setRequestMethod(\"GET\"); // 必须是get方式请求 http.setRequestProperty(\"Content-Type\",\"application/x-www-form-urlencoded\"); http.setDoOutput(true); http.setDoInput(true); System.setProperty(\"sun.net.client.defaultConnectTimeout\", \"30000\");// 连接超时30秒 System.setProperty(\"sun.net.client.defaultReadTimeout\", \"30000\"); // 读取超时30秒 http.connect(); InputStream is = http.getInputStream(); int size = is.available(); byte[] jsonBytes = new byte[size]; is.read(jsonBytes); String message = new String(jsonBytes, \"UTF-8\"); JSONObject demoJson = JSONObject.fromObject(message); ticket = demoJson.getString(\"ticket\"); //缓存到redis，一定要缓存，每天只能请求2000次 template.opsForValue().set(\"wx_jsapi_ticket\",ticket,2, TimeUnit.HOURS); is.close(); } catch (Exception e) { e.printStackTrace(); } return ticket; } 获取url，并进行签名 url的获取要特别注意，因为微信在分享时会在原来的url上加上一些\u0026from=singlemessage、\u0026from=…的，所以url必须要动态获取，网上有些用ajax，在网页通过“location.href.split(‘#’)“ 获取url，在用ajax传给后台，这种方法可行，但是不推荐，一方面用ajax返回，就要访问分享的逻辑，这样后台分享的逻辑增加复杂度，带来不便，是代码不易于维护，可读性低！另一方面分享是返回页面，而ajax是返回json，又增加了复杂度。所以，一个java程序员是不会通过ajax从前台获取url的，这里我们用HttpRequest的方法即可，不管微信加多少后缀，都可以获取到完整的当前url。\n获取url的controller如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 @PostMapping(\"/share\") public ResponseUtil getQuestionList(@RequestBody Map paramMap){ LOGGER.info( \"\\n***************************************\" + \"\\n\" + \"start share\" + \"\\n\" + \"分享\" + \"\\n\" + \"\\n********************************************\" ); ResponseUtil response = ResponseUtil.success(); CodeEnum code = CodeEnum.FAIL; try { LOGGER.info(\"前端传过来的\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c：\" + paramMap.get(\"strUrl\")); LOGGER.info(\"URI解码\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c：\" + URI.create(paramMap.get(\"strUrl\")).getPath()); response.setData(wxUtil.getWxEntity(URI.create(paramMap.get(\"strUrl\")).getPath(),redisTemplate)); } catch (Exception e) { e.printStackTrace(); response.setCode(code); response.setMessage(e.getMessage()); } return response; } 需要注意：这个url是前端动态获取的，不能写死。如果带参数，或是中文，前端要对url做encodeURIComponent转码，后台再使用URI.create(paramMap.get(\"strUrl\")).getPath()进行解码。\n我们再新建一个存放微信信息的实体类：wx.java\n1 2 3 4 5 6 7 8 9 10 11 public class wx { private String access_token; private String ticket ; private String noncestr; private String timestamp; private String str; private String signature; ...setter and getter... } sign类里面有一个签名的方法sign，传入ticket和url即可。也就是WeinXinUtil的getWinXinEntity方法，并将返回的map的信息读取存入WinXinEntity中。 在调试时，把sign返回的map打印出来，主要看看生成的signature。然后，把jsapi_ticket、noncestr、timestamp、url 复制到微信提供的微信 JS 接口签名校验工具， 比较代码签名生成的signature与校验工具生成的签名signature是否一致，如果一致，说明前面的步骤都是正确的，如果不一致，仔细检查。\ncontroller 我们把微信分享分解成3个工具类，现在在处理分享的controller，只要两句话就可以调用微信分享，一句获取url，一句获取WinXinEntity，代码已经在上边给出了。\n前端config函数配置 下面的代码放在网页js代码的最前面！ ”var url = location.href.split(‘#’)[0];“ 页面的url也可以从后台传过来，也可以通过location.href.split(‘#’)[0]获取。 为了一点微不足道的速度，这里才用网页获取方式。（网页的url跟前面的后台签名时得url是一样的，只是绕过了ajax）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 ",
+  "wordCount" : "14202",
+  "inLanguage": "en",
+  "datePublished": "2019-04-25T10:04:49Z",
+  "dateModified": "2019-04-25T10:04:49Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

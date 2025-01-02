@@ -1,8 +1,187 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>3_Map | Wjy&#39;s Blog</title>
+<meta name="keywords" content="Java集合">
+<meta name="description" content="概述
+我们知道，List是一种顺序列表，如果有一个存储学生Student实例的List，要在List中根据name查找某个指定的Student的分数，应该怎么办？
+最简单的方法是遍历List并判断name是否相等，然后返回指定元素：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+List&lt;Student&gt; list = ...
+Student target = null;
+for (Student s : list) {
+    if (&#34;Xiao Ming&#34;.equals(s.name)) {
+        target = s;
+        break;
+    }
+}
+System.out.println(target.score);
+
+
+">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java%E9%9B%86%E5%90%88/3_map/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java%E9%9B%86%E5%90%88/3_map/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java%E9%9B%86%E5%90%88/3_map/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="3_Map">
+  <meta property="og:description" content="概述 我们知道，List是一种顺序列表，如果有一个存储学生Student实例的List，要在List中根据name查找某个指定的Student的分数，应该怎么办？
+最简单的方法是遍历List并判断name是否相等，然后返回指定元素：
+1 2 3 4 5 6 7 8 9 List&lt;Student&gt; list = ... Student target = null; for (Student s : list) { if (&#34;Xiao Ming&#34;.equals(s.name)) { target = s; break; } } System.out.println(target.score); ">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2016-12-08T13:46:07+00:00">
+    <meta property="article:modified_time" content="2016-12-08T13:46:07+00:00">
+    <meta property="article:tag" content="Java集合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3_Map">
+<meta name="twitter:description" content="概述
+我们知道，List是一种顺序列表，如果有一个存储学生Student实例的List，要在List中根据name查找某个指定的Student的分数，应该怎么办？
+最简单的方法是遍历List并判断name是否相等，然后返回指定元素：
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+List&lt;Student&gt; list = ...
+Student target = null;
+for (Student s : list) {
+    if (&#34;Xiao Ming&#34;.equals(s.name)) {
+        target = s;
+        break;
+    }
+}
+System.out.println(target.score);
+
+
+">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "3_Map",
+      "item": "https://009965.xyz/posts/java%E9%9B%86%E5%90%88/3_map/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "3_Map",
+  "name": "3_Map",
+  "description": "概述 我们知道，List是一种顺序列表，如果有一个存储学生Student实例的List，要在List中根据name查找某个指定的Student的分数，应该怎么办？\n最简单的方法是遍历List并判断name是否相等，然后返回指定元素：\n1 2 3 4 5 6 7 8 9 List\u0026lt;Student\u0026gt; list = ... Student target = null; for (Student s : list) { if (\u0026#34;Xiao Ming\u0026#34;.equals(s.name)) { target = s; break; } } System.out.println(target.score); ",
+  "keywords": [
+    "Java集合"
+  ],
+  "articleBody": "概述 我们知道，List是一种顺序列表，如果有一个存储学生Student实例的List，要在List中根据name查找某个指定的Student的分数，应该怎么办？\n最简单的方法是遍历List并判断name是否相等，然后返回指定元素：\n1 2 3 4 5 6 7 8 9 List list = ... Student target = null; for (Student s : list) { if (\"Xiao Ming\".equals(s.name)) { target = s; break; } } System.out.println(target.score); 这种需求其实非常常见，即通过一个键去查询对应的值。使用List来实现存在效率非常低的问题，因为平均需要扫描一半的元素才能确定，而Map这种键值（key-value）映射表的数据结构，作用就是能高效通过key快速查找value（元素）。\n用Map来实现根据name查询某个Student的代码如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 public class Main { public static void main(String[] args) { Student s = new Student(\"Xiao Ming\", 99); Map map = new HashMap\u003c\u003e(); map.put(\"Xiao Ming\", s); // 将\"Xiao Ming\"和Student实例映射并关联 Student target = map.get(\"Xiao Ming\"); // 通过key查找并返回映射的Student实例 System.out.println(target == s); // true，同一个实例 System.out.println(target.score); // 99 Student another = map.get(\"Bob\"); // 通过另一个key查找 System.out.println(another); // 未找到返回null } } class Student { public String name; public int score; public Student(String name, int score) { this.name = name; this.score = score; } } 通过上述代码可知：Map是一种键-值映射表，当我们调用put(K key, V value)方法时，就把key和value做了映射并放入Map。当我们调用V get(K key)时，就可以通过key获取到对应的value。如果key不存在，则返回null。和List类似，Map也是一个接口，最常用的实现类是HashMap。\n如果只是想查询某个key是否存在，可以调用boolean containsKey(K key)方法。\n如果我们在存储Map映射关系的时候，对同一个key调用两次put()方法，分别放入不同的value，会有什么问题呢？例如：\n1 2 3 4 5 6 7 8 9 10 public class Main { public static void main(String[] args) { Map map = new HashMap\u003c\u003e(); map.put(\"apple\", 123); map.put(\"pear\", 456); System.out.println(map.get(\"apple\")); // 123 map.put(\"apple\", 789); // 再次放入apple作为key，但value变为789 System.out.println(map.get(\"apple\")); // 789 } } 重复放入key-value并不会有任何问题，但是一个key只能关联一个value。在上面的代码中，一开始我们把key对象\"apple\"映射到Integer对象123，然后再次调用put()方法把\"apple\"映射到789，这时，原来关联的value对象123就被“冲掉”了。实际上，put()方法的签名是V put(K key, V value)，如果放入的key已经存在，put()方法会返回被删除的旧的value，否则，返回null。\n始终牢记：Map中不存在重复的key，因为放入相同的key，只会把原有的key-value对应的value给替换掉。\n此外，在一个Map中，虽然key不能重复，但value是可以重复的：\n1 2 3 Map map = new HashMap\u003c\u003e(); map.put(\"apple\", 123); map.put(\"pear\", 123); // ok 遍历Map 对Map来说，要遍历key可以使用for each循环遍历Map实例的keySet()方法返回的Set集合，它包含不重复的key的集合：\n1 2 3 4 5 6 7 8 9 10 11 12 public class Main { public static void main(String[] args) { Map map = new HashMap\u003c\u003e(); map.put(\"apple\", 123); map.put(\"pear\", 456); map.put(\"banana\", 789); for (String key : map.keySet()) { Integer value = map.get(key); System.out.println(key + \" = \" + value); } } } 同时遍历key和value可以使用for each循环遍历Map对象的entrySet()集合，它包含每一个key-value映射：\n1 2 3 4 5 6 7 8 9 10 11 12 13 public class Main { public static void main(String[] args) { Map map = new HashMap\u003c\u003e(); map.put(\"apple\", 123); map.put(\"pear\", 456); map.put(\"banana\", 789); for (Map.Entry entry : map.entrySet()) { String key = entry.getKey(); Integer value = entry.getValue(); System.out.println(key + \" = \" + value); } } } Map和List不同的是，Map存储的是key-value的映射关系，并且，它不保证顺序。在遍历的时候，遍历的顺序既不一定是put()时放入的key的顺序，也不一定是key的排序顺序。使用Map时，任何依赖顺序的逻辑都是不可靠的。以HashMap为例，假设我们放入\"A\"，\"B\"，\"C\"这3个key，遍历的时候，每个key会保证被遍历一次且仅遍历一次，但顺序完全没有保证，甚至对于不同的JDK版本，相同的代码遍历的输出顺序都是不同的！\n练习 请编写一个根据name查找score的程序，并利用Map充当缓存，以提高查找效率：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 import java.util.*; public class Main { public static void main(String[] args) { List list = List.of( new Student(\"Bob\", 78), new Student(\"Alice\", 85), new Student(\"Brush\", 66), new Student(\"Newton\", 99)); var holder = new Students(list); System.out.println(holder.getScore(\"Bob\") == 78 ? \"测试成功!\" : \"测试失败!\"); System.out.println(holder.getScore(\"Alice\") == 85 ? \"测试成功!\" : \"测试失败!\"); System.out.println(holder.getScore(\"Tom\") == -1 ? \"测试成功!\" : \"测试失败!\"); } } class Students { List list; Map cache; Students(List list) { this.list = list; cache = new HashMap\u003c\u003e(); } /** * 根据name查找score，找到返回score，未找到返回-1 */ int getScore(String name) { // 先在Map中查找: Integer score = this.cache.get(name); if (score == null) { // TODO: } return score == null ? -1 : score.intValue(); } Integer findInList(String name) { for (var ss : this.list) { if (ss.name.equals(name)) { return ss.score; } } return null; } } class Student { String name; int score; Student(String name, int score) { this.name = name; this.score = score; } } 编写equals和hashCode 我们知道Map是一种键-值（key-value）映射表，可以通过key快速查找对应的value。\n以HashMap为例，观察下面的代码：\n1 2 3 4 5 6 7 Map map = new HashMap\u003c\u003e(); map.put(\"a\", new Person(\"Xiao Ming\")); map.put(\"b\", new Person(\"Xiao Hong\")); map.put(\"c\", new Person(\"Xiao Jun\")); map.get(\"a\"); // Person(\"Xiao Ming\") map.get(\"x\"); // null HashMap之所以能根据key直接拿到value，原因是它内部通过空间换时间的方法，用一个大数组存储所有value，并根据key直接计算出value应该存储在哪个索引：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 ┌───┐ 0 │ │ ├───┤ 1 │ ●─┼───\u003e Person(\"Xiao Ming\") ├───┤ 2 │ │ ├───┤ 3 │ │ ├───┤ 4 │ │ ├───┤ 5 │ ●─┼───\u003e Person(\"Xiao Hong\") ├───┤ 6 │ ●─┼───\u003e Person(\"Xiao Jun\") ├───┤ 7 │ │ └───┘ 如果key的值为\"a\"，计算得到的索引总是1，因此返回value为Person(\"Xiao Ming\")，如果key的值为\"b\"，计算得到的索引总是5，因此返回value为Person(\"Xiao Hong\")，这样，就不必遍历整个数组，即可直接读取key对应的value。\n当我们使用key存取value的时候，就会引出一个问题：\n我们放入Map的key是字符串\"a\"，但是，当我们获取Map的value时，传入的变量不一定就是放入的那个key对象。\n换句话讲，两个key应该是内容相同，但不一定是同一个对象。测试代码如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 public class Main { public static void main(String[] args) { String key1 = \"a\"; Map map = new HashMap\u003c\u003e(); map.put(key1, 123); String key2 = new String(\"a\"); map.get(key2); // 123 System.out.println(key1 == key2); // false System.out.println(key1.equals(key2)); // true } } 因为在Map的内部，对key做比较是通过equals()实现的，这一点和List查找元素需要正确覆写equals()是一样的，即正确使用Map必须保证：作为key的对象必须正确覆写equals()方法。\n我们经常使用String作为key，因为String已经正确覆写了equals()方法。但如果我们放入的key是一个自己写的类，就必须保证正确覆写了equals()方法。\n我们再思考一下HashMap为什么能通过key直接计算出value存储的索引。相同的key对象（使用equals()判断时返回true）必须要计算出相同的索引，否则，相同的key每次取出的value就不一定对。\n通过key计算索引的方式就是调用key对象的hashCode()方法，它返回一个int整数。HashMap正是通过这个方法直接定位key对应的value的索引，继而直接返回value。\n因此，正确使用Map必须保证：\n作为key的对象必须正确覆写equals()方法，相等的两个key实例调用equals()必须返回true； 作为key的对象还必须正确覆写hashCode()方法，且hashCode()方法要严格遵循以下规范： 如果两个对象相等，则两个对象的hashCode()必须相等； 如果两个对象不相等，则两个对象的hashCode()尽量不要相等。 即对应两个实例a和b：\n如果a和b相等，那么a.equals(b)一定为true，则a.hashCode()必须等于b.hashCode()； 如果a和b不相等，那么a.equals(b)一定为false，则a.hashCode()和b.hashCode()尽量不要相等。 上述第一条规范是正确性，必须保证实现，否则HashMap不能正常工作。\n而第二条如果尽量满足，则可以保证查询效率，因为不同的对象，如果返回相同的hashCode()，会造成Map内部存储冲突，使存取的效率下降。\n正确编写equals()的方法我们已经在编写equals方法一节中讲过了，以Person类为例：\n1 2 3 4 5 public class Person { String firstName; String lastName; int age; } 把需要比较的字段找出来：\nfirstName lastName age 然后，引用类型使用Objects.equals()比较，基本类型使用==比较。\n在正确实现equals()的基础上，我们还需要正确实现hashCode()，即上述3个字段分别相同的实例，hashCode()返回的int必须相同：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class Person { String firstName; String lastName; int age; @Override int hashCode() { int h = 0; h = 31 * h + firstName.hashCode(); h = 31 * h + lastName.hashCode(); h = 31 * h + age; return h; } } 注意到String类已经正确实现了hashCode()方法，我们在计算Person的hashCode()时，反复使用31*h，这样做的目的是为了尽量把不同的Person实例的hashCode()均匀分布到整个int范围。\n和实现equals()方法遇到的问题类似，如果firstName或lastName为null，上述代码工作起来就会抛NullPointerException。为了解决这个问题，我们在计算hashCode()的时候，经常借助Objects.hash()来计算：\n1 2 3 int hashCode() { return Objects.hash(firstName, lastName, age); } 所以，编写equals()和hashCode()遵循的原则是：\nequals()用到的用于比较的每一个字段，都必须在hashCode()中用于计算；equals()中没有使用到的字段，绝不可放在hashCode()中计算。\n另外注意，对于放入HashMap的value对象，没有任何要求。\n延伸阅读 既然HashMap内部使用了数组，通过计算key的hashCode()直接定位value所在的索引，那么第一个问题来了：hashCode()返回的int范围高达±21亿，先不考虑负数，HashMap内部使用的数组得有多大？\n实际上HashMap初始化时默认的数组大小只有16，任何key，无论它的hashCode()有多大，都可以简单地通过：\n1 int index = key.hashCode() \u0026 0xf; // 0xf = 15 把索引确定在0～15，即永远不会超出数组范围，上述算法只是一种最简单的实现。\n第二个问题：如果添加超过16个key-value到HashMap，数组不够用了怎么办？\n添加超过一定数量的key-value时，HashMap会在内部自动扩容，每次扩容一倍，即长度为16的数组扩展为长度32，相应地，需要重新确定hashCode()计算的索引位置。例如，对长度为32的数组计算hashCode()对应的索引，计算方式要改为：\n1 int index = key.hashCode() \u0026 0x1f; // 0x1f = 31 由于扩容会导致重新分布已有的key-value，所以，频繁扩容对HashMap的性能影响很大。如果我们确定要使用一个容量为10000个key-value的HashMap，更好的方式是创建HashMap时就指定容量：\n1 Map map = new HashMap\u003c\u003e(10000); 虽然指定容量是10000，但HashMap内部的数组长度总是2的N次方，因此，实际数组长度被初始化为比10000大的16384（2的14次方）。\n最后一个问题：如果不同的两个key，例如\"a\"和\"b\"，它们的hashCode()恰好是相同的（这种情况是完全可能的，因为不相等的两个实例，只要求hashCode()尽量不相等），那么，当我们放入：\n1 2 map.put(\"a\", new Person(\"Xiao Ming\")); map.put(\"b\", new Person(\"Xiao Hong\")); 时，由于计算出的数组索引相同，后面放入的\"Xiao Hong\"会不会把\"Xiao Ming\"覆盖了？\n当然不会！使用Map的时候，只要key不相同，它们映射的value就互不干扰。但是，在HashMap内部，确实可能存在不同的key，映射到相同的hashCode()，即相同的数组索引上，肿么办？\n我们就假设\"a\"和\"b\"这两个key最终计算出的索引都是5，那么，在HashMap的数组中，实际存储的不是一个Person实例，而是一个List，它包含两个Entry，一个是\"a\"的映射，一个是\"b\"的映射：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 ┌───┐ 0 │ │ ├───┤ 1 │ │ ├───┤ 2 │ │ ├───┤ 3 │ │ ├───┤ 4 │ │ ├───┤ 5 │ ●─┼───\u003e List",
+  "wordCount" : "21848",
+  "inLanguage": "en",
+  "datePublished": "2016-12-08T13:46:07Z",
+  "dateModified": "2016-12-08T13:46:07Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java%E9%9B%86%E5%90%88/3_map/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

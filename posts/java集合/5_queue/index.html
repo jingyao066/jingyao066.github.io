@@ -1,8 +1,144 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>5_queue | Wjy&#39;s Blog</title>
+<meta name="keywords" content="Java集合">
+<meta name="description" content="概述
+Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：
+
+把元素添加到队列末尾；
+从队列头部取出元素。
+
+超市的收银台就是一个队列。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java%E9%9B%86%E5%90%88/5_queue/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java%E9%9B%86%E5%90%88/5_queue/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java%E9%9B%86%E5%90%88/5_queue/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="5_queue">
+  <meta property="og:description" content="概述 Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：
+把元素添加到队列末尾； 从队列头部取出元素。 超市的收银台就是一个队列。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2016-12-10T21:59:33+00:00">
+    <meta property="article:modified_time" content="2016-12-10T21:59:33+00:00">
+    <meta property="article:tag" content="Java集合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5_queue">
+<meta name="twitter:description" content="概述
+Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：
+
+把元素添加到队列末尾；
+从队列头部取出元素。
+
+超市的收银台就是一个队列。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "5_queue",
+      "item": "https://009965.xyz/posts/java%E9%9B%86%E5%90%88/5_queue/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "5_queue",
+  "name": "5_queue",
+  "description": "概述 Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：\n把元素添加到队列末尾； 从队列头部取出元素。 超市的收银台就是一个队列。\n",
+  "keywords": [
+    "Java集合"
+  ],
+  "articleBody": "概述 Queue实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和List的区别在于，List可以在任意位置添加和删除元素，而Queue只有两个操作：\n把元素添加到队列末尾； 从队列头部取出元素。 超市的收银台就是一个队列。\nqueue 在Java的标准库中，队列接口Queue定义了以下几个方法：\nint size()：获取队列长度； boolean add(E)/boolean offer(E)：添加元素到队尾； E remove()/E poll()：获取队首元素并从队列中删除； E element()/E peek()：获取队首元素但并不从队列中删除。 对于具体的实现类，有的Queue有最大队列长度限制，有的Queue没有。注意到添加、删除和获取队列元素总是有两个方法，这是因为在添加或获取元素失败时，这两个方法的行为是不同的。我们用一个表格总结如下：\nthrow Exception 返回false或null 添加元素到队尾 add(E e) boolean offer(E e) 取队首元素并删除 E remove() E poll() 取队首元素但不删除 E element() E peek() 举个栗子，假设我们有一个队列，对它做一个添加操作，如果调用add()方法，当添加失败时（可能超过了队列的容量），它会抛出异常：\n1 2 3 4 5 6 7 Queue q = ... try { q.add(\"Apple\"); System.out.println(\"添加成功\"); } catch(IllegalStateException e) { System.out.println(\"添加失败\"); } 如果我们调用offer()方法来添加元素，当添加失败时，它不会抛异常，而是返回false：\n1 2 3 4 5 6 Queue q = ... if (q.offer(\"Apple\")) { System.out.println(\"添加成功\"); } else { System.out.println(\"添加失败\"); } 当我们需要从Queue中取出队首元素时，如果当前Queue是一个空队列，调用remove()方法，它会抛出异常：\n1 2 3 4 5 6 7 Queue q = ... try { String s = q.remove(); System.out.println(\"获取成功\"); } catch(IllegalStateException e) { System.out.println(\"获取失败\"); } 如果我们调用poll()方法来取出队首元素，当获取失败时，它不会抛异常，而是返回null：\n1 2 3 4 5 6 7 Queue q = ... String s = q.poll(); if (s != null) { System.out.println(\"获取成功\"); } else { System.out.println(\"获取失败\"); } 因此，两套方法可以根据需要来选择使用。\n注意：不要把null添加到队列中，否则poll()方法返回null时，很难确定是取到了null元素还是队列为空。\n接下来我们以poll()和peek()为例来说说“获取并删除”与“获取但不删除”的区别。\n对于Queue来说，每次调用poll()，都会获取队首元素，并且获取到的元素已经从队列中被删除了：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class Main { public static void main(String[] args) { Queue q = new LinkedList\u003c\u003e(); // 添加3个元素到队列: q.offer(\"apple\"); q.offer(\"pear\"); q.offer(\"banana\"); // 从队列取出元素: System.out.println(q.poll()); // apple System.out.println(q.poll()); // pear System.out.println(q.poll()); // banana System.out.println(q.poll()); // null,因为队列是空的 } } 如果用peek()，因为获取队首元素时，并不会从队列中删除这个元素，所以可以反复获取：\n1 2 3 4 5 6 7 8 9 10 11 12 13 public class Main { public static void main(String[] args) { Queue q = new LinkedList\u003c\u003e(); // 添加3个元素到队列: q.offer(\"apple\"); q.offer(\"pear\"); q.offer(\"banana\"); // 队首永远都是apple，因为peek()不会删除它: System.out.println(q.peek()); // apple System.out.println(q.peek()); // apple System.out.println(q.peek()); // apple } } 从上面的代码中，我们还可以发现，LinkedList即实现了List接口，又实现了Queue接口，但是，在使用的时候，如果我们把它当作List，就获取List的引用，如果我们把它当作Queue，就获取Queue的引用：\n1 2 3 4 // 这是一个List: List list = new LinkedList\u003c\u003e(); // 这是一个Queue: Queue queue = new LinkedList\u003c\u003e(); 始终按照面向抽象编程的原则编写代码，可以大大提高代码的质量。\n小结\n队列Queue实现了一个先进先出（FIFO）的数据结构：\n通过add()/offer()方法将元素添加到队尾； 通过remove()/poll()从队首获取元素并删除； 通过element()/peek()从队首获取元素但不删除。 要避免把null添加到队列。\nPriorityQueue 我们知道，Queue是一个先进先出（FIFO）的队列。 在银行柜台办业务时，我们假设只有一个柜台在办理业务，但是办理业务的人很多，怎么办？ 可以每个人先取一个号，例如：A1、A2、A3……然后，按照号码顺序依次办理，实际上这就是一个Queue。 如果这时来了一个VIP客户，他的号码是V1，虽然当前排队的是A10、A11、A12……但是柜台下一个呼叫的客户号码却是V1。 这个时候，我们发现，要实现“VIP插队”的业务，用Queue就不行了，因为Queue会严格按FIFO的原则取出队首元素。我们需要的是优先队列：PriorityQueue。\nPriorityQueue和Queue的区别在于，它的出队顺序与元素的优先级有关，对PriorityQueue调用remove()或poll()方法，返回的总是优先级最高的元素。\n要使用PriorityQueue，我们就必须给每个元素定义“优先级”。我们以实际代码为例，先看看PriorityQueue的行为：\n1 2 3 4 5 6 7 8 9 10 11 12 13 public class Main { public static void main(String[] args) { Queue q = new PriorityQueue\u003c\u003e(); // 添加3个元素到队列: q.offer(\"apple\"); q.offer(\"pear\"); q.offer(\"banana\"); System.out.println(q.poll()); // apple System.out.println(q.poll()); // banana System.out.println(q.poll()); // pear System.out.println(q.poll()); // null,因为队列为空 } } 我们放入的顺序是\"apple\"、\"pear\"、\"banana\"，但是取出的顺序却是\"apple\"、\"banana\"、\"pear\"，这是因为从字符串的排序看，\"apple\"排在最前面，\"pear\"排在最后面。\n因此，放入PriorityQueue的元素，必须实现Comparable接口，PriorityQueue会根据元素的排序顺序决定出队的优先级。\n如果我们要放入的元素并没有实现Comparable接口怎么办？PriorityQueue允许我们提供一个Comparator对象来判断两个元素的顺序。我们以银行排队业务为例，实现一个PriorityQueue：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 public class Main { public static void main(String[] args) { Queue q = new PriorityQueue\u003c\u003e(new UserComparator()); // 添加3个元素到队列: q.offer(new User(\"Bob\", \"A1\")); q.offer(new User(\"Alice\", \"A2\")); q.offer(new User(\"Boss\", \"V1\")); System.out.println(q.poll()); // Boss/V1 System.out.println(q.poll()); // Bob/A1 System.out.println(q.poll()); // Alice/A2 System.out.println(q.poll()); // null,因为队列为空 } } class UserComparator implements Comparator { public int compare(User u1, User u2) { if (u1.number.charAt(0) == u2.number.charAt(0)) { // 如果两人的号都是A开头或者都是V开头,比较号的大小: return u1.number.compareTo(u2.number); } if (u1.number.charAt(0) == 'V') { // u1的号码是V开头,优先级高: return -1; } else { return 1; } } } class User { public final String name; public final String number; public User(String name, String number) { this.name = name; this.number = number; } public String toString() { return name + \"/\" + number; } } 实现PriorityQueue的关键在于提供的UserComparator对象，它负责比较两个元素的大小（较小的在前）。UserComparator总是把V开头的号码优先返回，只有在开头相同的时候，才比较号码大小。\n上面的UserComparator的比较逻辑其实还是有问题的，它会把A10排在A2的前面，请尝试修复该错误。\n小结\nPriorityQueue实现了一个优先队列：从队首获取元素时，总是获取优先级最高的元素；\nPriorityQueue默认按元素比较的顺序排序（必须实现Comparable接口），也可以通过Comparator自定义排序算法（元素就不必实现Comparable接口）。\nDeque 我们知道，Queue是队列，只能一头进，另一头出。\n如果把条件放松一下，允许两头都进，两头都出，这种队列叫双端队列（Double Ended Queue），学名Deque。\nJava集合提供了接口Deque来实现一个双端队列，它的功能是：\n既可以添加到队尾，也可以添加到队首； 既可以从队首获取，又可以从队尾获取。 我们来比较一下Queue和Deque出队和入队的方法：\nQueue Deque 添加元素到队尾 add(E e) / offer(E e) addLast(E e) / offerLast(E e) 取队首元素并删除 E remove() / E poll() E removeFirst() / E pollFirst() 取队首元素但不删除 E element() / E peek() E getFirst() / E peekFirst() 添加元素到队首 无 addFirst(E e) / offerFirst(E e) 取队尾元素并删除 无 E removeLast() / E pollLast() 取队尾元素但不删除 无 E getLast() / E peekLast() 对于添加元素到队尾的操作，Queue提供了add()/offer()方法，而Deque提供了addLast()/offerLast()方法。添加元素到对首、取队尾元素的操作在Queue中不存在，在Deque中由addFirst()/removeLast()等方法提供。\n注意到Deque接口实际上扩展自Queue：\n1 2 3 public interface Deque extends Queue { } 因此，Queue提供的add()/offer()方法在Deque中也可以使用，但是，使用Deque，最好不要调用offer()，而是调用offerLast()：\n1 2 3 4 5 6 7 8 9 10 11 12 public class Main { public static void main(String[] args) { Deque deque = new LinkedList\u003c\u003e(); deque.offerLast(\"A\"); // A deque.offerLast(\"B\"); // A \u003c- B deque.offerFirst(\"C\"); // C \u003c- A \u003c- B System.out.println(deque.pollFirst()); // C, 剩下A \u003c- B System.out.println(deque.pollLast()); // B, 剩下A System.out.println(deque.pollFirst()); // A System.out.println(deque.pollFirst()); // null } } 如果直接写deque.offer()，我们就需要思考，offer()实际上是offerLast()，我们明确地写上offerLast()，不需要思考就能一眼看出这是添加到队尾。 因此，使用Deque，推荐总是明确调用offerLast()/offerFirst()或者pollFirst()/pollLast()方法。 Deque是一个接口，它的实现类有ArrayDeque和LinkedList。\n我们发现LinkedList真是一个全能选手，它即是List，又是Queue，还是Deque。但是我们在使用的时候，总是用特定的接口来引用它，这是因为持有接口说明代码的抽象层次更高，而且接口本身定义的方法代表了特定的用途。\n1 2 3 4 5 6 // 不推荐的写法: LinkedList d1 = new LinkedList\u003c\u003e(); d1.offerLast(\"z\"); // 推荐的写法： Deque d2 = new LinkedList\u003c\u003e(); d2.offerLast(\"z\"); xxxxxxxxxx import java.util.*;​/** * @desc TreeSet的API测试 * * @author skywang * @email kuiwu-wang@163.com */public class TreeSetTest {​ public static void main(String[] args) { testTreeSetAPIs(); } // 测试TreeSet的api public static void testTreeSetAPIs() { String val;​ // 新建TreeSet TreeSet tSet = new TreeSet(); // 将元素添加到TreeSet中 tSet.add(“aaa”); // Set中不允许重复元素，所以只会保存一个“aaa” tSet.add(“aaa”); tSet.add(“bbb”); tSet.add(“eee”); tSet.add(“ddd”); tSet.add(“ccc”); System.out.println(“TreeSet:\"+tSet);​ // 打印TreeSet的实际大小 System.out.printf(“size : %d\\n”, tSet.size());​ // 导航方法 // floor(小于、等于) System.out.printf(“floor bbb: %s\\n”, tSet.floor(“bbb”)); // lower(小于) System.out.printf(“lower bbb: %s\\n”, tSet.lower(“bbb”)); // ceiling(大于、等于) System.out.printf(“ceiling bbb: %s\\n”, tSet.ceiling(“bbb”)); System.out.printf(“ceiling eee: %s\\n”, tSet.ceiling(“eee”)); // ceiling(大于) System.out.printf(“higher bbb: %s\\n”, tSet.higher(“bbb”)); // subSet() System.out.printf(“subSet(aaa, true, ccc, true): %s\\n”, tSet.subSet(“aaa”, true, “ccc”, true)); System.out.printf(“subSet(aaa, true, ccc, false): %s\\n”, tSet.subSet(“aaa”, true, “ccc”, false)); System.out.printf(“subSet(aaa, false, ccc, true): %s\\n”, tSet.subSet(“aaa”, false, “ccc”, true)); System.out.printf(“subSet(aaa, false, ccc, false): %s\\n”, tSet.subSet(“aaa”, false, “ccc”, false)); // headSet() System.out.printf(“headSet(ccc, true): %s\\n”, tSet.headSet(“ccc”, true)); System.out.printf(“headSet(ccc, false): %s\\n”, tSet.headSet(“ccc”, false)); // tailSet() System.out.printf(“tailSet(ccc, true): %s\\n”, tSet.tailSet(“ccc”, true)); System.out.printf(“tailSet(ccc, false): %s\\n”, tSet.tailSet(“ccc”, false));​​ // 删除“ccc” tSet.remove(“ccc”); // 将Set转换为数组 String[] arr = (String[])tSet.toArray(new String[0]); for (String str:arr) System.out.printf(“for each : %s\\n”, str);​ // 打印TreeSet System.out.printf(“TreeSet:%s\\n”, tSet);​ // 遍历TreeSet for(Iterator iter = tSet.iterator(); iter.hasNext(); ) { System.out.printf(“iter : %s\\n”, iter.next()); }​ // 删除并返回第一个元素 val = (String)tSet.pollFirst(); System.out.printf(“pollFirst=%s, set=%s\\n”, val, tSet);​ // 删除并返回最后一个元素 val = (String)tSet.pollLast(); System.out.printf(“pollLast=%s, set=%s\\n”, val, tSet);​ // 清空HashSet tSet.clear();​ // 输出HashSet是否为空 System.out.printf(\"%s\\n”, tSet.isEmpty()?“set is empty”:“set is not empty”); }}java\n小结\nDeque实现了一个双端队列（Double Ended Queue），它可以：\n将元素添加到队尾或队首：addLast()/offerLast()/addFirst()/offerFirst()； 从队首／队尾获取元素并删除：removeFirst()/pollFirst()/removeLast()/pollLast()； 从队首／队尾获取元素但不删除：getFirst()/peekFirst()/getLast()/peekLast()； 总是调用xxxFirst()/xxxLast()以便与Queue的方法区分开； 避免把null添加到队列。 Stack 注意：这里提到的Stack并不是遗留类java.util.Stack。\n栈（Stack）是一种后进先出（LIFO：Last In First Out）的数据结构。什么是LIFO呢？我们先回顾一下Queue的特点FIFO：\n1 2 3 4 5 ──────────────────────── (\\(\\ (\\(\\ (\\(\\ (\\(\\ (\\(\\ (='.') ─\u003e (='.') (='.') (='.') ─\u003e (='.') O(_\")\") O(_\")\") O(_\")\") O(_\")\") O(_\")\") ──────────────────────── 所谓FIFO，是最先进队列的元素一定最早出队列，而LIFO是最后进Stack的元素一定最早出Stack。如何做到这一点呢？只需要把队列的一端封死：\n1 2 3 4 5 ───────────────────────────────┐ (\\(\\ (\\(\\ (\\(\\ (\\(\\ (\\(\\ │ (='.') \u003c─\u003e (='.') (='.') (='.') (='.')│ O(_\")\") O(_\")\") O(_\")\") O(_\")\") O(_\")\")│ ───────────────────────────────┘ 因此，Stack是这样一种数据结构：只能不断地往Stack中压入（push）元素，最后进去的必须最早弹出（pop）来：\nStack只有入栈和出栈的操作：\n把元素压栈：push(E)； 把栈顶的元素“弹出”：pop()； 取栈顶元素但不弹出：peek()。 在Java中，我们用Deque可以实现Stack的功能：\n把元素压栈：push(E)/addFirst(E)； 把栈顶的元素“弹出”：pop()/removeFirst()； 取栈顶元素但不弹出：peek()/peekFirst()。 为什么Java的集合类没有单独的Stack接口呢？因为有个遗留类名字就叫Stack，出于兼容性考虑，所以没办法创建Stack接口，只能用Deque接口来“模拟”一个Stack了。\njava.util.Stack类上有说明： Deque 接口及其实现提供了一组更完整和一致的 LIFO 堆栈操作，应优先使用此类。例如： Deque stack = new ArrayDeque();\n当我们把Deque作为Stack使用时，注意只调用push()/pop()/peek()方法，不要调用addFirst()/removeFirst()/peekFirst()方法，这样代码更加清晰。\nStack在计算机中使用非常广泛，JVM在处理Java方法调用的时候就会通过栈这种数据结构维护方法调用的层次。例如：\n1 2 3 4 5 6 7 8 9 10 11 static void main(String[] args) { foo(123); } static String foo(x) { return \"F-\" + bar(x + 1); } static int bar(int x) { return x \u003c\u003c 2; } JVM会创建方法调用栈，每调用一个方法时，先将参数压栈，然后执行对应的方法；当方法返回时，返回值压栈，调用方法通过出栈操作获得方法返回值。\n因为方法调用栈有容量限制，嵌套调用过多会造成栈溢出，即引发StackOverflowError：\n1 2 3 4 5 6 7 8 9 public class Main { public static void main(String[] args) { increase(1); } static int increase(int x) { return increase(x) + 1; } } 我们再来看一个Stack的用途：对整数进行进制的转换就可以利用栈。 例如，我们要把一个int整数12500转换为十六进制表示的字符串，如何实现这个功能？首先我们准备一个空栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ └───┘ 然后计算12500÷16=781…4，余数是4，把余数4压栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ 4 │ └───┘ 然后计算781÷16=48…13，余数是13，13的十六进制用字母D表示，把余数D压栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ │ │ │ │ D │ │ │ │ 4 │ └───┘ 然后计算48÷16=3…0，余数是0，把余数0压栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ 0 │ │ │ │ D │ │ │ │ 4 │ └───┘ 最后计算3÷16=0…3，余数是3，把余数3压栈：\n1 2 3 4 5 6 7 8 9 │ │ │ 3 │ │ │ │ 0 │ │ │ │ D │ │ │ │ 4 │ └───┘ 当商是0的时候，计算结束，我们把栈的所有元素依次弹出，组成字符串30D4，这就是十进制整数12500的十六进制表示的字符串。\n计算中缀表达式 在编写程序的时候，我们使用的带括号的数学表达式实际上是中缀表达式，即运算符在中间，例如：1 + 2 * (9 - 5)。但是计算机执行表达式的时候，它并不能直接计算中缀表达式，而是通过编译器把中缀表达式转换为后缀表达式，例如：1 2 9 5 - * +。这个编译过程就会用到栈。我们先跳过编译这一步（涉及运算优先级，代码比较复杂），看看如何通过栈计算后缀表达式。\n计算后缀表达式不考虑优先级，直接从左到右依次计算，因此计算起来简单。首先准备一个空的栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ └───┘ 然后我们依次扫描后缀表达式1 2 9 5 - * +，遇到数字1，就直接扔到栈里：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ 1 │ └───┘ 紧接着，遇到数字2，9，5，也扔到栈里：\n1 2 3 4 5 6 7 8 9 │ │ │ 5 │ │ │ │ 9 │ │ │ │ 2 │ │ │ │ 1 │ └───┘ 接下来遇到减号时，弹出栈顶的两个元素，并计算9-5=4，把结果4压栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ 4 │ │ │ │ 2 │ │ │ │ 1 │ └───┘ 接下来遇到*号时，弹出栈顶的两个元素，并计算2*4=8，把结果8压栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ │ │ │ │ 8 │ │ │ │ 1 │ └───┘ 接下来遇到+号时，弹出栈顶的两个元素，并计算1+8=9，把结果9压栈：\n1 2 3 4 5 6 7 8 9 │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ 9 │ └───┘ 扫描结束后，没有更多的计算了，弹出栈的唯一一个元素，得到计算结果9。\n练习1 请利用Stack把一个给定的整数转换为十六进制：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 import java.util.*; public class Main { public static void main(String[] args) { String hex = toHex(12500); if (hex.equalsIgnoreCase(\"30D4\")) { System.out.println(\"测试通过\"); } else { System.out.println(\"测试失败\"); } } static String toHex(int n) { return \"\"; } } 进阶练习 请利用Stack把字符串中缀表达式编译为后缀表达式，然后再利用栈执行后缀表达式获得计算结果：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 import java.util.*; public class Main { public static void main(String[] args) { String exp = \"1 + 2 * (9 - 5)\"; SuffixExpression se = compile(exp); int result = se.execute(); System.out.println(exp + \" = \" + result + \" \" + (result == 1 + 2 * (9 - 5) ? \"✓\" : \"✗\")); } static SuffixExpression compile(String exp) { // TODO: return new SuffixExpression(); } } class SuffixExpression { int execute() { // TODO: return 0; } } 进阶练习2 请把带变量的中缀表达式编译为后缀表达式，执行后缀表达式时，传入变量的值并获得计算结果：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 import java.util.*; public class Main { public static void main(String[] args) { String exp = \"x + 2 * (y - 5)\"; SuffixExpression se = compile(exp); Map env = Map.of(\"x\", 1, \"y\", 9); int result = se.execute(env); System.out.println(exp + \" = \" + result + \" \" + (result == 1 + 2 * (9 - 5) ? \"✓\" : \"✗\")); } static SuffixExpression compile(String exp) { // TODO: return new SuffixExpression(); } } class SuffixExpression { int execute(Map env) { // TODO: return 0; } } 小结 栈（Stack）是一种后进先出（LIFO）的数据结构，操作栈的元素的方法有：\n把元素压栈：push(E)； 把栈顶的元素“弹出”：pop(E)； 取栈顶元素但不弹出：peek(E)。 在Java中，我们用Deque可以实现Stack的功能，注意只调用push()/pop()/peek()方法，避免调用Deque的其他方法；\n不要使用遗留类Stack。\n",
+  "wordCount" : "7538",
+  "inLanguage": "en",
+  "datePublished": "2016-12-10T21:59:33Z",
+  "dateModified": "2016-12-10T21:59:33Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java%E9%9B%86%E5%90%88/5_queue/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

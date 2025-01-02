@@ -1,8 +1,135 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>StringBuilder和StringBuffer | Wjy&#39;s Blog</title>
+<meta name="keywords" content="java">
+<meta name="description" content="StringBuilder 简介
+StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。
+StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java/stringbuilder%E5%92%8Cstringbuffer/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java/stringbuilder%E5%92%8Cstringbuffer/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java/stringbuilder%E5%92%8Cstringbuffer/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="StringBuilder和StringBuffer">
+  <meta property="og:description" content="StringBuilder 简介 StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。 StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-05-07T17:16:52+00:00">
+    <meta property="article:modified_time" content="2019-05-07T17:16:52+00:00">
+    <meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="StringBuilder和StringBuffer">
+<meta name="twitter:description" content="StringBuilder 简介
+StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。
+StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "StringBuilder和StringBuffer",
+      "item": "https://009965.xyz/posts/java/stringbuilder%E5%92%8Cstringbuffer/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "StringBuilder和StringBuffer",
+  "name": "StringBuilder和StringBuffer",
+  "description": "StringBuilder 简介 StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。 StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。\n",
+  "keywords": [
+    "java"
+  ],
+  "articleBody": "StringBuilder 简介 StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。 StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。\nStringBuilder函数列表 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 StringBuilder() StringBuilder(int capacity) StringBuilder(CharSequence seq) StringBuilder(String str) StringBuilder append(float f) StringBuilder append(double d) StringBuilder append(boolean b) StringBuilder append(int i) StringBuilder append(long l) StringBuilder append(char c) StringBuilder append(char[] chars) StringBuilder append(char[] str, int offset, int len) StringBuilder append(String str) StringBuilder append(Object obj) StringBuilder append(StringBuffer sb) StringBuilder append(CharSequence csq) StringBuilder append(CharSequence csq, int start, int end) StringBuilder appendCodePoint(int codePoint) int capacity() char charAt(int index) int codePointAt(int index) int codePointBefore(int index) int codePointCount(int start, int end) StringBuilder delete(int start, int end) StringBuilder deleteCharAt(int index) void ensureCapacity(int min) void getChars(int start, int end, char[] dst, int dstStart) int indexOf(String subString, int start) int indexOf(String string) StringBuilder insert(int offset, boolean b) StringBuilder insert(int offset, int i) StringBuilder insert(int offset, long l) StringBuilder insert(int offset, float f) StringBuilder insert(int offset, double d) StringBuilder insert(int offset, char c) StringBuilder insert(int offset, char[] ch) StringBuilder insert(int offset, char[] str, int strOffset, int strLen) StringBuilder insert(int offset, String str) StringBuilder insert(int offset, Object obj) StringBuilder insert(int offset, CharSequence s) StringBuilder insert(int offset, CharSequence s, int start, int end) int lastIndexOf(String string) int lastIndexOf(String subString, int start) int length() int offsetByCodePoints(int index, int codePointOffset) StringBuilder replace(int start, int end, String string) StringBuilder reverse() void setCharAt(int index, char ch) void setLength(int length) CharSequence subSequence(int start, int end) String substring(int start) String substring(int start, int end) String toString() void trimToSize() 此处省略AbstractStringBuilder 和 StringBuilder源码。\nStringBuilder 中插入(insert)相关的API 源码如下(StringBuilderInsertTest.java):\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 /** * StringBuilder 的insert()示例 * * @author skywang */ import java.util.HashMap; public class StringBuilderInsertTest { public static void main(String[] args) { testInsertAPIs() ; } /** * StringBuilder 的insert()示例 */ private static void testInsertAPIs() { System.out.println(\"-------------------------------- testInsertAPIs -------------------------------\"); StringBuilder sbuilder = new StringBuilder(); // 在位置0处插入字符数组 sbuilder.insert(0, new char[]{'a','b','c','d','e'}); // 在位置0处插入字符数组。0表示字符数组起始位置，3表示长度 sbuilder.insert(0, new char[]{'A','B','C','D','E'}, 0, 3); // 在位置0处插入float sbuilder.insert(0, 1.414f); // 在位置0处插入double sbuilder.insert(0, 3.14159d); // 在位置0处插入boolean sbuilder.insert(0, true); // 在位置0处插入char sbuilder.insert(0, '\\n'); // 在位置0处插入int sbuilder.insert(0, 100); // 在位置0处插入long sbuilder.insert(0, 12345L); // 在位置0处插入StringBuilder对象 sbuilder.insert(0, new StringBuilder(\"StringBuilder\")); // 在位置0处插入StringBuilder对象。6表示被在位置0处插入对象的起始位置(包括)，13是结束位置(不包括) sbuilder.insert(0, new StringBuilder(\"STRINGBUILDER\"), 6, 13); // 在位置0处插入StringBuffer对象。 sbuilder.insert(0, new StringBuffer(\"StringBuffer\")); // 在位置0处插入StringBuffer对象。6表示被在位置0处插入对象的起始位置(包括)，12是结束位置(不包括) sbuilder.insert(0, new StringBuffer(\"STRINGBUFFER\"), 6, 12); // 在位置0处插入String对象。 sbuilder.insert(0, \"String\"); // 在位置0处插入String对象。1表示被在位置0处插入对象的起始位置(包括)，6是结束位置(不包括) sbuilder.insert(0, \"0123456789\", 1, 6); sbuilder.insert(0, '\\n'); // 在位置0处插入Object对象。此处以HashMap为例 HashMap map = new HashMap(); map.put(\"1\", \"one\"); map.put(\"2\", \"two\"); map.put(\"3\", \"three\"); sbuilder.insert(0, map); System.out.printf(\"%s\\n\\n\", sbuilder); } } 运行结果：\n1 2 3 4 -------------------------------- testInsertAPIs ------------------------------- {3=three, 2=two, 1=one} 12345StringBUFFERStringBufferBUILDERStringBuilder12345100 true3.141591.414ABCabcde StringBuilder 中追加(append)相关的API 源码如下(StringBuilderAppendTest.java):\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 /** * StringBuilder 的append()示例 * * @author skywang */ import java.util.HashMap; public class StringBuilderAppendTest { public static void main(String[] args) { testAppendAPIs() ; } /** * StringBuilder 的append()示例 */ private static void testAppendAPIs() { System.out.println(\"-------------------------------- testAppendAPIs -------------------------------\"); StringBuilder sbuilder = new StringBuilder(); // 追加字符数组 sbuilder.append(new char[]{'a','b','c','d','e'}); // 追加字符数组。0表示字符数组起始位置，3表示长度 sbuilder.append(new char[]{'A','B','C','D','E'}, 0, 3); // 追加float sbuilder.append(1.414f); // 追加double sbuilder.append(3.14159d); // 追加boolean sbuilder.append(true); // 追加char sbuilder.append('\\n'); // 追加int sbuilder.append(100); // 追加long sbuilder.append(12345L); // 追加StringBuilder对象 sbuilder.append(new StringBuilder(\"StringBuilder\")); // 追加StringBuilder对象。6表示被追加对象的起始位置(包括)，13是结束位置(不包括) sbuilder.append(new StringBuilder(\"STRINGBUILDER\"), 6, 13); // 追加StringBuffer对象。 sbuilder.append(new StringBuffer(\"StringBuffer\")); // 追加StringBuffer对象。6表示被追加对象的起始位置(包括)，12是结束位置(不包括) sbuilder.append(new StringBuffer(\"STRINGBUFFER\"), 6, 12); // 追加String对象。 sbuilder.append(\"String\"); // 追加String对象。1表示被追加对象的起始位置(包括)，6是结束位置(不包括) sbuilder.append(\"0123456789\", 1, 6); sbuilder.append('\\n'); // 追加Object对象。此处以HashMap为例 HashMap map = new HashMap(); map.put(\"1\", \"one\"); map.put(\"2\", \"two\"); map.put(\"3\", \"three\"); sbuilder.append(map); sbuilder.append('\\n'); // 追加unicode编码 sbuilder.appendCodePoint(0x5b57); // 0x5b57是“字”的unicode编码 sbuilder.appendCodePoint(0x7b26); // 0x7b26是“符”的unicode编码 sbuilder.appendCodePoint(0x7f16); // 0x7f16是“编”的unicode编码 sbuilder.appendCodePoint(0x7801); // 0x7801是“码”的unicode编码 System.out.printf(\"%s\\n\\n\", sbuilder); } } 运行结果：\n1 2 3 4 5 -------------------------------- testAppendAPIs ------------------------------- abcdeABC1.4143.14159true 10012345StringBuilderBUILDERStringBufferBUFFERString12345 {3=three, 2=two, 1=one} 字符编码 StringBuilder 中替换(replace)相关的API 源码如下(StringBuilderReplaceTest.java):\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 /** * StringBuilder 的replace()示例 * * @author skywang */ import java.util.HashMap; public class StringBuilderReplaceTest { public static void main(String[] args) { testReplaceAPIs() ; } /** * StringBuilder 的replace()示例 */ private static void testReplaceAPIs() { System.out.println(\"-------------------------------- testReplaceAPIs ------------------------------\"); StringBuilder sbuilder; sbuilder = new StringBuilder(\"0123456789\"); sbuilder.replace(0, 3, \"ABCDE\"); System.out.printf(\"sbuilder=%s\\n\", sbuilder); sbuilder = new StringBuilder(\"0123456789\"); sbuilder.reverse(); System.out.printf(\"sbuilder=%s\\n\", sbuilder); sbuilder = new StringBuilder(\"0123456789\"); sbuilder.setCharAt(0, 'M'); System.out.printf(\"sbuilder=%s\\n\", sbuilder); System.out.println(); } } 运行结果：\n1 2 3 4 -------------------------------- testReplaceAPIs ------------------------------ sbuilder=ABCDE3456789 sbuilder=9876543210 sbuilder=M123456789 StringBuilder 中删除(delete)相关的API 源码如下(StringBuilderDeleteTest.java):\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 /** * StringBuilder 的delete()示例 * * @author skywang */ import java.util.HashMap; public class StringBuilderDeleteTest { public static void main(String[] args) { testDeleteAPIs() ; } /** * StringBuilder 的delete()示例 */ private static void testDeleteAPIs() { System.out.println(\"-------------------------------- testDeleteAPIs -------------------------------\"); StringBuilder sbuilder = new StringBuilder(\"0123456789\"); // 删除位置0的字符，剩余字符是“123456789”。 sbuilder.deleteCharAt(0); // 删除位置3(包括)到位置6(不包括)之间的字符，剩余字符是“123789”。 sbuilder.delete(3,6); // 获取sb中从位置1开始的字符串 String str1 = sbuilder.substring(1); // 获取sb中从位置3(包括)到位置5(不包括)之间的字符串 String str2 = sbuilder.substring(3, 5); // 获取sb中从位置3(包括)到位置5(不包括)之间的字符串，获取的对象是CharSequence对象，此处转型为String String str3 = (String)sbuilder.subSequence(3, 5); System.out.printf(\"sbuilder=%s\\nstr1=%s\\nstr2=%s\\nstr3=%s\\n\", sbuilder, str1, str2, str3); } } 运行结果：\n1 2 3 4 5 -------------------------------- testDeleteAPIs ------------------------------- sbuilder=123789 str1=23789 str2=78 str3=78 StringBuilder 中index相关的API 源码如下(StringBuilderIndexTest.java):\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 /** * StringBuilder 中index相关API演示 * * @author skywang */ import java.util.HashMap; public class StringBuilderIndexTest { public static void main(String[] args) { testIndexAPIs() ; } /** * StringBuilder 中index相关API演示 */ private static void testIndexAPIs() { System.out.println(\"-------------------------------- testIndexAPIs --------------------------------\"); StringBuilder sbuilder = new StringBuilder(\"abcAbcABCabCaBcAbCaBCabc\"); System.out.printf(\"sbuilder=%s\\n\", sbuilder); // 1. 从前往后，找出\"bc\"第一次出现的位置 System.out.printf(\"%-30s = %d\\n\", \"sbuilder.indexOf(\\\"bc\\\")\", sbuilder.indexOf(\"bc\")); // 2. 从位置5开始，从前往后，找出\"bc\"第一次出现的位置 System.out.printf(\"%-30s = %d\\n\", \"sbuilder.indexOf(\\\"bc\\\", 5)\", sbuilder.indexOf(\"bc\", 5)); // 3. 从后往前，找出\"bc\"第一次出现的位置 System.out.printf(\"%-30s = %d\\n\", \"sbuilder.lastIndexOf(\\\"bc\\\")\", sbuilder.lastIndexOf(\"bc\")); // 4. 从位置4开始，从后往前，找出\"bc\"第一次出现的位置 System.out.printf(\"%-30s = %d\\n\", \"sbuilder.lastIndexOf(\\\"bc\\\", 4)\", sbuilder.lastIndexOf(\"bc\", 4)); System.out.println(); } } 运行结果：\n1 2 3 4 5 6 -------------------------------- testIndexAPIs -------------------------------- sbuilder=abcAbcABCabCaBcAbCaBCabc sbuilder.indexOf(\"bc\") = 1 sbuilder.indexOf(\"bc\", 5) = 22 sbuilder.lastIndexOf(\"bc\") = 22 sbuilder.lastIndexOf(\"bc\", 4) = 4 StringBuilder 剩余的API 源码如下(StringBuilderOtherTest.java):\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 /** * StringBuilder 的其它API示例 * * @author skywang */ import java.util.HashMap; public class StringBuilderOtherTest { public static void main(String[] args) { testOtherAPIs() ; } /** * StringBuilder 的其它API示例 */ private static void testOtherAPIs() { System.out.println(\"-------------------------------- testOtherAPIs --------------------------------\"); StringBuilder sbuilder = new StringBuilder(\"0123456789\"); int cap = sbuilder.capacity(); System.out.printf(\"cap=%d\\n\", cap); char c = sbuilder.charAt(6); System.out.printf(\"c=%c\\n\", c); char[] carr = new char[4]; sbuilder.getChars(3, 7, carr, 0); for (int i=0; i",
+  "wordCount" : "5169",
+  "inLanguage": "en",
+  "datePublished": "2019-05-07T17:16:52Z",
+  "dateModified": "2019-05-07T17:16:52Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java/stringbuilder%E5%92%8Cstringbuffer/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

@@ -1,8 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>workflow | Wjy&#39;s Blog</title>
+<meta name="keywords" content="中间件">
+<meta name="description" content="为什么需要工作流 假设我有一个请假需求，流程如下： 请假可以提交给我的上司，上司可以选择批准或者拒绝，无论批准还是拒绝，都会给我一个通知。 这个流">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="workflow">
+  <meta property="og:description" content="为什么需要工作流 假设我有一个请假需求，流程如下： 请假可以提交给我的上司，上司可以选择批准或者拒绝，无论批准还是拒绝，都会给我一个通知。 这个流">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-10-23T10:53:04+00:00">
+    <meta property="article:modified_time" content="2019-10-23T10:53:04+00:00">
+    <meta property="article:tag" content="中间件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="workflow">
+<meta name="twitter:description" content="为什么需要工作流 假设我有一个请假需求，流程如下： 请假可以提交给我的上司，上司可以选择批准或者拒绝，无论批准还是拒绝，都会给我一个通知。 这个流">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "workflow",
+      "item": "https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "workflow",
+  "name": "workflow",
+  "description": "为什么需要工作流 假设我有一个请假需求，流程如下： 请假可以提交给我的上司，上司可以选择批准或者拒绝，无论批准还是拒绝，都会给我一个通知。 这个流",
+  "keywords": [
+    "中间件"
+  ],
+  "articleBody": "为什么需要工作流 假设我有一个请假需求，流程如下：\n请假可以提交给我的上司，上司可以选择批准或者拒绝，无论批准还是拒绝，都会给我一个通知。\n这个流程比较简单，我们很容易想到解决方案，不用工作流也能解决，有一个专门的请假表，当 A 要请假的时候，就往请假表中添加一条记录，这条记录的内容包含了请假的天数、原因、请假的审批人 B 以及一个名为 status 的字段，这个 status 字段表示这个请假申请目前的状态（待审批、已批准还是已拒绝），然后 B 登录系统之后，在请假表中查询到了 A 的请假信息，然后选择批准，此时将 status 字段的值改一下就行了。\n这个流程很简单，相信小伙伴们都能想到。\n然而，这是一个非常简单的流程，对于这样的流程，一般来说也确实没有必要使用工作流，但是现实中，我们涉及到的工作流往往都是非常复杂的，我举个例子，就说报销审批吧，这个可能很多小伙伴都经历过。\n小伙伴们看到，这个流程相对来说还是比较复杂的，此时你再用一个 status 字段去描述，就很难说的请到底是怎么回事了。每一步审批，都有可能批准也有可能拒绝，拒绝并不意味着流程结束，员工修改报销资料之后，还可以继续提交。此时如果还用 status 去描述，那么 status 将有 N 多个值去表示不同的情况，这个维护起来非常不便。\n这就复杂了吗？非也非也，我们再来看一个生产笔记本电脑的例子，假设公司研发了一款新型笔记本电脑，整个研发到生产的流程可能是这样：\n相比上面两个，这个就更复杂一些了，不仅有串行任务还有并行任务，如何去设计这样一个系统？单纯的通过状态字段去描述显然已经不够用了，此时我们就得考虑一种通用的、更易维护的方案来实现这样的系统了，这种通用的、易维护的方案，也就是工作流。\n工作流选型 一个比较早的工作流是 jBPM，这是一个由 Java 实现的企业级流程引擎，是 JBoss 公司开发的产品之一。\njBPM 的创建者是 Tom Baeyens，这个大佬后来离开了 JBoss，并加入到 Alfresco，并推出了基于 jBPM4 的开源工作流系统 Activiti，而 jBPM 则在后续的代码中完全放弃了 jBPM4 的代码。从这个过程中也能看出来，jBPM 在发展过程中，由于意见相左，后来变成了两个 jBPM 和 Activiti。\n然而戏剧的是，Activiti5 没搞多久，从 Activiti 中又分出来一个 Camunda，Activiti 继续发展，又从中分出来一个 Flowable。。。\n由于开发 jBPM、Activiti、Camunda 以及 Flowable 的人多多少少有一些关联性，让人不得不猜测意见相左拉一票人出来单干是他们的企业文化。\n所以现在市面上主流的流程引擎就一共有三个：\nActiviti Flowable Camunda 这三个各有特点：\nActiviti 目前是侧重云，他目前的设计会向 Spring Cloud、Docker 这些去靠拢。 Flowable 核心思想还是在做一个功能丰富的流程引擎工具，除了最最基础的工作流，他还提供了很多其他的扩展点，我们可以基于 Flowable 实现出许多我们想要的功能（当然这也是小伙伴们觉得 Flowable 使用复杂的原因之一）。 Camunda 相对于前两个而言比较轻量级，Camunda 有一个比较有特色的功能就是他提供了一个小巧的编辑器，基于 bpmn.io 来实现的（松哥之前已经发文讲过了）。如果你的项目需求是做一个轻巧的、灵活的、定制性强的编辑器，工作流是嵌入式的，那么可以选择 Camunda。 Camunda 概念 流程（PROCESS） : 通过工具建模最终生成的BPMN文件，里面有整个流程的定义 流程实例（Instance） ：流程启动后的实例 流程变量（Variables） ：流程任务之间传递的参数 任务（TASK） ：流程中定义的每一个节点 流程部署 ：将之前流程定义的.bpmn文件部署到工作流平台 spring boot 集成 Camunda7 参考官网：https://docs.camunda.org/manual\n核心类介绍 ProcessEngine\n流程引擎，可以通过他获取相关service，里面集成了很多相关service，默认实现如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 public class ProcessEngineImpl implements ProcessEngine { public static final CompositeCondition EXT_TASK_CONDITIONS = new CompositeCondition(); private static final ProcessEngineLogger LOG; protected String name; protected RepositoryService repositoryService; protected RuntimeService runtimeService; protected HistoryService historicDataService; protected IdentityService identityService; protected TaskService taskService; protected FormService formService; protected ManagementService managementService; protected AuthorizationService authorizationService; protected CaseService caseService; protected FilterService filterService; protected ExternalTaskService externalTaskService; protected DecisionService decisionService; protected String databaseSchemaUpdate; protected JobExecutor jobExecutor; protected CommandExecutor commandExecutor; protected CommandExecutor commandExecutorSchemaOperations; protected Map",
+  "wordCount" : "2590",
+  "inLanguage": "en",
+  "datePublished": "2019-10-23T10:53:04Z",
+  "dateModified": "2019-10-23T10:53:04Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

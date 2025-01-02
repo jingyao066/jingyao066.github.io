@@ -1,8 +1,143 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>备忘录模式 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="设计模式">
+<meta name="description" content="快速学习
+类型：行为型
+
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。
+
+备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捕捉(Capture)住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。备忘录模式常常与命令模式和迭代器模式一同使用。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="备忘录模式">
+  <meta property="og:description" content="快速学习 类型：行为型
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。
+备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捕捉(Capture)住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。备忘录模式常常与命令模式和迭代器模式一同使用。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-12-22T13:29:39+00:00">
+    <meta property="article:modified_time" content="2018-12-22T13:29:39+00:00">
+    <meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="备忘录模式">
+<meta name="twitter:description" content="快速学习
+类型：行为型
+
+在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。
+
+备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捕捉(Capture)住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。备忘录模式常常与命令模式和迭代器模式一同使用。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "备忘录模式",
+      "item": "https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "备忘录模式",
+  "name": "备忘录模式",
+  "description": "快速学习 类型：行为型\n在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。\n备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捕捉(Capture)住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。备忘录模式常常与命令模式和迭代器模式一同使用。\n",
+  "keywords": [
+    "设计模式"
+  ],
+  "articleBody": "快速学习 类型：行为型\n在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。\n备忘录对象是一个用来存储另外一个对象内部状态的快照的对象。备忘录模式的用意是在不破坏封装的条件下，将一个对象的状态捕捉(Capture)住，并外部化，存储起来，从而可以在将来合适的时候把这个对象还原到存储起来的状态。备忘录模式常常与命令模式和迭代器模式一同使用。\n备忘录模式（Memento），主要用于捕获一个对象的内部状态，以便在将来的某个时候恢复此状态。\n其实我们使用的几乎所有软件都用到了备忘录模式。最简单的备忘录模式就是保存到文件，打开文件。对于文本编辑器来说，保存就是把TextEditor类的字符串存储到文件，打开就是恢复TextEditor类的状态。对于图像编辑器来说，原理是一样的，只是保存和恢复的数据格式比较复杂而已。Java的序列化也可以看作是备忘录模式。\n在使用文本编辑器的时候，我们还经常使用Undo、Redo这些功能。这些其实也可以用备忘录模式实现，即不定期地把TextEditor类的字符串复制一份存起来，这样就可以Undo或Redo。\n标准的备忘录模式有这么几种角色：\nMemonto：存储的内部状态； Originator：创建一个备忘录并设置其状态； Caretaker：负责保存备忘录。 实际上我们在使用备忘录模式的时候，不必设计得这么复杂，只需要对类似TextEditor的类，增加getState()和setState()就可以了。\n我们以一个文本编辑器TextEditor为例，它内部使用StringBuilder允许用户增删字符：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 public class TextEditor { private StringBuilder buffer = new StringBuilder(); public void add(char ch) { buffer.append(ch); } public void add(String s) { buffer.append(s); } public void delete() { if (buffer.length() \u003e 0) { buffer.deleteCharAt(buffer.length() - 1); } } } 为了支持这个TextEditor能保存和恢复状态，我们增加getState()和setState()两个方法：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class TextEditor { ... // 获取状态: public String getState() { return buffer.toString(); } // 恢复状态: public void setState(String state) { this.buffer.delete(0, this.buffer.length()); this.buffer.append(state); } } 对这个简单的文本编辑器，用一个String就可以表示其状态，对于复杂的对象模型，通常我们会使用JSON、XML等复杂格式。\n概述 备忘录模式涉及到的角色 备忘录(Memento)角色\n将发起人（Originator）对象的内战状态存储起来。备忘录可以根据发起人对象的判断来决定存储多少发起人（Originator）对象的内部状态。\n备忘录可以保护其内容不被发起人（Originator）对象之外的任何对象所读取。\n备忘录有两个等效的接口： 窄接口：负责人（Caretaker）对象（和其他除发起人对象之外的任何对象）看到的是备忘录的窄接口(narrow interface)，这个窄接口只允许它把备忘录对象传给其他的对象。\n宽接口：与负责人对象看到的窄接口相反的是，发起人对象可以看到一个宽接口(wide interface)，这个宽接口允许它读取所有的数据，以便根据这些数据恢复这个发起人对象的内部状态。\n发起人（Originator）角色\n创建一个含有当前的内部状态的备忘录对象。 使用备忘录对象存储其内部状态。 负责人（Caretaker）角色\n负责保存备忘录对象。 不检查备忘录对象的内容。 #“白箱”备忘录模式的实现 备忘录角色对任何对象都提供一个接口，即宽接口，备忘录角色的内部所存储的状态就对所有对象公开。因此这个实现又叫做“白箱实现”。“白箱”实现将发起人角色的状态存储在一个大家都看得到的地方，因此是破坏封装性的。但是通过程序员自律，同样可以在一定程度上实现模式的大部分用意。因此白箱实现仍然是有意义的。下面给出一个示意性的“白箱实现”。\n白箱备忘录模式 备忘录角色类\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 public class Memento { private String state = \"\"; public Memento(String state){ this.state = state; } public String getState() { return state; } public void setState(String state) { this.state = state; } } 发起人角色类，发起人角色利用一个新创建的备忘录对象将自己的内部状态存储起来。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 public class Originator { private String state; /** * 工厂方法，返回一个新的备忘录对象 */ public Memento createMemento(){ return new Memento(state); } /** * 将发起人恢复到备忘录对象所记载的状态 */ public void restoreMemento(Memento memento){ this.state = memento.getState(); } public String getState() { return state; } public void setState(String state) { this.state = state; System.out.println(\"当前状态：\" + this.state); } } 负责人角色类，负责人角色负责保存备忘录对象，但是从不修改（甚至不查看）备忘录对象的内容。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 public class Caretaker { private Memento memento; /** * 备忘录的取值方法 */ public Memento retrieveMemento(){ return this.memento; } /** * 备忘录的赋值方法 */ public void saveMemento(Memento memento){ this.memento = memento; } } 客户端\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class Client { public static void main(String[] args) { Originator originator = new Originator(); originator.setState(\"状态1\"); System.out.println(\"初始状态:\"+originator.getState()); Caretaker caretaker = new Caretaker(); caretaker.setMemento(originator.createMemento()); originator.setState(\"状态2\"); System.out.println(\"改变后状态:\"+originator.getState()); originator.restoreMemento(caretaker.getMemento()); System.out.println(\"恢复后状态:\"+originator.getState()); } } 代码演示了一个单状态单备份的例子，逻辑非常简单：Originator类中的state变量需要备份，以便在需要的时候恢复；Memento类中，也有一个state变量，用来存储Originator类中state变量的临时状态；而Caretaker类就是用来管理备忘录类的，用来向备忘录对象中写入状态或者取回状态。\n黑箱备忘录模式 备忘录角色对发起人（Originator）角色对象提供一个宽接口，而为其他对象提供一个窄接口。这样的实现叫做“黑箱实现”。在JAVA语言中，实现双重接口的办法就是将备忘录角色类设计成发起人角色类的内部成员类。\n将Memento设成Originator类的内部类，从而将Memento对象封装在Originator里面；在外部提供一个标识接口MementoIF给Caretaker以及其他对象。这样，Originator类看到的是Menmento的所有接口，而Caretaker以及其他对象看到的仅仅是标识接口MementoIF所暴露出来的接口。\n发起人角色类Originator中定义了一个内部的Memento类。由于此Memento类的全部接口都是私有的，因此只有它自己和发起人类可以调用。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 public class Originator { private String state; public String getState() { return state; } public void setState(String state) { this.state = state; System.out.println(\"赋值状态：\" + state); } /** * 工厂方法，返还一个新的备忘录对象 */ public MementoIF createMemento(){ return new Memento(state); } /** * 发起人恢复到备忘录对象记录的状态 */ public void restoreMemento(MementoIF memento){ this.setState(((Memento)memento).getState()); } private class Memento implements MementoIF{ private String state; /** * 构造方法 */ private Memento(String state){ this.state = state; } private String getState() { return state; } private void setState(String state) { this.state = state; } } } 窄接口MementoIF，这是一个标识接口，因此它没有定义出任何的方法。\n1 2 3 public interface MementoIF { } 负责人角色类Caretaker能够得到的备忘录对象是以MementoIF为接口的，由于这个接口仅仅是一个标识接口，因此负责人角色不可能改变这个备忘录对象的内容。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 public class Caretaker { private MementoIF memento; /** * 备忘录取值方法 */ public MementoIF getMemento(){ return memento; } /** * 备忘录赋值方法 */ public void setMemento(MementoIF memento){ this.memento = memento; } } 客户端\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 public class Client { public static void main(String[] args){ Originator originator = new Originator(); //初始化发起人对象的状态 originator.setState(\"状态1\"); System.out.println(\"初始状态:\"+originator.getState()); //创建负责人对象，并将发起人对象的状态通过备忘录存储起来 //此时createMemento()方法还回的明显类型是MementoIF接口，真实类型为Originator内部的Memento对象 Caretaker caretaker = new Caretaker(); //由于负责人对象拿到的仅是MementoIF接口，因此无法读出备忘录对象内部的状态。 caretaker.setMemento(originator.createMemento()); //修改发起人对象的状态 originator.setState(\"状态2\"); System.out.println(\"改变后状态:\"+originator.getState()); //恢复发起人对象的状态，通过备忘录 //注意此时仅能得到MementoIF接口，因此无法读出此对象的内部状态。 //由于发起人对象的内部类Memento实现了MementoIF接口，这个内部类是传入的备忘录对象的真实类型， //因此发起人对象可以利用内部类Memento的私有接口读出此对象的内部状态。 originator.restoreMemento(caretaker.getMemento()); System.out.println(\"恢复后状态:\"+originator.getState()); } } 多重检查点 前面所给出的白箱和黑箱的示意性实现都是只存储一个状态的简单实现，也可以叫做只有一个检查点。常见的系统往往需要存储不止一个状态，而是需要存储多个状态，或者叫做有多个检查点。\n备忘录模式可以将发起人对象的状态存储到备忘录对象里面，备忘录模式可以将发起人对象恢复到备忘录对象所存储的某一个检查点上。下面给出一个示意性的、有多重检查点的备忘录模式的实现。\n备忘录角色类，这个实现可以存储任意多的状态，外界可以使用检查点指数index来取出检查点上的状态。　1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 public class Memento { private List states; private int index; /** * 构造函数 */ public Memento(List states ,int index){ this.states = new ArrayList(states); this.index = index; } public List getStates() { return states; } public int getIndex() { return index; } } 发起人角色\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 public class Originator { private List states; //检查点指数 private int index; /** * 构造函数 */ public Originator(){ states = new ArrayList\u003c\u003e(); index = 0; } /** * 工厂方法，返还一个新的备忘录对象 */ public Memento createMemento(){ return new Memento(states , index); } /** * 将发起人恢复到备忘录对象记录的状态上 */ public void restoreMemento(Memento memento){ states = memento.getStates(); index = memento.getIndex(); } /** * 状态的赋值方法 */ public void setState(String state){ states.add(state); index++; } /** * 辅助方法，打印所有状态 */ public void printStates(){ for(String state : states){ System.out.println(state); } } } 负责人角色\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 public class Caretaker { private Originator o; private List mementos = new ArrayList\u003c\u003e(); private int current; /** * 构造函数 */ public Caretaker(Originator o){ this.o = o; this.current = 0; } /** * 创建一个新的检查点 */ public int createMemento(){ Memento memento = o.createMemento(); mementos.add(memento); return current++; } /** * 将发起人恢复到某个检查点 */ public void restoreMemento(int index){ Memento memento = mementos.get(index); o.restoreMemento(memento); } /** * 将某个检查点删除 */ public void removeMemento(int index){ mementos.remove(index); } } 客户端\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 public class Client { public static void main(String[] args) { Originator o = new Originator(); Caretaker c = new Caretaker(o); //改变状态 o.setState(\"state 0\"); //建立一个检查点 c.createMemento(); //改变状态 o.setState(\"state 1\"); //建立一个检查点 c.createMemento(); //改变状态 o.setState(\"state 2\"); //建立一个检查点 c.createMemento(); //改变状态 o.setState(\"state 3\"); //建立一个检查点 c.createMemento(); //打印出所有检查点 o.printStates(); System.out.println(\"-----------------恢复检查点-----------------\"); //恢复到第二个检查点 c.restoreMemento(2); //打印出所有检查点 o.printStates(); } } 运行结果\n1 2 3 4 5 6 7 8 state 0 state 1 state 2 state 3 -----------------恢复检查点----------------- state 0 state 1 state 2 可以看出，客户端角色通过不断改变发起人角色的状态，并将之存储在备忘录里面。通过指明检查点指数可以将发起人角色恢复到相应的检查点所对应的状态上。\n系统运行的时序是这样的： （1）将发起人对象的状态设置成某个有效状态； （2）调用负责人角色的createMemento()方法，负责人角色会负责调用发起人角色和备忘录角色，将发起人对象的状态存储起来。 （3）调用负责人角色的restoreMemento()方法，将发起人恢复到某个检查点。\n“自述历史”模式 所谓“自述历史”模式(History-On-Self Pattern)实际上就是备忘录模式的一个变种。在备忘录模式中，发起人(Originator)角色、负责人(Caretaker)角色和备忘录(Memento)角色都是独立的角色。虽然在实现上备忘录类可以成为发起人类的内部成员类，但是备忘录类仍然保持作为一个角色的独立意义。在“自述历史”模式里面，发起人角色自己兼任负责人角色。\n备忘录角色有如下责任： （1）将发起人（Originator）对象的内部状态存储起来。 （2）备忘录可以保护其内容不被发起人（Originator）对象之外的任何对象所读取。\n发起人角色有如下责任： （1）创建一个含有它当前的内部状态的备忘录对象。 （2）使用备忘录对象存储其内部状态。\n客户端角色有负责保存备忘录对象的责任。代码如下\n窄接口MementoIF，这是一个标识接口，因此它没有定义出任何的方法。\n1 2 3 public interface MementoIF { } 发起人角色同时还兼任负责人角色，也就是说它自己负责保持自己的备忘录对象。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 public class Originator { public String state; /** * 改变状态 */ public void changeState(String state){ this.state = state; System.out.println(\"状态改变为：\" + state); } /** * 工厂方法，返还一个新的备忘录对象 */ public Memento createMemento(){ return new Memento(this); } /** * 将发起人恢复到备忘录对象所记录的状态上 */ public void restoreMemento(MementoIF memento){ Memento m = (Memento)memento; changeState(m.state); } private class Memento implements MementoIF{ private String state; /** * 构造方法 */ private Memento(Originator o){ this.state = o.state; } private String getState() { return state; } } } 客户端\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class Client { public static void main(String[] args) { Originator o = new Originator(); //修改状态 o.changeState(\"state 0\"); //创建备忘录 MementoIF memento = o.createMemento(); //修改状态 o.changeState(\"state 1\"); //按照备忘录恢复对象的状态 o.restoreMemento(memento); } } 由于“自述历史”作为一个备忘录模式的特殊实现形式非常简单易懂，它可能是备忘录模式最为流行的实现形式。\n参考 参考\n",
+  "wordCount" : "5499",
+  "inLanguage": "en",
+  "datePublished": "2018-12-22T13:29:39Z",
+  "dateModified": "2018-12-22T13:29:39Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

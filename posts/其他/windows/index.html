@@ -1,8 +1,135 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>windows | Wjy&#39;s Blog</title>
+<meta name="keywords" content="其他">
+<meta name="description" content="查看端口占用
+查看全部端口：
+netstat -ano">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/windows/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/windows/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/windows/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="windows">
+  <meta property="og:description" content="查看端口占用 查看全部端口： netstat -ano">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-10-28T16:39:52+00:00">
+    <meta property="article:modified_time" content="2019-10-28T16:39:52+00:00">
+    <meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows">
+<meta name="twitter:description" content="查看端口占用
+查看全部端口：
+netstat -ano">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "windows",
+      "item": "https://009965.xyz/posts/%E5%85%B6%E4%BB%96/windows/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "windows",
+  "name": "windows",
+  "description": "查看端口占用 查看全部端口： netstat -ano\n",
+  "keywords": [
+    "其他"
+  ],
+  "articleBody": "查看端口占用 查看全部端口： netstat -ano\n查看指定端口： netstat -ano | findstr 8080\n找到被占用端口的PID，就是上边结果的最后一列，并输入 tasklist | findstr \"上边的PID\" 可以看到被占用的程序名。\n可以通过程序名结束掉它： taskkill /f /t /im Tencentdl.exe。\n或直接通过PID结束它： taskkill /f /t /im 上边的PID\n或通过任务管理器结束该程序，如果看不到PID，随意找到一选项卡右键，勾选PID即可，然后可以右键结束掉该程序。\nwindows休眠后，分辨率改变导致任务窗口缩放的问题 参考：Windows唤醒后窗口位移至左上角且尺寸缩小解决方案 | Sirius (siriusq.top)\n按下 WIN+R，输入 regedit 后回车，打开注册表编辑器，定位到\n1 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers 三个里面的记录全部删掉然后重启，重启后 Windows 会重新识别现在连接的显示器：\n1 2 3 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Connectivity HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\ScaleFactors 一般到这里问题就解决了，重启下显示器或者睡眠唤醒一下检测一下。\n如果你的电脑问题依旧的话，尝试关闭显示器开关再打开，然后刷新一下注册表编辑器，可以看到 Configuration 下面多了一项 NOEDIDxxxxxxx，修改 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration\\NOEDIDxxxxxxx\\00 中的 PrimSurfSize.cx 和 PrimSurfSize.cy 的值为当前显示器的分辨率，注意这个 00 下面还有一个 00，里面的也要改。\n解决方案来源 1：Stefan Traistaru 解决方案来源 2：atwitsend42\n原理 热插拔 大多数现代显示器的一个方便的特点是能够在两者都通电的情况下 “热插拔 “到源设备上，并立即以正确的显示设置开始工作。\n这种行为是由三个功能实现的。热插拔检测、显示数据通道（DDC）和扩展显示识别数据（EDID）。\n热插拔检测 将显示器 “热插拔 “到信号源中，意味着在两个设备都通电的情况下进行连接。这与旧技术不同，旧技术通常需要在一个或两个设备断电的情况下进行 “冷插”。热插拔检测或 “HPD “是 HDMI、DisplayPort 和 DVI 规格的一项功能。通常情况下，它依赖于连接器中的一个针脚进行接触，从而启动该过程。\nDDC DDC，即显示数据通道，描述了信号源和显示器用于通信的协议和物理路径。它通常被分配给接口上的一个或多个引脚，并携带 EDID。\nDisplayPort 使用一个多功能的 “AUX 通道”，而不是一个专门的 DDC，它既是用户数据的媒介（通常是 USB），也是传输 EDID 和其他拓扑信息的手段。\nEDID EDID（扩展显示识别数据）是由显示器提供的信息，用于向源设备描述其能力和要求。它包含诸如制造商、序列号、最大分辨率、刷新率和色彩空间等信息。\n罪魁祸首 在显示器关闭或进入睡眠状态时，它将通过 DCC 传输一个信号，表明它正在关闭电源，在某些情况下，这被系统的视频驱动程序或操作系统解释为显示器被拔掉。这将导致操作系统以一种不理想的方式重新安排桌面空间和窗口。\n来源：Hot Plug Detection, DDC, and EDID\n以我的显示器为例，原分辨率为 2560x1440，但是显示器关闭后，系统认为显示器被拔出，检测不到显示器的话系统就会采用注册表中的默认分辨率，也就是上面提到的那个 NOEDIDxxxxxxx，在我这里是 1024x768，当显示器再次开启时，会听到很多声硬件插拔的提示音，说明显示器被当作了新插入的设备，显示器开启后所有的窗口的分辨率并没有改变，仍然是 1024x768，观感上就是占了屏幕大小的一半。而 Windows 窗口的屏幕坐标原点就是在左上角，也就导致所有的窗口都挤在了左上角。\nNOEDID NOEDID 的意思就是 No EDID，如果系统无法从显示器获取扩展显示识别数据的话，就会调用这个配置。这个文件在显示器关闭或者拔出后会自动生成。\n其他解决方法 参考：https://www.cnblogs.com/kingchan/p/10905475.html\n长时间休眠或锁屏后，任务窗口会缩小，使用的是4k的显示器，系统分辨率为3840*2160。 推测是因为休眠时候，系统的分辨率变小，例如变为了1980*1080。结束休眠或开屏时，系统分辨率回到3840*2160，而任务窗口没有随分辨率改变，导致的任务窗口缩放。\n解决方法：打开注册表：win+R，regedit。\n路径：HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration\n在Configuration项下查找SIMULATED或NOEDID开头的项（反正我把Configuration下所有的内容都改了）\n查找的项展开有个00项，00项展开又还有个00项，两个00项都要修改；\nPrimSurfSize.cx PrimSurfSize.cy\n把这两个键值双击修改，选中基数十进制，输入你电脑对应的正常分辨率数值，\n比如PrimSurfSize.cx为3840，PrimSurfSize.cy为2160。\n重启Windows，唤醒Windows设备就应该正常不会出现任务窗口缩放的问题了。\n这个键是用来设置当没有输入源时，windows的默认分辨率的，主要目的是当突然更换显示器的时候（比如故障送修，比如显卡损坏等等），系统把默认分辨率设置为基础分辨率（1024x768），避免因为分辨率问题造成替换显示器无法正常显示。\n获取当前连接的wifi密码 查看电脑连接过的WiFi名称 netsh wlan show profiles\n选择自己要查询的wifi netsh wlan show profiles WiFi名称 key=clear 关键内容就是这个wifi的密码。\npe升级win11后重装软件 因为不是系统直接升级，pe安装系统相当于装一个新系统，注册表是新的，所以软件都需要重装。 软件都安装在d:/install，所以根据install文件夹的安装内容，逐个下载新的安装包，然后重新安装到install文件夹， 安装之前将旧的安装文件删除即可。 注意：如果需要旧软件的数据，可以到windows.old里去找。\n系统工具： 火绒 图吧工具箱 阿里云盘 bindzip 网易云 everything utools PotPlayer Snipaste Typora Telegram chrome powerToys\nim： 飞书 企业微信 微信 telegram\n开发工具： git vs code idea dataGrip xshell kibana-7.15.2-windows-x86_64 redis5.0 Another Redis Desktop Manager postman sourceTree\n其他工具： RevokeMsgPatcher.v1.6 windows运行环境：windowsdesktop-runtime-6.0.15-win-x64 ScreenToGif ffmpeg\n——-分割线——– jdk安装 open jdk 安装 官网下载：\nhttps://jdk.java.net/archive/\noracle jdk 商用是要收费的。而且open jdk 和 oracle区别不大，所以建议使用open jdk。\n下载完成后解压到理想位置。如：D:\\dev\\jdk-21.0.1\n新建系统环境变量：\n变量名：JAVA_HOME\n变量值：D:\\dev\\jdk-21.0.1，刚下载的jdk解压的路径\n注意：以上添加必须在【系统变量】\n在PATH中添加%JAVA_HOME%\\bin\n打开cmd，输入java -version，验证结果。\noracle jdk 安装 Oracle官网下载jdk 需要登录才可以下载。\n配置jdk环境变量 不建议将jdk安装到默认路径，会有问题。 默认安装路径：C:\\Program Files\\Java\\jdk-12 Program Files这个文件夹名字中有空格，RocketMQ的nameServer在启动时，会报错。 还是安装到D盘比较好：D:\\Java\\jdk-12\n右键我的电脑-高级设置-环境变量\n系统变量-新建 变量名：JAVA_HOME 变量值：D:\\Java\\jdk-12 即本机jdk的安装目录，目录下需要看到bin、lib等文件夹。\n找到系统变量中的 Path 变量-编辑 win7、8： 在变量值最后输入%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin; （注意原来Path的变量值末尾有没有;号，如果没有，先输入；号再输入上面的代码） 由于 win10 的不同，当选中 Path 变量的时候，系统会很方便的把所有不同路径都分开了，不会像 win7 或者 win8 那样连在一起。 win10： 点击path-\u003e新建，新建两条路径\n1 2 %JAVA_HOME%\\bin %JAVA_HOME%\\jre\\bin 系统变量→新建 CLASSPATH 变量 变量值填写 .;%JAVA_HOME%\\lib;%JAVA_HOME%\\lib\\tools.jar （注意最前面有一点） 系统变量配置完毕\n验证 打开cmd，输入java -version 显示版本信息 输入javac 显示候选命令 成功！\nwindows 多jdk 前置条件：你需要的多个jdk已经下载并解压好，如 java8、java17、java21。\n首先需要为两个jdk指定安装目录，博主的两个jdk版本分别是8和17，因此配置两个变量，指向jdk安装目录，用数字区分他们。\n创建系统变量：\n变量名：JAVA_HOME_8\n变量值：D:\\dev\\jdk-8，你的java8的安装或解压路径。\n再用同样的方法配置Java17\n变量名：JAVA_HOME_17\n变量值：D:\\dev\\jdk-17，你的java17的安装或解压路径。\n接着就是正式指定要使用的jdk版本了，新建一个名为JAVA_HOME的变量，指定对应的jdk版本。\n变量名：JAVA_HOME\n变量值：%JAVA_HOME_17%，刚刚配置的，根据数字指定要使用的版本。\n然后配置CLASSPATH环境变量，注意标点符号不要少。\n1 2 3 变量名：CLASSPATH 变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar; 最后配置Path环境变量，双击Path环境变量，新建两条：\n1 2 3 %JAVA_HOME%\\bin %JAVA_HOME%\\jre\\bin 并移动到最上方，一定要进行移动，不然后面切换jdk版本会失败。\n这样整个jdk运行环境就配置好了，我们来验证下效果。\n打开cmd，输入echo %JAVA_HOME%，可以看到当前指向了jdk1.8的安装目录。查看jdk版本，输入：java -version，当前jdk版本为1.8。\n切换版本，将JAVA_HOME的变量值改为%JAVA_HOME_17%\n查看切换结果，关掉原来的命令行窗口，重新打开一个。\n输入echo %JAVA_HOME%，发现指向了jdk17的安装目录。\n接着查看jdk版本，java -version，切换到了jdk17。\n如果切换不成功，这可能是安装jdk时，自动生成了优先级更高的配置项，使用以下方式解决。\n删除C:\\ProgramData\\Oracle\\Java\\javapath下的三个文件，windows后面会从指定的jdk版本的安装目录重新复制这三个文件放到该目录。\njdk升级 参考：https://my.oschina.net/u/4090830/blog/10142895\nJDK 21 于 2023 年 9 月 19 日 发布，这是一个非常重要的版本，里程碑式。JDK21 是 LTS（长期支持版），至此为止，目前有 JDK8、JDK11、JDK17 和 JDK21 这四个长期支持版了。所以现在的新项目，建议直接上jdk21。\nOracleJDK 和 OpenJDK 的选择。 2021 年 9 月，Oracle 宣布 JDK17 可以免费商用，直到下一个 LTS 版本之后继续提供整整一年，同时 Oracle 将继续按照自 Java 9 以来的相同版本和时间表提供 GPL 下的 Oracle OpenJDK 版本。\n2023 年 9 月，OracleJDK 发布了新的 LTS 版本 JDK21，这就意味着从 2024 年 9 月开始，在生产环境使用 OracleJDK17 将需要付费。\n参考：https://www.oracle.com/hk/java/technologies/downloads/#java17\nOracleJDK 和 OpenJDK 这两个之间没有真正的技术差别，因为针对 Oracle JDK 构建过程是基于 OpenJDK 的。自从 JDK11 开始，OracleJDK 和 OpenJDK 在功能上基本相同，所以推荐使用 OpenJDK17 或其他开源的 JDK 版本，这些开源版本都是基于 OpenJDK 构建并提供长期支持的，比如：AdoptOpenJDK、RedHatOpenJDK。\n参考：https://blogs.oracle.com/java/post/oracle-jdk-releases-for-java-11-and-later\noracle JDK OpenJDK 是否收费 默认商业收费，JDK17免费商用截止到下一个LTS版本（2024.9） 开源项目(GPLV2许可证)，可免费用于商业用途，允许自由使用、修改和分发 发布频率 3年发布一次，提供LTS 6个月发布一次，无LTS 功能差异 功能基本一致，遵循特定的加密政策，要求第三方加密提供者必须使用已知证书进行签名。支持使用情况日志记录 功能基本一致，加密框架具有开放的加密接口，不限制可以使用的加密提供者，不支持使用情况日志记录 安装方式 包含安装程序、品牌和RE打包提供 以zip和tar.gz文件形式提供 识别方式 java-version命令响应关键标识：JavaHotSpot java-version命令响应关键标识：OpenJDK 工具 浏览器 Edge（新版的edge微软用了chrome内核，可以用chrome的插件，也可以同步书签。很棒） chrome 连接linux服务器 SecureCRT Xshell：支持多标签页、个人版免费。https://www.netsarang.com/en/xshell/ PuTTY：轻量、开源、免费、不支持多标签页。https://www.putty.org/ Termius：现代化的SSH客户端，基础版免费，专业版需订阅，专业版支持跨平台同步，多设备同步。https://www.termius.com/ Tabby：界面美观，支持插件扩展，开源、免费。https://tabby.sh/ MobaXterm：功能丰富、仅支持Windows。免费版功能有限，高级功能需要购买专业版。https://mobaxterm.mobatek.net/ 上传下载 filezilla\n开发工具 idea idea的配置包括：插件，主题，字体，注释模板 同步idea配置有两种方法。 1.备份idea-settings，放到云盘。File-\u003eManage IDE Settings-\u003eExport Settings 2.同步到云端。File-\u003eManage IDE Settings-\u003eSync Settings To JetBrain Account 同步的服务器应该在国外，可能会因为网络问题无法同步。 vs code notepad++主题和字体设置 设置-\u003e语言格式设置 选择主题：Obsidian 字体样式：Segoe UI、微软雅黑、Consolas 字体大小：12\nnotepad++设置列边界 一行代码不超过80个字符，一行注释的字符数更少，这是一条古老的编程规范，现在很多人都还在坚守。带来的好处是，代码的lay-out优雅美观，视觉上更清晰，更容易减少错误发现bug。 Notepad++可以设置一条80个字符宽的垂直线，使我们在编写代码的时候，可以清晰有效执行这条古老的编程规范。\n设置-\u003e首选项-\u003e编辑-\u003e列边界设置 然后在下面输入自己想要的字符数。 这个功能还有个重要的作用，在写markdown的时候，一行如果过长不便于编辑，过短在hexo中显示又不美观。可以通过列边界，达到理想的效果。\n开发环境 jdk mysql node.js zookeeper redis Another Redis Desktop Manager：redis客户端 maven配置(settings.xml文件：主要配置仓库路径和jar包镜像源) Maven3.3.*以上需要JDK1.7以上的支持 去官网下载 下载-bin.zip后解压并记住根路径，然后在系统变量中分别添加： M2_HOME MAVEN_HOME 值是maven的根路径。 然后，在系统变量中找到Path，编辑-\u003e新建 %MAVEN_HOME%\\bin 然后打开cmd，输入mvn -v，看到版本号说明成功。 windows安装redis redis3.X下载地址 下载zip版本的直接运行即可。\nredis5.X下载地址\nwindows安装mysql_8.0 官网下载：https://dev.mysql.com/downloads/mysql/\n点击MySQL Community Edition (GPL) 下面的download，位于页面最下边。\n点击MySQL Community Server (GPL)下面的download\n页面最下边的有三种安装包。 安装版 .msi结尾的 Windows (x86, 64-bit), ZIP Archive 免安装版，解压即可。 Windows (x86, 64-bit), ZIP Archive Debug Binaries \u0026 Test Suite，带工具包版本。 这里下载第二个，免安装版，下载之后解压到你想要的位置。\n在解压的根目录新建一个 my.ini 的文件，然后加入以下内容：（basedir datadir 这两个的值一定要改成你自己的目录地址）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 [mysql] # 设置mysql客户端默认字符集 default-character-set=utf8 [mysqld] # 设置3306端口 port = 3306 # 设置mysql的安装目录 basedir=D:\\install\\mysql-8.0.15-winx64 # 设置mysql数据库的数据的存放目录 datadir=D:\\install\\mysql-8.0.15-winx64\\data # 允许最大连接数 max_connections=200 # 服务端使用的字符集默认为8比特编码的latin1字符集 character-set-server=utf8 # 创建新表时将使用的默认存储引擎 default-storage-engine=INNODB 添加环境变量 我的电脑右键属性–\u003e高级系统设置–\u003e环境变量–\u003e系统变量中找到Path–\u003e点击编辑–\u003e新建 加入Mysql的bin目录路径；\n在mysql的bin目录以管理员身份运行cmd，以此输入 mysqld --install安装 mysqld --initialize初始化 net start mysql运行 初始化后在Mysql的根目录会生成 data 数据库文件夹，如果启动服务失败，很有可能就是这个data文件夹有问题，删掉重新执行上边的步骤。\n登陆mysql mysql -u root -p 此时需要输入mysql的默认密码，在mysql的安装目录下搜索*.err，以文本形式打开可以看到一些内容： 搜索文本A temporary password is generated for root@localhost: localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键，将密码黏贴，回车，登录成功。\n登录成功后必须修改密码才能进行其他操作。 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你的新密码';\n配置远程连接mysql： 在mysql的bin目录下执行： mysql -u root -p密码 use mysql; update user set host='%' where user ='root';修改连接权限 update user set plugin='mysql_native_password' where user ='root';更改加密方式： flush privileges;执行刷新权限\n协作 git 通讯 微信pc TIM 远程协助(TeamViewer) 解压缩 bindZip\n文档 office三件套\n比对 Beyond Compare\n聚合 utools Everything：用于搜索电脑本地文件。\nutools插件：\n本地搜索 聚合翻译 剪贴板 备忘快贴 Markdown笔记 Json编辑器 ssh 悬浮（图片） FileShare SwitchHosts 用于切换DNS，可以解决github访问慢的问题。 github\npostman配置环境变量 左上角new-\u003eEnvironment\n最上边：这一套环境变量的名字 VARIABLE：变量名字 CURRENT VALUE：变量值 initial value：不填 示例： environment name：本地\n1 2 variable：host current value：localhost 1 2 variable：port current value：8000 1 2 variable：h current value：http:// 使用方法 {{h}}{{host}}{{port}}/zjx/api/home/padHome\n以此类推，根据需要，再创建测试环境、生产环境的环境变量。 请求接口时，就可以通过切换postman右上角的environment按钮，来切换环境，很方便。\n参考\nchrome快捷键 标签页和窗口快捷键 操作 快捷键 打开新窗口 Ctrl + N 在无痕模式下打开新窗口 Ctrl + Shift + N 打开新的标签页，并跳转到该标签页 Ctrl + T 按标签页的关闭顺序重新打开先前关闭的标签页 Ctrl + Shift + T 跳转到下一个打开的标签页 Ctrl + Tab 或 Ctrl + PgDn 跳转到上一个打开的标签页 Ctrl + Shift + Tab 或 Ctrl + PgUp 跳转到特定标签页 Ctrl + 1 到 Ctrl + 8 跳转到最右侧的那个标签页 Ctrl + 9 在当前标签页中打开主页 Alt + Home 打开当前标签页浏览记录中记录的上一个页面 Alt + 向左箭头键 打开当前标签页浏览记录中记录的下一个页面 Alt + 向右键 关闭当前标签页 Ctrl + W 或 Ctrl + F4 关闭当前窗口 Ctrl + Shift + W 或 Alt + F4 最小化当前窗口 Alt + 空格键，然后按 n 键 最大化当前窗口 Alt + 空格键，然后按 x 键 退出 Google Chrome Alt + F，然后按 x 键 向右或向左移动标签页 Ctrl + Shift + PgUp 或 Ctrl + Shift + PgDn 将当前标签页在新标签页打开 Ctrl + Shift + K 功能快捷键 操作 快捷键 打开\"菜单\" Alt + f、Alt + e 或 F10 显示或隐藏书签栏 Ctrl + Shift + b 打开书签管理器 Ctrl + Shift + o 在新标签页中打开\"历史记录\"页 Ctrl + h 在新标签页中打开\"下载内容\"页 Ctrl + j 打开 Chrome 任务管理器 Shift + Esc 将焦点放置在 Chrome 工具栏中的第一项上 Shift + Alt + t 在地址栏、书签栏（若显示）和页面内容之间向前切换焦点 F6 在地址栏、书签栏（若显示）和页面内容之间向后切换焦点 Shift + F6 打开查找栏搜索当前网页 Ctrl + f 或 F3 跳转到与查找栏中搜索字词相匹配的下一条内容 Ctrl + g 跳转到与查找栏中搜索字词相匹配的上一条内容 Ctrl + Shift + g 打开\"开发者工具\" Ctrl + Shift + j 或 F12 打开\"清除浏览数据\"选项 Ctrl + Shift + Delete 在新标签页中打开 Chrome 帮助中心 F1 开启光标浏览模式 F7，有点用 使用其他帐户登录或进入隐身模式 Ctrl + Shift + m 打开反馈表单 Ctrl + Shift + i 将焦点移到非使用中的对话框 Alt + Shift + A 地址栏快捷键 操作 快捷键 使用默认搜索引擎进行搜索 在地址栏输入搜索字词并按 Enter 键 使用其他搜索引擎进行搜索 输入搜索引擎名称并按 Tab 键 为网站名称添加 www. 和 .com，并在当前标签页中打开该网站 输入网站名称并按 Ctrl + Enter 键（有用，可以只输入网站名了） 为网站名称添加 www. 和 .com，并在新标签页中打开该网站 输入网站名称并按 Alt + Enter 键 跳转到地址栏 Ctrl + l、Alt + d 或 F6 从页面中的任意位置搜索 Ctrl + k 或 Ctrl + e 从地址栏中移除联想查询内容 按向下键以突出显示相应内容，然后按 Shift + Delete 键 将光标移到地址栏 Ctrl + F5 网页快捷键 操作 快捷键 打开选项以打印当前网页 Ctrl + p 打开选项以保存当前网页 Ctrl + s 重新加载当前网页 F5 或 Ctrl + r 重新加载当前网页（忽略缓存的内容） Shift + F5 或 Ctrl + Shift + r 停止加载网页 Esc 浏览下一个可点击项 Tab 浏览上一个可点击项 Shift + Tab 使用 Chrome 打开计算机中的文件 按住 Ctrl + o 键并选择文件 显示当前网页的 HTML 源代码（不可修改） Ctrl + u 将当前网页保存为书签 Ctrl + d 将所有打开的标签页以书签的形式保存在新文件夹中 Ctrl + Shift + d 开启或关闭全屏模式 F11 放大网页上的所有内容 Ctrl 和 + 缩小网页上的所有内容 Ctrl 和 - 将网页上的所有内容恢复到默认大小 Ctrl + 0 向下滚动网页，一次一个屏幕 空格键或 PgDn 向上滚动网页，一次一个屏幕 Shift + 空格键或 PgUp 转到网页顶部 首页 转到网页底部 末尾 在网页上水平滚动（就是左右滚动） 按住 Shift 键并滚动鼠标滚轮 将光标移到文本字段中的上一个字词前面 Ctrl + 向左箭头键 将光标移到文本字段中的上一个字词后面 Ctrl + 向右箭头键 删除文本字段中的上一个字词 Ctrl + Backspace 将焦点移到通知上 Alt + n 在通知中允许 Alt + Shift + a 在通知中拒绝 Alt + Shift + d 在当前标签页中打开主页 Alt + Home 鼠标快捷键 操作 快捷键 在当前标签页中打开链接（仅限鼠标） 将链接拖到标签页中 在新的后台标签页中打开链接 按住 Ctrl 键的同时点击链接 打开链接，并跳转到该链接 按住 Ctrl + Shift 键的同时点击链接 打开链接，并跳转到该链接（仅使用鼠标） 将链接拖到标签栏的空白区域 在新窗口中打开链接 按住 Shift 键的同时点击链接 在新窗口中打开标签页（仅使用鼠标） 将标签页拖出标签栏 将标签页移至当前窗口（仅限鼠标） 将标签页拖到现有窗口中 将标签页移回其原始位置 拖动标签页的同时按 Esc 将当前网页保存为书签 将相应网址拖动到书签栏中 下载链接目标 按住 Alt 键的同时点击链接 显示浏览记录 右键点击\"后退\"箭头 返回 或\"前进\"箭头 下一个，或者点击并按住\"后退\"箭头 返回 或\"前进\"箭头 下一个 最大化或最小化窗口 双击标签栏的空白区域 放大网页上的所有内容 按住 Ctrl 键的同时向上滚动鼠标滚轮 缩小网页上的所有内容 按住 Ctrl 键的同时向下滚动鼠标滚轮 ",
+  "wordCount" : "9039",
+  "inLanguage": "en",
+  "datePublished": "2019-10-28T16:39:52Z",
+  "dateModified": "2019-10-28T16:39:52Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E5%85%B6%E4%BB%96/windows/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

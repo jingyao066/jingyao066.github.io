@@ -1,8 +1,139 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>3_multithreading-wait&#43;notify | Wjy&#39;s Blog</title>
+<meta name="keywords" content="multithreading">
+<meta name="description" content="本章对线程的等待/唤醒方法进行介绍。
+wait(), notify(), notifyAll()等方法介绍
+在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。
+wait()，notify()必须和 synchronized 配合使用。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="3_multithreading-wait&#43;notify">
+  <meta property="og:description" content="本章对线程的等待/唤醒方法进行介绍。
+wait(), notify(), notifyAll()等方法介绍 在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。
+wait()，notify()必须和 synchronized 配合使用。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-03-25T15:04:27+00:00">
+    <meta property="article:modified_time" content="2019-03-25T15:04:27+00:00">
+    <meta property="article:tag" content="Multithreading">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3_multithreading-wait&#43;notify">
+<meta name="twitter:description" content="本章对线程的等待/唤醒方法进行介绍。
+wait(), notify(), notifyAll()等方法介绍
+在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。
+wait()，notify()必须和 synchronized 配合使用。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "3_multithreading-wait+notify",
+      "item": "https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait+notify/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "3_multithreading-wait+notify",
+  "name": "3_multithreading-wait\u002bnotify",
+  "description": "本章对线程的等待/唤醒方法进行介绍。\nwait(), notify(), notifyAll()等方法介绍 在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。\nwait()，notify()必须和 synchronized 配合使用。\n",
+  "keywords": [
+    "multithreading"
+  ],
+  "articleBody": "本章对线程的等待/唤醒方法进行介绍。\nwait(), notify(), notifyAll()等方法介绍 在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。\nwait()，notify()必须和 synchronized 配合使用。\nObject类中关于等待/唤醒的API详细信息如下：\nnotify()：唤醒在此对象监视器上等待的单个线程。 notifyAll()：唤醒在此对象监视器上等待的所有线程。 wait()：让当前线程处于等待(阻塞)状态，直到其他线程调用此对象的notify()方法或notifyAll() 方法，当前线程被唤醒(进入就绪状态)。 wait(long timeout)：让当前线程处于等待(阻塞)状态，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量，当前线程被唤醒(进入就绪状态)。 wait(long timeout, int nanos)：让当前线程处于等待(阻塞)状态，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量，当前线程被唤醒(进入就绪状态)。 wait()和notify()示例 下面通过示例演示wait()和notify()配合使用的情形\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 // WaitTest.java的源码 class ThreadA extends Thread{ public ThreadA(String name) { super(name); } public void run() { synchronized (this) { System.out.println(Thread.currentThread().getName()+\" call notify()\"); // 唤醒当前的wait线程 notify(); } } } public class WaitTest { public static void main(String[] args) { ThreadA t1 = new ThreadA(\"t1\"); synchronized(t1) { try { // 启动“线程t1” System.out.println(Thread.currentThread().getName()+\" start t1\"); t1.start(); // 主线程等待t1通过notify()唤醒。 System.out.println(Thread.currentThread().getName()+\" wait()\"); t1.wait(); System.out.println(Thread.currentThread().getName()+\" continue\"); } catch (InterruptedException e) { e.printStackTrace(); } } } } 运行结果：\n1 2 3 4 main start t1 main wait() t1 call notify() main continue 结果说明： 如下图，说明了主线程和线程t1的流程。\n图中主线程代表主线程main。线程t1代表WaitTest中启动的线程t1。 而锁代表t1这个对象的同步锁。 主线程通过new ThreadA(\"t1\")新建线程t1。随后通过synchronized(t1)获取t1对象的同步锁。然后调用t1.start()启动线程t1。 主线程执行t1.wait()释放t1对象的锁并且进入等待(阻塞)状态。等待t1对象上的线程通过notify() 或 notifyAll()将其唤醒。 线程t1运行之后，通过synchronized(this)获取当前对象的锁；接着调用notify()唤醒当前对象上的等待线程，也就是唤醒主线程。 线程t1运行完毕之后，释放当前对象的锁。紧接着，主线程获取t1对象的锁，然后接着运行。 t1.wait()应该是让线程t1等待，为什么却是让主线程main等待了呢？请看jdk文档中关于wait的一段介绍： Causes the current thread to wait until another thread invokes the notify() method or the notifyAll() method for this object. In other words, this method behaves exactly as if it simply performs the call wait(0). The current thread must own this object’s monitor. The thread releases ownership of this monitor and waits until another thread notifies threads waiting on this object’s monitor to wake up either through a call to the notify method or the notifyAll method. The thread then waits until it can re-obtain ownership of the monitor and resumes execution.\nwait方法会引起当前线程等待，直到另外一个线程调用notify()或notifyAll()唤醒该线程。换句话说，这个方法和wait(0)的效果一样！(补充，对于wait(long millis)方法，当millis为0时，表示无限等待，直到被notify()或notifyAll()唤醒)。 当前线程在调用wait()时，必须拥有该对象的同步锁。该线程调用wait()之后，会释放该锁；然后一直等待直到其它线程调用对象的同步锁的notify()或notifyAll()方法。然后，该线程继续等待直到它重新获取该对象的同步锁，然后就可以接着运行。 注意：jdk的解释中，说wait()的作用是让当前线程等待，而当前线程是指正在cpu上运行的线程。 这也意味着，虽然t1.wait()是通过线程t1调用的wait()方法，但是调用t1.wait()的地方是在主线程main中。而主线程必须是当前线程，也就是运行状态，才可以执行t1.wait()。所以，此时的当前线程是主线程main！因此，t1.wait()是让主线程等待，而不是线程t1。\nwait(long timeout)和notify() wait(long timeout)会让当前线程处于等待(阻塞)状态，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量，当前线程被唤醒(进入就绪状态)。 下面的示例就是演示wait(long timeout)在超时情况下，线程被唤醒的情况。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 // WaitTimeoutTest.java的源码 public class ThreadA extends Thread{ public ThreadA(String name) { super(name); } public void run() { System.out.println(Thread.currentThread().getName() + \" run \"); // 死循环，不断运行。 while(true) ; } } public class WaitTimeoutTest { public static void main(String[] args) { ThreadA t1 = new ThreadA(\"t1\"); synchronized(t1) { try { // 启动“线程t1” System.out.println(Thread.currentThread().getName() + \" start t1\"); t1.start(); // 主线程等待t1通过notify()唤醒 或 notifyAll()唤醒，或超过3000ms延时；然后才被唤醒。 System.out.println(Thread.currentThread().getName() + \" call wait \"); t1.wait(3000); System.out.println(Thread.currentThread().getName() + \" continue\"); } catch (InterruptedException e) { e.printStackTrace(); } } } } 运行结果：\n1 2 3 4 main start t1 main call wait t1 run // 大约3秒之后...输出“main continue” main continue 结果说明： 如下图，说明了主线程和线程t1的流程。\n图中主线程代表WaitTimeoutTest主线程(即，线程main)。线程t1代表WaitTest中启动的线程t1。 而锁代表t1这个对象的同步锁。 主线程main执行t1.start()启动线程t1。 主线程main执行t1.wait(3000)，此时，主线程进入阻塞状态。需要用于t1对象锁的线程通过notify() 或者 notifyAll()将其唤醒或者超时3000ms之后，主线程main才进入到就绪状态，然后才可以运行。 线程t1运行之后，进入了死循环，一直不断的运行。 超时3000ms之后，主线程main会进入到就绪状态，然后接着进入运行状态。 wait()和notifyAll() 通过前面的示例，我们知道notify()可以唤醒在此对象监视器上等待的单个线程。 下面，我们通过示例演示notifyAll()的用法；它的作用是唤醒在此对象监视器上等待的所有线程。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 public class NotifyAllTest { private static Object obj = new Object(); public static void main(String[] args) { ThreadA t1 = new ThreadA(\"t1\"); ThreadA t2 = new ThreadA(\"t2\"); ThreadA t3 = new ThreadA(\"t3\"); t1.start(); t2.start(); t3.start(); try { System.out.println(Thread.currentThread().getName()+\" sleep(3000)\"); Thread.sleep(3000); } catch (InterruptedException e) { e.printStackTrace(); } synchronized(obj) { // 主线程等待唤醒。 System.out.println(Thread.currentThread().getName()+\" notifyAll()\"); obj.notifyAll(); } } static class ThreadA extends Thread{ public ThreadA(String name){ super(name); } public void run() { synchronized (obj) { try { // 打印输出结果 System.out.println(Thread.currentThread().getName() + \" wait\"); // 唤醒当前的wait线程 obj.wait(); // 打印输出结果 System.out.println(Thread.currentThread().getName() + \" continue\"); } catch (InterruptedException e) { e.printStackTrace(); } } } } } 运行结果：\n1 2 3 4 5 6 7 8 t1 wait main sleep(3000) t3 wait t2 wait main notifyAll() t2 continue t3 continue t1 continue 结果说明： 参考下面的流程图。\n主线程中新建并且启动了3个线程t1、t2和t3 主线程通过sleep(3000)休眠3秒。在主线程休眠3秒的过程中，我们假设t1、t2和t3这3个线程都开始运行了。以t1为例，当它运行的时候，它会执行obj.wait()等待其它线程通过notify()或额nofityAll()来唤醒它；相同的道理，t2和t3也会等待其它线程通过nofity()或nofityAll()来唤醒它们。 主线程休眠3秒之后，接着运行。执行obj.notifyAll()唤醒obj上的等待线程，即唤醒t1、t2和t3这3个线程。 紧接着，主线程的synchronized(obj)运行完毕之后，主线程释放obj锁。这样，t1、t2和t3就可以相继获取obj锁而继续运行了。 为什么notify(), wait()等函数定义在Object中，而不是Thread中 Object中的wait()和notify()等函数，和synchronized一样，会对 “对象的同步锁” 进行操作。 wait()会使 “当前线程” 等待，因为线程进入等待状态，所以线程应该释放它所持有的 “同步锁”，否则其他线程会因为获取不到该 “同步锁” 而无法运行。 ok，线程调用wait()之后，会释放它锁持有的同步锁；而且，根据前面的介绍，我们知道：等待线程可以被notify()或notifyAll()唤醒。 那么 notify() 是依据什么唤醒等待线程的？或者说，wait()等待线程和notify()之间是通过什么关联起来的？答案是：依据对象的同步锁。 负责唤醒等待线程的那个线程(我们称为 “唤醒线程”)，它只有在获取该对象的同步锁(这里的同步锁必须和等待线程的同步锁是同一个)，并且调用notify()或notifyAll()方法之后，才能唤醒等待线程。虽然，等待线程被唤醒；但是，它不能立刻执行，因为唤醒线程还持有该对象的同步锁。必须等到唤醒线程释放了该对象的同步锁之后，等待线程才能获取到该对象的同步锁进而继续运行。\n总之，notify(), wait()依赖于同步锁，而同步锁是对象锁持有，并且每个对象有且仅有一个！这就是为什么notify(), wait()等函数定义在Object类，而不是Thread类中的原因。\n",
+  "wordCount" : "3718",
+  "inLanguage": "en",
+  "datePublished": "2019-03-25T15:04:27Z",
+  "dateModified": "2019-03-25T15:04:27Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait+notify/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

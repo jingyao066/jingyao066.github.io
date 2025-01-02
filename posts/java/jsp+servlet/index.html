@@ -1,8 +1,145 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>JSP&#43;Servlet | Wjy&#39;s Blog</title>
+<meta name="keywords" content="java">
+<meta name="description" content="web应用服务器
+目前较为主流的Web应用服务器
+Tomcat  &mdash;&mdash;  Apache软件基金会
+Jboss  &mdash;&mdash;-  JBOSS公司
+Weblogic &mdash;&mdash;  BEA公司
+Websphere &mdash;&ndash;  IBM公司
+IIS  &mdash;&mdash; 微软  支持ASP语言
+Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java/jsp&#43;servlet/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java/jsp&#43;servlet/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java/jsp&#43;servlet/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="JSP&#43;Servlet">
+  <meta property="og:description" content="web应用服务器 目前较为主流的Web应用服务器 Tomcat —— Apache软件基金会 Jboss ——- JBOSS公司 Weblogic —— BEA公司 Websphere —– IBM公司 IIS —— 微软 支持ASP语言 Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-10-06T18:14:43+00:00">
+    <meta property="article:modified_time" content="2018-10-06T18:14:43+00:00">
+    <meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSP&#43;Servlet">
+<meta name="twitter:description" content="web应用服务器
+目前较为主流的Web应用服务器
+Tomcat  &mdash;&mdash;  Apache软件基金会
+Jboss  &mdash;&mdash;-  JBOSS公司
+Weblogic &mdash;&mdash;  BEA公司
+Websphere &mdash;&ndash;  IBM公司
+IIS  &mdash;&mdash; 微软  支持ASP语言
+Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "JSP+Servlet",
+      "item": "https://009965.xyz/posts/java/jsp+servlet/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "JSP+Servlet",
+  "name": "JSP\u002bServlet",
+  "description": "web应用服务器 目前较为主流的Web应用服务器 Tomcat \u0026mdash;\u0026mdash; Apache软件基金会 Jboss \u0026mdash;\u0026mdash;- JBOSS公司 Weblogic \u0026mdash;\u0026mdash; BEA公司 Websphere \u0026mdash;\u0026ndash; IBM公司 IIS \u0026mdash;\u0026mdash; 微软 支持ASP语言 Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。\n",
+  "keywords": [
+    "java"
+  ],
+  "articleBody": "web应用服务器 目前较为主流的Web应用服务器 Tomcat —— Apache软件基金会 Jboss ——- JBOSS公司 Weblogic —— BEA公司 Websphere —– IBM公司 IIS —— 微软 支持ASP语言 Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。\nTomcat目录结构 bin目录：存放tomcat启动和关闭的脚本文件 conf目录：存放tomcat各种配置文件 lib目录：存放tomcat的jar文件 logs目录：存放tomcat日志文件 work目录：tomcat运行时产生的工作文件 temp目录：存放临时文件 webapps目录：主要的发布目录，放置javaWeb程序 发布： Eclipse:右键项目，export，选定路径生成war包，放入Tomcat的webapps目录下 idea：maven-package\ntomcat启动与停止 启动服务：双击tomcat bin目录下的startup.bat 最后一行显示：server startup in 1234 ms 证明启动成功 打开浏览器，输入localhost:8080，可以看到tomcat默认页面 停止服务：双击tomcat bin目录下的shutdown.bat 或直接闭窗口\nTomcat端口设置 conf目录下server.xml文件进行修改 在server.xml中找到标签，修改port中的端口号 注：端口范围：0–65535，其中0–1023，这些端口，一般固定分配给一些服务， 21 – FTP服务(文件传输) 25 – SMTP(简单邮件传输协议) 80 – HTTP服务 135 – RPC(远程过程调用)\n动态端口范围：1024 – 65535 ,尽量不要占用系统端口\nTomcat启动失败常见问题 1.JAVA环境变量配置有问题为导致tomcat启动时一闪而过，启动不成功。 2.tomcat端口被其他程序占用，尝试关闭占用端口的程序或修改tomcat端口\n访问Tomcat中的项目 IP地址:端口号/项目名字\n多个tomcat共存 修改conf/server.xml文件其中的三处地方:\n1 2 3 - - - Web项目结构 在WEB-INF 之外，存放静态资源，可以通过浏览器访问 WEB-INF中的文件受保护，无法通过浏览器直接访问\napache和tomcat区别 apache支持静态页，tomcat支持动态的，比如servlet等， 一般使用apache+tomcat的话，apache只是作为一个转发，对jsp的处理是由tomcat来处理的。 apache可以支持php\\cgi\\perl,但是要使用java的话，你需要tomcat在apache后台支撑，将java请求由apache转发给tomcat处理。 apache是web服务器,Tomcat是应用（java）服务器，它只是一个servlet(jsp也翻译成servlet)容器，可以认为是apache的扩展，但是可以独立于apache运行。 这两个有以下几点可以比较的： 1、两者都是apache组织开发的 2、两者都有HTTP服务的功能 3、两者都是免费的\n不同点：\nApache是专门用了提供HTTP服务的，以及相关配置的（例如虚拟主机、URL转发等等），Tomcat是Apache组织在符合J2EE的JSP、Servlet标准下开发的一个JSP服务器 apache是一个web服务器环境程序,启用他可以作为web服务器使用,不过只支持静态网页,如(asp,php,cgi,jsp)等动态网页的就不行，如果要在apache环境下运行jsp的话就需要一个解释器来执行jsp网页， 而这个jsp解释器就是tomcat, 为什么还要JDK呢？因为jsp需要连接数据库的话，就要jdk来提供连接数据库的驱程，所以要运行jsp的web服务器平台就需要apache+tomcat+jdk。 整合的好处是： 如果客户端请求的是静态页面，则只需要Apache服务器响应请求 如果客户端请求动态页面，则是Tomcat服务器响应请求，因为jsp是服务器端解释代码的，这样整合就可以减少Tomcat的服务开销。 apache:侧重于http server tomcat:侧重于servlet引擎，如果以standalone方式运行，功能上与apache等效，支持JSP，但对静态网页不太理想；\napache是web服务器，tomcat是应用（java）服务器，它只是一个servlet(jsp也翻译成servlet)容器，可以认为是apache的扩展，但是可以独立于apache运行。\n换句话说，apache是一辆卡车，上面可以装一些东西如html等。但是不能装水，要装水必须要有容器（桶tomcat），而这个桶也可以不放在卡车上。 Tomcat 警告：consider increasing the maximum size of the cache 这是因为tomcat8以上对resource采取了cache，而默认的大小是10M。解决的办法很简单，就是在context.xml中调大缓存。 在context.xml中加入如下配置： JSP JSP语法 JSP中可以写JAVA代码\n1 2 3 4 5 \u003c% System.out.print(\"Hello world\"); %\u003e \u003c% JAVA代码 %\u003e 单个脚本片段可以是不完整的，但是多个脚本片段整合的结果必须是完整的JAVA语句 JSP脚本表达式 \u003c%=userName%\u003e \u003c%= 变量名 %\u003e\nJSP对象作用域 作用域：即\"信息共享的范围\"，就是说一个信息能够在多大范围内有效。 从大到小排列 1.Application 在所有应用程序中有效 例：如将一个变量保存到application中，所有人通过浏览器都可以看到该变量的值（信息是共享的）。\n2.Session 在当前会话有效 会话：打开浏览器访问某网站，等于跟目标网站开启了一个会话，将浏览器关闭，则此次会话结束。 例：现有一个用户如将一个变量保存到session中，当前用户打开浏览器可以看到该变量的值，其他用户看不到，关闭浏览器后则会话结束。\n3.Request 在当前请求有效 请求：每一次操作网站，比如：查询，提交，购买 …… 请求查询，请求提交，请求购买……\n4.Page 当前页面有效\nJSP内置对象 Web服务器(Tomcat)启动后创建的一组对象，不需要使用new关键字直接可以使用该对象。 内置对象只存在于JSP中 JSP九大内置对象 session,request,response,out,page,application,pageContext,exception,config\n1.Session对象\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 类型：Javax.servlet.http.HttpSession 作用域：Session 表示一个会话，用来保存用户信息，以便跟踪每个用户的状态。 常用方法： session.getId(); 取得Session的ID号，ID由Tomcat自动分配。 session.setAttribute(key,object); 向Session中设置一个属性。 参数 key---键、标识，可理解为该属性的名字， Session中相同的key所对应的值会覆盖。 参数 object---该属性的值，可以是任意类型的JAVA对象。 session.getAttribute(key); 获取Session中的一个属性。 参数key --- 键、标识、可理解为属性名字。 通过session.setAttribute方法所设置的key来获取对应的值。 session.removeAttribute(key); 删除Session中的一个属性。 参数key --- 键、标识、可理解为属性名字。 通过session.setAttribute方法所设置的key来删除一个属性 2.Request对象\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 类型：javax.servlet.http.HttpServletRequest 作用域：Request request对象代表了客户端的请求信息，主要用于接受通过HTTP协议传送到服务器的数据。（包括头信息、系统信息、请求方式以及请求参数等）。request对 象的作用域为一次请求。 常用方法： request.getParameter(key); 获取表单提交数据（参数）。 参数key --- 参数名字。 通过key获取页面传递的参数，key与HTML标签的name对应，如想将页面的数据当做参数标题至后台，需要指定元素的name属性。 request.getParameterValues(key); 与request.getParameter方法用法一致。 返回值是数组，一般用于获取复选框checkbox的值。 request.setAttribute(key,object); 向Request中设置一个属性。 参数同session.setAttribute方法。 request.gettAttribute(key); 获取Request中的一个属性。 参数同session.getAttribute方法。 request.getRequestDispatcher(\"list.jsp\").forward(request,response); 用转发方式跳转到目标路径。 参数---JSP页面或另一个Servlet。 固定参数request,response。 request.setCharacterEncoding(\"UTF-8\"); 设置请求的编码方式。 参数---编码格式UTF-8/GBK/GB2312 …… 3.Response对象\n1 2 3 4 5 6 7 8 9 10 类型：Javax.servlet.http. HttpServletResponse 作用域：Page response 代表的是对客户端的响应，主要是将JSP容器处理过的对象传回到客户端。 常用方法： response.sendRedirect(\"页面\"); 通过重定向方式跳转到目标路径。 参数 --- JSP页面或另一个Servlet。 response.setCharacterEncoding(\"gbk\"); 设置响应编码格式。 参数---编码格式UTF-8/GBK/GB2312 ……。 4.Out对象\n1 2 3 4 5 6 7 8 9 类型:javax.servlet.jsp.jspWriter 作用域:Page Out对象是一个输出流，用来向客户端输出数据。 常用方法： out.print(); 向浏览器输出各类型的数据。 类似System.out.print()方法; out.close(); 关闭流。 5.Page对象 类型:java.lang.Object 作用域：Page\n6.Application对象\n1 2 3 4 类型：javax.servlet.ServletContext 作用域：application application 对象可将信息保存在服务器中，直到服务器关闭，否则application对象中保存的信息会在整个应用中都有效。与session对象相比，application对象生命周期更长，类似于系统的“全局变量”。 服务器启动后就产生了这个Application对象，当客户再所访问的网站的各个页面之间浏览时，这个Application对象都是同一个，直到服务器关闭。但是与Session对象不同的时，所有客户的Application对象都时同一个，即所有客户共享这个内置的Application对象。 pageContext对象 1 2 3 4 5 6 7 类型: javax.servlet.jsp.PageContext 作用域：Page 本JSP的页面上下文。 上下文的理解：上下文可以联系到当前页面所有的信息。 通过PageContext上下文对象获取当前页面的其他内置对象。 pageContext.getRequest();获取Request对象。 pageContext.getResponse();获取Response对象。 8.exception对象 类型：java.lang.Exception 作用域：Page 本JSP页面的异常对象\n9.config对象 类型: javax.servlet.ServletConfig 作用域：Page 代表配置对象。\n10.总结\n1 2 3 4 5 6 7 8 9 request 请求对象 作用域 Request response 响应对象 作用域 Page pageContext 页面上下文对象 作用域 Page session 会话对象 作用域 Session application 应用程序对象 作用域 Application out 输出对象 作用域 Page config 配置对象 作用域 Page page 页面对象 作用域 Page exception 异常对象 作用域 page JSP基本指令 1.指令用于对JSP一些设置 指令语法 \u003c%@ 指令名 属性名 = 值 %\u003e 一个指令作用于整个JSP文件 1.1 page指令 \u003c%@ page import=\"jsp_test.deleteUser\"%\u003e 1.2 include指令 附加一个页面 \u003c%@ include file=\"doLogin.jsp\" %\u003e 1.3 tablib指令 \u003c%@ prefix=\"c\" uri=\"http://java.sun.com/jsp/jstl/core\" %\u003e\nJSP动作 略 违反了前后端分离的思想\njsp:include与\u003c%@include%\u003e区别 1.\u003c%@include%\u003e嵌入代码，先合并后编译，把代码原封不动的附加过来 如页面a.jsp中 有变量 stuName，b.jsp 中同样存在变量 stuName 使用\u003c%@include%\u003e 将报错，变量名重复\n2.jsp:include嵌入执行后的内容。 先编译后合并，合并的是编译后的结果。 上述情况如使用jsp:include则不会报错。\nServlet生命周期 1.装载并创建该Servlet的一个实例对象(实例化) 2.调用Servlet实例对象的init()方法(初始化) 3.创建了一个用于封装HTTP请求消息的HttpServletRequest对象和一个代表HTTP响应消息的 HttpServletResponse对象，然后调用servlet的service()方法， 并将请求和相应对象作为参数传递进去(服务) 4.Web应用程序在被停止或重新启动之前，Servlet引擎将卸载Servlet，并在卸载之前调用Servlet的 destroy()方法) (销毁)\n实例化 — 初始化 — 服务 — 销毁\n转发和重定向的区别 重定向(redirect) 1.发送请求 2.服务器响应请求，返回给浏览器一个新的地址和响应 3.浏览器根据响应码，判定该响应为重定向，自动发送一个新的请求给服务器，请求地址为之前返回的地址 4.服务器响应请求给浏览器\n转发(forward): 1.发送请求 2.服务器进行请求的重新设置，例如通过request.setAttribute 3.浏览器根据转发的地址，获取该地址的网页 4.服务器响应请求给浏览器\n区别： 1.redirect改变浏览器地址，forward浏览器网址不变 2.redirect产生了两次请求，forward只产生一次请求 3.redirect网址可以是任意网站，forward必须是本站的网址 4.redirect:之前request中的变量全部失效，并进入一个新的request作用域 forward:之前request中的变量不会失效，就像把两个页面拼到了一起\n1.有值没值 2.本站外站 3.变不变址 4.一次两次\nJavaBean 特征： 1.提供了一个默认的无参构造函数 2.需要被序列化并且实现了Serializanle接口 3.可能有一系列可读写属性 4.可能有一系列的\"getter\"或\"setter\"方法。\n简单来说，JavaBean也是一个普通的JAVA类。 项目中，每一张数据表对应一个JavaBean, JavaBean中的属性、属性类型与数据表的字段和数据类型对应。 可将一个JavaBean对象看成一条数据。 单条数据用一个JavaBean对象接收。 多条数据用List\u003c JavaBean \u003e 对象接收。 通过JavaBean可实现数据表之间的关系。 使用JavaBean可保证开发时的效率以及数据类型的检查。\nJSTL标签及EL表达式 JSTL标签： JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。 使用方法： 1.导入JAR包，jstl-1.2.jar。 2.在JSP页面中导入标签库 \u003c% tablib prefix=“c” uri=“http://java.sun.com/jsp/jstl/core\" %\u003e\nEL表达式 语法结构: ${expression} 可获取Page,Request,Session,Application作用域中的对象，根据setAttribute的key来获取。 获取request中的student对象：${requestScope.student} 获取request中的student对象的name属性：${requestScope.student.name}\n常用的JSTL标签： JSTL可嵌套EL表达式：\n1 2 3 ",
+  "wordCount" : "7302",
+  "inLanguage": "en",
+  "datePublished": "2018-10-06T18:14:43Z",
+  "dateModified": "2018-10-06T18:14:43Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java/jsp+servlet/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

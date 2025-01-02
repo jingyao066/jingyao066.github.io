@@ -1,8 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>javadoc | Wjy&#39;s Blog</title>
+<meta name="keywords" content="java">
+<meta name="description" content="Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。官方文档">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java/javadoc/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java/javadoc/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java/javadoc/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="javadoc">
+  <meta property="og:description" content="Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。官方文档">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-09-06T17:10:20+00:00">
+    <meta property="article:modified_time" content="2018-09-06T17:10:20+00:00">
+    <meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javadoc">
+<meta name="twitter:description" content="Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。官方文档">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "javadoc",
+      "item": "https://009965.xyz/posts/java/javadoc/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "javadoc",
+  "name": "javadoc",
+  "description": "Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。官方文档\n",
+  "keywords": [
+    "java"
+  ],
+  "articleBody": "Javadoc用于描述类或者方法的作用。Javadoc可以写在类上面和方法上面。官方文档\n写在类上面的Javadoc 写在类上的文档标注一般分为三段：\n第一段：概要描述 概要描述，通常用一句或者一段话简要描述该类的作用，以英文句号作为结束。 单行示例：\n1 2 3 4 5 6 package org.springframework.util; /** * Miscellaneous {@link String} utility methods. * */ public abstract class StringUtils { 多行示例：\n1 2 3 4 5 6 7 8 package java.lang; /** * Class {@code Object} is the root of the class hierarchy. * Every class has {@code Object} as a superclass. All objects, * including arrays, implement the methods of this class. */ public class Object {} 以@开头的代码，被称为Javadoc文档标记，是JDK定义好的，包含 @author、@version、@since、@see、@link、@code、@param、@return、@exception、@throws等。\n@link：用于快速链接到相关代码 @link的使用语法{@link 包名.类名#方法名(参数类型)} 其中当包名在当前类中已经导入了包名可以省略，可以只是一个类名，也可以是仅仅是一个方法名，也可以是类名.方法名，使用此文档标记的类或者方法，可用通过按住Ctrl键+单击 可以快速跳到相应的类或者方法上，解析成html其实就是\u003c code\u003e 包名.类名#方法名(参数类型)\u003c /code\u003e @link示例\n1 2 3 4 5 6 7 8 9 10 11 // 完全限定的类名 {@link java.lang.Character} // 省略包名 {@link String} // 省略类名，表示指向当前的某个方法 {@link #length()} // 包名.类名.方法名(参数类型) {@link java.lang.String#charAt(int)} @code：将文本标记为code {@code text} 会被解析成 text 将文本标记为代码样式的文本，在code内部可以使用 \u003c 、\u003e 等不会被解释成html标签, code标签有自己的样式一般在Javadoc中只要涉及到类名或者方法名，都需要使用@code进行标记。\n第二段：详细描述 通常用一段或者多段话来详细描述该类的作用，详细描述中可以使用html标签， 如、、、、等标签， 通常详细描述都以段落p标签开始。 详细描述和概要描述中间通常有一个空行来分割\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 package org.springframework.util; /** * Miscellaneous {@link String} utility methods. * * Mainly for internal use within the framework; consider * Apache's Commons Lang * for a more comprehensive suite of {@code String} utilities. * * This class delivers some simple functionality that should really be * provided by the core Java {@link String} and {@link StringBuilder} * classes. It also provides easy-to-use methods to convert between * delimited strings, such as CSV strings, and collections and arrays. * */ public abstract class StringUtils { 一般段落都用p标签来标记，凡涉及到类名和方法名都用@code标记，凡涉及到组织的，一般用a标签提供出来链接地址。\n第三段：文档标注，用于标注作者、创建时间、参阅类等信息 @param 一般类中支持泛型时会通过@param来解释泛型的类型\n1 2 3 4 /** * @param the type of elements in this list */ public interface List extends Collection {} @author 详细描述后面一般使用@author来标记作者，如果一个文件有多个作者来维护就标记多个@author， @author 后面可以跟作者姓名(也可以附带邮箱地址)、组织名称(也可以附带组织官网地址)\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 // 纯文本作者 @author Rod Johnson // 纯文本作者，邮件 @author Igor Hersht, igorh@ca.ibm.com // 超链接邮件 纯文本作者 @author \"mailto:ovidiu@cup.hp.com\"\u003eOvidiu Predescu // 纯文本邮件 @author shane_curcuru@us.ibm.com // 纯文本 组织 @author Apache Software Foundation // 超链接组织地址 纯文本组织 @author \"https://jakarta.apache.org/turbine\"\u003e Apache Jakarta Turbine @see 另请参阅 @see 一般用于标记该类相关联的类,@see即可以用在类上，也可以用在方法上。\n1 2 3 4 5 6 7 /** * @see IntStream * @see LongStream * @see DoubleStream * @see \"package-summary.html\"\u003ejava.util.stream * / public interface Stream extends BaseStream",
+  "wordCount" : "3029",
+  "inLanguage": "en",
+  "datePublished": "2018-09-06T17:10:20Z",
+  "dateModified": "2018-09-06T17:10:20Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java/javadoc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

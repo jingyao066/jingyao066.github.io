@@ -1,8 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>7_泛型 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="java基础">
+<meta name="description" content="泛型是一种“代码模板”，可以用一套代码套用各种类型。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/7_%E6%B3%9B%E5%9E%8B/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/7_%E6%B3%9B%E5%9E%8B/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/7_%E6%B3%9B%E5%9E%8B/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="7_泛型">
+  <meta property="og:description" content="泛型是一种“代码模板”，可以用一套代码套用各种类型。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-08-07T09:36:54+00:00">
+    <meta property="article:modified_time" content="2022-08-07T09:36:54+00:00">
+    <meta property="article:tag" content="Java基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7_泛型">
+<meta name="twitter:description" content="泛型是一种“代码模板”，可以用一套代码套用各种类型。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "7_泛型",
+      "item": "https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/7_%E6%B3%9B%E5%9E%8B/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "7_泛型",
+  "name": "7_泛型",
+  "description": "泛型是一种“代码模板”，可以用一套代码套用各种类型。\n",
+  "keywords": [
+    "java基础"
+  ],
+  "articleBody": "泛型是一种“代码模板”，可以用一套代码套用各种类型。\n什么是泛型 在讲解什么是泛型之前，我们先观察Java标准库提供的ArrayList，它可以看作“可变长度”的数组，因为用起来比数组更方便。实际上ArrayList内部就是一个Object[]数组，配合存储一个当前分配的长度，就可以充当“可变数组”：\n1 2 3 4 5 6 7 public class ArrayList { private Object[] array; private int size; public void add(Object e) {...} public void remove(int index) {...} public Object get(int index) {...} } 如果用上述ArrayList存储String类型，会有这么几个缺点：\n需要强制转型； 不方便，易出错。 例如，代码必须这么写：\n1 2 3 4 ArrayList list = new ArrayList(); list.add(\"Hello\"); // 获取到Object，必须强制转型为String: String first = (String) list.get(0); 很容易出现ClassCastException，因为容易“误转型”：\n1 2 3 list.add(new Integer(123)); // ERROR: ClassCastException: String second = (String) list.get(1); 要解决上述问题，我们可以为String单独编写一种ArrayList：\n1 2 3 4 5 6 7 public class StringArrayList { private String[] array; private int size; public void add(String e) {...} public void remove(int index) {...} public String get(int index) {...} } 这样一来，存入的必须是String，取出的也一定是String，不需要强制转型，因为编译器会强制检查放入的类型：\n1 2 3 4 5 StringArrayList list = new StringArrayList(); list.add(\"Hello\"); String first = list.get(0); // 编译错误: 不允许放入非String类型: list.add(new Integer(123)); 问题暂时解决。\n然而，新的问题是，如果要存储Integer，还需要为Integer单独编写一种ArrayList：\n1 2 3 4 5 6 7 public class IntegerArrayList { private Integer[] array; private int size; public void add(Integer e) {...} public void remove(int index) {...} public Integer get(int index) {...} } 实际上，还需要为其他所有class单独编写一种ArrayList：\nLongArrayList DoubleArrayList PersonArrayList … 这是不可能的，JDK的class就有上千个，而且它还不知道其他人编写的class。\n为了解决新的问题，我们必须把ArrayList变成一种模板：ArrayList，代码如下：\n1 2 3 4 5 6 7 public class ArrayList { private T[] array; private int size; public void add(T e) {...} public void remove(int index) {...} public T get(int index) {...} } T可以是任何class。这样一来，我们就实现了：编写一次模版，可以创建任意类型的ArrayList：\n1 2 3 4 5 6 // 创建可以存储String的ArrayList: ArrayList strList = new ArrayList(); // 创建可以存储Float的ArrayList: ArrayList floatList = new ArrayList(); // 创建可以存储Person的ArrayList: ArrayList personList = new ArrayList(); 因此，泛型就是定义一种模板，例如ArrayList，然后在代码中为用到的类创建对应的ArrayList\u003c类型\u003e：\n1 2 3 4 5 6 7 ArrayList strList = new ArrayList(); // 由编译器针对类型作检查： strList.add(\"hello\"); // OK String s = strList.get(0); // OK strList.add(new Integer(123)); // compile error! Integer n = strList.get(0); // compile error! 这样一来，既实现了编写一次，万能匹配，又通过编译器保证了类型安全：这就是泛型。\n向上转型 在Java标准库中的ArrayList实现了List接口，它可以向上转型为List：\n1 2 3 4 5 public class ArrayList implements List { ... } List list = new ArrayList(); 即类型ArrayList可以向上转型为List。\n要特别注意：不能把ArrayList向上转型为ArrayList或List。\n这是为什么呢？假设ArrayList可以向上转型为ArrayList，观察以下代码：\n1 2 3 4 5 6 7 8 9 10 // 创建ArrayList类型： ArrayList integerList = new ArrayList(); // 添加一个Integer： integerList.add(new Integer(123)); // “向上转型”为ArrayList： ArrayList numberList = integerList; // 添加一个Float，因为Float也是Number： numberList.add(new Float(12.34)); // 从ArrayList获取索引为1的元素（即添加的Float）： Integer n = integerList.get(1); // ClassCastException! 我们把一个ArrayList转型为ArrayList类型后，这个ArrayList就可以接受Float类型，因为Float是Number的子类。但是，ArrayList实际上和ArrayList是同一个对象，也就是ArrayList类型，它不可能接受Float类型， 所以在获取Integer的时候将产生ClassCastException。\n实际上，编译器为了避免这种错误，根本就不允许把ArrayList转型为ArrayList。\nArrayList和ArrayList两者完全没有继承关系。\n使用泛型 使用ArrayList时，如果不定义泛型类型时，泛型类型实际上就是Object：\n1 2 3 4 5 6 // 编译器警告: List list = new ArrayList(); list.add(\"Hello\"); list.add(\"World\"); String first = (String) list.get(0); String second = (String) list.get(1); 此时，只能把当作Object使用，没有发挥泛型的优势。\n当我们定义泛型类型后，List的泛型接口变为强类型List：\n1 2 3 4 5 6 7 // 无编译器警告: List list = new ArrayList(); list.add(\"Hello\"); list.add(\"World\"); // 无强制转型: String first = list.get(0); String second = list.get(1); 当我们定义泛型类型后，List的泛型接口变为强类型List：\n1 2 3 4 5 List list = new ArrayList(); list.add(new Integer(123)); list.add(new Double(12.34)); Number first = list.get(0); Number second = list.get(1); 编译器如果能自动推断出泛型类型，就可以省略后面的泛型类型。例如，对于下面的代码：\n1 List list = new ArrayList(); 编译器看到泛型类型List就可以自动推断出后面的ArrayList的泛型类型必须是ArrayList，因此，可以把代码简写为：\n1 2 // 可以省略后面的Number，编译器可以自动推断泛型类型： List list = new ArrayList\u003c\u003e(); 泛型接口 除了ArrayList使用了泛型，还可以在接口中使用泛型。例如，Arrays.sort(Object[])可以对任意数组进行排序，但待排序的元素必须实现Comparable这个泛型接口：\n1 2 3 4 5 6 7 8 public interface Comparable { /** * 返回负数: 当前实例比参数o小 * 返回0: 当前实例与参数o相等 * 返回正数: 当前实例比参数o大 */ int compareTo(T o); } 可以直接对String数组进行排序：\n1 2 3 4 5 6 7 public class Main { public static void main(String[] args) { String[] ss = new String[] { \"Orange\", \"Apple\", \"Pear\" }; Arrays.sort(ss); System.out.println(Arrays.toString(ss)); } } 这是因为String本身已经实现了Comparable接口。如果换成我们自定义的Person类型试试：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 public class Main { public static void main(String[] args) { Person[] ps = new Person[] { new Person(\"Bob\", 61), new Person(\"Alice\", 88), new Person(\"Lily\", 75), }; Arrays.sort(ps); System.out.println(Arrays.toString(ps)); } } class Person { String name; int score; Person(String name, int score) { this.name = name; this.score = score; } public String toString() { return this.name + \",\" + this.score; } } 运行程序，我们会得到ClassCastException，即无法将Person转型为Comparable。我们修改代码，让Person实现Comparable接口：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 public class Main { public static void main(String[] args) { Person[] ps = new Person[] { new Person(\"Bob\", 61), new Person(\"Alice\", 88), new Person(\"Lily\", 75), }; Arrays.sort(ps); System.out.println(Arrays.toString(ps)); } } class Person implements Comparable { String name; int score; Person(String name, int score) { this.name = name; this.score = score; } public int compareTo(Person other) { return this.name.compareTo(other.name); } public String toString() { return this.name + \",\" + this.score; } } 运行上述代码，可以正确实现按name进行排序。\n也可以修改比较逻辑，例如，按score从高到低排序。请自行修改测试。\n编写泛型 编写泛型类比普通类要复杂。通常来说，泛型类一般用在集合类中，例如ArrayList，我们很少需要编写泛型类。如果我们确实需要编写一个泛型类，那么，应该如何编写它？可以按照以下步骤来编写一个泛型类。首先，按照某种类型，例如：String，来编写类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class Pair { private String first; private String last; public Pair(String first, String last) { this.first = first; this.last = last; } public String getFirst() { return first; } public String getLast() { return last; } } 把特定类型String替换为T，并申明：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { return first; } public T getLast() { return last; } } 熟练后即可直接从T开始编写。\n静态方法 编写泛型类时，要特别注意，泛型类型不能用于静态方法。例如：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { ... } public T getLast() { ... } // 对静态方法使用: public static Pair create(T first, T last) { return new Pair(first, last); } } 上述代码会导致编译错误，我们无法在静态方法create()的方法参数和返回类型上使用泛型类型T。\n有些同学在网上搜索发现，可以在static修饰符后面加一个，编译就能通过：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { ... } public T getLast() { ... } // 可以编译通过: public static Pair create(T first, T last) { return new Pair(first, last); } } 对于静态方法，我们可以单独改写为“泛型”方法，只需要使用另一个类型即可。对于上面的create()静态方法，我们应该把它改为另一种泛型类型，例如，：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { ... } public T getLast() { ... } // 静态泛型方法应该使用其他类型区分: public static Pair create(K first, K last) { return new Pair(first, last); } } 这样才能清楚地将静态方法的泛型类型和实例类型的泛型类型区分开。\n多个泛型类型 泛型还可以定义多种类型。例如，我们希望Pair不总是存储两个类型一样的对象，就可以使用类型：\n1 2 3 4 5 6 7 8 9 10 public class Pair { private T first; private K last; public Pair(T first, K last) { this.first = first; this.last = last; } public T getFirst() { ... } public K getLast() { ... } } 使用的时候，需要指出两种类型：\n1 Pair p = new Pair\u003c\u003e(\"test\", 123); Java标准库的Map就是使用两种泛型类型的例子。它对Key使用一种类型，对Value使用另一种类型。\n擦拭法 泛型是一种类似”模板代码“的技术，不同语言的泛型实现方式不一定相同。 Java语言的泛型实现方式是擦拭法（Type Erasure）。 所谓擦拭法是指，虚拟机对泛型其实一无所知，所有的工作都是编译器做的。 例如，我们编写了一个泛型类Pair，这是编译器看到的代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { return first; } public T getLast() { return last; } } 而虚拟机根本不知道泛型。这是虚拟机执行的代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class Pair { private Object first; private Object last; public Pair(Object first, Object last) { this.first = first; this.last = last; } public Object getFirst() { return first; } public Object getLast() { return last; } } 因此，Java使用擦拭法实现泛型，导致了：\n编译器把类型视为Object； 编译器根据实现安全的强制转型。 使用泛型的时候，我们编写的代码也是编译器看到的代码：\n1 2 3 Pair p = new Pair\u003c\u003e(\"Hello\", \"world\"); String first = p.getFirst(); String last = p.getLast(); 而虚拟机执行的代码并没有泛型：\n1 2 3 Pair p = new Pair(\"Hello\", \"world\"); String first = (String) p.getFirst(); String last = (String) p.getLast(); 所以，Java的泛型是由编译器在编译时实行的，编译器内部永远把所有类型T视为Object处理，但是，在需要转型的时候，编译器会根据T的类型自动为我们实行安全地强制转型。\n了解了Java泛型的实现方式——擦拭法，我们就知道了Java泛型的局限：\n局限一：不能是基本类型，例如int，因为实际类型是Object，Object类型无法持有基本类型：\n1 Pair\u003cint\u003e p = new Pair\u003c\u003e(1, 2); // compile error! 局限二：无法取得带泛型的Class。观察以下代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 public class Main { public static void main(String[] args) { Pair p1 = new Pair\u003c\u003e(\"Hello\", \"world\"); Pair p2 = new Pair\u003c\u003e(123, 456); Class c1 = p1.getClass(); Class c2 = p2.getClass(); System.out.println(c1==c2); // true System.out.println(c1==Pair.class); // true } } class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { return first; } public T getLast() { return last; } } 因为T是Object，我们对Pair和Pair类型获取Class时，获取到的是同一个Class，也就是Pair类的Class。\n换句话说，所有泛型实例，无论T的类型是什么，getClass()返回同一个Class实例，因为编译后它们全部都是Pair。\n局限三：无法判断带泛型的类型：\n1 2 3 4 Pair p = new Pair\u003c\u003e(123, 456); // Compile error: if (p instanceof Pair) { } 原因和前面一样，并不存在Pair.class，而是只有唯一的Pair.class。\n局限四：不能实例化T类型：\n1 2 3 4 5 6 7 8 9 public class Pair { private T first; private T last; public Pair() { // Compile error: first = new T(); last = new T(); } } 上述代码无法通过编译，因为构造方法的两行语句：\n1 2 first = new T(); last = new T(); 擦拭后实际上变成了：\n1 2 first = new Object(); last = new Object(); 这样一来，创建new Pair()和创建new Pair()就全部成了Object，显然编译器要阻止这种类型不对的代码。\n要实例化T类型，我们必须借助额外的Class参数：\n1 2 3 4 5 6 7 8 public class Pair { private T first; private T last; public Pair(Class clazz) { first = clazz.newInstance(); last = clazz.newInstance(); } } 上述代码借助Class参数并通过反射来实例化T类型，使用的时候，也必须传入Class。例如：\n1 Pair pair = new Pair\u003c\u003e(String.class); 因为传入了Class的实例，所以我们借助String.class就可以实例化String类型。\n不恰当的覆写方法 有些时候，一个看似正确定义的方法会无法通过编译。例如：\n1 2 3 4 5 public class Pair { public boolean equals(T t) { return this == t; } } 这是因为，定义的equals(T t)方法实际上会被擦拭成equals(Object t)，而这个方法是继承自Object的，编译器会阻止一个实际上会变成覆写的泛型方法定义。\n换个方法名，避开与Object.equals(Object)的冲突就可以成功编译：\n1 2 3 4 5 public class Pair { public boolean same(T t) { return this == t; } } 泛型继承 一个类可以继承自一个泛型类。例如：父类的类型是Pair，子类的类型是IntPair，可以这么继承：\n1 2 public class IntPair extends Pair { } 使用的时候，因为子类IntPair并没有泛型类型，所以，正常使用即可：\n1 IntPair ip = new IntPair(1, 2); 前面讲了，我们无法获取Pair的T类型，即给定一个变量Pair p，无法从p中获取到Integer类型。\n但是，在父类是泛型类型的情况下，编译器就必须把类型T（对IntPair来说，也就是Integer类型）保存到子类的class文件中，不然编译器就不知道IntPair只能存取Integer这种类型。\n在继承了泛型类型的情况下，子类可以获取父类的泛型类型。例如：IntPair可以获取到父类的泛型类型Integer。获取父类的泛型类型代码比较复杂：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 import java.lang.reflect.ParameterizedType; import java.lang.reflect.Type; public class Main { public static void main(String[] args) { Class clazz = IntPair.class; Type t = clazz.getGenericSuperclass(); if (t instanceof ParameterizedType) { ParameterizedType pt = (ParameterizedType) t; Type[] types = pt.getActualTypeArguments(); // 可能有多个泛型类型 Type firstType = types[0]; // 取第一个泛型类型 Class\u003c?\u003e typeClass = (Class\u003c?\u003e) firstType; System.out.println(typeClass); // Integer } } } class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { return first; } public T getLast() { return last; } } class IntPair extends Pair { public IntPair(Integer first, Integer last) { super(first, last); } } 因为Java引入了泛型，所以，只用Class来标识类型已经不够了。实际上，Java的类型系统结构如下：\n1 2 3 4 5 6 7 8 9 10 ┌────┐ │Type│ └────┘ ▲ │ ┌────────────┬────────┴─────────┬───────────────┐ │ │ │ │ ┌─────┐┌─────────────────┐┌────────────────┐┌────────────┐ │Class││ParameterizedType││GenericArrayType││WildcardType│ └─────┘└─────────────────┘└────────────────┘└────────────┘ extends通配符 我们前面已经讲到了泛型的继承关系：Pair不是Pair的子类。\n假设我们定义了Pair：\n1 public class Pair { ... } 然后，我们又针对Pair类型写了一个静态方法，它接收的参数类型是Pair：\n1 2 3 4 5 6 7 public class PairHelper { static int add(Pair p) { Number first = p.getFirst(); Number last = p.getLast(); return first.intValue() + last.intValue(); } } 上述代码是可以正常编译的。使用的时候，我们传入：\n1 int sum = PairHelper.add(new Pair(1, 2)); 注意：传入的类型是Pair，实际参数类型是(Integer, Integer)。\n既然实际参数是Integer类型，试试传入Pair：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 public class Main { public static void main(String[] args) { Pair p = new Pair\u003c\u003e(123, 456); int n = add(p); System.out.println(n); } static int add(Pair p) { Number first = p.getFirst(); Number last = p.getLast(); return first.intValue() + last.intValue(); } class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { return first; } public T getLast() { return last; } } } 直接运行，会得到一个编译错误： incompatible types: Pair cannot be converted to Pair\n原因很明显，因为Pair不是Pair的子类，因此，add(Pair)不接受参数类型Pair。\n但是从add()方法的代码可知，传入Pair是完全符合内部代码的类型规范，因为语句：\n1 2 Number first = p.getFirst(); Number last = p.getLast(); 实际类型是Integer，引用类型是Number，没有问题。问题在于方法参数类型定死了只能传入Pair。\n有没有办法使得方法参数接受Pair？办法是有的，这就是使用Pair\u003c? extends Number\u003e使得方法接收所有泛型类型为Number或Number子类的Pair类型。我们把代码改写如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 public class Main { public static void main(String[] args) { Pair p = new Pair\u003c\u003e(123, 456); int n = add(p); System.out.println(n); } static int add(Pair\u003c? extends Number\u003e p) { Number first = p.getFirst(); Number last = p.getLast(); return first.intValue() + last.intValue(); } } class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { return first; } public T getLast() { return last; } } 这样一来，给方法传入Pair类型时，它符合参数Pair\u003c? extends Number\u003e类型。这种使用\u003c? extends Number\u003e的泛型定义称之为上界通配符（Upper Bounds Wildcards），即把泛型类型T的上界限定在Number了。\n除了可以传入Pair类型，我们还可以传入Pair类型，Pair类型等等，因为Double和BigDecimal都是Number的子类。\n如果我们考察对Pair\u003c? extends Number\u003e类型调用getFirst()方法，实际的方法签名变成了：\n\u003c? extends Number\u003e getFirst();\n即返回值是Number或Number的子类，因此，可以安全赋值给Number类型的变量：\n1 Number x = p.getFirst(); 然后，我们不可预测实际类型就是Integer，例如，下面的代码是无法通过编译的：\nInteger x = p.getFirst();\n这是因为实际的返回类型可能是Integer，也可能是Double或者其他类型，编译器只能确定类型一定是Number的子类（包括Number类型本身），但具体类型无法确定。\n我们再来考察一下Pair的set方法：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 public class Main { public static void main(String[] args) { Pair p = new Pair\u003c\u003e(123, 456); int n = add(p); System.out.println(n); } static int add(Pair\u003c? extends Number\u003e p) { Number first = p.getFirst(); Number last = p.getLast(); p.setFirst(new Integer(first.intValue() + 100)); p.setLast(new Integer(last.intValue() + 100)); return p.getFirst().intValue() + p.getFirst().intValue(); } } class Pair { private T first; private T last; public Pair(T first, T last) { this.first = first; this.last = last; } public T getFirst() { return first; } public T getLast() { return last; } public void setFirst(T first) { this.first = first; } public void setLast(T last) { this.last = last; } } 不出意外，我们会得到一个编译错误：\n1 2 3 incompatible types: Integer cannot be converted to CAP#1 where CAP#1 is a fresh type-variable: CAP#1 extends Number from capture of ? extends Number 编译错误发生在p.setFirst()传入的参数是Integer类型。有些童鞋会问了，既然p的定义是Pair\u003c? extends Number\u003e，那么setFirst(? extends Number)为什么不能传入Integer？\n原因还在于擦拭法。如果我们传入的p是Pair，显然它满足参数定义Pair\u003c? extends Number\u003e，然而，Pair的setFirst()显然无法接受Integer类型。\n这就是\u003c? extends Number\u003e通配符的一个重要限制：方法参数签名setFirst(? extends Number)无法传递任何Number的子类型给setFirst(? extends Number)。\n这里唯一的例外是可以给方法参数传入null：\n1 2 p.setFirst(null); // ok, 但是后面会抛出NullPointerException p.getFirst().intValue(); // NullPointerException extends通配符的作用 如果我们考察Java标准库的java.util.List接口，它实现的是一个类似“可变数组”的列表，主要功能包括：\n1 2 3 4 5 6 public interface List { int size(); // 获取个数 T get(int index); // 根据索引获取指定元素 void add(T t); // 添加一个新元素 void remove(T t); // 删除一个已有元素 } 现在，让我们定义一个方法来处理列表的每个元素：\n1 2 3 4 5 6 7 8 int sumOfList(List\u003c? extends Integer\u003e list) { int sum = 0; for (int i=0; i",
+  "wordCount" : "13751",
+  "inLanguage": "en",
+  "datePublished": "2022-08-07T09:36:54Z",
+  "dateModified": "2022-08-07T09:36:54Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/7_%E6%B3%9B%E5%9E%8B/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

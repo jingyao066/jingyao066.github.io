@@ -1,8 +1,133 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>OAuth | Wjy&#39;s Blog</title>
+<meta name="keywords" content="java">
+<meta name="description" content="OAuth
+OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java/oauth/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java/oauth/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java/oauth/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="OAuth">
+  <meta property="og:description" content="OAuth OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-03-17T10:24:53+00:00">
+    <meta property="article:modified_time" content="2021-03-17T10:24:53+00:00">
+    <meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OAuth">
+<meta name="twitter:description" content="OAuth
+OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "OAuth",
+      "item": "https://009965.xyz/posts/java/oauth/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OAuth",
+  "name": "OAuth",
+  "description": "OAuth OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。\n",
+  "keywords": [
+    "java"
+  ],
+  "articleBody": "OAuth OAuth 2.0 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。这个标准比较抽象，使用了很多术语，初学者不容易理解。其实说起来并不复杂，下面我就通过一个简单的类比，帮助大家轻松理解，OAuth 2.0 到底是什么。\n快递员问题 我住在一个大型的居民小区，小区有门禁系统，进入的时候需要输入密码，我经常网购和点外卖，每天都有快递员来送货。我必须找到一个办法，让快递员通过门禁系统，进入小区。如果我把自己的密码，告诉快递员，他就拥有了与我同样的权限，这样好像不太合适。万一我想取消他进入小区的权力，也很麻烦，我自己的密码也得跟着改了，还得通知其他的快递员。有没有一种办法，让快递员能够自由进入小区，又不必知道小区居民的密码，而且他的唯一权限就是送货，其他需要密码的场合，他都没有权限？\n授权机制的设计 第一步，门禁系统的密码输入器下面，增加一个按钮，叫做\"获取授权\"。快递员需要首先按这个按钮，去申请授权。\n第二步，他按下按钮以后，屋主（也就是我）的手机就会跳出对话框：有人正在要求授权。系统还会显示该快递员的姓名、工号和所属的快递公司。我确认请求属实，就点击按钮，告诉门禁系统，我同意给予他进入小区的授权。\n第三步，门禁系统得到我的确认以后，向快递员显示一个进入小区的令牌（access token）。令牌就是类似密码的一串数字，只在短期内（比如七天）有效。\n第四步，快递员向门禁系统输入令牌，进入小区。\n有人可能会问，为什么不是远程为快递员开门，而要为他单独生成一个令牌？这是因为快递员可能每天都会来送货，第二天他还可以复用这个令牌。另外，有的小区有多重门禁，快递员可以使用同一个令牌通过它们。\n互联网场景 我们把上面的例子搬到互联网，就是 OAuth 的设计了。 首先，居民小区就是储存用户数据的网络服务。比如，微信储存了我的好友信息，获取这些信息，就必须经过微信的\"门禁系统\"。其次，快递员（或者说快递公司）就是第三方应用，想要穿过门禁系统，进入小区。最后，我就是用户本人，同意授权第三方应用进入小区，获取我的数据。\n简单说，OAuth 就是一种授权机制。数据的所有者告诉系统，同意授权第三方应用进入系统，获取这些数据。系统从而产生一个短期的进入令牌（token），用来代替密码，供第三方应用使用。\n令牌与密码 令牌（token）与密码（password）的作用是一样的，都可以进入系统，但是有三点差异。\n令牌是短期的，到期会自动失效，用户自己无法修改。密码一般长期有效，用户不修改，就不会发生变化。 令牌可以被数据所有者撤销，会立即失效。以上例而言，屋主可以随时取消快递员的令牌。密码一般不允许被他人撤销。 令牌有权限范围（scope），比如只能进小区的二号门。对于网络服务来说，只读令牌就比读写令牌更安全。密码一般是完整权限。 上面这些设计，保证了令牌既可以让第三方应用获得权限，同时又随时可控，不会危及系统安全。这就是OAuth 2.0 的优点。\n注意，只要知道了令牌，就能进入系统。系统一般不会再次确认身份，所以令牌必须保密，泄漏令牌与泄漏密码的后果是一样的。 这也是为什么令牌的有效期，一般都设置得很短的原因。\nOAuth 2.0 对于如何颁发令牌的细节，规定得非常详细。具体来说，一共分成四种授权类型（authorizationgrant），即四种颁发令牌的方式，适用于不同的互联网场景。\nRFC 6749 OAuth 2.0 的标准是 RFC 6749 文件。该文件先解释了 OAuth 是什么。 OAuth 引入了一个授权层，用来分离两种不同的角色：客户端和资源所有者。……资源所有者同意以后，资源服务器可以向客户端颁发令牌。客户端通过令牌，去请求数据。\n这段话的意思就是，OAuth 的核心就是向第三方应用颁发令牌。然后，RFC 6749 接着写道： （由于互联网有多种场景，）本标准定义了获得令牌的四种授权方式（authorization grant ）。 也就是说，OAuth 2.0 规定了四种获得令牌的流程。你可以选择最适合自己的那一种，向第三方应用颁发令牌。 下面就是这四种授权方式。 授权码（authorization-code） 隐藏式（implicit） 密码式（password） 客户端凭证（client credentials）\n注意，不管哪一种授权方式，第三方应用申请令牌之前，都必须先到系统备案，说明自己的身份，然后会拿到两个身份识别码：客户端 ID（client ID）和客户端密钥（client secret）。这是为了防止令牌被滥用，没有备案过的第三方应用，是不会拿到令牌的。\n第一种授权方式：授权码 授权码（authorization code）方式，指的是第三方应用先申请一个授权码，然后再用该码获取令牌。这种方式是最常用的流程，安全性也最高，它适用于那些有后端的 Web 应用。授权码通过前端传送，令牌则是储存在后端，而且所有与资源服务器的通信都在后端完成。这样的前后端分离，可以避免令牌泄漏。微信公众号获取用户信息，就是完全按照授权码模式来的。\n第一步，A 网站提供一个链接，用户点击后就会跳转到 B 网站，授权用户数据给 A 网站使用。下面就是 A 网站跳转 B 网站的一个示意链接。\n1 2 3 4 5 https://b.com/oauth/authorize? response_type=code\u0026 client_id=CLIENT_ID\u0026 redirect_uri=CALLBACK_URL\u0026 scope=read 上面 URL 中，response_type参数表示要求返回授权码（code），client_id参数让 B 知道是谁在请求，redirect_uri参数是 B 接受或拒绝请求后的跳转网址，scope参数表示要求的授权范围（这里是只读）。这一步前端自己就可以实现，不需要后端。client_id，即appId可以存在前端，没有危险。\n第二步，用户跳转后，B 网站会要求用户登录，然后询问是否同意给予 A 网站授权。用户表示同意，这时 B 网站就会跳回redirect_uri参数指定的网址。跳转时，会传回一个授权码，就像下面这样。https://a.com/callback?code=AUTHORIZATION_CODE 上面 URL 中，code参数就是授权码。前端在url上拿到code了。\n第三步，A 网站（即前端）拿到授权码code以后，将code通过接口传给后端，后端通过拿到的code，请求B网站，获取令牌。\n1 2 3 4 5 https://b.com/oauth/token? client_id=CLIENT_ID\u0026 client_secret=CLIENT_SECRET\u0026 grant_type=authorization_code\u0026 code=AUTHORIZATION_CODE 第四步，B 网站收到请求以后，就会通过上面的http请求返回json数据，其中包含了令牌，格式如下\n1 2 3 4 5 6 7 8 9 { \"access_token\":\"ACCESS_TOKEN\", \"token_type\":\"bearer\", \"expires_in\":2592000, \"refresh_token\":\"REFRESH_TOKEN\", \"scope\":\"read\", \"uid\":100101, \"info\":{...} } 上面 JSON 数据中，access_token字段就是令牌，A 网站在后端拿到了。之后就可以通过access_token来获取资源服务器的数据了。\n按照微信获取用户信息的步骤来说： 第一步：前端请求微信的接口\n1 2 3 4 String url = \"https://open.weixin.qq.com/connect/oauth2/authorize?\" + \"appid=\" + APPID + \"\u0026redirect_uri=\" + URLEncoder.encode(rediretUrl, PayConstant.DEFAULT_CHARSET) + \"\u0026response_type=code\u0026scope=snsapi_base\u0026state=123#wechat_redirect\"; 微信会将code拼到前端指定的redirect_uri的后面。\n第二步：前端拿到code后，将code传给后端，后端先通过code向微信服务器发送get请求,获取access_token和openid，然后再次向微信发送请求,通过access_token和openid,获取userinfo，然后返回给前端展示。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 /** * @author: wjy * @description: h5非静默授权, 通过code获取用户信息 * 注意：code使用一次就会失效，所有每次请求接口，前端都要重新获取code */ @ResponseBody @GetMapping(\"getWxUserinfoByCode\") public JSONObject getWxUserinfoByCode(@RequestParam(\"code\") String code) { LOGGER.info(\"*************获取access_token和openid,然后获取微信userinfo***********************************************\"); JSONObject userInfoJson = new JSONObject(); try { //获取openId地址 String getOpenidUrl = \"https://api.weixin.qq.com/sns/oauth2/access_token\"; String param = \"appid=\" + WxUtil.getAppid(environment, WxPlatformConstant.PARENT_GZH)+ \"\u0026secret=\" + WxUtil.getAppSecret(environment, WxPlatformConstant.PARENT_GZH) + \"\u0026code=\" + code + \"\u0026grant_type=authorization_code\"; //向微信服务器发送get请求,获取access_token和openid String accessTokenAndOpenid = HttpUtil.sendGet(getOpenidUrl, param); JSONObject jsonObject = JSONObject.parseObject(accessTokenAndOpenid); //再次向微信发送请求,通过access_token和openid,获取userinfo String userInfo = HttpUtil.sendGet( \"https://api.weixin.qq.com/sns/userinfo\", \"access_token=\" + jsonObject.getString(\"access_token\") + \"\u0026openid=\" + jsonObject.get(\"openid\") + \"\u0026lang=zh_CN\"); userInfoJson = JSON.parseObject(userInfo); } catch (Exception e) { e.printStackTrace(); } return userInfoJson; } 两步就完事了。\n第二种方式：隐藏式(简化模式) 有些 Web 应用是纯前端应用，没有后端。这时就不能用上面的方式了，必须将令牌储存在前端。RFC 6749 就规定了第二种方式，允许直接向前端颁发令牌。这种方式没有授权码这个中间步骤，所以称为（授权码）“隐藏式”（implicit）。\n第一步，A 网站提供一个链接，要求用户跳转到 B 网站，授权用户数据给 A 网站使用。\n1 2 3 4 5 https://b.com/oauth/authorize? response_type=token\u0026 client_id=CLIENT_ID\u0026 redirect_uri=CALLBACK_URL\u0026 scope=read 上面 URL 中，response_type参数为token，表示要求直接返回令牌。 第二步，用户跳转到 B 网站，登录后同意给予 A 网站授权。这时，B 网站就会跳回redirect_uri参数指定的跳转网址，并且把令牌作为 URL 参数，传给 A 网站。 https://a.com/callback#token=ACCESS_TOKEN 上面 URL 中，token参数就是令牌，A 网站因此直接在前端拿到令牌。\n注意，令牌的位置是 URL 锚点（fragment），而不是查询字符串（querystring），这是因为 OAuth 2.0 允许跳转网址是 HTTP 协议，因此存在\"中间人攻击\"的风险，而浏览器跳转时，锚点不会发到服务器，就减少了泄漏令牌的风险。\n这种方式把令牌直接传给前端，是很不安全的。因此，只能用于一些安全要求不高的场景，并且令牌的有效期必须非常短，通常就是会话期间（session）有效，浏览器关掉，令牌就失效了。\n第三种方式：密码式 如果你高度信任某个应用，RFC 6749 也允许用户把用户名和密码，直接告诉该应用。该应用就使用你的密码，申请令牌，这种方式称为\"密码式\"（password）。\n第一步，A 网站要求用户提供 B 网站的用户名和密码。拿到以后，A 就直接向 B 请求令牌。\n1 2 3 4 5 https://oauth.b.com/token? grant_type=password\u0026 username=USERNAME\u0026 password=PASSWORD\u0026 client_id=CLIENT_ID 上面 URL 中，grant_type参数是授权方式，这里的password表示\"密码式\"，username和password是 B 的用户名和密码。 第二步，B 网站验证身份通过后，直接给出令牌。注意，这时不需要跳转，而是把令牌放在 JSON 数据里面，作为 HTTP 回应，A 因此拿到令牌。 这种方式需要用户给出自己的用户名/密码，显然风险很大，因此只适用于其他授权方式都无法采用的情况，而且必须是用户高度信任的应用。\n第四种方式：凭证式 最后一种方式是凭证式（client credentials），适用于没有前端的命令行应用，即在命令行下请求令牌。第一步，A 应用在命令行向 B 发出请求。\n1 2 3 4 https://oauth.b.com/token? grant_type=client_credentials\u0026 client_id=CLIENT_ID\u0026 client_secret=CLIENT_SECRET 上面 URL 中，grant_type参数等于client_credentials表示采用凭证式，client_id和client_secret用来让 B确认 A 的身份。 第二步，B 网站验证通过以后，直接返回令牌。这种方式给出的令牌，是针对第三方应用的，而不是针对用户的，即有可能多个用户共享同一个令牌。\n令牌的使用 A 网站拿到令牌以后，就可以向 B 网站的 API 请求数据了。 此时，每个发到 API 的请求，都必须带有令牌。具体做法是在请求的头信息，加上一个Authorization字段，令牌就放在这个字段里面。\n1 2 curl -H \"Authorization: Bearer ACCESS_TOKEN\" \\ \"https://api.b.com\" 上面命令中，ACCESS_TOKEN就是拿到的令牌。\n更新令牌 令牌的有效期到了，如果让用户重新走一遍上面的流程，再申请一个新的令牌，很可能体验不好，而且也没有必要。OAuth 2.0 允许用户自动更新令牌。 具体方法是，B 网站颁发令牌的时候，一次性颁发两个令牌，一个用于获取数据，另一个用于获取新的令牌（refresh token 字段）。令牌到期前，用户使用 refresh token 发一个请求，去更新令牌。\n1 2 3 4 5 https://b.com/oauth/token? grant_type=refresh_token\u0026 client_id=CLIENT_ID\u0026 client_secret=CLIENT_SECRET\u0026 refresh_token=REFRESH_TOKEN 上面 URL 中，grant_type参数为refresh_token表示要求更新令牌，client_id参数和client_secret参数用于确认身份，refresh_token参数就是用于更新令牌的令牌。\nB 网站验证通过以后，就会颁发新的令牌。\n参考阮一峰老师的文章 OAuth中文规范\nJWT(JSON WEB TOKENS) JSON Web Token（缩写 JWT）是目前最流行的跨域认证解决方案，特别适用于分布式站点的单点登录（SSO）场景。 官方标准\n跨域认证的问题 互联网服务离不开用户认证。一般流程是下面这样。 1、用户向服务器发送用户名和密码。 2、服务器验证通过后，在当前对话（session）里面保存相关数据，比如用户角色、登录时间等等。 3、服务器向用户返回一个 session_id，写入用户的 Cookie。 4、用户随后的每一次请求，都会通过 Cookie，将 session_id 传回服务器。 5、服务器收到 session_id，找到前期保存的数据，由此得知用户的身份。\n这种模式的问题在于，扩展性（scaling）不好。单机当然没有问题，如果是服务器集群，或者是跨域的服务导向架构，就要求 session 数据共享，每台服务器都能够读取 session。 举例来说，A 网站和 B 网站是同一家公司的关联服务。现在要求，用户只要在其中一个网站登录，再访问另一个网站就会自动登录，请问怎么实现？ 一种解决方案是 session 数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。 这种方案的优点是架构清晰，缺点是工程量比较大。另外，持久层万一挂了，就会单点失败。 另一种方案是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。JWT 就是这种方案的一个代表。\nJWT 的原理 JWT 的原理是，服务器认证以后，生成一个 JSON 对象，发回给用户，就像下面这样。\n1 2 3 4 5 { \"姓名\": \"张三\", \"角色\": \"管理员\", \"到期时间\": \"2018年7月1日0点0分\" } 以后，用户与服务端通信的时候，都要发回这个 JSON 对象。服务器完全只靠这个对象认定用户身份。为了防止用户篡改数据，服务器在生成这个对象的时候，会加上签名（详见后文）。 服务器就不保存任何 session 数据了，也就是说，服务器变成无状态了，从而比较容易实现扩展。\nJWT 的数据结构 实际的 JWT 大概就像下面这样。 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ\nJWT 的三个部分依次如下。 Header（头部） Payload（负载） Signature（签名）\n写成一行，就是下面的样子。 Header.Payload.Signature\nHeader Header 部分是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。\n1 2 3 4 { \"alg\": \"HS256\", \"typ\": \"JWT\" } 上面代码中，alg属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；typ属性表示这个令牌（token）的类型（type），JWT 令牌统一写为JWT。 最后，将上面的 JSON 对象使用 Base64URL 算法（详见后文）转成字符串。\nPayload Payload 部分也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。\n1 2 3 4 5 6 7 iss (issuer)：签发人 exp (expiration time)：过期时间 sub (subject)：主题 aud (audience)：受众 nbf (Not Before)：生效时间 iat (Issued At)：签发时间 jti (JWT ID)：编号 除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。\n1 2 3 4 5 { \"sub\": \"1234567890\", \"name\": \"John Doe\", \"admin\": true } 注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。\nSignature Signature 部分是对前两部分的签名，防止数据篡改。 首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。\n1 2 3 4 HMACSHA256( base64UrlEncode(header) + \".\" + base64UrlEncode(payload), secret) 算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用\"点\"（.）分隔，就可以返回给用户。\nBase64URL 前面提到，Header 和 Payload 串型化的算法是 Base64URL。这个算法跟 Base64 算法基本类似，但有一些小的不同。JWT 作为一个令牌（token），有些场合可能会放到 URL（比如 api.example.com/?token=xxx）。Base64 有三个字符+、/和=，在 URL 里面有特殊含义，所以要被替换掉：=被省略、+替换成-，/替换成_ 。这就是 Base64URL 算法。\nJWT 的使用方式 客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。 此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面。 Authorization: Bearer 另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。\nJWT 的几个特点 JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。 JWT 不加密的情况下，不能将秘密数据写入 JWT。 JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。 JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。 JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。 为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。 理解Spring Cloud Security OAuth2及JWT\nJWT 的优势 无状态 JWT 自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储 Session 信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。\n不过，也正是由于 JWT 的无状态，也导致了它最大的缺点：不可控！\n就比如说，我们想要在 JWT 有效期内废弃一个 JWT 或者更改它的权限的话，并不会立即生效，通常需要等到有效期过后才可以。再比如说，当用户 Logout 的话，JWT 也还有效。除非，我们在后端增加额外的处理逻辑比如将失效的 JWT 存储起来，后端先验证 JWT 是否有效再进行处理。具体的解决办法，我们会在后面的内容中详细介绍到，这里只是简单提一下。\n有效避免了 CSRF 攻击 CSRF（Cross Site Request Forgery） 一般被翻译为 跨站请求伪造，属于网络攻击领域范围。相比于 SQL 脚本注入、XSS 等安全攻击方式，CSRF 的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆 Google 的产品 Gmail 也曾在 2007 年的时候爆出过 CSRF 漏洞，这给 Gmail 的用户造成了很大的损失。\n那么究竟什么是跨站请求伪造呢？ 简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。\n举个简单的例子：小壮登录了某网上银行，他来到了网上银行的帖子区，看到一个帖子下面有一个链接写着“科学理财，年盈利率过万”，小壮好奇的点开了这个链接，结果发现自己的账户少了 10000 元。这是这么回事呢？原来黑客在链接中藏了一个请求，这个请求直接利用小壮的身份给银行发送了一个转账请求，也就是通过你的 Cookie 向银行发出请求。\n1 2 3 ",
+  "wordCount" : "20658",
+  "inLanguage": "en",
+  "datePublished": "2021-03-17T10:24:53Z",
+  "dateModified": "2021-03-17T10:24:53Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java/oauth/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

@@ -1,8 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>常见 Java 代码缺陷及规避方式 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="java">
+<meta name="description" content="空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="常见 Java 代码缺陷及规避方式">
+  <meta property="og:description" content="空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-10-09T17:36:57+00:00">
+    <meta property="article:modified_time" content="2020-10-09T17:36:57+00:00">
+    <meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见 Java 代码缺陷及规避方式">
+<meta name="twitter:description" content="空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "常见 Java 代码缺陷及规避方式",
+      "item": "https://009965.xyz/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "常见 Java 代码缺陷及规避方式",
+  "name": "常见 Java 代码缺陷及规避方式",
+  "description": "空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编",
+  "keywords": [
+    "java"
+  ],
+  "articleBody": "空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编码阶段规避绝大部分的 NPE 问题，建议至少在常用方法或者对外 API 中使用该注解，能够对调用方提供显著的帮助。\n用 Optional 处理链式调用 Optional 源于 Guava 中的 Optional 类，后 Java 8 内置到 JDK 中。Optional 一般作为函数的返回值，强制提醒调用者返回值可能不存在，并且能够通过链式调用优雅的处理空值。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 public class OptionalExample { public static void main(String[] args) { // 使用传统空值处理方式 User user = getUser(); String city = \"DEFAULT\"; if (user != null \u0026\u0026 user.isValid()) { Address address = user.getAddress(); if (adress != null) { city = adress.getCity(); } } System.out.println(city); // 使用 Optional 的方式 Optional optional = getUserOptional(); city = optional.filter(User::isValid) .map(User::getAddress) .map(Adress::getCity) .orElse(\"DEFAULT\") System.out.println(city); } @Nullable public static User getUser() { return null; } public static Optional getUserOptional() { return Optional.empty(); } @Data public static class User { private Adress address; private boolean valid; } @Data public static class Address { private String city; } } 用 Objects.equals(a,b) 代替 a.equals(b) equals方法是 NPE 的高发地点，用 Objects.euqals来比较两个对象，能够避免任意对象为 null 时的 NPE。\n使用空对象模式 空对像模式通过一个特殊对象代替不存在的情况，代表对象不存在时的默认行为模式。常见例子：\n用 Empty List 代替 null，EmptyList 能够正常遍历：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 public class EmptyListExample { public static void main(String[] args) { List listNullable = getListNullable(); if (listNullable != null) { for (String s : listNullable) { System.out.println(s); } } List listNotNull = getListNotNull(); for (String s : listNotNull) { System.out.println(s); } } @Nullable public static List getListNullable() { return null; } @NotNull public static List getListNotNull() { return Collections.emptyList(); } } 空策略\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 public class NullStrategyExample { private static final Map strategyMap = new HashMap\u003c\u003e(); public static void handle(String strategy, String content) { findStrategy(strategy).handle(content); } @NotNull private static Strategy findStrategy(String strategyKey) { return strategyMap.getOrDefault(strategyKey, new DoNothing()); } public interface Strategy { void handle(String s); } // 当找不到对应策略时, 什么也不做 public static class DoNothing implements Strategy { @Override public void handle(String s) { } } } 对象转化 在业务应用中，我们的代码结构往往是多层次的，不同层次之间经常涉及到对象的转化，虽然很简单，但实际上繁琐且容易出错。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 // 反例 1： public class UserConverter { public static UserDTO toDTO(UserDO userDO) { UserDTO userDTO = new UserDTO(); userDTO.setAge(userDO.getAge()); // 问题 1: 自己赋值给自己 userDTO.setName(userDTO.getName()); return userDTO; } @Data public static class UserDO { private String name; private Integer age; // 问题 2: 新增字段未赋值 private String address; } @Data public static class UserDTO { private String name; private Integer age; } } // 反例2： public class UserBeanCopyConvert { public UserDTO toDTO(UserDO userDO) { UserDTO userDTO = new UserDTO(); // 用反射复制不同类型对象. // 1. 重构不友好, 当我要删除或修改 UserDO 的字段时, 无法得知该字段是否通过反射被其他字段依赖 BeanUtils.copyProperties(userDO, userDTO); return userDTO; } } 使用 Mapstruct Mapstruct 使用编译期代码生成技术，根据注解, 入参，出参自动生成转化，代码，并且支持各种高级特性，比如：\n未映射字段的处理策略，在编译期发现映射问题 复用工具，方便字段类型转化 生成 spring Component 注解，通过 spring 管理 等等其他特性 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 @Mapper( componentModel = \"spring\", unmappedSourcePolicy = ReportingPolicy.ERROR, unmappedTargetPolicy = ReportingPolicy.ERROR, // convert 逻辑依赖 DateUtil 做日期转化 uses = DateUtil.class ) public interface UserConvertor { UserDTO toUserDTO(UserDO userDO); @Data class UserDO { private String name; private Integer age; //private String address; private Date birthDay; } @Data class UserDTO { private String name; private Integer age; private String birthDay; } } public class DateUtil { public static String format(Date date) { SimpleDateFormat simpleDateFormat = new SimpleDateFormat(\"yyyy-MM-dd\"); return simpleDateFormat.format(date); } } 使用示例：\n1 2 3 4 5 6 7 8 9 10 11 @RequiredArgsConstructor @Component public class UserService { private final UserDao userDao; private final UserCovertor userCovertor; public UserDTO getUser(String userId){ UserDO userDO = userDao.getById(userId); return userCovertor.toUserDTO(userDO); } } 生成的代码：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 @Generated( value = \"org.mapstruct.ap.MappingProcessor\", date = \"2023-12-18T20:17:00+0800\", comments = \"version: 1.3.1.Final, compiler: javac, environment: Java 11.0.12 (GraalVM Community)\" ) @Component public class UserConvertorImpl implements UserConvertor { @Override public UserDTO toUserDTO(UserDO userDO) { if ( userDO == null ) { return null; } UserDTO userDTO = new UserDTO(); userDTO.setName( userDO.getName() ); userDTO.setAge( userDO.getAge() ); userDTO.setBirthDay( DateUtil.format( userDO.getBirthDay() ) ); return userDTO; } } 线程安全问题 熟练使用线程安全类 ConcurrentHashMap\n反例：\nmap.get 以及 map.put 操作是非原子操作，多线程并发修改的情况下可能导致一致性问题。比如线程 A 调用 append 方法，在第 6 行时，线程 B 删除了 key。\n1 2 3 4 5 6 7 8 9 10 public class ConcurrentHashMapExample { private Map map = new ConcurrentHashMap\u003c\u003e(); public void appendIfExists(String key, String suffix) { String value = map.get(key); if (value != null) { map.put(key, value + suffix); } } } 正例：\n1 2 3 4 5 6 7 8 public class ConcurrentHashMapExample { private Map map = new ConcurrentHashMap\u003c\u003e(); public void append(String key, String suffix) { // 使用 computeIfPresent 原子操作 map.computeIfPresent(key, (k, v) -\u003e v + suffix); } } 保证变更的原子性 反例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 @Getter public class NoAtomicDiamondParser { private volatile int start; private volatile int end; public NoAtomicDiamondParser() { Diamond.addListener(\"dataId\", \"groupId\", new ManagerListenerAdapter() { @Override public void receiveConfigInfo(String s) { JSONObject jsonObject = JSON.parseObject(s); start = jsonObject.getIntValue(\"start\"); end = jsonObject.getIntValue(\"end\"); } }); } } public class MyController{ private final NoAtomicDiamondParser noAtomicDiamondParser; public void handleRange(){ // end 读取的旧值, start 读取的新值, start 可能大于 end int end = noAtomicDiamondParser.getEnd(); int start = noAtomicDiamondParser.getStart(); } } 正例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 @Getter public class AtomicDiamondParser { private volatile Range range; public AtomicDiamondParser() { Diamond.addListener(\"dataId\", \"groupId\", new ManagerListenerAdapter() { @Override public void receiveConfigInfo(String s) { range = JSON.parseObject(s, Range.class); } }); } @Data public static class Range { private int start; private int end; } } public class MyController { private final AtomicDiamondParser atomicDiamondParser; public void handleRange() { Range range = atomicDiamondParser.getRange(); System.out.println(range.getStart()); System.out.println(range.getEnd()); } } 使用不可变对象 当一个对象是不可变的，那这个对象内就自然不存在线程安全问题，如果需要修改这个对象，那就必须创建一个新的对象，这种方式适用于简单的值对象类型，常见的例子就是 java 中的 String 和 BigDecimal。对于上面一个例子，我们也可以将 Range 设计为一个通用的值对象。\n正例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 @Getter public class AtomicDiamondParser { private volatile Range range; public AtomicDiamondParser() { Diamond.addListener(\"dataId\", \"groupId\", new ManagerListenerAdapter() { @Override public void receiveConfigInfo(String s) { JSONObject jsonObject = JSON.parseObject(s); int start = jsonObject.getIntValue(\"start\"); int end = jsonObject.getIntValue(\"end\"); range = new Range(start, end); } }); } // lombok 注解会保证 Range 类的不变性 @Value public static class Range { private int start; private int end; } } 正确性优先于性能 不要因为担心性能问题而放弃使用 synchronized，volatile 等关键字，或者采用一些非常规写法\n反例 双重检查锁：\n1 2 3 4 5 6 7 8 9 10 11 12 class Foo { // 缺少 volatile 关键字 private Helper helper = null; public Helper getHelper() { if (helper == null) synchronized(this) { if (helper == null) helper = new Helper(); } return helper; } } 在上述例子中，在 helper 字段上增加 volatile 关键字，能够在 java 5 及之后的版本中保证线程安全。\n正例：\n1 2 3 4 5 6 7 8 9 10 11 class Foo { private volatile Helper helper = null; public Helper getHelper() { if (helper == null) synchronized(this) { if (helper == null) helper = new Helper(); } return helper; } } 正例3（推荐）：\n1 2 3 4 5 6 7 8 class Foo { private Helper helper = null; public synchronized Helper getHelper() { if (helper == null) helper = new Helper(); } return helper; } 并不严谨的 Diamond Parser：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 /** * 省略异常处理等其他逻辑 */ @Getter public class DiamondParser { // 缺少 volatile 关键字 private Config config; public DiamondParser() { Diamond.addListener(\"dataId\", \"groupId\", new ManagerListenerAdapter() { @Override public void receiveConfigInfo(String s) { config = JSON.parseObject(s, Config.class); } }); } @Data public static class Config { private String name; } } 这种 Diamond 写法可能从来没有发生过线上问题，但这种写法也确实是不符合 JVM 线程安全原则。未来某一天你的代码跑在另一个 JVM 实现上，可能就有问题了。\n线程池使用不当 反例 1：\n1 2 3 4 public class ThreadPoolExample { // 没有任何限制的线程池, 使用起来很方便, 但当一波请求高峰到达时, 可能会创建大量线程, 导致系统崩溃 private static Executor executor = Executors.newCachedThreadPool(); } 反例2：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 public class StreamParallelExample { public List batchQuery(List ids){ // 看上去很优雅, 但 ForkJoinPool 的队列是没有大小限制的, 并且线程数量很少, 如果 ids 列表很大可能导致 OOM // parallelStream 更适合计算密集型任务, 不要在任务中做远程调用 return ids.parallelStream() .map(this::queryFromRemote) .collect(Collectors.toList()); } private String queryFromRemote(String id){ // 从远程查询 } } 正例：手动创建线程池\n1 2 3 4 5 6 public class ManualCreateThreadPool { // 手动创建资源有限的线程池 private Executor executor = new ThreadPoolExecutor(10, 10, 1, TimeUnit.MINUTES, new ArrayBlockingQueue\u003c\u003e(1000), new ThreadFactoryBuilder().setNameFormat(\"work-%d\").build()); } 异常处理不当 和 NPE 一样，异常处理也同样是我们每天都需要面对的问题，但很多代码中往往会出现：\n反例 1：\n重复且繁琐的的异常处理逻辑\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 @Slf4j public class DuplicatedExceptionHandlerExample { private UserService userService; public User query(String id) { try { return userService.query(id); } catch (Exception e) { log.error(\"query error, userId: {}\", id, e); return null; } } public User create(String id) { try { return userService.create(id); } catch (Exception e) { log.error(\"query error, userId: {}\", id, e); return null; } } } 反例 2：\n异常被吞掉或者丢失部分信息\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 @Slf4j public class ExceptionShouldLogOrThrowExample { private UserService userService; public User query(String id) { try { return userService.query(id); } catch (Exception e) { // 异常被吞并, 问题被隐藏 return null; } } public User create(String id) { try { return userService.create(id); } catch (Exception e) { // 堆栈丢失, 后续难以定位问题 log.error(\"query error, userId: {}, error: {}\", id,e.getMessage() ); return null; } } } 反例 3：对外抛出未知异常, 导致调用方序列化失败\n1 2 3 4 5 6 7 public class OpenAPIService { public void handle(){ // HSF 服务对外抛出 client 中未定义的异常, 调用方反序列化失败 throw new InternalSystemException(\"\"); } } 通过 AOP 统一异常处理 未知异常抛给调用方, 将未知异常转为 Result 或者通用异常类型 统一异常日志的打印和监控 处理 Checked Exception Checked Exception 是在编译期要求必须处理的异常，也就是非 RuntimeException 类型的异常，但 Java Checked 的异常给接口的调用者造成了一定的负担，导致异常声明层层传递，如果顶层能够处理该异常，我们可以通过 lombok 的 @SneakyThrows 注解规避 Checked exception\nTry catch 线程逻辑 反例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 @RequiredArgsConstructor public class ThreadNotTryCatch { private final ExecutorService executorService; public void handle() { executorService.submit(new Runnable() { @Override public void run() { // 未捕获异常, 线程直接退出, 异常信息丢失 remoteInvoke(); } }); } } 正例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 @RequiredArgsConstructor @Slf4j public class ThreadNotTryCatch { private final ExecutorService executorService; public void handle() { executorService.submit(new Runnable() { @Override public void run() { try { remoteInvoke(); } catch (Exception e) { log.error(\"handle failed\", e); } } }); } } 特殊异常的处理 InterruptedException 一般是上层调度者主动发起的中断信号，例如某个任务执行超时，那么调度者通过将线程置为 interuppted 来中断任务，对于这类异常我们不应该在 catch 之后忽略，应该向上抛出或者将当前线程置为 interuppted。\n反例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 public class InterruptedExceptionExample { private ExecutorService executorService = Executors.newSingleThreadExecutor(); public void handleWithTimeout() throws InterruptedException { Future\u003c?\u003e future = executorService.submit(() -\u003e { try { // sleep 模拟处理逻辑 Thread.sleep(1000); } catch (InterruptedException e) { System.out.println(\"interrupted\"); } System.out.println(\"continue task\"); // 异常被忽略, 继续处理 }); // 等待任务结果, 如果超过 500ms 则中断 Thread.sleep(500); if (!future.isDone()) { System.out.println(\"cancel\"); future.cancel(true); } } } 避免 catch Error 不要吞并 Error，Error 设计本身就是区别于异常，一般不应该被 catch，更不能被吞掉。举个例子，OOM 有可能发生在任意代码位置，如果吞并 Error，让程序继续运行，那么以下代码的 start 和 end 就无法保证一致性。\n1 2 3 4 5 6 7 8 9 10 11 12 13 public class ErrorExample { private Date start; private Date end; public synchronized void update(long start, long end) { if (start \u003e end) { throw new IllegalArgumentException(\"start after end\"); } this.start = new Date(start); // 如果 new Date(end) 发生 OOM, start 有可能大于 end this.end = new Date(end); } } Spring Bean 隐式依赖 反例 1: SpringContext 作为静态变量 UserController 和 SpringContextUtils 类没有依赖关系， SpringContextUtils.getApplication() 可能返回空。并且 Spring 非依赖关系的 Bean 之间的初始化顺序是不确定的，虽然可能当前初始化顺序恰好符合期望，但后续可能发生变化。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 @Component public class SpringContextUtils { @Getter private static ApplicationContext applicationContext; public SpringContextUtils(ApplicationContext context) { applicationContext = context; } } @Component public class UserController { public void handle(){ MyService bean = SpringContextUtils.getApplicationContext().getBean(MyService.class); } } 反例 2: Switch 在 Spring Bean 中注册, 但通过静态方式读取\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 @Component public class SwitchConfig { @PostConstruct public void init() { SwitchManager.register(\"appName\", MySwitch.class); } public static class MySwitch { @AppSwitch(des = \"config\", level = Switch.Level.p1) public static String config; } } @Component public class UserController{ public String getConfig(){ // UserController 和 SwitchConfig 类没有依赖关系, MySwitch.config 可能还没有初始化 return MySwitch.config; } } 正例： 通过 SpringBeanFactory 保证初始化顺序：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 public class PreInitializer implements BeanFactoryPostProcessor, PriorityOrdered { @Override public int getOrder() { return Ordered.HIGHEST_PRECEDENCE; } @Override public void postProcessBeanFactory( ConfigurableListableBeanFactory beanFactory) throws BeansException { try { SwitchManager.init(应用名, 开关类.class); } catch (SwitchCenterException e) { // 此处抛错最好阻断程序启动，避免开关读不到持久值引发问题 } catch (SwitchCenterError e) { System.exit(1); } } } @Component public class SpringContextUtilPostProcessor implements BeanFactoryPostProcessor, PriorityOrdered, ApplicationContextAware { private ApplicationContext applicationContext; @Override public int getOrder() { return Ordered.HIGHEST_PRECEDENCE; } @Override public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException { SpringContextUtils.setApplicationContext(applicationContext); } @Override public void setApplicationContext(ApplicationContext applicationContext) throws BeansException { this.applicationContext = applicationContext; } } 内存/资源泄漏 虽然 JVM 有垃圾回收机制，但并不意味着内存泄漏问题不存在，一般内存泄漏发生在在长时间持对象无法释放的场景，比如静态集合，内存中的缓存数据，运行时类生成技术等。\nLoadingCache 代替全局 Map 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 @Service public class MetaInfoManager { // 对于少量的元数据来说, 放到内存中似乎并无大碍, 但如果后续元数据量增大, 则大量对象则内存中无法释放, 导致内存泄漏 private Map cache = new HashMap\u003c\u003e(); public MetaInfo getMetaInfo(String id) { return cache.computeIfAbsent(id, k -\u003e loadFromRemote(id)); } private LoadingCache loadingCache = CacheBuilder.newBuilder() // loadingCache 设置最大 size 或者过期时间, 能够限制缓存条目的数量 .maximumSize(1000) .build(new CacheLoader() { @Override public MetaInfo load(String key) throws Exception { return loadFromRemote(key); } }); public MetaInfo getMetaInfoFromLoadingCache(String id) { return loadingCache.getUnchecked(id); } private MetaInfo loadFromRemote(String id) { return null; } @Data public static class MetaInfo { private String id; private String name; } } 谨慎使用运行时类生成技术 Cglib, Javasisit 或者 Groovy 脚本会在运行时创建临时类, Jvm 对于类的回收条件十分苛刻, 所以这些临时类在很长一段时间都不会回收, 直到触发 FullGC。\n使用 Java 8 try wiht Resource 语法： 1 2 3 4 5 6 7 8 public class TryWithResourceExample { public static void main(String[] args) throws IOException { try (InputStream in = Files.newInputStream(Paths.get(\"\"))) { // read } } } 性能问题 URL 的 hashCode、euqals 方法 URL 的 hashCode，equals 方法的实现涉及到了对域名 ip 地址解析，所以在显示调用或者放到 Map 这样的数据结构中，有可能触发远程调用。用 URI 代替 URL 则可以避免这个问题。\n反例1：\n1 2 3 4 5 6 7 public class URLExample { public void handle(URL a, URL b) { if (Objects.equals(a, b)) { } } } 反例 2：\n1 2 3 4 public class URLMapExample { private static final Map urlObjectMap = new HashMap\u003c\u003e(); } 循环远程调用：\n1 2 3 4 5 6 7 8 9 10 11 12 public class HSFLoopInvokeExample { @HSFConsumer private UserService userService; public List batchQuery(List ids){ // 使用批量接口或者限制批量大小 return ids.stream() .map(userService::getUser) .collect(Collectors.toList()); } } 了解常见性能指标\u0026瓶颈 了解一些基础性能指标，有助于我们准确评估当前问题的性能瓶颈，这里推荐看一下《每个程序员都应该知道的延迟数字》。比如将字段设置为 volatile，相当于每次都需要读主存，读主存性能大概在纳秒级别，在一次 HSF 调用中不太可能成为性能瓶颈。反射相比普通操作多几次内存读取，一般认为性能较差，但是同理在一次 HSF 调用中也不太可能成为性能瓶颈。\n在服务端开发中, 性能瓶颈一般集中在：\n大量日志打印 大对象序列化 网络调用: 比如 HSF，HTTP 等远程调用 数据库操作 使用专业性能测试工具估性能 不要尝试自己实现一个简陋的性能测试，在测试代码运行过程中，编译器，JVM， 操作系统各个层级上都有可能存在你意料之外的优化，导致测试结果过于乐观。建议使用 jmh，arthas 火焰图，这样的专业工具做性能测试\n反例：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 public class ManualPerformanceTest { public void testPerformance() { long start = System.currentTimeMillis(); for (int i = 0; i \u003c 1000; i++) { // 这里 mutiply 没有任何副作用, 有可能被优化之后被干掉 mutiply(10, 10); } System.out.println(\"avg rt: \" + (System.currentTimeMillis() - start) / 1000); } private int mutiply(int a, int b) { return a * b; } } 正例:\n使用火焰图\n使用 jmh 评估性能\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS) @Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS) @Fork(3) @BenchmarkMode(Mode.AverageTime) @OutputTimeUnit(TimeUnit.NANOSECONDS) public class JMHExample { @Benchmark public void testPerformance(Blackhole bh) { bh.consume(mutiply(10, 10)); } private int mutiply(int a, int b) { return a * b; } } Spring 事务问题 注意事务注解失效的场景\n当打上 @Transactional 注解的 spring bean 被注入时，spring 会用事务代理过的对象代替原对象注入。\n但是如果注解方法被同一个对象中的另一个方法里面调用，则该调用无法被 Spring 干预，自然事务注解也就失效了。\n1 2 3 4 5 6 7 8 9 10 11 @Component public class TransactionNotWork { public void doTheThing() { actuallyDoTheThing(); } @Transactional public void actuallyDoTheThing() { } } ",
+  "wordCount" : "5202",
+  "inLanguage": "en",
+  "datePublished": "2020-10-09T17:36:57Z",
+  "dateModified": "2020-10-09T17:36:57Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

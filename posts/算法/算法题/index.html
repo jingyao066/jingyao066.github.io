@@ -1,8 +1,131 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>算法题 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="算法">
+<meta name="description" content="大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="算法题">
+  <meta property="og:description" content="大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-11-09T00:34:23+00:00">
+    <meta property="article:modified_time" content="2018-11-09T00:34:23+00:00">
+    <meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法题">
+<meta name="twitter:description" content="大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "算法题",
+      "item": "https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "算法题",
+  "name": "算法题",
+  "description": "大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG 在开发的时候，我们如何评估一个算法的好",
+  "keywords": [
+    "算法"
+  ],
+  "articleBody": "大O表示法 参考：https://www.bilibili.com/video/BV1DY4y1H7DG\n在开发的时候，我们如何评估一个算法的好坏，如何描述一个算法运行效率的高低呢？通俗一点的表达方法就是程序执行快或慢，但是这只是一种较为宽泛的描述，我们如何直观科学的用的描述它呢？\n有同学可能会说，用其运行时间不就可以很好很直观的描述它了。不过，不同的语言，不同的编译器，不同的CPU来说，对程序的处理的时间是不同的，我们无法单单用运行时间来描述某个算法执行效率。另外，当需要处理的数据增长时，算法的基本操作要重复执行的次数也会增长，对于不同的算法的增长的速度也不一样。\n数学果然是个不错的工具，为了描述算法的运行时间的增长情况，我们可以用不同数学公式来分析。在计算机科学上，我们是有专门的术语来表征算法的效率，就是大O表示法。大O并不是表示算法运行需要多长时间，它表示的是算法运行时间的增速，即算法的运行时间以不同的速度增加，也叫渐进时间复杂度。\n我们可以用下面的表达式来表示：\nT(n)=O(f(n))\n通常主要有以下几种表达式来描述时间复杂度：\nO(1)：常量时间 O(n)：线性时间 O(log n)：对数时间 O(n^2)：二次方时间 O(2^n)：指数时间 O(n!)：阶乘时间 O(1) O(1)：是最低的时间复杂度，表示算法的速度和数量无关，不论数量是多少，算法的速度始终不变，也就是耗时/耗空间与输入数据大小无关，无论输入数据增大多少倍，耗时/耗空间都不变。\n哈希算法就是典型的O(1)时间复杂度，无论数据规模多大，都可以在一次计算后找到目标（不考虑冲突的话）。\nO(n) O(n)：也叫线性时间，表示算法的速度和数量增加呈现线性增长。\n典型算法有：简单查找。\n即在n个数中轮询查找a所处的位置，当n的数量+1时算法查找的次数也+1。\nO(log n) O(log n)：也叫对数时间\n典型算法有：二分查找法\n即当数量每扩大两倍，查询次数仅仅需要+1次，是一种随着数量越多，算法耗时增速越慢的算法。\nO(n²) 典型算法有：选择排序、冒泡排序，是一种速度较慢的排序法。\nO(n * log n) 典型算法有：快速排序法，是一种速度较快的排序法。\nO(n!) 是一种非常慢的算法\n即当数量为n时，查询算法耗时为a时，当数量+1时查询算法将耗时a*(n+1),当数量较多时耗时将变得非常大。\n注意，大 O 表示法只是一种估算，当数据量大的时候才有用。\n大部分情况下你用直觉就可以知道一个算法的大 O 表示法。\n比如说，如果你的代码用一个循环遍历你输入的每个元素，那么这个算法就是O(n)。\n如果是循环套循环，那就是O(n^2)。如果 3 个循环套在一起就是O(n^3)，以此类推。\n排序算法 十大经典排序算法 | 菜鸟教程 (runoob.com)\n排序算法可以分为：\n内部排序：数据记录在内存中进行排序。 外部排序open in new window：因排序的数据很大，一次不能容纳全部的排序记录，在排序过程中需要访问外存。 常见的内部排序算法有：插入排序、希尔排序、选择排序、冒泡排序、归并排序、快速排序、堆排序、基数排序等，本文只讲解内部排序算法。用一张图概括：\n上图存在错误：\n插入排序的最好时间复杂度为 O(n) 而不是 O(n^2) 。 希尔排序的平均时间复杂度为 O(nlogn) 图片名词解释：\nn：数据规模 k：“桶” 的个数 In-place：占用常数内存，不占用额外内存 Out-place：占用额外内存 术语说明 稳定：如果 A 原本在 B 前面，而 A=B，排序之后 A 仍然在 B 的前面。 不稳定：如果 A 原本在 B 的前面，而 A=B，排序之后 A 可能会出现在 B 的后面。 内排序：所有排序操作都在内存中完成。 外排序：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行。 时间复杂度：定性描述一个算法执行所耗费的时间。 空间复杂度：定性描述一个算法执行所需内存的大小。 算法分类 十种常见排序算法可以分类两大类别：比较类排序和非比较类排序。\n常见的快速排序、归并排序、堆排序以及冒泡排序等都属于比较类排序算法。比较类排序是通过比较来决定元素间的相对次序，由于其时间复杂度不能突破 O(nlogn)，因此也称为非线性时间比较类排序。在冒泡排序之类的排序中，问题规模为 n，又因为需要比较 n 次，所以平均时间复杂度为 O(n²)。在归并排序、快速排序之类的排序中，问题规模通过分治法消减为 logn 次，所以时间复杂度平均 O(nlogn)。\n比较类排序的优势是，适用于各种规模的数据，也不在乎数据的分布，都能进行排序。可以说，比较排序适用于一切需要排序的情况。\n而计数排序、基数排序、桶排序则属于非比较类排序算法。非比较排序不通过比较来决定元素间的相对次序，而是通过确定每个元素之前，应该有多少个元素来排序。由于它可以突破基于比较排序的时间下界，以线性时间运行，因此称为线性时间非比较类排序。 非比较排序只要确定每个元素之前的已有的元素个数即可，所有一次遍历即可解决。算法时间复杂度 O(n)。\n非比较排序时间复杂度底，但由于非比较排序需要占用空间来确定唯一位置。所以对数据规模和数据分布有一定的要求。\n冒泡排序 冒泡排序是一种简单的排序算法。它重复地遍历要排序的序列，依次比较两个元素，如果它们的顺序错误就把它们交换过来。遍历序列的工作是重复地进行直到没有再需要交换为止，此时说明该序列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢 “浮” 到数列的头部。\n算法步骤 比较相邻的元素。如果第一个比第二个大，就交换它们两个； 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对，这样在最后的元素应该会是最大的数； 针对所有的元素重复以上的步骤，除了最后一个； 重复步骤 1~3，直到排序完成。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 public static void bubbleSort() { int[] arr = {6,5,3,9,1}; int temp = 0; //第一层循环的边界，是到数组最后一位 for (int i = 0; i \u003c arr.length - 1; i++) { //第二层循环的边界，是到数组最后一位，减去i的长度，因为数组最后边i个数，已经是最大的，不需要比较了 // 设置标志，如果为true，说明数组本来即使排好序的 boolean flag = true; for (int j = 0; j \u003c arr.length - 1 - i; j++) { //若前值大于后值，交换顺序 if (arr[j] \u003e arr[j + 1]) { temp = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = temp; // 改变标志 flag = false; } } // 标志没有改变，说明没有走交换的逻辑，即第一位数字小于后边的每一个数字， // 所以这个数组本来就是排序好的，不需要继续循环了 if (flag) { break; } } // 输出 for (int i = 0; i \u003c arr.length; i++){ System.out.println(arr[i]); } } 算法分析 稳定性：稳定 时间复杂度：最佳：O(n) ，最差：O(n2)， 平均：O(n2) 空间复杂度：O(1) 排序方式：In-place 选择排序 选择排序是一种简单直观的排序算法，无论什么数据进去都是 O(n²) 的时间复杂度。所以用到它的时候，数据规模越小越好。唯一的好处可能就是不占用额外的内存空间了吧。它的工作原理：首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。\n算法步骤 首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置 再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。 重复第 2 步，直到所有元素均排序完毕。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 public static void selectionSort() { int[] arr = {6,5,3,9,1}; for (int i = 0; i \u003c arr.length - 1; i++) { int minIndex = i; for (int j = i + 1; j \u003c arr.length; j++) { if (arr[j] \u003c arr[minIndex]) { // 记录目前能找到的最小值的下标 minIndex = j; } } if (i != minIndex) {// 将找到的最小值和i位置所在的值进行交换 int tmp = arr[minIndex]; arr[minIndex] = arr[i]; arr[i] = tmp; } } for (int i = 0; i \u003c arr.length; i++){ System.out.println(arr[i]); } } 算法分析 稳定性：不稳定 时间复杂度：最佳：O(n2) ，最差：O(n2)， 平均：O(n2) 空间复杂度：O(1) 排序方式：In-place 插入排序 插入排序是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常采用 in-place 排序（即只需用到 O(1) 的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。\n插入排序的代码实现虽然没有冒泡排序和选择排序那么简单粗暴，但它的原理应该是最容易理解的了，因为只要打过扑克牌的人都应该能够秒懂。插入排序是一种最简单直观的排序算法，它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。\n插入排序和冒泡排序一样，也有一种优化算法，叫做拆半插入。\n算法步骤 从第一个元素开始，该元素可以认为已经被排序； 取出下一个元素，在已经排序的元素序列中从后向前扫描； 如果该元素（已排序）大于新元素，将该元素移到下一位置； 重复步骤 3，直到找到已排序的元素小于或者等于新元素的位置； 将新元素插入到该位置后； 重复步骤 2~5。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 /** * 插入排序 * @param arr * @return arr */ public static int[] insertionSort(int[] arr) { for (int i = 1; i \u003c arr.length; i++) { int preIndex = i - 1; int current = arr[i]; while (preIndex \u003e= 0 \u0026\u0026 current \u003c arr[preIndex]) { arr[preIndex + 1] = arr[preIndex]; preIndex -= 1; } arr[preIndex + 1] = current; } return arr; } 算法分析 稳定性：稳定 时间复杂度：最佳：O(n) ，最差：O(n2)， 平均：O(n2) 空间复杂度：O(1) 排序方式：In-place 希尔排序 (Shell Sort) 希尔排序是希尔 (Donald Shell) 于 1959 年提出的一种排序算法。希尔排序也是一种插入排序，它是简单插入排序经过改进之后的一个更高效的版本，也称为递减增量排序算法，同时该算法是冲破 O(n²) 的第一批算法之一。\n希尔排序的基本思想是：先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录 “基本有序” 时，再对全体记录进行依次直接插入排序。\n算法步骤 我们来看下希尔排序的基本步骤，在此我们选择增量 gap=length/2，缩小增量继续以 gap = gap/2 的方式，这种增量选择我们可以用一个序列来表示，{n/2, (n/2)/2, ..., 1}，称为增量序列。希尔排序的增量序列的选择与证明是个数学难题，我们选择的这个增量序列是比较常用的，也是希尔建议的增量，称为希尔增量，但其实这个增量序列不是最优的。此处我们做示例使用希尔增量。\n先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，具体算法描述：\n选择一个增量序列 {t1, t2, …, tk}，其中 (ti\u003etj, i； 按增量序列个数 k，对序列进行 k 趟排序； 每趟排序，根据对应的增量 t，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 /** * 希尔排序 * * @param arr * @return arr */ public static int[] shellSort(int[] arr) { int n = arr.length; int gap = n / 2; while (gap \u003e 0) { for (int i = gap; i \u003c n; i++) { int current = arr[i]; int preIndex = i - gap; // Insertion sort while (preIndex \u003e= 0 \u0026\u0026 arr[preIndex] \u003e current) { arr[preIndex + gap] = arr[preIndex]; preIndex -= gap; } arr[preIndex + gap] = current; } gap /= 2; } return arr; } 算法分析 稳定性：不稳定 时间复杂度：最佳：O(nlogn)， 最差：O(n^2) 平均：O(nlogn) 空间复杂度：O(1) 归并排序 (Merge Sort) 归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法 (Divide and Conquer) 的一个非常典型的应用。归并排序是一种稳定的排序方法。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为 2 - 路归并。\n和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是 O(nlogn) 的时间复杂度。代价是需要额外的内存空间。\n算法步骤 归并排序算法是一个递归过程，边界条件为当输入序列仅有一个元素时，直接返回，具体过程如下：\n如果输入内只有一个元素，则直接返回，否则将长度为 n 的输入序列分成两个长度为 n/2 的子序列； 分别对这两个子序列进行归并排序，使子序列变为有序状态； 设定两个指针，分别指向两个已经排序子序列的起始位置； 比较两个指针所指向的元素，选择相对小的元素放入到合并空间（用于存放排序结果），并移动指针到下一位置； 重复步骤 3 ~4 直到某一指针达到序列尾； 将另一序列剩下的所有元素直接复制到合并序列尾。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 /** * 归并排序 * * @param arr * @return arr */ public static int[] mergeSort(int[] arr) { if (arr.length \u003c= 1) { return arr; } int middle = arr.length / 2; int[] arr_1 = Arrays.copyOfRange(arr, 0, middle); int[] arr_2 = Arrays.copyOfRange(arr, middle, arr.length); return merge(mergeSort(arr_1), mergeSort(arr_2)); } /** * Merge two sorted arrays * * @param arr_1 * @param arr_2 * @return sorted_arr */ public static int[] merge(int[] arr_1, int[] arr_2) { int[] sorted_arr = new int[arr_1.length + arr_2.length]; int idx = 0, idx_1 = 0, idx_2 = 0; while (idx_1 \u003c arr_1.length \u0026\u0026 idx_2 \u003c arr_2.length) { if (arr_1[idx_1] \u003c arr_2[idx_2]) { sorted_arr[idx] = arr_1[idx_1]; idx_1 += 1; } else { sorted_arr[idx] = arr_2[idx_2]; idx_2 += 1; } idx += 1; } if (idx_1 \u003c arr_1.length) { while (idx_1 \u003c arr_1.length) { sorted_arr[idx] = arr_1[idx_1]; idx_1 += 1; idx += 1; } } else { while (idx_2 \u003c arr_2.length) { sorted_arr[idx] = arr_2[idx_2]; idx_2 += 1; idx += 1; } } return sorted_arr; } 算法分析 稳定性：稳定 时间复杂度：最佳：O(nlogn)， 最差：O(nlogn)， 平均：O(nlogn) 空间复杂度：O(n) 快速排序 快速排序用到了分治思想，同样的还有归并排序。乍看起来快速排序和归并排序非常相似，都是将问题变小，先排序子串，最后合并。不同的是快速排序在划分子问题的时候经过多一步处理，将划分的两组数据划分为一大一小，这样在最后合并的时候就不必像归并排序那样再进行比较。但也正因为如此，划分的不定性使得快速排序的时间复杂度并不稳定。\n快速排序的基本思想：通过一趟排序将待排序列分隔成独立的两部分，其中一部分记录的元素均比另一部分的元素小，则可分别对这两部分子序列继续进行排序，以达到整个序列有序。\n算法步骤 快速排序使用分治法open in new window（Divide and conquer）策略来把一个序列分为较小和较大的 2 个子序列，然后递回地排序两个子序列。具体算法描述如下：\n从序列中随机挑出一个元素，做为 “基准”(pivot)； 重新排列序列，将所有比基准值小的元素摆放在基准前面，所有比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个操作结束之后，该基准就处于数列的中间位置。这个称为分区（partition）操作； 递归地把小于基准值元素的子序列和大于基准值元素的子序列进行快速排序。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 public class Test { public static void main(String[] args) { //算法步骤 //从数列中挑出一个元素，称为 \"基准\"（pivot）; //重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作； //递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序； int[] arr = {8,5,4,2,7}; quickSort(arr,0, arr.length- 1); for (int i : arr) { System.out.println(i); } } /** * * @param arr 数组 * @param left 数组左边界 * @param right 数组右边界 */ public static void quickSort(int arr[], int left, int right) { if (left \u003c right) { int partitionIndex = partition(arr, left, right); quickSort(arr, left, partitionIndex - 1); quickSort(arr, partitionIndex + 1, right); } } private static int partition(int[] arr, int left, int right) { // 设定基准值（pivot） int pivot = left; int index = pivot + 1; for (int i = index; i \u003c= right; i++) { if (arr[i] \u003c arr[pivot]) { swap(arr, i, index); index++; } } swap(arr, pivot, index - 1); return index - 1; } //交换数据 private static void swap(int[] arr, int i, int j) { int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp; } } 算法分析 稳定性：不稳定 时间复杂度：最佳：O(nlogn)， 最差：O(nlogn)，平均：O(nlogn) 空间复杂度：O(logn) 堆排序 堆排序是指利用堆这种数据结构所设计的一种排序算法。堆是一个近似完全二叉树的结构，并同时满足堆的性质：即子结点的值总是小于（或者大于）它的父节点。\n算法步骤 将初始待排序列 (R1, R2, ……, Rn) 构建成大顶堆，此堆为初始的无序区； 将堆顶元素 R[1] 与最后一个元素 R[n] 交换，此时得到新的无序区 (R1, R2, ……, Rn-1) 和新的有序区 (Rn), 且满足 R[1, 2, ……, n-1]\u003c=R[n]； 由于交换后新的堆顶 R[1] 可能违反堆的性质，因此需要对当前无序区 (R1, R2, ……, Rn-1) 调整为新堆，然后再次将 R [1] 与无序区最后一个元素交换，得到新的无序区 (R1, R2, ……, Rn-2) 和新的有序区 (Rn-1, Rn)。不断重复此过程直到有序区的元素个数为 n-1，则整个排序过程完成。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 // Global variable that records the length of an array; static int heapLen; /** * Swap the two elements of an array * @param arr * @param i * @param j */ private static void swap(int[] arr, int i, int j) { int tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp; } /** * Build Max Heap * @param arr */ private static void buildMaxHeap(int[] arr) { for (int i = arr.length / 2 - 1; i \u003e= 0; i--) { heapify(arr, i); } } /** * Adjust it to the maximum heap * @param arr * @param i */ private static void heapify(int[] arr, int i) { int left = 2 * i + 1; int right = 2 * i + 2; int largest = i; if (right \u003c heapLen \u0026\u0026 arr[right] \u003e arr[largest]) { largest = right; } if (left \u003c heapLen \u0026\u0026 arr[left] \u003e arr[largest]) { largest = left; } if (largest != i) { swap(arr, largest, i); heapify(arr, largest); } } /** * Heap Sort * @param arr * @return */ public static int[] heapSort(int[] arr) { // index at the end of the heap heapLen = arr.length; // build MaxHeap buildMaxHeap(arr); for (int i = arr.length - 1; i \u003e 0; i--) { // Move the top of the heap to the tail of the heap in turn swap(arr, 0, i); heapLen -= 1; heapify(arr, 0); } return arr; } 算法分析 稳定性：不稳定 时间复杂度：最佳：O(nlogn)， 最差：O(nlogn)， 平均：O(nlogn) 空间复杂度：O(1) 计数排序 (Counting Sort) 计数排序的核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。 作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。\n计数排序 (Counting sort) 是一种稳定的排序算法。计数排序使用一个额外的数组 C，其中第 i 个元素是待排序数组 A 中值等于 i 的元素的个数。然后根据数组 C 来将 A 中的元素排到正确的位置。它只能对整数进行排序。\n算法步骤 找出数组中的最大值 max、最小值 min； 创建一个新数组 C，其长度是 max-min+1，其元素默认值都为 0； 遍历原数组 A 中的元素 A[i]，以 A[i]-min 作为 C 数组的索引，以 A[i] 的值在 A 中元素出现次数作为 C[A[i]-min] 的值； 对 C 数组变形，新元素的值是该元素与前一个元素值的和，即当 i\u003e1 时 C[i] = C[i] + C[i-1]； 创建结果数组 R，长度和原始数组一样。 从后向前遍历原始数组 A 中的元素 A[i]，使用 A[i] 减去最小值 min 作为索引，在计数数组 C 中找到对应的值 C[A[i]-min]，C[A[i]-min]-1 就是 A[i] 在结果数组 R 中的位置，做完上述这些操作，将 count[A[i]-min] 减小 1。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 /** * Gets the maximum and minimum values in the array * * @param arr * @return */ private static int[] getMinAndMax(int[] arr) { int maxValue = arr[0]; int minValue = arr[0]; for (int i = 0; i \u003c arr.length; i++) { if (arr[i] \u003e maxValue) { maxValue = arr[i]; } else if (arr[i] \u003c minValue) { minValue = arr[i]; } } return new int[] { minValue, maxValue }; } /** * Counting Sort * * @param arr * @return */ public static int[] countingSort(int[] arr) { if (arr.length \u003c 2) { return arr; } int[] extremum = getMinAndMax(arr); int minValue = extremum[0]; int maxValue = extremum[1]; int[] countArr = new int[maxValue - minValue + 1]; int[] result = new int[arr.length]; for (int i = 0; i \u003c arr.length; i++) { countArr[arr[i] - minValue] += 1; } for (int i = 1; i \u003c countArr.length; i++) { countArr[i] += countArr[i - 1]; } for (int i = arr.length - 1; i \u003e= 0; i--) { int idx = countArr[arr[i] - minValue] - 1; result[idx] = arr[i]; countArr[arr[i] - minValue] -= 1; } return result; } 算法分析 当输入的元素是 n 个 0 到 k 之间的整数时，它的运行时间是 O(n+k)。计数排序不是比较排序，排序的速度快于任何比较排序算法。由于用来计数的数组 C 的长度取决于待排序数组中数据的范围（等于待排序数组的最大值与最小值的差加上 1），这使得计数排序对于数据范围很大的数组，需要大量额外内存空间。\n稳定性：稳定 时间复杂度：最佳：O(n+k) 最差：O(n+k) 平均：O(n+k) 空间复杂度：O(k) 桶排序 (Bucket Sort) 桶排序是计数排序的升级版。它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。为了使桶排序更加高效，我们需要做到这两点：\n在额外空间充足的情况下，尽量增大桶的数量 使用的映射函数能够将输入的 N 个数据均匀的分配到 K 个桶中 桶排序的工作的原理：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行。\n算法步骤 设置一个 BucketSize，作为每个桶所能放置多少个不同数值； 遍历输入数据，并且把数据依次映射到对应的桶里去； 对每个非空的桶进行排序，可以使用其它排序方法，也可以递归使用桶排序； 从非空桶里把排好序的数据拼接起来。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 /** * Gets the maximum and minimum values in the array * @param arr * @return */ private static int[] getMinAndMax(List arr) { int maxValue = arr.get(0); int minValue = arr.get(0); for (int i : arr) { if (i \u003e maxValue) { maxValue = i; } else if (i \u003c minValue) { minValue = i; } } return new int[] { minValue, maxValue }; } /** * Bucket Sort * @param arr * @return */ public static List bucketSort(List arr, int bucket_size) { if (arr.size() \u003c 2 || bucket_size == 0) { return arr; } int[] extremum = getMinAndMax(arr); int minValue = extremum[0]; int maxValue = extremum[1]; int bucket_cnt = (maxValue - minValue) / bucket_size + 1; List",
+  "wordCount" : "20471",
+  "inLanguage": "en",
+  "datePublished": "2018-11-09T00:34:23Z",
+  "dateModified": "2018-11-09T00:34:23Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

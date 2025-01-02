@@ -1,8 +1,140 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head>
-    
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>代理模式 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="设计模式">
+<meta name="description" content="快速学习
+类型：结构型
+
+为其他对象提供一种代理以控制对这个对象的访问。
+">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="代理模式">
+  <meta property="og:description" content="快速学习 类型：结构型
+为其他对象提供一种代理以控制对这个对象的访问。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2018-12-10T16:45:26+00:00">
+    <meta property="article:modified_time" content="2018-12-10T16:45:26+00:00">
+    <meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代理模式">
+<meta name="twitter:description" content="快速学习
+类型：结构型
+
+为其他对象提供一种代理以控制对这个对象的访问。
+">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "代理模式",
+      "item": "https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "代理模式",
+  "name": "代理模式",
+  "description": "快速学习 类型：结构型\n为其他对象提供一种代理以控制对这个对象的访问。\n",
+  "keywords": [
+    "设计模式"
+  ],
+  "articleBody": "快速学习 类型：结构型\n为其他对象提供一种代理以控制对这个对象的访问。\n代理模式，即Proxy，它和Adapter模式很类似。我们先回顾Adapter模式，它用于把A接口转换为B接口：\n1 2 3 4 5 6 7 8 9 public class BAdapter implements B { private A a; public BAdapter(A a) { this.a = a; } public void b() { a.a(); } } 而Proxy模式不是把A接口转换成B接口，它还是转换成A接口：\n1 2 3 4 5 6 7 8 9 public class AProxy implements A { private A a; public AProxy(A a) { this.a = a; } public void a() { this.a.a(); } } 合着Proxy就是为了给A接口再包一层，这不是脱了裤子放屁吗？\n当然不是。我们观察Proxy的实现A接口的方法：\n1 2 3 public void a() { this.a.a(); } 这样写当然没啥卵用。但是，如果我们在调用a.a()的前后，加一些额外的代码：\n1 2 3 4 5 6 7 public void a() { if (getCurrentUser().isRoot()) { this.a.a(); } else { throw new SecurityException(\"Forbidden\"); } } 这样一来，我们就实现了权限检查，只有符合要求的用户，才会真正调用目标方法，否则，会直接抛出异常。\n有的童鞋会问，为啥不把权限检查的功能直接写到目标实例A的内部？\n因为我们编写代码的原则有：\n职责清晰：一个类只负责一件事； 易于测试：一次只测一个功能。 用Proxy实现这个权限检查，我们可以获得更清晰、更简洁的代码：\nA接口：只定义接口； ABusiness类：只实现A接口的业务逻辑； APermissionProxy类：只实现A接口的权限检查代理。 如果我们希望编写其他类型的代理，可以继续增加类似ALogProxy，而不必对现有的A接口、ABusiness类进行修改。\n实际上权限检查只是代理模式的一种应用。Proxy还广泛应用在：\n远程代理 远程代理即Remote Proxy，本地的调用者持有的接口实际上是一个代理，这个代理负责把对接口的方法访问转换成远程调用，然后返回结果。Java内置的RMI机制就是一个完整的远程代理模式。\n虚代理 虚代理即Virtual Proxy，它让调用者先持有一个代理对象，但真正的对象尚未创建。如果没有必要，这个真正的对象是不会被创建的，直到客户端需要真的必须调用时，才创建真正的对象。JDBC的连接池返回的JDBC连接（Connection对象）就可以是一个虚代理，即获取连接时根本没有任何实际的数据库连接，直到第一次执行JDBC查询或更新操作时，才真正创建实际的JDBC连接。\n保护代理 保护代理即Protection Proxy，它用代理对象控制对原始对象的访问，常用于鉴权。\n智能引用 智能引用即Smart Reference，它也是一种代理对象，如果有很多客户端对它进行访问，通过内部的计数器可以在外部调用者都不使用后自动释放它。\n我们来看一下如何应用代理模式编写一个JDBC连接池（DataSource）。我们首先来编写一个虚代理，即如果调用者获取到Connection后，并没有执行任何SQL操作，那么这个Connection Proxy实际上并不会真正打开JDBC连接。调用者代码如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 DataSource lazyDataSource = new LazyDataSource(jdbcUrl, jdbcUsername, jdbcPassword); System.out.println(\"get lazy connection...\"); try (Connection conn1 = lazyDataSource.getConnection()) { // 并没有实际打开真正的Connection } System.out.println(\"get lazy connection...\"); try (Connection conn2 = lazyDataSource.getConnection()) { try (PreparedStatement ps = conn2.prepareStatement(\"SELECT * FROM students\")) { // 打开了真正的Connection try (ResultSet rs = ps.executeQuery()) { while (rs.next()) { System.out.println(rs.getString(\"name\")); } } } } 现在我们来思考如何实现这个LazyConnectionProxy。为了简化代码，我们首先针对Connection接口做一个抽象的代理类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 public abstract class AbstractConnectionProxy implements Connection { // 抽象方法获取实际的Connection: protected abstract Connection getRealConnection(); // 实现Connection接口的每一个方法: public Statement createStatement() throws SQLException { return getRealConnection().createStatement(); } public PreparedStatement prepareStatement(String sql) throws SQLException { return getRealConnection().prepareStatement(sql); } ...其他代理方法... } 这个AbstractConnectionProxy代理类的作用是把Connection接口定义的方法全部实现一遍，因为Connection接口定义的方法太多了，后面我们要编写的LazyConnectionProxy只需要继承AbstractConnectionProxy，就不必再把Connection接口方法挨个实现一遍。\nLazyConnectionProxy实现如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 public class LazyConnectionProxy extends AbstractConnectionProxy { private Supplier supplier; private Connection target = null; public LazyConnectionProxy(Supplier supplier) { this.supplier = supplier; } // 覆写close方法：只有target不为null时才需要关闭: public void close() throws SQLException { if (target != null) { System.out.println(\"Close connection: \" + target); super.close(); } } @Override protected Connection getRealConnection() { if (target == null) { target = supplier.get(); } return target; } } 如果调用者没有执行任何SQL语句，那么target字段始终为null。只有第一次执行SQL语句时（即调用任何类似prepareStatement()方法时，触发getRealConnection()调用），才会真正打开实际的JDBC Connection。\n最后，我们还需要编写一个LazyDataSource来支持这个LazyConnectionProxy：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 public class LazyDataSource implements DataSource { private String url; private String username; private String password; public LazyDataSource(String url, String username, String password) { this.url = url; this.username = username; this.password = password; } public Connection getConnection(String username, String password) throws SQLException { return new LazyConnectionProxy(() -\u003e { try { Connection conn = DriverManager.getConnection(url, username, password); System.out.println(\"Open connection: \" + conn); return conn; } catch (SQLException e) { throw new RuntimeException(e); } }); } ... } 我们执行代码，输出如下：\n1 2 3 4 5 6 7 8 9 get lazy connection... get lazy connection... Open connection: com.mysql.jdbc.JDBC4Connection@7a36aefa 小明 小红 小军 小白 ... Close connection: com.mysql.jdbc.JDBC4Connection@7a36aefa 可见第一个getConnection()调用获取到的LazyConnectionProxy并没有实际打开真正的JDBC Connection。\n使用连接池的时候，我们更希望能重复使用连接。如果调用方编写这样的代码：\n1 2 3 4 5 6 7 8 9 DataSource pooledDataSource = new PooledDataSource(jdbcUrl, jdbcUsername, jdbcPassword); try (Connection conn = pooledDataSource.getConnection()) { } try (Connection conn = pooledDataSource.getConnection()) { // 获取到的是同一个Connection } try (Connection conn = pooledDataSource.getConnection()) { // 获取到的是同一个Connection } 调用方并不关心是否复用了Connection，但从PooledDataSource获取的Connection确实自带这个优化功能。如何实现可复用Connection的连接池？答案仍然是使用代理模式。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 public class PooledConnectionProxy extends AbstractConnectionProxy { // 实际的Connection: Connection target; // 空闲队列: Queue idleQueue; public PooledConnectionProxy(Queue idleQueue, Connection target) { this.idleQueue = idleQueue; this.target = target; } public void close() throws SQLException { System.out.println(\"Fake close and released to idle queue for future reuse: \" + target); // 并没有调用实际Connection的close()方法, // 而是把自己放入空闲队列: idleQueue.offer(this); } protected Connection getRealConnection() { return target; } } 复用连接的关键在于覆写close()方法，它并没有真正关闭底层JDBC连接，而是把自己放回一个空闲队列，以便下次使用。\n空闲队列由PooledDataSource负责维护：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 public class PooledDataSource implements DataSource { private String url; private String username; private String password; // 维护一个空闲队列: private Queue idleQueue = new ArrayBlockingQueue\u003c\u003e(100); public PooledDataSource(String url, String username, String password) { this.url = url; this.username = username; this.password = password; } public Connection getConnection(String username, String password) throws SQLException { // 首先试图获取一个空闲连接: PooledConnectionProxy conn = idleQueue.poll(); if (conn == null) { // 没有空闲连接时，打开一个新连接: conn = openNewConnection(); } else { System.out.println(\"Return pooled connection: \" + conn.target); } return conn; } private PooledConnectionProxy openNewConnection() throws SQLException { Connection conn = DriverManager.getConnection(url, username, password); System.out.println(\"Open new connection: \" + conn); return new PooledConnectionProxy(idleQueue, conn); } ... } 我们执行调用方代码，输出如下：\n1 2 3 4 5 6 Open new connection: com.mysql.jdbc.JDBC4Connection@61ca2dfa Fake close and released to idle queue for future reuse: com.mysql.jdbc.JDBC4Connection@61ca2dfa Return pooled connection: com.mysql.jdbc.JDBC4Connection@61ca2dfa Fake close and released to idle queue for future reuse: com.mysql.jdbc.JDBC4Connection@61ca2dfa Return pooled connection: com.mysql.jdbc.JDBC4Connection@61ca2dfa Fake close and released to idle queue for future reuse: com.mysql.jdbc.JDBC4Connection@61ca2dfa 除了第一次打开了一个真正的JDBC Connection，后续获取的Connection实际上是同一个JDBC Connection。但是，对于调用方来说，完全不需要知道底层做了哪些优化。\n我们实际使用的DataSource，例如HikariCP，都是基于代理模式实现的，原理同上，但增加了更多的如动态伸缩的功能（一个连接空闲一段时间后自动关闭）。\n有的童鞋会发现Proxy模式和Decorator模式有些类似。确实，这两者看起来很像，但区别在于：Decorator模式让调用者自己创建核心类，然后组合各种功能，而Proxy模式决不能让调用者自己创建再组合，否则就失去了代理的功能。Proxy模式让调用者认为获取到的是核心类接口，但实际上是代理类。\n概述 代理模式可以通过代理对象访问目标对象，这样做的好处是：在实现目标对象的基础上，扩展目标对象的功能。不要随意去修改别人已经写好的代码或者方法，如果需改修改，可以通过代理的方式来扩展该方法。\n代理对象是目标对象的扩展，并会调用目标对象。\n静态代理 静态代理在使用时，需要定义接口或者父类，被代理对象与代理对象一起实现相同的接口或者是继承相同父类。\n1 2 3 4 //接口 public interface UserService { void save(); } 1 2 3 4 5 6 7 //接口实现：目标对象 public class UserServiceImpl implements UserService{ @Override public void save() { System.out.println(\"----已经保存数据!----\"); } } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 /** * 代理对象,静态代理 */ public class UserProxy implements UserService{ //接收保存目标对象 private UserService target; public UserProxy(UserService target){ this.target=target; } @Override public void save() { if (getCurrentUser().isRoot()) { //执行目标对象的方法 target.save(); } else { throw new SecurityException(\"Forbidden\"); } } } 1 2 3 4 5 6 7 8 9 10 11 12 13 /** * 测试类 */ public class Test { public static void main(String[] args) { //目标对象 UserService userService = new UserServiceImpl(); //代理对象,把目标对象传给代理对象,建立代理关系 UserProxy userProxy = new UserProxy(userService); //执行的是代理的方法 userProxy.save(); } } 我们编写代码的原则有：\n职责清晰：一个类只负责一件事； 易于测试：一次只测一个功能。 用Proxy实现这个权限检查，我们可以获得更清晰、更简洁的代码：\nA接口：只定义接口； ABusiness类：只实现A接口的业务逻辑； APermissionProxy类：只实现A接口的权限检查代理。 如果我们希望编写其他类型的代理，可以继续增加类似ALogProxy，而不必对现有的A接口、ABusiness类进行修改。\n静态代理总结： 优点：可以做到在不修改目标对象的功能前提下，对目标功能扩展。 缺点：因为代理对象需要与目标对象实现一样的接口，所以会有很多代理类，类太多。同时，一旦接口增加方法，目标对象与代理对象都要维护。 如何解决静态代理中的缺点呢？答案是可以使用动态代理方式。\n动态代理 特点：\n代理对象，不需要实现接口 代理对象的生成，是利用JDK的API，动态的在内存中构建代理对象（需要我们指定创建代理对象/目标对象实现的接口的类型） 动态代理也叫做：JDK代理，接口代理 JDK中生成代理对象的API 代理类所在包：java.lang.reflect.Proxy JDK实现代理只需要使用newProxyInstance方法，但是该方法需要接收三个参数,完整的写法是： static Object newProxyInstance(ClassLoader loader, Class\u003c?\u003e[] interfaces,InvocationHandler h )\n注意该方法是在Proxy类中是静态方法，且接收的三个参数依次为：\nClassLoader loader：指定当前目标对象使用类加载器，获取加载器的方法是固定的 Class\u003c?\u003e[] interfaces：目标对象实现的接口的类型,使用泛型方式确认类型 事件处理，执行目标对象的方法时，会触发事件处理器的方法，会把当前执行目标对象的方法作为参数传入 接口类 UserService、目标对象 UserServiceImpl 无需修改。在此基础上，增加代理工厂类：ProxyFactory\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 /** * 创建动态代理对象 * 动态代理不需要实现接口,但是需要指定接口类型 */ public class ProxyFactory { //维护一个目标对象 private Object target; public ProxyFactory(Object target) { this.target = target; } //给目标对象生成代理对象 public Object getProxyInstance(){ InvocationHandler handler = (proxy, method, args) -\u003e { System.out.println(\"开始事务2\"); //执行目标对象方法 Object returnValue = method.invoke(target, args); System.out.println(\"提交事务2\"); return returnValue; }; Object proxyInstance = Proxy.newProxyInstance( target.getClass().getClassLoader(), target.getClass().getInterfaces(), handler); return proxyInstance; } } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 /** * 测试类 */ public class Test { public static void main(String[] args) { // 目标对象 UserService userService = new UserServiceImpl(); // 原始类型 class cn.wjy.UserServiceImpl System.out.println(userService.getClass()); // 给目标对象，创建代理对象 UserService proxy = (UserService) new ProxyFactory(userService).getProxyInstance(); // class $Proxy0 内存中动态生成的代理对象 System.out.println(proxy.getClass()); // 代理对象，执行方法 proxy.save(); } } 代理对象不需要实现接口，但是目标对象一定要实现接口，否则不能用动态代理。\nCglib 代理 Cglib代理，也叫作子类代理，它是在内存中构建一个子类对象从而实现对目标对象功能的扩展。 静、动态代理都要求目标对象实现接口，但有时目标对象只是一个单独的对象，没有实现任何口，此时可使用Cglib代理。\nCglib是一个强大的高性能的代码生成包，它可以在运行期扩展java类与实现java接口，它广泛的被许多AOP的框架使用，例如Spring AOP和synaop，为他们提供方法的interception(拦截)。 Cglib包的底层是通过使用一个小而快的字节码处理框架ASM来转换字节码并生成新的类。不鼓励直接使用ASM，因为它要求你必须对JVM内部结构包括class文件的格式和指令集都很熟悉。\nCglib子类代理实现方法：\n需要引入cglib的jar文件，但是Spring的核心包中已经包括了Cglib功能，所以直接引入spring-core-3.2.5.jar即可。 引入功能包后，就可以在内存中动态构建子类。 代理的类不能为final，否则报错。 目标对象的方法如果为final/static，那么就不会被拦截，即不会执行目标对象额外的业务方法。 目标对象类：UserDao\n1 2 3 4 5 6 7 8 /** * 目标对象，没有实现任何接口 */ public class User { public void save(){ System.out.println(\"----已经保存数据!----\"); } } Cglib代理工厂：ProxyFactory\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 /** * Cglib子类代理工厂 * 对User在内存中动态构建一个子类对象 */ public class ProxyFactory implements MethodInterceptor { //维护目标对象 private Object target; public ProxyFactory(Object target) { this.target = target; } //给目标对象创建一个代理对象 public Object getProxyInstance(){ //1.工具类 Enhancer en = new Enhancer(); //2.设置父类 en.setSuperclass(target.getClass()); //3.设置回调函数 en.setCallback(this); //4.创建子类(代理对象) return en.create(); } public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable { System.out.println(\"开始事务...\"); //执行目标对象的方法 Object returnValue = method.invoke(target, objects); System.out.println(\"提交事务...\"); return returnValue; } } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 /** * 测试类 */ public class Test { public static void main(String[] args) { //目标对象 User target = new User(); //代理对象 User proxy = (User)new ProxyFactory(target).getProxyInstance(); //执行代理对象的方法 proxy.save(); } } 在Spring的AOP编程中：\n如果加入容器的目标对象有实现接口，用JDK代理。\n如果目标对象没有实现接口，用Cglib代理。\n参考\n",
+  "wordCount" : "5602",
+  "inLanguage": "en",
+  "datePublished": "2018-12-10T16:45:26Z",
+  "dateModified": "2018-12-10T16:45:26Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
