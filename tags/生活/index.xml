@@ -6,8 +6,15 @@
     <description>Recent content in 生活 on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 24 Oct 2024 17:33:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jan 2025 12:05:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>云原生</title>
+      <link>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E4%BA%91%E5%8E%9F%E7%94%9F/</link>
+      <pubDate>Mon, 06 Jan 2025 12:05:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E4%BA%91%E5%8E%9F%E7%94%9F/</guid>
+      <description>从云计算到云原生：从概念到落地 云计算最近几年已经火得不行，云原生（Cloud Native）这个概念又来了，如果上云不“原生”，那就等于白上云</description>
+    </item>
     <item>
       <title>cloudFlare</title>
       <link>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/cloudflare/</link>

@@ -2,16 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/httpclient/</loc>
-    <lastmod>2024-12-30T17:58:58+00:00</lastmod>
-  </url><url>
     <loc>https://009965.xyz/posts/</loc>
-    <lastmod>2024-12-30T17:58:58+00:00</lastmod>
+    <lastmod>2025-01-06T12:05:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/tags/</loc>
-    <lastmod>2024-12-30T17:58:58+00:00</lastmod>
+    <lastmod>2025-01-06T12:05:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/</loc>
+    <lastmod>2025-01-06T12:05:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E4%BA%91%E5%8E%9F%E7%94%9F/</loc>
+    <lastmod>2025-01-06T12:05:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</loc>
+    <lastmod>2025-01-06T12:05:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/httpclient/</loc>
     <lastmod>2024-12-30T17:58:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/tags/%E5%85%B6%E4%BB%96/</loc>
@@ -21,9 +27,6 @@
     <lastmod>2024-12-13T17:37:56+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/cloudflare/</loc>
-    <lastmod>2024-10-24T17:33:37+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</loc>
     <lastmod>2024-10-24T17:33:37+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E5%8F%8C%E6%8B%BC%E8%BE%93%E5%85%A5/</loc>
