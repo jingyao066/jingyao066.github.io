@@ -167,7 +167,7 @@
       <link>https://009965.xyz/posts/interview/1_java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
       <pubDate>Thu, 06 Jul 2023 05:00:00 +0000</pubDate>
       <guid>https://009965.xyz/posts/interview/1_java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
-      <description>基础概念和常识 JVM JVM是运行 Java 字节码的虚拟机。JVM 有针对不同系统的特定实现（Windows，Linux，macOS），目的是使用相同的字节</description>
+      <description>基础概念和常识 JVM Java 虚拟机（Java Virtual Machine, JVM）是运行 Java 字节码的虚拟机。JVM 有针对不同系统的特定实现（Windows，Linux，macOS</description>
     </item>
   </channel>
 </rss>
