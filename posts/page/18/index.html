@@ -163,6 +163,22 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">equals
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>equals() 的作用 equals() 的作用是用来判断两个对象是否相等。 equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否相等(即，是否是同一个对象)来区分它们是否相等。源码如下：
+1 2 3 public boolean equals(Object obj) { return (this == obj); } 既然Object.java中定义了equals()方法，这就意味着所有的Java类都实现了equals()方法，所有的类都可以通过equals()去比较两个对象是否相等。 但是，我们已经说过，使用默认的equals()方法，等价于==方法。因此，我们通常会重写equals()方法：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。
+下面根据类是否覆盖equals()方法，将它分为2类。
+若某个类没有覆盖equals()方法，当它的通过equals()比较两个对象时，实际上是比较两个对象是不是同一个对象。这时，等价于通过==去比较这两个对象。 我们可以覆盖类的equals()方法，来让equals()通过其它方式比较两个对象是否相等。通常的做法是：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。 下面，举例对上面的2种情况进行说明。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-04-30 11:36:50 +0000 UTC'>2019-04-30</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to equals" href="https://009965.xyz/posts/java/equals/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">comparable和comparator
     </h2>
   </header>
@@ -236,19 +252,6 @@
   </div>
   <footer class="entry-footer"><span title='2019-03-30 10:22:55 +0000 UTC'>2019-03-30</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to 10_multithreading-JUC线程池" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/10_multithreading-juc%E7%BA%BF%E7%A8%8B%E6%B1%A0/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">9_multithreading-JUC集合
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>JUC集合概述 Java集合包 java集合主要包括Collection和Map类，而Collection集合又可以划分为List(队列)和Set(集合)。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-03-29 15:18:33 +0000 UTC'>2019-03-29</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 9_multithreading-JUC集合" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/9_multithreading-juc%E9%9B%86%E5%90%88/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
