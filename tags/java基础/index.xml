@@ -147,7 +147,8 @@
       <guid>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/5_%E5%8F%8D%E5%B0%84/</guid>
       <description>&lt;h1 id=&#34;反射&#34;&gt;反射&lt;/h1&gt;
 &lt;p&gt;什么是反射？
-反射就是&lt;code&gt;Reflection&lt;/code&gt;，Java的反射是指程序在运行期可以拿到一个对象的所有信息。&lt;/p&gt;</description>
+反射就是&lt;code&gt;Reflection&lt;/code&gt;，Java的反射是指程序在运行期可以拿到一个对象的所有信息。&lt;/p&gt;
+&lt;p&gt;其他参考：https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html&lt;/p&gt;</description>
     </item>
     <item>
       <title>4_异常</title>
