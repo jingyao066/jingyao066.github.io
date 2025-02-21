@@ -6,13 +6,20 @@
     <description>Recent content in Tags on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 07 Jan 2025 17:22:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Feb 2025 17:30:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>生活</title>
       <link>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI</title>
+      <link>https://009965.xyz/tags/ai/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://009965.xyz/tags/ai/</guid>
       <description></description>
     </item>
     <item>
@@ -104,13 +111,6 @@
       <link>https://009965.xyz/tags/java%E9%9B%86%E5%90%88/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://009965.xyz/tags/java%E9%9B%86%E5%90%88/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>AI</title>
-      <link>https://009965.xyz/tags/ai/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/tags/ai/</guid>
       <description></description>
     </item>
   </channel>

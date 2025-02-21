@@ -163,6 +163,71 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">概念
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>java反编译 在介绍编译和反编译之前，我们先来简单介绍下编程语言（Programming Language）。编程语言（Programming Language）分为低级语言（Low-level Language）和高级语言（High-level Language）。
+机器语言（Machine Language）和汇编语言（Assembly Language）属于低级语言，直接用计算机指令编写程序。
+而C、C&#43;&#43;、Java、Python等属于高级语言，用语句（Statement）编写程序，语句是计算机指令的抽象表示。
+举个例子，同样一个语句用C语言、汇编语言和机器语言分别表示如下：
+编程语言 表示形式 C语言 a=b&#43;1; 汇编 mov 0x804a01c,%eax
+add $Ox1,%eax
+mov %eax,0x804a018 机器语言 a1 1c a0 04 0883 c0 01a3 18 a0 04 08 计算机只能对数字做运算，符号、声音、图像在计算机内部都要用数字表示，指令也不例外，上表中的机器语言完全由十六进制数字组成。最早的程序员都是直接用机器语言编程，但是很麻烦，需要查大量的表格来确定每个数字表示什么意思，编写出来的程序很不直观，而且容易出错，于是有了汇编语言，把机器语言中一组一组的数字用助记符（Mnemonic）表示，直接用这些助记符写出汇编程序，然后让汇编器（Assembler）去查表把助记符替换成数字，也就把汇编语言翻译成了机器语言。但是，汇编语言用起来同样比较复杂，后面，就衍生出了Java、C、C&#43;&#43;等高级语言。
+什么是编译？ 上面提到语言有两种，一种低级语言，一种高级语言。可以这样简单的理解：低级语言是计算机认识的语言、高级语言是程序员认识的语言。那么如何从高级语言转换成低级语言呢？这个过程其实就是编译。
+从上面的例子还可以看出，C语言的语句和低级语言的指令之间不是简单的一一对应关系，一条a=b&#43;1;语句要翻译成三条汇编或机器指令，这个过程称为编译（Compile），由编译器（Compiler）来完成，显然编译器的功能比汇编器要复杂得多。用C语言编写的程序必须经过编译转成机器指令才能被计算机执行，编译需要花一些时间，这是用高级语言编程的一个缺点，然而更多的是优点。首先，用C语言编程更容易，写出来的代码更紧凑，可读性更强，出了错也更容易改正。
+将便于人编写、阅读、维护的高级计算机语言所写作的源代码程序，翻译为计算机能解读、运行的低阶机器语言的程序的过程就是编译。负责这一过程的处理的工具叫做编译器。
+现在我们知道了什么是编译，也知道了什么是编译器。不同的语言都有自己的编译器，Java语言中负责编译的编译器是一个命令：javac
+javac是收录于JDK中的Java语言编译器。该工具可以将后缀名为.java的源文件编译为后缀名为.class的可以运行于Java虚拟机的字节码。
+当我们写完一个HelloWorld.java文件后，我们可以使用javac HelloWorld.java命令来生成HelloWorld.class文件，这个class类型的文件是JVM可以识别的文件。通常我们认为这个过程叫做Java语言的编译。其实，class文件仍然不是机器能够识别的语言，因为机器只能识别机器语言，还需要JVM再将这种class文件类型字节码转换成机器可以识别的机器语言。
+什么是反编译？ 反编译的过程与编译刚好相反，就是将已编译好的编程语言还原到未编译的状态，也就是找出程序语言的源代码。就是将机器看得懂的语言转换成程序员可以看得懂的语言。Java语言中的反编译一般指将class文件转换成java文件。
+有了反编译工具，我们可以做很多事情，最主要的功能就是有了反编译工具，我们就能读得懂Java编译器生成的字节码。
+如何防止反编译？
+由于我们有工具可以对Class文件进行反编译，所以，对开发人员来说，如何保护Java程序就变成了一个非常重要的挑战。但是，魔高一尺、道高一丈。当然有对应的技术可以应对反编译咯。但是，这里还是要说明一点，和网络安全的防护一样，无论做出多少努力，其实都只是提高攻击者的成本而已。无法彻底防治。
+典型的应对策略有以下几种：
+隔离Java程序
+让用户接触不到你的Class文件 对Class文件进行加密
+提到破解难度 代码混淆
+将代码转换成功能上等价，但是难于阅读和理解的形式 Java反编译工具 Javap javap是jdk自带的一个工具，可以对代码反编译，也可以查看java编译器生成的字节码。javap和其他两个反编译工具最大的区别是他生成的文件并不是java文件，也不像其他两个工具生成代码那样更容易理解。拿一段简单的代码举例，如我们想分析Java 7中的switch是如何支持String的，我们先有以下可以编译通过的源代码：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class switchDemoString { public static void main(String[] args) { String str = &#34;world&#34;; switch (str) { case &#34;hello&#34;: System.out.println(&#34;hello&#34;); break; case &#34;world&#34;: System.out.println(&#34;world&#34;); break; default: break; } } } 执行以下两个命令：
+1 2 javac switchDemoString.java javap -c switchDemoString.class 生成代码如下：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 public class com.hollis.suguar.switchDemoString { public com.hollis.suguar.switchDemoString(); Code: 0: aload_0 1: invokespecial #1 // Method java/lang/Object.&#34;&lt;init&gt;&#34;:()V 4: return public static void main(java.lang.String[]); Code: 0: ldc #2 // String world 2: astore_1 3: aload_1 4: astore_2 5: iconst_m1 6: istore_3 7: aload_2 8: invokevirtual #3 // Method java/lang/String.hashCode:()I 11: lookupswitch { // 2 99162322: 36 113318802: 50 default: 61 } 36: aload_2 37: ldc #4 // String hello 39: invokevirtual #5 // Method java/lang/String.equals:(Ljava/lang/Object;)Z 42: ifeq 61 45: iconst_0 46: istore_3 47: goto 61 50: aload_2 51: ldc #2 // String world 53: invokevirtual #5 // Method java/lang/String.equals:(Ljava/lang/Object;)Z 56: ifeq 61 59: iconst_1 60: istore_3 61: iload_3 62: lookupswitch { // 2 0: 88 1: 99 default: 110 } 88: getstatic #6 // Field java/lang/System.out:Ljava/io/PrintStream; 91: ldc #4 // String hello 93: invokevirtual #7 // Method java/io/PrintStream.println:(Ljava/lang/String;)V 96: goto 110 99: getstatic #6 // Field java/lang/System.out:Ljava/io/PrintStream; 102: ldc #2 // String world 104: invokevirtual #7 // Method java/io/PrintStream.println:(Ljava/lang/String;)V 107: goto 110 110: return } 我个人的理解，javap并没有将字节码反编译成java文件，而是生成了一种我们可以看得懂字节码。其实javap生成的文件仍然是字节码，只是程序员可以稍微看得懂一些。如果你对字节码有所掌握，还是可以看得懂以上的代码的。其实就是把String转成hashcode，然后进行比较。
+个人认为，一般情况下我们会用到javap命令的时候不多，一般只有在真的需要看字节码的时候才会用到。但是字节码中间暴露的东西是最全的，你肯定有机会用到，比如我在分析synchronized的原理的时候就有是用到javap。通过javap生成的字节码，我发现synchronized底层依赖了ACC_SYNCHRONIZED标记和monitorenter、monitorexit两个指令来实现同步。
+jad jad是一个比较不错的反编译工具，只要下载一个执行工具，就可以实现对class文件的反编译了。还是上面的源代码，使用jad反编译后内容如下：
+命令：jad switchDemoString.class
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 public class switchDemoString { public switchDemoString() { } public static void main(String args[]) { String str = &#34;world&#34;; String s; switch((s = str).hashCode()) { default: break; case 99162322: if(s.equals(&#34;hello&#34;)) System.out.println(&#34;hello&#34;); break; case 113318802: if(s.equals(&#34;world&#34;)) System.out.println(&#34;world&#34;); break; } } } 看，这个代码你肯定看的懂，因为这不就是标准的java的源代码么。这个就很清楚的可以看到原来字符串的switch是通过****equals()和hashCode()方法来实现的。
+但是，jad已经很久不更新了，在对Java7生成的字节码进行反编译时，偶尔会出现不支持的问题，在对Java 8的lambda表达式反编译时就彻底失败。
+crf jad很好用，但是无奈的是很久没更新了，所以只能用一款新的工具替代他，CFR是一个不错的选择，相比jad来说，他的语法可能会稍微复杂一些，但是好在能用。我们使用cfr对刚刚的代码进行反编译。执行以下命令：
+1 java -jar cfr_0_125.jar switchDemoString.class --decodestringswitch false 得到以下代码：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 public class switchDemoString { public static void main(String[] arrstring) { String string; String string2 = string = &#34;world&#34;; int n = -1; switch (string2.hashCode()) { case 99162322: { if (!string2.equals(&#34;hello&#34;)) break; n = 0; break; } case 113318802: { if (!string2.equals(&#34;world&#34;)) break; n = 1; } } switch (n) { case 0: { System.out.println(&#34;hello&#34;); break; } case 1: { System.out.println(&#34;world&#34;); break; } } } } 通过这段代码也能得到字符串的switch是通过equals()和hashCode()方法来实现的结论。
+相比Jad来说，CFR有很多参数，还是刚刚的代码，如果我们使用以下命令，java -jar cfr_0_125.jar switchDemoString.class，输出结果就会不同：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class switchDemoString { public static void main(String[] arrstring) { String string; switch (string = &#34;world&#34;) { case &#34;hello&#34;: { System.out.println(&#34;hello&#34;); break; } case &#34;world&#34;: { System.out.println(&#34;world&#34;); break; } } } } 所以--decodestringswitch表示对于switch支持string的细节进行解码。类似的还有--decodeenumswitch、--decodefinally、--decodelambdas等。在我的关于语法糖的文章中，我使用--decodelambdas对lambda表达式警进行了反编译。 源码：
+1 2 3 4 public static void main(String... args) { List&lt;String&gt; strList = ImmutableList.of(&#34;Hollis&#34;, &#34;公众号：Hollis&#34;, &#34;博客：www.hollischuang.com&#34;); strList.forEach( s -&gt; { System.out.println(s); } ); } java -jar cfr_0_125.jar lambdaDemo.class --decodelambdas false反编译后代码：
+1 2 3 4 5 6 7 8 public static /* varargs */ void main(String ... args) { ImmutableList strList = ImmutableList.of((Object)&#34;Hollis&#34;, (Object)&#34;\u516c\u4f17\u53f7\uff1aHollis&#34;, (Object)&#34;\u535a\u5ba2\uff1awww.hollischuang.com&#34;); strList.forEach((Consumer&lt;String&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)V, lambda$main$0(java.lang.String ), (Ljava/lang/String;)V)()); } private static /* synthetic */ void lambda$main$0(String s) { System.out.println(s); } CFR还有很多其他参数，均用于不同场景，读者可以使用java -jar cfr_0_125.jar --help进行了解。这里不逐一介绍了。
+Java实例变量和类变量 Java程序的变量大体可分为成员变量和局部变量。其中局部变量可分为如下3类。 形参：在方法签名中定义的局部变量，由方法调用者负责为其赋值，随方法的结束而消亡。 方法内的局部变量：在方法内定义的局部变量，必须在方法内对其进行显示初始化。这种类型的局部变量从初始化完成后开始生效，随方法的结束而消亡。 代码块的局部变量：在代码块内定义的局部变量，必须在代码块内对其进行显式初始化，这种类型的局部变量从初始化完成后开始生效，随代码的结束而消亡。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-02 18:18:52 +0000 UTC'>2022-09-02</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 概念" href="https://009965.xyz/posts/java/%E6%A6%82%E5%BF%B5/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">jvm
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>jvm全面思维导图 java内存模型
+什么是虚拟机 windows只能安装exe安装包，mac只能安装dmg安装包，这是因为操作系统底层的实现是不一样的。系统软件无法通用是一个常见的问题。
+但使用过 Java 的同学都知道，Java 代码可以在Linux 系统运行，也可以在 Windows 系统运行，但我们并没有生成多份不同的代码。所以 Java 语言是如何做到的呢？ Java 语言并不直接将代码编译成与系统有关的机器码，而是编译成一种特定的语言规范，这种语言规范我们称之为字节码。无论 Java 程序要在 Windows 系统，还是 Mac 系统，抑或是 Linux 系统，它首先都得编译成字节码文件，之后才能运行。 但即使编译成字节码文件了，各个系统还是无法明白字节码文件的内容，这时候就需要 Java 虚拟机的帮助了。Java 虚拟机会解析字节码文件的内容，并将其翻译为各操作系统能理解的机器码。 java源码-&gt;字节码（byte code）-&gt;java Virture Machine -&gt;windows\linux code
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-01 18:16:18 +0000 UTC'>2022-09-01</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to jvm" href="https://009965.xyz/posts/java/jvm/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">21_web开发
     </h2>
   </header>
@@ -240,36 +305,6 @@ Maven就是是专门为Java项目打造的管理和构建工具，它的主要�
   </div>
   <footer class="entry-footer"><span title='2022-08-12 18:07:39 +0000 UTC'>2022-08-12</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to 15_Maven" href="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/15_maven/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">13_加密与安全
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>加密与安全 在计算机系统中，什么是加密与安全呢？
-我们举个栗子：假设Bob要给Alice发一封邮件，在邮件传送的过程中，黑客可能会窃取到邮件的内容，所以需要防窃听。黑客还可能会篡改邮件的内容，Alice必须有能力识别出邮件有没有被篡改。最后，黑客可能假冒Bob给Alice发邮件，Alice必须有能力识别出伪造的邮件。
-所以，应对潜在的安全威胁，需要做到三防：
-防窃听 防篡改 防伪造 计算机加密技术就是为了实现上述目标，而现代计算机密码学理论是建立在严格的数学理论基础上的，密码学已经逐渐发展成一门科学。对于绝大多数开发者来说，设计一个安全的加密算法非常困难，验证一个加密算法是否安全更加困难，当前被认为安全的加密算法仅仅是迄今为止尚未被攻破。因此，要编写安全的计算机程序，我们要做到：
-不要自己设计山寨的加密算法； 不要自己实现已有的加密算法； 不要自己修改已有的加密算法。 本章我们会介绍最常用的加密算法，以及如何通过Java代码实现。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 17:53:20 +0000 UTC'>2022-08-12</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 13_加密与安全" href="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/13_%E5%8A%A0%E5%AF%86%E4%B8%8E%E5%AE%89%E5%85%A8/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">12_正则
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>在了解正则表达式之前，我们先看几个非常常见的问题：
-如何判断字符串是否是有效的电话号码？例如：010-1234567，123ABC456，13510001000 如何判断字符串是否是有效的电子邮件地址？例如：test@example.com，test#example 如何判断字符串是否是有效的时间？例如：12:34，09:60，99:99等。 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-11 17:56:20 +0000 UTC'>2022-08-11</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 12_正则" href="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/12_%E6%AD%A3%E5%88%99/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
