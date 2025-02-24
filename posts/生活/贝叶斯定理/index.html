@@ -216,22 +216,18 @@
         <div class="inner"><ul>
                 <li>
                     <a href="#%e5%8e%9f%e7%90%86" aria-label="原理">原理</a><ul>
-                        <ul>
                         
                 <li>
                     <a href="#%e8%ae%a1%e7%ae%97" aria-label="计算">计算</a></li>
                 <li>
                     <a href="#%e8%b4%9d%e5%8f%b6%e6%96%af%e5%ae%9a%e7%90%86%e7%9a%84%e5%8f%a6%e4%b8%80%e7%a7%8d%e8%a1%a8%e7%a4%ba" aria-label="贝叶斯定理的另一种表示">贝叶斯定理的另一种表示</a></li></ul>
-                    </ul>
                 </li>
                 <li>
                     <a href="#%e5%ba%94%e7%94%a8" aria-label="应用">应用</a><ul>
-                        <ul>
                         
                 <li>
                     <a href="#%e5%85%b3%e4%ba%8e%e4%bf%a1%e5%bf%b5" aria-label="关于信念">关于信念</a>
                 </li>
-            </ul>
             </ul>
             </li>
             </ul>
@@ -291,7 +287,7 @@
 <p>很多时候，我们把<code>A</code>改写为<code>H</code>，把<code>B</code>改写为<code>E</code>：</p>
 <p><em>P</em>(<em>H</em>∣<em>E</em>)=<em>P</em>(<em>E</em>)<em>P</em>(<em>E</em>∣<em>H</em>)×<em>P</em>(<em>H</em>)</p>
 <p>H表示Hypothesis（假设），E表示Evidence（证据），贝叶斯定理的意义就在于，给定一个先验概率P(H)，在出现了证据E的情况下，计算后验概率P(H|E)。</p>
-<h3 id="计算">计算<a hidden class="anchor" aria-hidden="true" href="#计算">#</a></h3>
+<h2 id="计算">计算<a hidden class="anchor" aria-hidden="true" href="#计算">#</a></h2>
 <p>有了贝叶斯定理，我们就可以回到开头的问题：</p>
 <p>已知有一种疾病，发病率是0.1%。针对这种疾病的测试非常准确：</p>
 <ul>
@@ -357,7 +353,7 @@
 <p>带入贝叶斯定理，计算P(H|E)：</p>
 <p><em>P</em>(<em>H</em>∣<em>E</em>)=<em>P</em>(<em>E</em>)<em>P</em>(<em>E</em>∣<em>H</em>)×<em>P</em>(<em>H</em>)=2.097%99%×0.1%=0.020970.99×0.001=0.04721=4.721%</p>
 <p>计算结果为患病的概率为4.721%，这个概率远小于99%，且与大多数人的直觉不同，原因在于庞大的健康人群导致的误报数量远多于病人，当出现“检测阳性”的证据时，患病的概率从先验概率0.1%提升到4.721%，还远不足以确诊。</p>
-<h3 id="贝叶斯定理的另一种表示">贝叶斯定理的另一种表示<a hidden class="anchor" aria-hidden="true" href="#贝叶斯定理的另一种表示">#</a></h3>
+<h2 id="贝叶斯定理的另一种表示">贝叶斯定理的另一种表示<a hidden class="anchor" aria-hidden="true" href="#贝叶斯定理的另一种表示">#</a></h2>
 <p>在上述计算中，我们发现计算P(E)是比较困难的，很多时候，甚至无法知道P(E)。此时，我们需要贝叶斯定理的另一种表示形式。</p>
 <p>我们用P(H)表示H发生的概率，用H表示H不发生，P(H)表示H不发生的概率。显然P(H)=1-P(H)。</p>
 <p>下图红色部分表示H，红色部分以外则表示H：</p>
@@ -425,7 +421,7 @@
 </ul>
 <p>把它们排个序，选出条件概率最大的几个，就是搜索建议。</p>
 <p>诸如反垃圾邮件、电商推荐系统等，都是贝叶斯理论在机器学习中的应用。由于需要大量的计算，贝叶斯理论也只有在计算机时代才能广泛应用。</p>
-<h3 id="关于信念">关于信念<a hidden class="anchor" aria-hidden="true" href="#关于信念">#</a></h3>
+<h2 id="关于信念">关于信念<a hidden class="anchor" aria-hidden="true" href="#关于信念">#</a></h2>
 <p>我们再回顾一下贝叶斯定理：</p>
 <p><em>P</em>(<em>H</em>∣<em>E</em>)=<em>P</em>(<em>E</em>)<em>P</em>(<em>E</em>∣<em>H</em>)×<em>P</em>(<em>H</em>)</p>
 <p>稍微改一下，变为：</p>
