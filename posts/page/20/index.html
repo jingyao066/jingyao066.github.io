@@ -163,6 +163,19 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">5_multithreading-interrupt
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>interrupt介绍 JDK1.8官方文档描述如下： Interrupts this thread. Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown. If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException. If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread’s interrupt status will be set, and the thread will receive a ClosedByInterruptException. If this thread is blocked in a Selector then the thread’s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector’s wakeup method were invoked. If none of the previous conditions hold then this thread’s interrupt status will be set. Interrupting a thread that is not alive need not have any effect.
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-03-26 16:50:17 +0000 UTC'>2019-03-26</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 5_multithreading-interrupt" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/5_multithreading-interrupt/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">4_multithreading-yield&#43;sleep&#43;join
     </h2>
   </header>
@@ -239,20 +252,6 @@ wait()，notify()必须和 synchronized 配合使用。
   </div>
   <footer class="entry-footer"><span title='2018-12-29 13:54:05 +0000 UTC'>2018-12-29</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to 装饰模式" href="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">组合模式
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>快速学习 类型：结构型
-将对象组合成树形结构以表示“部分-整体”的层次结构，使得用户对单个对象和组合对象的使用具有一致性。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2018-12-29 13:50:35 +0000 UTC'>2018-12-29</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 组合模式" href="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
