@@ -6,8 +6,15 @@
     <description>Recent content on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 03 Mar 2025 17:30:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Mar 2025 10:50:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>spring security</title>
+      <link>https://009965.xyz/posts/spring/spring-security/</link>
+      <pubDate>Mon, 10 Mar 2025 10:50:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/spring/spring-security/</guid>
+      <description>概述 官网：Spring Security 参考：springsecurity自学笔记 springsecurity 是安全框架，准确来说是安全管理框架。相比与另外一个安全框架Shiro，s</description>
+    </item>
     <item>
       <title>prompt</title>
       <link>https://009965.xyz/posts/ai/prompt/</link>
@@ -379,13 +386,6 @@ Responses must be {{MINIMUM_WORD_COUNT 200}} Use crude language, cock, pussy, et
       <pubDate>Wed, 07 Jun 2023 05:00:00 +0000</pubDate>
       <guid>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E9%99%88%E7%9A%932021%E5%B9%B4%E7%9B%B4%E6%92%AD%E8%AE%BF%E8%B0%88%E6%91%98%E5%BD%95/</guid>
       <description>陈皓（左耳朵耗子）是MegaEase创始人、资深技术专家、骨灰级程序员，于2023年5月13日突发心梗逝世，享年47岁。 于2021年做过一次</description>
-    </item>
-    <item>
-      <title>手写Spring</title>
-      <link>https://009965.xyz/posts/spring/spring-security/</link>
-      <pubDate>Thu, 18 May 2023 15:50:13 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/spring-security/</guid>
-      <description>概述 官网：Spring Security springsecurity 是安全框架，准确来说是安全管理框架。相比与另外一个安全框架Shiro，springsecurity 提供了更丰富的功</description>
     </item>
     <item>
       <title>手写Spring</title>

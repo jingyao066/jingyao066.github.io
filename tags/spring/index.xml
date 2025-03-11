@@ -6,14 +6,14 @@
     <description>Recent content in Spring on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 18 May 2023 15:50:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Mar 2025 10:50:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>手写Spring</title>
+      <title>spring security</title>
       <link>https://009965.xyz/posts/spring/spring-security/</link>
-      <pubDate>Thu, 18 May 2023 15:50:13 +0000</pubDate>
+      <pubDate>Mon, 10 Mar 2025 10:50:58 +0000</pubDate>
       <guid>https://009965.xyz/posts/spring/spring-security/</guid>
-      <description>概述 官网：Spring Security springsecurity 是安全框架，准确来说是安全管理框架。相比与另外一个安全框架Shiro，springsecurity 提供了更丰富的功</description>
+      <description>概述 官网：Spring Security 参考：springsecurity自学笔记 springsecurity 是安全框架，准确来说是安全管理框架。相比与另外一个安全框架Shiro，s</description>
     </item>
     <item>
       <title>手写Spring</title>

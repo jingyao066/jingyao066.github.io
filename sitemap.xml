@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://009965.xyz/posts/</loc>
+    <lastmod>2025-03-10T10:50:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/spring/</loc>
+    <lastmod>2025-03-10T10:50:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/spring/spring-security/</loc>
+    <lastmod>2025-03-10T10:50:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/</loc>
+    <lastmod>2025-03-10T10:50:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/</loc>
+    <lastmod>2025-03-10T10:50:58+00:00</lastmod>
+  </url><url>
     <loc>https://009965.xyz/tags/ai/</loc>
     <lastmod>2025-03-03T17:30:58+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/posts/</loc>
-    <lastmod>2025-03-03T17:30:58+00:00</lastmod>
-  </url><url>
     <loc>https://009965.xyz/posts/ai/prompt/</loc>
-    <lastmod>2025-03-03T17:30:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/</loc>
-    <lastmod>2025-03-03T17:30:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/</loc>
     <lastmod>2025-03-03T17:30:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/deepseek/</loc>
@@ -190,12 +196,6 @@
   </url><url>
     <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E9%99%88%E7%9A%932021%E5%B9%B4%E7%9B%B4%E6%92%AD%E8%AE%BF%E8%B0%88%E6%91%98%E5%BD%95/</loc>
     <lastmod>2023-06-07T05:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/spring/</loc>
-    <lastmod>2023-05-18T15:50:13+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/posts/spring/spring-security/</loc>
-    <lastmod>2023-05-18T15:50:13+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/spring/%E6%89%8B%E5%86%99spring/</loc>
     <lastmod>2023-04-13T15:50:13+00:00</lastmod>
