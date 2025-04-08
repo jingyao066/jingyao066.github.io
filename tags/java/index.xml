@@ -577,6 +577,13 @@ StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于Ab
       <description>简介 简单来说“Shell 编程就是对一堆 Linux 命令的逻辑化处理”。W3Cschool 上的一篇文章是这样介绍 Shell 的，如下图所示。 Shell 编程的 Hello World 学习任何一</description>
     </item>
     <item>
+      <title>java http请求</title>
+      <link>https://009965.xyz/posts/java/java-http%E8%AF%B7%E6%B1%82/</link>
+      <pubDate>Tue, 30 Apr 2019 11:36:55 +0000</pubDate>
+      <guid>https://009965.xyz/posts/java/java-http%E8%AF%B7%E6%B1%82/</guid>
+      <description>使用Java 11+的HttpClient (推荐) Java 11引入了新的HttpClient API，位于java.net.http包中： 1 2 3 4 5 6</description>
+    </item>
+    <item>
       <title>equals</title>
       <link>https://009965.xyz/posts/java/equals/</link>
       <pubDate>Tue, 30 Apr 2019 11:36:50 +0000</pubDate>
