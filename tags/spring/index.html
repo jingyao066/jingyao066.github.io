@@ -164,7 +164,7 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>一、Spring启示录 阅读以下代码： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 package com.powernode.oa.controller; import com.powernode.oa.service.UserService; import com.powernode.oa.service.impl.UserServiceImpl; public class UserController { private UserService userService = new UserServiceImpl(); public void login(){ String username = &#34;admin&#34;; String password = &#34;123456&#34;; boolean success = userService.login(username, password);...</p>
+    <p>一、Spring启示录 阅读以下代码： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class UserController { private UserService userService = new UserServiceImpl(); public void login(){ String username = &#34;admin&#34;; String password = &#34;123456&#34;; boolean success = userService.login(username, password); if (success) { // 登录成功 } else {...</p>
   </div>
   <footer class="entry-footer"><span title='2025-01-12 17:27:28 +0000 UTC'>2025-01-12</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to spring6" href="https://009965.xyz/posts/spring/spring6/"></a>

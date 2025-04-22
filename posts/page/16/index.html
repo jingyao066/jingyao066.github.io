@@ -163,97 +163,94 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">1、IOC容器
+    <h2 class="entry-hint-parent">网站的扩展
     </h2>
   </header>
   <div class="entry-content">
-    <p>概述 Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。
-Spring最早是由Rod Johnson这哥们在他的《Expert One-on-One J2EE Development without EJB》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。
-随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。
-Spring Framework Spring Framework主要包括几个模块：
-支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。
-本教程使用的Spring版本是6.x版，如果使用Spring 5.x则需注意，两者有以下不同（主要是包名由javax变为了jakarta）：
-Spring 5.x Spring 6.x JDK版本 &gt;= 1.8 &gt;= 17 Tomcat版本 9.x 10.x Annotation包 javax.annotation jakarta.annotation Servlet包 javax.servlet jakarta.servlet JMS包 javax.jms jakarta.jms JavaMail包 javax.mail jakarta.mail 如果使用Spring的其他版本，则需要根据需要调整代码。
-spring官网 spring官网如何阅读
+    <p>原文地址：https://arcentry.com/blog/scaling-webapps-for-newbs-and-non-techies/ 通俗地解释如何拓展网站服务，承受更大的访问量。
+单个服务器&#43;数据库 这可能是后台刚开始的样子，运行业务逻辑的单个应用程序服务器和长期存储数据的数据库。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2020-01-01 15:32:45 +0000 UTC'>2020-01-01</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 1、IOC容器" href="https://009965.xyz/posts/spring/1ioc%E5%AE%B9%E5%99%A8/"></a>
+  <footer class="entry-footer"><span title='2020-03-27 10:28:01 +0000 UTC'>2020-03-27</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 网站的扩展" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql主从复制&#43;读写分离的实现
+    <h2 class="entry-hint-parent">MQ
     </h2>
   </header>
   <div class="entry-content">
-    <p>准备 本机，安装mysql 一台虚拟机，或内网中的另一台主机，安装mysql 需要两台机器互相可以ping通 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-12-06 18:09:14 +0000 UTC'>2019-12-06</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql主从复制&#43;读写分离的实现" href="https://009965.xyz/posts/mysql/mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6-%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%E7%9A%84%E5%AE%9E%E7%8E%B0/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql进阶-存储过程
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。 存储过程是可编程的函数，在数据库中(数据字典表)创建并保存，可以由SQL语句和控制结构组成。当想要在不同的应用程序或平台上执行相同的函数，或者封装特定功能时，存储过程是非常有用的。数据库中的存储过程可以看做是对编程中面向对象方法的模拟，它允许控制数据的访问方式。
+    <p>概述 什么是消息队列 消息队列(Message queue)是一种进程间通信或同一进程的不同线程间的通信方式，软件的贮列用来处理一系列的输入，通常来自用户。消息队列提供了异步的通信协议，每一个贮列中的记录包含详细说明的数据，包含发生的时间，输入设备的种类，以及特定的输入参数。也就是说：消息的发送者和接收者不需要同时与消息队列互交。消息会保存在队列中，直到接收者取回它。 –维基百科
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-05 20:08:17 +0000 UTC'>2019-12-05</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql进阶-存储过程" href="https://009965.xyz/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/"></a>
+  <footer class="entry-footer"><span title='2020-03-06 14:51:55 +0000 UTC'>2020-03-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to MQ" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/mq/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql进阶-视图
+    <h2 class="entry-hint-parent">docker
     </h2>
   </header>
   <div class="entry-content">
-    <p>视图 概念： 视图就是一条SELECT语句执行后返回的结果集。 视图（view）是一种虚拟存在的表，是一个逻辑表，本身并不包含数据。作为一个select语句保存在数据字典中的。 所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。
+    <p>一文读懂docker原理 说起Docker，基本上就是指容器。许多同学熟悉Docker的操作，却搞不懂到底什么是容器。本文就来讲讲Docker...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-03-05 10:26:24 +0000 UTC'>2020-03-05</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to docker" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/docker/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">spring代码示例
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>简单的hello world...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-01-15 14:13:12 +0000 UTC'>2020-01-15</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to spring代码示例" href="https://009965.xyz/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">springMVC
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>spring mvc 概述 MVC，即 model模型，view视图，controller控制。 spring mvc可以用来开发灵活、松散耦合的 web 应用程序。 MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。
+模型封装了应用程序数据，通常由POJO组成。 视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。 控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-01-13 23:35:36 +0000 UTC'>2020-01-13</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to springMVC" href="https://009965.xyz/posts/spring/springmvc/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">spring boot
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 官网：https://spring.io/projects/spring-boot
+为什么用SpringBoot？
+Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-04 18:27:30 +0000 UTC'>2019-12-04</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql进阶-视图" href="https://009965.xyz/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E8%A7%86%E5%9B%BE/"></a>
+  <footer class="entry-footer"><span title='2020-01-12 17:27:28 +0000 UTC'>2020-01-12</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to spring boot" href="https://009965.xyz/posts/spring/spring-boot/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql优化
+    <h2 class="entry-hint-parent">kit
     </h2>
   </header>
   <div class="entry-content">
-    <p>千万级数据深分页查询 如何在Mysql中实现上亿数据的遍历查询？先来介绍一下系统主角：关注系统，主要是维护京东用户和业务对象之前的关注关系；并...</p>
+    <p>ffmpeg使用 ffmpeg了解 ffmpeg官网 在使用Java调用FFmpeg处理音视频之前，需要先安装FFmpeg，安装方法分为两种：
+...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-03 18:13:55 +0000 UTC'>2019-12-03</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql优化" href="https://009965.xyz/posts/mysql/mysql%E4%BC%98%E5%8C%96/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql数据类型
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>mysql数据类型 主要包括以下五大类：
-1 2 3 4 5 6 7 8 9 整数类型：BIT、BOOL、TINY INT、SMALL INT、MEDIUM INT、 INT、 BIG INT 浮点数类型：FLOAT、DOUBLE、DECIMAL 字符串类型：CHAR、VARCHAR、TINY TEXT、TEXT、MEDIUM TEXT、LONGTEXT、TINY BLOB、BLOB、MEDIUM BLOB、LONG BLOB 日期类型：Date、DateTime、TimeStamp、Time、Year 其他数据类型：BINARY、VARBINARY、ENUM、SET、Geometry、Point、MultiPoint、LineString、MultiLineString、Polygon、GeometryCollection等 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-12-03 11:31:38 +0000 UTC'>2019-12-03</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql数据类型" href="https://009965.xyz/posts/mysql/mysql%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql技巧
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>select执行顺序 1 2 3 4 5 6 7 8 9 10 (7) SELECT (8) DISTINCT &lt;select_list&gt; (1) FROM &lt;left_table&gt; (3) &lt;join_type&gt; JOIN &lt;right_table&gt; (2) ON &lt;join_condition&gt; (4) WHERE &lt;where_condition&gt; (5) GROUP BY &lt;group_by_list&gt; (6) HAVING &lt;having_condition&gt; (9) ORDER BY &lt;order_by_condition&gt; (10) LIMIT &lt;limit_number&gt; ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-12-02 18:13:55 +0000 UTC'>2019-12-02</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql技巧" href="https://009965.xyz/posts/mysql/mysql%E6%8A%80%E5%B7%A7/"></a>
+  <footer class="entry-footer"><span title='2020-01-11 10:27:48 +0000 UTC'>2020-01-11</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to kit" href="https://009965.xyz/posts/java/kit/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

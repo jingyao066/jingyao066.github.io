@@ -163,92 +163,99 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql基础
+    <h2 class="entry-hint-parent">sharding
     </h2>
   </header>
   <div class="entry-content">
-    <p>关系数据库概述 为什么需要数据库？
-因为应用程序需要保存用户的数据，比如Word需要把用户文档保存起来，以便下次继续编辑或者拷贝到另一台电脑。
+    <p>官网 github Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar这3款相互独立的产品组成。 他们均提供标准化的数据分片、读写分离、柔性事务和数据治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。 其中Sharding-JDBC最早由当当网在2016年开源，在Sharding-JDBC 3.0版本，更名为Sharding-Sphere，后来创始人张亮去了京东。在2018年底，项目开源给了apache基金会。
+参考：Sharding-JDBC源码解析与vivo的定制开发
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-12-01 18:12:58 +0000 UTC'>2019-12-01</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql基础" href="https://009965.xyz/posts/mysql/mysql%E5%9F%BA%E7%A1%80/"></a>
+  <footer class="entry-footer"><span title='2020-01-08 11:57:49 +0000 UTC'>2020-01-08</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to sharding" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">git
+    <h2 class="entry-hint-parent">mysql进阶-索引
     </h2>
   </header>
   <div class="entry-content">
-    <p>常用命令 git官方文档
+    <p>索引概述 原文：https://mp.weixin.qq.com/s/rF3zP99Bqw7PzVXfqfzF0w
+在关系数据库中，索引是一种单独的、物理的对数据库表中一列或多列的值进行排序的一种存储结构，它是某个表中一列或若干列值的集合和相应的指向表中物理标识这些值的数据页的逻辑指针清单。 简单来说，索引的作用相当于图书的目录，可以根据目录中的页码快速找到所需的内容。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-11-25 10:14:46 +0000 UTC'>2019-11-25</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to git" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/git/"></a>
+  <footer class="entry-footer"><span title='2020-01-07 22:05:33 +0000 UTC'>2020-01-07</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mysql进阶-索引" href="https://009965.xyz/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">支付功能开发
+    <h2 class="entry-hint-parent">6、SpringCloud开发
     </h2>
   </header>
   <div class="entry-content">
-    <p>支付宝支付官网： https://docs.open.alipay.com/catalog 微信支付官网： V2：https://pay.weixin.qq.com/wiki/doc/api/index.html V3：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml
+    <p>概述 Spring是JavaEE的一个轻量级开发框架，主营IoC和AOP，集成JDBC、ORM、MVC等功能便于开发。 Spring Boot是基于Spri...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-01-06 13:22:38 +0000 UTC'>2020-01-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 6、SpringCloud开发" href="https://009965.xyz/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">5、SpringBoot开发
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>概述 我们已经在前面详细介绍了Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。 那么，...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-01-05 10:15:56 +0000 UTC'>2020-01-05</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 5、SpringBoot开发" href="https://009965.xyz/posts/spring/5springboot%E5%BC%80%E5%8F%91/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">4、Spring开发web应用
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>开发Web应用 在Web开发一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：
+Servlet规范定义了几种标准组件：Servlet、JSP、Filter和Listener； Servlet的标准组件总是运行在Servlet容器中，如Tomcat、Jetty、WebLogic等。 直接使用Servlet进行Web开发好比直接在JDBC上操作数据库，比较繁琐，更好的方法是在Servlet基础上封装MVC框架，基于MVC开发Web应用，大部分时候，不需要接触Servlet API，开发省时省力。
+我们在MVC开发和MVC高级开发已经由浅入深地介绍了如何编写MVC框架。当然，自己写的MVC主要是理解原理，要实现一个功能全面的MVC需要大量的工作以及广泛的测试。
+因此，开发Web应用，首先要选择一个优秀的MVC框架。常用的MVC框架有：
+Struts：最古老的一个MVC框架，目前版本是2，和1.x有很大的区别； WebWork：一个比Struts设计更优秀的MVC框架，但不知道出于什么原因，从2.0开始把自己的代码全部塞给Struts 2了； Turbine：一个重度使用Velocity，强调布局的MVC框架； 其他100&#43;MVC框架……（略） Spring虽然都可以集成任何Web框架，但是，Spring本身也开发了一个MVC框架，就叫Spring MVC。这个MVC框架设计得足够优秀以至于我们已经不想再费劲去集成类似Struts这样的框架了。
+本章我们会详细介绍如何基于Spring MVC开发Web应用。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-11-24 13:50:44 +0000 UTC'>2019-11-24</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 支付功能开发" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E6%94%AF%E4%BB%98%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91/"></a>
+  <footer class="entry-footer"><span title='2020-01-04 18:56:17 +0000 UTC'>2020-01-04</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 4、Spring开发web应用" href="https://009965.xyz/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">后台角色授权菜单功能的实现
+    <h2 class="entry-hint-parent">3、访问数据库
     </h2>
   </header>
   <div class="entry-content">
-    <p>后台添加角色后，需要给角色授权菜单，不同的角色有不同的菜单。 两个点： 1.菜单表结构，父子级在一个表中。dto的使用 2.树状图插件zTree的使用，以及角色菜单的回显
+    <p>概述 数据库基本上是现代应用程序的标准存储，绝大多数程序都把自己的业务数据存储在关系数据库中，可见，访问数据库几乎是所有应用程序必备能力。 我们...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-01-03 09:25:58 +0000 UTC'>2020-01-03</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 3、访问数据库" href="https://009965.xyz/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">2、AOP
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>使用AOP AOP是Aspect Oriented Programming，即面向切面编程。
+那什么是AOP？
+我们先回顾一下OOP：Object Oriented Programming，OOP作为面向对象编程的模式，获得了巨大的成功，OOP的主要功能是数据封装、继承和多态。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2019-11-10 14:51:14 +0000 UTC'>2019-11-10</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 后台角色授权菜单功能的实现" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E5%90%8E%E5%8F%B0%E8%A7%92%E8%89%B2%E6%8E%88%E6%9D%83%E8%8F%9C%E5%8D%95%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">SKU
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>SKU 淘宝购买商品时，商品有很多不同的属性和属性值，如： 颜色：白色、黑色、蓝色、紫色… 尺寸：170、175、180、185… 买衣服时，通常会发现，白色-175库存20件，但是白色-180有30件， 而且价格可能还不同，这是因为后台sku设置的价格和库存。 后台设置SKU的界面 ...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-11-01 22:52:56 +0000 UTC'>2019-11-01</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to SKU" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/sku/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">windows
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>查看端口占用 查看全部端口： netstat -ano
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-10-28 16:39:52 +0000 UTC'>2019-10-28</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to windows" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/windows/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">workflow
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>为什么需要工作流 假设我有一个请假需求，流程如下： 请假可以提交给我的上司，上司可以选择批准或者拒绝，无论批准还是拒绝，都会给我一个通知。 这个流...</p>
-  </div>
-  <footer class="entry-footer"><span title='2019-10-23 10:53:04 +0000 UTC'>2019-10-23</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to workflow" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/workflow/"></a>
+  <footer class="entry-footer"><span title='2020-01-02 16:21:14 +0000 UTC'>2020-01-02</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 2、AOP" href="https://009965.xyz/posts/spring/2aop/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

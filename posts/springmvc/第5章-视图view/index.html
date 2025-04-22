@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>5、视图View | Wjy&#39;s Blog</title>
+<meta name="keywords" content="springmvc">
+<meta name="description" content="SpringMVC中视图的实现原理 Spring MVC视图支持可配置 在Spring MVC中，视图View是支持定制的，例如我们之前在 springmvc.xml 文件中进行了如下的">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="5、视图View">
+  <meta property="og:description" content="SpringMVC中视图的实现原理 Spring MVC视图支持可配置 在Spring MVC中，视图View是支持定制的，例如我们之前在 springmvc.xml 文件中进行了如下的">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-04-22T15:05:58+00:00">
+    <meta property="article:modified_time" content="2025-04-22T15:05:58+00:00">
+    <meta property="article:tag" content="Springmvc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5、视图View">
+<meta name="twitter:description" content="SpringMVC中视图的实现原理 Spring MVC视图支持可配置 在Spring MVC中，视图View是支持定制的，例如我们之前在 springmvc.xml 文件中进行了如下的">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "5、视图View",
+      "item": "https://009965.xyz/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "5、视图View",
+  "name": "5、视图View",
+  "description": "SpringMVC中视图的实现原理 Spring MVC视图支持可配置 在Spring MVC中，视图View是支持定制的，例如我们之前在 springmvc.xml 文件中进行了如下的",
+  "keywords": [
+    "springmvc"
+  ],
+  "articleBody": "SpringMVC中视图的实现原理 Spring MVC视图支持可配置 在Spring MVC中，视图View是支持定制的，例如我们之前在 springmvc.xml 文件中进行了如下的配置：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 ",
+  "wordCount" : "7460",
+  "inLanguage": "en",
+  "datePublished": "2025-04-22T15:05:58Z",
+  "dateModified": "2025-04-22T15:05:58Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://009965.xyz/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      5、视图View
+    </h1>
+    <div class="post-meta"><span title='2025-04-22 15:05:58 +0000 UTC'>2025-04-22</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#springmvc%e4%b8%ad%e8%a7%86%e5%9b%be%e7%9a%84%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86" aria-label="SpringMVC中视图的实现原理">SpringMVC中视图的实现原理</a><ul>
+                        
+                <li>
+                    <a href="#spring-mvc%e8%a7%86%e5%9b%be%e6%94%af%e6%8c%81%e5%8f%af%e9%85%8d%e7%bd%ae" aria-label="Spring MVC视图支持可配置">Spring MVC视图支持可配置</a></li>
+                <li>
+                    <a href="#spring-mvc%e6%94%af%e6%8c%81%e7%9a%84%e5%b8%b8%e8%a7%81%e8%a7%86%e5%9b%be" aria-label="Spring MVC支持的常见视图">Spring MVC支持的常见视图</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e8%a7%86%e5%9b%be%e6%9c%ba%e5%88%b6%e7%9a%84%e6%a0%b8%e5%bf%83%e6%8e%a5%e5%8f%a3" aria-label="实现视图机制的核心接口">实现视图机制的核心接口</a></li>
+                <li>
+                    <a href="#%e5%ae%9e%e7%8e%b0%e8%a7%86%e5%9b%be%e6%9c%ba%e5%88%b6%e7%9a%84%e5%8e%9f%e7%90%86%e6%8f%8f%e8%bf%b0" aria-label="实现视图机制的原理描述">实现视图机制的原理描述</a></li>
+                <li>
+                    <a href="#%e9%80%bb%e8%be%91%e8%a7%86%e5%9b%be%e5%90%8d%e5%88%b0%e7%89%a9%e7%90%86%e8%a7%86%e5%9b%be%e5%90%8d%e7%9a%84%e8%bd%ac%e6%8d%a2" aria-label="逻辑视图名到物理视图名的转换">逻辑视图名到物理视图名的转换</a></li></ul>
+                </li>
+                <li>
+                    <a href="#thymeleaf%e8%a7%86%e5%9b%be" aria-label="Thymeleaf视图">Thymeleaf视图</a></li>
+                <li>
+                    <a href="#jsp%e8%a7%86%e5%9b%be%e4%ba%86%e8%a7%a3" aria-label="JSP视图（了解）">JSP视图（了解）</a></li>
+                <li>
+                    <a href="#%e8%bd%ac%e5%8f%91%e4%b8%8e%e9%87%8d%e5%ae%9a%e5%90%91" aria-label="转发与重定向">转发与重定向</a><ul>
+                        
+                <li>
+                    <a href="#%e5%9b%9e%e9%a1%be%e8%bd%ac%e5%8f%91%e5%92%8c%e9%87%8d%e5%ae%9a%e5%90%91%e5%8c%ba%e5%88%ab" aria-label="回顾转发和重定向区别">回顾转发和重定向区别</a></li>
+                <li>
+                    <a href="#forward" aria-label="forward">forward</a></li>
+                <li>
+                    <a href="#redirect" aria-label="redirect">redirect</a></li></ul>
+                </li>
+                <li>
+                    <a href="#mvcview-controller" aria-label="mvc:view-controller">mvc:view-controller</a></li>
+                <li>
+                    <a href="#mvcannotation-driven" aria-label="mvc:annotation-driven/">mvc:annotation-driven/</a></li>
+                <li>
+                    <a href="#%e8%ae%bf%e9%97%ae%e9%9d%99%e6%80%81%e8%b5%84%e6%ba%90" aria-label="访问静态资源">访问静态资源</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8%e9%bb%98%e8%ae%a4servlet%e5%a4%84%e7%90%86%e9%9d%99%e6%80%81%e8%b5%84%e6%ba%90" aria-label="使用默认Servlet处理静态资源">使用默认Servlet处理静态资源</a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8-mvcresources-%e6%a0%87%e7%ad%be%e9%85%8d%e7%bd%ae%e9%9d%99%e6%80%81%e8%b5%84%e6%ba%90" aria-label="使用 mvc:resources 标签配置静态资源">使用 mvc:resources 标签配置静态资源</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="springmvc中视图的实现原理">SpringMVC中视图的实现原理<a hidden class="anchor" aria-hidden="true" href="#springmvc中视图的实现原理">#</a></h1>
+<h2 id="spring-mvc视图支持可配置">Spring MVC视图支持可配置<a hidden class="anchor" aria-hidden="true" href="#spring-mvc视图支持可配置">#</a></h2>
+<p>在Spring MVC中，视图View是支持定制的，例如我们之前在 springmvc.xml 文件中进行了如下的配置：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#007f7f">&lt;!--视图解析器--&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;thymeleafViewResolver&#34;</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.view.ThymeleafViewResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">&lt;!--作用于视图渲染的过程中，可以设置视图渲染后输出时采用的编码字符集--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;characterEncoding&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">&lt;!--如果配置多个视图解析器，它来决定优先使用哪个视图解析器，它的值越小优先级越高--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;order&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;1&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">&lt;!--当 ThymeleafViewResolver 渲染模板时，会使用该模板引擎来解析、编译和渲染模板--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateEngine&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.SpringTemplateEngine&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#007f7f">&lt;!--用于指定 Thymeleaf 模板引擎使用的模板解析器。模板解析器负责根据模板位置、模板资源名称、文件编码等信息，加载模板并对其进行解析--&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#007f7f">&lt;!--设置模板文件的位置（前缀）--&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;prefix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;/WEB-INF/templates/&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#007f7f">&lt;!--设置模板文件后缀（后缀），Thymeleaf文件扩展名不一定是html，也可以是其他，例如txt，大部分都是html--&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;suffix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;.html&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#007f7f">&lt;!--设置模板类型，例如：HTML,TEXT,JAVASCRIPT,CSS等--&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateMode&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;HTML&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#007f7f">&lt;!--用于模板文件在读取和解析过程中采用的编码字符集--&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;characterEncoding&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上的配置表明当前SpringMVC框架使用的视图View是Thymeleaf的。
+如果你需要换成其他的视图View，修改以上的配置即可。这样就可以非常轻松的完成视图View的扩展。
+这种设计是完全符合OCP开闭原则的。视图View和框架是解耦合的，耦合度低扩展能力强。视图View可以通过配置文件进行灵活切换。</p>
+<h2 id="spring-mvc支持的常见视图">Spring MVC支持的常见视图<a hidden class="anchor" aria-hidden="true" href="#spring-mvc支持的常见视图">#</a></h2>
+<p>Spring MVC支持的常见视图包括：</p>
+<ol>
+<li>InternalResourceView：内部资源视图（Spring MVC框架内置的，专门为<code>JSP模板语法</code>准备的）</li>
+<li>RedirectView：重定向视图（Spring MVC框架内置的，用来完成重定向效果）</li>
+<li>ThymeleafView：Thymeleaf视图（第三方的，为<code>Thymeleaf模板语法</code>准备的）</li>
+<li>FreeMarkerView：FreeMarker视图（第三方的，为<code>FreeMarker模板语法</code>准备的）</li>
+<li>VelocityView：Velocity视图（第三方的，为<code>Velocity模板语法</code>准备的）</li>
+<li>PDFView：PDF视图（第三方的，专门用来生成pdf文件视图）</li>
+<li>ExcelView：Excel视图（第三方的，专门用来生成excel文件视图）</li>
+<li>&hellip;&hellip;</li>
+</ol>
+<h2 id="实现视图机制的核心接口">实现视图机制的核心接口<a hidden class="anchor" aria-hidden="true" href="#实现视图机制的核心接口">#</a></h2>
+<p>实现视图的核心类与接口包括：</p>
+<ol>
+<li>DispatcherServlet类（前端控制器）：
+<ol>
+<li>职责：在整个Spring MVC执行流程中，负责中央调度。</li>
+<li>核心方法：doDispatch</li>
+</ol>
+</li>
+</ol>
+<p><img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/e700cc9fdb4c04f42b54614f470464d9_MD5.png"></p>
+<ol start="2">
+<li>ViewResolver接口（视图解析器）：
+<ol>
+<li>职责：负责将<code>逻辑视图名</code>转换为<code>物理视图名</code>，最终创建View接口的实现类，即视图实现类对象。</li>
+<li>核心方法：resolveViewName</li>
+</ol>
+</li>
+</ol>
+<p><img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/535ea4b0dba21ac99f9baebdc8608452_MD5.png"></p>
+<ol start="3">
+<li>View接口（视图）:
+<ol>
+<li>职责：负责将模型数据Model渲染为视图格式（HTML代码），并最终将生成的视图（HTML代码）输出到客户端。（它负责将模板语言转换成HTML代码）</li>
+<li>核心方法：render</li>
+</ol>
+</li>
+</ol>
+<p><img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/c46cf052d3ba822347b20cdeac3979a5_MD5.png"></p>
+<ol start="4">
+<li>ViewResolverRegistry（视图解析器注册器）：
+<ol>
+<li>负责在web容器（Tomcat）启动的时候，完成视图解析器的注册。如果有多个视图解析器，会将视图解析器对象按照order的配置放入List集合。</li>
+</ol>
+</li>
+</ol>
+<p><strong>总结：</strong></p>
+<ul>
+<li><strong>实现视图的核心类和接口包括：ViewResolverRegistry、DispatcherServlet、ViewResolver、View</strong></li>
+<li><strong>如果你想定制自己的视图组件：</strong>
+<ul>
+<li><strong>编写类实现ViewResolver接口，实现resolveViewName方法，在该方法中完成</strong><code>**逻辑视图名**</code><strong>转换为</strong><code>**物理视图名**</code><strong>，并返回View对象。</strong></li>
+<li><strong>编写类实现View接口，实现render方法，在该方法中将模板语言转换成HTML代码，并将HTML代码响应到浏览器。</strong></li>
+</ul>
+</li>
+<li><strong>如果Spring MVC框架中使用Thymeleaf作为视图技术。那么相关的类包括：</strong>
+<ul>
+<li><strong>ThymeleafView</strong></li>
+<li><strong>ThymeleafViewResolver</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="实现视图机制的原理描述">实现视图机制的原理描述<a hidden class="anchor" aria-hidden="true" href="#实现视图机制的原理描述">#</a></h2>
+<p>假设我们SpringMVC中使用了Thymeleaf作为视图。
+第一步：浏览器发送请求给web服务器
+第二步：Spring MVC中的DispatcherServlet接收到请求
+第三步：DispatcherServlet根据请求路径分发到对应的Controller
+第四步：DispatcherServlet调用Controller的方法
+第五步：Controller的方法处理业务并返回一个<code>逻辑视图名</code>给DispatcherServlet
+第六步：DispatcherServlet调用ThymeleafViewResolver的resolveViewName方法，将<code>逻辑视图名</code>转换为<code>物理视图名</code>，并创建ThymeleafView对象返回给DispatcherServlet
+第七步：DispatcherServlet再调用ThymeleafView的render方法，render方法将模板语言转换为HTML代码，响应给浏览器，完成最终的渲染。</p>
+<p>假设我们SpringMVC中使用了JSP作为视图。
+第一步：浏览器发送请求给web服务器
+第二步：Spring MVC中的DispatcherServlet接收到请求
+第三步：DispatcherServlet根据请求路径分发到对应的Controller
+第四步：DispatcherServlet调用Controller的方法
+第五步：Controller的方法处理业务并返回一个<code>逻辑视图名</code>给DispatcherServlet
+第六步：DispatcherServlet调用<code>InternalResourceViewResolver</code>的<code>resolveViewName</code>方法，将<code>逻辑视图名</code>转换为<code>物理视图名</code>，并创建<code>InternalResourceView</code>对象返回给DispatcherServlet
+第七步：DispatcherServlet再调用<code>InternalResourceView</code>的<code>render</code>方法，render方法将模板语言转换为HTML代码，响应给浏览器，完成最终的渲染。</p>
+<h2 id="逻辑视图名到物理视图名的转换">逻辑视图名到物理视图名的转换<a hidden class="anchor" aria-hidden="true" href="#逻辑视图名到物理视图名的转换">#</a></h2>
+<p>逻辑视图名最终转换的物理视图名是什么，取决再springmvc.xml文件中视图解析器的配置：
+假如视图解析器配置的是ThymeleafViewResolver，如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;thymeleafViewResolver&#34;</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.view.ThymeleafViewResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;characterEncoding&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;order&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;1&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateEngine&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.SpringTemplateEngine&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;prefix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;/WEB-INF/templates/&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;suffix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;.html&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateMode&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;HTML&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;characterEncoding&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以下程序返回逻辑视图名：index</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/index&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> String toIndex(){
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;index&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最终逻辑视图名&quot;index&quot; 转换为物理视图名：/WEB-INF/templates/index.html</p>
+<p>假如视图解析器配置的是InternalResourceViewResolver，如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;viewResolver&#34;</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.springframework.web.servlet.view.InternalResourceViewResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;prefix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;/WEB-INF/templates/&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;suffix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;.jsp&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以下程序返回逻辑视图名：index</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/index&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> String toIndex(){
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;index&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最终逻辑视图名&quot;index&quot; 转换为物理视图名：/WEB-INF/templates/index.jsp</p>
+<h1 id="thymeleaf视图">Thymeleaf视图<a hidden class="anchor" aria-hidden="true" href="#thymeleaf视图">#</a></h1>
+<p>我们在学习前面内容的时候，采用的都是Thymeleaf视图。我们再来测试一下，看看底层创建的视图对象是不是<code>ThymeleafView</code>
+springmvc.xml配置内容如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;beans</span> <span style="color:#007f7f">xmlns=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#007f7f">xmlns:xsi=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#007f7f">xmlns:context=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.springframework.org/schema/context&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#007f7f">xsi:schemaLocation=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">&lt;!--组件扫描--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;context:component-scan</span> <span style="color:#007f7f">base-package=</span><span style="color:#0ff;font-weight:bold">&#34;com.powernode.springmvc.controller&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">&lt;!--视图解析器--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;thymeleafViewResolver&#34;</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.view.ThymeleafViewResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;characterEncoding&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;order&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;1&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateEngine&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.SpringTemplateEngine&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;prefix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;/WEB-INF/thymeleaf/&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;suffix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;.html&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;templateMode&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;HTML&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;characterEncoding&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;/property&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Controller代码如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> com.powernode.springmvc.controller;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.stereotype.Controller;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.web.bind.annotation.RequestMapping;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Controller
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> IndexController {
+</span></span><span style="display:flex;"><span>    @RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/index&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String toIndex(){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;index&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>视图页面：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">html</span> <span style="color:#007f7f">lang</span>=<span style="color:#0ff;font-weight:bold">&#34;en&#34;</span> <span style="color:#007f7f">xmlns:th</span>=<span style="color:#0ff;font-weight:bold">&#34;http://www.thymeleaf.org&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">meta</span> <span style="color:#007f7f">charset</span>=<span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">title</span>&gt;index page&lt;/<span style="font-weight:bold">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">h1</span>&gt;index page&lt;/<span style="font-weight:bold">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">html</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加断点：在DispatcherServlet的doDispatch方法的下图位置添加断点
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/8b080bd1382c662fff4b9a6bea6dcbbe_MD5.png"></p>
+<p>启动Tomcat，在浏览器地址栏上发送请求：http://localhost:8080/springmvc/index
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/3ddb6c66758298d8dab82a3bafed9658_MD5.png">
+程序走到以上位置，这行代码是调用对应的Controller，并且Controller最终会返回ModelAndView对象：mv
+按照我们之前所讲，返回mv之后，接下来就是视图处理与渲染，接着往下走，走到下图这一行：
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/2cd70b5f31b496eb15ca73a0df158283_MD5.png">
+这个方法的作用是处理分发结果，就是在这个方法当中进行了视图的处理与渲染，进入该方法：
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/f53c807e5fc10929e2338a43564be094_MD5.png">
+进去之后走到上图位置：这个方法就是用来渲染页面的方法，再进入该方法：
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/bc836e457f339d93e263e65d89fbfcc6_MD5.png">
+走到上图位置就可以看到底层创建的是ThymeleafView对象。</p>
+<h1 id="jsp视图了解">JSP视图（了解）<a hidden class="anchor" aria-hidden="true" href="#jsp视图了解">#</a></h1>
+<p>我们再来跟一下源码，看看JSP视图底层创建的是不是InternalResourceView对象。
+我们前面说过 InternalResourceView是SpringMVC框架内置的，翻译为内部资源视图，SpringMVC把JSP看做是内部资源。可见JSP在之前的技术栈中有很高的地位。
+不过，当下流行的开发中JSP使用较少，这里不再详细讲解。只是测试一下。
+springmvc.xml配置如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;beans</span> <span style="color:#007f7f">xmlns=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.springframework.org/schema/beans&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#007f7f">xmlns:xsi=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#007f7f">xmlns:context=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.springframework.org/schema/context&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#007f7f">xsi:schemaLocation=</span><span style="color:#0ff;font-weight:bold">&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">&lt;!--组件扫描--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;context:component-scan</span> <span style="color:#007f7f">base-package=</span><span style="color:#0ff;font-weight:bold">&#34;com.powernode.springmvc.controller&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#007f7f">&lt;!--视图解析器--&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;bean</span> <span style="color:#007f7f">id=</span><span style="color:#0ff;font-weight:bold">&#34;viewResolver&#34;</span> <span style="color:#007f7f">class=</span><span style="color:#0ff;font-weight:bold">&#34;org.springframework.web.servlet.view.InternalResourceViewResolver&#34;</span><span style="font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;prefix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;/WEB-INF/jsp/&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;property</span> <span style="color:#007f7f">name=</span><span style="color:#0ff;font-weight:bold">&#34;suffix&#34;</span> <span style="color:#007f7f">value=</span><span style="color:#0ff;font-weight:bold">&#34;.jsp&#34;</span><span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/bean&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Controller代码如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> com.powernode.springmvc.controller;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.stereotype.Controller;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.web.bind.annotation.RequestMapping;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Controller
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> IndexController {
+</span></span><span style="display:flex;"><span>    @RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/index&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String toIndex(){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;index&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>视图页面：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#f00">&lt;</span>%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; %&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">html</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">title</span>&gt;index jsp&lt;/<span style="font-weight:bold">title</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">h1</span>&gt;index jsp!&lt;/<span style="font-weight:bold">h1</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">html</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动web容器，添加断点跟踪：
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/2ade7c6afca18f12437d53d2d0bd4cd7_MD5.png">
+通过测试得知：对于JSP视图来说，底层创建的视图对象是InternalResourceView。</p>
+<h1 id="转发与重定向">转发与重定向<a hidden class="anchor" aria-hidden="true" href="#转发与重定向">#</a></h1>
+<h2 id="回顾转发和重定向区别">回顾转发和重定向区别<a hidden class="anchor" aria-hidden="true" href="#回顾转发和重定向区别">#</a></h2>
+<ol>
+<li>转发是一次请求。因此浏览器地址栏上的地址不会发生变化。</li>
+<li>重定向是两次请求。因此浏览器地址栏上的地址会发生变化。</li>
+<li>转发的代码实现：request.getRequestDispatcher(&quot;/index&quot;).forward(request, response);</li>
+<li>重定向的代码实现：response.sendRedirect(&quot;/webapproot/index&quot;);</li>
+<li>转发是服务器内部资源跳转，由服务器来控制。不可实现跨域访问。</li>
+<li>重定向可以完成内部资源的跳转，也可以完成跨域跳转。</li>
+<li>转发的方式可以访问WEB-INF目录下受保护的资源。</li>
+<li>重定向相当于浏览器重新发送了一次请求，在浏览器直接发送的请求是无法访问WEB-INF目录下受保护的资源的。</li>
+<li>转发原理：
+<ol>
+<li>假设发送了 /a 请求，执行了 AServlet</li>
+<li>在AServlet 中通过<code>request.getRequestDispatcher(&quot;/b&quot;).forward(request,response);</code>转发到BServlet</li>
+<li>从AServlet跳转到BServlet是服务器内部来控制的。对于浏览器而言，浏览器只发送了一个 /a 请求。</li>
+</ol>
+</li>
+<li>重定向原理：</li>
+<li>假设发送了 /a 请求，执行了 AServlet</li>
+<li>在AServlet 中通过<code>response.sendRedirect(&quot;/webapproot/b&quot;)</code>重定向到BServlet</li>
+<li>此时服务器会将请求路径<code>/webapproot/b</code>响应给浏览器</li>
+<li>浏览器会自发的再次发送<code>/webapproot/b</code>请求来访问BServlet</li>
+<li>因此对于重定向来说，发送了两次请求，一次是 <code>/webapproot/a</code>，另一次是<code>/webapproot/b</code>。</li>
+</ol>
+<p>以上所描述的是使用原生Servlet API来完成转发和重定向。在Spring MVC中是如何转发和重定向的呢？</p>
+<h2 id="forward">forward<a hidden class="anchor" aria-hidden="true" href="#forward">#</a></h2>
+<p>在Spring MVC中默认就是转发的方式，我们之前所写的程序，都是转发的方式。只不过都是转发到Thymeleaf的模板文件xxx.html上。
+那么，在Spring MVC中如何转发到另一个Controller上呢？可以使用Spring MVC的<code>forward</code>
+代码实现如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> com.powernode.springmvc.controller;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.stereotype.Controller;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.web.bind.annotation.RequestMapping;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Controller
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> IndexController {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/a&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String toA(){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;forward:/b&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/b&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String toB(){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;b&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>视图页面：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">html</span> <span style="color:#007f7f">lang</span>=<span style="color:#0ff;font-weight:bold">&#34;en&#34;</span> <span style="color:#007f7f">xmlns:th</span>=<span style="color:#0ff;font-weight:bold">&#34;http://www.thymeleaf.org&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">meta</span> <span style="color:#007f7f">charset</span>=<span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">title</span>&gt;b&lt;/<span style="font-weight:bold">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">h1</span>&gt;Page B!!!&lt;/<span style="font-weight:bold">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">html</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动服务器，浏览器地址栏上输入：http://localhost:8080/springmvc/a
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/64a665b9391d73480f41769502b0025e_MD5.png">
+通过测试，可以顺利的完成转发，转发是一次请求，可以看到地址栏上的地址没有发生改变。</p>
+<p>我们来跟踪一下源码，看看以上程序执行过程中，创建了几个视图对象，分别是什么？
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/a3acdc0e0e074d873525947da45d7d24_MD5.png">
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/980b8a16a04621b15bd6d801f95522ba_MD5.png"></p>
+<p>通过源码的跟踪得知：整个请求处理过程中，一共创建了两个视图对象</p>
+<ul>
+<li>InternalResourceView</li>
+<li>ThymeleafView</li>
+</ul>
+<p>这说明转发底层创建的视图对象是：InternalResourceView。
+<strong>思考：既然会创建InternalResourceView，应该会对应一个视图解析器呀（InternalResourceViewResolver）？但是我在springmvc.xml文件中只配置了ThymeleafViewResolver，并没有配置InternalResourceViewResolver呀？这是为什么？</strong>
+<strong>这是因为</strong><code>**forward:**</code>** 后面的不是**<code>**逻辑视图名**</code><strong>，而是一个</strong><code>**请求路径**</code><strong>。因此转发是不需要视图解析器的。</strong>
+<strong>另外，转发使用的是InternalResourceView，也说明了转发是内部资源的跳转。（Internal是内部的意思，Resource是资源的意思。）</strong></p>
+<h2 id="redirect">redirect<a hidden class="anchor" aria-hidden="true" href="#redirect">#</a></h2>
+<p>redirect是专门完成重定向效果的。和forward语法类似，只需要将之前的 <code>return &quot;forward:/b&quot;</code>修改为 <code>return &quot;redirect:/b&quot;</code>即可。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">package</span> com.powernode.springmvc.controller;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.stereotype.Controller;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.web.bind.annotation.RequestMapping;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Controller
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> IndexController {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/a&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String toA(){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;redirect:/b&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/b&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String toB(){
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;b&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>视图页面：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#0f0;font-weight:bold">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">html</span> <span style="color:#007f7f">lang</span>=<span style="color:#0ff;font-weight:bold">&#34;en&#34;</span> <span style="color:#007f7f">xmlns:th</span>=<span style="color:#0ff;font-weight:bold">&#34;http://www.thymeleaf.org&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">meta</span> <span style="color:#007f7f">charset</span>=<span style="color:#0ff;font-weight:bold">&#34;UTF-8&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="font-weight:bold">title</span>&gt;b&lt;/<span style="font-weight:bold">title</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="font-weight:bold">h1</span>&gt;Page B!!!&lt;/<span style="font-weight:bold">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="font-weight:bold">html</span>&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动服务器，浏览器地址栏上输入：http://localhost:8080/springmvc/a
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/a4987415ca29eb1177669cfc1f732538_MD5.png">
+可见，重定向是两次请求，地址栏上的地址发生了改变。</p>
+<p>可以看一下源码，在重定向的时候，Spring MVC创建哪个视图对象？
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/4e542d51fdb7d70a6175bb6d64f2dec0_MD5.png">
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/8a35d03f4ef12a1b4d43301c3bc3bef9_MD5.png">
+通过断点调试可以看出，当重定向的时候，SpringMVC会创建一个重定向视图对象：<strong>RedirectView</strong>。这个视图对象也是SpringMVC框架内置的。
+另外可以看出重定向之后的第二次请求创建的视图对象就是ThymeleafView了。</p>
+<p>注意：从springmvc应用重定向到springmvc2应用（跨域），语法是：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/a&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> String a(){
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;redirect:http://localhost:8080/springmvc2/b&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以自行测试一下！！！</p>
+<h1 id="mvcview-controller"><a href="mvc:view-controller">mvc:view-controller</a><a hidden class="anchor" aria-hidden="true" href="#mvcview-controller">#</a></h1>
+<p><code>&lt;mvc:view-controller&gt;</code> 配置用于将某个请求映射到特定的视图上，即指定某一个 URL 请求到一个视图资源的映射，使得这个视图资源可以被访问。它相当于是一个独立的处理程序，不需要编写任何 Controller，只需要指定 URL 和对应的视图名称就可以了。
+一般情况下，<code>&lt;mvc:view-controller&gt;</code> 配置可以替代一些没有业务逻辑的 Controller，例如首页、错误页面等。当用户访问配置的 URL 时，框架将直接匹配到对应的视图，而无需再经过其他控制器的处理。
+<code>&lt;mvc:view-controller&gt;</code> 配置的格式如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;mvc:view-controller</span> <span style="color:#007f7f">path=</span><span style="color:#0ff;font-weight:bold">&#34;/如何访问该页面&#34;</span> <span style="color:#007f7f">view-name=</span><span style="color:#0ff;font-weight:bold">&#34;对应的逻辑视图名称&#34;</span> <span style="font-weight:bold">/&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中：</p>
+<ul>
+<li><code>path</code>：被映射的 URL 路径。</li>
+<li><code>view-name</code>：对应的逻辑视图名称。</li>
+</ul>
+<p>例如，配置首页的映射：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;mvc:view-controller</span> <span style="color:#007f7f">path=</span><span style="color:#0ff;font-weight:bold">&#34;/&#34;</span> <span style="color:#007f7f">view-name=</span><span style="color:#0ff;font-weight:bold">&#34;index&#34;</span> <span style="font-weight:bold">/&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上述配置将会匹配上访问应用程序的根路径，如：http://localhost:8080/。当用户在浏览器中访问该根路径时，就会直接渲染名为 <code>index</code> 的视图。</p>
+<h1 id="mvcannotation-driven"><a href="mvc:annotation-driven/">mvc:annotation-driven/</a><a hidden class="anchor" aria-hidden="true" href="#mvcannotation-driven">#</a></h1>
+<p>在SpringMVC中，如果在springmvc.xml文件中配置了 <code>&lt;mvc:view-controller&gt;</code>，就需要同时在springmvc.xml文件中添加如下配置：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;mvc:annotation-driven/&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>该配置的作用是：启用Spring MVC的注解。
+如果没有以上的配置，Controller就无法访问到。访问之前的Controller会发生 404 问题。</p>
+<h1 id="访问静态资源">访问静态资源<a hidden class="anchor" aria-hidden="true" href="#访问静态资源">#</a></h1>
+<p>一个项目可能会包含大量的静态资源，比如：css、js、images等。
+由于我们DispatcherServlet的url-pattern配置的是“/”，之前我们说过，这个&quot;/&ldquo;代表的是除jsp请求之外的所有请求，也就是说访问应用中的静态资源，也会走DispatcherServlet，这会导致404错误，无法访问静态资源，如何解决，两种方案：</p>
+<ul>
+<li>使用默认 Servlet 处理静态资源</li>
+<li>使用 <code>mvc:resources</code> 标签配置静态资源处理</li>
+</ul>
+<p>这两种方式都可以。自行选择。</p>
+<h2 id="使用默认servlet处理静态资源">使用默认Servlet处理静态资源<a hidden class="anchor" aria-hidden="true" href="#使用默认servlet处理静态资源">#</a></h2>
+<p>首先需要在springmvc.xml文件中添加以下配置，开启 <code>默认Servlet处理静态资源</code> 功能：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#007f7f">&lt;!-- 开启注解驱动 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;mvc:annotation-driven</span> <span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">&lt;!--开启默认Servlet处理--&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;mvc:default-servlet-handler&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在web.xml文件中指定什么样的路径走其他Servlet：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;servlet&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;servlet-name&gt;</span>default<span style="font-weight:bold">&lt;/servlet-name&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;servlet-class&gt;</span>org.apache.catalina.servlets.DefaultServlet<span style="font-weight:bold">&lt;/servlet-class&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;init-param&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;param-name&gt;</span>debug<span style="font-weight:bold">&lt;/param-name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;param-value&gt;</span>0<span style="font-weight:bold">&lt;/param-value&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/init-param&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;init-param&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;param-name&gt;</span>listings<span style="font-weight:bold">&lt;/param-name&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&lt;param-value&gt;</span>false<span style="font-weight:bold">&lt;/param-value&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;/init-param&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;load-on-startup&gt;</span>1<span style="font-weight:bold">&lt;/load-on-startup&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/servlet&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;servlet-mapping&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;servlet-name&gt;</span>default<span style="font-weight:bold">&lt;/servlet-name&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;url-pattern&gt;</span>/<span style="font-weight:bold">&lt;/url-pattern&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/servlet-mapping&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上配置url-pattern使用的也是&rdquo;/&quot;，和DispatcherServlet一样。表示的含义是：<strong>同一个请求路径，先走DispatcherServlet，如果找不到则走默认的Servlet。</strong>
+默认的 Servlet 类中的代码已经由 Tomcat 服务器提供了实现，一般不需要开发者自己编写。在上面的示例中，我们指定了 <code>org.apache.catalina.servlets.DefaultServlet</code>，则 Tomcat 服务器会自动将请求转发给该类处理。在处理时，该类会根据请求的 URL 去查询 Web 应用的静态资源（如 HTML、CSS、JavaScript 和图片等），并将其返回给用户。
+告诉大家一个好消息，以上在web.xml文件中的配置我们也可以省略了，因为在Tomcat服务器中已经为我们提前配置好了，在CATALINA_HOME/conf/web.xml文件中，如下：
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/628c66c6f12f7a169491724f62816372_MD5.png">
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC5%E7%AB%A0-%E8%A7%86%E5%9B%BEview/747ead4415112853d9c9beba4da3500e_MD5.png">
+因此我们只需要在springmvc.xml文件中启用这个默认的Servlet即可：<code>&lt;mvc:default-servlet-handler&gt;</code></p>
+<h2 id="使用-mvcresources-标签配置静态资源">使用 mvc:resources 标签配置静态资源<a hidden class="anchor" aria-hidden="true" href="#使用-mvcresources-标签配置静态资源">#</a></h2>
+<p>访问静态资源，也可以在springmvc.xml文件中添加如下的配置：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#007f7f">&lt;!-- 开启注解驱动 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;mvc:annotation-driven</span> <span style="font-weight:bold">/&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#007f7f">&lt;!-- 配置静态资源处理 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;mvc:resources</span> <span style="color:#007f7f">mapping=</span><span style="color:#0ff;font-weight:bold">&#34;/static/**&#34;</span> <span style="color:#007f7f">location=</span><span style="color:#0ff;font-weight:bold">&#34;/static/&#34;</span> <span style="font-weight:bold">/&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示凡是请求路径是&quot;/static/&ldquo;开始的，都会去&rdquo;/static/&ldquo;目录下找该资源。
+注意：要想使用 <code>&lt;mvc:resources&gt;</code> 配置，必须开启注解驱动 <code>&lt;mvc:annotation-driven /&gt;</code></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://009965.xyz/tags/springmvc/">Springmvc</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

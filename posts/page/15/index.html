@@ -163,99 +163,93 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">sharding
+    <h2 class="entry-hint-parent">《Netty实战》读书笔记
     </h2>
   </header>
   <div class="entry-content">
-    <p>官网 github Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar这3款相互独立的产品组成。 他们均提供标准化的数据分片、读写分离、柔性事务和数据治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。 其中Sharding-JDBC最早由当当网在2016年开源，在Sharding-JDBC 3.0版本，更名为Sharding-Sphere，后来创始人张亮去了京东。在2018年底，项目开源给了apache基金会。
-参考：Sharding-JDBC源码解析与vivo的定制开发
+    <p>第一个Netty应用程序 Netty 客户端/服务器概览 Echo 客户端和服务器之间的交互是非常简单的；在客户端建立一个连接之后，它会向服务器发送一个或多个消息...</p>
+  </div>
+  <footer class="entry-footer"><span title='2021-01-14 09:28:13 +0000 UTC'>2021-01-14</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 《Netty实战》读书笔记" href="https://009965.xyz/posts/java/netty%E5%AE%9E%E6%88%98%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">网络
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>网络通信原理 TCP/IP五层模型详解 计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质&#43;互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。 ...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-12-09 00:48:47 +0000 UTC'>2020-12-09</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 网络" href="https://009965.xyz/posts/%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">常见 Java 代码缺陷及规避方式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>空指针异常 使用 JSR-305/jetbrain 等注解 NotNull Nullable 1 2 3 4 @Nullable public static String getString(){ return null; } 通过在方法参数、返回值、字段等位置显式标记值是否可能为 Null，配合代码检查工具，能够在编...</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-10-09 17:36:57 +0000 UTC'>2020-10-09</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 常见 Java 代码缺陷及规避方式" href="https://009965.xyz/posts/java/%E5%B8%B8%E8%A7%81-java-%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E5%8F%8A%E8%A7%84%E9%81%BF%E6%96%B9%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">编程规约
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>养成良好的编程习惯。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2020-01-08 11:57:49 +0000 UTC'>2020-01-08</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to sharding" href="https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/"></a>
+  <footer class="entry-footer"><span title='2020-10-09 17:36:56 +0000 UTC'>2020-10-09</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 编程规约" href="https://009965.xyz/posts/java/%E7%BC%96%E7%A8%8B%E8%A7%84%E7%BA%A6/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">mysql进阶-索引
+    <h2 class="entry-hint-parent">json
     </h2>
   </header>
   <div class="entry-content">
-    <p>索引概述 原文：https://mp.weixin.qq.com/s/rF3zP99Bqw7PzVXfqfzF0w
-在关系数据库中，索引是一种单独的、物理的对数据库表中一列或多列的值进行排序的一种存储结构，它是某个表中一列或若干列值的集合和相应的指向表中物理标识这些值的数据页的逻辑指针清单。 简单来说，索引的作用相当于图书的目录，可以根据目录中的页码快速找到所需的内容。
+    <p>Jackson 是用来序列化和反序列化 json 的 Java 的开源框架。Spring MVC 的默认 json 解析器便是 Jackson。 Jackson 的 1.x 版本的包名是 org.codehaus.jackson ，当升级到 2.x 版本时，包名变为 com.fasterxml.jackson，本文讨论的内容是基于最新的 Jackson 的 2.9.1 版本。 如果使用的是spring-boot项目，则spring-boot-starter-web默认会引入Jackson包，无需再次引入依赖。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2020-01-07 22:05:33 +0000 UTC'>2020-01-07</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to mysql进阶-索引" href="https://009965.xyz/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95/"></a>
+  <footer class="entry-footer"><span title='2020-08-07 11:47:04 +0000 UTC'>2020-08-07</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to json" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/json/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">6、SpringCloud开发
+    <h2 class="entry-hint-parent">mybatis-plus
     </h2>
   </header>
   <div class="entry-content">
-    <p>概述 Spring是JavaEE的一个轻量级开发框架，主营IoC和AOP，集成JDBC、ORM、MVC等功能便于开发。 Spring Boot是基于Spri...</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-01-06 13:22:38 +0000 UTC'>2020-01-06</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 6、SpringCloud开发" href="https://009965.xyz/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">5、SpringBoot开发
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>概述 我们已经在前面详细介绍了Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。 那么，...</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-01-05 10:15:56 +0000 UTC'>2020-01-05</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 5、SpringBoot开发" href="https://009965.xyz/posts/spring/5springboot%E5%BC%80%E5%8F%91/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">4、Spring开发web应用
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>开发Web应用 在Web开发一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：
-Servlet规范定义了几种标准组件：Servlet、JSP、Filter和Listener； Servlet的标准组件总是运行在Servlet容器中，如Tomcat、Jetty、WebLogic等。 直接使用Servlet进行Web开发好比直接在JDBC上操作数据库，比较繁琐，更好的方法是在Servlet基础上封装MVC框架，基于MVC开发Web应用，大部分时候，不需要接触Servlet API，开发省时省力。
-我们在MVC开发和MVC高级开发已经由浅入深地介绍了如何编写MVC框架。当然，自己写的MVC主要是理解原理，要实现一个功能全面的MVC需要大量的工作以及广泛的测试。
-因此，开发Web应用，首先要选择一个优秀的MVC框架。常用的MVC框架有：
-Struts：最古老的一个MVC框架，目前版本是2，和1.x有很大的区别； WebWork：一个比Struts设计更优秀的MVC框架，但不知道出于什么原因，从2.0开始把自己的代码全部塞给Struts 2了； Turbine：一个重度使用Velocity，强调布局的MVC框架； 其他100&#43;MVC框架……（略） Spring虽然都可以集成任何Web框架，但是，Spring本身也开发了一个MVC框架，就叫Spring MVC。这个MVC框架设计得足够优秀以至于我们已经不想再费劲去集成类似Struts这样的框架了。
-本章我们会详细介绍如何基于Spring MVC开发Web应用。
+    <p>官网 https://baomidou.com/
+其他参考 https://www.cnblogs.com/l-y-h/p/12859477.html
+Mybatis-Plus（简称MP）是一个 Mybatis 的增强工具，在 Mybatis 的基础上只做增强不做改变，为简化开发、提高效率而生。那么它是怎么增强的呢？其实就是它已经封装好了一些crud方法，我们不需要再写xml了，直接调用这些方法就行，就类似于JPA。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2020-01-04 18:56:17 +0000 UTC'>2020-01-04</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 4、Spring开发web应用" href="https://009965.xyz/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/"></a>
+  <footer class="entry-footer"><span title='2020-03-28 15:07:56 +0000 UTC'>2020-03-28</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mybatis-plus" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis-plus/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">3、访问数据库
+    <h2 class="entry-hint-parent">mybatis
     </h2>
   </header>
   <div class="entry-content">
-    <p>概述 数据库基本上是现代应用程序的标准存储，绝大多数程序都把自己的业务数据存储在关系数据库中，可见，访问数据库几乎是所有应用程序必备能力。 我们...</p>
+    <p>基础 面向接口编程 Mapper文件的namespace要和dao层接口的完整路径对应 &lt;mapper namespace=&#34;com.wjy.mapper.TestMapper&#34;&gt;
+接口中的方法名字要和Mapper文件中SQL语句的ID对应 dao层接口 xxxBean selectByPrimaryKey(Integer id);
+1 2 3 4 5 6 &lt;select id=&#34;selectByPrimaryKey&#34; resultMap=&#34;BaseResultMap&#34; parameterType=&#34;java.lang.Integer&#34; &gt; select &lt;include refid=&#34;Base_Column_List&#34; /&gt; from unit where id = #{id,jdbcType=INTEGER} &lt;/select&gt; ...</p>
   </div>
-  <footer class="entry-footer"><span title='2020-01-03 09:25:58 +0000 UTC'>2020-01-03</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 3、访问数据库" href="https://009965.xyz/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">2、AOP
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>使用AOP AOP是Aspect Oriented Programming，即面向切面编程。
-那什么是AOP？
-我们先回顾一下OOP：Object Oriented Programming，OOP作为面向对象编程的模式，获得了巨大的成功，OOP的主要功能是数据封装、继承和多态。
-...</p>
-  </div>
-  <footer class="entry-footer"><span title='2020-01-02 16:21:14 +0000 UTC'>2020-01-02</span>&nbsp;·&nbsp;Wjy</footer>
-  <a class="entry-link" aria-label="post link to 2、AOP" href="https://009965.xyz/posts/spring/2aop/"></a>
+  <footer class="entry-footer"><span title='2020-03-27 15:07:56 +0000 UTC'>2020-03-27</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to mybatis" href="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
