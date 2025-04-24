@@ -6,21 +6,21 @@
     <description>Recent content in Springmvc on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 22 Apr 2025 15:13:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Apr 2025 15:14:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/springmvc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>14、SSM整合</title>
+      <link>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</link>
+      <pubDate>Tue, 22 Apr 2025 15:14:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</guid>
+      <description>引入相关依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64</description>
+    </item>
     <item>
       <title>13、全注解开发</title>
       <link>https://009965.xyz/posts/springmvc/%E7%AC%AC13%E7%AB%A0-%E5%85%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91/</link>
       <pubDate>Tue, 22 Apr 2025 15:13:58 +0000</pubDate>
       <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC13%E7%AB%A0-%E5%85%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91/</guid>
       <description>web.xml文件的替代 Servlet3.0新特性 Servlet3.0新特性：web.xml文件可以不写了。 在Servlet3.0的时候，规</description>
-    </item>
-    <item>
-      <title>14、SSM整合</title>
-      <link>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</link>
-      <pubDate>Tue, 22 Apr 2025 15:13:58 +0000</pubDate>
-      <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</guid>
-      <description>引入相关依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64</description>
     </item>
     <item>
       <title>12、手写Spring MVC</title>

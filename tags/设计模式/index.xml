@@ -749,9 +749,9 @@
     </item>
     <item>
       <title>工厂方法和抽象工厂</title>
-      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/</link>
       <pubDate>Mon, 10 Dec 2018 15:39:08 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/</guid>
       <description>&lt;h1 id=&#34;工厂方法&#34;&gt;工厂方法&lt;/h1&gt;
 &lt;p&gt;类型：创建型
 概念：定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。&lt;/p&gt;</description>
@@ -768,13 +768,10 @@
     </item>
     <item>
       <title>设计模式概览</title>
-      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</link>
+      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/1%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</guid>
-      <description>&lt;h1 id=&#34;设计模式的分类&#34;&gt;设计模式的分类&lt;/h1&gt;
-&lt;p&gt;提到设计模式，不得不感谢GoF（Gang of Four，四人组），他们1995年出版的《设计模式》一书，第一次将设计模式提升到理论高度，并将之规范化。书中一共总结了23种基本的设计模式。而这23中设计模式几乎涵盖了面向对象设计过程中所有问题的解决方案。书中提到的23种设计模式分别是：&lt;/p&gt;
-&lt;p&gt;总体来说设计模式分为三大类：
-创建型(5种)：工厂、抽象工厂、单例、建造者、原型&lt;/p&gt;</description>
+      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/1%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</guid>
+      <description>设计模式的分类 设计模式，即Design Patterns，是指在软件设计中，被反复使用的一种代码设计经验。使用设计模式的目的是为了可重用代码，</description>
     </item>
   </channel>
 </rss>

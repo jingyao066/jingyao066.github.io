@@ -6,21 +6,21 @@
     <description>Recent content on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 22 Apr 2025 15:13:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Apr 2025 15:14:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>14、SSM整合</title>
+      <link>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</link>
+      <pubDate>Tue, 22 Apr 2025 15:14:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</guid>
+      <description>引入相关依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64</description>
+    </item>
     <item>
       <title>13、全注解开发</title>
       <link>https://009965.xyz/posts/springmvc/%E7%AC%AC13%E7%AB%A0-%E5%85%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91/</link>
       <pubDate>Tue, 22 Apr 2025 15:13:58 +0000</pubDate>
       <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC13%E7%AB%A0-%E5%85%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91/</guid>
       <description>web.xml文件的替代 Servlet3.0新特性 Servlet3.0新特性：web.xml文件可以不写了。 在Servlet3.0的时候，规</description>
-    </item>
-    <item>
-      <title>14、SSM整合</title>
-      <link>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</link>
-      <pubDate>Tue, 22 Apr 2025 15:13:58 +0000</pubDate>
-      <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</guid>
-      <description>引入相关依赖 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64</description>
     </item>
     <item>
       <title>12、手写Spring MVC</title>
@@ -1456,7 +1456,7 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
 &lt;p&gt;我们先回顾一下OOP：Object Oriented Programming，OOP作为面向对象编程的模式，获得了巨大的成功，OOP的主要功能是数据封装、继承和多态。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>1、IOC容器</title>
+      <title>1、IoC容器</title>
       <link>https://009965.xyz/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</link>
       <pubDate>Wed, 01 Jan 2020 15:32:45 +0000</pubDate>
       <guid>https://009965.xyz/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</guid>
@@ -2676,9 +2676,9 @@ Interrupting a thread that is not alive need not have any effect.&lt;/p&gt;</des
     </item>
     <item>
       <title>工厂方法和抽象工厂</title>
-      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/</link>
       <pubDate>Mon, 10 Dec 2018 15:39:08 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E5%92%8C%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/</guid>
       <description>&lt;h1 id=&#34;工厂方法&#34;&gt;工厂方法&lt;/h1&gt;
 &lt;p&gt;类型：创建型
 概念：定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。&lt;/p&gt;</description>
@@ -3120,13 +3120,10 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
     </item>
     <item>
       <title>设计模式概览</title>
-      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</link>
+      <link>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/1%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</guid>
-      <description>&lt;h1 id=&#34;设计模式的分类&#34;&gt;设计模式的分类&lt;/h1&gt;
-&lt;p&gt;提到设计模式，不得不感谢GoF（Gang of Four，四人组），他们1995年出版的《设计模式》一书，第一次将设计模式提升到理论高度，并将之规范化。书中一共总结了23种基本的设计模式。而这23中设计模式几乎涵盖了面向对象设计过程中所有问题的解决方案。书中提到的23种设计模式分别是：&lt;/p&gt;
-&lt;p&gt;总体来说设计模式分为三大类：
-创建型(5种)：工厂、抽象工厂、单例、建造者、原型&lt;/p&gt;</description>
+      <guid>https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/1%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%A7%88/</guid>
+      <description>设计模式的分类 设计模式，即Design Patterns，是指在软件设计中，被反复使用的一种代码设计经验。使用设计模式的目的是为了可重用代码，</description>
     </item>
     <item>
       <title>面试</title>

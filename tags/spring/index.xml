@@ -120,7 +120,7 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;p&gt;我们先回顾一下OOP：Object Oriented Programming，OOP作为面向对象编程的模式，获得了巨大的成功，OOP的主要功能是数据封装、继承和多态。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>1、IOC容器</title>
+      <title>1、IoC容器</title>
       <link>https://009965.xyz/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</link>
       <pubDate>Wed, 01 Jan 2020 15:32:45 +0000</pubDate>
       <guid>https://009965.xyz/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</guid>
