@@ -6,8 +6,15 @@
     <description>Recent content in 生活 on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 07 Jan 2025 17:22:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 25 Apr 2025 17:25:35 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>下载视频</title>
+      <link>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91/</link>
+      <pubDate>Fri, 25 Apr 2025 17:25:35 +0000</pubDate>
+      <guid>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91/</guid>
+      <description>yt-dlp yt-dlp是一个可以下载资源的开源库：yt-dlp/yt-dlp: A feature-rich command-line audio/video downloader 安装： Releases · yt-dlp/yt-dlp windows下载exe文件，无需安装，直接通过</description>
+    </item>
     <item>
       <title>贝叶斯定理</title>
       <link>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86/</link>

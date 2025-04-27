@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://009965.xyz/posts/</loc>
+    <lastmod>2025-04-25T17:25:35+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/</loc>
+    <lastmod>2025-04-25T17:25:35+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/</loc>
+    <lastmod>2025-04-25T17:25:35+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91/</loc>
+    <lastmod>2025-04-25T17:25:35+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</loc>
+    <lastmod>2025-04-25T17:25:35+00:00</lastmod>
+  </url><url>
     <loc>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</loc>
     <lastmod>2025-04-22T15:14:58+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/posts/</loc>
-    <lastmod>2025-04-22T15:14:58+00:00</lastmod>
-  </url><url>
     <loc>https://009965.xyz/tags/springmvc/</loc>
-    <lastmod>2025-04-22T15:14:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/</loc>
-    <lastmod>2025-04-22T15:14:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/</loc>
     <lastmod>2025-04-22T15:14:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/springmvc/%E7%AC%AC13%E7%AB%A0-%E5%85%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91/</loc>
@@ -76,9 +82,6 @@
   </url><url>
     <loc>https://009965.xyz/posts/spring/spring6/</loc>
     <lastmod>2025-01-12T17:27:28+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</loc>
-    <lastmod>2025-01-07T17:22:04+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86/</loc>
     <lastmod>2025-01-07T17:22:04+00:00</lastmod>

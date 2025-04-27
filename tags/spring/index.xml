@@ -36,7 +36,7 @@
       <link>https://009965.xyz/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
       <pubDate>Wed, 15 Jan 2020 14:13:12 +0000</pubDate>
       <guid>https://009965.xyz/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
-      <description>&lt;h1 id=&#34;简单的hello-world&#34;&gt;简单的hello world&lt;/h1&gt;</description>
+      <description>简单的hello world 创建简单的信息类： 1 2 3 4 5 6 7 8 9 10 11 public class HelloWorld { private String message; public String getMessage() { return message; } public void setMessage(String message) { this.message = message; } } 创建 bean 的配置文件beans.xml</description>
     </item>
     <item>
       <title>springMVC</title>
