@@ -64,7 +64,9 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
 <meta property="og:url" content="https://009965.xyz/posts/java%E9%9B%86%E5%90%88/hashmap/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="HashMap">
-  <meta property="og:description" content="概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。">
+  <meta property="og:description" content="概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。
+HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
+HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -105,11 +107,11 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
   "@type": "BlogPosting",
   "headline": "HashMap",
   "name": "HashMap",
-  "description": "概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。\n",
+  "description": "概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。\nHashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。\nHashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。\n",
   "keywords": [
     "Java集合"
   ],
-  "articleBody": "概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。 HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。\nHashMap的实例有两个参数影响其性能：初始容量和加载因子 容量是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。 加载因子是哈希表在其容量自动增长之前，可以达到多满的一种尺度。 当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行rehash操作(即重建内部结构)，从而哈希表将具有两倍的桶数。 通常，默认加载因子是0.75， 这是在时间和空间成本上寻求一种折中。加载因子过高虽然减少了空间开销，但是也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。 在设置初始容量时应该考虑到映射中所需的条目数及其加载因子，以便最大限度地减少 rehash 操作次数。如果初始容量大于最大条目数除以加载因子，则不会发生 rehash 操作。\n链式哈希表 链式哈希表从根本上说是由一组链表构成。 每个链表都可以看做是一个“桶”，我们将所有的元素通过散列的方式放到具体的不同的桶中。 插入元素时，首先将其键传入一个哈希函数（该过程称为哈希键），函数通过散列的方式告知元素属于哪个“桶”，然后在相应的链表头插入元素。 查找或删除元素时，用同样的方式先找到元素的“桶”，然后遍历相应的链表，直到发现我们想要的元素。 因为每个“桶”都是一个链表，所以链式哈希表并不限制包含元素的个数。然而，如果表变得太大，它的性能将会降低。\nJDK 1.8 对 HashMap 进行了比较大的优化，底层实现由之前的 “数组+链表” 改为 “数组+链表+红黑树”。JDK 1.8 的 HashMap 的数据结构如下图所示，当链表节点较少时仍然是以链表存在，当链表节点较多时（大于8）会转为红黑树。\n1、本文中头节点指的是 table 表上索引位置的节点，也就是链表的头节点。\n2、根节点（root 节点）指的是红黑树最上面的那个节点，也就是没有父节点的节点。\n3、红黑树的根节点不一定是索引位置的头节点（也就是链表的头节点），HashMap 通过 moveRootToFront 方法来维持红黑树的根结点就是索引位置的头结点，但是在 removeTreeNode 方法中，当 movable 为 false 时，不会调用 moveRootToFront 方法，此时红黑树的根节点不一定是索引位置的头节点，该场景发生在 HashIterator 的 remove 方法中。\n4、转为红黑树节点后，链表的结构还存在，通过 next 属性维持，红黑树节点在进行操作时都会维护链表的结构，并不是转为红黑树节点，链表结构就不存在了。\n5、在红黑树上，叶子节点也可能有 next 节点，因为红黑树的结构跟链表的结构是互不影响的，不会因为是叶子节点就说该节点已经没有 next 节点。\n6、源码中一些变量定义：如果定义了一个节点 p，则 pl（p left）为 p 的左节点，pr（p right）为 p 的右节点，pp（p parent）为 p 的父节点，ph（p hash）为 p 的 hash 值，pk（p key）为 p 的 key 值，kc（key class）为 key 的类等等。源码中很喜欢在 if/for 等语句中进行赋值并判断，请注意。\n7、链表中移除一个节点只需如下图操作，其他操作同理。\n8、红黑树在维护链表结构时，移除一个节点只需如下图操作（红黑树中增加了一个 prev 属性），其他操作同理。注：此处只是红黑树维护链表结构的操作，红黑树还需要单独进行红黑树的移除或者其他操作。\n9、源码中进行红黑树的查找时，会反复用到以下两条规则：1）如果目标节点的 hash 值小于 p 节点的 hash 值，则向 p 节点的左边遍历；否则向 p 节点的右边遍历。2）如果目标节点的 key 值小于 p 节点的 key 值，则向 p 节点的左边遍历；否则向 p 节点的右边遍历。这两条规则是利用了红黑树的特性（左节点 \u003c 根节点 \u003c 右节点）。\n10、源码中进行红黑树的查找时，会用 dir（direction）来表示向左还是向右查找，dir 存储的值是目标节点的 hash/key 与 p 节点的 hash/key 的比较结果。\n构造函数 1 2 3 4 5 6 7 8 // 默认构造函数。 HashMap() // 指定“容量大小”的构造函数 HashMap(int capacity) // 指定“容量大小”和“加载因子”的构造函数 HashMap(int capacity, float loadFactor) // 包含“子Map”的构造函数 HashMap(Map\u003c? extends K, ? extends V\u003e map) API 1 2 3 4 5 6 7 8 9 10 11 12 13 void clear() Object clone() boolean containsKey(Object key) boolean containsValue(Object value) Set",
+  "articleBody": "概述 HashMap是一个散列表（就是哈希表），哈希表就是一种以键-值(key-indexed)存储数据的结构。\nHashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。\nHashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。\nHashMap的实例有两个参数影响其性能：初始容量和加载因子\n容量是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。\n加载因子是哈希表在其容量自动增长之前，可以达到多满的一种尺度。\n当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行rehash操作(即重建内部结构)，从而哈希表将具有两倍的桶数。\n通常，默认加载因子是0.75， 这是在时间和空间成本上寻求一种折中。加载因子过高虽然减少了空间开销，但是也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。\n在设置初始容量时应该考虑到映射中所需的条目数及其加载因子，以便最大限度地减少 rehash 操作次数。如果初始容量大于最大条目数除以加载因子，则不会发生 rehash 操作。\n链式哈希表\n链式哈希表从根本上说是由一组链表构成。\n每个链表都可以看做是一个“桶”，我们将所有的元素通过散列的方式放到具体的不同的桶中。\n插入元素时，首先将其键传入一个哈希函数（该过程称为哈希键），函数通过散列的方式告知元素属于哪个“桶”，然后在相应的链表头插入元素。\n查找或删除元素时，用同样的方式先找到元素的“桶”，然后遍历相应的链表，直到发现我们想要的元素。\n因为每个“桶”都是一个链表，所以链式哈希表并不限制包含元素的个数。然而，如果表变得太大，它的性能将会降低。\nJDK 1.8 对 HashMap 进行了比较大的优化，底层实现由之前的 “数组+链表” 改为 “数组+链表+红黑树”。JDK 1.8 的 HashMap 的数据结构如下图所示，当链表节点较少时仍然是以链表存在，当链表节点较多时（大于8）会转为红黑树。\n1、本文中头节点指的是 table 表上索引位置的节点，也就是链表的头节点。\n2、根节点（root 节点）指的是红黑树最上面的那个节点，也就是没有父节点的节点。\n3、红黑树的根节点不一定是索引位置的头节点（也就是链表的头节点），HashMap 通过 moveRootToFront 方法来维持红黑树的根结点就是索引位置的头结点，但是在 removeTreeNode 方法中，当 movable 为 false 时，不会调用 moveRootToFront 方法，此时红黑树的根节点不一定是索引位置的头节点，该场景发生在 HashIterator 的 remove 方法中。\n4、转为红黑树节点后，链表的结构还存在，通过 next 属性维持，红黑树节点在进行操作时都会维护链表的结构，并不是转为红黑树节点，链表结构就不存在了。\n5、在红黑树上，叶子节点也可能有 next 节点，因为红黑树的结构跟链表的结构是互不影响的，不会因为是叶子节点就说该节点已经没有 next 节点。\n6、源码中一些变量定义：如果定义了一个节点 p，则 pl（p left）为 p 的左节点，pr（p right）为 p 的右节点，pp（p parent）为 p 的父节点，ph（p hash）为 p 的 hash 值，pk（p key）为 p 的 key 值，kc（key class）为 key 的类等等。源码中很喜欢在 if/for 等语句中进行赋值并判断，请注意。\n7、链表中移除一个节点只需如下图操作，其他操作同理。\n8、红黑树在维护链表结构时，移除一个节点只需如下图操作（红黑树中增加了一个 prev 属性），其他操作同理。注：此处只是红黑树维护链表结构的操作，红黑树还需要单独进行红黑树的移除或者其他操作。\n9、源码中进行红黑树的查找时，会反复用到以下两条规则：1）如果目标节点的 hash 值小于 p 节点的 hash 值，则向 p 节点的左边遍历；否则向 p 节点的右边遍历。2）如果目标节点的 key 值小于 p 节点的 key 值，则向 p 节点的左边遍历；否则向 p 节点的右边遍历。这两条规则是利用了红黑树的特性（左节点 \u003c 根节点 \u003c 右节点）。\n10、源码中进行红黑树的查找时，会用 dir（direction）来表示向左还是向右查找，dir 存储的值是目标节点的 hash/key 与 p 节点的 hash/key 的比较结果。\n构造函数 1 2 3 4 5 6 7 8 // 默认构造函数。 HashMap() // 指定“容量大小”的构造函数 HashMap(int capacity) // 指定“容量大小”和“加载因子”的构造函数 HashMap(int capacity, float loadFactor) // 包含“子Map”的构造函数 HashMap(Map\u003c? extends K, ? extends V\u003e map) API 1 2 3 4 5 6 7 8 9 10 11 12 13 void clear() Object clone() boolean containsKey(Object key) boolean containsValue(Object value) Set",
   "wordCount" : "26795",
   "inLanguage": "en",
   "datePublished": "2016-12-12T14:49:20Z",
@@ -364,20 +366,20 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
 </div>
 
   <div class="post-content"><h1 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h1>
-<p>HashMap是一个散列表（就是哈希表），哈希表就是一种以<code>键-值(key-indexed)</code>存储数据的结构。
-HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
+<p>HashMap是一个散列表（就是哈希表），哈希表就是一种以<code>键-值(key-indexed)</code>存储数据的结构。<br>
+HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。<br>
 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。</p>
-<p>HashMap的实例有两个参数影响其性能：<code>初始容量</code>和<code>加载因子</code>
-容量是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。
-加载因子是哈希表在其容量自动增长之前，可以达到多满的一种尺度。
-当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行rehash操作(即重建内部结构)，从而哈希表将具有两倍的桶数。
-通常，<strong>默认加载因子是0.75</strong>， 这是在时间和空间成本上寻求一种折中。加载因子过高虽然减少了空间开销，但是也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。
+<p>HashMap的实例有两个参数影响其性能：<code>初始容量</code>和<code>加载因子</code><br>
+容量是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。<br>
+加载因子是哈希表在其容量自动增长之前，可以达到多满的一种尺度。<br>
+当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行rehash操作(即重建内部结构)，从而哈希表将具有两倍的桶数。<br>
+通常，<strong>默认加载因子是0.75</strong>， 这是在时间和空间成本上寻求一种折中。加载因子过高虽然减少了空间开销，但是也增加了查询成本（在大多数 HashMap 类的操作中，包括 get 和 put 操作，都反映了这一点）。<br>
 在设置初始容量时应该考虑到映射中所需的条目数及其加载因子，以便最大限度地减少 rehash 操作次数。如果初始容量大于最大条目数除以加载因子，则不会发生 rehash 操作。</p>
-<p>链式哈希表
-链式哈希表从根本上说是由一组链表构成。
-每个链表都可以看做是一个“桶”，我们将所有的元素通过散列的方式放到具体的不同的桶中。
-插入元素时，首先将其键传入一个哈希函数（该过程称为哈希键），函数通过散列的方式告知元素属于哪个“桶”，然后在相应的链表头插入元素。
-查找或删除元素时，用同样的方式先找到元素的“桶”，然后遍历相应的链表，直到发现我们想要的元素。
+<p>链式哈希表<br>
+链式哈希表从根本上说是由一组链表构成。<br>
+每个链表都可以看做是一个“桶”，我们将所有的元素通过散列的方式放到具体的不同的桶中。<br>
+插入元素时，首先将其键传入一个哈希函数（该过程称为哈希键），函数通过散列的方式告知元素属于哪个“桶”，然后在相应的链表头插入元素。<br>
+查找或删除元素时，用同样的方式先找到元素的“桶”，然后遍历相应的链表，直到发现我们想要的元素。<br>
 因为每个“桶”都是一个链表，所以链式哈希表并不限制包含元素的个数。然而，如果表变得太大，它的性能将会降低。</p>
 <p><img loading="lazy" src="1.png"></p>
 <p>JDK 1.8 对 HashMap 进行了比较大的优化，底层实现由之前的 “数组+链表” 改为 “数组+链表+红黑树”。JDK 1.8 的 HashMap 的数据结构如下图所示，当链表节点较少时仍然是以链表存在，当链表节点较多时（大于8）会转为红黑树。</p>
@@ -471,15 +473,15 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
 </span></span><span style="display:flex;"><span>    implements Map&lt;K,V&gt;, Cloneable, Serializable { }
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/hashmap/1.jpg">
+</div><p><img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/hashmap/1.jpg"><br>
 从图中可以看出：</p>
 <ul>
 <li>HashMap继承于AbstractMap类，实现了Map接口。Map是&quot;key-value键值对&quot;接口，AbstractMap实现了&quot;键值对&quot;的通用函数接口。</li>
-<li>HashMap是通过&quot;拉链法&quot;实现的哈希表。它包括几个重要的成员变量：table, size, threshold, loadFactor, modCount。
-table是一个Entry[]数组类型，而Entry实际上就是一个单向链表。哈希表的&quot;key-value键值对&quot;都是存储在Entry数组中的。
-size是HashMap的大小，它是HashMap保存的键值对的数量。
-threshold是HashMap的阈值，用于判断是否需要调整HashMap的容量。threshold的值=<code>容量*加载因子</code>，当HashMap中存储数据的数量达到threshold时，就需要将HashMap的容量加倍。
-loadFactor就是加载因子。
+<li>HashMap是通过&quot;拉链法&quot;实现的哈希表。它包括几个重要的成员变量：table, size, threshold, loadFactor, modCount。<br>
+table是一个Entry[]数组类型，而Entry实际上就是一个单向链表。哈希表的&quot;key-value键值对&quot;都是存储在Entry数组中的。<br>
+size是HashMap的大小，它是HashMap保存的键值对的数量。<br>
+threshold是HashMap的阈值，用于判断是否需要调整HashMap的容量。threshold的值=<code>容量*加载因子</code>，当HashMap中存储数据的数量达到threshold时，就需要将HashMap的容量加倍。<br>
+loadFactor就是加载因子。<br>
 modCount是用来实现fail-fast机制的。</li>
 </ul>
 <h1 id="hashmap构造函数">HashMap构造函数<a hidden class="anchor" aria-hidden="true" href="#hashmap构造函数">#</a></h1>
@@ -1416,7 +1418,7 @@ modCount是用来实现fail-fast机制的。</li>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果当前节点 x 不是根节点, 则从根节点开始查找属于该节点的位置，该段代码跟<strong>代码块2</strong>和<strong>代码块4</strong>的查找代码类似。
+</div><p>如果当前节点 x 不是根节点, 则从根节点开始查找属于该节点的位置，该段代码跟<strong>代码块2</strong>和<strong>代码块4</strong>的查找代码类似。<br>
 如果 root 节点不在 table 索引位置的头节点, 则将其调整为头节点，<strong>见代码块8详解</strong>。</p>
 <h2 id="代码块8moveroottofront">代码块8：moveRootToFront<a hidden class="anchor" aria-hidden="true" href="#代码块8moveroottofront">#</a></h2>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2394,9 +2396,9 @@ modCount是用来实现fail-fast机制的。</li>
 </div><p>7.如果 succ 节点不为空，则将 succ 的 prev 节点设置为 pred，与前面对应（TreeNode 链表的移除，见开头第8点）。</p>
 <p>12.6 寻找 replacement，用来替换掉 p 节点。为什么 sr 是 replacement 的首选，p 为备选？见解释1。</p>
 <p>PS：代码中的第一次调整和第二次调整是将 p 节点和 s 节点进行了位置调换，然后找出要替换掉 p 节点的 replacement；第三次调整是将 replacement 节点覆盖掉 p 节点；这部分的代码逻辑非常复杂，建议自己动手画图模拟。（下文图解1即为这三次调整的例子）</p>
-<p>解释1：为什么 sr 是 replacement 的首选，p 为备选？
+<p>解释1：为什么 sr 是 replacement 的首选，p 为备选？<br>
 解析：首先我们看 sr 是什么？从代码中可以看到 sr 第一次被赋值时，是在 s 节点进行了向左穷遍历结束后，因此此时 s 节点是没有左节点的，sr 即为 s 节点的右节点。而从上面的第一次调整和第二次调整我们知道，p 节点已经跟 s 节点进行了位置调换，所以此时 sr 其实是 p 节点的右节点，并且 p 节点没有左节点，因此要移除 p 节点，只需要将 p 节点的右节点 sr 覆盖掉 p 节点即可，因此 sr 是 replacement 的首选，而如果 sr 为空，则代表 p 节点为叶子节点，此时将 p 节点直接移除即可。</p>
-<p>图解1：removeTreeNode 图解
+<p>图解1：removeTreeNode 图解<br>
 本图解忽略红黑树的颜色，请注意。</p>
 <p>下面的图解是代码中的最复杂的情况，即流程最长的那个，p 节点不为根节点，p 节点有左右节点，s 节点不为 pr 节点，s 节点有右节点。</p>
 <p>另外，第一次调整和第二次调整的是本人根据代码而设定的，将第一次调整和第二次调整合起来看会更容易理解，如下：</p>
@@ -2501,7 +2503,7 @@ modCount是用来实现fail-fast机制的。</li>
 <p><img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/hashmap/6.png"></p>
 <p>****结果：****可以看出，扩容后，节点 A 和节点 C 的先后顺序跟扩容前是一样的。因此，即使此时有多个线程并发扩容，也不会出现死循环的情况。当然，这仍然改变不了 HashMap 仍是非并发安全，在并发下，还是要使用 ConcurrentHashMap 来代替。</p>
 <h1 id="hashmap实现的cloneable接口">HashMap实现的Cloneable接口<a hidden class="anchor" aria-hidden="true" href="#hashmap实现的cloneable接口">#</a></h1>
-<p>HashMap实现了Cloneable接口，即实现了clone()方法。
+<p>HashMap实现了Cloneable接口，即实现了clone()方法。<br>
 clone()方法的作用很简单，就是克隆一个HashMap对象并返回。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2759,7 +2761,7 @@ clone()方法的作用很简单，就是克隆一个HashMap对象并返回。</p
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>至此，HashMap内容总结完毕，有待完善，其中很多源码都是JDK1.6版本的，Java8的HashMap相比之前有较大的优化，
+</div><p>至此，HashMap内容总结完毕，有待完善，其中很多源码都是JDK1.6版本的，Java8的HashMap相比之前有较大的优化，<br>
 其中最重要的一个优化就是桶中的元素不再唯一按照链表组合，也可以使用红黑树进行存储，总之，目标只有一个，那就是在安全和功能性完备的情况下让其速度更快，提升性能。</p>
 <h1 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h1>
 <ul>
@@ -2777,24 +2779,24 @@ clone()方法的作用很简单，就是克隆一个HashMap对象并返回。</p
 <p><a href="https://blog.csdn.net/v123411739/article/details/78996181/">参考</a></p>
 <h1 id="concurrenthashmap">ConcurrentHashMap<a hidden class="anchor" aria-hidden="true" href="#concurrenthashmap">#</a></h1>
 <h2 id="jdk17中的-concurrenthashmap">jdk1.7中的 ConcurrentHashMap<a hidden class="anchor" aria-hidden="true" href="#jdk17中的-concurrenthashmap">#</a></h2>
-<p>针对<code>HashTable</code>会锁整个hash表的问题，ConcurrentHashMap提出了分段锁的解决方案。
-分段锁的思想就是：锁的时候不锁整个hash表，而是只锁一部分。
-如何实现呢？这就用到了ConcurrentHashMap中最关键的Segment。
-ConcurrentHashMap中维护着一个Segment数组，每个Segment可以看做是一个HashMap。
-而Segment本身继承了ReentrantLock，它本身就是一个锁。
-在Segment中通过HashEntry数组来维护其内部的hash表。
-每个HashEntry就代表了map中的一个K-V，用HashEntry可以组成一个链表结构，通过next字段引用到其下一个元素。
+<p>针对<code>HashTable</code>会锁整个hash表的问题，ConcurrentHashMap提出了分段锁的解决方案。<br>
+分段锁的思想就是：锁的时候不锁整个hash表，而是只锁一部分。<br>
+如何实现呢？这就用到了ConcurrentHashMap中最关键的Segment。<br>
+ConcurrentHashMap中维护着一个Segment数组，每个Segment可以看做是一个HashMap。<br>
+而Segment本身继承了ReentrantLock，它本身就是一个锁。<br>
+在Segment中通过HashEntry数组来维护其内部的hash表。<br>
+每个HashEntry就代表了map中的一个K-V，用HashEntry可以组成一个链表结构，通过next字段引用到其下一个元素。<br>
 所以1.7中的ConcurrentHashMap定位一个元素的过程需要进行两次Hash操作。第一次Hash定位到Segment，第二次Hash定位到元素所在的链表的头部。</p>
-<p>使用Segment的坏处：
+<p>使用Segment的坏处：<br>
 Hash的过程要比普通的HashMap要长</p>
-<p>好处：
-可以只对元素所在的Segment进行加锁即可，不会影响到其他的Segment。
+<p>好处：<br>
+可以只对元素所在的Segment进行加锁即可，不会影响到其他的Segment。<br>
 这样，在最理想的情况下，ConcurrentHashMap可以最高同时支持Segment数量大小的写操作。</p>
 <h2 id="jdk18中的-concurrenthashmap">jdk1.8中的 ConcurrentHashMap<a hidden class="anchor" aria-hidden="true" href="#jdk18中的-concurrenthashmap">#</a></h2>
 <p>JDK8中ConcurrentHashMap参考了JDK8 HashMap的实现，采用了数组+链表+红黑树的实现方式来设计，内部大量采用CAS操作，这里简要介绍下CAS。</p>
 <p>CAS是compare and swap的缩写，即我们所说的比较交换。cas是一种基于锁的操作，而且是乐观锁。在java中锁分为乐观锁和悲观锁。悲观锁是将资源锁住，等一个之前获得锁的线程释放锁之后，下一个线程才可以访问。而乐观锁采取了一种宽泛的态度，通过某种方式不加锁来处理资源，比如通过给记录加version来获取数据，性能较悲观锁有很大的提高。</p>
-<p>CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）和新值(B)。如果内存地址里面的值和A的值是一样的，那么就将内存里面的值更新成B。CAS是通过无限循环来获取数据的，如果在第一轮循环中，a线程获取地址里面的值被b线程修改了，那么a线程需要自旋，到下次循环才有可能机会执行。
-JDK8中彻底放弃了Segment转而采用的是Node，其设计思想也不再是JDK1.7中的分段锁思想。
+<p>CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）和新值(B)。如果内存地址里面的值和A的值是一样的，那么就将内存里面的值更新成B。CAS是通过无限循环来获取数据的，如果在第一轮循环中，a线程获取地址里面的值被b线程修改了，那么a线程需要自旋，到下次循环才有可能机会执行。<br>
+JDK8中彻底放弃了Segment转而采用的是Node，其设计思想也不再是JDK1.7中的分段锁思想。<br>
 Node：保存key，value及key的hash值的数据结构。其中value和next都用volatile修饰，保证并发的可见性。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2831,8 +2833,8 @@ Node：保存key，value及key的hash值的数据结构。其中value和next都�
 <p>如果我们设置节点多于8个转红黑树，少于8个就马上转链表，当节点个数在8徘徊时，就会频繁进行红黑树和链表的转换，造成性能的损耗。</p>
 <h2 id="那-hashmap-有哪些重要属性分别用于做什么的">那 HashMap 有哪些重要属性？分别用于做什么的？<a hidden class="anchor" aria-hidden="true" href="#那-hashmap-有哪些重要属性分别用于做什么的">#</a></h2>
 <p>除了用来存储我们的节点 table 数组外，HashMap 还有以下几个重要属性：</p>
-<p>1）size：HashMap 已经存储的节点个数；
-2）threshold：扩容阈值，当 HashMap 的个数达到该值，触发扩容。
+<p>1）size：HashMap 已经存储的节点个数；<br>
+2）threshold：扩容阈值，当 HashMap 的个数达到该值，触发扩容。<br>
 3）loadFactor：负载因子，扩容阈值 = 容量 * 负载因子。</p>
 <h2 id="threshold-除了用于存放扩容阈值还有其他作用吗">threshold 除了用于存放扩容阈值还有其他作用吗？<a hidden class="anchor" aria-hidden="true" href="#threshold-除了用于存放扩容阈值还有其他作用吗">#</a></h2>
 <p>在我们新建 HashMap 对象时， threshold 还会被用来存初始化时的容量。HashMap 直到我们第一次插入节点时，才会对 table 进行初始化，避免不必要的空间浪费。</p>
@@ -2861,8 +2863,8 @@ Node：保存key，value及key的hash值的数据结构。其中value和next都�
 <li>扩容时计算节点在新表的索引位置方式从“h &amp; (length-1)”改成“hash &amp; oldCap”，性能可能提升不大，但设计更巧妙、更优雅。</li>
 </ul>
 <h2 id="介绍下-concurrenhashmap要讲出-17-和-18-的区别">介绍下 ConcurrenHashMap，要讲出 1.7 和 1.8 的区别？<a hidden class="anchor" aria-hidden="true" href="#介绍下-concurrenhashmap要讲出-17-和-18-的区别">#</a></h2>
-<p>ConcurrentHashMap 是 HashMap 的线程安全版本，和 HashMap 一样，在JDK 1.8 中进行了较大的优化。
-JDK1.7：底层结构为：分段的数组+链表；实现线程安全的方式：分段锁（Segment，继承了ReentrantLock），如下图所示。
+<p>ConcurrentHashMap 是 HashMap 的线程安全版本，和 HashMap 一样，在JDK 1.8 中进行了较大的优化。<br>
+JDK1.7：底层结构为：分段的数组+链表；实现线程安全的方式：分段锁（Segment，继承了ReentrantLock），如下图所示。<br>
 JDK1.8：底层结构为：数组+链表+红黑树；实现线程安全的方式：CAS + Synchronized</p>
 <p>区别：</p>
 <ul>
@@ -2881,7 +2883,7 @@ JDK1.8：底层结构为：数组+链表+红黑树；实现线程安全的方式
 <p>3）.否则，对索引位置的节点 f 对象使用 synchronized 进行加锁，遍历链表或红黑树，如果找到 key 和入参相同的，则替换掉 value 值；如果没找到，则新增一个节点。如果是链表，同时判断是否需要转红黑树。处理完在索引位置的节点后，会将该索引位置赋值为 ForwardingNode，表示该位置已经处理过。</p>
 <p>ForwardingNode：一个特殊的 Node 节点，hash 值为-1（源码中定义成 MOVED），其中存储 nextTable 的引用。 只有发生扩容的时候，ForwardingNode才会发挥作用，作为一个占位符放在 table 中表示当前节点已经被处理（或则为 null ）。</p>
 <h2 id="hashset-是如何保证不重复的">HashSet 是如何保证不重复的？<a hidden class="anchor" aria-hidden="true" href="#hashset-是如何保证不重复的">#</a></h2>
-<p>HashSet 底层使用 HashMap 来实现，见下面的源码，元素放在 HashMap 的 key 里，value 为固定的 Object 对象。当 add 时调用 HashMap 的 put 方法，如果元素不存在，则返回 null 表示 add 成功，否则 add 失败。
+<p>HashSet 底层使用 HashMap 来实现，见下面的源码，元素放在 HashMap 的 key 里，value 为固定的 Object 对象。当 add 时调用 HashMap 的 put 方法，如果元素不存在，则返回 null 表示 add 成功，否则 add 失败。<br>
 由于 HashMap 的 Key 值本身就不允许重复，HashSet 正好利用 HashMap 中 key 不重复的特性来校验重复元素。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">

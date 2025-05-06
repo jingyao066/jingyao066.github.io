@@ -30,10 +30,10 @@
       <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</link>
       <pubDate>Wed, 08 Jan 2020 11:57:49 +0000</pubDate>
       <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/sharding/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://shardingsphere.apache.org/index_zh.html&#34;&gt;官网&lt;/a&gt;
-&lt;a href=&#34;https://github.com/apache/incubator-shardingsphere&#34;&gt;github&lt;/a&gt;
-Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar这3款相互独立的产品组成。
-他们均提供标准化的数据分片、读写分离、柔性事务和数据治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。
+      <description>&lt;p&gt;&lt;a href=&#34;https://shardingsphere.apache.org/index_zh.html&#34;&gt;官网&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/apache/incubator-shardingsphere&#34;&gt;github&lt;/a&gt;&lt;br&gt;
+Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成的生态圈，它由Sharding-JDBC、Sharding-Proxy和Sharding-Sidecar这3款相互独立的产品组成。&lt;br&gt;
+他们均提供标准化的数据分片、读写分离、柔性事务和数据治理功能，可适用于如Java同构、异构语言、容器、云原生等各种多样化的应用场景。&lt;br&gt;
 其中&lt;code&gt;Sharding-JDBC&lt;/code&gt;最早由当当网在2016年开源，在&lt;code&gt;Sharding-JDBC 3.0&lt;/code&gt;版本，更名为&lt;code&gt;Sharding-Sphere&lt;/code&gt;，后来创始人张亮去了京东。在2018年底，项目开源给了apache基金会。&lt;/p&gt;
 &lt;p&gt;参考：&lt;a href=&#34;https://mp.weixin.qq.com/s/GawVNXjCo8qni6w4yoW7SA&#34;&gt;Sharding-JDBC源码解析与vivo的定制开发&lt;/a&gt;&lt;/p&gt;</description>
     </item>

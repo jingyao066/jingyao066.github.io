@@ -127,7 +127,8 @@ Spring Framework Spring Framework主要包括几个模块：
 支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。
 本教程使用的Spring版本是6.x版，如果使用Spring 5.x则需注意，两者有以下不同（主要是包名由javax变为了jakarta）：
 Spring 5.x Spring 6.x JDK版本 &gt;= 1.8 &gt;= 17 Tomcat版本 9.x 10.x Annotation包 javax.annotation jakarta.annotation Servlet包 javax.servlet jakarta.servlet JMS包 javax.jms jakarta.jms JavaMail包 javax.mail jakarta.mail 如果使用Spring的其他版本，则需要根据需要调整代码。
-spring官网 spring官网如何阅读">
+spring官网
+spring官网如何阅读">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -224,12 +225,12 @@ spring官网如何阅读">
   "@type": "BlogPosting",
   "headline": "1、IoC容器",
   "name": "1、IoC容器",
-  "description": "概述 Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。\nSpring最早是由Rod Johnson这哥们在他的《Expert One-on-One J2EE Development without EJB》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。\n随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。\nSpring Framework Spring Framework主要包括几个模块：\n支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。\n本教程使用的Spring版本是6.x版，如果使用Spring 5.x则需注意，两者有以下不同（主要是包名由javax变为了jakarta）：\nSpring 5.x Spring 6.x JDK版本 \u0026gt;= 1.8 \u0026gt;= 17 Tomcat版本 9.x 10.x Annotation包 javax.annotation jakarta.annotation Servlet包 javax.servlet jakarta.servlet JMS包 javax.jms jakarta.jms JavaMail包 javax.mail jakarta.mail 如果使用Spring的其他版本，则需要根据需要调整代码。\nspring官网 spring官网如何阅读\n",
+  "description": "概述 Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。\nSpring最早是由Rod Johnson这哥们在他的《Expert One-on-One J2EE Development without EJB》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。\n随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。\nSpring Framework Spring Framework主要包括几个模块：\n支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。\n本教程使用的Spring版本是6.x版，如果使用Spring 5.x则需注意，两者有以下不同（主要是包名由javax变为了jakarta）：\nSpring 5.x Spring 6.x JDK版本 \u0026gt;= 1.8 \u0026gt;= 17 Tomcat版本 9.x 10.x Annotation包 javax.annotation jakarta.annotation Servlet包 javax.servlet jakarta.servlet JMS包 javax.jms jakarta.jms JavaMail包 javax.mail jakarta.mail 如果使用Spring的其他版本，则需要根据需要调整代码。\nspring官网\nspring官网如何阅读\n",
   "keywords": [
     "spring"
   ],
-  "articleBody": "概述 Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。\nSpring最早是由Rod Johnson这哥们在他的《Expert One-on-One J2EE Development without EJB》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。\n随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。\nSpring Framework Spring Framework主要包括几个模块：\n支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。\n本教程使用的Spring版本是6.x版，如果使用Spring 5.x则需注意，两者有以下不同（主要是包名由javax变为了jakarta）：\nSpring 5.x Spring 6.x JDK版本 \u003e= 1.8 \u003e= 17 Tomcat版本 9.x 10.x Annotation包 javax.annotation jakarta.annotation Servlet包 javax.servlet jakarta.servlet JMS包 javax.jms jakarta.jms JavaMail包 javax.mail jakarta.mail 如果使用Spring的其他版本，则需要根据需要调整代码。\nspring官网 spring官网如何阅读\nIOC容器 在学习Spring框架时，我们遇到的第一个也是最核心的概念就是容器。\n什么是容器？容器是一种为某种特定组件的运行提供必要支持的一个软件环境。例如，Tomcat就是一个Servlet容器，它可以为Servlet的运行提供运行环境。类似Docker这样的软件也是一个容器，它提供了必要的Linux环境以便运行一个特定的Linux进程。\n通常来说，使用容器运行组件，除了提供一个组件运行环境之外，容器还提供了许多底层服务。例如，Servlet容器底层实现了TCP连接，解析HTTP协议等非常复杂的服务，如果没有容器来提供这些服务，我们就无法编写像Servlet这样代码简单，功能强大的组件。早期的JavaEE服务器提供的EJB容器最重要的功能就是通过声明式事务服务，使得EJB组件的开发人员不必自己编写冗长的事务处理代码，所以极大地简化了事务处理。\nSpring的核心就是提供了一个IoC容器，它可以管理所有轻量级的JavaBean组件，提供的底层服务包括组件的生命周期管理、配置和组装服务、AOP支持，以及建立在AOP基础上的声明式事务服务等。\n本章我们讨论的IoC容器，主要介绍Spring容器如何对组件进行生命周期管理和配置组装服务。\nIoC原理 Spring提供的容器又称为IoC容器，什么是IoC？\nIoC全称Inversion of Control，直译为控制反转。那么何谓IoC？在理解IoC之前，我们先看看通常的Java组件是如何协作的。\n我们假定一个在线书店，通过BookService获取书籍：\n1 2 3 4 5 6 7 8 9 10 11 public class BookService { private HikariConfig config = new HikariConfig(); private DataSource dataSource = new HikariDataSource(config); public Book getBook(long bookId) { try (Connection conn = dataSource.getConnection()) { // ... return book; } } } 为了从数据库查询书籍，BookService持有一个DataSource。为了实例化一个HikariDataSource，又不得不实例化一个HikariConfig。\n现在，我们继续编写UserService获取用户：\n1 2 3 4 5 6 7 8 9 10 11 public class UserService { private HikariConfig config = new HikariConfig(); private DataSource dataSource = new HikariDataSource(config); public User getUser(long userId) { try (Connection conn = dataSource.getConnection()) { // ... return user; } } } 因为UserService也需要访问数据库，因此，我们不得不也实例化一个HikariDataSource。\n在处理用户购买的CartServlet中，我们需要实例化UserService和BookService：\n1 2 3 4 5 6 7 8 9 10 11 12 public class CartServlet extends HttpServlet { private BookService bookService = new BookService(); private UserService userService = new UserService(); protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { long currentUserId = getFromCookie(req); User currentUser = userService.getUser(currentUserId); Book book = bookService.getBook(req.getParameter(\"bookId\")); cartService.addToCart(currentUser, book); ... } } 类似的，在购买历史HistoryServlet中，也需要实例化UserService和BookService：\n1 2 3 4 public class HistoryServlet extends HttpServlet { private BookService bookService = new BookService(); private UserService userService = new UserService(); } 上述每个组件都采用了一种简单的通过new创建实例并持有的方式。仔细观察，会发现以下缺点：\n实例化一个组件其实很难，例如，BookService和UserService要创建HikariDataSource，实际上需要读取配置，才能先实例化HikariConfig，再实例化HikariDataSource。 没有必要让BookService和UserService分别创建DataSource实例，完全可以共享同一个DataSource，但谁负责创建DataSource，谁负责获取其他组件已经创建的DataSource，不好处理。类似的，CartServlet和HistoryServlet也应当共享BookService实例和UserService实例，但也不好处理。 很多组件需要销毁以便释放资源，例如DataSource，但如果该组件被多个组件共享，如何确保它的使用方都已经全部被销毁？ 随着更多的组件被引入，例如，书籍评论，需要共享的组件写起来会更困难，这些组件的依赖关系会越来越复杂。 测试某个组件，例如BookService，是复杂的，因为必须要在真实的数据库环境下执行。 从上面的例子可以看出，如果一个系统有大量的组件，其生命周期和相互之间的依赖关系如果由组件自身来维护，不但大大增加了系统的复杂度，而且会导致组件之间极为紧密的耦合，继而给测试和维护带来了极大的困难。\n因此，核心问题是：\n谁负责创建组件？ 谁负责根据依赖关系组装组件？ 销毁时，如何按依赖顺序正确销毁？ 解决这一问题的核心方案就是IoC。\n传统的应用程序中，控制权在程序本身，程序的控制流程完全由开发者控制，例如：\nCartServlet创建了BookService，在创建BookService的过程中，又创建了DataSource组件。这种模式的缺点是，一个组件如果要使用另一个组件，必须先知道如何正确地创建它。\n在IoC模式下，控制权发生了反转，即从应用程序转移到了IoC容器，所有组件不再由应用程序自己创建和配置，而是由IoC容器负责，这样，应用程序只需要直接使用已经创建好并且配置好的组件。为了能让组件在IoC容器中被“装配”出来，需要某种“注入”机制，例如，BookService自己并不会创建DataSource，而是等待外部通过setDataSource()方法来注入一个DataSource：\n1 2 3 4 5 6 7 public class BookService { private DataSource dataSource; public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; } } 不直接new一个DataSource，而是注入一个DataSource，这个小小的改动虽然简单，却带来了一系列好处：\nBookService不再关心如何创建DataSource，因此，不必编写读取数据库配置之类的代码； DataSource实例被注入到BookService，同样也可以注入到UserService，因此，共享一个组件非常简单； 测试BookService更容易，因为注入的是DataSource，可以使用内存数据库，而不是真实的MySQL配置。 因此，IoC又称为依赖注入（DI：Dependency Injection），它解决了一个最主要的问题：将组件的创建+配置与组件的使用相分离，并且，由IoC容器负责管理组件的生命周期。\n因为IoC容器要负责实例化所有的组件，因此，有必要告诉容器如何创建组件，以及各组件的依赖关系。一种最简单的配置是通过XML文件来实现，例如：\n1 2 3 4 5 6 7 8 9 \"dataSource\" class=\"HikariDataSource\" /\u003e ",
-  "wordCount" : "15676",
+  "articleBody": "概述 Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。\nSpring最早是由Rod Johnson这哥们在他的《Expert One-on-One J2EE Development without EJB》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。\n随着Spring越来越受欢迎，在Spring Framework基础上，又诞生了Spring Boot、Spring Cloud、Spring Data、Spring Security等一系列基于Spring Framework的项目。本章我们只介绍Spring Framework，即最核心的Spring框架。后续章节我们还会涉及Spring Boot、Spring Cloud等其他框架。\nSpring Framework Spring Framework主要包括几个模块：\n支持IoC和AOP的容器； 支持JDBC和ORM的数据访问模块； 支持声明式事务的模块； 支持基于Servlet的MVC开发； 支持基于Reactive的Web开发； 以及集成JMS、JavaMail、JMX、缓存等其他模块。 我们会依次介绍Spring Framework的主要功能。\n本教程使用的Spring版本是6.x版，如果使用Spring 5.x则需注意，两者有以下不同（主要是包名由javax变为了jakarta）：\nSpring 5.x Spring 6.x JDK版本 \u003e= 1.8 \u003e= 17 Tomcat版本 9.x 10.x Annotation包 javax.annotation jakarta.annotation Servlet包 javax.servlet jakarta.servlet JMS包 javax.jms jakarta.jms JavaMail包 javax.mail jakarta.mail 如果使用Spring的其他版本，则需要根据需要调整代码。\nspring官网\nspring官网如何阅读\nIOC容器 在学习Spring框架时，我们遇到的第一个也是最核心的概念就是容器。\n什么是容器？容器是一种为某种特定组件的运行提供必要支持的一个软件环境。例如，Tomcat就是一个Servlet容器，它可以为Servlet的运行提供运行环境。类似Docker这样的软件也是一个容器，它提供了必要的Linux环境以便运行一个特定的Linux进程。\n通常来说，使用容器运行组件，除了提供一个组件运行环境之外，容器还提供了许多底层服务。例如，Servlet容器底层实现了TCP连接，解析HTTP协议等非常复杂的服务，如果没有容器来提供这些服务，我们就无法编写像Servlet这样代码简单，功能强大的组件。早期的JavaEE服务器提供的EJB容器最重要的功能就是通过声明式事务服务，使得EJB组件的开发人员不必自己编写冗长的事务处理代码，所以极大地简化了事务处理。\nSpring的核心就是提供了一个IoC容器，它可以管理所有轻量级的JavaBean组件，提供的底层服务包括组件的生命周期管理、配置和组装服务、AOP支持，以及建立在AOP基础上的声明式事务服务等。\n本章我们讨论的IoC容器，主要介绍Spring容器如何对组件进行生命周期管理和配置组装服务。\nIoC原理 Spring提供的容器又称为IoC容器，什么是IoC？\nIoC全称Inversion of Control，直译为控制反转。那么何谓IoC？在理解IoC之前，我们先看看通常的Java组件是如何协作的。\n我们假定一个在线书店，通过BookService获取书籍：\n1 2 3 4 5 6 7 8 9 10 11 public class BookService { private HikariConfig config = new HikariConfig(); private DataSource dataSource = new HikariDataSource(config); public Book getBook(long bookId) { try (Connection conn = dataSource.getConnection()) { // ... return book; } } } 为了从数据库查询书籍，BookService持有一个DataSource。为了实例化一个HikariDataSource，又不得不实例化一个HikariConfig。\n现在，我们继续编写UserService获取用户：\n1 2 3 4 5 6 7 8 9 10 11 public class UserService { private HikariConfig config = new HikariConfig(); private DataSource dataSource = new HikariDataSource(config); public User getUser(long userId) { try (Connection conn = dataSource.getConnection()) { // ... return user; } } } 因为UserService也需要访问数据库，因此，我们不得不也实例化一个HikariDataSource。\n在处理用户购买的CartServlet中，我们需要实例化UserService和BookService：\n1 2 3 4 5 6 7 8 9 10 11 12 public class CartServlet extends HttpServlet { private BookService bookService = new BookService(); private UserService userService = new UserService(); protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { long currentUserId = getFromCookie(req); User currentUser = userService.getUser(currentUserId); Book book = bookService.getBook(req.getParameter(\"bookId\")); cartService.addToCart(currentUser, book); ... } } 类似的，在购买历史HistoryServlet中，也需要实例化UserService和BookService：\n1 2 3 4 public class HistoryServlet extends HttpServlet { private BookService bookService = new BookService(); private UserService userService = new UserService(); } 上述每个组件都采用了一种简单的通过new创建实例并持有的方式。仔细观察，会发现以下缺点：\n实例化一个组件其实很难，例如，BookService和UserService要创建HikariDataSource，实际上需要读取配置，才能先实例化HikariConfig，再实例化HikariDataSource。 没有必要让BookService和UserService分别创建DataSource实例，完全可以共享同一个DataSource，但谁负责创建DataSource，谁负责获取其他组件已经创建的DataSource，不好处理。类似的，CartServlet和HistoryServlet也应当共享BookService实例和UserService实例，但也不好处理。 很多组件需要销毁以便释放资源，例如DataSource，但如果该组件被多个组件共享，如何确保它的使用方都已经全部被销毁？ 随着更多的组件被引入，例如，书籍评论，需要共享的组件写起来会更困难，这些组件的依赖关系会越来越复杂。 测试某个组件，例如BookService，是复杂的，因为必须要在真实的数据库环境下执行。 从上面的例子可以看出，如果一个系统有大量的组件，其生命周期和相互之间的依赖关系如果由组件自身来维护，不但大大增加了系统的复杂度，而且会导致组件之间极为紧密的耦合，继而给测试和维护带来了极大的困难。\n因此，核心问题是：\n谁负责创建组件？ 谁负责根据依赖关系组装组件？ 销毁时，如何按依赖顺序正确销毁？ 解决这一问题的核心方案就是IoC。\n传统的应用程序中，控制权在程序本身，程序的控制流程完全由开发者控制，例如：\nCartServlet创建了BookService，在创建BookService的过程中，又创建了DataSource组件。这种模式的缺点是，一个组件如果要使用另一个组件，必须先知道如何正确地创建它。\n在IoC模式下，控制权发生了反转，即从应用程序转移到了IoC容器，所有组件不再由应用程序自己创建和配置，而是由IoC容器负责，这样，应用程序只需要直接使用已经创建好并且配置好的组件。为了能让组件在IoC容器中被“装配”出来，需要某种“注入”机制，例如，BookService自己并不会创建DataSource，而是等待外部通过setDataSource()方法来注入一个DataSource：\n1 2 3 4 5 6 7 public class BookService { private DataSource dataSource; public void setDataSource(DataSource dataSource) { this.dataSource = dataSource; } } 不直接new一个DataSource，而是注入一个DataSource，这个小小的改动虽然简单，却带来了一系列好处：\nBookService不再关心如何创建DataSource，因此，不必编写读取数据库配置之类的代码； DataSource实例被注入到BookService，同样也可以注入到UserService，因此，共享一个组件非常简单； 测试BookService更容易，因为注入的是DataSource，可以使用内存数据库，而不是真实的MySQL配置。 因此，IoC又称为依赖注入（DI：Dependency Injection），它解决了一个最主要的问题：将组件的创建+配置与组件的使用相分离，并且，由IoC容器负责管理组件的生命周期。\n因为IoC容器要负责实例化所有的组件，因此，有必要告诉容器如何创建组件，以及各组件的依赖关系。一种最简单的配置是通过XML文件来实现，例如：\n1 2 3 4 5 6 7 8 9 \"dataSource\" class=\"HikariDataSource\" /\u003e ",
+  "wordCount" : "13841",
   "inLanguage": "en",
   "datePublished": "2020-01-01T15:32:45Z",
   "dateModified": "2020-01-01T15:32:45Z",
@@ -409,27 +410,7 @@ spring官网如何阅读">
                 <li>
                     <a href="#%e4%bd%bf%e7%94%a8conditional" aria-label="使用Conditional">使用Conditional</a></li>
                 <li>
-                    <a href="#%e5%b0%8f%e7%bb%93-5" aria-label="小结">小结</a></li></ul>
-                </li>
-                <li>
-                    <a href="#%e5%85%b6%e4%bb%96" aria-label="其他">其他</a><ul>
-                        
-                <li>
-                    <a href="#ioc%e5%92%8cdi" aria-label="IOC和DI">IOC和DI</a></li>
-                <li>
-                    <a href="#spring-%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84" aria-label="spring 体系结构">spring 体系结构</a></li>
-                <li>
-                    <a href="#%e6%a0%b8%e5%bf%83%e5%ae%b9%e5%99%a8-core-container" aria-label="核心容器 Core Container">核心容器 Core Container</a></li>
-                <li>
-                    <a href="#%e6%95%b0%e6%8d%ae%e8%ae%bf%e9%97%ae%e5%92%8c%e9%9b%86%e6%88%90-data-accessintegeration" aria-label="数据访问和集成 Data Access/Integeration">数据访问和集成 Data Access/Integeration</a></li>
-                <li>
-                    <a href="#web" aria-label="web">web</a></li>
-                <li>
-                    <a href="#aop-%e5%92%8c%e8%ae%be%e5%a4%87%e6%94%af%e6%8c%81" aria-label="AOP 和设备支持">AOP 和设备支持</a></li>
-                <li>
-                    <a href="#%e6%8a%a5%e6%96%87%e5%8f%91%e9%80%81-messaging" aria-label="报文发送 Messaging">报文发送 Messaging</a></li>
-                <li>
-                    <a href="#test" aria-label="Test">Test</a>
+                    <a href="#%e5%b0%8f%e7%bb%93-5" aria-label="小结">小结</a>
                 </li>
             </ul>
             </li>
@@ -496,7 +477,7 @@ spring官网如何阅读">
 </tbody>
 </table>
 <p>如果使用Spring的其他版本，则需要根据需要调整代码。</p>
-<p><a href="https://spring.io/">spring官网</a>
+<p><a href="https://spring.io/">spring官网</a><br>
 <a href="https://blog.csdn.net/qq_41907991/article/details/105502255">spring官网如何阅读</a></p>
 <h1 id="ioc容器">IOC容器<a hidden class="anchor" aria-hidden="true" href="#ioc容器">#</a></h1>
 <p>在学习Spring框架时，我们遇到的第一个也是最核心的概念就是容器。</p>
@@ -688,7 +669,7 @@ spring官网如何阅读">
 </div><p>上述XML配置文件指示IoC容器创建3个JavaBean组件，并把id为<code>dataSource</code>的组件通过属性<code>dataSource</code>（即调用<code>setDataSource()</code>方法）注入到另外两个组件中。</p>
 <p>在Spring的IoC容器中，我们把所有组件统称为JavaBean，即配置一个组件就是配置一个Bean。</p>
 <h2 id="依赖注入方式">依赖注入方式<a hidden class="anchor" aria-hidden="true" href="#依赖注入方式">#</a></h2>
-<p>我们从上面的代码可以看到，依赖注入可以通过<code>set()</code>方法实现。但依赖注入也可以通过构造方法实现。
+<p>我们从上面的代码可以看到，依赖注入可以通过<code>set()</code>方法实现。但依赖注入也可以通过构造方法实现。<br>
 很多Java类都具有带参数的构造方法，如果我们把<code>BookService</code>改造为通过构造方法注入，那么实现代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1077,7 +1058,7 @@ spring官网如何阅读">
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>ApplicationContext context = <span style="color:#fff;font-weight:bold">new</span> ClassPathXmlApplicationContext(<span style="color:#0ff;font-weight:bold">&#34;application.xml&#34;</span>);
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>可以看到，Spring容器就是<code>ApplicationContext</code>，它是一个接口，有很多实现类，这里我们选择<code>ClassPathXmlApplicationContext</code>，表示它会自动从classpath中查找指定的XML配置文件。
+</div><p>可以看到，Spring容器就是<code>ApplicationContext</code>，它是一个接口，有很多实现类，这里我们选择<code>ClassPathXmlApplicationContext</code>，表示它会自动从classpath中查找指定的XML配置文件。<br>
 获得了<code>ApplicationContext</code>的实例，就获得了IoC容器的引用。从<code>ApplicationContext</code>中我们可以根据Bean的ID获取Bean，但更多的时候我们根据Bean的类型获取Bean的引用：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1100,14 +1081,14 @@ spring官网如何阅读">
 </div>
 </div><p><code>BeanFactory</code>和<code>ApplicationContext</code>的区别在于，<code>BeanFactory</code>的实现是按需创建，即第一次获取Bean时才创建这个Bean，而<code>ApplicationContext</code>会一次性创建所有的Bean。实际上，<code>ApplicationContext</code>接口是从<code>BeanFactory</code>接口继承而来的，并且，<code>ApplicationContext</code>提供了一些额外的功能，包括国际化支持、事件和通知机制等。通常情况下，我们总是使用<code>ApplicationContext</code>，很少会考虑使用<code>BeanFactory</code>。</p>
 <h2 id="小结">小结<a hidden class="anchor" aria-hidden="true" href="#小结">#</a></h2>
-<p>Spring的IoC容器接口是<code>ApplicationContext</code>，并提供了多种实现类；
-通过XML配置文件创建IoC容器时，使用<code>ClassPathXmlApplicationContext</code>；
+<p>Spring的IoC容器接口是<code>ApplicationContext</code>，并提供了多种实现类；<br>
+通过XML配置文件创建IoC容器时，使用<code>ClassPathXmlApplicationContext</code>；<br>
 持有IoC容器后，通过<code>getBean()</code>方法获取Bean的引用。</p>
 <h1 id="使用annotation配置">使用Annotation配置<a hidden class="anchor" aria-hidden="true" href="#使用annotation配置">#</a></h1>
-<p>使用Spring的IoC容器，实际上就是通过类似XML这样的配置文件，把我们自己的Bean的依赖关系描述出来，然后让容器来创建并装配Bean。一旦容器初始化完毕，我们就直接从容器中获取Bean使用它们。
-使用XML配置的优点是所有的Bean都能一目了然地列出来，并通过配置注入能直观地看到每个Bean的依赖。它的缺点是写起来非常繁琐，每增加一个组件，就必须把新的Bean配置到XML中。
+<p>使用Spring的IoC容器，实际上就是通过类似XML这样的配置文件，把我们自己的Bean的依赖关系描述出来，然后让容器来创建并装配Bean。一旦容器初始化完毕，我们就直接从容器中获取Bean使用它们。<br>
+使用XML配置的优点是所有的Bean都能一目了然地列出来，并通过配置注入能直观地看到每个Bean的依赖。它的缺点是写起来非常繁琐，每增加一个组件，就必须把新的Bean配置到XML中。<br>
 有没有其他更简单的配置方式呢？</p>
-<p>有！我们可以使用Annotation配置，可以完全不需要XML，让Spring自动扫描Bean并组装它们。
+<p>有！我们可以使用Annotation配置，可以完全不需要XML，让Spring自动扫描Bean并组装它们。<br>
 我们把上一节的示例改造一下，先删除XML配置文件，然后，给<code>UserService</code>和<code>MailService</code>添加几个注解。</p>
 <p>首先，我们给<code>MailService</code>添加一个<code>@Component</code>注解：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1124,7 +1105,7 @@ spring官网如何阅读">
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个<code>@Component</code>注解就相当于定义了一个Bean，它有一个可选的名称，默认是<code>mailService</code>，即小写开头的类名。
+</div><p>这个<code>@Component</code>注解就相当于定义了一个Bean，它有一个可选的名称，默认是<code>mailService</code>，即小写开头的类名。<br>
 然后，我们给<code>UserService</code>添加一个<code>@Component</code>注解和一个<code>@Autowired</code>注解：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1208,7 +1189,7 @@ spring官网如何阅读">
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>ApplicationContext context = <span style="color:#fff;font-weight:bold">new</span> AnnotationConfigApplicationContext(AppConfig.<span style="color:#007f7f">class</span>);
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>使用的实现类是<code>AnnotationConfigApplicationContext</code>，必须传入一个标注了<code>@Configuration</code>的类名。
+</div><p>使用的实现类是<code>AnnotationConfigApplicationContext</code>，必须传入一个标注了<code>@Configuration</code>的类名。<br>
 此外，<code>AppConfig</code>还标注了<code>@ComponentScan</code>，它告诉容器，自动搜索当前类所在的包以及子包，把所有标注为<code>@Component</code>的Bean自动创建出来，并根据<code>@Autowired</code>进行装配。</p>
 <p>整个工程结构如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1253,11 +1234,11 @@ spring官网如何阅读">
 <h2 id="思考">思考<a hidden class="anchor" aria-hidden="true" href="#思考">#</a></h2>
 <p>如果我们想给<code>UserService</code>注入<code>HikariDataSource</code>，但是这个类位于<code>com.zaxxer.hikari</code>包中，并且<code>HikariDataSource</code>也不可能有<code>@Component</code>注解，如何告诉IoC容器创建并配置<code>HikariDataSource</code>？或者换个说法，如何创建并配置一个第三方Bean？</p>
 <h2 id="小结-1">小结<a hidden class="anchor" aria-hidden="true" href="#小结-1">#</a></h2>
-<p>使用Annotation可以大幅简化配置，每个Bean通过<code>@Component</code>和<code>@Autowired</code>注入；
+<p>使用Annotation可以大幅简化配置，每个Bean通过<code>@Component</code>和<code>@Autowired</code>注入；<br>
 必须合理设计包的层次结构，才能发挥<code>@ComponentScan</code>的威力。</p>
 <h1 id="定制bean">定制Bean<a hidden class="anchor" aria-hidden="true" href="#定制bean">#</a></h1>
 <h2 id="scope">Scope<a hidden class="anchor" aria-hidden="true" href="#scope">#</a></h2>
-<p>对于Spring容器来说，当我们把一个Bean标记为<code>@Component</code>后，它就会自动为我们创建一个单例（Singleton），即容器初始化时创建Bean，容器关闭前销毁Bean。在容器运行期间，我们调用<code>getBean(Class)</code>获取到的Bean总是同一个实例。
+<p>对于Spring容器来说，当我们把一个Bean标记为<code>@Component</code>后，它就会自动为我们创建一个单例（Singleton），即容器初始化时创建Bean，容器关闭前销毁Bean。在容器运行期间，我们调用<code>getBean(Class)</code>获取到的Bean总是同一个实例。<br>
 还有一种Bean，我们每次调用<code>getBean(Class)</code>，容器都返回一个新的实例，这种Bean称为Prototype（原型），它的生命周期显然和Singleton不同。声明一个Prototype的Bean时，需要添加一个额外的<code>@Scope</code>注解：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1420,7 +1401,7 @@ spring官网如何阅读">
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="可选注入">可选注入<a hidden class="anchor" aria-hidden="true" href="#可选注入">#</a></h2>
-<p>默认情况下，当我们标记了一个<code>@Autowired</code>后，Spring如果没有找到对应类型的Bean，它会抛出<code>NoSuchBeanDefinitionException</code>异常。
+<p>默认情况下，当我们标记了一个<code>@Autowired</code>后，Spring如果没有找到对应类型的Bean，它会抛出<code>NoSuchBeanDefinitionException</code>异常。<br>
 可以给<code>@Autowired</code>增加一个<code>required = false</code>的参数：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1440,10 +1421,10 @@ spring官网如何阅读">
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个参数告诉Spring容器，如果找到一个类型为<code>ZoneId</code>的Bean，就注入，如果找不到，就忽略。
+</div><p>这个参数告诉Spring容器，如果找到一个类型为<code>ZoneId</code>的Bean，就注入，如果找不到，就忽略。<br>
 这种方式非常适合有定义就使用定义，没有就使用默认值的情况。</p>
 <h2 id="创建第三方bean">创建第三方Bean<a hidden class="anchor" aria-hidden="true" href="#创建第三方bean">#</a></h2>
-<p>如果一个Bean不在我们自己的package管理之内，例如<code>ZoneId</code>，如何创建它？
+<p>如果一个Bean不在我们自己的package管理之内，例如<code>ZoneId</code>，如何创建它？<br>
 答案是我们自己在<code>@Configuration</code>类中编写一个Java方法创建并返回它，注意给方法标记一个<code>@Bean</code>注解：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1531,10 +1512,10 @@ spring官网如何阅读">
 <li>根据<code>@Autowired</code>进行注入；</li>
 <li>调用标记有<code>@PostConstruct</code>的<code>init()</code>方法进行初始化。</li>
 </ul>
-<p>而销毁时，容器会首先调用标记有<code>@PreDestroy</code>的<code>shutdown()</code>方法。
+<p>而销毁时，容器会首先调用标记有<code>@PreDestroy</code>的<code>shutdown()</code>方法。<br>
 Spring只根据Annotation查找<em>无参数</em>方法，对方法名不作要求。</p>
 <h2 id="使用别名">使用别名<a hidden class="anchor" aria-hidden="true" href="#使用别名">#</a></h2>
-<p>默认情况下，对一种类型的Bean，容器只创建一个实例。但有些时候，我们需要对一种类型的Bean创建多个实例。例如，同时连接多个数据库，就必须创建多个<code>DataSource</code>实例。
+<p>默认情况下，对一种类型的Bean，容器只创建一个实例。但有些时候，我们需要对一种类型的Bean创建多个实例。例如，同时连接多个数据库，就必须创建多个<code>DataSource</code>实例。<br>
 如果我们在<code>@Configuration</code>类中创建了多个同类型的Bean：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1604,7 +1585,7 @@ Spring只根据Annotation查找<em>无参数</em>方法，对方法名不作要�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>可以用<code>@Bean(&quot;name&quot;)</code>指定别名，也可以用<code>@Bean</code>+<code>@Qualifier(&quot;name&quot;)</code>指定别名。
+</div><p>可以用<code>@Bean(&quot;name&quot;)</code>指定别名，也可以用<code>@Bean</code>+<code>@Qualifier(&quot;name&quot;)</code>指定别名。<br>
 存在多个同类型的Bean时，注入<code>ZoneId</code>又会报错：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1751,16 +1732,16 @@ Spring只根据Annotation查找<em>无参数</em>方法，对方法名不作要�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>当一个Bean实现了<code>FactoryBean</code>接口后，Spring会先实例化这个工厂，然后调用<code>getObject()</code>创建真正的Bean。<code>getObjectType()</code>可以指定创建的Bean的类型，因为指定类型不一定与实际类型一致，可以是接口或抽象类。
+</div><p>当一个Bean实现了<code>FactoryBean</code>接口后，Spring会先实例化这个工厂，然后调用<code>getObject()</code>创建真正的Bean。<code>getObjectType()</code>可以指定创建的Bean的类型，因为指定类型不一定与实际类型一致，可以是接口或抽象类。<br>
 因此，如果定义了一个<code>FactoryBean</code>，要注意Spring创建的Bean实际上是这个<code>FactoryBean</code>的<code>getObject()</code>方法返回的Bean。为了和普通Bean区分，我们通常都以<code>XxxFactoryBean</code>命名。</p>
 <h2 id="小结-2">小结<a hidden class="anchor" aria-hidden="true" href="#小结-2">#</a></h2>
-<p>Spring默认使用Singleton创建Bean，也可指定Scope为Prototype；
-可将相同类型的Bean注入<code>List</code>；
-可用<code>@Autowired(required=false)</code>允许可选注入；
-可用带<code>@Bean</code>标注的方法创建Bean；
+<p>Spring默认使用Singleton创建Bean，也可指定Scope为Prototype；<br>
+可将相同类型的Bean注入<code>List</code>；<br>
+可用<code>@Autowired(required=false)</code>允许可选注入；<br>
+可用带<code>@Bean</code>标注的方法创建Bean；<br>
 可使用<code>@PostConstruct</code>和<code>@PreDestroy</code>对Bean进行初始化和清理；</p>
-<p>相同类型的Bean只能有一个指定为<code>@Primary</code>，其他必须用<code>@Quanlifier(&quot;beanName&quot;)</code>指定别名；
-注入时，可通过别名<code>@Quanlifier(&quot;beanName&quot;)</code>指定某个Bean；
+<p>相同类型的Bean只能有一个指定为<code>@Primary</code>，其他必须用<code>@Quanlifier(&quot;beanName&quot;)</code>指定别名；<br>
+注入时，可通过别名<code>@Quanlifier(&quot;beanName&quot;)</code>指定某个Bean；<br>
 可以定义<code>FactoryBean</code>来使用工厂模式创建Bean。</p>
 <h1 id="使用resource">使用Resource<a hidden class="anchor" aria-hidden="true" href="#使用resource">#</a></h1>
 <p>在Java程序中，我们经常会读取配置文件、资源文件等。使用Spring容器时，我们也可以把“文件”注入进来，方便程序读取。</p>
@@ -2184,106 +2165,6 @@ Spring只根据Annotation查找<em>无参数</em>方法，对方法名不作要�
 <h2 id="小结-5">小结<a hidden class="anchor" aria-hidden="true" href="#小结-5">#</a></h2>
 <p>Spring允许通过<code>@Profile</code>配置不同的Bean；</p>
 <p>Spring还提供了<code>@Conditional</code>来进行条件装配，Spring Boot在此基础上进一步提供了基于配置、Class、Bean等条件进行装配。</p>
-<h1 id="其他">其他<a hidden class="anchor" aria-hidden="true" href="#其他">#</a></h1>
-<h2 id="ioc和di">IOC和DI<a hidden class="anchor" aria-hidden="true" href="#ioc和di">#</a></h2>
-<p>用图例说明一下，传统程序设计如下图，都是主动去创建相关对象然后再组合起来：
-<img loading="lazy" src="/posts/spring/1ioc%E5%AE%B9%E5%99%A8/2.jpg"></p>
-<p>当有了IOC/DI的容器后，在客户端类中不再主动去创建这些对象了，如下图所示：
-<img loading="lazy" src="/posts/spring/1ioc%E5%AE%B9%E5%99%A8/3.jpg"></p>
-<h2 id="spring-体系结构">spring 体系结构<a hidden class="anchor" aria-hidden="true" href="#spring-体系结构">#</a></h2>
-<p>Spring 总共大约有 20 个组件，这些组件被整合在6个大模块中。</p>
-<p>以下是 Spring5 的模块结构图：
-<img loading="lazy" src="/posts/spring/1ioc%E5%AE%B9%E5%99%A8/4.png"></p>
-<h2 id="核心容器-core-container">核心容器 Core Container<a hidden class="anchor" aria-hidden="true" href="#核心容器-core-container">#</a></h2>
-<p>核心容器由4个模块组成。</p>
-<ul>
-<li>
-<p>spring-core
-spring-core 模块提供了框架的基本组成部分，包含了控制反转<code>Inversion of Control, IOC</code> 和依赖注入<code>Dependency Injection, DI</code></p>
-</li>
-<li>
-<p>spring-beans
-spring-beans 模块提供了 BeanFactory。BeanFactory 接口是 Spring 框架中的核心接口， 它是工厂模式的具体实现。BeanFactory 使用控制反转对应用程序的配置和依赖性规范与实际的应用程序代码进行了分离。但 BeanFactory 容器实例化后并不会自动实例化 Bean， 只有当 Bean被使用时 BeanFactory 容器才会对该Bean 进行实例化与依赖关系的装配。</p>
-</li>
-<li>
-<p>spring-context
-spring-context 模块是在core和 beans 模块的基础上建立的， 他扩展了 BeanFactory，
-为它添加了 Bean 生命周期控制、 框架事件体系以及资源加载透明化等功能。
-此外该模块还提供了许多企业级支持， 如邮件访问、远程访问、任务调度等。
-ApplicationContext 是该模块的核心接口，它是 BeanFactory 的间接子类， 与BeanFactory 不同，
-ApplicationContext 容器实例化后会自动对所有的单实例 Bean 进行实例化与依赖关系的装配， 使之处于待用状态。</p>
-</li>
-<li>
-<p>spring-expression（Spring Expression Language, SpEL）
-spring-expression 模块是统一表达式语言（EL） 的扩展模块， 可以查询、 管理运行中的对象，同时也方便的可以调用对象方法、 操作数组、 集合等。 它的语法类似于传统 EL， 但提供了额外的功能，最出色的要数函数调用和简单字符串的模板函数。 这种语言的特性是基于 Spring 产品的需求而设计，他可以非常方便地同 Spring IOC 进行交互。</p>
-</li>
-</ul>
-<h2 id="数据访问和集成-data-accessintegeration">数据访问和集成 Data Access/Integeration<a hidden class="anchor" aria-hidden="true" href="#数据访问和集成-data-accessintegeration">#</a></h2>
-<p>由5个模块组成。</p>
-<ul>
-<li>
-<p>spring-jdbc
-spring-jdbc 模块是 Spring 提供的 JDBC 抽象框架的主要实现模块， 用于简化 JDBC。主要是提供 JDBC模板方式、 关系数据库对象化方式、 SimpleJdbc 方式、 事务管理来简化 JDBC 编程，
-主要实现类是 JdbcTemplate、 SimpleJdbcTemplate 以及 NamedParameterJdbcTemplate。</p>
-</li>
-<li>
-<p>spring-tx
-spring-tx 模块是 Spring JDBC 事务控制实现模块。支持编程式和声明式事务管理。（注：编程式事务需要自己写 beginTransaction()、commit()、rollback() 等事务管理方法，声明式事务是通过注解或配置由 spring 自动处理，编程式事务粒度更细）</p>
-</li>
-<li>
-<p>spring-orm
-spring-orm 模块是 ORM 框架支持模块， 主要集成 Hibernate, Java Persistence API (JPA)
-和Java Data Objects (JDO) 用于资源管理、 数据访问对象(DAO)的实现和事务策略。</p>
-</li>
-<li>
-<p>spring-jms
-spring-jms 模块（Java Messaging Service） 能够发送和接受信息， 自 Spring Framework 4.1以后， 他还提供了对 spring-messaging 模块的支撑。</p>
-</li>
-<li>
-<p>spring-oxm
-spring-oxm 模块主要提供一个抽象层以支撑 OXM（OXM 是 Object-to-XML-Mapping 的缩写， 它是一个O/M-mapper， 将 java 对象映射成 XML 数据， 或者将 XML 数据映射成 java 对象） ， 例如： JAXB,Castor, XMLBeans, JiBX 和 XStream 等</p>
-</li>
-</ul>
-<h2 id="web">web<a hidden class="anchor" aria-hidden="true" href="#web">#</a></h2>
-<ul>
-<li>
-<p>spring-web
-spring-web 模块为 Spring 提供了最基础 Web 支持， 主要建立于核心容器之上， 通过 Servlet 或者
-Listeners 来初始化 IOC 容器， 也包含一些与 Web 相关的支持。</p>
-</li>
-<li>
-<p>spring-webmvc
-Web-MVC 模块为 web 应用提供了模型视图控制（MVC）和 REST Web服务的实现。Spring 的 MVC 框架可以使领域模型代码和 web 表单完全地分离，且可以与 Spring 框架的其它所有功能进行集成。</p>
-</li>
-<li>
-<p>spring-websocket
-Web-Socket 模块为 WebSocket-based 提供了支持，而且在 web 应用程序中提供了客户端和服务器端之间通信的两种方式。</p>
-</li>
-<li>
-<p>spring-webflux
-spring-webflux 是一个新的非堵塞函数式 Reactive Web 框架， 可以用来建立异步的， 非阻塞，事件驱动的服务， 并且扩展性非常好。</p>
-</li>
-</ul>
-<h2 id="aop-和设备支持">AOP 和设备支持<a hidden class="anchor" aria-hidden="true" href="#aop-和设备支持">#</a></h2>
-<ul>
-<li>
-<p>spring-aop
-spring-aop 是 Spring 的另一个核心模块， 是 AOP 主要的实现模块。 作为继 OOP 后， 对程序员影响最大的编程思想之一， AOP 极大地开拓了人们对于编程的思路。 在 Spring 中， 他是以 JVM 的动态代理技术为基础， 然后设计出了一系列的 AOP 横切实现， 比如前置通知、 返回通知、 异常通知等， 同时，Pointcut 接口来匹配切入点， 可以使用现有的切入点来设计横切面， 也可以扩展相关方法根据需求进行切入。</p>
-</li>
-<li>
-<p>spring-aspects
-spring-aspects 模块集成自 AspectJ 框架， 主要是为 Spring AOP 提供多种 AOP 实现方法。</p>
-</li>
-<li>
-<p>spring-instrument
-spring-instrument 模块是基于 JAVA SE 中的&quot;java.lang.instrument&quot;进行设计的， 应该算是AOP 的一个支援模块， 主要作用是在 JVM 启用时， 生成一个代理类， 程序员通过代理类在运行时修改类的字节， 从而改变一个类的功能， 实现 AOP 的功能。 在分类里， 我把他分在了 AOP 模块下， 在 Spring 官方文档里对这个地方也有点含糊不清， 这里是纯个人观点。</p>
-</li>
-</ul>
-<h2 id="报文发送-messaging">报文发送 Messaging<a hidden class="anchor" aria-hidden="true" href="#报文发送-messaging">#</a></h2>
-<p>即 spring-messaging模块。spring-messaging 是从 Spring4 开始新加入的一个模块，
-主要职责是为 Spring 框架集成一些基础的报文传送应用。</p>
-<h2 id="test">Test<a hidden class="anchor" aria-hidden="true" href="#test">#</a></h2>
-<p>即 spring-test 模块，为测试提供支持。</p>
 
   </div>
 

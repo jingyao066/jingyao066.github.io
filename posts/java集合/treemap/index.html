@@ -103,7 +103,7 @@
   "keywords": [
     "Java集合"
   ],
-  "articleBody": "TreeMap介绍 TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。 TreeMap 继承于AbstractMap，所以它是一个Map，即一个key-value集合。 TreeMap 实现了NavigableMap接口，意味着它支持一系列的导航方法。比如返回有序的key集合。 TreeMap 实现了Cloneable接口，意味着它能被克隆。 TreeMap 实现了java.io.Serializable接口，意味着它支持序列化。\nTreeMap基于红黑树（Red-Black tree）实现。该映射根据其键的自然顺序进行排序，或者根据创建映射时提供的 Comparator 进行排序，具体取决于使用的构造方法。 TreeMap的基本操作 containsKey、get、put 和 remove 的时间复杂度是 log(n) 。 另外，TreeMap是非同步的。 它的iterator 方法返回的迭代器是 fail-fast 的。\nTreeMap构造函数 1 2 3 4 5 6 7 8 9 10 11 // 默认构造函数。使用该构造函数，TreeMap中的元素按照自然排序进行排列。 TreeMap() // 创建的TreeMap包含Map TreeMap(Map\u003c? extends K, ? extends V\u003e copyFrom) // 指定Tree的比较器 TreeMap(Comparator\u003c? super K\u003e comparator) // 创建的TreeSet包含copyFrom TreeMap(SortedMap",
+  "articleBody": "TreeMap介绍 TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。\nTreeMap 继承于AbstractMap，所以它是一个Map，即一个key-value集合。\nTreeMap 实现了NavigableMap接口，意味着它支持一系列的导航方法。比如返回有序的key集合。\nTreeMap 实现了Cloneable接口，意味着它能被克隆。\nTreeMap 实现了java.io.Serializable接口，意味着它支持序列化。\nTreeMap基于红黑树（Red-Black tree）实现。该映射根据其键的自然顺序进行排序，或者根据创建映射时提供的 Comparator 进行排序，具体取决于使用的构造方法。\nTreeMap的基本操作 containsKey、get、put 和 remove 的时间复杂度是 log(n) 。\n另外，TreeMap是非同步的。 它的iterator 方法返回的迭代器是 fail-fast 的。\nTreeMap构造函数 1 2 3 4 5 6 7 8 9 10 11 // 默认构造函数。使用该构造函数，TreeMap中的元素按照自然排序进行排列。 TreeMap() // 创建的TreeMap包含Map TreeMap(Map\u003c? extends K, ? extends V\u003e copyFrom) // 指定Tree的比较器 TreeMap(Comparator\u003c? super K\u003e comparator) // 创建的TreeSet包含copyFrom TreeMap(SortedMap",
   "wordCount" : "32771",
   "inLanguage": "en",
   "datePublished": "2016-12-12T17:21:59Z",
@@ -269,13 +269,13 @@
 </div>
 
   <div class="post-content"><h1 id="treemap介绍">TreeMap介绍<a hidden class="anchor" aria-hidden="true" href="#treemap介绍">#</a></h1>
-<p>TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。
-TreeMap 继承于AbstractMap，所以它是一个Map，即一个key-value集合。
-TreeMap 实现了NavigableMap接口，意味着它支持一系列的导航方法。比如返回有序的key集合。
-TreeMap 实现了Cloneable接口，意味着它能被克隆。
+<p>TreeMap 是一个有序的key-value集合，它是通过红黑树实现的。<br>
+TreeMap 继承于AbstractMap，所以它是一个Map，即一个key-value集合。<br>
+TreeMap 实现了NavigableMap接口，意味着它支持一系列的导航方法。比如返回有序的key集合。<br>
+TreeMap 实现了Cloneable接口，意味着它能被克隆。<br>
 TreeMap 实现了java.io.Serializable接口，意味着它支持序列化。</p>
-<p>TreeMap基于红黑树（Red-Black tree）实现。该映射根据其键的自然顺序进行排序，或者根据创建映射时提供的 Comparator 进行排序，具体取决于使用的构造方法。
-TreeMap的基本操作 containsKey、get、put 和 remove 的时间复杂度是 log(n) 。
+<p>TreeMap基于红黑树（Red-Black tree）实现。该映射根据其键的自然顺序进行排序，或者根据创建映射时提供的 Comparator 进行排序，具体取决于使用的构造方法。<br>
+TreeMap的基本操作 containsKey、get、put 和 remove 的时间复杂度是 log(n) 。<br>
 另外，TreeMap是非同步的。 它的iterator 方法返回的迭代器是 fail-fast 的。</p>
 <h1 id="treemap构造函数">TreeMap构造函数<a hidden class="anchor" aria-hidden="true" href="#treemap构造函数">#</a></h1>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -403,14 +403,14 @@ TreeMap的基本操作 containsKey、get、put 和 remove 的时间复杂度是 
 </span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">implements</span> NavigableMap&lt;K,V&gt;, Cloneable, java.<span style="color:#007f7f">io</span>.<span style="color:#007f7f">Serializable</span> {}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>TreeMap与Map关系如下图：
-<img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/treemap/1.jpg">
+</div><p>TreeMap与Map关系如下图：<br>
+<img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/treemap/1.jpg"><br>
 从图中可以看出：</p>
 <ul>
 <li>TreeMap实现继承于AbstractMap，并且实现了NavigableMap接口。</li>
-<li>TreeMap的本质是R-B Tree(红黑树)，它包含几个重要的成员变量： root, size, comparator。
-root是红黑数的根节点。它是Entry类型，Entry是红黑数的节点，它包含了红黑数的6个基本组成成分：key(键)、value(值)、left(左孩子)、right(右孩子)、parent(父节点)、color(颜色)。Entry节点根据key进行排序，Entry节点包含的内容为value。
-红黑数排序时，根据Entry中的key进行排序；Entry中的key比较大小是根据比较器comparator来进行判断的。
+<li>TreeMap的本质是R-B Tree(红黑树)，它包含几个重要的成员变量： root, size, comparator。<br>
+root是红黑数的根节点。它是Entry类型，Entry是红黑数的节点，它包含了红黑数的6个基本组成成分：key(键)、value(值)、left(左孩子)、right(右孩子)、parent(父节点)、color(颜色)。Entry节点根据key进行排序，Entry节点包含的内容为value。<br>
+红黑数排序时，根据Entry中的key进行排序；Entry中的key比较大小是根据比较器comparator来进行判断的。<br>
 size是红黑数中节点的个数。</li>
 </ul>
 <h1 id="treemap源码解析">TreeMap源码解析<a hidden class="anchor" aria-hidden="true" href="#treemap源码解析">#</a></h1>
@@ -4520,50 +4520,50 @@ size是红黑数中节点的个数。</li>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：
-在详细介绍TreeMap的代码之前，我们先建立一个整体概念。
-TreeMap是通过红黑树实现的，TreeMap存储的是key-value键值对，TreeMap的排序是基于对key的排序。
-TreeMap提供了操作“key”、“key-value”、“value”等方法，也提供了对TreeMap这颗树进行整体操作的方法，如获取子树、反向树。
-后面的解说内容分为几部分,
-首先，介绍TreeMap的核心，即红黑树相关部分；
-然后，介绍TreeMap的主要函数；
-再次，介绍TreeMap实现的几个接口；
+</div><p>说明：<br>
+在详细介绍TreeMap的代码之前，我们先建立一个整体概念。<br>
+TreeMap是通过红黑树实现的，TreeMap存储的是key-value键值对，TreeMap的排序是基于对key的排序。<br>
+TreeMap提供了操作“key”、“key-value”、“value”等方法，也提供了对TreeMap这颗树进行整体操作的方法，如获取子树、反向树。<br>
+后面的解说内容分为几部分,<br>
+首先，介绍TreeMap的核心，即红黑树相关部分；<br>
+然后，介绍TreeMap的主要函数；<br>
+再次，介绍TreeMap实现的几个接口；<br>
 最后，补充介绍TreeMap的其它内容。</p>
 <p>TreeMap本质上是一颗红黑树。要彻底理解TreeMap，建议读者先理解红黑树。</p>
 <h1 id="treemap的红黑树相关内容">TreeMap的红黑树相关内容<a hidden class="anchor" aria-hidden="true" href="#treemap的红黑树相关内容">#</a></h1>
 <h2 id="数据结构">数据结构<a hidden class="anchor" aria-hidden="true" href="#数据结构">#</a></h2>
 <p>TreeMap中于红黑树相关的主要函数有：</p>
 <ul>
-<li>红黑树的节点颜色&ndash;红色
+<li>红黑树的节点颜色&ndash;红色<br>
 <code>private static final boolean RED = false;</code></li>
-<li>红黑树的节点颜色&ndash;黑色
+<li>红黑树的节点颜色&ndash;黑色<br>
 <code>private static final boolean BLACK = true;</code></li>
-<li>“红黑树的节点”对应的类。
-<code>static final class Entry&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; { ... }</code>
-Entry包含了6个部分内容：key(键)、value(值)、left(左孩子)、right(右孩子)、parent(父节点)、color(颜色)
+<li>“红黑树的节点”对应的类。<br>
+<code>static final class Entry&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; { ... }</code><br>
+Entry包含了6个部分内容：key(键)、value(值)、left(左孩子)、right(右孩子)、parent(父节点)、color(颜色)<br>
 Entry节点根据key进行排序，Entry节点包含的内容为value。</li>
 </ul>
 <h2 id="相关操作">相关操作<a hidden class="anchor" aria-hidden="true" href="#相关操作">#</a></h2>
 <ul>
-<li>左旋
+<li>左旋<br>
 <code>private void rotateLeft(Entry&lt;K,V&gt; p) { ... }</code></li>
-<li>右旋
+<li>右旋<br>
 <code>private void rotateRight(Entry&lt;K,V&gt; p) { ... }</code></li>
-<li>插入操作
+<li>插入操作<br>
 <code>public V put(K key, V value) { ... }</code></li>
-<li>插入修正操作
-红黑树在执行插入操作后，要执行插入修正操作。目的是：保证红黑树插入节点之后，仍然是一颗红黑树
+<li>插入修正操作<br>
+红黑树在执行插入操作后，要执行插入修正操作。目的是：保证红黑树插入节点之后，仍然是一颗红黑树<br>
 <code>private void fixAfterInsertion(Entry&lt;K,V&gt; x) { ... }</code></li>
-<li>删除操作
+<li>删除操作<br>
 <code>private void deleteEntry(Entry&lt;K,V&gt; p) { ... }</code></li>
-<li>删除修正操作
-红黑树执行删除之后，要执行“删除修正操作”。目的是：保证红黑树删除节点之后，仍然是一颗红黑树。
+<li>删除修正操作<br>
+红黑树执行删除之后，要执行“删除修正操作”。目的是：保证红黑树删除节点之后，仍然是一颗红黑树。<br>
 <code>private void fixAfterDeletion(Entry&lt;K,V&gt; x) { ... }</code></li>
 </ul>
 <p>关于红黑树部分，这里主要是指出了TreeMap中哪些是红黑树的主要相关内容。具体的红黑树相关操作API，这里没有详细说明，因为它们仅仅只是将算法翻译成代码。</p>
 <h1 id="treemap的构造函数">TreeMap的构造函数<a hidden class="anchor" aria-hidden="true" href="#treemap的构造函数">#</a></h1>
 <ul>
-<li>默认构造函数
+<li>默认构造函数<br>
 使用默认构造函数构造TreeMap时，使用java的默认的比较器比较Key的大小，从而对TreeMap进行排序。</li>
 </ul>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -4651,8 +4651,8 @@ Entry节点根据key进行排序，Entry节点包含的内容为value。</li>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>该构造函数不同于上一个构造函数，在上一个构造函数中传入的参数是Map，Map不是有序的，所以要逐个添加。
-而该构造函数的参数是SortedMap是一个有序的Map，我们通过buildFromSorted()来创建对应的Map。
+</div><p>该构造函数不同于上一个构造函数，在上一个构造函数中传入的参数是Map，Map不是有序的，所以要逐个添加。<br>
+而该构造函数的参数是SortedMap是一个有序的Map，我们通过buildFromSorted()来创建对应的Map。<br>
 buildFromSorted涉及到的代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -4820,8 +4820,8 @@ buildFromSorted涉及到的代码如下：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>从中，我们可以看出 firstEntry() 和 getFirstEntry() 都是用于获取第一个节点。
-但是，firstEntry() 是对外接口； getFirstEntry() 是内部接口。而且，firstEntry() 是通过 getFirstEntry() 来实现的。那为什么外界不能直接调用 getFirstEntry()，而需要多此一举的调用 firstEntry() 呢?
+</div><p>从中，我们可以看出 firstEntry() 和 getFirstEntry() 都是用于获取第一个节点。<br>
+但是，firstEntry() 是对外接口； getFirstEntry() 是内部接口。而且，firstEntry() 是通过 getFirstEntry() 来实现的。那为什么外界不能直接调用 getFirstEntry()，而需要多此一举的调用 firstEntry() 呢?<br>
 先告诉大家原因，再进行详细说明。这么做的目的是：防止用户修改返回的Entry。getFirstEntry()返回的Entry是可以被修改的，但是经过firstEntry()返回的Entry不能被修改，只可以读取Entry的key值和value值。下面我们看看到底是如何实现的。</p>
 <ol>
 <li>getFirstEntry()返回的是Entry节点，而Entry是红黑树的节点，它的源码如下：</li>
@@ -4966,16 +4966,16 @@ buildFromSorted涉及到的代码如下：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>从中，我们可以看出SimpleImmutableEntry实际上是简化的key-value节点。
+</div><p>从中，我们可以看出SimpleImmutableEntry实际上是简化的key-value节点。<br>
 它只提供了getKey()、getValue()方法类获取节点的值；但不能修改value的值，因为调用 setValue() 会抛出异常UnsupportedOperationException();</p>
-<p>再回到我们之前的问题：那为什么外界不能直接调用 getFirstEntry()，而需要多此一举的调用 firstEntry() 呢?
+<p>再回到我们之前的问题：那为什么外界不能直接调用 getFirstEntry()，而需要多此一举的调用 firstEntry() 呢?<br>
 现在我们清晰的了解到：</p>
 <ol>
 <li>firstEntry()是对外接口，而getFirstEntry()是内部接口。</li>
 <li>对firstEntry()返回的Entry对象只能进行getKey()、getValue()等读取操作；而对getFirstEntry()返回的对象除了可以进行读取操作之后，还可以通过setValue()修改值。</li>
 </ol>
 <h1 id="treemap的key相关函数">TreeMap的key相关函数<a hidden class="anchor" aria-hidden="true" href="#treemap的key相关函数">#</a></h1>
-<p>TreeMap的firstKey()、lastKey()、lowerKey()、higherKey()、floorKey()、ceilingKey()原理都是类似的；下面以ceilingKey()来进行详细说明。
+<p>TreeMap的firstKey()、lastKey()、lowerKey()、higherKey()、floorKey()、ceilingKey()原理都是类似的；下面以ceilingKey()来进行详细说明。<br>
 ceilingKey(K key)的作用是“返回大于/等于key的最小的键值对所对应的KEY，没有的话返回null”，它的代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5099,7 +5099,7 @@ ceilingKey(K key)的作用是“返回大于/等于key的最小的键值对所�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：从中，我们可以发现values()是通过 new Values() 来实现 “返回TreeMap中值的集合”。
+</div><p>说明：从中，我们可以发现values()是通过 new Values() 来实现 “返回TreeMap中值的集合”。<br>
 那么Values()是如何实现的呢？ 没错！由于返回的是值的集合，那么Values()肯定返回一个集合；而Values()正好是集合类Value的构造函数。Values继承于AbstractCollection，它的代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5173,8 +5173,8 @@ ceilingKey(K key)的作用是“返回大于/等于key的最小的键值对所�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：从中，我们可以知道Values类就是一个集合。而 AbstractCollection 实现了除 size() 和 iterator() 之外的其它函数，因此只需要在Values类中实现这两个函数即可。
-size() 的实现非常简单，Values集合中元素的个数=该TreeMap的元素个数。(TreeMap每一个元素都有一个值嘛！)
+</div><p>说明：从中，我们可以知道Values类就是一个集合。而 AbstractCollection 实现了除 size() 和 iterator() 之外的其它函数，因此只需要在Values类中实现这两个函数即可。<br>
+size() 的实现非常简单，Values集合中元素的个数=该TreeMap的元素个数。(TreeMap每一个元素都有一个值嘛！)<br>
 iterator() 则返回一个迭代器，用于遍历Values。下面，我们一起可以看看iterator()的实现：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5332,11 +5332,11 @@ iterator() 则返回一个迭代器，用于遍历Values。下面，我们一起
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：PrivateEntryIterator是一个抽象类，它的实现很简单，只只实现了Iterator的remove()和hasNext()接口，没有实现next()接口。
-而我们在ValueIterator中已经实现的next()接口。
+</div><p>说明：PrivateEntryIterator是一个抽象类，它的实现很简单，只只实现了Iterator的remove()和hasNext()接口，没有实现next()接口。<br>
+而我们在ValueIterator中已经实现的next()接口。<br>
 至此，我们就了解了iterator()的完整实现了。</p>
 <h1 id="treemap的entryset函数">TreeMap的EntrySet()函数<a hidden class="anchor" aria-hidden="true" href="#treemap的entryset函数">#</a></h1>
-<p>entrySet() 返回“键值对集合”。顾名思义，它返回的是一个集合，集合的元素是“键值对”。
+<p>entrySet() 返回“键值对集合”。顾名思义，它返回的是一个集合，集合的元素是“键值对”。<br>
 下面，我们看看它是如何实现的？entrySet() 的实现代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5441,10 +5441,10 @@ iterator() 则返回一个迭代器，用于遍历Values。下面，我们一起
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：
-EntrySet是“TreeMap的所有键值对组成的集合”，而且它单位是单个“键值对”。
+</div><p>说明：<br>
+EntrySet是“TreeMap的所有键值对组成的集合”，而且它单位是单个“键值对”。<br>
 EntrySet是一个集合，它继承于AbstractSet。而AbstractSet实现了除size() 和 iterator() 之外的其它函数，因此，我们重点了解一下EntrySet的size() 和 iterator() 函数</p>
-<p>size() 的实现非常简单，AbstractSet集合中元素的个数=该TreeMap的元素个数。
+<p>size() 的实现非常简单，AbstractSet集合中元素的个数=该TreeMap的元素个数。<br>
 iterator() 则返回一个迭代器，用于遍历AbstractSet。从上面的源码中，我们可以发现iterator() 是通过EntryIterator实现的；下面我们看看EntryIterator的源码：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5530,9 +5530,9 @@ iterator() 则返回一个迭代器，用于遍历AbstractSet。从上面的源�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="treemap实现的serializable接口">TreeMap实现的Serializable接口<a hidden class="anchor" aria-hidden="true" href="#treemap实现的serializable接口">#</a></h1>
-<p>TreeMap实现java.io.Serializable，分别实现了串行读取、写入功能。
-串行写入函数是writeObject()，它的作用是将TreeMap的“容量，所有的Entry”都写入到输出流中。
-而串行读取函数是readObject()，它的作用是将TreeMap的“容量、所有的Entry”依次读出。
+<p>TreeMap实现java.io.Serializable，分别实现了串行读取、写入功能。<br>
+串行写入函数是writeObject()，它的作用是将TreeMap的“容量，所有的Entry”都写入到输出流中。<br>
+而串行读取函数是readObject()，它的作用是将TreeMap的“容量、所有的Entry”依次读出。<br>
 readObject() 和 writeObject() 正好是一对，通过它们，我能实现TreeMap的串行传输。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5602,20 +5602,20 @@ readObject() 和 writeObject() 正好是一对，通过它们，我能实现Tree
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说到这里，就顺便说一下“关键字transient”的作用
-transient是Java语言的关键字，它被用来表示一个域不是该对象串行化的一部分。
-Java的serialization提供了一种持久化对象实例的机制。当持久化对象时，可能有一个特殊的对象数据成员，我们不想用serialization机制来保存它。为了在一个特定对象的一个域上关闭serialization，可以在这个域前加上关键字transient。
+</div><p>说到这里，就顺便说一下“关键字transient”的作用<br>
+transient是Java语言的关键字，它被用来表示一个域不是该对象串行化的一部分。<br>
+Java的serialization提供了一种持久化对象实例的机制。当持久化对象时，可能有一个特殊的对象数据成员，我们不想用serialization机制来保存它。为了在一个特定对象的一个域上关闭serialization，可以在这个域前加上关键字transient。<br>
 当一个对象被串行化的时候，transient型变量的值不包括在串行化的表示中，然而非transient型的变量是被包括进去的。</p>
 <h1 id="treemap实现的navigablemap接口">TreeMap实现的NavigableMap接口<a hidden class="anchor" aria-hidden="true" href="#treemap实现的navigablemap接口">#</a></h1>
-<p>firstKey()、lastKey()、lowerKey()、higherKey()、ceilingKey()、floorKey();
-firstEntry()、 lastEntry()、 lowerEntry()、 higherEntry()、 floorEntry()、 ceilingEntry()、 pollFirstEntry() 、 pollLastEntry();
+<p>firstKey()、lastKey()、lowerKey()、higherKey()、ceilingKey()、floorKey();<br>
+firstEntry()、 lastEntry()、 lowerEntry()、 higherEntry()、 floorEntry()、 ceilingEntry()、 pollFirstEntry() 、 pollLastEntry();<br>
 上面已经讲解过这些API了，下面对其它的API进行说明。</p>
 <ul>
-<li>反向TreeMap
-descendingMap() 的作用是返回当前TreeMap的反向的TreeMap。所谓反向，就是排序顺序和原始的顺序相反。
-我们已经知道TreeMap是一颗红黑树，而红黑树是有序的。
-TreeMap的排序方式是通过比较器，在创建TreeMap的时候，若指定了比较器，则使用该比较器；否则，就使用Java的默认比较器。
-而获取TreeMap的反向TreeMap的原理就是将比较器反向即可！
+<li>反向TreeMap<br>
+descendingMap() 的作用是返回当前TreeMap的反向的TreeMap。所谓反向，就是排序顺序和原始的顺序相反。<br>
+我们已经知道TreeMap是一颗红黑树，而红黑树是有序的。<br>
+TreeMap的排序方式是通过比较器，在创建TreeMap的时候，若指定了比较器，则使用该比较器；否则，就使用Java的默认比较器。<br>
+而获取TreeMap的反向TreeMap的原理就是将比较器反向即可！<br>
 理解了descendingMap()的反向原理之后，再讲解一下descendingMap()的代码。</li>
 </ul>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -5829,8 +5829,8 @@ TreeMap的排序方式是通过比较器，在创建TreeMap的时候，若指定
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>从中，我们看出DescendingSubMap是降序的SubMap，它的实现机制是将“SubMap的比较器反转”。
-它继承于NavigableSubMap。而NavigableSubMap是一个继承于AbstractMap的抽象类；它包括2个子类——&quot;(升序)AscendingSubMap&quot;和&quot;(降序)DescendingSubMap&quot;。NavigableSubMap为它的两个子类实现了许多公共API。
+</div><p>从中，我们看出DescendingSubMap是降序的SubMap，它的实现机制是将“SubMap的比较器反转”。<br>
+它继承于NavigableSubMap。而NavigableSubMap是一个继承于AbstractMap的抽象类；它包括2个子类——&quot;(升序)AscendingSubMap&quot;和&quot;(降序)DescendingSubMap&quot;。NavigableSubMap为它的两个子类实现了许多公共API。<br>
 下面看看NavigableSubMap的源码。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -6922,13 +6922,13 @@ TreeMap的排序方式是通过比较器，在创建TreeMap的时候，若指定
 </div>
 </div><h1 id="treemap其他函数">TreeMap其他函数<a hidden class="anchor" aria-hidden="true" href="#treemap其他函数">#</a></h1>
 <ul>
-<li>顺序遍历和逆序遍历
-TreeMap的顺序遍历和逆序遍历原理非常简单。
+<li>顺序遍历和逆序遍历<br>
+TreeMap的顺序遍历和逆序遍历原理非常简单。<br>
 由于TreeMap中的元素是从小到大的顺序排列的。因此，顺序遍历，就是从第一个元素开始，逐个向后遍历；而倒序遍历则恰恰相反，它是从最后一个元素开始，逐个往前遍历。</li>
 </ul>
-<p>我们可以通过 keyIterator() 和 descendingKeyIterator()来说明。
-keyIterator()的作用是返回顺序的KEY的集合，
-descendingKeyIterator()的作用是返回逆序的KEY的集合。
+<p>我们可以通过 keyIterator() 和 descendingKeyIterator()来说明。<br>
+keyIterator()的作用是返回顺序的KEY的集合，<br>
+descendingKeyIterator()的作用是返回逆序的KEY的集合。<br>
 keyIterator() 的代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -6942,7 +6942,7 @@ keyIterator() 的代码如下：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：从中我们可以看出keyIterator() 是返回以“第一个节点(getFirstEntry)” 为其实元素的迭代器。
+</div><p>说明：从中我们可以看出keyIterator() 是返回以“第一个节点(getFirstEntry)” 为其实元素的迭代器。<br>
 KeyIterator的代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -6980,7 +6980,7 @@ KeyIterator的代码如下：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：从中我们可以看出descendingKeyIterator() 是返回以“最后一个节点(getLastEntry)” 为其实元素的迭代器。
+</div><p>说明：从中我们可以看出descendingKeyIterator() 是返回以“最后一个节点(getLastEntry)” 为其实元素的迭代器。<br>
 再看看DescendingKeyIterator的代码：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -7004,7 +7004,7 @@ KeyIterator的代码如下：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：
+</div><p>说明：<br>
 DescendingKeyIterator继承于PrivateEntryIterator。当我们通过next()不断获取下一个元素的时候，实际上调用的是prevEntry()获取的上一个节点，这样它实际上执行的是逆序遍历了。</p>
 <h1 id="treemap遍历">TreeMap遍历<a hidden class="anchor" aria-hidden="true" href="#treemap遍历">#</a></h1>
 <h2 id="遍历treemap的键值对">遍历TreeMap的键值对<a hidden class="anchor" aria-hidden="true" href="#遍历treemap的键值对">#</a></h2>

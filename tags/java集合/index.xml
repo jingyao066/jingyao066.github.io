@@ -21,8 +21,8 @@
       <pubDate>Mon, 12 Dec 2016 14:49:20 +0000</pubDate>
       <guid>https://009965.xyz/posts/java%E9%9B%86%E5%90%88/hashmap/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;HashMap是一个散列表（就是哈希表），哈希表就是一种以&lt;code&gt;键-值(key-indexed)&lt;/code&gt;存储数据的结构。
-HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
+&lt;p&gt;HashMap是一个散列表（就是哈希表），哈希表就是一种以&lt;code&gt;键-值(key-indexed)&lt;/code&gt;存储数据的结构。&lt;br&gt;
+HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。&lt;br&gt;
 HashMap 的实现不是同步的，这意味着它不是线程安全的。它的key、value都可以为null。此外，HashMap中的映射不是有序的。&lt;/p&gt;</description>
     </item>
     <item>
@@ -31,11 +31,11 @@ HashMap 的实现不是同步的，这意味着它不是线程安全的。它的
       <pubDate>Sun, 11 Dec 2016 13:44:51 +0000</pubDate>
       <guid>https://009965.xyz/posts/java%E9%9B%86%E5%90%88/linkedlist/</guid>
       <description>&lt;h1 id=&#34;linkedlist概述&#34;&gt;LinkedList概述&lt;/h1&gt;
-&lt;p&gt;LinkedList是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
-LinkedList 实现List 接口，能对它进行队列操作。
-LinkedList 实现Deque 接口，即能将LinkedList当作双端队列使用。
-LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。
-LinkedList 实现&lt;code&gt;java.io.Serializable&lt;/code&gt;接口，这意味着LinkedList支持序列化，能通过序列化去传输。
+&lt;p&gt;LinkedList是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。&lt;br&gt;
+LinkedList 实现List 接口，能对它进行队列操作。&lt;br&gt;
+LinkedList 实现Deque 接口，即能将LinkedList当作双端队列使用。&lt;br&gt;
+LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。&lt;br&gt;
+LinkedList 实现&lt;code&gt;java.io.Serializable&lt;/code&gt;接口，这意味着LinkedList支持序列化，能通过序列化去传输。&lt;br&gt;
 LinkedList 是非同步的。&lt;/p&gt;</description>
     </item>
     <item>
@@ -44,8 +44,8 @@ LinkedList 是非同步的。&lt;/p&gt;</description>
       <pubDate>Sun, 11 Dec 2016 09:01:24 +0000</pubDate>
       <guid>https://009965.xyz/posts/java%E9%9B%86%E5%90%88/arraylist/</guid>
       <description>&lt;h1 id=&#34;arraylist概述&#34;&gt;ArrayList概述&lt;/h1&gt;
-&lt;p&gt;ArrayList 是容量可变的非线程安全集合。
-内部使用数组进行存储，集合扩容时会创建更大的数组空间，把原有数据复制到新数组中。
+&lt;p&gt;ArrayList 是容量可变的非线程安全集合。&lt;br&gt;
+内部使用数组进行存储，集合扩容时会创建更大的数组空间，把原有数据复制到新数组中。&lt;br&gt;
 ArrayList 支持对元素的快速随机访问，但是插入与删除时速度很慢，因为这个过程很有可能需要移动其他元素。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ArrayList 继承了AbstractList，实现了List。提供了相关的添加、删除、修改、遍历等功能。&lt;/li&gt;

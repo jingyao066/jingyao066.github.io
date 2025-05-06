@@ -948,7 +948,7 @@
 </div>
 </div><p>那么根据条件<code>@ConditionalOnMissingBean(JdbcOperations.class)</code>，Spring Boot就不会再创建一个重复的<code>JdbcTemplate</code>（因为<code>JdbcOperations</code>是<code>JdbcTemplate</code>的父类）。</p>
 <p>可见，Spring Boot自动装配功能是通过自动扫描+条件装配实现的，这一套机制在默认情况下工作得很好，但是，如果我们要手动控制某个Bean的创建，就需要详细地了解Spring Boot自动创建的原理，很多时候还要跟踪<code>XxxAutoConfiguration</code>，以便设定条件使得某个Bean不会被自动创建。</p>
-<p><strong>小结</strong>
+<p><strong>小结</strong><br>
 Spring Boot是一个基于Spring提供了开箱即用的一组套件，它可以让我们基于很少的配置和代码快速搭建出一个完整的应用程序。</p>
 <p>Spring Boot有非常强大的AutoConfiguration功能，它是通过自动扫描+条件装配实现的。</p>
 <h1 id="打包spring-boot应用">打包Spring Boot应用<a hidden class="anchor" aria-hidden="true" href="#打包spring-boot应用">#</a></h1>
@@ -1064,7 +1064,7 @@ Spring Boot是一个基于Spring提供了开箱即用的一组套件，它可以
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样打包后的文件名就是<code>awesome-app.jar</code>。</p>
-<p><strong>小结</strong>
+<p><strong>小结</strong><br>
 Spring Boot提供了一个Maven插件用于打包所有依赖到单一jar文件，此插件十分易用，无需配置。</p>
 <h1 id="使用actuator">使用Actuator<a hidden class="anchor" aria-hidden="true" href="#使用actuator">#</a></h1>
 <p>在生产环境中，需要对应用程序的状态进行监控。前面我们已经介绍了使用JMX对Java应用程序包括JVM进行监控，使用JMX需要把一些监控信息以MBean的形式暴露给JMX Server，而Spring Boot已经内置了一个监控功能，它叫Actuator。</p>
@@ -1438,8 +1438,8 @@ Spring Boot提供了一个Maven插件用于打包所有依赖到单一jar文件�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意到<code>LocalStorageService</code>使用了条件装配<code>@Profile(&quot;default&quot;)</code>，即默认启用<code>LocalStorageService</code>，而<code>CloudStorageService</code>使用了条件装配<code>@Profile(&quot;!default&quot;)</code>，即非<code>default</code>环境时，自动启用<code>CloudStorageService</code>。这样，一套代码，就实现了不同环境启用不同的配置。</p>
-<p><strong>小结</strong>
-Spring Boot允许在一个配置文件中针对不同Profile进行配置；
+<p><strong>小结</strong><br>
+Spring Boot允许在一个配置文件中针对不同Profile进行配置；<br>
 Spring Boot在未指定Profile时默认为default。</p>
 <h1 id="使用conditional">使用Conditional<a hidden class="anchor" aria-hidden="true" href="#使用conditional">#</a></h1>
 <p>使用Profile能根据不同的Profile进行条件装配，但是Profile控制比较糙，如果想要精细控制，例如，配置本地存储，AWS存储和阿里云存储，将来很可能会增加Azure存储等，用Profile就很难实现。</p>

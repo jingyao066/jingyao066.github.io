@@ -3200,8 +3200,8 @@
 <p>注意：如果Filter要使请求继续被处理，就一定要调用<code>chain.doFilter()</code></p>
 <p>如果我们使用上一节介绍的MVC模式，即一个统一的<code>DispatcherServlet</code>入口，加上多个Controller，这种模式下Filter仍然是正常工作的。例如，一个处理<code>/user/*</code>的Filter实际上作用于那些处理<code>/user/</code>开头的Controller方法之前。</p>
 <h2 id="小结-5">小结<a hidden class="anchor" aria-hidden="true" href="#小结-5">#</a></h2>
-<p>Filter是一种对HTTP请求进行预处理的组件，它可以构成一个处理链，使得公共处理代码能集中到一起；
-Filter适用于日志、登录检查、全局设置等；
+<p>Filter是一种对HTTP请求进行预处理的组件，它可以构成一个处理链，使得公共处理代码能集中到一起；<br>
+Filter适用于日志、登录检查、全局设置等；<br>
 设计合理的URL映射可以让Filter链更清晰。</p>
 <h2 id="修改请求">修改请求<a hidden class="anchor" aria-hidden="true" href="#修改请求">#</a></h2>
 <p>Filter可以对请求进行预处理，因此，我们可以把很多公共预处理逻辑放到Filter中完成。</p>

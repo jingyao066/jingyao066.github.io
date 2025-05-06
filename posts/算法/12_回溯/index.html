@@ -387,16 +387,16 @@
 </div>
 </div><p>在每次“尝试”中，我们通过将当前节点添加进 <code>path</code> 来记录路径；而在“回退”前，我们需要将该节点从 <code>path</code> 中弹出，<strong>以恢复本次尝试之前的状态</strong>。</p>
 <p>观察图 13-2 所示的过程，<strong>我们可以将尝试和回退理解为“前进”与“撤销”</strong>，两个操作互为逆向。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step9.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step10.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step9.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step10.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/12_%E5%9B%9E%E6%BA%AF/preorder_find_paths_step11.png"></p>
 <h2 id="剪枝">剪枝<a hidden class="anchor" aria-hidden="true" href="#剪枝">#</a></h2>
 <p>复杂的回溯问题通常包含一个或多个约束条件，<strong>约束条件通常可用于“剪枝”</strong>。</p>

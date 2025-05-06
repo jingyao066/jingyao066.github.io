@@ -1400,7 +1400,7 @@ System.out.println(target.score);
 <p>可以从文件系统、classpath或其他任何地方读取<code>.properties</code>文件。</p>
 <p>读写<code>Properties</code>时，注意仅使用<code>getProperty()</code>和<code>setProperty()</code>方法，不要调用继承而来的<code>get()</code>和<code>put()</code>等方法。</p>
 <h1 id="总览">总览<a hidden class="anchor" aria-hidden="true" href="#总览">#</a></h1>
-<p><img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/3_map/1.jpg">
+<p><img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/3_map/1.jpg"><br>
 如上图：</p>
 <ul>
 <li>Map 是映射接口，Map中存储的内容是键值对(key-value)。</li>
@@ -1413,10 +1413,10 @@ System.out.println(target.score);
 <li>WeakHashMap 继承于AbstractMap。它和HashMap的键类型不同，WeakHashMap的键是“弱键”。</li>
 </ul>
 <h1 id="map定义">Map定义<a hidden class="anchor" aria-hidden="true" href="#map定义">#</a></h1>
-<p><code>public interface Map&lt;K,V&gt;{}</code>
-Map 是一个键值对(key-value)映射接口。Map映射中不能包含重复的键；每个键最多只能映射到一个值。
-Map 接口提供三种collection 视图，允许以键集、值集或键-值映射关系集的形式查看某个映射的内容。
-Map 映射顺序。有些实现类，可以明确保证其顺序，如 TreeMap；另一些映射实现则不保证顺序，如 HashMap 类。
+<p><code>public interface Map&lt;K,V&gt;{}</code><br>
+Map 是一个键值对(key-value)映射接口。Map映射中不能包含重复的键；每个键最多只能映射到一个值。<br>
+Map 接口提供三种collection 视图，允许以键集、值集或键-值映射关系集的形式查看某个映射的内容。<br>
+Map 映射顺序。有些实现类，可以明确保证其顺序，如 TreeMap；另一些映射实现则不保证顺序，如 HashMap 类。<br>
 Map 的实现类应该提供2个“标准的”构造方法：第一个，void（无参数）构造方法，用于创建空映射；第二个，带有单个 Map 类型参数的构造方法，用于创建一个与其参数具有相同键-值映射关系的新映射。实际上，后一个构造方法允许用户复制任意映射，生成所需类的一个等价映射。尽管无法强制执行此建议（因为接口不能包含构造方法），但是 JDK 中所有通用的映射实现都遵从它。</p>
 <h1 id="map的api">Map的API<a hidden class="anchor" aria-hidden="true" href="#map的api">#</a></h1>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1453,15 +1453,15 @@ Map 的实现类应该提供2个“标准的”构造方法：第一个，void�
 </span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">abstract</span> Collection&lt;V&gt;        values()
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Map提供了一些用于返回数据的接口：键集、值集、键-值映射关系集
-<code>entrySet()</code>用于返回键值集的Set集合
-<code>keySet()</code>用于返回键集的Set集合
-<code>values()</code>用户返回值集的Collection集合
-因为Map中不能包含重复的键；每个键最多只能映射到一个值。所以，键值集、键集都是Set，值集是Collection。
+</div><p>Map提供了一些用于返回数据的接口：键集、值集、键-值映射关系集<br>
+<code>entrySet()</code>用于返回键值集的Set集合<br>
+<code>keySet()</code>用于返回键集的Set集合<br>
+<code>values()</code>用户返回值集的Collection集合<br>
+因为Map中不能包含重复的键；每个键最多只能映射到一个值。所以，键值集、键集都是Set，值集是Collection。<br>
 Map提供了一些方法：根据键获取值、删除键、获取容量大小、键值对。</p>
 <h1 id="mapentry">Map.Entry<a hidden class="anchor" aria-hidden="true" href="#mapentry">#</a></h1>
-<p>Map.Entry定义如下：
-<code>interface Entry&lt;K,V&gt; {}</code>
+<p>Map.Entry定义如下：<br>
+<code>interface Entry&lt;K,V&gt; {}</code><br>
 <code>Map.Entry</code>是Map内部的一个接口，Map.Entry是键值对，Map通过 entrySet() 获取Map.Entry的键值对集合，从而通过该集合实现对键值对的操作。</p>
 <p>Map.Entry的API</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1481,9 +1481,9 @@ Map提供了一些方法：根据键获取值、删除键、获取容量大小�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="abstractmap">AbstractMap<a hidden class="anchor" aria-hidden="true" href="#abstractmap">#</a></h1>
-<p><code>public abstract class AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt; {}</code>
-AbstractMap类提供Map接口的实现，以最大限度的减少实现此接口所需的工作。
-要实现不可修改的映射，编程人员只需扩展此类并提供 entrySet 方法的实现即可，该方法将返回映射的映射关系 set 视图。通常，返回的 set 将依次在 AbstractSet 上实现。此 set 不支持 add() 或 remove() 方法，其迭代器也不支持 remove() 方法。
+<p><code>public abstract class AbstractMap&lt;K,V&gt; implements Map&lt;K,V&gt; {}</code><br>
+AbstractMap类提供Map接口的实现，以最大限度的减少实现此接口所需的工作。<br>
+要实现不可修改的映射，编程人员只需扩展此类并提供 entrySet 方法的实现即可，该方法将返回映射的映射关系 set 视图。通常，返回的 set 将依次在 AbstractSet 上实现。此 set 不支持 add() 或 remove() 方法，其迭代器也不支持 remove() 方法。<br>
 要实现可修改的映射，编程人员必须另外重写此类的 put 方法（否则将抛出 UnsupportedOperationException），entrySet().iterator() 返回的迭代器也必须另外实现其 remove 方法。</p>
 <p>AbstractMap的API</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1525,8 +1525,8 @@ AbstractMap类提供Map接口的实现，以最大限度的减少实现此接口
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="sortedmap">SortedMap<a hidden class="anchor" aria-hidden="true" href="#sortedmap">#</a></h1>
-<p><code>public interface SortedMap&lt;K,V&gt; extends Map&lt;K,V&gt; {}</code>
-SortedMap是一个继承于Map接口的接口，它是一个有序的SortedMap键值映射。
+<p><code>public interface SortedMap&lt;K,V&gt; extends Map&lt;K,V&gt; {}</code><br>
+SortedMap是一个继承于Map接口的接口，它是一个有序的SortedMap键值映射。<br>
 SortedMap的排序方式有两种：自然排序或者用户指定比较器。 插入有序 SortedMap 的所有元素都必须实现 Comparable 接口（或者被指定的比较器所接受）。</p>
 <p>另外，所有SortedMap 实现类都应该提供 4 个“标准”构造方法：</p>
 <ol>
@@ -1587,8 +1587,8 @@ SortedMap的排序方式有两种：自然排序或者用户指定比较器。 �
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="navigablemap">NavigableMap<a hidden class="anchor" aria-hidden="true" href="#navigablemap">#</a></h1>
-<p><code>public interface NavigableMap&lt;K,V&gt; extends SortedMap&lt;K,V&gt; {}</code>
-NavigableMap是继承于SortedMap的接口。它是一个可导航的键-值对集合，具有了为给定搜索目标报告最接近匹配项的导航方法。
+<p><code>public interface NavigableMap&lt;K,V&gt; extends SortedMap&lt;K,V&gt; {}</code><br>
+NavigableMap是继承于SortedMap的接口。它是一个可导航的键-值对集合，具有了为给定搜索目标报告最接近匹配项的导航方法。<br>
 NavigableMap分别提供了获取“键”、“键-值对”、“键集”、“键-值对集”的相关方法。</p>
 <p>NavigableMap的API</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1639,20 +1639,20 @@ NavigableMap分别提供了获取“键”、“键-值对”、“键集”、�
 </span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">abstract</span> NavigableMap&lt;K, V&gt;      tailMap(K fromKey, <span style="color:#fff;font-weight:bold">boolean</span> inclusive)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>说明：
+</div><p>说明：<br>
 NavigableMap除了继承SortedMap的特性外，它的提供的功能可以分为4类：</p>
 <ul>
-<li>提供操作键-值对的方法。
-lowerEntry、floorEntry、ceilingEntry 和 higherEntry 方法，它们分别返回与小于、小于等于、大于等于、大于给定键的键关联的 Map.Entry 对象。
+<li>提供操作键-值对的方法。<br>
+lowerEntry、floorEntry、ceilingEntry 和 higherEntry 方法，它们分别返回与小于、小于等于、大于等于、大于给定键的键关联的 Map.Entry 对象。<br>
 firstEntry、pollFirstEntry、lastEntry 和 pollLastEntry 方法，它们返回和/或移除最小和最大的映射关系（如果存在），否则返回 null。</li>
-<li>提供操作键的方法。这个和第1类比较类似
+<li>提供操作键的方法。这个和第1类比较类似<br>
 lowerKey、floorKey、ceilingKey 和 higherKey 方法，它们分别返回与小于、小于等于、大于等于、大于给定键的键。</li>
-<li>获取键集。
+<li>获取键集。<br>
 navigableKeySet、descendingKeySet分别获取正序/反序的键集。</li>
 <li>获取键-值对的子集。</li>
 </ul>
 <h1 id="dictionary">Dictionary<a hidden class="anchor" aria-hidden="true" href="#dictionary">#</a></h1>
-<p><code>public abstract class Dictionary&lt;K,V&gt; {}</code>
+<p><code>public abstract class Dictionary&lt;K,V&gt; {}</code><br>
 Dictionary是JDK 1.0定义的键值对的接口，它也包括了操作键值对的基本函数。</p>
 <p>Dictionary的API</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1692,17 +1692,17 @@ Dictionary是JDK 1.0定义的键值对的接口，它也包括了操作键值对
 </ol>
 <h1 id="hashmap和hashtable异同">HashMap和Hashtable异同<a hidden class="anchor" aria-hidden="true" href="#hashmap和hashtable异同">#</a></h1>
 <h2 id="hashmap和hashtable的相同点">HashMap和Hashtable的相同点<a hidden class="anchor" aria-hidden="true" href="#hashmap和hashtable的相同点">#</a></h2>
-<p>HashMap和Hashtable都是存储“键值对(key-value)”的散列表，而且都是采用拉链法实现的。
+<p>HashMap和Hashtable都是存储“键值对(key-value)”的散列表，而且都是采用拉链法实现的。<br>
 存储的思想都是：通过table数组存储，数组的每一个元素都是一个Entry；而一个Entry就是一个单向链表，Entry链表中的每一个节点就保存了key-value键值对数据。</p>
-<p>添加key-value键值对：首先，根据key值计算出哈希值，再计算出数组索引(即，该key-value在table中的索引)。然后，根据数组索引找到Entry(即，单向链表)，再遍历单向链表，将key和链表中的每一个节点的key进行对比。若key已经存在Entry链表中，则用该value值取代旧的value值；若key不存在Entry链表中，则新建一个key-value节点，并将该节点插入Entry链表的表头位置。
+<p>添加key-value键值对：首先，根据key值计算出哈希值，再计算出数组索引(即，该key-value在table中的索引)。然后，根据数组索引找到Entry(即，单向链表)，再遍历单向链表，将key和链表中的每一个节点的key进行对比。若key已经存在Entry链表中，则用该value值取代旧的value值；若key不存在Entry链表中，则新建一个key-value节点，并将该节点插入Entry链表的表头位置。<br>
 删除key-value键值对：删除键值对，相比于“添加键值对”来说，简单很多。首先，还是根据key计算出哈希值，再计算出数组索引(即，该key-value在table中的索引)。然后，根据索引找出Entry(即，单向链表)。若节点key-value存在与链表Entry中，则删除链表中的节点即可。</p>
 <p>上面介绍了HashMap和Hashtable的相同点。正是由于它们都是散列表，我们关注更多的是“它们的区别，以及它们分别适合在什么情况下使用”。那接下来，我们先看看它们的区别。</p>
 <h2 id="hashmap和hashtable的不同点">HashMap和Hashtable的不同点<a hidden class="anchor" aria-hidden="true" href="#hashmap和hashtable的不同点">#</a></h2>
 <ol>
 <li>
-<p>继承和实现方式不同
-HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。
-Hashtable 继承于Dictionary，实现了Map、Cloneable、java.io.Serializable接口。
+<p>继承和实现方式不同<br>
+HashMap 继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。<br>
+Hashtable 继承于Dictionary，实现了Map、Cloneable、java.io.Serializable接口。<br>
 HashMap的定义：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1734,29 +1734,29 @@ HashMap的定义：</p>
 </ol>
 <ul>
 <li>
-<p>HashMap和Hashtable都实现了Map、Cloneable、java.io.Serializable接口。
-实现了Map接口，意味着它们都支持key-value键值对操作。支持“添加key-value键值对”、“获取key”、“获取value”、“获取map大小”、“清空map”等基本的key-value键值对操作。
-实现了Cloneable接口，意味着它能被克隆。
+<p>HashMap和Hashtable都实现了Map、Cloneable、java.io.Serializable接口。<br>
+实现了Map接口，意味着它们都支持key-value键值对操作。支持“添加key-value键值对”、“获取key”、“获取value”、“获取map大小”、“清空map”等基本的key-value键值对操作。<br>
+实现了Cloneable接口，意味着它能被克隆。<br>
 实现了java.io.Serializable接口，意味着它们支持序列化，能通过序列化去传输。</p>
 </li>
 <li>
-<p>HashMap继承于AbstractMap，而Hashtable继承于Dictionary
-Dictionary是一个抽象类，它直接继承于Object类，没有实现任何接口。Dictionary类是JDK 1.0的引入的。虽然Dictionary也支持“添加key-value键值对”、“获取value”、“获取大小”等基本操作，但它的API函数比Map少；而且Dictionary一般是通过Enumeration(枚举类)去遍历，Map则是通过Iterator(迭代器)去遍历。 然而‘由于Hashtable也实现了Map接口，所以，它即支持Enumeration遍历，也支持Iterator遍历。关于这点，后面还会进一步说明。
+<p>HashMap继承于AbstractMap，而Hashtable继承于Dictionary<br>
+Dictionary是一个抽象类，它直接继承于Object类，没有实现任何接口。Dictionary类是JDK 1.0的引入的。虽然Dictionary也支持“添加key-value键值对”、“获取value”、“获取大小”等基本操作，但它的API函数比Map少；而且Dictionary一般是通过Enumeration(枚举类)去遍历，Map则是通过Iterator(迭代器)去遍历。 然而‘由于Hashtable也实现了Map接口，所以，它即支持Enumeration遍历，也支持Iterator遍历。关于这点，后面还会进一步说明。<br>
 AbstractMap是一个抽象类，它实现了Map接口的绝大部分API函数；为Map的具体实现类提供了极大的便利。它是JDK 1.2新增的类。</p>
 </li>
 </ul>
 <ol start="2">
 <li>
-<p>线程安全不同
-Hashtable的几乎所有函数都是同步的，即它是线程安全的，支持多线程。
-而HashMap的函数则是非同步的，它不是线程安全的。若要在多线程中使用HashMap，需要我们额外的进行同步处理。
+<p>线程安全不同<br>
+Hashtable的几乎所有函数都是同步的，即它是线程安全的，支持多线程。<br>
+而HashMap的函数则是非同步的，它不是线程安全的。若要在多线程中使用HashMap，需要我们额外的进行同步处理。<br>
 对HashMap的同步处理可以使用Collections类提供的synchronizedMap静态方法，或者直接使用JDK 5.0之后提供的java.util.concurrent包里的ConcurrentHashMap类。</p>
 </li>
 <li>
-<p>对null值的处理不同
-HashMap的key、value都可以为null。
-Hashtable的key、value都不可以为null。
-我们先看看HashMap和Hashtable “添加key-value”的方法
+<p>对null值的处理不同<br>
+HashMap的key、value都可以为null。<br>
+Hashtable的key、value都不可以为null。<br>
+我们先看看HashMap和Hashtable “添加key-value”的方法<br>
 HashMap的添加key-value的方法</p>
 </li>
 </ol>
@@ -1941,24 +1941,24 @@ HashMap的添加key-value的方法</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>根据上面的代码，我们可以看出：
-Hashtable的key或value，都不能为null！否则，会抛出异常NullPointerException。
+</div><p>根据上面的代码，我们可以看出：<br>
+Hashtable的key或value，都不能为null！否则，会抛出异常NullPointerException。<br>
 HashMap的key、value都可以为null。 当HashMap的key为null时，HashMap会将其固定的插入table[0]位置(即HashMap散列表的第一个位置)；而且table[0]处只会容纳一个key为null的值，当有多个key为null的值插入的时候，table[0]会保留最后插入的value。</p>
 <ol start="4">
 <li>
-<p>支持的遍历种类不同
-HashMap只支持Iterator(迭代器)遍历。
-而Hashtable支持Iterator(迭代器)和Enumeration(枚举器)两种方式遍历。
-Enumeration 是JDK 1.0添加的接口，只有hasMoreElements(), nextElement() 两个API接口，不能通过Enumeration()对元素进行修改 。
+<p>支持的遍历种类不同<br>
+HashMap只支持Iterator(迭代器)遍历。<br>
+而Hashtable支持Iterator(迭代器)和Enumeration(枚举器)两种方式遍历。<br>
+Enumeration 是JDK 1.0添加的接口，只有hasMoreElements(), nextElement() 两个API接口，不能通过Enumeration()对元素进行修改 。<br>
 而Iterator 是JDK 1.2才添加的接口，支持hasNext(), next(), remove() 三个API接口。HashMap也是JDK 1.2版本才添加的，所以用Iterator取代Enumeration，HashMap只支持Iterator遍历。</p>
 </li>
 <li>
-<p>通过Iterator迭代器遍历时，遍历的顺序不同
-HashMap是“从前向后”的遍历数组；再对数组具体某一项对应的链表，从表头开始进行遍历。
-Hashtabl是“从后往前”的遍历数组；再对数组具体某一项对应的链表，从表头开始进行遍历。
-HashMap和Hashtable都实现Map接口，所以支持获取它们“key的集合”、“value的集合”、“key-value的集合”，然后通过Iterator对这些集合进行遍历。
-由于“key的集合”、“value的集合”、“key-value的集合”的遍历原理都是一样的；下面，我以遍历“key-value的集合”来进行说明。
-HashMap 和Hashtable 遍历&quot;key-value集合&quot;的方式是：(01) 通过entrySet()获取“Map.Entry集合”。 (02) 通过iterator()获取“Map.Entry集合”的迭代器，再进行遍历。
+<p>通过Iterator迭代器遍历时，遍历的顺序不同<br>
+HashMap是“从前向后”的遍历数组；再对数组具体某一项对应的链表，从表头开始进行遍历。<br>
+Hashtabl是“从后往前”的遍历数组；再对数组具体某一项对应的链表，从表头开始进行遍历。<br>
+HashMap和Hashtable都实现Map接口，所以支持获取它们“key的集合”、“value的集合”、“key-value的集合”，然后通过Iterator对这些集合进行遍历。<br>
+由于“key的集合”、“value的集合”、“key-value的集合”的遍历原理都是一样的；下面，我以遍历“key-value的集合”来进行说明。<br>
+HashMap 和Hashtable 遍历&quot;key-value集合&quot;的方式是：(01) 通过entrySet()获取“Map.Entry集合”。 (02) 通过iterator()获取“Map.Entry集合”的迭代器，再进行遍历。<br>
 HashMap的实现方式：先“从前向后”的遍历数组；对数组具体某一项对应的链表，则从表头开始往后遍历。</p>
 </li>
 </ol>
@@ -2302,9 +2302,9 @@ HashMap的实现方式：先“从前向后”的遍历数组；对数组具体�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="6">
-<li>容量的初始值 和 增加方式都不一样
-HashMap默认的容量大小是16；增加容量时，每次将容量变为“原始容量x2”。
-Hashtable默认的容量大小是11；增加容量时，每次将容量变为“原始容量x2 + 1”。
+<li>容量的初始值 和 增加方式都不一样<br>
+HashMap默认的容量大小是16；增加容量时，每次将容量变为“原始容量x2”。<br>
+Hashtable默认的容量大小是11；增加容量时，每次将容量变为“原始容量x2 + 1”。<br>
 HashMap默认的“加载因子”是0.75, 默认的容量大小是16。</li>
 </ol>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2439,9 +2439,9 @@ HashMap默认的“加载因子”是0.75, 默认的容量大小是16。</li>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="7">
-<li>添加key-value时的hash值算法不同
-HashMap添加元素时，是使用自定义的哈希算法。
-Hashtable没有自定义哈希算法，而直接采用的key的hashCode()。
+<li>添加key-value时的hash值算法不同<br>
+HashMap添加元素时，是使用自定义的哈希算法。<br>
+Hashtable没有自定义哈希算法，而直接采用的key的hashCode()。<br>
 HashMap添加元素时，是使用自定义的哈希算法。</li>
 </ol>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2597,13 +2597,13 @@ HashMap添加元素时，是使用自定义的哈希算法。</li>
 </div>
 </div><ol start="8">
 <li>
-<p>部分API不同
-Hashtable支持contains(Object value)方法，而且重写了toString()方法；
+<p>部分API不同<br>
+Hashtable支持contains(Object value)方法，而且重写了toString()方法；<br>
 而HashMap不支持contains(Object value)方法，没有重写toString()方法。</p>
 </li>
 <li>
-<p>最后，再说说“HashMap和Hashtable”使用的情景。
-其实，若了解它们之间的不同之处后，可以很容易的区分根据情况进行取舍。例如：(01) 若在单线程中，我们往往会选择HashMap；而在多线程中，则会选择Hashtable。(02)，若不能插入null元素，则选择Hashtable；否则，可以选择HashMap。
+<p>最后，再说说“HashMap和Hashtable”使用的情景。<br>
+其实，若了解它们之间的不同之处后，可以很容易的区分根据情况进行取舍。例如：(01) 若在单线程中，我们往往会选择HashMap；而在多线程中，则会选择Hashtable。(02)，若不能插入null元素，则选择Hashtable；否则，可以选择HashMap。<br>
 但这个不是绝对的标准。例如，在多线程中，我们可以自己对HashMap进行同步，也可以选择ConcurrentHashMap。当HashMap和Hashtable都不能满足自己的需求时，还可以考虑新定义一个类，继承或重新实现散列表；当然，一般情况下是不需要的了。</p>
 </li>
 </ol>
@@ -2621,25 +2621,25 @@ Hashtable支持contains(Object value)方法，而且重写了toString()方法；
 <h2 id="hashmap和weakhashmap的不同点">HashMap和WeakHashMap的不同点<a hidden class="anchor" aria-hidden="true" href="#hashmap和weakhashmap的不同点">#</a></h2>
 <ul>
 <li>
-<p>HashMap实现了Cloneable和Serializable接口，而WeakHashMap没有。
-HashMap实现Cloneable，意味着它能通过clone()克隆自己。
+<p>HashMap实现了Cloneable和Serializable接口，而WeakHashMap没有。<br>
+HashMap实现Cloneable，意味着它能通过clone()克隆自己。<br>
 HashMap实现Serializable，意味着它支持序列化，能通过序列化去传输。</p>
 </li>
 <li>
-<p>HashMap的“键”是“强引用(StrongReference)”，而WeakHashMap的键是“弱引用(WeakReference)”。
-WeakReference的“弱键”能实现WeakReference对“键值对”的动态回收。当“弱键”不再被使用到时，GC会回收它，WeakReference也会将“弱键”对应的键值对删除。
-这个“弱键”实现的动态回收“键值对”的原理呢？其实，通过WeakReference(弱引用)和ReferenceQueue(引用队列)实现的。 首先，我们需要了解WeakHashMap中：
-第一，“键”是WeakReference，即key是弱键。
-第二，ReferenceQueue是一个引用队列，它是和WeakHashMap联合使用的。当弱引用所引用的对象被垃圾回收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。 WeakHashMap中的ReferenceQueue是queue。
-第三，WeakHashMap是通过数组实现的，我们假设这个数组是table。
-接下来，说说“动态回收”的步骤。
-(01) 新建WeakHashMap，将“键值对”添加到WeakHashMap中。
-将“键值对”添加到WeakHashMap中时，添加的键都是弱键。
-实际上，WeakHashMap是通过数组table保存Entry(键值对)；每一个Entry实际上是一个单向链表，即Entry是键值对链表。
-(02) 当某“弱键”不再被其它对象引用，并被GC回收时。在GC回收该“弱键”时，这个“弱键”也同时会被添加到queue队列中。
-例如，当我们在将“弱键”key添加到WeakHashMap之后；后来将key设为null。这时，便没有外部外部对象再引用该了key。
-接着，当Java虚拟机的GC回收内存时，会回收key的相关内存；同时，将key添加到queue队列中。
-(03) 当下一次我们需要操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的“弱键”；同步它们，就是删除table中被GC回收的“弱键”对应的键值对。
+<p>HashMap的“键”是“强引用(StrongReference)”，而WeakHashMap的键是“弱引用(WeakReference)”。<br>
+WeakReference的“弱键”能实现WeakReference对“键值对”的动态回收。当“弱键”不再被使用到时，GC会回收它，WeakReference也会将“弱键”对应的键值对删除。<br>
+这个“弱键”实现的动态回收“键值对”的原理呢？其实，通过WeakReference(弱引用)和ReferenceQueue(引用队列)实现的。 首先，我们需要了解WeakHashMap中：<br>
+第一，“键”是WeakReference，即key是弱键。<br>
+第二，ReferenceQueue是一个引用队列，它是和WeakHashMap联合使用的。当弱引用所引用的对象被垃圾回收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。 WeakHashMap中的ReferenceQueue是queue。<br>
+第三，WeakHashMap是通过数组实现的，我们假设这个数组是table。<br>
+接下来，说说“动态回收”的步骤。<br>
+(01) 新建WeakHashMap，将“键值对”添加到WeakHashMap中。<br>
+将“键值对”添加到WeakHashMap中时，添加的键都是弱键。<br>
+实际上，WeakHashMap是通过数组table保存Entry(键值对)；每一个Entry实际上是一个单向链表，即Entry是键值对链表。<br>
+(02) 当某“弱键”不再被其它对象引用，并被GC回收时。在GC回收该“弱键”时，这个“弱键”也同时会被添加到queue队列中。<br>
+例如，当我们在将“弱键”key添加到WeakHashMap之后；后来将key设为null。这时，便没有外部外部对象再引用该了key。<br>
+接着，当Java虚拟机的GC回收内存时，会回收key的相关内存；同时，将key添加到queue队列中。<br>
+(03) 当下一次我们需要操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的“弱键”；同步它们，就是删除table中被GC回收的“弱键”对应的键值对。<br>
 例如，当我们“读取WeakHashMap中的元素或获取WeakReference的大小时”，它会先同步table和queue，目的是“删除table中被GC回收的‘弱键’对应的键值对”。删除的方法就是逐个比较“table中元素的‘键’和queue中的‘键’”，若它们相当，则删除“table中的该键值对”。</p>
 </li>
 </ul>

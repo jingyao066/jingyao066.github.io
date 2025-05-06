@@ -388,16 +388,16 @@
 <li>以此类推。经过 𝑛−1 轮选择与交换后，数组前 𝑛−1 个元素已排序。</li>
 <li>仅剩的一个元素必定是最大元素，无须排序，因此数组排序完成。</li>
 </ol>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step9.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step10.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step9.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step10.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/selection_sort_step11.png"></p>
 <p>在代码中，我们用 𝑘 来记录未排序区间内的最小元素：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -449,12 +449,12 @@
 <h1 id="冒泡排序">冒泡排序<a hidden class="anchor" aria-hidden="true" href="#冒泡排序">#</a></h1>
 <p>冒泡排序（bubble sort）通过连续地比较与交换相邻元素实现排序。这个过程就像气泡从底部升到顶部一样，因此得名冒泡排序。</p>
 <p>如图 11-4 所示，冒泡过程可以利用元素交换操作来模拟：从数组最左端开始向右遍历，依次比较相邻元素大小，如果“左元素 &gt; 右元素”就交换二者。遍历完成后，最大的元素会被移动到数组的最右端。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step6.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step6.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/bubble_operation_step7.png"></p>
 <h2 id="算法流程">算法流程<a hidden class="anchor" aria-hidden="true" href="#算法流程">#</a></h2>
 <p>设数组的长度为 𝑛 ，冒泡排序的步骤如图 11-5 所示。</p>
@@ -626,14 +626,14 @@
 <li>设置一个循环，在每轮中使用 <code>i</code>（<code>j</code>）分别寻找第一个比基准数大（小）的元素，然后交换这两个元素。</li>
 <li>循环执行步骤 <code>2.</code> ，直到 <code>i</code> 和 <code>j</code> 相遇时停止，最后将基准数交换至两个子数组的分界线。</li>
 </ol>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step8.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step8.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/pivot_division_step9.png"></p>
 <p>哨兵划分完成后，原数组被划分成三部分：左子数组、基准数、右子数组，且满足“左子数组任意元素 ≤ 基准数 ≤ 右子数组任意元素”。因此，我们接下来只需对这两个子数组进行排序。</p>
 <blockquote>
@@ -860,15 +860,15 @@
 <li>递归执行步骤 <code>1.</code> ，直至子数组区间长度为 1 时终止。</li>
 </ol>
 <p>“合并阶段”从底至顶地将左子数组和右子数组合并为一个有序数组。需要注意的是，从长度为 1 的子数组开始合并，合并阶段中的每个子数组都是有序的。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step9.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step9.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/merge_sort_step10.png"></p>
 <p>观察发现，归并排序与二叉树后序遍历的递归顺序是一致的。</p>
 <ul>
@@ -991,17 +991,17 @@
 <blockquote>
 <p>Tip：实际上，元素出堆操作中也包含第 <code>2.</code> 步和第 <code>3.</code> 步，只是多了一个弹出元素的步骤。</p>
 </blockquote>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step9.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step10.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step11.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step9.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step10.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step11.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/heap_sort_step12.png"></p>
 <p>在代码实现中，我们使用了与“堆”章节相同的从顶至底堆化 <code>sift_down()</code> 函数。值得注意的是，由于堆的长度会随着提取最大元素而减小，因此我们需要给 <code>sift_down()</code> 函数添加一个长度参数 𝑛 ，用于指定堆的当前有效长度。代码如下所示：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1251,25 +1251,25 @@
 </blockquote>
 <h2 id="完整实现httpswwwhello-algocomchapter_sortingcounting_sort1192">完整实现<a href="https://www.hello-algo.com/chapter_sorting/counting_sort/#1192">¶</a><a hidden class="anchor" aria-hidden="true" href="#完整实现httpswwwhello-algocomchapter_sortingcounting_sort1192">#</a></h2>
 <p>细心的读者可能发现了，<strong>如果输入数据是对象，上述步骤 <code>3.</code> 就失效了</strong>。假设输入数据是商品对象，我们想按照商品价格（类的成员变量）对商品进行排序，而上述算法只能给出价格的排序结果。</p>
-<p>那么如何才能得到原数据的排序结果呢？我们首先计算 <code>counter</code> 的“前缀和”。顾名思义，索引 <code>i</code> 处的前缀和 <code>prefix[i]</code> 等于数组前 <code>i</code> 个元素之和：
+<p>那么如何才能得到原数据的排序结果呢？我们首先计算 <code>counter</code> 的“前缀和”。顾名思义，索引 <code>i</code> 处的前缀和 <code>prefix[i]</code> 等于数组前 <code>i</code> 个元素之和：<br>
 </p>
 $$
 prefix[i] = \sum_{j=0}^i counter[j]
 $$
-<p>
+<p><br>
 <strong>前缀和具有明确的意义，<code>prefix[num] - 1</code> 代表元素 <code>num</code> 在结果数组 <code>res</code> 中最后一次出现的索引</strong>。这个信息非常关键，因为它告诉我们各个元素应该出现在结果数组的哪个位置。接下来，我们倒序遍历原数组 <code>nums</code> 的每个元素 <code>num</code> ，在每轮迭代中执行以下两步。</p>
 <ol>
 <li>将 <code>num</code> 填入数组 <code>res</code> 的索引 <code>prefix[num] - 1</code> 处。</li>
 <li>令前缀和 <code>prefix[num]</code> 减小 1 ，从而得到下次放置 <code>num</code> 的索引。</li>
 </ol>
 <p>遍历完成后，数组 <code>res</code> 中就是排序好的结果，最后使用 <code>res</code> 覆盖原数组 <code>nums</code> 即可。图 11-17 展示了完整的计数排序流程。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step7.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step7.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/counting_sort_step8.png"></p>
 <p>计数排序的实现代码如下所示：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1365,12 +1365,12 @@ $$
 <li>将 𝑘 增加 1 ，然后返回步骤 <code>2.</code> 继续迭代，直到所有位都排序完成后结束。</li>
 </ol>
 <p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/10_%E6%8E%92%E5%BA%8F/radix_sort_overview.png"></p>
-<p>下面剖析代码实现。对于一个 𝑑 进制的数字 𝑥 ，要获取其第 𝑘 位 𝑥𝑘 ，可以使用以下计算公式：
+<p>下面剖析代码实现。对于一个 𝑑 进制的数字 𝑥 ，要获取其第 𝑘 位 𝑥𝑘 ，可以使用以下计算公式：<br>
 </p>
 $$
 𝑥_𝑘=⌊{𝑥 \over 𝑑𝑘-1}⌋mod \ 𝑑
 $$
-<p>
+<p><br>
 其中 ⌊𝑎⌋ 表示对浮点数 𝑎 向下取整，而 mod𝑑 表示对 𝑑 取模（取余）。对于学号数据，𝑑=10 且 𝑘∈[1,8] 。</p>
 <p>此外，我们需要小幅改动计数排序代码，使之可以根据数字的第 𝑘 位进行排序：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">

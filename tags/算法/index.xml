@@ -127,9 +127,9 @@
       <guid>https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E6%A0%91/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/skywang12345/p/3603935.html&#34;&gt;完整参考&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;树tree&#34;&gt;树（tree）&lt;/h1&gt;
-&lt;p&gt;树是一种常用的数据结构，它是一个由n（n&amp;gt;=0，有限)个节点组成的一个具有层次关系的集合。
-数据就存储在树的这些节点中。
-当n&amp;gt;1时，其余结点可分为m(m&amp;gt;0)个互不相交的有限集T1、T2、&amp;hellip;&amp;hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。
+&lt;p&gt;树是一种常用的数据结构，它是一个由n（n&amp;gt;=0，有限)个节点组成的一个具有层次关系的集合。&lt;br&gt;
+数据就存储在树的这些节点中。&lt;br&gt;
+当n&amp;gt;1时，其余结点可分为m(m&amp;gt;0)个互不相交的有限集T1、T2、&amp;hellip;&amp;hellip;、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。&lt;br&gt;
 &lt;img loading=&#34;lazy&#34; src=&#34;https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E6%A0%91/1.png&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>

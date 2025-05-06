@@ -44,8 +44,8 @@
       <pubDate>Mon, 13 Jan 2020 23:35:36 +0000</pubDate>
       <guid>https://009965.xyz/posts/spring/springmvc/</guid>
       <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
-&lt;p&gt;MVC，即 model模型，view视图，controller控制。
-spring mvc可以用来开发灵活、松散耦合的 web 应用程序。
+&lt;p&gt;MVC，即 model模型，view视图，controller控制。&lt;br&gt;
+spring mvc可以用来开发灵活、松散耦合的 web 应用程序。&lt;br&gt;
 MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;模型封装了应用程序数据，通常由POJO组成。&lt;/li&gt;
@@ -182,7 +182,7 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;如果使用Spring的其他版本，则需要根据需要调整代码。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://spring.io/&#34;&gt;spring官网&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;https://spring.io/&#34;&gt;spring官网&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://blog.csdn.net/qq_41907991/article/details/105502255&#34;&gt;spring官网如何阅读&lt;/a&gt;&lt;/p&gt;</description>
     </item>
   </channel>

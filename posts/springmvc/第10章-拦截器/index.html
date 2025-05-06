@@ -103,7 +103,7 @@
   "keywords": [
     "springmvc"
   ],
-  "articleBody": "拦截器概述 拦截器（Interceptor）类似于过滤器（Filter） Spring MVC的拦截器作用是在请求到达控制器之前或之后进行拦截，可以对请求和响应进行一些特定的处理。 拦截器可以用于很多场景下：\n登录验证：对于需要登录才能访问的网址，使用拦截器可以判断用户是否已登录，如果未登录则跳转到登录页面。 权限校验：根据用户权限对部分网址进行访问控制，拒绝未经授权的用户访问。 请求日志：记录请求信息，例如请求地址、请求参数、请求时间等，用于排查问题和性能优化。 更改响应：可以对响应的内容进行修改，例如添加头信息、调整响应内容格式等。 拦截器和过滤器的区别在于它们的作用层面不同。\n过滤器更注重在请求和响应的流程中进行处理，可以修改请求和响应的内容，例如设置编码和字符集、请求头、状态码等。 拦截器则更加侧重于对控制器进行前置或后置处理，在请求到达控制器之前或之后进行特定的操作，例如打印日志、权限验证等。 Filter、Servlet、Interceptor、Controller的执行顺序： 拦截器的创建与基本配置 定义拦截器 实现org.springframework.web.servlet.HandlerInterceptor 接口，共有三个方法可以进行选择性的实现：\npreHandle：处理器方法调用之前执行 只有该方法有返回值，返回值是布尔类型，true放行，false拦截。 postHandle：处理器方法调用之后执行 afterCompletion：渲染完成后执行 拦截器基本配置 在springmvc.xml文件中进行如下配置： 第一种方式：\n1 2 3 ",
+  "articleBody": "拦截器概述 拦截器（Interceptor）类似于过滤器（Filter）\nSpring MVC的拦截器作用是在请求到达控制器之前或之后进行拦截，可以对请求和响应进行一些特定的处理。\n拦截器可以用于很多场景下：\n登录验证：对于需要登录才能访问的网址，使用拦截器可以判断用户是否已登录，如果未登录则跳转到登录页面。 权限校验：根据用户权限对部分网址进行访问控制，拒绝未经授权的用户访问。 请求日志：记录请求信息，例如请求地址、请求参数、请求时间等，用于排查问题和性能优化。 更改响应：可以对响应的内容进行修改，例如添加头信息、调整响应内容格式等。 拦截器和过滤器的区别在于它们的作用层面不同。\n过滤器更注重在请求和响应的流程中进行处理，可以修改请求和响应的内容，例如设置编码和字符集、请求头、状态码等。 拦截器则更加侧重于对控制器进行前置或后置处理，在请求到达控制器之前或之后进行特定的操作，例如打印日志、权限验证等。 Filter、Servlet、Interceptor、Controller的执行顺序：\n拦截器的创建与基本配置 定义拦截器 实现org.springframework.web.servlet.HandlerInterceptor 接口，共有三个方法可以进行选择性的实现：\npreHandle：处理器方法调用之前执行 只有该方法有返回值，返回值是布尔类型，true放行，false拦截。 postHandle：处理器方法调用之后执行 afterCompletion：渲染完成后执行 拦截器基本配置 在springmvc.xml文件中进行如下配置：\n第一种方式：\n1 2 3 ",
   "wordCount" : "1916",
   "inLanguage": "en",
   "datePublished": "2025-04-22T15:10:58Z",
@@ -256,8 +256,8 @@
 </div>
 
   <div class="post-content"><h1 id="拦截器概述">拦截器概述<a hidden class="anchor" aria-hidden="true" href="#拦截器概述">#</a></h1>
-<p><strong>拦截器（Interceptor）类似于过滤器（Filter）</strong>
-Spring MVC的拦截器作用是在请求到达控制器之前或之后进行拦截，可以对请求和响应进行一些特定的处理。
+<p><strong>拦截器（Interceptor）类似于过滤器（Filter）</strong><br>
+Spring MVC的拦截器作用是在请求到达控制器之前或之后进行拦截，可以对请求和响应进行一些特定的处理。<br>
 拦截器可以用于很多场景下：</p>
 <ol>
 <li>登录验证：对于需要登录才能访问的网址，使用拦截器可以判断用户是否已登录，如果未登录则跳转到登录页面。</li>
@@ -270,7 +270,7 @@ Spring MVC的拦截器作用是在请求到达控制器之前或之后进行拦�
 <li>过滤器更注重在请求和响应的流程中进行处理，可以修改请求和响应的内容，例如设置编码和字符集、请求头、状态码等。</li>
 <li>拦截器则更加侧重于对控制器进行前置或后置处理，在请求到达控制器之前或之后进行特定的操作，例如打印日志、权限验证等。</li>
 </ul>
-<p><strong>Filter、Servlet、Interceptor、Controller的执行顺序：</strong>
+<p><strong>Filter、Servlet、Interceptor、Controller的执行顺序：</strong><br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC10%E7%AB%A0-%E6%8B%A6%E6%88%AA%E5%99%A8/777b531e900ae1a371c1827a84f21187_MD5.png"></p>
 <h1 id="拦截器的创建与基本配置">拦截器的创建与基本配置<a hidden class="anchor" aria-hidden="true" href="#拦截器的创建与基本配置">#</a></h1>
 <h2 id="定义拦截器">定义拦截器<a hidden class="anchor" aria-hidden="true" href="#定义拦截器">#</a></h2>
@@ -285,7 +285,7 @@ Spring MVC的拦截器作用是在请求到达控制器之前或之后进行拦�
 <li>afterCompletion：渲染完成后执行</li>
 </ul>
 <h2 id="拦截器基本配置">拦截器基本配置<a hidden class="anchor" aria-hidden="true" href="#拦截器基本配置">#</a></h2>
-<p>在springmvc.xml文件中进行如下配置：
+<p>在springmvc.xml文件中进行如下配置：<br>
 第一种方式：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -482,7 +482,7 @@ Spring MVC的拦截器作用是在请求到达控制器之前或之后进行拦�
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/mvc:interceptors&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>执行顺序：
+</div><p>执行顺序：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC10%E7%AB%A0-%E6%8B%A6%E6%88%AA%E5%99%A8/ab3e1996ec08f3758b64d0cf46816d2e_MD5.png"></p>
 <h3 id="如果其中一个拦截器prehandle返回false">如果其中一个拦截器preHandle返回false<a hidden class="anchor" aria-hidden="true" href="#如果其中一个拦截器prehandle返回false">#</a></h3>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -499,8 +499,8 @@ Spring MVC的拦截器作用是在请求到达控制器之前或之后进行拦�
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/mvc:interceptors&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果<code>interceptor2</code>的preHandle返回false，执行顺序：
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC10%E7%AB%A0-%E6%8B%A6%E6%88%AA%E5%99%A8/6a2906b86845bd3b30069ebe3e101455_MD5.png">
+</div><p>如果<code>interceptor2</code>的preHandle返回false，执行顺序：<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC10%E7%AB%A0-%E6%8B%A6%E6%88%AA%E5%99%A8/6a2906b86845bd3b30069ebe3e101455_MD5.png"><br>
 规则：只要有一个拦截器<code>preHandle</code>返回false，任何<code>postHandle</code>都不执行。但返回false的拦截器的前面的拦截器按照逆序执行<code>afterCompletion</code>。</p>
 <h2 id="源码分析">源码分析<a hidden class="anchor" aria-hidden="true" href="#源码分析">#</a></h2>
 <p>DispatcherServlet和 HandlerExecutionChain的部分源码：</p>

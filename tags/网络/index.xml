@@ -22,7 +22,7 @@
       <guid>https://009965.xyz/posts/%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C/</guid>
       <description>&lt;h1 id=&#34;网络通信原理&#34;&gt;网络通信原理&lt;/h1&gt;
 &lt;h2 id=&#34;tcpip五层模型详解&#34;&gt;TCP/IP五层模型详解&lt;/h2&gt;
-&lt;p&gt;计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质+互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。
+&lt;p&gt;计算机与计算机之间要有统一的连接标准才能够完成相互通信，这个标准被称为互联网协议，而网络就是物理链接介质+互联网协议。按照功能不同，人们将互联网协议从不同维度分为TCP/IP四层，TCP/IP五层和OSI七层，如下图所示。&lt;br&gt;
 &lt;img loading=&#34;lazy&#34; src=&#34;https://009965.xyz/posts/%E7%BD%91%E7%BB%9C/%E7%BD%91%E7%BB%9C/1.jpg&#34;&gt;&lt;/p&gt;</description>
     </item>
   </channel>

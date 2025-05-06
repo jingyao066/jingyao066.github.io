@@ -32,7 +32,7 @@
       <pubDate>Thu, 28 Mar 2019 17:51:23 +0000</pubDate>
       <guid>https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/</guid>
       <description>&lt;p&gt;根据锁的添加到Java中的时间，Java中的锁，可以分为&amp;quot;同步锁&amp;quot;和&amp;quot;JUC包中的锁&amp;quot;。&lt;/p&gt;
-&lt;p&gt;同步锁就是通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。
+&lt;p&gt;同步锁就是通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。&lt;br&gt;
 同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，从而在CPU上执行；而没有获取到同步锁的线程，必须进行等待，直到获取到同步锁之后才能继续运行。这就是多线程通过同步锁进行同步的原理。&lt;/p&gt;
 &lt;p&gt;下面主要介绍JUC包中的锁。&lt;/p&gt;</description>
     </item>
@@ -50,9 +50,9 @@
       <pubDate>Thu, 28 Mar 2019 16:23:30 +0000</pubDate>
       <guid>https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/6_multithreading-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%94%9F%E4%BA%A7%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98/</guid>
       <description>&lt;h1 id=&#34;线程优先级&#34;&gt;线程优先级&lt;/h1&gt;
-&lt;p&gt;java 中的线程优先级的范围是1～10，默认的优先级是5。10表示最高优先级，1表示最低优先级，5是普通优先级。“高优先级线程”会优先于“低优先级线程”执行。
-java 中有两种线程：用户线程和守护线程。可以通过isDaemon()方法来区别它们：如果返回false，则说明该线程是“用户线程”；否则就是“守护线程”。
-用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务，作用是为其他线程的运行提供便利服务，守护线程最典型的应用就是 GC (垃圾回收器)。
+&lt;p&gt;java 中的线程优先级的范围是1～10，默认的优先级是5。10表示最高优先级，1表示最低优先级，5是普通优先级。“高优先级线程”会优先于“低优先级线程”执行。&lt;br&gt;
+java 中有两种线程：用户线程和守护线程。可以通过isDaemon()方法来区别它们：如果返回false，则说明该线程是“用户线程”；否则就是“守护线程”。&lt;br&gt;
+用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务，作用是为其他线程的运行提供便利服务，守护线程最典型的应用就是 GC (垃圾回收器)。&lt;br&gt;
 用户线程和守护线程两者几乎没有区别，唯一的不同之处就在于虚拟机的离开。需要注意的是：Java虚拟机在“用户线程”都结束后会后退出。&lt;/p&gt;</description>
     </item>
     <item>
@@ -61,13 +61,13 @@ java 中有两种线程：用户线程和守护线程。可以通过isDaemon()�
       <pubDate>Tue, 26 Mar 2019 16:50:17 +0000</pubDate>
       <guid>https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/5_multithreading-interrupt/</guid>
       <description>&lt;h1 id=&#34;interrupt介绍&#34;&gt;interrupt介绍&lt;/h1&gt;
-&lt;p&gt;JDK1.8官方文档描述如下：
-Interrupts this thread.
-Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown.
-If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException.
-If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread&amp;rsquo;s interrupt status will be set, and the thread will receive a ClosedByInterruptException.
-If this thread is blocked in a Selector then the thread&amp;rsquo;s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector&amp;rsquo;s wakeup method were invoked.
-If none of the previous conditions hold then this thread&amp;rsquo;s interrupt status will be set.
+&lt;p&gt;JDK1.8官方文档描述如下：&lt;br&gt;
+Interrupts this thread.&lt;br&gt;
+Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown.&lt;br&gt;
+If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException.&lt;br&gt;
+If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread&amp;rsquo;s interrupt status will be set, and the thread will receive a ClosedByInterruptException.&lt;br&gt;
+If this thread is blocked in a Selector then the thread&amp;rsquo;s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector&amp;rsquo;s wakeup method were invoked.&lt;br&gt;
+If none of the previous conditions hold then this thread&amp;rsquo;s interrupt status will be set.&lt;br&gt;
 Interrupting a thread that is not alive need not have any effect.&lt;/p&gt;</description>
     </item>
     <item>
@@ -76,7 +76,7 @@ Interrupting a thread that is not alive need not have any effect.&lt;/p&gt;</des
       <pubDate>Tue, 26 Mar 2019 15:07:56 +0000</pubDate>
       <guid>https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/4_multithreading-yield&#43;sleep&#43;join/</guid>
       <description>&lt;h1 id=&#34;yield介绍&#34;&gt;yield()介绍&lt;/h1&gt;
-&lt;p&gt;yield()的作用是让步。它能让当前线程由&lt;code&gt;运行状态&lt;/code&gt;进入&lt;code&gt;就绪状态&lt;/code&gt;，从而让其他具有相同优先级的等待线程获取执行权。
+&lt;p&gt;yield()的作用是让步。它能让当前线程由&lt;code&gt;运行状态&lt;/code&gt;进入&lt;code&gt;就绪状态&lt;/code&gt;，从而让其他具有相同优先级的等待线程获取执行权。&lt;br&gt;
 但是，并不能保证当前线程调佣yield()之后，其他具有相同优先级的线程就一定能获得执行权，也有可能是当前线程又进入到运行状态继续运行。&lt;/p&gt;</description>
     </item>
     <item>
@@ -95,7 +95,7 @@ Interrupting a thread that is not alive need not have any effect.&lt;/p&gt;</des
       <pubDate>Sat, 02 Mar 2019 17:44:00 +0000</pubDate>
       <guid>https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/2_multithreading-synchronized/</guid>
       <description>&lt;h1 id=&#34;synchronized原理&#34;&gt;synchronized原理&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;在java中，每一个对象都有且仅有一个同步锁，这也意味着，同步锁是依赖对象而存在的。&lt;/strong&gt;
+&lt;p&gt;&lt;strong&gt;在java中，每一个对象都有且仅有一个同步锁，这也意味着，同步锁是依赖对象而存在的。&lt;/strong&gt;&lt;br&gt;
 当调用对象的synchronized方法时，就获取了该对象的同步锁。如：&lt;code&gt;synchronized(obj)&lt;/code&gt;，就获取了obj这个对象的同步锁。&lt;/p&gt;</description>
     </item>
     <item>

@@ -103,7 +103,7 @@
   "keywords": [
     "生活"
   ],
-  "articleBody": "yt-dlp yt-dlp是一个可以下载资源的开源库：yt-dlp/yt-dlp: A feature-rich command-line audio/video downloader\n安装： Releases · yt-dlp/yt-dlp\nwindows下载exe文件，无需安装，直接通过命令执行程序。\n在yt-dlp.exe文件的同一级路径下执行：\n1 .\\yt-dlp.exe 你的指令 安装ffmpeg Download FFmpeg\n指令 -f 'bestvideo+bestaudio'：选择最佳视频和最佳音频格式。\n-o '%(title)s.%(ext)s'：输出文件的命名格式，%(title)s 表示视频标题，%(ext)s 表示视频格式。\n断点续传： yt-dlp 默认支持断点续传，你可以使用 --continue 选项来确保从上次结束的地方继续下载。通常情况下，这个选项是默认启用的，但你可以显式指定它以确保续传功能开启。\n1 yt-dlp --continue -f 'bv*[height=1080]+ba' -o '%(title)s.%(ext)s' \"https://www.youtube.com/watch?v=vLRQUR68MSo\u0026list=PL9nxfq1tlKKl1uTYq11gCFJ6I__wYRXsX\u0026index=1\" 使用yt-dlp下载B站视频 方法一：使用浏览器扩展导出 Netscape 格式的 cookies\n安装Cookie-Editor扩展（例如 edge 浏览器）。 打开 Bilibili 并登录。 使用 Cookie-Editor导出 cookies，选择“导出为文本（Netscape 格式）”，保存为 cookies.txt 文件。 1 .\\yt-dlp.exe -f bestvideo+bestaudio -ciw --merge-output-format mp4 --cookies cookies.txt -o \"./XXXX/%(title)s.%(ext)s\" --yes-playlist \"https://www.bilibili.com/video/BV1mm4y1X7Hc\" 方法二：使用 --cookies-from-browser 选项\n直接从浏览器中读取 cookies 进行下载：\n1 .\\yt-dlp.exe -f bestvideo+bestaudio -ciw --merge-output-format mp4 --cookies-from-browser chrome -o \"./XXXX/%(title)s.%(ext)s\" --yes-playlist \"https://www.bilibili.com/video/BV1mm4y1X7Hc\" 查看可用格式\n1 yt-dlp --cookies cookies.txt --list-formats \"https://www.bilibili.com/video/BV1ocxveJE2H/?vd_source=6278f29e0b4b9859224ba32ab49ee184\" 下载指定格式的视频：\n1 yt-dlp --cookies cookies.txt -f 'bv*[height=1080]+ba' -o '%(title)s.%(ext)s' \"https://www.bilibili.com/video/BV1ocxveJE2H/?vd_source=6278f29e0b4b9859224ba32ab49ee184\" 其他注意事项 确保 cookies 文件的路径正确，并且文件格式为 Netscape 格式。 确保你的账号具有相应的权限，如果视频需要付费会员，请确保你的账号是会员。 cookies 文件有可能会过期，如果下载失败，请重新导出新的 cookies 文件。 ",
+  "articleBody": "yt-dlp yt-dlp是一个可以下载资源的开源库：yt-dlp/yt-dlp: A feature-rich command-line audio/video downloader\n安装：\nReleases · yt-dlp/yt-dlp\nwindows下载exe文件，无需安装，直接通过命令执行程序。\n在yt-dlp.exe文件的同一级路径下执行：\n1 .\\yt-dlp.exe 你的指令 安装ffmpeg Download FFmpeg\n指令 -f 'bestvideo+bestaudio'：选择最佳视频和最佳音频格式。\n-o '%(title)s.%(ext)s'：输出文件的命名格式，%(title)s 表示视频标题，%(ext)s 表示视频格式。\n断点续传：\nyt-dlp 默认支持断点续传，你可以使用 --continue 选项来确保从上次结束的地方继续下载。通常情况下，这个选项是默认启用的，但你可以显式指定它以确保续传功能开启。\n1 yt-dlp --continue -f 'bv*[height=1080]+ba' -o '%(title)s.%(ext)s' \"https://www.youtube.com/watch?v=vLRQUR68MSo\u0026list=PL9nxfq1tlKKl1uTYq11gCFJ6I__wYRXsX\u0026index=1\" 使用yt-dlp下载B站视频 方法一：使用浏览器扩展导出 Netscape 格式的 cookies\n安装Cookie-Editor扩展（例如 edge 浏览器）。 打开 Bilibili 并登录。 使用 Cookie-Editor导出 cookies，选择“导出为文本（Netscape 格式）”，保存为 cookies.txt 文件。 1 .\\yt-dlp.exe -f bestvideo+bestaudio -ciw --merge-output-format mp4 --cookies cookies.txt -o \"./XXXX/%(title)s.%(ext)s\" --yes-playlist \"https://www.bilibili.com/video/BV1mm4y1X7Hc\" 方法二：使用 --cookies-from-browser 选项\n直接从浏览器中读取 cookies 进行下载：\n1 .\\yt-dlp.exe -f bestvideo+bestaudio -ciw --merge-output-format mp4 --cookies-from-browser chrome -o \"./XXXX/%(title)s.%(ext)s\" --yes-playlist \"https://www.bilibili.com/video/BV1mm4y1X7Hc\" 查看可用格式\n1 yt-dlp --cookies cookies.txt --list-formats \"https://www.bilibili.com/video/BV1ocxveJE2H/?vd_source=6278f29e0b4b9859224ba32ab49ee184\" 下载指定格式的视频：\n1 yt-dlp --cookies cookies.txt -f 'bv*[height=1080]+ba' -o '%(title)s.%(ext)s' \"https://www.bilibili.com/video/BV1ocxveJE2H/?vd_source=6278f29e0b4b9859224ba32ab49ee184\" 其他注意事项 确保 cookies 文件的路径正确，并且文件格式为 Netscape 格式。 确保你的账号具有相应的权限，如果视频需要付费会员，请确保你的账号是会员。 cookies 文件有可能会过期，如果下载失败，请重新导出新的 cookies 文件。 ",
   "wordCount" : "591",
   "inLanguage": "en",
   "datePublished": "2025-04-25T17:25:35Z",
@@ -237,7 +237,7 @@
 
   <div class="post-content"><h1 id="yt-dlp">yt-dlp<a hidden class="anchor" aria-hidden="true" href="#yt-dlp">#</a></h1>
 <p>yt-dlp是一个可以下载资源的开源库：<a href="https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file">yt-dlp/yt-dlp: A feature-rich command-line audio/video downloader</a></p>
-<p>安装：
+<p>安装：<br>
 <a href="https://github.com/yt-dlp/yt-dlp/releases">Releases · yt-dlp/yt-dlp</a></p>
 <p>windows下载exe文件，无需安装，直接通过命令执行程序。</p>
 <p>在<code>yt-dlp.exe</code>文件的同一级路径下执行：</p>
@@ -254,7 +254,7 @@
 <h1 id="指令">指令<a hidden class="anchor" aria-hidden="true" href="#指令">#</a></h1>
 <p><code>-f 'bestvideo+bestaudio'</code>：选择最佳视频和最佳音频格式。</p>
 <p><code>-o '%(title)s.%(ext)s'</code>：输出文件的命名格式，<code>%(title)s</code> 表示视频标题，<code>%(ext)s</code> 表示视频格式。</p>
-<p>断点续传：
+<p>断点续传：<br>
 <code>yt-dlp</code> <strong>默认支持断点续传，你可以使用</strong> <code>--continue</code> <strong>选项来确保从上次结束的地方继续下载。通常情况下，这个选项是默认启用的，但你可以显式指定它以确保续传功能开启。</strong></p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">

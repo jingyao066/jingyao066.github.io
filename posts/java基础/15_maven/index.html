@@ -512,19 +512,19 @@ Maven就是是专门为Java项目打造的管理和构建工具，它的主要�
 <li>Maven使用<code>groupId</code>，<code>artifactId</code>和<code>version</code>唯一定位一个依赖。</li>
 </ul>
 <h1 id="仓库">仓库<a hidden class="anchor" aria-hidden="true" href="#仓库">#</a></h1>
-<p>通过pom.xml中的配置，就能够获取到想要的jar包，这些jar包存放在<strong>仓库</strong>中。
+<p>通过pom.xml中的配置，就能够获取到想要的jar包，这些jar包存放在<strong>仓库</strong>中。<br>
 仓库有三种：本地仓库、第三方仓库、中央仓库</p>
 <h2 id="中央仓库">中央仓库<a hidden class="anchor" aria-hidden="true" href="#中央仓库">#</a></h2>
-<p>Maven维护了一个中央仓库：https://repo1.maven.org/
-这个公共仓库是由Maven自己维护，里面有大量的常用类库，并包含了世界上大部分流行的开源项目，以java项目为主。如果本地仓库没有项目依赖的jar包，默认先从中央仓库下载到本地。
+<p>Maven维护了一个中央仓库：https://repo1.maven.org/<br>
+这个公共仓库是由Maven自己维护，里面有大量的常用类库，并包含了世界上大部分流行的开源项目，以java项目为主。如果本地仓库没有项目依赖的jar包，默认先从中央仓库下载到本地。<br>
 Maven并不会每次都从中央仓库下载jar包。一个jar包一旦被下载过，就会被Maven自动缓存在本地目录（用户主目录的.m2目录），所以，除了第一次编译时因为下载需要时间会比较慢，后续过程因为有本地缓存，并不会重复下载相同的jar包。jar包获取顺序：本地 -&gt; 私服（如果有） -&gt;中央仓库</p>
 <h2 id="本地仓库">本地仓库<a hidden class="anchor" aria-hidden="true" href="#本地仓库">#</a></h2>
-<p>Maven会将工程中依赖的构建（jar包）从远程下载到本机的一个目录下管理，仓库的默认位置是：
+<p>Maven会将工程中依赖的构建（jar包）从远程下载到本机的一个目录下管理，仓库的默认位置是：<br>
 <code>C:\Users\Administrator\.m2\repository</code></p>
 <p>可以通过修改<code>setting.xml</code>中的配置，来修改仓库的位置，以及jar包的下载源。</p>
-<p>修改仓库位置：
+<p>修改仓库位置：<br>
 找到localRepository标签，将路径修改为想要修改的路径。</p>
-<p>修改jar包下载源：
+<p>修改jar包下载源：<br>
 找到mirror标签，修改为阿里的源</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -544,11 +544,11 @@ Maven并不会每次都从中央仓库下载jar包。一个jar包一旦被下载
 </span></span><span style="display:flex;"><span>&lt;/mirror&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>idea是自带maven插件的，无需自行安装，也可以修改仓库位置以及镜像源。
-<code>ctrl+alt+s -&gt; maven </code>
+</div><p>idea是自带maven插件的，无需自行安装，也可以修改仓库位置以及镜像源。<br>
+<code>ctrl+alt+s -&gt; maven </code><br>
 最下面两行分别是setting.xml文件以及仓库位置。</p>
 <h2 id="第三方仓库">第三方仓库<a hidden class="anchor" aria-hidden="true" href="#第三方仓库">#</a></h2>
-<p>又称为内部仓库，也叫私服，一般是公司自己创建的，只内部使用，减少外部访问和下载的频率。
+<p>又称为内部仓库，也叫私服，一般是公司自己创建的，只内部使用，减少外部访问和下载的频率。<br>
 一般公司可能会创建这种第三方仓库，保证项目开发时，项目所需用的jar都从该仓库中拿，每个人的版本就都一样。</p>
 <h1 id="依赖管理">依赖管理<a hidden class="anchor" aria-hidden="true" href="#依赖管理">#</a></h1>
 <p>如果我们的项目依赖第三方的jar包，例如commons logging，那么问题来了：commons logging发布的jar包在哪下载？</p>
@@ -893,19 +893,19 @@ Maven并不会每次都从中央仓库下载jar包。一个jar包一旦被下载
 </ul>
 <h2 id="常用命令">常用命令<a hidden class="anchor" aria-hidden="true" href="#常用命令">#</a></h2>
 <p>注意：执行mvn命令，必须和 pom.xml 同级目录。</p>
-<p>编译：<code>mvn compile</code>
+<p>编译：<code>mvn compile</code><br>
 将<code>src/main/java</code>目录下的java源码编译，并生成class文件到 target 目录下。</p>
-<p>测试：mvn test
+<p>测试：mvn test<br>
 编译<code>src/test/java</code>目录下的文件，即测试文件。</p>
-<p>清理：<code>mvn clean</code>
-删除target目录，将所有生成的class和jar一并删除。
-mvn clean compile：先清理，再执行到compile；
+<p>清理：<code>mvn clean</code><br>
+删除target目录，将所有生成的class和jar一并删除。<br>
+mvn clean compile：先清理，再执行到compile；<br>
 mvn clean package：先清理，再执行到package。</p>
-<p>打包：<code>mvn package</code>
+<p>打包：<code>mvn package</code><br>
 将项目打成jar包或war包，然后放到target目录下。</p>
-<p>安装：<code>mvn install</code>
+<p>安装：<code>mvn install</code><br>
 将压缩文件（jar或者war）上传到本地仓库。</p>
-<p>部署|发布：<code>mvn deploy</code>
+<p>部署|发布：<code>mvn deploy</code><br>
 将jar包上传私服。</p>
 <p>大多数phase在执行过程中，因为我们通常没有在<code>pom.xml</code>中配置相关的设置，所以这些phase什么事情都不做。</p>
 <p>经常用到的phase其实只有几个：</p>
@@ -2277,7 +2277,7 @@ mvn clean package：先清理，再执行到package。</p>
 <p>optional：标记依赖是否可选。默认值false。</p>
 </li>
 <li>
-<p>exclusions：排除传递依赖，解决jar冲突问题。
+<p>exclusions：排除传递依赖，解决jar冲突问题。<br>
 当一个项目A依赖项目B，而项目B同时依赖项目C，如果项目A不想引用项目C，在配置项目B的依赖时，可以排除对C的依赖。</p>
 </li>
 <li>
@@ -2305,17 +2305,17 @@ mvn clean package：先清理，再执行到package。</p>
 </span></span><span style="display:flex;"><span>A------&gt;D----&gt;E-----&gt;C(v2)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>项目 A 隐形依赖了两个版本的 C，那到底采用哪个版本呢？
+</div><p>项目 A 隐形依赖了两个版本的 C，那到底采用哪个版本呢？<br>
 依据近路优先原则，很明显，第一种路径深度是 3，第二种路径深度是 4，所以，maven 会采用 C（v1）</p>
 <h3 id="第二原则第一声明者优先原则">第二原则：第一声明者优先原则。<a hidden class="anchor" aria-hidden="true" href="#第二原则第一声明者优先原则">#</a></h3>
-<p>就是如果路径相同，maven 默认配置在前面的优先使用
-A&ndash;&gt;B &ndash;&gt; X(1.6)
-C&ndash;&gt;D&ndash;&gt; X(2.0)
-这样就是路径相同，那么如果A在前面，C在后面，则使用X(1.6)
+<p>就是如果路径相同，maven 默认配置在前面的优先使用<br>
+A&ndash;&gt;B &ndash;&gt; X(1.6)<br>
+C&ndash;&gt;D&ndash;&gt; X(2.0)<br>
+这样就是路径相同，那么如果A在前面，C在后面，则使用X(1.6)<br>
 maven会先根据第一原则进行选择，第一原则不成，则按第二原则处理。</p>
 <h1 id="其他">其他<a hidden class="anchor" aria-hidden="true" href="#其他">#</a></h1>
 <h2 id="maven引入本地jar包">maven引入本地jar包<a hidden class="anchor" aria-hidden="true" href="#maven引入本地jar包">#</a></h2>
-<p>将jar包复制到项目中，建议放到<code>/src/main/resources/lib</code>下。
+<p>将jar包复制到项目中，建议放到<code>/src/main/resources/lib</code>下。<br>
 在pom.xml中加入配置</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2338,7 +2338,7 @@ maven会先根据第一原则进行选择，第一原则不成，则按第二原
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="不使用maven导包">不使用maven导包<a hidden class="anchor" aria-hidden="true" href="#不使用maven导包">#</a></h2>
-<p>Porject Structure-&gt;Libraries
+<p>Porject Structure-&gt;Libraries<br>
 点击左上角的加号，选择<code>java</code>，然后一层层找到你项目中的jar包。</p>
 <h2 id="使用dependency引入的jar包linux上失效">使用dependency引入的jar包Linux上失效<a hidden class="anchor" aria-hidden="true" href="#使用dependency引入的jar包linux上失效">#</a></h2>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2362,13 +2362,13 @@ maven会先根据第一原则进行选择，第一原则不成，则按第二原
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>system scope引入的包，在使用jar-with-dependencies打包时将不会被包含，就是如果我<code>maven install</code>打包，这个打不进去。到时候调用的时候就会报：<code>classNotFound</code>。</p>
-<p>执行命令
-windows:
+<p>执行命令<br>
+windows:<br>
 <code>mvn install:install-file -DgroupId=aspose-cells -DartifactId=aspose-cells -Dversion=16.8 -Dpackaging=jar -Dfile=E:\work\aspose-cells-18.9.jar</code></p>
-<p>linux:
-<code>mvn install:install-file -DgroupId=aspose-words -DartifactId=aspose-words -Dversion=16.8 -Dpackaging=jar -Dfile=/usr/local/src/aspose-words-16.8.0-jdk16.jar</code>
-<code>mvn install:install-file -DgroupId=aspose-slides -DartifactId=aspose-slides -Dversion=19.6 -Dpackaging=jar -Dfile=/usr/local/src/aspose-slides-19.6.jar</code>
-<code>mvn install:install-file -DgroupId=aspose-cells -DartifactId=aspose-cells -Dversion=18.9 -Dpackaging=jar -Dfile=/usr/local/src/aspose-cells-18.9.jar</code>
+<p>linux:<br>
+<code>mvn install:install-file -DgroupId=aspose-words -DartifactId=aspose-words -Dversion=16.8 -Dpackaging=jar -Dfile=/usr/local/src/aspose-words-16.8.0-jdk16.jar</code><br>
+<code>mvn install:install-file -DgroupId=aspose-slides -DartifactId=aspose-slides -Dversion=19.6 -Dpackaging=jar -Dfile=/usr/local/src/aspose-slides-19.6.jar</code><br>
+<code>mvn install:install-file -DgroupId=aspose-cells -DartifactId=aspose-cells -Dversion=18.9 -Dpackaging=jar -Dfile=/usr/local/src/aspose-cells-18.9.jar</code><br>
 区别只是路径不同，注意修改groupId、artifactId、version和file后的路径。</p>
 <p>然后使用时，在pom中添加</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2388,20 +2388,20 @@ windows:
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这里的groupId、artifactId、version，随便写，只需要和上边命令中的参数一致即可。</p>
-<p><a href="https://blog.csdn.net/mingjie1212/article/details/78395744">参考1</a>
+<p><a href="https://blog.csdn.net/mingjie1212/article/details/78395744">参考1</a><br>
 <a href="https://blog.csdn.net/hhb200766/article/details/42168819">参考2</a></p>
 <h2 id="卸载jar包">卸载jar包<a hidden class="anchor" aria-hidden="true" href="#卸载jar包">#</a></h2>
 <p>上边使用<code>mvn install:install-file</code>安装了本地的jar包，现在卸载它。</p>
 <ol>
 <li>
-<p>从Maven本地仓库删除jar
-//清除某个jar
-<code>mvn dependency:purge-local-repository -DmanualInclude=&quot;groupId:artifactId&quot;</code>
-//清除多个属于不同groupId的jar
+<p>从Maven本地仓库删除jar<br>
+//清除某个jar<br>
+<code>mvn dependency:purge-local-repository -DmanualInclude=&quot;groupId:artifactId&quot;</code><br>
+//清除多个属于不同groupId的jar<br>
 <code>mvn dependency:purge-local-repository -DmanualInclude=&quot;groupId1:artifactId1,groupId2:artifactId2,...&quot;</code></p>
 </li>
 <li>
-<p>阻止Maven对已删除的jar进行reResolve
+<p>阻止Maven对已删除的jar进行reResolve<br>
 <code>mvn dependency:purge-local-repository -DreResolve=false</code></p>
 </li>
 </ol>
@@ -2422,17 +2422,17 @@ windows:
 </span></span><span style="display:flex;"><span>-DarchetypeArtifactId=maven-archetype-quickstart
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>mvn：核心命令
-<code>archetype:create</code>：
+</div><p>mvn：核心命令<br>
+<code>archetype:create</code>：<br>
 创建项目，现在maven高一点的版本都弃用了create命令而使用generate命令</p>
-<p><code>-DgroupId=com.wjy.maven.quickstart</code>：
+<p><code>-DgroupId=com.wjy.maven.quickstart</code>：<br>
 创建该maven项目时的groupId是什么，该作用在上面已经解释了。一般使用包名的写法。因为包名是用公司的域名的反写，独一无二。</p>
-<p><code>-DartifactId=simple</code>：
+<p><code>-DartifactId=simple</code>：<br>
 创建该maven项目时的artifactId是什么，就是项目名称</p>
-<p><code>-DarchetypeArtifactId=maven-archetype-quickstart</code>：
+<p><code>-DarchetypeArtifactId=maven-archetype-quickstart</code>：<br>
 表示创建的是maven项目</p>
 <p>注意：需要联网，必须上网下载一个小文件</p>
-<p>创建成功后会提示：build success！
+<p>创建成功后会提示：build success！<br>
 在当前文件夹下会生成一个simple的文件夹，这就是maven java项目</p>
 <p>maven java项目的结构：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2479,7 +2479,7 @@ windows:
 </span></span><span style="display:flex;"><span>-Dversion=0.0.1-snapshot
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>创建成功后会提示：build success！
+</div><p>创建成功后会提示：build success！<br>
 在当前文件夹下会生成一个simple的文件夹，这就是maven javaWeb项目</p>
 <p>maven javaWeb 项目结构：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">

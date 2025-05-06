@@ -64,7 +64,8 @@
 <meta property="og:url" content="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/dubbo/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="dubbo">
-  <meta property="og:description" content="dubbo是什么 是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。 为什么要分布式？为什么要远程调用？ ">
+  <meta property="og:description" content="dubbo是什么 是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。
+为什么要分布式？为什么要远程调用？">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -105,11 +106,11 @@
   "@type": "BlogPosting",
   "headline": "dubbo",
   "name": "dubbo",
-  "description": "dubbo是什么 是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。 为什么要分布式？为什么要远程调用？ ",
+  "description": "dubbo是什么 是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。\n为什么要分布式？为什么要远程调用？\n",
   "keywords": [
     "其他"
   ],
-  "articleBody": "dubbo是什么 是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。 为什么要分布式？为什么要远程调用？ 以前是单服务应用，调用方法在服务内直接调用即可。 现在拆分成多个服务，controller和service不在一个服务里了，controller不能直接调用service的方法了。那只能远程调用了，dubbo就可以解决这个问题。\n使用Dubbo的好处\n透明化的远程方法调用，就像调用本地方法一样调用远程方法，只需简单配置，没有任何API侵入。 负载均衡及容错机制，可在内网替代F5等硬件负载均衡器，降低成本，减少单点。 服务自动注册与发现，不再需要写死服务提供方地址，注册中心基于接口名查询服务提供者的IP地址，并且能够平滑添加或删除服务提供者。 Dubbo采用全Spring配置方式，透明化接入应用，对应用没有任何API侵入，只需用Spring加载Dubbo的配置即可，Dubbo基于Spring的Schema扩展进行加载。 角色说明： Provider（生产者）: 暴露服务的服务提供方。 Consumer（消费者）: 调用远程服务的服务消费方。 如图，我们可以简单理解为web1234需要调用service1234的服务，所以web1234是消费者，service1234是生产者。 如果按照上面的逻辑，消费者调用生产者的服务，那是否像下面这样调用： 太乱了， 肯定不是这样。\n此时引出注册中心的概念： 服务注册与发现的注册中心。 注册中心有很多，现在只简单说zookeeper。 zookeeper是用于分布式中一致性处理的框架。 简单的讲，zookeeper就是个中介，卖楼的（生产者）把楼盘信息放在中介（注册中心）那里，想买楼的（消费者）去中介那里获得楼盘资源清单。于是，我们的图变成了这样： Monitor：统计服务的调用次调和调用时间的监控中心。 Container：服务运行的容器。\n总体结构如下（官方的图）： 上图的运行流程如下： 0. 服务容器负责启动，加载，运行服务提供者。\n服务提供者（生产者）在启动时，向注册中心注册自己提供的服务。 服务消费者在启动时，向注册中心订阅自己所需的服务。 注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。 服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。 服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。 dubbo官网\ndubbo控制台 dubbo admin官网介绍 github地址\n下载代码:git clone https://github.com/apache/dubbo-admin.git 在dubbo-admin-server/src/main/resources/application.properties中指定注册中心地址 构建mvn clean package 启动 mvn --projects dubbo-admin-server spring-boot:run 或 cd dubbo-admin-distribution/target; java -jar dubbo-admin-0.1.jar 访问 http://localhost:8080 修改访问端口： vim dubbo-admin\\dubbo-admin-server\\src\\main\\resources\\application.properties 在任意位置添加： server.port=9000\n目前新版buddo-admin还没有用户名密码访问功能。\\\n老版控制台 github 将项目整体下载，解压并进入到dubbo-admin 打包mvn package -Dmaven.skip.test=true 进入target，找到打好的war包，复制到tomcat的webapps下，并更名为ROOT.war 启动tomcat，启动完了再停止(这一步是要通过tomcat将war包解开。) 进入到webapps\\dubbo-admin-2.6.0\\WEB-INF，修改dubbo.properties\n1 2 3 dubbo.registry.address=zookeeper://127.0.0.1:2181 dubbo.admin.root.password=root dubbo.admin.guest.password=guest 修改你的zookeeper地址。 修改你的用户名和密码，需要注意用户名在=号前边，等号后边的是密码。 然后再启动tomcat，访问即可。\n参考\n超时与重试 在provider和consumer端，都提供了超时(timeout)和重试(retries)的参数配置。 timeout默认值为1000，单位毫秒，表示超时时间是1秒； retries默认值为2，表示重试2次，加上本身调用1次，一共有3次调用。 在org.apache.dubbo.common.Constants类可以找到： public static final int DEFAULT_TIMEOUT = 1000; public static final int DEFAULT_RETRIES = 2;\nconsumer端配置优先于provider端配置。\n总结： case 1： 默认情况，provider和consumer端的timeout和retires均不设置，使用默认值 在不设置timeout和retries的时候，如果provider端接口一直出现超时，provider端会调用3次，而日志中没有任何警告或错误信息； consumer端虽然重试了2次，加本身调用的1次，一共发起3次调用，如果provider3次全部超时，consumer端会打印超时异常信息； provider端日志中没有任何警告或错误信息不利于发现问题；前面的调用并未终止，如果是非查询类接口且接口没有实现幂等性时，可能产生重复数据。\ncase 2： provider端retries=0，consumer端不设置 在provider端设置retries=0已经生效，接口仅调用了1次。\ncase 3： provider端retries=0，consumer端retries=1 consumer的retries优先级较高，两端都设置的情况下，以consumer端的retries为准。\ncase 4： provider端timeout=3000, retries=0，consumer端retries=0 provider端设置timeout已生效。\ncase 5： provider端timeout=1000, retries=0，consumer端retries=0 provider端设置了timeout，如果接口调用超时，provider会打印WRAN信息。\ncase 6： provider端timeout=1000, retries=0，consumer端timeout=3000, retries=0 consumer的timeout优先级较高，两端都设置的情况下，以consumer端的timeout为准。\n参考dubbo官网的文档，并结合工作中项目实践，对超时和重试这2个参数做个总结：\n超时(timeout)默认1000毫秒，重试(retries)默认2次(即一共调用3次)； provider端在dubbo:service中配置，consumer端在dubbo:reference中配置，consumer端的配置会覆盖provider配置； 超时(timeout)建议在provider端配置，因为作为提供方，它更清楚自己接口的耗时情况，并且provider端设置了timeout，在日志中有TimeoutFilter的WARN信息； 在provider端一般接口timeout设置为5秒或者10秒，如果是复杂查询、导出报表、调用第三方接口、本身是最上游的接口等，根据情况考虑设置大一点； 在consumer端配置设置timeout会覆盖provider设置，但有时设置timeout能够让consumer快速失败，而不因为下游provider服务接口的问题拖垮consumer本身； retries建议在provider端设置为0，consumer根据情况也可以设置为0，因为重试可能因非幂等性原因导致重复数据，并且超时情况即便重试成功consumer端可能也收不到成功响应； 参考 参考2\ndubbo报错 com.alibaba.com.caucho.hessian.io.HessianProtocolException: ‘xxx’ could not be instantiated Hessian反序列化时，使用反射调用构造函数生成对象时，传入的参数不合法，造成了上面的异常。 知道了原因，解决的方法也很简单，就是添加了一个无参的构造器给CountObject，于是上面的问题就解决了。\n1 2 3 public ResponseUtil() { } https://hittyt.iteye.com/blog/1691772\nTried 3 times of the providers 意思是服务端被重复调用三次，然而provider并没有报错。 我觉得是provider的响应时间问题，就是说consumer等待provider默认是有时间限制的(默认1000ms)，即如果1秒内provider没有响应，就会再次调用。 如果三次调用都在1秒内没有响应，就是调用失败，会报上边的错误。这时加上timeout配置即可：\n1 2 @Reference(version = \"1.0.0\",timeout = 60000) private GrowthService growthService; ",
+  "articleBody": "dubbo是什么 是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。\n为什么要分布式？为什么要远程调用？\n以前是单服务应用，调用方法在服务内直接调用即可。\n现在拆分成多个服务，controller和service不在一个服务里了，controller不能直接调用service的方法了。那只能远程调用了，dubbo就可以解决这个问题。\n使用Dubbo的好处\n透明化的远程方法调用，就像调用本地方法一样调用远程方法，只需简单配置，没有任何API侵入。 负载均衡及容错机制，可在内网替代F5等硬件负载均衡器，降低成本，减少单点。 服务自动注册与发现，不再需要写死服务提供方地址，注册中心基于接口名查询服务提供者的IP地址，并且能够平滑添加或删除服务提供者。 Dubbo采用全Spring配置方式，透明化接入应用，对应用没有任何API侵入，只需用Spring加载Dubbo的配置即可，Dubbo基于Spring的Schema扩展进行加载。 角色说明：\nProvider（生产者）: 暴露服务的服务提供方。\nConsumer（消费者）: 调用远程服务的服务消费方。\n如图，我们可以简单理解为web1234需要调用service1234的服务，所以web1234是消费者，service1234是生产者。\n如果按照上面的逻辑，消费者调用生产者的服务，那是否像下面这样调用：\n太乱了， 肯定不是这样。\n此时引出注册中心的概念： 服务注册与发现的注册中心。\n注册中心有很多，现在只简单说zookeeper。\nzookeeper是用于分布式中一致性处理的框架。\n简单的讲，zookeeper就是个中介，卖楼的（生产者）把楼盘信息放在中介（注册中心）那里，想买楼的（消费者）去中介那里获得楼盘资源清单。于是，我们的图变成了这样：\nMonitor：统计服务的调用次调和调用时间的监控中心。\nContainer：服务运行的容器。\n总体结构如下（官方的图）：\n上图的运行流程如下：\n0. 服务容器负责启动，加载，运行服务提供者。\n服务提供者（生产者）在启动时，向注册中心注册自己提供的服务。 服务消费者在启动时，向注册中心订阅自己所需的服务。 注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。 服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。 服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。 dubbo官网\ndubbo控制台 dubbo admin官网介绍\ngithub地址\n下载代码:git clone https://github.com/apache/dubbo-admin.git 在dubbo-admin-server/src/main/resources/application.properties中指定注册中心地址 构建mvn clean package 启动\nmvn --projects dubbo-admin-server spring-boot:run\n或\ncd dubbo-admin-distribution/target; java -jar dubbo-admin-0.1.jar 访问\nhttp://localhost:8080 修改访问端口：\nvim dubbo-admin\\dubbo-admin-server\\src\\main\\resources\\application.properties\n在任意位置添加：\nserver.port=9000\n目前新版buddo-admin还没有用户名密码访问功能。\\\n老版控制台 github\n将项目整体下载，解压并进入到dubbo-admin\n打包mvn package -Dmaven.skip.test=true\n进入target，找到打好的war包，复制到tomcat的webapps下，并更名为ROOT.war\n启动tomcat，启动完了再停止(这一步是要通过tomcat将war包解开。)\n进入到webapps\\dubbo-admin-2.6.0\\WEB-INF，修改dubbo.properties\n1 2 3 dubbo.registry.address=zookeeper://127.0.0.1:2181 dubbo.admin.root.password=root dubbo.admin.guest.password=guest 修改你的zookeeper地址。\n修改你的用户名和密码，需要注意用户名在=号前边，等号后边的是密码。\n然后再启动tomcat，访问即可。\n参考\n超时与重试 在provider和consumer端，都提供了超时(timeout)和重试(retries)的参数配置。\ntimeout默认值为1000，单位毫秒，表示超时时间是1秒；\nretries默认值为2，表示重试2次，加上本身调用1次，一共有3次调用。\n在org.apache.dubbo.common.Constants类可以找到：\npublic static final int DEFAULT_TIMEOUT = 1000;\npublic static final int DEFAULT_RETRIES = 2;\nconsumer端配置优先于provider端配置。\n总结：\ncase 1： 默认情况，provider和consumer端的timeout和retires均不设置，使用默认值\n在不设置timeout和retries的时候，如果provider端接口一直出现超时，provider端会调用3次，而日志中没有任何警告或错误信息；\nconsumer端虽然重试了2次，加本身调用的1次，一共发起3次调用，如果provider3次全部超时，consumer端会打印超时异常信息；\nprovider端日志中没有任何警告或错误信息不利于发现问题；前面的调用并未终止，如果是非查询类接口且接口没有实现幂等性时，可能产生重复数据。\ncase 2： provider端retries=0，consumer端不设置\n在provider端设置retries=0已经生效，接口仅调用了1次。\ncase 3： provider端retries=0，consumer端retries=1\nconsumer的retries优先级较高，两端都设置的情况下，以consumer端的retries为准。\ncase 4： provider端timeout=3000, retries=0，consumer端retries=0\nprovider端设置timeout已生效。\ncase 5： provider端timeout=1000, retries=0，consumer端retries=0\nprovider端设置了timeout，如果接口调用超时，provider会打印WRAN信息。\ncase 6： provider端timeout=1000, retries=0，consumer端timeout=3000, retries=0\nconsumer的timeout优先级较高，两端都设置的情况下，以consumer端的timeout为准。\n参考dubbo官网的文档，并结合工作中项目实践，对超时和重试这2个参数做个总结：\n超时(timeout)默认1000毫秒，重试(retries)默认2次(即一共调用3次)； provider端在dubbo:service中配置，consumer端在dubbo:reference中配置，consumer端的配置会覆盖provider配置； 超时(timeout)建议在provider端配置，因为作为提供方，它更清楚自己接口的耗时情况，并且provider端设置了timeout，在日志中有TimeoutFilter的WARN信息； 在provider端一般接口timeout设置为5秒或者10秒，如果是复杂查询、导出报表、调用第三方接口、本身是最上游的接口等，根据情况考虑设置大一点； 在consumer端配置设置timeout会覆盖provider设置，但有时设置timeout能够让consumer快速失败，而不因为下游provider服务接口的问题拖垮consumer本身； retries建议在provider端设置为0，consumer根据情况也可以设置为0，因为重试可能因非幂等性原因导致重复数据，并且超时情况即便重试成功consumer端可能也收不到成功响应； 参考\n参考2\ndubbo报错 com.alibaba.com.caucho.hessian.io.HessianProtocolException: ‘xxx’ could not be instantiated Hessian反序列化时，使用反射调用构造函数生成对象时，传入的参数不合法，造成了上面的异常。\n知道了原因，解决的方法也很简单，就是添加了一个无参的构造器给CountObject，于是上面的问题就解决了。\n1 2 3 public ResponseUtil() { } https://hittyt.iteye.com/blog/1691772\nTried 3 times of the providers 意思是服务端被重复调用三次，然而provider并没有报错。\n我觉得是provider的响应时间问题，就是说consumer等待provider默认是有时间限制的(默认1000ms)，即如果1秒内provider没有响应，就会再次调用。\n如果三次调用都在1秒内没有响应，就是调用失败，会报上边的错误。这时加上timeout配置即可：\n1 2 @Reference(version = \"1.0.0\",timeout = 60000) private GrowthService growthService; ",
   "wordCount" : "3229",
   "inLanguage": "en",
   "datePublished": "2019-04-17T11:05:53Z",
@@ -246,10 +247,10 @@
 </div>
 
   <div class="post-content"><h1 id="dubbo是什么">dubbo是什么<a hidden class="anchor" aria-hidden="true" href="#dubbo是什么">#</a></h1>
-<p>是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。
-为什么要分布式？为什么要远程调用？
+<p>是一个Jar包，一个分布式框架，一个远程服务调用的分布式框架。<br>
+为什么要分布式？为什么要远程调用？<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/dubbo/1.jpg"></p>
-<p>以前是单服务应用，调用方法在服务内直接调用即可。
+<p>以前是单服务应用，调用方法在服务内直接调用即可。<br>
 现在拆分成多个服务，controller和service不在一个服务里了，controller不能直接调用service的方法了。那只能远程调用了，dubbo就可以解决这个问题。</p>
 <p>使用Dubbo的好处</p>
 <ul>
@@ -258,24 +259,24 @@
 <li>服务自动注册与发现，不再需要写死服务提供方地址，注册中心基于接口名查询服务提供者的IP地址，并且能够平滑添加或删除服务提供者。</li>
 <li>Dubbo采用全Spring配置方式，透明化接入应用，对应用没有任何API侵入，只需用Spring加载Dubbo的配置即可，Dubbo基于Spring的Schema扩展进行加载。</li>
 </ul>
-<p>角色说明：
-Provider（生产者）: 暴露服务的服务提供方。
-Consumer（消费者）: 调用远程服务的服务消费方。
-如图，我们可以简单理解为web1234需要调用service1234的服务，所以web1234是消费者，service1234是生产者。
+<p>角色说明：<br>
+Provider（生产者）: 暴露服务的服务提供方。<br>
+Consumer（消费者）: 调用远程服务的服务消费方。<br>
+如图，我们可以简单理解为web1234需要调用service1234的服务，所以web1234是消费者，service1234是生产者。<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/dubbo/2.jpg"></p>
-<p>如果按照上面的逻辑，消费者调用生产者的服务，那是否像下面这样调用：
-<img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/dubbo/3.jpg">
+<p>如果按照上面的逻辑，消费者调用生产者的服务，那是否像下面这样调用：<br>
+<img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/dubbo/3.jpg"><br>
 太乱了， 肯定不是这样。</p>
-<p>此时引出注册中心的概念： 服务注册与发现的注册中心。
-注册中心有很多，现在只简单说zookeeper。
-zookeeper是用于分布式中一致性处理的框架。
-简单的讲，zookeeper就是个中介，卖楼的（生产者）把楼盘信息放在中介（注册中心）那里，想买楼的（消费者）去中介那里获得楼盘资源清单。于是，我们的图变成了这样：
+<p>此时引出注册中心的概念： 服务注册与发现的注册中心。<br>
+注册中心有很多，现在只简单说zookeeper。<br>
+zookeeper是用于分布式中一致性处理的框架。<br>
+简单的讲，zookeeper就是个中介，卖楼的（生产者）把楼盘信息放在中介（注册中心）那里，想买楼的（消费者）去中介那里获得楼盘资源清单。于是，我们的图变成了这样：<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/dubbo/4.jpg"></p>
-<p>Monitor：统计服务的调用次调和调用时间的监控中心。
+<p>Monitor：统计服务的调用次调和调用时间的监控中心。<br>
 Container：服务运行的容器。</p>
-<p>总体结构如下（官方的图）：
+<p>总体结构如下（官方的图）：<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/dubbo/5.png"></p>
-<p>上图的运行流程如下：
+<p>上图的运行流程如下：<br>
 0. 服务容器负责启动，加载，运行服务提供者。</p>
 <ol>
 <li>服务提供者（生产者）在启动时，向注册中心注册自己提供的服务。</li>
@@ -286,30 +287,30 @@ Container：服务运行的容器。</p>
 </ol>
 <p><a href="http://dubbo.apache.org/zh-cn/index.html">dubbo官网</a></p>
 <h1 id="dubbo控制台">dubbo控制台<a hidden class="anchor" aria-hidden="true" href="#dubbo控制台">#</a></h1>
-<p><a href="http://dubbo.apache.org/zh-cn/blog/dubbo-admin.html">dubbo admin官网介绍</a>
+<p><a href="http://dubbo.apache.org/zh-cn/blog/dubbo-admin.html">dubbo admin官网介绍</a><br>
 <a href="https://github.com/apache/dubbo-admin">github地址</a></p>
 <ul>
 <li>下载代码:<code>git clone https://github.com/apache/dubbo-admin.git</code></li>
 <li>在dubbo-admin-server/src/main/resources/application.properties中指定注册中心地址</li>
 <li>构建<code>mvn clean package</code></li>
-<li>启动
-<code>mvn --projects dubbo-admin-server spring-boot:run</code>
-或
+<li>启动<br>
+<code>mvn --projects dubbo-admin-server spring-boot:run</code><br>
+或<br>
 <code>cd dubbo-admin-distribution/target; java -jar dubbo-admin-0.1.jar</code></li>
-<li>访问
+<li>访问<br>
 <code>http://localhost:8080</code></li>
 </ul>
-<p>修改访问端口：
-<code>vim dubbo-admin\dubbo-admin-server\src\main\resources\application.properties</code>
-在任意位置添加：
+<p>修改访问端口：<br>
+<code>vim dubbo-admin\dubbo-admin-server\src\main\resources\application.properties</code><br>
+在任意位置添加：<br>
 <code>server.port=9000</code></p>
 <p>目前新版buddo-admin还没有用户名密码访问功能。\</p>
 <h2 id="老版控制台">老版控制台<a hidden class="anchor" aria-hidden="true" href="#老版控制台">#</a></h2>
-<p><a href="https://github.com/apache/dubbo/tree/dubbo-2.6.0">github</a>
-将项目整体下载，解压并进入到<code>dubbo-admin</code>
-打包<code>mvn  package -Dmaven.skip.test=true</code>
-进入target，找到打好的war包，复制到tomcat的webapps下，并更名为<code>ROOT.war</code>
-启动tomcat，启动完了再停止(这一步是要通过tomcat将war包解开。)
+<p><a href="https://github.com/apache/dubbo/tree/dubbo-2.6.0">github</a><br>
+将项目整体下载，解压并进入到<code>dubbo-admin</code><br>
+打包<code>mvn  package -Dmaven.skip.test=true</code><br>
+进入target，找到打好的war包，复制到tomcat的webapps下，并更名为<code>ROOT.war</code><br>
+启动tomcat，启动完了再停止(这一步是要通过tomcat将war包解开。)<br>
 进入到<code>webapps\dubbo-admin-2.6.0\WEB-INF</code>，修改<code>dubbo.properties</code></p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -323,32 +324,32 @@ Container：服务运行的容器。</p>
 </span></span><span style="display:flex;"><span>dubbo.admin.guest.password=guest
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>修改你的zookeeper地址。
-修改你的用户名和密码，需要注意用户名在=号前边，等号后边的是密码。
+</div><p>修改你的zookeeper地址。<br>
+修改你的用户名和密码，需要注意用户名在=号前边，等号后边的是密码。<br>
 然后再启动tomcat，访问即可。</p>
 <p><a href="https://blog.csdn.net/qq_28988969/article/details/79866111">参考</a></p>
 <h1 id="超时与重试">超时与重试<a hidden class="anchor" aria-hidden="true" href="#超时与重试">#</a></h1>
-<p>在provider和consumer端，都提供了超时(timeout)和重试(retries)的参数配置。
-timeout默认值为1000，单位毫秒，表示超时时间是1秒；
-retries默认值为2，表示重试2次，加上本身调用1次，一共有3次调用。
-在org.apache.dubbo.common.Constants类可以找到：
-<code>public static final int DEFAULT_TIMEOUT = 1000;</code>
+<p>在provider和consumer端，都提供了超时(timeout)和重试(retries)的参数配置。<br>
+timeout默认值为1000，单位毫秒，表示超时时间是1秒；<br>
+retries默认值为2，表示重试2次，加上本身调用1次，一共有3次调用。<br>
+在org.apache.dubbo.common.Constants类可以找到：<br>
+<code>public static final int DEFAULT_TIMEOUT = 1000;</code><br>
 <code>public static final int DEFAULT_RETRIES = 2;</code></p>
 <p>consumer端配置优先于provider端配置。</p>
-<p>总结：
-case 1： 默认情况，provider和consumer端的timeout和retires均不设置，使用默认值
-在不设置timeout和retries的时候，如果provider端接口一直出现超时，provider端会调用3次，而日志中没有任何警告或错误信息；
-consumer端虽然重试了2次，加本身调用的1次，一共发起3次调用，如果provider3次全部超时，consumer端会打印超时异常信息；
+<p>总结：<br>
+case 1： 默认情况，provider和consumer端的timeout和retires均不设置，使用默认值<br>
+在不设置timeout和retries的时候，如果provider端接口一直出现超时，provider端会调用3次，而日志中没有任何警告或错误信息；<br>
+consumer端虽然重试了2次，加本身调用的1次，一共发起3次调用，如果provider3次全部超时，consumer端会打印超时异常信息；<br>
 provider端日志中没有任何警告或错误信息不利于发现问题；前面的调用并未终止，如果是非查询类接口且接口没有实现幂等性时，可能产生重复数据。</p>
-<p>case 2： provider端retries=0，consumer端不设置
+<p>case 2： provider端retries=0，consumer端不设置<br>
 在provider端设置retries=0已经生效，接口仅调用了1次。</p>
-<p>case 3： provider端retries=0，consumer端retries=1
+<p>case 3： provider端retries=0，consumer端retries=1<br>
 consumer的retries优先级较高，两端都设置的情况下，以consumer端的retries为准。</p>
-<p>case 4： provider端timeout=3000, retries=0，consumer端retries=0
+<p>case 4： provider端timeout=3000, retries=0，consumer端retries=0<br>
 provider端设置timeout已生效。</p>
-<p>case 5： provider端timeout=1000, retries=0，consumer端retries=0
+<p>case 5： provider端timeout=1000, retries=0，consumer端retries=0<br>
 provider端设置了timeout，如果接口调用超时，provider会打印WRAN信息。</p>
-<p>case 6： provider端timeout=1000, retries=0，consumer端timeout=3000, retries=0
+<p>case 6： provider端timeout=1000, retries=0，consumer端timeout=3000, retries=0<br>
 consumer的timeout优先级较高，两端都设置的情况下，以consumer端的timeout为准。</p>
 <p>参考dubbo官网的文档，并结合工作中项目实践，对超时和重试这2个参数做个总结：</p>
 <ul>
@@ -359,11 +360,11 @@ consumer的timeout优先级较高，两端都设置的情况下，以consumer端
 <li>在consumer端配置设置timeout会覆盖provider设置，但有时设置timeout能够让consumer快速失败，而不因为下游provider服务接口的问题拖垮consumer本身；</li>
 <li>retries建议在provider端设置为0，consumer根据情况也可以设置为0，因为重试可能因非幂等性原因导致重复数据，并且超时情况即便重试成功consumer端可能也收不到成功响应；</li>
 </ul>
-<p><a href="https://www.cnblogs.com/cdfive2018/p/10204720.html">参考</a>
+<p><a href="https://www.cnblogs.com/cdfive2018/p/10204720.html">参考</a><br>
 <a href="https://blog.csdn.net/u013940812/article/details/80041669">参考2</a></p>
 <h1 id="dubbo报错">dubbo报错<a hidden class="anchor" aria-hidden="true" href="#dubbo报错">#</a></h1>
 <h2 id="comalibabacomcauchohessianiohessianprotocolexception-xxx-could-not-be-instantiated">com.alibaba.com.caucho.hessian.io.HessianProtocolException: &lsquo;xxx&rsquo; could not be instantiated<a hidden class="anchor" aria-hidden="true" href="#comalibabacomcauchohessianiohessianprotocolexception-xxx-could-not-be-instantiated">#</a></h2>
-<p>Hessian反序列化时，使用反射调用构造函数生成对象时，传入的参数不合法，造成了上面的异常。
+<p>Hessian反序列化时，使用反射调用构造函数生成对象时，传入的参数不合法，造成了上面的异常。<br>
 知道了原因，解决的方法也很简单，就是添加了一个无参的构造器给CountObject，于是上面的问题就解决了。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -379,8 +380,8 @@ consumer的timeout优先级较高，两端都设置的情况下，以consumer端
 </div>
 </div><p><a href="https://hittyt.iteye.com/blog/1691772">https://hittyt.iteye.com/blog/1691772</a></p>
 <h2 id="tried-3-times-of-the-providers">Tried 3 times of the providers<a hidden class="anchor" aria-hidden="true" href="#tried-3-times-of-the-providers">#</a></h2>
-<p>意思是服务端被重复调用三次，然而provider并没有报错。
-我觉得是provider的响应时间问题，就是说consumer等待provider默认是有时间限制的(默认1000ms)，即如果1秒内provider没有响应，就会再次调用。
+<p>意思是服务端被重复调用三次，然而provider并没有报错。<br>
+我觉得是provider的响应时间问题，就是说consumer等待provider默认是有时间限制的(默认1000ms)，即如果1秒内provider没有响应，就会再次调用。<br>
 如果三次调用都在1秒内没有响应，就是调用失败，会报上边的错误。这时加上timeout配置即可：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">

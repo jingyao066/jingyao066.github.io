@@ -177,7 +177,8 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>SPI ，全称为 Service Provider Interface，是一种服务发现机制。它通过在ClassPath路径下的META-INF/services文件夹查找文件，自动加载文件里所定义的类。 这一机制为很多框架扩展提供了可能，比如在Dubbo、JDBC中都使用到了SPI机制。我们先通过一个很简单的例子来看下它是怎么用的。
+    <p>SPI ，全称为 Service Provider Interface，是一种服务发现机制。它通过在ClassPath路径下的META-INF/services文件夹查找文件，自动加载文件里所定义的类。
+这一机制为很多框架扩展提供了可能，比如在Dubbo、JDBC中都使用到了SPI机制。我们先通过一个很简单的例子来看下它是怎么用的。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2022-09-06 17:05:25 +0000 UTC'>2022-09-06</span>&nbsp;·&nbsp;Wjy</footer>
@@ -227,7 +228,10 @@ crf jad很好用，但是无奈的是很久没更新了，所以只能用一款�
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class switchDemoString { public static void main(String[] arrstring) { String string; switch (string = &#34;world&#34;) { case &#34;hello&#34;: { System.out.println(&#34;hello&#34;); break; } case &#34;world&#34;: { System.out.println(&#34;world&#34;); break; } } } } 所以--decodestringswitch表示对于switch支持string的细节进行解码。类似的还有--decodeenumswitch、--decodefinally、--decodelambdas等。在我的关于语法糖的文章中，我使用--decodelambdas对lambda表达式警进行了反编译。 源码：
 1 2 3 4 public static void main(String... args) { List&lt;String&gt; strList = ImmutableList.of(&#34;Hollis&#34;, &#34;公众号：Hollis&#34;, &#34;博客：www.hollischuang.com&#34;); strList.forEach( s -&gt; { System.out.println(s); } ); } java -jar cfr_0_125.jar lambdaDemo.class --decodelambdas false反编译后代码：
 1 2 3 4 5 6 7 8 public static /* varargs */ void main(String ... args) { ImmutableList strList = ImmutableList.of((Object)&#34;Hollis&#34;, (Object)&#34;\u516c\u4f17\u53f7\uff1aHollis&#34;, (Object)&#34;\u535a\u5ba2\uff1awww.hollischuang.com&#34;); strList.forEach((Consumer&lt;String&gt;)LambdaMetafactory.metafactory(null, null, null, (Ljava/lang/Object;)V, lambda$main$0(java.lang.String ), (Ljava/lang/String;)V)()); } private static /* synthetic */ void lambda$main$0(String s) { System.out.println(s); } CFR还有很多其他参数，均用于不同场景，读者可以使用java -jar cfr_0_125.jar --help进行了解。这里不逐一介绍了。
-Java实例变量和类变量 Java程序的变量大体可分为成员变量和局部变量。其中局部变量可分为如下3类。 形参：在方法签名中定义的局部变量，由方法调用者负责为其赋值，随方法的结束而消亡。 方法内的局部变量：在方法内定义的局部变量，必须在方法内对其进行显示初始化。这种类型的局部变量从初始化完成后开始生效，随方法的结束而消亡。 代码块的局部变量：在代码块内定义的局部变量，必须在代码块内对其进行显式初始化，这种类型的局部变量从初始化完成后开始生效，随代码的结束而消亡。
+Java实例变量和类变量 Java程序的变量大体可分为成员变量和局部变量。其中局部变量可分为如下3类。
+形参：在方法签名中定义的局部变量，由方法调用者负责为其赋值，随方法的结束而消亡。
+方法内的局部变量：在方法内定义的局部变量，必须在方法内对其进行显示初始化。这种类型的局部变量从初始化完成后开始生效，随方法的结束而消亡。
+代码块的局部变量：在代码块内定义的局部变量，必须在代码块内对其进行显式初始化，这种类型的局部变量从初始化完成后开始生效，随代码的结束而消亡。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2022-09-02 18:18:52 +0000 UTC'>2022-09-02</span>&nbsp;·&nbsp;Wjy</footer>
@@ -240,9 +244,13 @@ Java实例变量和类变量 Java程序的变量大体可分为成员变量和�
     </h2>
   </header>
   <div class="entry-content">
-    <p>jvm全面思维导图 java内存模型
+    <p>jvm全面思维导图
+java内存模型
 什么是虚拟机 windows只能安装exe安装包，mac只能安装dmg安装包，这是因为操作系统底层的实现是不一样的。系统软件无法通用是一个常见的问题。
-但使用过 Java 的同学都知道，Java 代码可以在Linux 系统运行，也可以在 Windows 系统运行，但我们并没有生成多份不同的代码。所以 Java 语言是如何做到的呢？ Java 语言并不直接将代码编译成与系统有关的机器码，而是编译成一种特定的语言规范，这种语言规范我们称之为字节码。无论 Java 程序要在 Windows 系统，还是 Mac 系统，抑或是 Linux 系统，它首先都得编译成字节码文件，之后才能运行。 但即使编译成字节码文件了，各个系统还是无法明白字节码文件的内容，这时候就需要 Java 虚拟机的帮助了。Java 虚拟机会解析字节码文件的内容，并将其翻译为各操作系统能理解的机器码。 java源码-&gt;字节码（byte code）-&gt;java Virture Machine -&gt;windows\linux code
+但使用过 Java 的同学都知道，Java 代码可以在Linux 系统运行，也可以在 Windows 系统运行，但我们并没有生成多份不同的代码。所以 Java 语言是如何做到的呢？
+Java 语言并不直接将代码编译成与系统有关的机器码，而是编译成一种特定的语言规范，这种语言规范我们称之为字节码。无论 Java 程序要在 Windows 系统，还是 Mac 系统，抑或是 Linux 系统，它首先都得编译成字节码文件，之后才能运行。
+但即使编译成字节码文件了，各个系统还是无法明白字节码文件的内容，这时候就需要 Java 虚拟机的帮助了。Java 虚拟机会解析字节码文件的内容，并将其翻译为各操作系统能理解的机器码。
+java源码-&gt;字节码（byte code）-&gt;java Virture Machine -&gt;windows\linux code
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2022-09-01 18:16:18 +0000 UTC'>2022-09-01</span>&nbsp;·&nbsp;Wjy</footer>

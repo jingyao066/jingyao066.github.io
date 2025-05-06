@@ -429,7 +429,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="创建基本类和接口">创建基本类和接口<a hidden class="anchor" aria-hidden="true" href="#创建基本类和接口">#</a></h2>
-<p>根据Spring MVC执行流程，目前先创建出以下的类和接口，后期如果需要其他的再添加：
+<p>根据Spring MVC执行流程，目前先创建出以下的类和接口，后期如果需要其他的再添加：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/e500502f51e56ac16288dd5b5fa5b641_MD5.png"></p>
 <h1 id="部分类和接口的代码完善">部分类和接口的代码完善<a hidden class="anchor" aria-hidden="true" href="#部分类和接口的代码完善">#</a></h1>
 <h2 id="controller注解">@Controller注解<a hidden class="anchor" aria-hidden="true" href="#controller注解">#</a></h2>
@@ -1941,7 +1941,7 @@
 <li>初始化ViewResolver</li>
 </ol>
 <h2 id="初始化spring容器">初始化Spring容器<a hidden class="anchor" aria-hidden="true" href="#初始化spring容器">#</a></h2>
-<p>Spring容器：ApplicationContext
+<p>Spring容器：ApplicationContext<br>
 Spring Web容器：WebApplicationContext</p>
 <h3 id="组件扫描">组件扫描<a hidden class="anchor" aria-hidden="true" href="#组件扫描">#</a></h3>
 <p>添加解析xml文件的依赖</p>
@@ -2151,11 +2151,11 @@ Spring Web容器：WebApplicationContext</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在DispatcherServlet中添加如下代码：
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/96334c0a177ca679aef81e31d372eda5_MD5.png">
-添加常量值：
+</div><p>在DispatcherServlet中添加如下代码：<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/96334c0a177ca679aef81e31d372eda5_MD5.png"><br>
+添加常量值：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/dd4041fdbccd9fd0d00c3e437d14c6ce_MD5.png"></p>
-<p>启动服务器测试：
+<p>启动服务器测试：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/643525b8208dec2df24afae08413dc25_MD5.png"></p>
 <h3 id="创建视图解析器对象">创建视图解析器对象<a hidden class="anchor" aria-hidden="true" href="#创建视图解析器对象">#</a></h3>
 <p>InternalResourceViewResolver类代码改动，添加prefix和suffix属性：</p>
@@ -2281,7 +2281,7 @@ Spring Web容器：WebApplicationContext</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="创建所有的拦截器对象">创建所有的拦截器对象<a hidden class="anchor" aria-hidden="true" href="#创建所有的拦截器对象">#</a></h3>
-<p>在ApplicationContext构造方法中继续添加如下代码：
+<p>在ApplicationContext构造方法中继续添加如下代码：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/9247dcfbe1ef568a620a7bdf1d76b684_MD5.png"></p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2565,8 +2565,8 @@ Spring Web容器：WebApplicationContext</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>ApplicationContext代码还有以下改造：
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/967e94495877b3c32c5d1dbfcb273186_MD5.png">
+</div><p>ApplicationContext代码还有以下改造：<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/967e94495877b3c32c5d1dbfcb273186_MD5.png"><br>
 添加一个新的类：RequestMappingInfo</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2697,7 +2697,7 @@ Spring Web容器：WebApplicationContext</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="执行拦截器的prehandle">执行拦截器的preHandle<a hidden class="anchor" aria-hidden="true" href="#执行拦截器的prehandle">#</a></h2>
-<p>添加以下代码：
+<p>添加以下代码：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/1a1c50fe305523b6b794818ecca81ef9_MD5.png"></p>
 <p>HandlerExecutionChain添加以下代码：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2729,17 +2729,17 @@ Spring Web容器：WebApplicationContext</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="执行处理器方法">执行处理器方法<a hidden class="anchor" aria-hidden="true" href="#执行处理器方法">#</a></h2>
-<p>DispatcherServlet中的doDispatch方法：
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/4ff3ca3fc6a679e707a21a8c6a593e6d_MD5.png">
-先让handle方法返回一个固定的ModelAndView，后期在详细编写 handle 方法：
+<p>DispatcherServlet中的doDispatch方法：<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/4ff3ca3fc6a679e707a21a8c6a593e6d_MD5.png"><br>
+先让handle方法返回一个固定的ModelAndView，后期在详细编写 handle 方法：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/d7b192b478e174ead136028775246e8e_MD5.png"></p>
 <h2 id="执行拦截器的posthandle">执行拦截器的postHandle<a hidden class="anchor" aria-hidden="true" href="#执行拦截器的posthandle">#</a></h2>
-<p>DispatcherServlet的doDispatch方法中：
+<p>DispatcherServlet的doDispatch方法中：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/28a7bcf4d30e7f21d568a752655dc60f_MD5.png"></p>
-<p>HandlerExecutionChain的方法：
+<p>HandlerExecutionChain的方法：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/d5f020761800e7246ed08d95683050be_MD5.png"></p>
 <h2 id="处理响应">处理响应<a hidden class="anchor" aria-hidden="true" href="#处理响应">#</a></h2>
-<p>在DispatcherServlet的 doDispatch方法中：
+<p>在DispatcherServlet的 doDispatch方法中：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/d49501b7830f1516d0b1c27d73c68452_MD5.png"></p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2940,19 +2940,19 @@ Spring Web容器：WebApplicationContext</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="执行拦截器的aftercompletion">执行拦截器的afterCompletion<a hidden class="anchor" aria-hidden="true" href="#执行拦截器的aftercompletion">#</a></h2>
-<p>在DispatcherServlet类的doDispatch方法中：
+<p>在DispatcherServlet类的doDispatch方法中：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/0506f575e243e7bb45238dfab4320bac_MD5.png"></p>
-<p>在HandlerExecutionChain中：
+<p>在HandlerExecutionChain中：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/025dccc3deeed48b2418e9f7d502a22f_MD5.png"></p>
 <p><img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/8709fdc359840fe3d9b63566cefc3cbe_MD5.png"></p>
 <h2 id="初步测试">初步测试<a hidden class="anchor" aria-hidden="true" href="#初步测试">#</a></h2>
-<p>启动服务器，浏览器地址栏：http://localhost:8080/myspringmvc
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/3be81510d11afda40828edd825798d74_MD5.png">
-后台效果：
+<p>启动服务器，浏览器地址栏：http://localhost:8080/myspringmvc<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/3be81510d11afda40828edd825798d74_MD5.png"><br>
+后台效果：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/121fcac719723732eec09e5d7fb00816_MD5.png"></p>
-<p>如果让第二个拦截器返回false尝试一下：
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/2a24ab93a49577a69048d6a3d13cdc79_MD5.png">
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/70fa1b09771c4f15e9b07dd3d9970da7_MD5.png">
+<p>如果让第二个拦截器返回false尝试一下：<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/2a24ab93a49577a69048d6a3d13cdc79_MD5.png"><br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC12%E7%AB%A0-%E6%89%8B%E5%86%99spring-mvc/70fa1b09771c4f15e9b07dd3d9970da7_MD5.png"><br>
 初步测试通过！！！</p>
 <h1 id="调用处理器方法">调用处理器方法<a hidden class="anchor" aria-hidden="true" href="#调用处理器方法">#</a></h1>
 

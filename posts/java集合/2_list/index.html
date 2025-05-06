@@ -1104,7 +1104,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="list概括">List概括<a hidden class="anchor" aria-hidden="true" href="#list概括">#</a></h1>
-<p>List的框架图
+<p>List的框架图<br>
 <img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/2_list/1.jpg"></p>
 <ul>
 <li>List是一个接口，继承于Collection接口，是线性数据结构的主要实现，集合元素通常存在明确的上一个和下一个元素，也存在明确的第一个元素和最后一个元素。</li>
@@ -1354,13 +1354,13 @@
 </span></span><span style="display:flex;"><span>ArrayList : delete 100000 elements from the 1st position use time：1909 ms
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>从中，我们可以发现：
-插入10万个元素，LinkedList所花时间最短：29ms。
-删除10万个元素，LinkedList所花时间最短：15ms。
+</div><p>从中，我们可以发现：<br>
+插入10万个元素，LinkedList所花时间最短：29ms。<br>
+删除10万个元素，LinkedList所花时间最短：15ms。<br>
 遍历10万个元素，LinkedList所花时间最长：10809 ms；而ArrayList、Stack和Vector则相差不多，都只用了几秒。</p>
-<p>考虑到Vector是支持同步的，而Stack又是继承于Vector的；因此，得出结论：
-(01) 对于需要快速插入，删除元素，应该使用LinkedList。
-(02) 对于需要快速随机访问元素，应该使用ArrayList。
+<p>考虑到Vector是支持同步的，而Stack又是继承于Vector的；因此，得出结论：<br>
+(01) 对于需要快速插入，删除元素，应该使用LinkedList。<br>
+(02) 对于需要快速随机访问元素，应该使用ArrayList。<br>
 (03) 对于“单线程环境” 或者 “多线程环境，但List仅仅只会被单个线程操作”，此时应该使用非同步的类。</p>
 <h1 id="linkedlist和arraylist性能差异分析">LinkedList和ArrayList性能差异分析<a hidden class="anchor" aria-hidden="true" href="#linkedlist和arraylist性能差异分析">#</a></h1>
 <p>通过查看源码，看看为什么LinkedList插入元素快，ArrayList插入慢。</p>
@@ -1471,7 +1471,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><code>ensureCapacity(size+1)</code>
+</div><p><code>ensureCapacity(size+1)</code><br>
 的作用是：确认ArrayList的容量，若容量不够，则增加容量。真正耗时的操作是</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1501,9 +1501,9 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这个方法会移动index之后所有元素即可。这就意味着，<code>ArrayList的add(int index, E element)</code>函数，会引起index之后所有元素的改变。</p>
-<p>通过上面的分析，我们就能理解为什么LinkedList中插入元素很快，而ArrayList中插入元素很慢。
+<p>通过上面的分析，我们就能理解为什么LinkedList中插入元素很快，而ArrayList中插入元素很慢。<br>
 “删除元素”与“插入元素”的原理类似，这里就不再过多说明。</p>
-<p>接下来，我们看看 为什么LinkedList中随机访问很慢，而ArrayList中随机访问很快。
+<p>接下来，我们看看 为什么LinkedList中随机访问很慢，而ArrayList中随机访问很快。<br>
 先看看LinkedList随机访问的代码</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1557,7 +1557,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>从中，我们可以看出：通过<code>get(int index)获取LinkedList第index</code>个元素时。先是在双向链表中找到要index位置的元素；找到之后再返回。
+</div><p>从中，我们可以看出：通过<code>get(int index)获取LinkedList第index</code>个元素时。先是在双向链表中找到要index位置的元素；找到之后再返回。<br>
 双向链表查找index位置的节点时，有一个加速动作：若index &lt; 双向链表长度的1/2，则从前向后查找; 否则，从后向前查找。</p>
 <p>下面在看看ArrayList随机访问的源码：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">

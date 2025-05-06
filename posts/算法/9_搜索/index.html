@@ -290,12 +290,12 @@
 </li>
 </ol>
 <p>若数组不包含目标元素，搜索区间最终会缩小为空。此时返回 −1 。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step6.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step6.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_step7.png"></p>
 <p>值得注意的是，由于 𝑖 和 𝑗 都是 <code>int</code> 类型，<strong>因此 𝑖+𝑗 可能会超出 <code>int</code> 类型的取值范围</strong>。为了避免大数越界，我们通常采用公式 𝑚=⌊𝑖+(𝑗−𝑖)/2⌋ 来计算中点。</p>
 <p>代码如下所示：</p>
@@ -465,13 +465,13 @@
 <li>当 <code>nums[m] == target</code> 时，说明小于 <code>target</code> 的元素在区间 [𝑖,𝑚−1] 中，因此采用 𝑗=𝑚−1 来缩小区间，<strong>从而使指针 𝑗 向小于 <code>target</code> 的元素靠近</strong>。</li>
 </ul>
 <p>循环完成后，𝑖 指向最左边的 <code>target</code> ，𝑗 指向首个小于 <code>target</code> 的元素，<strong>因此索引 𝑖 就是插入点</strong>。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step7.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step7.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/binary_search_insertion_step8.png"></p>
 <p>观察以下代码，判断分支 <code>nums[m] &gt; target</code> 和 <code>nums[m] == target</code> 的操作相同，因此两者可以合并。</p>
 <p>即便如此，我们仍然可以将判断条件保持展开，因为其逻辑更加清晰、可读性更好。</p>
@@ -655,8 +655,8 @@
 <li>判断数字 <code>target - nums[i]</code> 是否在哈希表中，若是，则直接返回这两个元素的索引。</li>
 <li>将键值对 <code>nums[i]</code> 和索引 <code>i</code> 添加进哈希表。</li>
 </ol>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/two_sum_hashtable_step1.png">
-<img loading="lazy" src="two_sum_hashtable_step2.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/9_%E6%90%9C%E7%B4%A2/two_sum_hashtable_step1.png"><br>
+<img loading="lazy" src="two_sum_hashtable_step2.png"><br>
 <img loading="lazy" src="two_sum_hashtable_step3.png"></p>
 <p>实现代码如下所示，仅需单层循环即可：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">

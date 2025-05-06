@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Springboot | Wjy&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="这是博客的描述">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/tags/springboot/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://009965.xyz/tags/springboot/index.xml">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/tags/springboot/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/tags/springboot/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="Springboot">
+  <meta property="og:description" content="这是博客的描述">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Springboot">
+<meta name="twitter:description" content="这是博客的描述">
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://009965.xyz/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/tags/">Tags</a></div>
+  <h1>
+    Springboot
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">第6章 SpringBoot实用技术整合
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>logo设置 关闭logo图标 配置方式 1 spring.main.banner-mode=off 代码方式 第一种代码： 1 2 3 4 5 6 7 8 @SpringBootApplication public class Springboot322WebServerApplication { public static void main(String[] args) { SpringApplication springApplication = new SpringApplication(Springboot322WebServerApplication.class); springApplication.setBannerMode(Banner.Mode.OFF); springApplication.run(args); } } 第二种代码：流式编程/链...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-05-06 15:52:55 +0000 UTC'>2025-05-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 第6章 SpringBoot实用技术整合" href="https://009965.xyz/posts/springboot/%E7%AC%AC6%E7%AB%A0-springboot%E5%AE%9E%E7%94%A8%E6%8A%80%E6%9C%AF%E6%95%B4%E5%90%88/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">第5章 Spring Boot的web开发
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>SpringBoot的web自动配置 新建项目sb3-09-web：添加web启动器，添加Lombok依赖。 web自动配置的依赖是如何传递的 首...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-05-06 15:50:01 +0000 UTC'>2025-05-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 第5章 Spring Boot的web开发" href="https://009965.xyz/posts/springboot/%E7%AC%AC5%E7%AB%A0-spring-boot%E7%9A%84web%E5%BC%80%E5%8F%91/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">第4章 Spring Boot自动配置
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>自动配置概述 SpringBoot的两大核心 Spring Boot 框架的两大核心特性可以概括为“启动器”（Starter）和“自动配置”（Auto-config...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-05-06 15:46:37 +0000 UTC'>2025-05-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 第4章 Spring Boot自动配置" href="https://009965.xyz/posts/springboot/%E7%AC%AC4%E7%AB%A0-spring-boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">第3章 SSM整合
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>整合持久层框架MyBatis 准备数据库表及数据 创建数据库：springboot 使用IDEA工具自带的mysql插件来完成表的创建和数据的准备...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-05-06 15:35:55 +0000 UTC'>2025-05-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 第3章 SSM整合" href="https://009965.xyz/posts/springboot/%E7%AC%AC3%E7%AB%A0-ssm%E6%95%B4%E5%90%88/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">第2章 Spring Boot核心机制
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>为何以继承方式引入SpringBoot 提出疑问 以前我们在开发项目时，需要什么，引入对应的依赖就行，比如我们需要连接mysql数据，则引入my...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-05-06 11:27:05 +0000 UTC'>2025-05-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 第2章 Spring Boot核心机制" href="https://009965.xyz/posts/springboot/%E7%AC%AC2%E7%AB%A0-spring-boot%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">第1章 First Spring Boot
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>认识Spring Boot 我们来看看官方是如何介绍的： https://docs.spring.io/spring-boot/index.html 翻译： Spring Boot倡导约定优于配置，将简化开发发挥到极致。使用Spring Boot框架可以快速...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-05-06 11:11:53 +0000 UTC'>2025-05-06</span>&nbsp;·&nbsp;Wjy</footer>
+  <a class="entry-link" aria-label="post link to 第1章 First Spring Boot" href="https://009965.xyz/posts/springboot/%E7%AC%AC1%E7%AB%A0-first-spring-boot/"></a>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

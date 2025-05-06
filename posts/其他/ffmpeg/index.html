@@ -103,7 +103,7 @@
   "keywords": [
     "其他"
   ],
-  "articleBody": "官网：https://ffmpeg.org/\n下载安装 去官网下载\nhttp://www.ffmpeg.org/download.html\n选择windows，选择Windows builds from gyan.dev。\n直接下载版本：ffmpeg-git-full.7z\n下载完解压到理想位置，文件夹改名为ffmpeg\nbin目录下有三个exe，\nffmpeg 用于视频转码 ffplay 用于视频播放 ffprobe 用于获取音视频文件的信息 记住bin的路径，如：D:\\install\\ffmpeg\\bin，添加到系统环境变量PATH。\n打开cmd，输入ffmpeg -version，出现版本，则安装成功。\n合并M3U8 1 2 3 4 5 6 7 8 9 10 11 12 13 14 #合并ts文件，ts文件数量少、不需要key的时候可以用这种， ffmpeg -i \"1.ts|2.ts|3.ts|\" -c copy xxx.mp4 #也可以根据文件中指定的ts文件位置进行合并，不需要key ffmpeg -i index.m3u8 -c copy xxx.mp4 #需要key的要加上参数-allowed_extensions ALL ffmpeg -allowed_extensions ALL -i index.m3u8 -c copy xxx.mp4 # -protocol_whitelist指定白名单协议，添加相应的协议即支持对应的文件来源 ffmpeg -allowed_extensions ALL -protocol_whitelist \"file,http,https,tls,tcp,crypto\" -i https://xxx/xxx/index.m3u8 -c copy xxx.mp4 最后一种的参数是最全的，也是最常用的，支持本地、网络中的m3u8文件，支持需要key的、不需要key的 文件名不一定非要是index，文件后缀不一定非要是.meu8，只要是文本文件，文件中包含了ts文件路径、所需key的路径的即可，路径支持相对路径、绝对路径、网络url，相对路径是相对于当前使用的m3u8文件 如果使用本地m3u8（文本）文件，可以复制index.m3u8来改其中的ts、key的路径 报错 Protocol ‘xxx’ not on whitelist ‘file,http,https,tls,tcp’! ，说明缺少该种协议设置，加到 whitelist 列表中即可 ffmpeg合并ts文件快，但使用网络中的m3u8 url地址时，会先下载所需的ts文件，ffmpeg不是专业的下载软件，下载速度慢，下载包含了大量ts的视频尤其慢。\n嫌慢的可以下载m3u8到本地，获取其中的ts路径列表、key路径，转换为网络url，使用迅雷任务组进行下载到本地，修改m3u8中的路径，使用本地m3u8文件进行ts合并。\n有的网站编码ts时使用了key，解码ts进行合并时自然也需要使用key，key文件的路径在m3u8文件中。有的网站编码时没有使用key，解码合并ts时自然也就不需要key。\n",
+  "articleBody": "官网：https://ffmpeg.org/\n下载安装 去官网下载\nhttp://www.ffmpeg.org/download.html\n选择windows，选择Windows builds from gyan.dev。\n直接下载版本：ffmpeg-git-full.7z\n下载完解压到理想位置，文件夹改名为ffmpeg\nbin目录下有三个exe，\nffmpeg 用于视频转码 ffplay 用于视频播放 ffprobe 用于获取音视频文件的信息 记住bin的路径，如：D:\\install\\ffmpeg\\bin，添加到系统环境变量PATH。\n打开cmd，输入ffmpeg -version，出现版本，则安装成功。\n合并M3U8 1 2 3 4 5 6 7 8 9 10 11 12 13 14 #合并ts文件，ts文件数量少、不需要key的时候可以用这种， ffmpeg -i \"1.ts|2.ts|3.ts|\" -c copy xxx.mp4 #也可以根据文件中指定的ts文件位置进行合并，不需要key ffmpeg -i index.m3u8 -c copy xxx.mp4 #需要key的要加上参数-allowed_extensions ALL ffmpeg -allowed_extensions ALL -i index.m3u8 -c copy xxx.mp4 # -protocol_whitelist指定白名单协议，添加相应的协议即支持对应的文件来源 ffmpeg -allowed_extensions ALL -protocol_whitelist \"file,http,https,tls,tcp,crypto\" -i https://xxx/xxx/index.m3u8 -c copy xxx.mp4 最后一种的参数是最全的，也是最常用的，支持本地、网络中的m3u8文件，支持需要key的、不需要key的\n文件名不一定非要是index，文件后缀不一定非要是.meu8，只要是文本文件，文件中包含了ts文件路径、所需key的路径的即可，路径支持相对路径、绝对路径、网络url，相对路径是相对于当前使用的m3u8文件\n如果使用本地m3u8（文本）文件，可以复制index.m3u8来改其中的ts、key的路径\n报错 Protocol ‘xxx’ not on whitelist ‘file,http,https,tls,tcp’! ，说明缺少该种协议设置，加到 whitelist 列表中即可\nffmpeg合并ts文件快，但使用网络中的m3u8 url地址时，会先下载所需的ts文件，ffmpeg不是专业的下载软件，下载速度慢，下载包含了大量ts的视频尤其慢。\n嫌慢的可以下载m3u8到本地，获取其中的ts路径列表、key路径，转换为网络url，使用迅雷任务组进行下载到本地，修改m3u8中的路径，使用本地m3u8文件进行ts合并。\n有的网站编码ts时使用了key，解码ts进行合并时自然也需要使用key，key文件的路径在m3u8文件中。有的网站编码时没有使用key，解码合并ts时自然也就不需要key。\n",
   "wordCount" : "927",
   "inLanguage": "en",
   "datePublished": "2001-10-24T16:21:14Z",
@@ -274,10 +274,10 @@
 </span></span><span style="display:flex;"><span>ffmpeg -allowed_extensions ALL -protocol_whitelist <span style="color:#0ff;font-weight:bold">&#34;file,http,https,tls,tcp,crypto&#34;</span> -i https://xxx/xxx/index.m3u8 -c copy xxx.mp4
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>最后一种的参数是最全的，也是最常用的，支持本地、网络中的m3u8文件，支持需要key的、不需要key的
-文件名不一定非要是index，文件后缀不一定非要是.meu8，只要是文本文件，文件中包含了ts文件路径、所需key的路径的即可，路径支持相对路径、绝对路径、网络url，相对路径是相对于当前使用的m3u8文件
-如果使用本地m3u8（文本）文件，可以复制index.m3u8来改其中的ts、key的路径
-报错 Protocol ‘xxx’ not on whitelist ‘file,http,https,tls,tcp’! ，说明缺少该种协议设置，加到 whitelist 列表中即可
+</div><p>最后一种的参数是最全的，也是最常用的，支持本地、网络中的m3u8文件，支持需要key的、不需要key的<br>
+文件名不一定非要是index，文件后缀不一定非要是.meu8，只要是文本文件，文件中包含了ts文件路径、所需key的路径的即可，路径支持相对路径、绝对路径、网络url，相对路径是相对于当前使用的m3u8文件<br>
+如果使用本地m3u8（文本）文件，可以复制index.m3u8来改其中的ts、key的路径<br>
+报错 Protocol ‘xxx’ not on whitelist ‘file,http,https,tls,tcp’! ，说明缺少该种协议设置，加到 whitelist 列表中即可<br>
 ffmpeg合并ts文件快，但使用网络中的m3u8 url地址时，会先下载所需的ts文件，ffmpeg不是专业的下载软件，下载速度慢，下载包含了大量ts的视频尤其慢。</p>
 <p>嫌慢的可以下载m3u8到本地，获取其中的ts路径列表、key路径，转换为网络url，使用迅雷任务组进行下载到本地，修改m3u8中的路径，使用本地m3u8文件进行ts合并。</p>
 <p>有的网站编码ts时使用了key，解码ts进行合并时自然也需要使用key，key文件的路径在m3u8文件中。有的网站编码时没有使用key，解码合并ts时自然也就不需要key。</p>

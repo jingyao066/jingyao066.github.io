@@ -27,7 +27,7 @@
       <link>https://009965.xyz/posts/java/spi/</link>
       <pubDate>Tue, 06 Sep 2022 17:05:25 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/spi/</guid>
-      <description>&lt;p&gt;SPI ，全称为 Service Provider Interface，是一种服务发现机制。它通过在ClassPath路径下的META-INF/services文件夹查找文件，自动加载文件里所定义的类。
+      <description>&lt;p&gt;SPI ，全称为 Service Provider Interface，是一种服务发现机制。它通过在ClassPath路径下的META-INF/services文件夹查找文件，自动加载文件里所定义的类。&lt;br&gt;
 这一机制为很多框架扩展提供了可能，比如在Dubbo、JDBC中都使用到了SPI机制。我们先通过一个很简单的例子来看下它是怎么用的。&lt;/p&gt;</description>
     </item>
     <item>
@@ -475,9 +475,9 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;CFR还有很多其他参数，均用于不同场景，读者可以使用&lt;code&gt;java -jar cfr_0_125.jar --help&lt;/code&gt;进行了解。这里不逐一介绍了。&lt;/p&gt;
 &lt;h1 id=&#34;java实例变量和类变量&#34;&gt;Java实例变量和类变量&lt;/h1&gt;
-&lt;p&gt;Java程序的变量大体可分为成员变量和局部变量。其中局部变量可分为如下3类。
-形参：在方法签名中定义的局部变量，由方法调用者负责为其赋值，随方法的结束而消亡。
-方法内的局部变量：在方法内定义的局部变量，必须在方法内对其进行显示初始化。这种类型的局部变量从初始化完成后开始生效，随方法的结束而消亡。
+&lt;p&gt;Java程序的变量大体可分为成员变量和局部变量。其中局部变量可分为如下3类。&lt;br&gt;
+形参：在方法签名中定义的局部变量，由方法调用者负责为其赋值，随方法的结束而消亡。&lt;br&gt;
+方法内的局部变量：在方法内定义的局部变量，必须在方法内对其进行显示初始化。这种类型的局部变量从初始化完成后开始生效，随方法的结束而消亡。&lt;br&gt;
 代码块的局部变量：在代码块内定义的局部变量，必须在代码块内对其进行显式初始化，这种类型的局部变量从初始化完成后开始生效，随代码的结束而消亡。&lt;/p&gt;</description>
     </item>
     <item>
@@ -485,13 +485,13 @@
       <link>https://009965.xyz/posts/java/jvm/</link>
       <pubDate>Thu, 01 Sep 2022 18:16:18 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/jvm/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.processon.com/view/link/5eea141cf346fb1ae56a44e7#map&#34;&gt;jvm全面思维导图&lt;/a&gt;
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.processon.com/view/link/5eea141cf346fb1ae56a44e7#map&#34;&gt;jvm全面思维导图&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://blog.csdn.net/suifeng3051/article/details/52611310&#34;&gt;java内存模型&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;什么是虚拟机&#34;&gt;什么是虚拟机&lt;/h1&gt;
 &lt;p&gt;windows只能安装exe安装包，mac只能安装dmg安装包，这是因为操作系统底层的实现是不一样的。系统软件无法通用是一个常见的问题。&lt;/p&gt;
-&lt;p&gt;但使用过 Java 的同学都知道，Java 代码可以在Linux 系统运行，也可以在 Windows 系统运行，但我们并没有生成多份不同的代码。所以 Java 语言是如何做到的呢？
-Java 语言并不直接将代码编译成与系统有关的机器码，而是编译成一种特定的语言规范，这种语言规范我们称之为字节码。无论 Java 程序要在 Windows 系统，还是 Mac 系统，抑或是 Linux 系统，它首先都得编译成字节码文件，之后才能运行。
-但即使编译成字节码文件了，各个系统还是无法明白字节码文件的内容，这时候就需要 Java 虚拟机的帮助了。Java 虚拟机会解析字节码文件的内容，并将其翻译为各操作系统能理解的机器码。
+&lt;p&gt;但使用过 Java 的同学都知道，Java 代码可以在Linux 系统运行，也可以在 Windows 系统运行，但我们并没有生成多份不同的代码。所以 Java 语言是如何做到的呢？&lt;br&gt;
+Java 语言并不直接将代码编译成与系统有关的机器码，而是编译成一种特定的语言规范，这种语言规范我们称之为字节码。无论 Java 程序要在 Windows 系统，还是 Mac 系统，抑或是 Linux 系统，它首先都得编译成字节码文件，之后才能运行。&lt;br&gt;
+但即使编译成字节码文件了，各个系统还是无法明白字节码文件的内容，这时候就需要 Java 虚拟机的帮助了。Java 虚拟机会解析字节码文件的内容，并将其翻译为各操作系统能理解的机器码。&lt;br&gt;
 &lt;code&gt;java源码-&amp;gt;字节码（byte code）-&amp;gt;java Virture Machine -&amp;gt;windows\linux code&lt;/code&gt;&lt;/p&gt;</description>
     </item>
     <item>
@@ -538,8 +538,8 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
       <pubDate>Sat, 11 Jan 2020 10:27:48 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/kit/</guid>
       <description>&lt;h1 id=&#34;ffmpeg使用&#34;&gt;ffmpeg使用&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://baike.baidu.com/item/ffmpeg&#34;&gt;ffmpeg了解&lt;/a&gt;
-&lt;a href=&#34;http://ffmpeg.org/&#34;&gt;ffmpeg官网&lt;/a&gt;
+&lt;p&gt;&lt;a href=&#34;https://baike.baidu.com/item/ffmpeg&#34;&gt;ffmpeg了解&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://ffmpeg.org/&#34;&gt;ffmpeg官网&lt;/a&gt;&lt;br&gt;
 在使用Java调用FFmpeg处理音视频之前，需要先安装FFmpeg，安装方法分为两种：&lt;/p&gt;</description>
     </item>
     <item>
@@ -548,7 +548,7 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
       <pubDate>Tue, 07 May 2019 17:16:52 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/stringbuilder%E5%92%8Cstringbuffer/</guid>
       <description>&lt;h1 id=&#34;stringbuilder-简介&#34;&gt;StringBuilder 简介&lt;/h1&gt;
-&lt;p&gt;StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。
+&lt;p&gt;StringBuilder 是一个可变的字符序列。它继承于AbstractStringBuilder，实现了CharSequence接口。&lt;br&gt;
 StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线程安全的，StringBuilder是非线程安全的。&lt;/p&gt;</description>
     </item>
     <item>
@@ -557,16 +557,16 @@ StringBuffer 也是继承于AbstractStringBuilder的子类。StringBuffer是线�
       <pubDate>Tue, 07 May 2019 15:30:07 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/string/</guid>
       <description>&lt;h1 id=&#34;string简介&#34;&gt;String简介&lt;/h1&gt;
-&lt;p&gt;String 是java中的字符串，它继承于CharSequence。
+&lt;p&gt;String 是java中的字符串，它继承于CharSequence。&lt;br&gt;
 String类所包含的API接口非常多。为了便于今后的使用，我对String的API进行了分类，并都给出的演示程序。&lt;/p&gt;
-&lt;p&gt;String 和 CharSequence 关系：
-String 继承于CharSequence，也就是说String也是CharSequence类型。
-CharSequence是一个接口，它只包括length(), charAt(int index), subSequence(int start, int end)这几个API接口。除了String实现了CharSequence之外，StringBuffer和StringBuilder也实现了CharSequence接口。
-需要说明的是，CharSequence就是字符序列，String、StringBuilder和StringBuffer本质上都是通过字符数组实现的。
-StringBuilder 和 StringBuffer 的区别：
-StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于AbstractStringBuilder，实现了CharSequence接口。
+&lt;p&gt;String 和 CharSequence 关系：&lt;br&gt;
+String 继承于CharSequence，也就是说String也是CharSequence类型。&lt;br&gt;
+CharSequence是一个接口，它只包括length(), charAt(int index), subSequence(int start, int end)这几个API接口。除了String实现了CharSequence之外，StringBuffer和StringBuilder也实现了CharSequence接口。&lt;br&gt;
+需要说明的是，CharSequence就是字符序列，String、StringBuilder和StringBuffer本质上都是通过字符数组实现的。&lt;br&gt;
+StringBuilder 和 StringBuffer 的区别：&lt;br&gt;
+StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于AbstractStringBuilder，实现了CharSequence接口。&lt;br&gt;
 但是，StringBuilder是非线程安全的，而StringBuffer是线程安全的。&lt;/p&gt;
-&lt;p&gt;它们之间的关系图如下：
+&lt;p&gt;它们之间的关系图如下：&lt;br&gt;
 &lt;img loading=&#34;lazy&#34; src=&#34;https://009965.xyz/posts/java/string/1.jpg&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>
@@ -589,7 +589,7 @@ StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于Ab
       <pubDate>Tue, 30 Apr 2019 11:36:50 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/equals/</guid>
       <description>&lt;h1 id=&#34;equals-的作用&#34;&gt;equals() 的作用&lt;/h1&gt;
-&lt;p&gt;equals() 的作用是&lt;code&gt;用来判断两个对象是否相等&lt;/code&gt;。
+&lt;p&gt;equals() 的作用是&lt;code&gt;用来判断两个对象是否相等&lt;/code&gt;。&lt;br&gt;
 equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否相等(即，是否是同一个对象)来区分它们是否相等。源码如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
@@ -617,8 +617,8 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
       <pubDate>Tue, 30 Apr 2019 09:53:16 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/comparable%E5%92%8Ccomparator/</guid>
       <description>&lt;h1 id=&#34;comparable简介&#34;&gt;Comparable简介&lt;/h1&gt;
-&lt;p&gt;Comparable 是排序接口，若一个类实现了Comparable接口，就意味着&lt;code&gt;该类支持排序&lt;/code&gt;。
-如果 List 中的类实现了&lt;code&gt;Comparable&lt;/code&gt;接口，则该List 可以通过&lt;code&gt;Collections.sort&lt;/code&gt;排序。
+&lt;p&gt;Comparable 是排序接口，若一个类实现了Comparable接口，就意味着&lt;code&gt;该类支持排序&lt;/code&gt;。&lt;br&gt;
+如果 List 中的类实现了&lt;code&gt;Comparable&lt;/code&gt;接口，则该List 可以通过&lt;code&gt;Collections.sort&lt;/code&gt;排序。&lt;br&gt;
 此外，一个类如果实现了&lt;code&gt;Comparable&lt;/code&gt;接口，可以用作&lt;code&gt;TreeMap&lt;/code&gt;的键，或&lt;code&gt;TreeSet&lt;/code&gt;中的元素，而不需要指定比较器。&lt;/p&gt;</description>
     </item>
     <item>
@@ -627,12 +627,12 @@ equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否
       <pubDate>Sat, 06 Oct 2018 18:14:43 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/jsp&#43;servlet/</guid>
       <description>&lt;h1 id=&#34;web应用服务器&#34;&gt;web应用服务器&lt;/h1&gt;
-&lt;p&gt;目前较为主流的Web应用服务器
-Tomcat  &amp;mdash;&amp;mdash;  Apache软件基金会
-Jboss  &amp;mdash;&amp;mdash;-  JBOSS公司
-Weblogic &amp;mdash;&amp;mdash;  BEA公司
-Websphere &amp;mdash;&amp;ndash;  IBM公司
-IIS  &amp;mdash;&amp;mdash; 微软  支持ASP语言
+&lt;p&gt;目前较为主流的Web应用服务器&lt;br&gt;
+Tomcat  &amp;mdash;&amp;mdash;  Apache软件基金会&lt;br&gt;
+Jboss  &amp;mdash;&amp;mdash;-  JBOSS公司&lt;br&gt;
+Weblogic &amp;mdash;&amp;mdash;  BEA公司&lt;br&gt;
+Websphere &amp;mdash;&amp;ndash;  IBM公司&lt;br&gt;
+IIS  &amp;mdash;&amp;mdash; 微软  支持ASP语言&lt;br&gt;
 Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。&lt;/p&gt;</description>
     </item>
     <item>

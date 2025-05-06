@@ -164,7 +164,8 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>equals() 的作用 equals() 的作用是用来判断两个对象是否相等。 equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否相等(即，是否是同一个对象)来区分它们是否相等。源码如下：
+    <p>equals() 的作用 equals() 的作用是用来判断两个对象是否相等。
+equals() 定义在JDK的Object.java中。通过判断两个对象的地址是否相等(即，是否是同一个对象)来区分它们是否相等。源码如下：
 1 2 3 public boolean equals(Object obj) { return (this == obj); } 既然Object.java中定义了equals()方法，这就意味着所有的Java类都实现了equals()方法，所有的类都可以通过equals()去比较两个对象是否相等。 但是，我们已经说过，使用默认的equals()方法，等价于==方法。因此，我们通常会重写equals()方法：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。
 下面根据类是否覆盖equals()方法，将它分为2类。
 若某个类没有覆盖equals()方法，当它的通过equals()比较两个对象时，实际上是比较两个对象是不是同一个对象。这时，等价于通过==去比较这两个对象。 我们可以覆盖类的equals()方法，来让equals()通过其它方式比较两个对象是否相等。通常的做法是：若两个对象的内容相等，则equals()方法返回true；否则，返回fasle。 下面，举例对上面的2种情况进行说明。
@@ -180,7 +181,9 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>Comparable简介 Comparable 是排序接口，若一个类实现了Comparable接口，就意味着该类支持排序。 如果 List 中的类实现了Comparable接口，则该List 可以通过Collections.sort排序。 此外，一个类如果实现了Comparable接口，可以用作TreeMap的键，或TreeSet中的元素，而不需要指定比较器。
+    <p>Comparable简介 Comparable 是排序接口，若一个类实现了Comparable接口，就意味着该类支持排序。
+如果 List 中的类实现了Comparable接口，则该List 可以通过Collections.sort排序。
+此外，一个类如果实现了Comparable接口，可以用作TreeMap的键，或TreeSet中的元素，而不需要指定比较器。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-04-30 09:53:16 +0000 UTC'>2019-04-30</span>&nbsp;·&nbsp;Wjy</footer>
@@ -193,7 +196,13 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>web应用服务器 目前较为主流的Web应用服务器 Tomcat —— Apache软件基金会 Jboss ——- JBOSS公司 Weblogic —— BEA公司 Websphere —– IBM公司 IIS —— 微软 支持ASP语言 Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。
+    <p>web应用服务器 目前较为主流的Web应用服务器
+Tomcat —— Apache软件基金会
+Jboss ——- JBOSS公司
+Weblogic —— BEA公司
+Websphere —– IBM公司
+IIS —— 微软 支持ASP语言
+Web应用服务器的主要作用是让用户可以通过浏览器（HTTP/HTTPS）方式访问你的项目。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2018-10-06 18:14:43 +0000 UTC'>2018-10-06</span>&nbsp;·&nbsp;Wjy</footer>

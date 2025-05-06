@@ -849,9 +849,9 @@
 </ul>
 <p>多线程的概念我们会在后面讲。因为从Java 5开始，引入了更高效的并发集合类，所以上述这几个同步方法已经没有什么用了。</p>
 <h1 id="其他-总体框架">其他-总体框架<a hidden class="anchor" aria-hidden="true" href="#其他-总体框架">#</a></h1>
-<p>Java集合是java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java集合工具包位置是java.util.*
-Java集合主要可以划分为4个部分：List列表、Set集合、Map映射、工具类(Iterator迭代器、Enumeration枚举类、Arrays和Collections)、。
-Java集合工具包框架图(如下)：
+<p>Java集合是java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java集合工具包位置是java.util.*<br>
+Java集合主要可以划分为4个部分：List列表、Set集合、Map映射、工具类(Iterator迭代器、Enumeration枚举类、Arrays和Collections)、。<br>
+Java集合工具包框架图(如下)：<br>
 <img loading="lazy" src="/posts/java%E9%9B%86%E5%90%88/1_java%E9%9B%86%E5%90%88%E7%AE%80%E4%BB%8B/1.jpg"></p>
 <p>看上面的框架图，先抓住它的主干，即Collection和Map。</p>
 <h2 id="collection-1">Collection<a hidden class="anchor" aria-hidden="true" href="#collection-1">#</a></h2>
@@ -863,18 +863,18 @@ Java集合工具包框架图(如下)：
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> Collection&lt;E&gt; <span style="color:#fff;font-weight:bold">extends</span> Iterable&lt;E&gt; {}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。
+</div><p>它是一个接口，是高度抽象出来的集合，它包含了集合的基本操作：添加、删除、清空、遍历(读取)、是否为空、获取大小、是否保护某元素等等。<br>
 Collection接口的所有子类(直接子类和间接子类)都必须实现2种构造函数：不带参数的构造函数 和 参数为Collection的构造函数。带参数的构造函数，可以用来转换Collection的类型。</p>
-<p>Collection主要的两个分支是：List 和 Set。
-List和Set都是接口，它们继承于Collection。
-List是有序的队列，List中可以有重复的元素；
-而Set是数学概念中的集合，Set中没有重复元素。
+<p>Collection主要的两个分支是：List 和 Set。<br>
+List和Set都是接口，它们继承于Collection。<br>
+List是有序的队列，List中可以有重复的元素；<br>
+而Set是数学概念中的集合，Set中没有重复元素。<br>
 List和Set都有它们各自的实现类。</p>
-<p>为了方便，我们抽象出了AbstractCollection抽象类，它实现了Collection中的绝大部分函数；这样，在Collection的实现类中，我们就可以通过继承AbstractCollection省去重复编码。
-AbstractList和AbstractSet都继承于AbstractCollection，具体的List实现类继承于AbstractList，而Set的实现类则继承于AbstractSet。
+<p>为了方便，我们抽象出了AbstractCollection抽象类，它实现了Collection中的绝大部分函数；这样，在Collection的实现类中，我们就可以通过继承AbstractCollection省去重复编码。<br>
+AbstractList和AbstractSet都继承于AbstractCollection，具体的List实现类继承于AbstractList，而Set的实现类则继承于AbstractSet。<br>
 另外，Collection中有一个iterator()函数，它的作用是返回一个Iterator接口。通常，我们通过Iterator迭代器来遍历集合。ListIterator是List接口所特有的，在List接口中，通过ListIterator()返回一个ListIterator对象。</p>
-<p>为了方便对多个对象进行操作，集合是存储对象的最常用的一种方式。
-集合的出现就是为了存储对象，可以存储任意类型的对象，而且长度可变。
+<p>为了方便对多个对象进行操作，集合是存储对象的最常用的一种方式。<br>
+集合的出现就是为了存储对象，可以存储任意类型的对象，而且长度可变。<br>
 集合和数组的区别?</p>
 <ul>
 <li>都是容器</li>
@@ -892,8 +892,8 @@ AbstractList和AbstractSet都继承于AbstractCollection，具体的List实现�
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">abstract</span> <span style="color:#fff;font-weight:bold">class</span> AbstractCollection&lt;E&gt; <span style="color:#fff;font-weight:bold">implements</span> Collection&lt;E&gt; {}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><code>AbstractCollection</code>是一个抽象类，它实现了Collection中除<code>iterator()</code>和<code>size()</code>之外的函数。
-主要作用：
+</div><p><code>AbstractCollection</code>是一个抽象类，它实现了Collection中除<code>iterator()</code>和<code>size()</code>之外的函数。<br>
+主要作用：<br>
 它实现了Collection接口中的大部分函数。从而方便其它类实现Collection，比如ArrayList、LinkedList等，它们这些类想要实现Collection接口，通过继承AbstractCollection就已经实现了大部分的功能了。</p>
 <h2 id="list">List<a hidden class="anchor" aria-hidden="true" href="#list">#</a></h2>
 <p>定义如下：</p>
@@ -905,9 +905,9 @@ AbstractList和AbstractSet都继承于AbstractCollection，具体的List实现�
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> List&lt;E&gt; <span style="color:#fff;font-weight:bold">extends</span> Collection&lt;E&gt; {}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>List是一个继承于Collection的接口，即List是集合的一种。
-List是有序的队列，List中的每一个元素都有一个索引；
-第一个元素的索引值是0，往后的元素的索引值依次+1。
+</div><p>List是一个继承于Collection的接口，即List是集合的一种。<br>
+List是有序的队列，List中的每一个元素都有一个索引；<br>
+第一个元素的索引值是0，往后的元素的索引值依次+1。<br>
 和Set不同，List中允许有重复的元素。</p>
 <p>既然List是继承于Collection接口，它自然就包含了Collection中的全部函数接口；由于List是有序队列，它也额外的有自己的API接口。主要有“添加、删除、获取、修改指定位置的元素”、“获取List中的子队列”等。</p>
 <h2 id="set">Set<a hidden class="anchor" aria-hidden="true" href="#set">#</a></h2>
@@ -920,22 +920,22 @@ List是有序的队列，List中的每一个元素都有一个索引；
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">interface</span> Set&lt;E&gt; <span style="color:#fff;font-weight:bold">extends</span> Collection&lt;E&gt; {}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Set是一个继承于Collection的接口，即Set也是集合中的一种。Set是没有重复元素的集合。
+</div><p>Set是一个继承于Collection的接口，即Set也是集合中的一种。Set是没有重复元素的集合。<br>
 Set的API和Collection完全一样。</p>
 <h2 id="abstractlist">AbstractList<a hidden class="anchor" aria-hidden="true" href="#abstractlist">#</a></h2>
-<p>定义如下：
-<code>public abstract class AbstractList&lt;E&gt; extends AbstractCollection&lt;E&gt; implements List&lt;E&gt; {}</code>
-AbstractList是一个继承于AbstractCollection，并且实现List接口的抽象类。它实现了List中除size()、get(int location)之外的函数。
-AbstractList的主要作用：它实现了List接口中的大部分函数。从而方便其它类继承List。
+<p>定义如下：<br>
+<code>public abstract class AbstractList&lt;E&gt; extends AbstractCollection&lt;E&gt; implements List&lt;E&gt; {}</code><br>
+AbstractList是一个继承于AbstractCollection，并且实现List接口的抽象类。它实现了List中除size()、get(int location)之外的函数。<br>
+AbstractList的主要作用：它实现了List接口中的大部分函数。从而方便其它类继承List。<br>
 另外，和AbstractCollection相比，AbstractList抽象类中，实现了iterator()接口。</p>
 <h2 id="abstractset">AbstractSet<a hidden class="anchor" aria-hidden="true" href="#abstractset">#</a></h2>
-<p>定义如下：
-<code>public abstract class AbstractSet&lt;E&gt; extends AbstractCollection&lt;E&gt; implements Set&lt;E&gt; {}</code>
-AbstractSet是一个继承于AbstractCollection，并且实现Set接口的抽象类。由于Set接口和Collection接口中的API完全一样，Set也就没有自己单独的API。和AbstractCollection一样，它实现了List中除iterator()和size()之外的函数。
+<p>定义如下：<br>
+<code>public abstract class AbstractSet&lt;E&gt; extends AbstractCollection&lt;E&gt; implements Set&lt;E&gt; {}</code><br>
+AbstractSet是一个继承于AbstractCollection，并且实现Set接口的抽象类。由于Set接口和Collection接口中的API完全一样，Set也就没有自己单独的API。和AbstractCollection一样，它实现了List中除iterator()和size()之外的函数。<br>
 AbstractSet的主要作用：它实现了Set接口中的大部分函数。从而方便其它类实现Set接口。</p>
 <h2 id="map">map<a hidden class="anchor" aria-hidden="true" href="#map">#</a></h2>
-<p>Map是一个映射接口，即key-value键值对。Map中的每一个元素包含“一个key”和“key对应的value”。
-AbstractMap是个抽象类，它实现了Map接口中的大部分API。而HashMap，TreeMap，WeakHashMap都是继承于AbstractMap。
+<p>Map是一个映射接口，即key-value键值对。Map中的每一个元素包含“一个key”和“key对应的value”。<br>
+AbstractMap是个抽象类，它实现了Map接口中的大部分API。而HashMap，TreeMap，WeakHashMap都是继承于AbstractMap。<br>
 Hashtable虽然继承于Dictionary，但它实现了Map接口。</p>
 <h2 id="enumeration">Enumeration<a hidden class="anchor" aria-hidden="true" href="#enumeration">#</a></h2>
 <p><code>Enumeration</code>是JDK 1.0引入的抽象类。作用和Iterator一样，也是遍历集合；但是Enumeration的功能要比Iterator少。在上面的框图中，Enumeration只能在Hashtable, Vector, Stack中使用。</p>
@@ -990,7 +990,7 @@ Hashtable虽然继承于Dictionary，但它实现了Map接口。</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意：Iterator遍历Collection时，是<code>fail-fast</code>机制的。即，当某一个线程A通过iterator去遍历某集合的过程中，若该集合的内容被其他线程所改变了；那么线程A访问集合时，就会抛出ConcurrentModificationException异常，产生fail-fast事件。关于fail-fast的详细内容，我们会在后面专门进行说明。</p>
-<p>实现了Iterable接口，就可以调用iterator()方法。
+<p>实现了Iterable接口，就可以调用iterator()方法。<br>
 HashMap类就实现了Iterable接口，遍历map</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1269,13 +1269,13 @@ HashMap类就实现了Iterable接口，遍历map</p>
 <li>spliterator方法</li>
 </ul>
 <h2 id="iterator和iterable-区别">Iterator和Iterable 区别<a hidden class="anchor" aria-hidden="true" href="#iterator和iterable-区别">#</a></h2>
-<p>从英文意思去理解：
-Iterable：故名思议，实现了这个接口的集合对象支持迭代，是可迭代的。
+<p>从英文意思去理解：<br>
+Iterable：故名思议，实现了这个接口的集合对象支持迭代，是可迭代的。<br>
 able结尾的表示<code>**能...样**，**可以做...**</code></p>
-<p>Iterator：在英语中or 结尾是都是表示<code>**...样的人** 或 **... 者**</code>。
+<p>Iterator：在英语中or 结尾是都是表示<code>**...样的人** 或 **... 者**</code>。<br>
 如creator就是创作者的意思。这里也是一样：iterator就是迭代者，我们一般叫迭代器，它就是提供迭代机制的对象，具体如何迭代，都是Iterator接口规范的。</p>
 <h3 id="iterable-1">Iterable<a hidden class="anchor" aria-hidden="true" href="#iterable-1">#</a></h3>
-<p>一个集合对象要表明自己支持迭代，能有使用foreach语句的特权，就必须实现Iterable接口，表明我是可迭代的，然而实现Iterable接口，就必需为foreach语句提供一个迭代器。
+<p>一个集合对象要表明自己支持迭代，能有使用foreach语句的特权，就必须实现Iterable接口，表明我是可迭代的，然而实现Iterable接口，就必需为foreach语句提供一个迭代器。<br>
 这个迭代器是用接口定义的 iterator方法提供的。也就是iterator方法需要返回一个Iterator对象。</p>
 <h3 id="iterator-1">Iterator<a hidden class="anchor" aria-hidden="true" href="#iterator-1">#</a></h3>
 <ol>
@@ -1285,10 +1285,10 @@ able结尾的表示<code>**能...样**，**可以做...**</code></p>
 <li>迭代出的元素是原集合中元素的拷贝（重要）</li>
 <li>配合foreach使用</li>
 </ol>
-<p>为什么一定要实现Iterable接口，为什么不直接实现Iterator接口呢？
-答：看一下JDK中的集合类，比如List一族或者Set一族，都是实现了Iterable接口，但并不直接实现Iterator接口。 仔细想一下这么做是有道理的。
-因为Iterator接口的核心方法next()或者hasNext() 是依赖于迭代器的当前迭代位置的。 如果Collection直接实现Iterator接口，势必导致集合对象中包含当前迭代位置的数据(指针)。
-当集合在不同方法间被传递时，由于当前迭代位置不可预置，那么next()方法的结果会变成不可预知。  除非再为Iterator接口添加一个reset()方法，用来重置当前迭代位置。
+<p>为什么一定要实现Iterable接口，为什么不直接实现Iterator接口呢？<br>
+答：看一下JDK中的集合类，比如List一族或者Set一族，都是实现了Iterable接口，但并不直接实现Iterator接口。 仔细想一下这么做是有道理的。<br>
+因为Iterator接口的核心方法next()或者hasNext() 是依赖于迭代器的当前迭代位置的。 如果Collection直接实现Iterator接口，势必导致集合对象中包含当前迭代位置的数据(指针)。<br>
+当集合在不同方法间被传递时，由于当前迭代位置不可预置，那么next()方法的结果会变成不可预知。  除非再为Iterator接口添加一个reset()方法，用来重置当前迭代位置。<br>
 但即时这样，Collection也只能同时存在一个当前迭代位置。 而Iterable则不然，每次调用都会返回一个从头开始计数的迭代器。 多个迭代器是互不干扰的。</p>
 <h2 id="listiterator">ListIterator<a hidden class="anchor" aria-hidden="true" href="#listiterator">#</a></h2>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1397,9 +1397,9 @@ able结尾的表示<code>**能...样**，**可以做...**</code></p>
 </div>
 </div><h2 id="问题">问题<a hidden class="anchor" aria-hidden="true" href="#问题">#</a></h2>
 <h3 id="list和set的区别">list和set的区别<a hidden class="anchor" aria-hidden="true" href="#list和set的区别">#</a></h3>
-<p>list允许重复对象，set不允许重复对象
-list是有序容器，保留了每个元素的插入顺序，输出顺序就是插入顺序
-set是无序容器，无法保证每个元素的存储顺序
+<p>list允许重复对象，set不允许重复对象<br>
+list是有序容器，保留了每个元素的插入顺序，输出顺序就是插入顺序<br>
+set是无序容器，无法保证每个元素的存储顺序<br>
 list可以插入多个null元素，set只允许一个null元素</p>
 <h3 id="什么时候该使用什么样的集合">什么时候该使用什么样的集合：<a hidden class="anchor" aria-hidden="true" href="#什么时候该使用什么样的集合">#</a></h3>
 <ul>
@@ -1418,9 +1418,9 @@ list可以插入多个null元素，set只允许一个null元素</p>
 </li>
 </ul>
 <h3 id="用什么方法">用什么方法<a hidden class="anchor" aria-hidden="true" href="#用什么方法">#</a></h3>
-<p>看到array，就要想到角标。
-看到link，就要想到first，last。
-看到hash，就要想到hashCode，equals
+<p>看到array，就要想到角标。<br>
+看到link，就要想到first，last。<br>
+看到hash，就要想到hashCode，equals<br>
 看到tree，就要想到两个接口：Comparable，Comparator。</p>
 <h3 id="collection接口的方法">Collection接口的方法<a hidden class="anchor" aria-hidden="true" href="#collection接口的方法">#</a></h3>
 <ul>
@@ -1488,11 +1488,11 @@ list可以插入多个null元素，set只允许一个null元素</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>函数接口不同
-Enumeration只有2个函数接口。通过Enumeration，我们只能读取集合的数据，而不能对数据进行修改。
+</div><p>函数接口不同<br>
+Enumeration只有2个函数接口。通过Enumeration，我们只能读取集合的数据，而不能对数据进行修改。<br>
 Iterator只有3个函数接口。Iterator除了能读取集合的数据之外，也能数据进行删除操作。</p>
-<p>Iterator支持fail-fast机制，而Enumeration不支持。
-Enumeration 是JDK 1.0添加的接口。使用到它的函数包括Vector、Hashtable等类，这些类都是JDK 1.0中加入的，Enumeration存在的目的就是为它们提供遍历接口。Enumeration本身并没有支持同步，而在Vector、Hashtable实现Enumeration时，添加了同步。
+<p>Iterator支持fail-fast机制，而Enumeration不支持。<br>
+Enumeration 是JDK 1.0添加的接口。使用到它的函数包括Vector、Hashtable等类，这些类都是JDK 1.0中加入的，Enumeration存在的目的就是为它们提供遍历接口。Enumeration本身并没有支持同步，而在Vector、Hashtable实现Enumeration时，添加了同步。<br>
 而Iterator 是JDK 1.2才添加的接口，它也是为了HashMap、ArrayList等集合提供遍历接口。Iterator是支持fail-fast机制的：当多个线程对同一个集合的内容进行操作时，就可能会产生fail-fast事件。</p>
 <h2 id="iterator和enumeration实例">Iterator和Enumeration实例<a hidden class="anchor" aria-hidden="true" href="#iterator和enumeration实例">#</a></h2>
 <p>下面，我们编写一个Hashtable，然后分别通过 Iterator 和 Enumeration 去遍历它，比较它们的效率。代码如下：</p>
@@ -1633,9 +1633,9 @@ Enumeration 是JDK 1.0添加的接口。使用到它的函数包括Vector、Hash
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>运行结果如下：</p>
-<p>time: 9ms
+<p>time: 9ms<br>
 time: 5ms</p>
-<p>从中，我们可以看出。Enumeration 比 Iterator 的遍历速度更快。为什么呢？
+<p>从中，我们可以看出。Enumeration 比 Iterator 的遍历速度更快。为什么呢？<br>
 这是因为，Hashtable中Iterator是通过Enumeration去实现的，而且Iterator添加了对fail-fast机制的支持；所以，执行的操作自然要多一些。</p>
 
   </div>

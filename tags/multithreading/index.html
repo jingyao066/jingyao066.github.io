@@ -180,7 +180,8 @@
   </header>
   <div class="entry-content">
     <p>根据锁的添加到Java中的时间，Java中的锁，可以分为&#34;同步锁&#34;和&#34;JUC包中的锁&#34;。
-同步锁就是通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。 同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，从而在CPU上执行；而没有获取到同步锁的线程，必须进行等待，直到获取到同步锁之后才能继续运行。这就是多线程通过同步锁进行同步的原理。
+同步锁就是通过synchronized关键字来进行同步，实现对竞争资源的互斥访问的锁。Java 1.0版本中就已经支持同步锁了。
+同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，从而在CPU上执行；而没有获取到同步锁的线程，必须进行等待，直到获取到同步锁之后才能继续运行。这就是多线程通过同步锁进行同步的原理。
 下面主要介绍JUC包中的锁。
 ...</p>
   </div>
@@ -207,7 +208,10 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>线程优先级 java 中的线程优先级的范围是1～10，默认的优先级是5。10表示最高优先级，1表示最低优先级，5是普通优先级。“高优先级线程”会优先于“低优先级线程”执行。 java 中有两种线程：用户线程和守护线程。可以通过isDaemon()方法来区别它们：如果返回false，则说明该线程是“用户线程”；否则就是“守护线程”。 用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务，作用是为其他线程的运行提供便利服务，守护线程最典型的应用就是 GC (垃圾回收器)。 用户线程和守护线程两者几乎没有区别，唯一的不同之处就在于虚拟机的离开。需要注意的是：Java虚拟机在“用户线程”都结束后会后退出。
+    <p>线程优先级 java 中的线程优先级的范围是1～10，默认的优先级是5。10表示最高优先级，1表示最低优先级，5是普通优先级。“高优先级线程”会优先于“低优先级线程”执行。
+java 中有两种线程：用户线程和守护线程。可以通过isDaemon()方法来区别它们：如果返回false，则说明该线程是“用户线程”；否则就是“守护线程”。
+用户线程一般用户执行用户级任务，而守护线程也就是“后台线程”，一般用来执行后台任务，作用是为其他线程的运行提供便利服务，守护线程最典型的应用就是 GC (垃圾回收器)。
+用户线程和守护线程两者几乎没有区别，唯一的不同之处就在于虚拟机的离开。需要注意的是：Java虚拟机在“用户线程”都结束后会后退出。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-03-28 16:23:30 +0000 UTC'>2019-03-28</span>&nbsp;·&nbsp;Wjy</footer>
@@ -220,7 +224,14 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>interrupt介绍 JDK1.8官方文档描述如下： Interrupts this thread. Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown. If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException. If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread’s interrupt status will be set, and the thread will receive a ClosedByInterruptException. If this thread is blocked in a Selector then the thread’s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector’s wakeup method were invoked. If none of the previous conditions hold then this thread’s interrupt status will be set. Interrupting a thread that is not alive need not have any effect.
+    <p>interrupt介绍 JDK1.8官方文档描述如下：
+Interrupts this thread.
+Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown.
+If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException.
+If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread’s interrupt status will be set, and the thread will receive a ClosedByInterruptException.
+If this thread is blocked in a Selector then the thread’s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector’s wakeup method were invoked.
+If none of the previous conditions hold then this thread’s interrupt status will be set.
+Interrupting a thread that is not alive need not have any effect.
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-03-26 16:50:17 +0000 UTC'>2019-03-26</span>&nbsp;·&nbsp;Wjy</footer>
@@ -233,7 +244,8 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>yield()介绍 yield()的作用是让步。它能让当前线程由运行状态进入就绪状态，从而让其他具有相同优先级的等待线程获取执行权。 但是，并不能保证当前线程调佣yield()之后，其他具有相同优先级的线程就一定能获得执行权，也有可能是当前线程又进入到运行状态继续运行。
+    <p>yield()介绍 yield()的作用是让步。它能让当前线程由运行状态进入就绪状态，从而让其他具有相同优先级的等待线程获取执行权。
+但是，并不能保证当前线程调佣yield()之后，其他具有相同优先级的线程就一定能获得执行权，也有可能是当前线程又进入到运行状态继续运行。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2019-03-26 15:07:56 +0000 UTC'>2019-03-26</span>&nbsp;·&nbsp;Wjy</footer>

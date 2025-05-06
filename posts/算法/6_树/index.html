@@ -629,16 +629,16 @@
 <li>“递”表示开启新方法，程序在此过程中访问下一个节点。</li>
 <li>“归”表示函数返回，代表当前节点已经访问完毕。</li>
 </ol>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step9.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step10.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step9.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step10.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/preorder_step11.png"></p>
 <h3 id="复杂度分析-1">复杂度分析<a hidden class="anchor" aria-hidden="true" href="#复杂度分析-1">#</a></h3>
 <ul>
@@ -888,9 +888,9 @@
 <li>若 <code>cur.val &gt; num</code> ，说明目标节点在 <code>cur</code> 的左子树中，因此执行 <code>cur = cur.left</code> 。</li>
 <li>若 <code>cur.val = num</code> ，说明找到目标节点，跳出循环并返回该节点。</li>
 </ul>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_search_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_search_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_search_step3.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_search_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_search_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_search_step3.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_search_step4.png"></p>
 <p>二叉搜索树的查找操作与二分查找算法的工作原理一致，都是每轮排除一半情况。循环次数最多为二叉树的高度，当二叉树平衡时，使用 𝑂(log⁡𝑛) 时间。示例代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1022,9 +1022,9 @@
 <li>找到待删除节点在“中序遍历序列”中的下一个节点，记为 <code>tmp</code> 。</li>
 <li>用 <code>tmp</code> 的值覆盖待删除节点的值，并在树中递归删除节点 <code>tmp</code> 。</li>
 </ol>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_remove_case3_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_remove_case3_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_remove_case3_step3.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_remove_case3_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_remove_case3_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_remove_case3_step3.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/bst_remove_case3_step4.png"></p>
 <p>删除节点操作同样使用 𝑂(log⁡𝑛) 时间，其中查找待删除节点需要 𝑂(log⁡𝑛) 时间，获取中序遍历后继节点需要 𝑂(log⁡𝑛) 时间。示例代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1270,9 +1270,9 @@
 <p>我们将平衡因子绝对值 &gt;1 的节点称为“失衡节点”。根据节点失衡情况的不同，旋转操作分为四种：右旋、左旋、先右旋后左旋、先左旋后右旋。下面详细介绍这些旋转操作。</p>
 <h3 id="右旋">右旋<a hidden class="anchor" aria-hidden="true" href="#右旋">#</a></h3>
 <p>如图 7-26 所示，节点下方为平衡因子。从底至顶看，二叉树中首个失衡节点是“节点 3”。我们关注以该失衡节点为根节点的子树，将该节点记为 <code>node</code> ，其左子节点记为 <code>child</code> ，执行“右旋”操作。完成右旋后，子树恢复平衡，并且仍然保持二叉搜索树的性质。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_step3.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_step3.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_step4.png"></p>
 <p>如图 7-27 所示，当节点 <code>child</code> 有右子节点（记为 <code>grand_child</code> ）时，需要在右旋中添加一步：将 <code>grand_child</code> 作为 <code>node</code> 的左子节点。</p>
 <p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/6_%E6%A0%91/avltree_right_rotate_with_grandchild.png"></p>

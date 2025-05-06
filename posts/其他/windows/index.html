@@ -63,7 +63,8 @@ netstat -ano">
 <meta property="og:url" content="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/windows/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="windows">
-  <meta property="og:description" content="查看端口占用 查看全部端口： netstat -ano">
+  <meta property="og:description" content="查看端口占用 查看全部端口：
+netstat -ano">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -103,11 +104,11 @@ netstat -ano">
   "@type": "BlogPosting",
   "headline": "windows",
   "name": "windows",
-  "description": "查看端口占用 查看全部端口： netstat -ano\n",
+  "description": "查看端口占用 查看全部端口：\nnetstat -ano\n",
   "keywords": [
     "其他"
   ],
-  "articleBody": "查看端口占用 查看全部端口： netstat -ano\n查看指定端口： netstat -ano | findstr 8080\n找到被占用端口的PID，就是上边结果的最后一列，并输入 tasklist | findstr \"上边的PID\" 可以看到被占用的程序名。\n可以通过程序名结束掉它： taskkill /f /t /im Tencentdl.exe。\n或直接通过PID结束它： taskkill /f /t /im 上边的PID\n或通过任务管理器结束该程序，如果看不到PID，随意找到一选项卡右键，勾选PID即可，然后可以右键结束掉该程序。\n获取当前连接的wifi密码 查看电脑连接过的WiFi名称 netsh wlan show profiles\n选择自己要查询的wifi netsh wlan show profiles WiFi名称 key=clear 关键内容就是这个wifi的密码。\nOracleJDK 和 OpenJDK 的选择 2021 年 9 月，Oracle 宣布 JDK17 可以免费商用，直到下一个 LTS 版本之后继续提供整整一年，同时 Oracle 将继续按照自 Java 9 以来的相同版本和时间表提供 GPL 下的 Oracle OpenJDK 版本。 2023 年 9 月，OracleJDK 发布了新的 LTS 版本 JDK21，这就意味着从 2024 年 9 月开始，在生产环境使用 OracleJDK17 将需要付费。 参考：https://www.oracle.com/hk/java/technologies/downloads/#java17\nOracleJDK 和 OpenJDK 这两个之间没有真正的技术差别，因为针对 Oracle JDK 构建过程是基于 OpenJDK 的。自从 JDK11 开始，OracleJDK 和 OpenJDK 在功能上基本相同，所以推荐使用 OpenJDK17 或其他开源的 JDK 版本，这些开源版本都是基于 OpenJDK 构建并提供长期支持的，比如：AdoptOpenJDK、RedHatOpenJDK。\n参考：https://blogs.oracle.com/java/post/oracle-jdk-releases-for-java-11-and-later\noracle JDK OpenJDK 是否收费 默认商业收费，JDK17免费商用截止到下一个LTS版本（2024.9） 开源项目(GPLV2许可证)，可免费用于商业用途，允许自由使用、修改和分发 发布频率 3年发布一次，提供LTS 6个月发布一次，无LTS 功能差异 功能基本一致，遵循特定的加密政策，要求第三方加密提供者必须使用已知证书进行签名。支持使用情况日志记录 功能基本一致，加密框架具有开放的加密接口，不限制可以使用的加密提供者，不支持使用情况日志记录 安装方式 包含安装程序、品牌和RE打包提供 以zip和tar.gz文件形式提供 识别方式 java-version命令响应关键标识：JavaHotSpot java-version命令响应关键标识：OpenJDK open jdk 安装 官网下载： https://jdk.java.net/archive/\noracle jdk 商用是要收费的。而且open jdk 和 oracle区别不大，所以建议使用open jdk。 下载完成后解压到理想位置。如：D:\\dev\\jdk-21.0.1\n新建系统环境变量： 变量名：JAVA_HOME 变量值：D:\\dev\\jdk-21.0.1，刚下载的jdk解压的路径\n注意：以上添加必须在【系统变量】 在PATH中添加%JAVA_HOME%\\bin 打开cmd，输入java -version，验证结果。\noracle jdk 安装 Oracle官网下载jdk 需要登录才可以下载。\n配置jdk环境变量：\n不建议将jdk安装到默认路径，会有问题。 默认安装路径：C:\\Program Files\\Java\\jdk-12 Program Files这个文件夹名字中有空格，RocketMQ的nameServer在启动时，会报错。 还是安装到D盘比较好：D:\\Java\\jdk-12\n右键我的电脑-高级设置-环境变量\n系统变量-新建 变量名：JAVA_HOME 变量值：D:\\Java\\jdk-12 即本机jdk的安装目录，目录下需要看到bin、lib等文件夹。\n找到系统变量中的 Path 变量-编辑 win7、8： 在变量值最后输入%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin; （注意原来Path的变量值末尾有没有;号，如果没有，先输入；号再输入上面的代码） 由于 win10 的不同，当选中 Path 变量的时候，系统会很方便的把所有不同路径都分开了，不会像 win7 或者 win8 那样连在一起。 win10： 点击path-\u003e新建，新建两条路径\n1 2 %JAVA_HOME%\\bin %JAVA_HOME%\\jre\\bin 系统变量→新建 CLASSPATH 变量 变量值填写 .;%JAVA_HOME%\\lib;%JAVA_HOME%\\lib\\tools.jar （注意最前面有一点） 系统变量配置完毕\n验证 打开cmd，输入java -version 显示版本信息 输入javac 显示候选命令 成功！\nwindows 多jdk 前置条件：你需要的多个jdk已经下载并解压好，如 java8、java17、java21。 首先需要为两个jdk指定安装目录，博主的两个jdk版本分别是8和17，因此配置两个变量，指向jdk安装目录，用数字区分他们。\n创建系统变量： 变量名：JAVA_HOME_8 变量值：D:\\dev\\jdk-8，你的java8的安装或解压路径。\n再用同样的方法配置Java17 变量名：JAVA_HOME_17 变量值：D:\\dev\\jdk-17，你的java17的安装或解压路径。\n接着就是正式指定要使用的jdk版本了，新建一个名为JAVA_HOME的变量，指定对应的jdk版本。 变量名：JAVA_HOME 变量值：%JAVA_HOME_17%，刚刚配置的，根据数字指定要使用的版本。\n然后配置CLASSPATH环境变量，注意标点符号不要少。\n1 2 变量名：CLASSPATH 变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar; 最后配置Path环境变量，双击Path环境变量，新建两条：\n1 2 %JAVA_HOME%\\bin %JAVA_HOME%\\jre\\bin 并移动到最上方，一定要进行移动，不然后面切换jdk版本会失败。 这样整个jdk运行环境就配置好了，我们来验证下效果。\n打开cmd，输入echo %JAVA_HOME%，可以看到当前指向了jdk1.8的安装目录。查看jdk版本，输入：java -version，当前jdk版本为1.8。 切换版本，将JAVA_HOME的变量值改为%JAVA_HOME_17% 查看切换结果，关掉原来的命令行窗口，重新打开一个。 输入echo %JAVA_HOME%，发现指向了jdk17的安装目录。 接着查看jdk版本，java -version，切换到了jdk17。\n如果切换不成功，这可能是安装jdk时，自动生成了优先级更高的配置项，使用以下方式解决。 删除C:\\ProgramData\\Oracle\\Java\\javapath下的三个文件，windows后面会从指定的jdk版本的安装目录重新复制这三个文件放到该目录。\n开发工具 环境：jdk、maven、nodejs、git 工具：idea、dataGrip、vsCode、cursor ssh：Xshell、Termius、Tabby、MobaXterm 连接redis：Another Redis Desktop Manager 管理git：ugit\n其他工具 浏览器：edge、chrome、firefox 通讯：微信pc、飞书、企微、钉钉 解压缩：bindzip 截图：Snipaste 文档：word、excel、ppt utools、everything 火绒 powerToys LocalSend PotPlayer Obsidian wiztree\nnotepad++主题和字体设置 设置-\u003e语言格式设置 选择主题：Obsidian 字体样式：Segoe UI、微软雅黑、Consolas 字体大小：12\nnotepad++设置列边界： 一行代码不超过80个字符，一行注释的字符数更少，这是一条古老的编程规范，现在很多人都还在坚守。带来的好处是，代码的lay-out优雅美观，视觉上更清晰，更容易减少错误发现bug。 Notepad++可以设置一条80个字符宽的垂直线，使我们在编写代码的时候，可以清晰有效执行这条古老的编程规范。\n设置-\u003e首选项-\u003e编辑-\u003e列边界设置 然后在下面输入自己想要的字符数。 这个功能还有个重要的作用，在写markdown的时候，一行如果过长不便于编辑，过短在hexo中显示又不美观。可以通过列边界，达到理想的效果。\nmaven配置 去官网下载 下载-bin.zip后解压并记住根路径，然后在系统变量中分别添加： M2_HOME MAVEN_HOME 值是maven的根路径。 然后，在系统变量中找到Path，编辑-\u003e新建 %MAVEN_HOME%\\bin 然后打开cmd，输入mvn -v，看到版本号说明成功。\nwindows安装mysql_8.0（不推荐，请使用wsl2安装） 官网下载：https://dev.mysql.com/downloads/mysql/\n点击MySQL Community Edition (GPL) 下面的download，位于页面最下边。\n点击MySQL Community Server (GPL)下面的download\n页面最下边的有三种安装包。 安装版 .msi结尾的 Windows (x86, 64-bit), ZIP Archive 免安装版，解压即可。 Windows (x86, 64-bit), ZIP Archive Debug Binaries \u0026 Test Suite，带工具包版本。 这里下载第二个，免安装版，下载之后解压到你想要的位置。\n在解压的根目录新建一个 my.ini 的文件，然后加入以下内容：（basedir datadir 这两个的值一定要改成你自己的目录地址）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 [mysql] # 设置mysql客户端默认字符集 default-character-set=utf8 [mysqld] # 设置3306端口 port = 3306 # 设置mysql的安装目录 basedir=D:\\install\\mysql-8.0.15-winx64 # 设置mysql数据库的数据的存放目录 datadir=D:\\install\\mysql-8.0.15-winx64\\data # 允许最大连接数 max_connections=200 # 服务端使用的字符集默认为8比特编码的latin1字符集 character-set-server=utf8 # 创建新表时将使用的默认存储引擎 default-storage-engine=INNODB 添加环境变量 我的电脑右键属性–\u003e高级系统设置–\u003e环境变量–\u003e系统变量中找到Path–\u003e点击编辑–\u003e新建 加入Mysql的bin目录路径；\n在mysql的bin目录以管理员身份运行cmd，以此输入 mysqld --install安装 mysqld --initialize初始化 net start mysql运行 初始化后在Mysql的根目录会生成 data 数据库文件夹，如果启动服务失败，很有可能就是这个data文件夹有问题，删掉重新执行上边的步骤。\n登陆mysql mysql -u root -p 此时需要输入mysql的默认密码，在mysql的安装目录下搜索*.err，以文本形式打开可以看到一些内容： 搜索文本A temporary password is generated for root@localhost: localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键，将密码黏贴，回车，登录成功。\n登录成功后必须修改密码才能进行其他操作。 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你的新密码';\n配置远程连接mysql： 在mysql的bin目录下执行： mysql -u root -p密码 use mysql; update user set host='%' where user ='root';修改连接权限 update user set plugin='mysql_native_password' where user ='root';更改加密方式： flush privileges;执行刷新权限\npostman配置环境变量 左上角new-\u003eEnvironment\n最上边：这一套环境变量的名字 VARIABLE：变量名字 CURRENT VALUE：变量值 initial value：不填 示例： environment name：本地\n1 2 variable：host current value：localhost 1 2 variable：port current value：8000 1 2 variable：h current value：http:// 使用方法 {{h}}{{host}}{{port}}/zjx/api/home/padHome\n以此类推，根据需要，再创建测试环境、生产环境的环境变量。 请求接口时，就可以通过切换postman右上角的environment按钮，来切换环境，很方便。\n参考\nchrome快捷键 标签页和窗口快捷键 操作 快捷键 打开新窗口 Ctrl + N 在无痕模式下打开新窗口 Ctrl + Shift + N 打开新的标签页，并跳转到该标签页 Ctrl + T 按标签页的关闭顺序重新打开先前关闭的标签页 Ctrl + Shift + T 跳转到下一个打开的标签页 Ctrl + Tab 或 Ctrl + PgDn 跳转到上一个打开的标签页 Ctrl + Shift + Tab 或 Ctrl + PgUp 跳转到特定标签页 Ctrl + 1 到 Ctrl + 8 跳转到最右侧的那个标签页 Ctrl + 9 在当前标签页中打开主页 Alt + Home 打开当前标签页浏览记录中记录的上一个页面 Alt + 向左箭头键 打开当前标签页浏览记录中记录的下一个页面 Alt + 向右键 关闭当前标签页 Ctrl + W 或 Ctrl + F4 关闭当前窗口 Ctrl + Shift + W 或 Alt + F4 最小化当前窗口 Alt + 空格键，然后按 n 键 最大化当前窗口 Alt + 空格键，然后按 x 键 退出 Google Chrome Alt + F，然后按 x 键 向右或向左移动标签页 Ctrl + Shift + PgUp 或 Ctrl + Shift + PgDn 将当前标签页在新标签页打开 Ctrl + Shift + K 功能快捷键 操作 快捷键 打开\"菜单\" Alt + f、Alt + e 或 F10 显示或隐藏书签栏 Ctrl + Shift + b 打开书签管理器 Ctrl + Shift + o 在新标签页中打开\"历史记录\"页 Ctrl + h 在新标签页中打开\"下载内容\"页 Ctrl + j 打开 Chrome 任务管理器 Shift + Esc 将焦点放置在 Chrome 工具栏中的第一项上 Shift + Alt + t 在地址栏、书签栏（若显示）和页面内容之间向前切换焦点 F6 在地址栏、书签栏（若显示）和页面内容之间向后切换焦点 Shift + F6 打开查找栏搜索当前网页 Ctrl + f 或 F3 跳转到与查找栏中搜索字词相匹配的下一条内容 Ctrl + g 跳转到与查找栏中搜索字词相匹配的上一条内容 Ctrl + Shift + g 打开\"开发者工具\" Ctrl + Shift + j 或 F12 打开\"清除浏览数据\"选项 Ctrl + Shift + Delete 在新标签页中打开 Chrome 帮助中心 F1 开启光标浏览模式 F7，有点用 使用其他帐户登录或进入隐身模式 Ctrl + Shift + m 打开反馈表单 Ctrl + Shift + i 将焦点移到非使用中的对话框 Alt + Shift + A 地址栏快捷键 操作 快捷键 使用默认搜索引擎进行搜索 在地址栏输入搜索字词并按 Enter 键 使用其他搜索引擎进行搜索 输入搜索引擎名称并按 Tab 键 为网站名称添加 www. 和 .com，并在当前标签页中打开该网站 输入网站名称并按 Ctrl + Enter 键（有用，可以只输入网站名了） 为网站名称添加 www. 和 .com，并在新标签页中打开该网站 输入网站名称并按 Alt + Enter 键 跳转到地址栏 Ctrl + l、Alt + d 或 F6 从页面中的任意位置搜索 Ctrl + k 或 Ctrl + e 从地址栏中移除联想查询内容 按向下键以突出显示相应内容，然后按 Shift + Delete 键 将光标移到地址栏 Ctrl + F5 网页快捷键 操作 快捷键 打开选项以打印当前网页 Ctrl + p 打开选项以保存当前网页 Ctrl + s 重新加载当前网页 F5 或 Ctrl + r 重新加载当前网页（忽略缓存的内容） Shift + F5 或 Ctrl + Shift + r 停止加载网页 Esc 浏览下一个可点击项 Tab 浏览上一个可点击项 Shift + Tab 使用 Chrome 打开计算机中的文件 按住 Ctrl + o 键并选择文件 显示当前网页的 HTML 源代码（不可修改） Ctrl + u 将当前网页保存为书签 Ctrl + d 将所有打开的标签页以书签的形式保存在新文件夹中 Ctrl + Shift + d 开启或关闭全屏模式 F11 放大网页上的所有内容 Ctrl 和 + 缩小网页上的所有内容 Ctrl 和 - 将网页上的所有内容恢复到默认大小 Ctrl + 0 向下滚动网页，一次一个屏幕 空格键或 PgDn 向上滚动网页，一次一个屏幕 Shift + 空格键或 PgUp 转到网页顶部 首页 转到网页底部 末尾 在网页上水平滚动（就是左右滚动） 按住 Shift 键并滚动鼠标滚轮 将光标移到文本字段中的上一个字词前面 Ctrl + 向左箭头键 将光标移到文本字段中的上一个字词后面 Ctrl + 向右箭头键 删除文本字段中的上一个字词 Ctrl + Backspace 将焦点移到通知上 Alt + n 在通知中允许 Alt + Shift + a 在通知中拒绝 Alt + Shift + d 在当前标签页中打开主页 Alt + Home 鼠标快捷键 操作 快捷键 在当前标签页中打开链接（仅限鼠标） 将链接拖到标签页中 在新的后台标签页中打开链接 按住 Ctrl 键的同时点击链接 打开链接，并跳转到该链接 按住 Ctrl + Shift 键的同时点击链接 打开链接，并跳转到该链接（仅使用鼠标） 将链接拖到标签栏的空白区域 在新窗口中打开链接 按住 Shift 键的同时点击链接 在新窗口中打开标签页（仅使用鼠标） 将标签页拖出标签栏 将标签页移至当前窗口（仅限鼠标） 将标签页拖到现有窗口中 将标签页移回其原始位置 拖动标签页的同时按 Esc 将当前网页保存为书签 将相应网址拖动到书签栏中 下载链接目标 按住 Alt 键的同时点击链接 显示浏览记录 右键点击\"后退\"箭头 返回 或\"前进\"箭头 下一个，或者点击并按住\"后退\"箭头 返回 或\"前进\"箭头 下一个 最大化或最小化窗口 双击标签栏的空白区域 放大网页上的所有内容 按住 Ctrl 键的同时向上滚动鼠标滚轮 缩小网页上的所有内容 按住 Ctrl 键的同时向下滚动鼠标滚轮 windows休眠后，分辨率改变导致任务窗口缩放的问题 方案一 设置-\u003e系统-\u003e屏幕-\u003e多显示器-\u003e（勾选）基础显示器连接记住窗口位置\n方案二 参考：Windows唤醒后窗口位移至左上角且尺寸缩小解决方案 | Sirius (siriusq.top) 按下 WIN+R，输入 regedit 后回车，打开注册表编辑器，定位到\n1 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers 三个里面的记录全部删掉然后重启，重启后 Windows 会重新识别现在连接的显示器：\n1 2 3 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Connectivity HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\ScaleFactors 一般到这里问题就解决了，重启下显示器或者睡眠唤醒一下检测一下。 如果你的电脑问题依旧的话，尝试关闭显示器开关再打开，然后刷新一下注册表编辑器，可以看到 Configuration 下面多了一项 NOEDIDxxxxxxx，修改 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration\\NOEDIDxxxxxxx\\00 中的 PrimSurfSize.cx 和 PrimSurfSize.cy 的值为当前显示器的分辨率，注意这个 00 下面还有一个 00，里面的也要改。\n解决方案来源 1：Stefan Traistaru 解决方案来源 2：atwitsend42\n方案三 参考：https://www.cnblogs.com/kingchan/p/10905475.html\n长时间休眠或锁屏后，任务窗口会缩小，使用的是4k的显示器，系统分辨率为3840*2160。 推测是因为休眠时候，系统的分辨率变小，例如变为了1980*1080。结束休眠或开屏时，系统分辨率回到3840*2160，而任务窗口没有随分辨率改变，导致的任务窗口缩放。\n解决方法：打开注册表：win+R，regedit。 路径：HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration 在Configuration项下查找SIMULATED或NOEDID开头的项（反正我把Configuration下所有的内容都改了）\n查找的项展开有个00项，00项展开又还有个00项，两个00项都要修改；\n1 2 PrimSurfSize.cx PrimSurfSize.cy 把这两个键值双击修改，选中基数十进制，输入你电脑对应的正常分辨率数值，\n比如PrimSurfSize.cx为3840，PrimSurfSize.cy为2160。 重启Windows，唤醒Windows设备就应该正常不会出现任务窗口缩放的问题了。 这个键是用来设置当没有输入源时，windows的默认分辨率的，主要目的是当突然更换显示器的时候（比如故障送修，比如显卡损坏等等），系统把默认分辨率设置为基础分辨率（1024x768），避免因为分辨率问题造成替换显示器无法正常显示。\n",
+  "articleBody": "查看端口占用 查看全部端口：\nnetstat -ano\n查看指定端口：\nnetstat -ano | findstr 8080\n找到被占用端口的PID，就是上边结果的最后一列，并输入\ntasklist | findstr \"上边的PID\"\n可以看到被占用的程序名。\n可以通过程序名结束掉它：\ntaskkill /f /t /im Tencentdl.exe。\n或直接通过PID结束它：\ntaskkill /f /t /im 上边的PID\n或通过任务管理器结束该程序，如果看不到PID，随意找到一选项卡右键，勾选PID即可，然后可以右键结束掉该程序。\n获取当前连接的wifi密码 查看电脑连接过的WiFi名称\nnetsh wlan show profiles\n选择自己要查询的wifi\nnetsh wlan show profiles WiFi名称 key=clear\n关键内容就是这个wifi的密码。\nOracleJDK 和 OpenJDK 的选择 2021 年 9 月，Oracle 宣布 JDK17 可以免费商用，直到下一个 LTS 版本之后继续提供整整一年，同时 Oracle 将继续按照自 Java 9 以来的相同版本和时间表提供 GPL 下的 Oracle OpenJDK 版本。\n2023 年 9 月，OracleJDK 发布了新的 LTS 版本 JDK21，这就意味着从 2024 年 9 月开始，在生产环境使用 OracleJDK17 将需要付费。\n参考：https://www.oracle.com/hk/java/technologies/downloads/#java17\nOracleJDK 和 OpenJDK 这两个之间没有真正的技术差别，因为针对 Oracle JDK 构建过程是基于 OpenJDK 的。自从 JDK11 开始，OracleJDK 和 OpenJDK 在功能上基本相同，所以推荐使用 OpenJDK17 或其他开源的 JDK 版本，这些开源版本都是基于 OpenJDK 构建并提供长期支持的，比如：AdoptOpenJDK、RedHatOpenJDK。\n参考：https://blogs.oracle.com/java/post/oracle-jdk-releases-for-java-11-and-later\noracle JDK OpenJDK 是否收费 默认商业收费，JDK17免费商用截止到下一个LTS版本（2024.9） 开源项目(GPLV2许可证)，可免费用于商业用途，允许自由使用、修改和分发 发布频率 3年发布一次，提供LTS 6个月发布一次，无LTS 功能差异 功能基本一致，遵循特定的加密政策，要求第三方加密提供者必须使用已知证书进行签名。支持使用情况日志记录 功能基本一致，加密框架具有开放的加密接口，不限制可以使用的加密提供者，不支持使用情况日志记录 安装方式 包含安装程序、品牌和RE打包提供 以zip和tar.gz文件形式提供 识别方式 java-version命令响应关键标识：JavaHotSpot java-version命令响应关键标识：OpenJDK open jdk 安装 官网下载：\nhttps://jdk.java.net/archive/\noracle jdk 商用是要收费的。而且open jdk 和 oracle区别不大，所以建议使用open jdk。\n下载完成后解压到理想位置。如：D:\\dev\\jdk-21.0.1\n新建系统环境变量：\n变量名：JAVA_HOME\n变量值：D:\\dev\\jdk-21.0.1，刚下载的jdk解压的路径\n注意：以上添加必须在【系统变量】\n在PATH中添加%JAVA_HOME%\\bin\n打开cmd，输入java -version，验证结果。\noracle jdk 安装 Oracle官网下载jdk\n需要登录才可以下载。\n配置jdk环境变量：\n不建议将jdk安装到默认路径，会有问题。\n默认安装路径：C:\\Program Files\\Java\\jdk-12\nProgram Files这个文件夹名字中有空格，RocketMQ的nameServer在启动时，会报错。\n还是安装到D盘比较好：D:\\Java\\jdk-12\n右键我的电脑-高级设置-环境变量\n系统变量-新建\n变量名：JAVA_HOME\n变量值：D:\\Java\\jdk-12\n即本机jdk的安装目录，目录下需要看到bin、lib等文件夹。\n找到系统变量中的 Path 变量-编辑\nwin7、8：\n在变量值最后输入%JAVA_HOME%\\bin;%JAVA_HOME%\\jre\\bin;\n（注意原来Path的变量值末尾有没有;号，如果没有，先输入；号再输入上面的代码）\n由于 win10 的不同，当选中 Path 变量的时候，系统会很方便的把所有不同路径都分开了，不会像 win7 或者 win8 那样连在一起。\nwin10：\n点击path-\u003e新建，新建两条路径\n1 2 %JAVA_HOME%\\bin %JAVA_HOME%\\jre\\bin 系统变量→新建 CLASSPATH 变量\n变量值填写 .;%JAVA_HOME%\\lib;%JAVA_HOME%\\lib\\tools.jar （注意最前面有一点）\n系统变量配置完毕\n验证\n打开cmd，输入java -version 显示版本信息\n输入javac 显示候选命令\n成功！\nwindows 多jdk 前置条件：你需要的多个jdk已经下载并解压好，如 java8、java17、java21。\n首先需要为两个jdk指定安装目录，博主的两个jdk版本分别是8和17，因此配置两个变量，指向jdk安装目录，用数字区分他们。\n创建系统变量：\n变量名：JAVA_HOME_8\n变量值：D:\\dev\\jdk-8，你的java8的安装或解压路径。\n再用同样的方法配置Java17\n变量名：JAVA_HOME_17\n变量值：D:\\dev\\jdk-17，你的java17的安装或解压路径。\n接着就是正式指定要使用的jdk版本了，新建一个名为JAVA_HOME的变量，指定对应的jdk版本。\n变量名：JAVA_HOME\n变量值：%JAVA_HOME_17%，刚刚配置的，根据数字指定要使用的版本。\n然后配置CLASSPATH环境变量，注意标点符号不要少。\n1 2 变量名：CLASSPATH 变量值：.;%JAVA_HOME%\\lib\\dt.jar;%JAVA_HOME%\\lib\\tools.jar; 最后配置Path环境变量，双击Path环境变量，新建两条：\n1 2 %JAVA_HOME%\\bin %JAVA_HOME%\\jre\\bin 并移动到最上方，一定要进行移动，不然后面切换jdk版本会失败。\n这样整个jdk运行环境就配置好了，我们来验证下效果。\n打开cmd，输入echo %JAVA_HOME%，可以看到当前指向了jdk1.8的安装目录。查看jdk版本，输入：java -version，当前jdk版本为1.8。\n切换版本，将JAVA_HOME的变量值改为%JAVA_HOME_17%\n查看切换结果，关掉原来的命令行窗口，重新打开一个。\n输入echo %JAVA_HOME%，发现指向了jdk17的安装目录。\n接着查看jdk版本，java -version，切换到了jdk17。\n如果切换不成功，这可能是安装jdk时，自动生成了优先级更高的配置项，使用以下方式解决。\n删除C:\\ProgramData\\Oracle\\Java\\javapath下的三个文件，windows后面会从指定的jdk版本的安装目录重新复制这三个文件放到该目录。\n开发工具 环境：jdk、maven、nodejs、git\n工具：idea、dataGrip、vsCode、cursor\nssh：Xshell、Termius、Tabby、MobaXterm\n连接redis：Another Redis Desktop Manager\n管理git：ugit\n其他工具 浏览器：edge、chrome、firefox\n通讯：微信pc、飞书、企微、钉钉\n解压缩：bindzip\n截图：Snipaste\n文档：word、excel、ppt\nutools、everything\n火绒\npowerToys\nLocalSend\nPotPlayer\nObsidian\nwiztree\nnotepad++主题和字体设置 设置-\u003e语言格式设置\n选择主题：Obsidian\n字体样式：Segoe UI、微软雅黑、Consolas\n字体大小：12\nnotepad++设置列边界：\n一行代码不超过80个字符，一行注释的字符数更少，这是一条古老的编程规范，现在很多人都还在坚守。带来的好处是，代码的lay-out优雅美观，视觉上更清晰，更容易减少错误发现bug。\nNotepad++可以设置一条80个字符宽的垂直线，使我们在编写代码的时候，可以清晰有效执行这条古老的编程规范。\n设置-\u003e首选项-\u003e编辑-\u003e列边界设置\n然后在下面输入自己想要的字符数。\n这个功能还有个重要的作用，在写markdown的时候，一行如果过长不便于编辑，过短在hexo中显示又不美观。可以通过列边界，达到理想的效果。\nmaven配置 去官网下载\n下载-bin.zip后解压并记住根路径，然后在系统变量中分别添加：\nM2_HOME\nMAVEN_HOME\n值是maven的根路径。\n然后，在系统变量中找到Path，编辑-\u003e新建\n%MAVEN_HOME%\\bin\n然后打开cmd，输入mvn -v，看到版本号说明成功。\nwindows安装mysql_8.0（不推荐，请使用wsl2安装） 官网下载：https://dev.mysql.com/downloads/mysql/\n点击MySQL Community Edition (GPL) 下面的download，位于页面最下边。\n点击MySQL Community Server (GPL)下面的download\n页面最下边的有三种安装包。\n安装版 .msi结尾的\nWindows (x86, 64-bit), ZIP Archive 免安装版，解压即可。\nWindows (x86, 64-bit), ZIP Archive Debug Binaries \u0026 Test Suite，带工具包版本。\n这里下载第二个，免安装版，下载之后解压到你想要的位置。\n在解压的根目录新建一个 my.ini 的文件，然后加入以下内容：（basedir datadir 这两个的值一定要改成你自己的目录地址）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 [mysql] # 设置mysql客户端默认字符集 default-character-set=utf8 [mysqld] # 设置3306端口 port = 3306 # 设置mysql的安装目录 basedir=D:\\install\\mysql-8.0.15-winx64 # 设置mysql数据库的数据的存放目录 datadir=D:\\install\\mysql-8.0.15-winx64\\data # 允许最大连接数 max_connections=200 # 服务端使用的字符集默认为8比特编码的latin1字符集 character-set-server=utf8 # 创建新表时将使用的默认存储引擎 default-storage-engine=INNODB 添加环境变量\n我的电脑右键属性–\u003e高级系统设置–\u003e环境变量–\u003e系统变量中找到Path–\u003e点击编辑–\u003e新建 加入Mysql的bin目录路径；\n在mysql的bin目录以管理员身份运行cmd，以此输入\nmysqld --install安装\nmysqld --initialize初始化\nnet start mysql运行\n初始化后在Mysql的根目录会生成 data 数据库文件夹，如果启动服务失败，很有可能就是这个data文件夹有问题，删掉重新执行上边的步骤。\n登陆mysql\nmysql -u root -p\n此时需要输入mysql的默认密码，在mysql的安装目录下搜索*.err，以文本形式打开可以看到一些内容：\n搜索文本A temporary password is generated for root@localhost: localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键，将密码黏贴，回车，登录成功。\n登录成功后必须修改密码才能进行其他操作。\nALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你的新密码';\n配置远程连接mysql：\n在mysql的bin目录下执行：\nmysql -u root -p密码\nuse mysql;\nupdate user set host='%' where user ='root';修改连接权限\nupdate user set plugin='mysql_native_password' where user ='root';更改加密方式：\nflush privileges;执行刷新权限\npostman配置环境变量 左上角new-\u003eEnvironment\n最上边：这一套环境变量的名字 VARIABLE：变量名字 CURRENT VALUE：变量值 initial value：不填 示例：\nenvironment name：本地\n1 2 variable：host current value：localhost 1 2 variable：port current value：8000 1 2 variable：h current value：http:// 使用方法\n{{h}}{{host}}{{port}}/zjx/api/home/padHome\n以此类推，根据需要，再创建测试环境、生产环境的环境变量。\n请求接口时，就可以通过切换postman右上角的environment按钮，来切换环境，很方便。\n参考\nchrome快捷键 标签页和窗口快捷键 操作 快捷键 打开新窗口 Ctrl + N 在无痕模式下打开新窗口 Ctrl + Shift + N 打开新的标签页，并跳转到该标签页 Ctrl + T 按标签页的关闭顺序重新打开先前关闭的标签页 Ctrl + Shift + T 跳转到下一个打开的标签页 Ctrl + Tab 或 Ctrl + PgDn 跳转到上一个打开的标签页 Ctrl + Shift + Tab 或 Ctrl + PgUp 跳转到特定标签页 Ctrl + 1 到 Ctrl + 8 跳转到最右侧的那个标签页 Ctrl + 9 在当前标签页中打开主页 Alt + Home 打开当前标签页浏览记录中记录的上一个页面 Alt + 向左箭头键 打开当前标签页浏览记录中记录的下一个页面 Alt + 向右键 关闭当前标签页 Ctrl + W 或 Ctrl + F4 关闭当前窗口 Ctrl + Shift + W 或 Alt + F4 最小化当前窗口 Alt + 空格键，然后按 n 键 最大化当前窗口 Alt + 空格键，然后按 x 键 退出 Google Chrome Alt + F，然后按 x 键 向右或向左移动标签页 Ctrl + Shift + PgUp 或 Ctrl + Shift + PgDn 将当前标签页在新标签页打开 Ctrl + Shift + K 功能快捷键 操作 快捷键 打开\"菜单\" Alt + f、Alt + e 或 F10 显示或隐藏书签栏 Ctrl + Shift + b 打开书签管理器 Ctrl + Shift + o 在新标签页中打开\"历史记录\"页 Ctrl + h 在新标签页中打开\"下载内容\"页 Ctrl + j 打开 Chrome 任务管理器 Shift + Esc 将焦点放置在 Chrome 工具栏中的第一项上 Shift + Alt + t 在地址栏、书签栏（若显示）和页面内容之间向前切换焦点 F6 在地址栏、书签栏（若显示）和页面内容之间向后切换焦点 Shift + F6 打开查找栏搜索当前网页 Ctrl + f 或 F3 跳转到与查找栏中搜索字词相匹配的下一条内容 Ctrl + g 跳转到与查找栏中搜索字词相匹配的上一条内容 Ctrl + Shift + g 打开\"开发者工具\" Ctrl + Shift + j 或 F12 打开\"清除浏览数据\"选项 Ctrl + Shift + Delete 在新标签页中打开 Chrome 帮助中心 F1 开启光标浏览模式 F7，有点用 使用其他帐户登录或进入隐身模式 Ctrl + Shift + m 打开反馈表单 Ctrl + Shift + i 将焦点移到非使用中的对话框 Alt + Shift + A 地址栏快捷键 操作 快捷键 使用默认搜索引擎进行搜索 在地址栏输入搜索字词并按 Enter 键 使用其他搜索引擎进行搜索 输入搜索引擎名称并按 Tab 键 为网站名称添加 www. 和 .com，并在当前标签页中打开该网站 输入网站名称并按 Ctrl + Enter 键（有用，可以只输入网站名了） 为网站名称添加 www. 和 .com，并在新标签页中打开该网站 输入网站名称并按 Alt + Enter 键 跳转到地址栏 Ctrl + l、Alt + d 或 F6 从页面中的任意位置搜索 Ctrl + k 或 Ctrl + e 从地址栏中移除联想查询内容 按向下键以突出显示相应内容，然后按 Shift + Delete 键 将光标移到地址栏 Ctrl + F5 网页快捷键 操作 快捷键 打开选项以打印当前网页 Ctrl + p 打开选项以保存当前网页 Ctrl + s 重新加载当前网页 F5 或 Ctrl + r 重新加载当前网页（忽略缓存的内容） Shift + F5 或 Ctrl + Shift + r 停止加载网页 Esc 浏览下一个可点击项 Tab 浏览上一个可点击项 Shift + Tab 使用 Chrome 打开计算机中的文件 按住 Ctrl + o 键并选择文件 显示当前网页的 HTML 源代码（不可修改） Ctrl + u 将当前网页保存为书签 Ctrl + d 将所有打开的标签页以书签的形式保存在新文件夹中 Ctrl + Shift + d 开启或关闭全屏模式 F11 放大网页上的所有内容 Ctrl 和 + 缩小网页上的所有内容 Ctrl 和 - 将网页上的所有内容恢复到默认大小 Ctrl + 0 向下滚动网页，一次一个屏幕 空格键或 PgDn 向上滚动网页，一次一个屏幕 Shift + 空格键或 PgUp 转到网页顶部 首页 转到网页底部 末尾 在网页上水平滚动（就是左右滚动） 按住 Shift 键并滚动鼠标滚轮 将光标移到文本字段中的上一个字词前面 Ctrl + 向左箭头键 将光标移到文本字段中的上一个字词后面 Ctrl + 向右箭头键 删除文本字段中的上一个字词 Ctrl + Backspace 将焦点移到通知上 Alt + n 在通知中允许 Alt + Shift + a 在通知中拒绝 Alt + Shift + d 在当前标签页中打开主页 Alt + Home 鼠标快捷键 操作 快捷键 在当前标签页中打开链接（仅限鼠标） 将链接拖到标签页中 在新的后台标签页中打开链接 按住 Ctrl 键的同时点击链接 打开链接，并跳转到该链接 按住 Ctrl + Shift 键的同时点击链接 打开链接，并跳转到该链接（仅使用鼠标） 将链接拖到标签栏的空白区域 在新窗口中打开链接 按住 Shift 键的同时点击链接 在新窗口中打开标签页（仅使用鼠标） 将标签页拖出标签栏 将标签页移至当前窗口（仅限鼠标） 将标签页拖到现有窗口中 将标签页移回其原始位置 拖动标签页的同时按 Esc 将当前网页保存为书签 将相应网址拖动到书签栏中 下载链接目标 按住 Alt 键的同时点击链接 显示浏览记录 右键点击\"后退\"箭头 返回 或\"前进\"箭头 下一个，或者点击并按住\"后退\"箭头 返回 或\"前进\"箭头 下一个 最大化或最小化窗口 双击标签栏的空白区域 放大网页上的所有内容 按住 Ctrl 键的同时向上滚动鼠标滚轮 缩小网页上的所有内容 按住 Ctrl 键的同时向下滚动鼠标滚轮 windows休眠后，分辨率改变导致任务窗口缩放的问题 方案一 设置-\u003e系统-\u003e屏幕-\u003e多显示器-\u003e（勾选）基础显示器连接记住窗口位置\n方案二 参考：Windows唤醒后窗口位移至左上角且尺寸缩小解决方案 | Sirius (siriusq.top)\n按下 WIN+R，输入 regedit 后回车，打开注册表编辑器，定位到\n1 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers 三个里面的记录全部删掉然后重启，重启后 Windows 会重新识别现在连接的显示器：\n1 2 3 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Connectivity HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\ScaleFactors 一般到这里问题就解决了，重启下显示器或者睡眠唤醒一下检测一下。\n如果你的电脑问题依旧的话，尝试关闭显示器开关再打开，然后刷新一下注册表编辑器，可以看到 Configuration 下面多了一项 NOEDIDxxxxxxx，修改 HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration\\NOEDIDxxxxxxx\\00 中的 PrimSurfSize.cx 和 PrimSurfSize.cy 的值为当前显示器的分辨率，注意这个 00 下面还有一个 00，里面的也要改。\n解决方案来源 1：Stefan Traistaru\n解决方案来源 2：atwitsend42\n方案三 参考：https://www.cnblogs.com/kingchan/p/10905475.html\n长时间休眠或锁屏后，任务窗口会缩小，使用的是4k的显示器，系统分辨率为3840*2160。\n推测是因为休眠时候，系统的分辨率变小，例如变为了1980*1080。结束休眠或开屏时，系统分辨率回到3840*2160，而任务窗口没有随分辨率改变，导致的任务窗口缩放。\n解决方法：打开注册表：win+R，regedit。\n路径：HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\\Configuration\n在Configuration项下查找SIMULATED或NOEDID开头的项（反正我把Configuration下所有的内容都改了）\n查找的项展开有个00项，00项展开又还有个00项，两个00项都要修改；\n1 2 PrimSurfSize.cx PrimSurfSize.cy 把这两个键值双击修改，选中基数十进制，输入你电脑对应的正常分辨率数值，\n比如PrimSurfSize.cx为3840，PrimSurfSize.cy为2160。\n重启Windows，唤醒Windows设备就应该正常不会出现任务窗口缩放的问题了。\n这个键是用来设置当没有输入源时，windows的默认分辨率的，主要目的是当突然更换显示器的时候（比如故障送修，比如显卡损坏等等），系统把默认分辨率设置为基础分辨率（1024x768），避免因为分辨率问题造成替换显示器无法正常显示。\n",
   "wordCount" : "7191",
   "inLanguage": "en",
   "datePublished": "2019-10-28T16:39:52Z",
@@ -274,27 +275,27 @@ netstat -ano">
 </div>
 
   <div class="post-content"><h1 id="查看端口占用">查看端口占用<a hidden class="anchor" aria-hidden="true" href="#查看端口占用">#</a></h1>
-<p>查看全部端口：
+<p>查看全部端口：<br>
 <code>netstat -ano</code></p>
-<p>查看指定端口：
+<p>查看指定端口：<br>
 <code>netstat -ano | findstr 8080</code></p>
-<p>找到被占用端口的<code>PID</code>，就是上边结果的最后一列，并输入
-<code>tasklist | findstr &quot;上边的PID&quot;</code>
+<p>找到被占用端口的<code>PID</code>，就是上边结果的最后一列，并输入<br>
+<code>tasklist | findstr &quot;上边的PID&quot;</code><br>
 可以看到被占用的程序名。</p>
-<p>可以通过程序名结束掉它：
+<p>可以通过程序名结束掉它：<br>
 <code>taskkill /f /t /im Tencentdl.exe。</code></p>
-<p>或直接通过<code>PID</code>结束它：
+<p>或直接通过<code>PID</code>结束它：<br>
 <code>taskkill /f /t /im 上边的PID</code></p>
 <p>或通过任务管理器结束该程序，如果看不到<code>PID</code>，随意找到一选项卡右键，勾选<code>PID</code>即可，然后可以右键结束掉该程序。</p>
 <h1 id="获取当前连接的wifi密码">获取当前连接的wifi密码<a hidden class="anchor" aria-hidden="true" href="#获取当前连接的wifi密码">#</a></h1>
-<p>查看电脑连接过的WiFi名称
+<p>查看电脑连接过的WiFi名称<br>
 <code>netsh wlan show profiles</code></p>
-<p>选择自己要查询的wifi
-<code>netsh wlan show profiles WiFi名称 key=clear</code>
+<p>选择自己要查询的wifi<br>
+<code>netsh wlan show profiles WiFi名称 key=clear</code><br>
 <code>关键内容</code>就是这个wifi的密码。</p>
 <h1 id="oraclejdk-和-openjdk-的选择">OracleJDK 和 OpenJDK 的选择<a hidden class="anchor" aria-hidden="true" href="#oraclejdk-和-openjdk-的选择">#</a></h1>
-<p>2021 年 9 月，Oracle 宣布 JDK17 可以免费商用，直到下一个 LTS 版本之后继续提供整整一年，同时 Oracle 将继续按照自 Java 9 以来的相同版本和时间表提供 GPL 下的 Oracle OpenJDK 版本。
-2023 年 9 月，OracleJDK 发布了新的 LTS 版本 JDK21，这就意味着从 <strong>2024 年 9 月开始，在生产环境使用 OracleJDK17 将需要付费。</strong>
+<p>2021 年 9 月，Oracle 宣布 JDK17 可以免费商用，直到下一个 LTS 版本之后继续提供整整一年，同时 Oracle 将继续按照自 Java 9 以来的相同版本和时间表提供 GPL 下的 Oracle OpenJDK 版本。<br>
+2023 年 9 月，OracleJDK 发布了新的 LTS 版本 JDK21，这就意味着从 <strong>2024 年 9 月开始，在生产环境使用 OracleJDK17 将需要付费。</strong><br>
 参考：https://www.oracle.com/hk/java/technologies/downloads/#java17</p>
 <p>OracleJDK 和 OpenJDK 这两个之间没有真正的技术差别，因为针对 Oracle JDK 构建过程是基于 OpenJDK 的。自从 JDK11 开始，OracleJDK 和 OpenJDK 在功能上基本相同，所以推荐使用 <a href="https://www.oschina.net/action/GoToLink?url=https%3A%2F%2Fjdk.java.net%2Farchive%2F">OpenJDK17</a> 或其他开源的 JDK 版本，这些开源版本都是基于 OpenJDK 构建并提供长期支持的，比如：<a href="https://www.oschina.net/action/GoToLink?url=https%3A%2F%2Fadoptopenjdk.net%2F">AdoptOpenJDK</a>、<a href="https://www.oschina.net/action/GoToLink?url=https%3A%2F%2Fdevelopers.redhat.com%2Fproducts%2Fopenjdk%2Foverview">RedHatOpenJDK。</a></p>
 <p>参考：https://blogs.oracle.com/java/post/oracle-jdk-releases-for-java-11-and-later</p>
@@ -335,43 +336,43 @@ netstat -ano">
 </tbody>
 </table>
 <h1 id="open-jdk-安装">open jdk 安装<a hidden class="anchor" aria-hidden="true" href="#open-jdk-安装">#</a></h1>
-<p>官网下载：
+<p>官网下载：<br>
 <a href="https://jdk.java.net/archive/">https://jdk.java.net/archive/</a></p>
-<p>oracle jdk 商用是要收费的。而且open jdk 和 oracle区别不大，所以建议使用open jdk。
+<p>oracle jdk 商用是要收费的。而且open jdk 和 oracle区别不大，所以建议使用open jdk。<br>
 下载完成后解压到理想位置。如：<code>D:\dev\jdk-21.0.1</code></p>
-<p>新建系统环境变量：
-变量名：<code>JAVA_HOME</code>
+<p>新建系统环境变量：<br>
+变量名：<code>JAVA_HOME</code><br>
 变量值：<code>D:\dev\jdk-21.0.1</code>，刚下载的jdk解压的路径</p>
-<p><strong>注意：以上添加必须在【系统变量】</strong>
-在<code>PATH</code>中添加<code>%JAVA_HOME%\bin</code>
+<p><strong>注意：以上添加必须在【系统变量】</strong><br>
+在<code>PATH</code>中添加<code>%JAVA_HOME%\bin</code><br>
 打开cmd，输入<code>java -version</code>，验证结果。</p>
 <h1 id="oracle-jdk-安装">oracle jdk 安装<a hidden class="anchor" aria-hidden="true" href="#oracle-jdk-安装">#</a></h1>
-<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle官网下载jdk</a>
+<p><a href="https://www.oracle.com/technetwork/java/javase/downloads/index.html">Oracle官网下载jdk</a><br>
 需要登录才可以下载。</p>
 <p>配置jdk环境变量：</p>
 <ol>
 <li>
-<p>不建议将jdk安装到默认路径，会有问题。
-默认安装路径：C:\Program Files\Java\jdk-12
-Program Files这个文件夹名字中有空格，RocketMQ的nameServer在启动时，会报错。
+<p>不建议将jdk安装到默认路径，会有问题。<br>
+默认安装路径：C:\Program Files\Java\jdk-12<br>
+Program Files这个文件夹名字中有空格，RocketMQ的nameServer在启动时，会报错。<br>
 还是安装到D盘比较好：D:\Java\jdk-12</p>
 </li>
 <li>
 <p>右键我的电脑-高级设置-环境变量</p>
 </li>
 <li>
-<p>系统变量-新建
-变量名：JAVA_HOME
-变量值：D:\Java\jdk-12
+<p>系统变量-新建<br>
+变量名：JAVA_HOME<br>
+变量值：D:\Java\jdk-12<br>
 即本机jdk的安装目录，目录下需要看到bin、lib等文件夹。</p>
 </li>
 <li>
-<p>找到系统变量中的 <code>Path</code> 变量-编辑
-win7、8：
-在变量值最后输入<code>%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;</code>
-（注意原来Path的变量值末尾有没有;号，如果没有，先输入；号再输入上面的代码）
-由于 win10 的不同，当选中 Path 变量的时候，系统会很方便的把所有不同路径都分开了，不会像 win7 或者 win8 那样连在一起。
-win10：
+<p>找到系统变量中的 <code>Path</code> 变量-编辑<br>
+win7、8：<br>
+在变量值最后输入<code>%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;</code><br>
+（注意原来Path的变量值末尾有没有;号，如果没有，先输入；号再输入上面的代码）<br>
+由于 win10 的不同，当选中 Path 变量的时候，系统会很方便的把所有不同路径都分开了，不会像 win7 或者 win8 那样连在一起。<br>
+win10：<br>
 点击path-&gt;新建，新建两条路径</p>
 </li>
 </ol>
@@ -387,28 +388,28 @@ win10：
 </div>
 </div><ol start="5">
 <li>
-<p>系统变量→新建 <code>CLASSPATH</code> 变量
-变量值填写 <code>.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar</code> （注意最前面有一点）
+<p>系统变量→新建 <code>CLASSPATH</code> 变量<br>
+变量值填写 <code>.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar</code> （注意最前面有一点）<br>
 系统变量配置完毕</p>
 </li>
 <li>
-<p>验证
-打开cmd，输入java -version 显示版本信息
-输入javac 显示候选命令
+<p>验证<br>
+打开cmd，输入java -version 显示版本信息<br>
+输入javac 显示候选命令<br>
 成功！</p>
 </li>
 </ol>
 <h1 id="windows-多jdk">windows 多jdk<a hidden class="anchor" aria-hidden="true" href="#windows-多jdk">#</a></h1>
-<p>前置条件：你需要的多个jdk已经下载并解压好，如 java8、java17、java21。
+<p>前置条件：你需要的多个jdk已经下载并解压好，如 java8、java17、java21。<br>
 首先需要为两个jdk指定安装目录，博主的两个jdk版本分别是8和17，因此配置两个变量，指向jdk安装目录，用数字区分他们。</p>
-<p>创建系统变量：
-变量名：JAVA_HOME_8
+<p>创建系统变量：<br>
+变量名：JAVA_HOME_8<br>
 变量值：<code>D:\dev\jdk-8</code>，你的java8的安装或解压路径。</p>
-<p>再用同样的方法配置Java17
-变量名：JAVA_HOME_17
+<p>再用同样的方法配置Java17<br>
+变量名：JAVA_HOME_17<br>
 变量值：<code>D:\dev\jdk-17</code>，你的java17的安装或解压路径。</p>
-<p>接着就是正式指定要使用的jdk版本了，新建一个名为JAVA_HOME的变量，指定对应的jdk版本。
-变量名：JAVA_HOME
+<p>接着就是正式指定要使用的jdk版本了，新建一个名为JAVA_HOME的变量，指定对应的jdk版本。<br>
+变量名：JAVA_HOME<br>
 变量值：<code>%JAVA_HOME_17%</code>，刚刚配置的，根据数字指定要使用的版本。</p>
 <p>然后配置CLASSPATH环境变量，注意标点符号不要少。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -432,53 +433,53 @@ win10：
 </span></span><span style="display:flex;"><span>%JAVA_HOME%\jre\bin
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>并移动到最上方，一定要进行移动，不然后面切换jdk版本会失败。
+</div><p>并移动到最上方，一定要进行移动，不然后面切换jdk版本会失败。<br>
 这样整个jdk运行环境就配置好了，我们来验证下效果。</p>
-<p>打开cmd，输入<code>echo %JAVA_HOME%</code>，可以看到当前指向了jdk1.8的安装目录。查看jdk版本，输入：java -version，当前jdk版本为1.8。
-切换版本，将JAVA_HOME的变量值改为<code>%JAVA_HOME_17%</code>
-查看切换结果，关掉原来的命令行窗口，重新打开一个。
-输入echo %JAVA_HOME%，发现指向了jdk17的安装目录。
+<p>打开cmd，输入<code>echo %JAVA_HOME%</code>，可以看到当前指向了jdk1.8的安装目录。查看jdk版本，输入：java -version，当前jdk版本为1.8。<br>
+切换版本，将JAVA_HOME的变量值改为<code>%JAVA_HOME_17%</code><br>
+查看切换结果，关掉原来的命令行窗口，重新打开一个。<br>
+输入echo %JAVA_HOME%，发现指向了jdk17的安装目录。<br>
 接着查看jdk版本，java -version，切换到了jdk17。</p>
-<p>如果切换不成功，这可能是安装jdk时，自动生成了优先级更高的配置项，使用以下方式解决。
+<p>如果切换不成功，这可能是安装jdk时，自动生成了优先级更高的配置项，使用以下方式解决。<br>
 删除C:\ProgramData\Oracle\Java\javapath下的三个文件，windows后面会从指定的jdk版本的安装目录重新复制这三个文件放到该目录。</p>
 <h1 id="开发工具">开发工具<a hidden class="anchor" aria-hidden="true" href="#开发工具">#</a></h1>
-<p>环境：jdk、maven、nodejs、git
-工具：idea、dataGrip、vsCode、cursor
-ssh：Xshell、Termius、Tabby、MobaXterm
-连接redis：Another Redis Desktop Manager
+<p>环境：jdk、maven、nodejs、git<br>
+工具：idea、dataGrip、vsCode、cursor<br>
+ssh：Xshell、Termius、Tabby、MobaXterm<br>
+连接redis：Another Redis Desktop Manager<br>
 管理git：ugit</p>
 <h1 id="其他工具">其他工具<a hidden class="anchor" aria-hidden="true" href="#其他工具">#</a></h1>
-<p>浏览器：edge、chrome、firefox
-通讯：微信pc、飞书、企微、钉钉
-解压缩：bindzip
-截图：Snipaste
-文档：word、excel、ppt
-utools、everything
-火绒
-powerToys
-LocalSend
-PotPlayer
-Obsidian
+<p>浏览器：edge、chrome、firefox<br>
+通讯：微信pc、飞书、企微、钉钉<br>
+解压缩：bindzip<br>
+截图：Snipaste<br>
+文档：word、excel、ppt<br>
+utools、everything<br>
+火绒<br>
+powerToys<br>
+LocalSend<br>
+PotPlayer<br>
+Obsidian<br>
 wiztree</p>
 <h1 id="notepad主题和字体设置">notepad++主题和字体设置<a hidden class="anchor" aria-hidden="true" href="#notepad主题和字体设置">#</a></h1>
-<p>设置-&gt;语言格式设置
-选择主题：Obsidian
-字体样式：Segoe UI、微软雅黑、Consolas
+<p>设置-&gt;语言格式设置<br>
+选择主题：Obsidian<br>
+字体样式：Segoe UI、微软雅黑、Consolas<br>
 字体大小：12</p>
-<p>notepad++设置列边界：
-一行代码不超过80个字符，一行注释的字符数更少，这是一条古老的编程规范，现在很多人都还在坚守。带来的好处是，代码的lay-out优雅美观，视觉上更清晰，更容易减少错误发现bug。
+<p>notepad++设置列边界：<br>
+一行代码不超过80个字符，一行注释的字符数更少，这是一条古老的编程规范，现在很多人都还在坚守。带来的好处是，代码的lay-out优雅美观，视觉上更清晰，更容易减少错误发现bug。<br>
 Notepad++可以设置一条80个字符宽的垂直线，使我们在编写代码的时候，可以清晰有效执行这条古老的编程规范。</p>
-<p>设置-&gt;首选项-&gt;编辑-&gt;列边界设置
-然后在下面输入自己想要的字符数。
+<p>设置-&gt;首选项-&gt;编辑-&gt;列边界设置<br>
+然后在下面输入自己想要的字符数。<br>
 这个功能还有个重要的作用，在写markdown的时候，一行如果过长不便于编辑，过短在hexo中显示又不美观。可以通过列边界，达到理想的效果。</p>
 <h1 id="maven配置">maven配置<a hidden class="anchor" aria-hidden="true" href="#maven配置">#</a></h1>
-<p><a href="http://maven.apache.org/download.cgi">去官网下载</a>
-下载<code>-bin.zip</code>后解压并记住根路径，然后在系统变量中分别添加：
-<code>M2_HOME</code>
-<code>MAVEN_HOME</code>
-值是maven的根路径。
-然后，在系统变量中找到<code>Path</code>，编辑-&gt;新建
-<code>%MAVEN_HOME%\bin</code>
+<p><a href="http://maven.apache.org/download.cgi">去官网下载</a><br>
+下载<code>-bin.zip</code>后解压并记住根路径，然后在系统变量中分别添加：<br>
+<code>M2_HOME</code><br>
+<code>MAVEN_HOME</code><br>
+值是maven的根路径。<br>
+然后，在系统变量中找到<code>Path</code>，编辑-&gt;新建<br>
+<code>%MAVEN_HOME%\bin</code><br>
 然后打开cmd，输入<code>mvn -v</code>，看到版本号说明成功。</p>
 <h1 id="windows安装mysql_80不推荐请使用wsl2安装">windows安装mysql_8.0（不推荐，请使用wsl2安装）<a hidden class="anchor" aria-hidden="true" href="#windows安装mysql_80不推荐请使用wsl2安装">#</a></h1>
 <ol>
@@ -492,10 +493,10 @@ Notepad++可以设置一条80个字符宽的垂直线，使我们在编写代码
 <p>点击MySQL Community Server (GPL)下面的download</p>
 </li>
 <li>
-<p>页面最下边的有三种安装包。
-安装版  .msi结尾的
-Windows (x86, 64-bit), ZIP Archive 免安装版，解压即可。
-Windows (x86, 64-bit), ZIP Archive Debug Binaries &amp; Test Suite，带工具包版本。
+<p>页面最下边的有三种安装包。<br>
+安装版  .msi结尾的<br>
+Windows (x86, 64-bit), ZIP Archive 免安装版，解压即可。<br>
+Windows (x86, 64-bit), ZIP Archive Debug Binaries &amp; Test Suite，带工具包版本。<br>
 这里下载第二个，免安装版，下载之后解压到你想要的位置。</p>
 </li>
 <li>
@@ -544,34 +545,34 @@ Windows (x86, 64-bit), ZIP Archive Debug Binaries &amp; Test Suite，带工具�
 </div>
 </div><ol start="6">
 <li>
-<p>添加环境变量
+<p>添加环境变量<br>
 我的电脑右键属性&ndash;&gt;高级系统设置&ndash;&gt;环境变量&ndash;&gt;系统变量中找到Path&ndash;&gt;点击编辑&ndash;&gt;新建 加入Mysql的bin目录路径；</p>
 </li>
 <li>
-<p>在mysql的bin目录以管理员身份运行cmd，以此输入
-<code>mysqld --install</code>安装
-<code>mysqld --initialize</code>初始化
-<code>net start mysql</code>运行
+<p>在mysql的bin目录以管理员身份运行cmd，以此输入<br>
+<code>mysqld --install</code>安装<br>
+<code>mysqld --initialize</code>初始化<br>
+<code>net start mysql</code>运行<br>
 初始化后在Mysql的根目录会生成 data 数据库文件夹，如果启动服务失败，很有可能就是这个data文件夹有问题，删掉重新执行上边的步骤。</p>
 </li>
 <li>
-<p>登陆mysql
-<code>mysql -u root -p</code>
-此时需要输入mysql的默认密码，在mysql的安装目录下搜索*.err，以文本形式打开可以看到一些内容：
-搜索文本<code>A temporary password is generated for root@localhost: </code>
+<p>登陆mysql<br>
+<code>mysql -u root -p</code><br>
+此时需要输入mysql的默认密码，在mysql的安装目录下搜索*.err，以文本形式打开可以看到一些内容：<br>
+搜索文本<code>A temporary password is generated for root@localhost: </code><br>
 localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键，将密码黏贴，回车，登录成功。</p>
 </li>
 <li>
-<p>登录成功后必须修改密码才能进行其他操作。
+<p>登录成功后必须修改密码才能进行其他操作。<br>
 <code>ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你的新密码';</code></p>
 </li>
 <li>
-<p>配置远程连接mysql：
-在mysql的bin目录下执行：
-<code>mysql -u root -p密码</code>
-<code>use mysql;</code>
-<code>update user set host='%' where user ='root';</code>修改连接权限
-<code>update user set plugin='mysql_native_password' where user ='root';</code>更改加密方式：
+<p>配置远程连接mysql：<br>
+在mysql的bin目录下执行：<br>
+<code>mysql -u root -p密码</code><br>
+<code>use mysql;</code><br>
+<code>update user set host='%' where user ='root';</code>修改连接权限<br>
+<code>update user set plugin='mysql_native_password' where user ='root';</code>更改加密方式：<br>
 <code>flush privileges;</code>执行刷新权限</p>
 </li>
 </ol>
@@ -583,7 +584,7 @@ localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键
 <li>CURRENT VALUE：变量值</li>
 <li>initial value：不填</li>
 </ul>
-<p>示例：
+<p>示例：<br>
 <code>environment name：本地</code></p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -615,9 +616,9 @@ localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键
 </span></span><span style="display:flex;"><span>current value<span style="color:#f00">：</span>http://
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>使用方法
+</div><p>使用方法<br>
 <code>{{h}}{{host}}{{port}}/zjx/api/home/padHome</code></p>
-<p>以此类推，根据需要，再创建测试环境、生产环境的环境变量。
+<p>以此类推，根据需要，再创建测试环境、生产环境的环境变量。<br>
 请求接口时，就可以通过切换postman右上角的environment按钮，来切换环境，很方便。</p>
 <p><a href="https://www.jianshu.com/p/d3eaed7b876a">参考</a></p>
 <h1 id="chrome快捷键">chrome快捷键<a hidden class="anchor" aria-hidden="true" href="#chrome快捷键">#</a></h1>
@@ -1024,7 +1025,7 @@ localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键
 <h2 id="方案一">方案一<a hidden class="anchor" aria-hidden="true" href="#方案一">#</a></h2>
 <p>设置-&gt;系统-&gt;屏幕-&gt;多显示器-&gt;（勾选）基础显示器连接记住窗口位置</p>
 <h2 id="方案二">方案二<a hidden class="anchor" aria-hidden="true" href="#方案二">#</a></h2>
-<p>参考：<a href="https://siriusq.top/Windows%E5%94%A4%E9%86%92%E5%90%8E%E7%AA%97%E5%8F%A3%E4%BD%8D%E7%A7%BB%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html">Windows唤醒后窗口位移至左上角且尺寸缩小解决方案 | Sirius (siriusq.top)</a>
+<p>参考：<a href="https://siriusq.top/Windows%E5%94%A4%E9%86%92%E5%90%8E%E7%AA%97%E5%8F%A3%E4%BD%8D%E7%A7%BB%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html">Windows唤醒后窗口位移至左上角且尺寸缩小解决方案 | Sirius (siriusq.top)</a><br>
 按下 <code>WIN</code>+<code>R</code>，输入 <code>regedit</code> 后回车，打开注册表编辑器，定位到</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1047,16 +1048,16 @@ localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键
 </span></span><span style="display:flex;"><span>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\ScaleFactors
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>一般到这里问题就解决了，重启下显示器或者睡眠唤醒一下检测一下。
+</div><p>一般到这里问题就解决了，重启下显示器或者睡眠唤醒一下检测一下。<br>
 如果你的电脑问题依旧的话，尝试关闭显示器开关再打开，然后刷新一下注册表编辑器，可以看到 Configuration 下面多了一项 <code>NOEDIDxxxxxxx</code>，修改 <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration\NOEDIDxxxxxxx\00</code> 中的 <code>PrimSurfSize.cx</code> 和 <code>PrimSurfSize.cy</code> 的值为当前显示器的分辨率，注意这个 00 下面还有一个 00，里面的也要改。</p>
-<p>解决方案来源 1：<a href="https://answers.microsoft.com/en-us/windows/forum/all/windows-10-reset-external-monitors-settings/b3a53cef-e54f-4410-b09e-6846fa297a3f">Stefan Traistaru</a>
+<p>解决方案来源 1：<a href="https://answers.microsoft.com/en-us/windows/forum/all/windows-10-reset-external-monitors-settings/b3a53cef-e54f-4410-b09e-6846fa297a3f">Stefan Traistaru</a><br>
 解决方案来源 2：<a href="https://answers.microsoft.com/en-us/windows/forum/all/windows-are-resized-and-moved-after-waking-pc-with/35084e25-1b78-4cff-94e9-e9157334bb2f">atwitsend42</a></p>
 <h2 id="方案三">方案三<a hidden class="anchor" aria-hidden="true" href="#方案三">#</a></h2>
 <p>参考：https://www.cnblogs.com/kingchan/p/10905475.html</p>
-<p>长时间休眠或锁屏后，任务窗口会缩小，使用的是4k的显示器，系统分辨率为<code>3840*2160</code>。
+<p>长时间休眠或锁屏后，任务窗口会缩小，使用的是4k的显示器，系统分辨率为<code>3840*2160</code>。<br>
 推测是因为休眠时候，系统的分辨率变小，例如变为了<code>1980*1080</code>。结束休眠或开屏时，系统分辨率回到<code>3840*2160</code>，而任务窗口没有随分辨率改变，导致的任务窗口缩放。</p>
-<p>解决方法：打开注册表：win+R，regedit。
-路径：<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration</code>
+<p>解决方法：打开注册表：win+R，regedit。<br>
+路径：<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration</code><br>
 在Configuration项下查找SIMULATED或NOEDID开头的项（反正我把Configuration下所有的内容都改了）</p>
 <p>查找的项展开有个00项，00项展开又还有个00项，<strong>两个00项都要修改</strong>；</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1070,8 +1071,8 @@ localhost冒号之后的就是mysql的默认密码，复制，在cmd窗口右键
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>把这两个键值双击修改，选中<strong>基数十进制，输入你电脑对应的正常分辨率数值</strong>，</p>
-<p>比如PrimSurfSize.cx为3840，PrimSurfSize.cy为2160。
-重启Windows，唤醒Windows设备就应该正常不会出现任务窗口缩放的问题了。
+<p>比如PrimSurfSize.cx为3840，PrimSurfSize.cy为2160。<br>
+重启Windows，唤醒Windows设备就应该正常不会出现任务窗口缩放的问题了。<br>
 这个键是用来设置当没有输入源时，windows的默认分辨率的，主要目的是当突然更换显示器的时候（比如故障送修，比如显卡损坏等等），系统把默认分辨率设置为基础分辨率（1024x768），避免因为分辨率问题造成替换显示器无法正常显示。</p>
 
   </div>

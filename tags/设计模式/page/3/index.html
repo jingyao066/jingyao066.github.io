@@ -203,11 +203,18 @@
 1 2 3 4 5 6 7 8 9 10 11 12 13 public class DiscountContext { // 持有某个策略: private DiscountStrategy strategy = new UserDiscountStrategy(); // 允许客户端设置新策略: public void setStrategy(DiscountStrategy strategy) { this.strategy = strategy; } public BigDecimal calculatePrice(BigDecimal total) { return total.subtract(this.strategy.getDiscount(total)).setScale(2); } } 调用方必须首先创建一个DiscountContext，并指定一个策略（或者使用默认策略），即可获得折扣后的价格：
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 DiscountContext ctx = new DiscountContext(); // 默认使用普通会员折扣: BigDecimal pay1 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay1); // 使用满减折扣: ctx.setStrategy(new OverDiscountStrategy()); BigDecimal pay2 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay2); // 使用Prime会员折扣: ctx.setStrategy(new PrimeDiscountStrategy()); BigDecimal pay3 = ctx.calculatePrice(BigDecimal.valueOf(105)); System.out.println(pay3); 上述完整的策略模式如下图所示：
 1 2 3 4 5 6 7 8 9 10 11 12 13 ┌───────────────┐ ┌─────────────────┐ │DiscountContext│─ ─ ─&gt;│DiscountStrategy │ └───────────────┘ └─────────────────┘ ▲ │ ┌─────────────────────┐ ├─│UserDiscountStrategy │ │ └─────────────────────┘ │ ┌─────────────────────┐ ├─│PrimeDiscountStrategy│ │ └─────────────────────┘ │ ┌─────────────────────┐ └─│OverDiscountStrategy │ └─────────────────────┘ 策略模式的核心思想是在一个计算方法中把容易变化的算法抽出来作为“策略”参数传进去，从而使得新增策略不必修改原有逻辑。
-概述 类型：行为型 意图：定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。 主要解决：在有多种算法相似的情况下，使用 if…else 所带来的复杂和难以维护。 何时使用：一个系统有许多许多类，而区分它们的只是他们直接的行为。 如何解决：将这些算法封装成一个一个的类，任意地替换。 关键代码：实现同一个接口。 应用实例：
+概述 类型：行为型
+意图：定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。
+主要解决：在有多种算法相似的情况下，使用 if…else 所带来的复杂和难以维护。
+何时使用：一个系统有许多许多类，而区分它们的只是他们直接的行为。
+如何解决：将这些算法封装成一个一个的类，任意地替换。
+关键代码：实现同一个接口。
+应用实例：
 诸葛亮的锦囊妙计，每一个锦囊就是一个策略。 旅行的出游方式，选择骑自行车、坐汽车，每一种旅行方式都是一个策略。 JAVA AWT 中的 LayoutManager。 优点：
 算法可以自由切换。 避免使用多重条件判断。 扩展性良好。 缺点：
 策略类会增多。 所有策略类都需要对外暴露。 使用场景：
-一个系统需要动态地在几种算法中选择一种。 如果在一个系统里面有许多类，它们之间的区别仅在于它们的行为，那么使用策略模式可以动态地让一个对象在许多行为中选择一种行为。 如果一个对象有很多的行为，如果不用恰当的模式，这些行为就只好使用多重的条件选择语句来实现。 注意事项：如果一个系统的策略多于四个，就需要考虑使用混合模式，解决策略类膨胀的问题。 ...</p>
+一个系统需要动态地在几种算法中选择一种。 如果在一个系统里面有许多类，它们之间的区别仅在于它们的行为，那么使用策略模式可以动态地让一个对象在许多行为中选择一种行为。 如果一个对象有很多的行为，如果不用恰当的模式，这些行为就只好使用多重的条件选择语句来实现。
+注意事项：如果一个系统的策略多于四个，就需要考虑使用混合模式，解决策略类膨胀的问题。 ...</p>
   </div>
   <footer class="entry-footer"><span title='2018-12-10 17:40:19 +0000 UTC'>2018-12-10</span>&nbsp;·&nbsp;Wjy</footer>
   <a class="entry-link" aria-label="post link to 策略模式" href="https://009965.xyz/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"></a>
@@ -233,7 +240,8 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>工厂方法 类型：创建型 概念：定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。
+    <p>工厂方法 类型：创建型
+概念：定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method使一个类的实例化延迟到其子类。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2018-12-10 15:39:08 +0000 UTC'>2018-12-10</span>&nbsp;·&nbsp;Wjy</footer>
@@ -247,7 +255,8 @@
   </header>
   <div class="entry-content">
     <p>概述 类型：创建型
-定义： 确保某一个类只有一个实例，并且自行实例化，并向整个系统提供这个实例，这个类称为单例类。
+定义：
+确保某一个类只有一个实例，并且自行实例化，并向整个系统提供这个实例，这个类称为单例类。
 ...</p>
   </div>
   <footer class="entry-footer"><span title='2018-12-09 14:54:44 +0000 UTC'>2018-12-09</span>&nbsp;·&nbsp;Wjy</footer>

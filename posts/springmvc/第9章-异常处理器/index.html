@@ -103,7 +103,7 @@
   "keywords": [
     "springmvc"
   ],
-  "articleBody": "什么是异常处理器 Spring MVC在处理器方法执行过程中出现了异常，可以采用异常处理器进行应对。 一句话概括异常处理器作用：处理器方法执行过程中出现了异常，跳转到对应的视图，在视图上展示友好信息。\nSpringMVC为异常处理提供了一个接口：HandlerExceptionResolver 核心方法是：resolveException。 该方法用来编写具体的异常处理方案。返回值ModelAndView，表示异常处理完之后跳转到哪个视图。\nHandlerExceptionResolver 接口有两个常用的默认实现：\nDefaultHandlerExceptionResolver SimpleMappingExceptionResolver 默认的异常处理器 DefaultHandlerExceptionResolver 是默认的异常处理器。 核心方法： 当请求方式和处理方式不同时，DefaultHandlerExceptionResolver的默认处理态度是： 自定义的异常处理器 自定义异常处理器需要使用：SimpleMappingExceptionResolver 自定义异常处理机制有两种语法：\n通过XML配置文件 通过注解 配置文件方式 1 2 3 4 5 6 7 8 9 10 ",
+  "articleBody": "什么是异常处理器 Spring MVC在处理器方法执行过程中出现了异常，可以采用异常处理器进行应对。\n一句话概括异常处理器作用：处理器方法执行过程中出现了异常，跳转到对应的视图，在视图上展示友好信息。\nSpringMVC为异常处理提供了一个接口：HandlerExceptionResolver\n核心方法是：resolveException。\n该方法用来编写具体的异常处理方案。返回值ModelAndView，表示异常处理完之后跳转到哪个视图。\nHandlerExceptionResolver 接口有两个常用的默认实现：\nDefaultHandlerExceptionResolver SimpleMappingExceptionResolver 默认的异常处理器 DefaultHandlerExceptionResolver 是默认的异常处理器。\n核心方法：\n当请求方式和处理方式不同时，DefaultHandlerExceptionResolver的默认处理态度是：\n自定义的异常处理器 自定义异常处理器需要使用：SimpleMappingExceptionResolver\n自定义异常处理机制有两种语法：\n通过XML配置文件 通过注解 配置文件方式 1 2 3 4 5 6 7 8 9 10 ",
   "wordCount" : "622",
   "inLanguage": "en",
   "datePublished": "2025-04-22T15:09:58Z",
@@ -234,11 +234,11 @@
 </div>
 
   <div class="post-content"><h1 id="什么是异常处理器">什么是异常处理器<a hidden class="anchor" aria-hidden="true" href="#什么是异常处理器">#</a></h1>
-<p>Spring MVC在<code>处理器方法</code>执行过程中出现了异常，可以采用<code>异常处理器</code>进行应对。
+<p>Spring MVC在<code>处理器方法</code>执行过程中出现了异常，可以采用<code>异常处理器</code>进行应对。<br>
 一句话概括异常处理器作用：处理器方法执行过程中出现了异常，跳转到对应的视图，在视图上展示友好信息。</p>
-<p>SpringMVC为异常处理提供了一个接口：HandlerExceptionResolver
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC9%E7%AB%A0-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/fa813f9e64850468fae84db79f3bedcd_MD5.png">
-核心方法是：resolveException。
+<p>SpringMVC为异常处理提供了一个接口：HandlerExceptionResolver<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC9%E7%AB%A0-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/fa813f9e64850468fae84db79f3bedcd_MD5.png"><br>
+核心方法是：resolveException。<br>
 该方法用来编写具体的异常处理方案。返回值ModelAndView，表示异常处理完之后跳转到哪个视图。</p>
 <p>HandlerExceptionResolver 接口有两个常用的默认实现：</p>
 <ul>
@@ -246,13 +246,13 @@
 <li>SimpleMappingExceptionResolver</li>
 </ul>
 <h1 id="默认的异常处理器">默认的异常处理器<a hidden class="anchor" aria-hidden="true" href="#默认的异常处理器">#</a></h1>
-<p>DefaultHandlerExceptionResolver 是默认的异常处理器。
-核心方法：
-<img loading="lazy" src="/posts/springmvc/%E7%AC%AC9%E7%AB%A0-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/b3e728d4c9601ddfcfa6f4a5cced2733_MD5.png">
-当请求方式和处理方式不同时，DefaultHandlerExceptionResolver的默认处理态度是：
+<p>DefaultHandlerExceptionResolver 是默认的异常处理器。<br>
+核心方法：<br>
+<img loading="lazy" src="/posts/springmvc/%E7%AC%AC9%E7%AB%A0-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/b3e728d4c9601ddfcfa6f4a5cced2733_MD5.png"><br>
+当请求方式和处理方式不同时，DefaultHandlerExceptionResolver的默认处理态度是：<br>
 <img loading="lazy" src="/posts/springmvc/%E7%AC%AC9%E7%AB%A0-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8/d4afd50ee2360a053fa17b27c1ce2ffe_MD5.png"></p>
 <h1 id="自定义的异常处理器">自定义的异常处理器<a hidden class="anchor" aria-hidden="true" href="#自定义的异常处理器">#</a></h1>
-<p>自定义异常处理器需要使用：SimpleMappingExceptionResolver
+<p>自定义异常处理器需要使用：SimpleMappingExceptionResolver<br>
 自定义异常处理机制有两种语法：</p>
 <ul>
 <li>通过XML配置文件</li>

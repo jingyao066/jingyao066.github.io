@@ -960,17 +960,17 @@ $$ dp[i, j] = \min(dp[i-1, j], dp[i, j-1]) + grid[i, j] $$
 </div>
 </div><p>图 14-16 展示了最小路径和的状态转移过程，其遍历了整个网格，<strong>因此时间复杂度为 $O(nm)$</strong> 。</p>
 <p>数组 <code>dp</code> 大小为 $n \times m$ ，<strong>因此空间复杂度为 $O(nm)$</strong> 。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step9.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step10.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step11.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step9.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step10.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step11.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/min_path_sum_dp_step12.png"></p>
 <h3 id="空间优化-1">空间优化<a hidden class="anchor" aria-hidden="true" href="#空间优化-1">#</a></h3>
 <p>由于每个格子只与其左边和上边的格子有关，因此我们可以只用一个单行数组来实现 $dp$ 表。</p>
@@ -1200,18 +1200,18 @@ $$ dp[i, c] = \max(dp[i-1, c], dp[i-1, c - wgt[i-1]] + val[i-1]) $$
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>如图 14-20 所示，时间复杂度和空间复杂度都由数组 <code>dp</code> 大小决定，即 $O(n \times cap)$ 。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step9.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step10.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step11.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step12.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step9.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step10.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step11.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step12.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_step13.png"></p>
 <h3 id="空间优化-2">空间优化<a hidden class="anchor" aria-hidden="true" href="#空间优化-2">#</a></h3>
 <p>由于每个状态都只与其上一行的状态有关，因此我们可以使用两个数组滚动前进，将空间复杂度从 $O(n^2)$ 降至 $O(n)$ 。</p>
@@ -1221,11 +1221,11 @@ $$ dp[i, c] = \max(dp[i-1, c], dp[i-1, c - wgt[i-1]] + val[i-1]) $$
 <li>如果采取倒序遍历，则不会发生覆盖问题，状态转移可以正确进行。</li>
 </ul>
 <p>图 14-21 展示了在单个数组下从第 $i = 1$ 行转换至第 $i = 2$ 行的过程。请思考正序遍历和倒序遍历的区别。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step5.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step5.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/knapsack_dp_comp_step6.png"></p>
 <p>在代码实现中，我们仅需将数组 <code>dp</code> 的第一维 $i$ 直接删除，并且把内循环更改为倒序遍历即可：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1338,11 +1338,11 @@ $$ dp[i, c] = \max(dp[i-1, c], dp[i, c - wgt[i-1]] + val[i-1]) $$
 </div><h3 id="空间优化-3">空间优化<a hidden class="anchor" aria-hidden="true" href="#空间优化-3">#</a></h3>
 <p>由于当前状态是从左边和上边的状态转移而来的，<strong>因此空间优化后应该对 $dp$ 表中的每一行进行正序遍历</strong>。</p>
 <p>这个遍历顺序与 0-1 背包正好相反。请借助图 14-23 来理解两者的区别。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step5.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step5.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/unbounded_knapsack_dp_comp_step6.png"></p>
 <p>代码实现比较简单，仅需将数组 <code>dp</code> 的第一维删除：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1474,18 +1474,18 @@ $$ dp[i, a] = \min(dp[i-1, a], dp[i, a - coins[i-1]] + 1) $$
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>图 14-25 展示了零钱兑换的动态规划过程，和完全背包问题非常相似。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step1.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step2.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step3.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step4.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step5.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step6.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step7.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step8.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step9.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step10.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step11.png">
-<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step12.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step1.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step2.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step3.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step4.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step5.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step6.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step7.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step8.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step9.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step10.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step11.png"><br>
+<img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step12.png"><br>
 <img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/coin_change_dp_step13.png"></p>
 <h3 id="空间优化-4">空间优化<a hidden class="anchor" aria-hidden="true" href="#空间优化-4">#</a></h3>
 <p>零钱兑换的空间优化的处理方式和完全背包问题一致：</p>
@@ -1748,18 +1748,18 @@ $$ dp[i, j] = dp[i-1, j-1] $$
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>如图 14-30 所示，编辑距离问题的状态转移过程与背包问题非常类似，都可以看作填写一个二维网格的过程。</p>
-<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/edit_distance_dp_step1.png">
-<img loading="lazy" src="edit_distance_dp_step2.png">
-<img loading="lazy" src="edit_distance_dp_step3.png">
-<img loading="lazy" src="edit_distance_dp_step4.png">
-<img loading="lazy" src="edit_distance_dp_step5.png">
-<img loading="lazy" src="edit_distance_dp_step6.png">
-<img loading="lazy" src="edit_distance_dp_step7.png">
-<img loading="lazy" src="edit_distance_dp_step8.png">
-<img loading="lazy" src="edit_distance_dp_step9.png">
-<img loading="lazy" src="edit_distance_dp_step10.png">
-<img loading="lazy" src="edit_distance_dp_step11.png">
-<img loading="lazy" src="edit_distance_dp_step12.png">
+<p><img loading="lazy" src="/posts/%E7%AE%97%E6%B3%95/13_%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/edit_distance_dp_step1.png"><br>
+<img loading="lazy" src="edit_distance_dp_step2.png"><br>
+<img loading="lazy" src="edit_distance_dp_step3.png"><br>
+<img loading="lazy" src="edit_distance_dp_step4.png"><br>
+<img loading="lazy" src="edit_distance_dp_step5.png"><br>
+<img loading="lazy" src="edit_distance_dp_step6.png"><br>
+<img loading="lazy" src="edit_distance_dp_step7.png"><br>
+<img loading="lazy" src="edit_distance_dp_step8.png"><br>
+<img loading="lazy" src="edit_distance_dp_step9.png"><br>
+<img loading="lazy" src="edit_distance_dp_step10.png"><br>
+<img loading="lazy" src="edit_distance_dp_step11.png"><br>
+<img loading="lazy" src="edit_distance_dp_step12.png"><br>
 <img loading="lazy" src="edit_distance_dp_step13.png"></p>
 <h3 id="空间优化-6">空间优化<a hidden class="anchor" aria-hidden="true" href="#空间优化-6">#</a></h3>
 <p>由于 $dp[i,j]$ 是由上方 $dp[i-1, j]$、左方 $dp[i, j-1]$、左上方 $dp[i-1, j-1]$ 转移而来的，而正序遍历会丢失左上方 $dp[i-1, j-1]$ ，倒序遍历无法提前构建 $dp[i, j-1]$ ，因此两种遍历顺序都不可取。</p>

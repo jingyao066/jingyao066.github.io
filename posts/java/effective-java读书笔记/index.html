@@ -108,7 +108,7 @@ Creating and Destroying Objects
   "keywords": [
     "java"
   ],
-  "articleBody": "chapter_02 创建和销毁对象 Creating and Destroying Objects\n本章涉及创建和销毁对象：何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们被及时销毁，以及如何管理在销毁之前必须执行的清理操作。\n一些参考，原文读起来有些费劲 github github\nItem-1：用静态工厂方法代替构造函数 在 Java 中，获得一个类实例最简单的方法就是使用 new 关键字，即通过构造函数来实现对象的创建。就像这样：\n1 2 Fragment fragment = new MyFragment(); Date date = new Date(); 不过在实际的开发中，我们经常还会见到另外一种获取类实例的方法：\n1 2 3 Fragment fragment = MyFragment.newIntance(); Calendar calendar = Calendar.getInstance(); Integer number = Integer.valueOf(\"3\"); 像这样的：不通过 new，而是用一个静态方法来对外提供自身实例的方法，即为我们所说的静态工厂方法。要注意的是静态工厂方法与设计模式中的工厂方法模式不同。静态工厂方法与构造函数相比的优点如下。\n静态工厂方法有具体名字 由于语言的特性，Java 的构造函数都是跟类名一样的。这导致的一个问题是构造函数的名称不够灵活，经常不能准确地描述返回值，在有多个重载的构造函数时尤甚，如果参数类型、数目又比较相似的话，那更是很容易出错。\n1 2 3 4 5 6 Date date0 = new Date(); Date date1 = new Date(0L); Date date2 = new Date(\"0\"); Date date3 = new Date(1,2,1); Date date4 = new Date(1,2,1,1,1); Date date5 = new Date(1,2,1,1,1,1); Date 类有很多重载函数，对于开发者来说，假如不是特别熟悉的话，恐怕是需要犹豫一下，才能找到合适的构造函数的。而对于其他的代码阅读者来说，估计更是需要查看文档，才能明白每个参数的含义了。 Date 类在目前的 Java 版本中，只保留了一个无参和一个有参的构造函数，其他的都已经标记为 @Deprecated 了。 而如果使用静态工厂方法，就可以给方法起更多有意义的名字，比如前面的 valueOf、newInstance、getInstance 等，对于代码的编写和阅读都能够更清晰。\n静态工厂方法不需要在每次调用时创建新对象。 这允许不可变类使用预先构造的实例，或在构造实例时缓存实例，并重复分配它们以避免创建不必要的重复对象。Boolean.valueOf(boolean) 方法说明了这种技术：它从不创建对象。这种技术类似于享元模式。如果经常请求相同的对象，特别是在创建对象的代价很高时，它可以极大地提高性能。 有时候外部调用者只需要拿到一个实例，而不关心是否是新的实例；又或者我们想对外提供一个单例时，如果使用工厂方法，就可以很容易的在内部控制，防止创建不必要的对象，减少开销。在实际的场景中，单例的写法也大都是用静态工厂方法来实现的。\n可以通过静态工厂方法获取返回类型的任何子类的对象。 这条不用多说，设计模式中的基本的原则之一：『里氏替换』原则，就是说子类应该能替换父类。显然，构造方法只能返回确切的自身类型，而静态工厂方法则能够更加灵活，可以根据需要方便地返回任何它的子类型的实例。\n1 2 3 4 5 6 7 8 9 10 Class Person { public static Person getInstance(){ return new Person(); // 这里可以改为 return new Player() / Cooker() } } Class Player extends Person{ } Class Cooker extends Person{ } 比如上面这段代码，Person 类的静态工厂方法可以返回 Person 的实例，也可以根据需要返回它的子类Player 或者 Cooker。（当然，这只是为了演示，在实际的项目中，一个类是不应该依赖于它的子类的。但如果这里的 getInstance () 方法位于其他的类中，就更具有的实际操作意义了）\n可以有多个参数相同但名称不同的工厂方法 构造函数虽然也可以有多个，但是由于函数名已经被固定，所以就要求参数必须有差异时（类型、数量或者顺序）才能够重载了。举例来说：\n1 2 3 4 5 6 7 8 9 10 11 class Child{ int age = 10; int weight = 30; public Child(int age, int weight) { this.age = age; this.weight = weight; } public Child(int age) { this.age = age; } } Child 类有 age 和 weight 两个属性，如代码所示，它已经有了两个构造函数：Child(int age, int weight) 和 Child(int age)，这时候如果我们想再添加一个指定 wegiht 但不关心 age 的构造函数，一般是这样：\n1 2 3 public Child(int weight) { this.weight = weight; } 但要把这个构造函数添加到 Child 类中，我们都知道是行不通的，因为 java 的函数签名是忽略参数名称的，所以 Child(int age) 跟 Child(int weight) 会冲突。这时候，静态工厂方法就可以登场了。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 class Child{ int age = 10; int weight = 30; public static Child newChild(int age, int weight) { Child child = new Child(); child.weight = weight; child.age = age; return child; } public static Child newChildWithWeight(int weight) { Child child = new Child(); child.weight = weight; return child; } public static Child newChildWithAge(int age) { Child child = new Child(); child.age = age; return child; } } 其中的 newChildWithWeight 和 newChildWithAge，就是两个参数类型相同的的方法，但是作用不同，如此，就能够满足上面所说的类似Child(int age) 和 Child(int weight)同时存在的需求。（另外，这两个函数名字也是自描述的，相对于一成不变的构造函数更能表达自身的含义，这也是上面所说的第一条优势 ——『它们有名字』）\n可以减少对外暴露的属性 软件开发中有一条很重要的经验：对外暴露的属性越多，调用者就越容易出错。所以对于类的提供者，一般来说，应该努力减少对外暴露属性，从而降低调用者出错的机会。考虑一下有如下一个 Player 类：\n1 2 3 4 5 6 7 8 9 10 // Player : Version 1 class Player { public static final int TYPE_RUNNER = 1; public static final int TYPE_SWIMMER = 2; public static final int TYPE_RACER = 3; protected int type; public Player(int type) { this.type = type; } } Player 对外提供了一个构造方法，让使用者传入一个 type 来表示类型。那么这个类期望的调用方式就是这样的：\n1 2 Player player1 = new Player(Player.TYPE_RUNNER); Player player2 = new Player(Player.TYPE_SWEIMMER); 但是，我们知道，提供者是无法控制调用方的行为的，实际中调用方式可能是这样的：\n1 2 3 Player player3 = new Player(0); Player player4 = new Player(-1); Player player5 = new Player(10086); 提供者期望的构造函数传入的值是事先定义好的几个常量之一，但如果不是，就很容易导致程序错误。要避免这种错误，使用枚举来代替常量值是常见的方法之一，当然如果不想用枚举的话，使用我们今天所说的主角静态工厂方法也是一个很好的办法。如果把以上需求用静态工厂方法来实现，代码大致是这样的：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 // Player : Version 2 class Player { public static final int TYPE_RUNNER = 1; public static final int TYPE_SWIMMER = 2; public static final int TYPE_RACER = 3; int type; private Player(int type) { this.type = type; } public static Player newRunner() { return new Player(TYPE_RUNNER); } public static Player newSwimmer() { return new Player(TYPE_SWIMMER); } public static Player newRacer() { return new Player(TYPE_RACER); } } 注意其中的构造方法被声明为了 private，这样可以防止它被外部调用，于是调用方在使用 Player 实例的时候，基本上就必须通过 newRunner、newSwimmer、newRacer 这几个静态工厂方法来创建，调用方无须知道也无须指定 type 值，这样就能把 type 的赋值的范围控制住，防止前面所说的异常值的情况。\n多了一层控制，方便统一修改 我们在开发中一定遇到过很多次这样的场景：在写一个界面时，服务端的数据还没准备好，这时候我们经常就需要自己在客户端编写一个测试的数据，来进行界面的测试，像这样：\n1 2 3 4 5 6 7 8 // 创建一个测试数据 User tester = new User(); tester.setName(\"小明\"); tester.setAge(16); tester.setDescription(\"测试数据\"); // use tester bindUI(tester); //、、 要写一连串的测试代码，如果需要测试的界面有多个，那么这一连串的代码可能还会被复制多次到项目的多个位置。这种写法的缺点呢，首先是代码臃肿、混乱；其次是万一上线的时候漏掉了某一处，忘记修改，那就可以说是灾难了。但是如果你像我一样，习惯了用静态工厂方法代替构造器的话，则会很自然地这么写，先在User 中定义一个 newTestInstance 方法：\n1 2 3 4 5 6 7 8 9 10 11 12 static class User{ String name ; int age ; String description; public static User newTestInstance() { User tester = new User(); tester.setName(\"隔壁老张\"); tester.setAge(16); tester.setDescription(\"我住隔壁我姓张！\"); return tester; } } 然后调用的地方就可以这样写了：\n1 2 3 4 // 创建一个测试数据 User tester = User.newTestInstance(); // use tester bindUI(tester); 是不是瞬间就觉得优雅了很多？！而且不只是代码简洁优雅，由于所有测试实例的创建都是在这一个地方，所以在需要正式数据的时候，也只需把这个方法随意删除或者修改一下，所有调用者都会编译不通过，彻底杜绝了由于疏忽导致线上还有测试代码的情况。\n静态工厂返回对象的类，可以随每次调用而变化（因静态工厂方法的参数值不同） 只要是已声明的返回类型的子类，都是可以返回的。返回对象的类也可能因版本而异。 例如，EnumSet类是没有公共构造函数的，只有静态工厂方法。在 OpenJDK 实现中，因底层 enum 类型的大小不同，这个静态工厂方法会返回两个子类中的一个实例。\n1 2 3 4 5 6 7 8 9 10 11 12 public static ",
+  "articleBody": "chapter_02 创建和销毁对象 Creating and Destroying Objects\n本章涉及创建和销毁对象：何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们被及时销毁，以及如何管理在销毁之前必须执行的清理操作。\n一些参考，原文读起来有些费劲\ngithub\ngithub\nItem-1：用静态工厂方法代替构造函数 在 Java 中，获得一个类实例最简单的方法就是使用 new 关键字，即通过构造函数来实现对象的创建。就像这样：\n1 2 Fragment fragment = new MyFragment(); Date date = new Date(); 不过在实际的开发中，我们经常还会见到另外一种获取类实例的方法：\n1 2 3 Fragment fragment = MyFragment.newIntance(); Calendar calendar = Calendar.getInstance(); Integer number = Integer.valueOf(\"3\"); 像这样的：不通过 new，而是用一个静态方法来对外提供自身实例的方法，即为我们所说的静态工厂方法。要注意的是静态工厂方法与设计模式中的工厂方法模式不同。静态工厂方法与构造函数相比的优点如下。\n静态工厂方法有具体名字 由于语言的特性，Java 的构造函数都是跟类名一样的。这导致的一个问题是构造函数的名称不够灵活，经常不能准确地描述返回值，在有多个重载的构造函数时尤甚，如果参数类型、数目又比较相似的话，那更是很容易出错。\n1 2 3 4 5 6 Date date0 = new Date(); Date date1 = new Date(0L); Date date2 = new Date(\"0\"); Date date3 = new Date(1,2,1); Date date4 = new Date(1,2,1,1,1); Date date5 = new Date(1,2,1,1,1,1); Date 类有很多重载函数，对于开发者来说，假如不是特别熟悉的话，恐怕是需要犹豫一下，才能找到合适的构造函数的。而对于其他的代码阅读者来说，估计更是需要查看文档，才能明白每个参数的含义了。\nDate 类在目前的 Java 版本中，只保留了一个无参和一个有参的构造函数，其他的都已经标记为 @Deprecated 了。\n而如果使用静态工厂方法，就可以给方法起更多有意义的名字，比如前面的 valueOf、newInstance、getInstance 等，对于代码的编写和阅读都能够更清晰。\n静态工厂方法不需要在每次调用时创建新对象。 这允许不可变类使用预先构造的实例，或在构造实例时缓存实例，并重复分配它们以避免创建不必要的重复对象。Boolean.valueOf(boolean) 方法说明了这种技术：它从不创建对象。这种技术类似于享元模式。如果经常请求相同的对象，特别是在创建对象的代价很高时，它可以极大地提高性能。\n有时候外部调用者只需要拿到一个实例，而不关心是否是新的实例；又或者我们想对外提供一个单例时，如果使用工厂方法，就可以很容易的在内部控制，防止创建不必要的对象，减少开销。在实际的场景中，单例的写法也大都是用静态工厂方法来实现的。\n可以通过静态工厂方法获取返回类型的任何子类的对象。 这条不用多说，设计模式中的基本的原则之一：『里氏替换』原则，就是说子类应该能替换父类。显然，构造方法只能返回确切的自身类型，而静态工厂方法则能够更加灵活，可以根据需要方便地返回任何它的子类型的实例。\n1 2 3 4 5 6 7 8 9 10 Class Person { public static Person getInstance(){ return new Person(); // 这里可以改为 return new Player() / Cooker() } } Class Player extends Person{ } Class Cooker extends Person{ } 比如上面这段代码，Person 类的静态工厂方法可以返回 Person 的实例，也可以根据需要返回它的子类Player 或者 Cooker。（当然，这只是为了演示，在实际的项目中，一个类是不应该依赖于它的子类的。但如果这里的 getInstance () 方法位于其他的类中，就更具有的实际操作意义了）\n可以有多个参数相同但名称不同的工厂方法 构造函数虽然也可以有多个，但是由于函数名已经被固定，所以就要求参数必须有差异时（类型、数量或者顺序）才能够重载了。举例来说：\n1 2 3 4 5 6 7 8 9 10 11 class Child{ int age = 10; int weight = 30; public Child(int age, int weight) { this.age = age; this.weight = weight; } public Child(int age) { this.age = age; } } Child 类有 age 和 weight 两个属性，如代码所示，它已经有了两个构造函数：Child(int age, int weight) 和 Child(int age)，这时候如果我们想再添加一个指定 wegiht 但不关心 age 的构造函数，一般是这样：\n1 2 3 public Child(int weight) { this.weight = weight; } 但要把这个构造函数添加到 Child 类中，我们都知道是行不通的，因为 java 的函数签名是忽略参数名称的，所以 Child(int age) 跟 Child(int weight) 会冲突。这时候，静态工厂方法就可以登场了。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 class Child{ int age = 10; int weight = 30; public static Child newChild(int age, int weight) { Child child = new Child(); child.weight = weight; child.age = age; return child; } public static Child newChildWithWeight(int weight) { Child child = new Child(); child.weight = weight; return child; } public static Child newChildWithAge(int age) { Child child = new Child(); child.age = age; return child; } } 其中的 newChildWithWeight 和 newChildWithAge，就是两个参数类型相同的的方法，但是作用不同，如此，就能够满足上面所说的类似Child(int age) 和 Child(int weight)同时存在的需求。（另外，这两个函数名字也是自描述的，相对于一成不变的构造函数更能表达自身的含义，这也是上面所说的第一条优势 ——『它们有名字』）\n可以减少对外暴露的属性 软件开发中有一条很重要的经验：对外暴露的属性越多，调用者就越容易出错。所以对于类的提供者，一般来说，应该努力减少对外暴露属性，从而降低调用者出错的机会。考虑一下有如下一个 Player 类：\n1 2 3 4 5 6 7 8 9 10 // Player : Version 1 class Player { public static final int TYPE_RUNNER = 1; public static final int TYPE_SWIMMER = 2; public static final int TYPE_RACER = 3; protected int type; public Player(int type) { this.type = type; } } Player 对外提供了一个构造方法，让使用者传入一个 type 来表示类型。那么这个类期望的调用方式就是这样的：\n1 2 Player player1 = new Player(Player.TYPE_RUNNER); Player player2 = new Player(Player.TYPE_SWEIMMER); 但是，我们知道，提供者是无法控制调用方的行为的，实际中调用方式可能是这样的：\n1 2 3 Player player3 = new Player(0); Player player4 = new Player(-1); Player player5 = new Player(10086); 提供者期望的构造函数传入的值是事先定义好的几个常量之一，但如果不是，就很容易导致程序错误。要避免这种错误，使用枚举来代替常量值是常见的方法之一，当然如果不想用枚举的话，使用我们今天所说的主角静态工厂方法也是一个很好的办法。如果把以上需求用静态工厂方法来实现，代码大致是这样的：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 // Player : Version 2 class Player { public static final int TYPE_RUNNER = 1; public static final int TYPE_SWIMMER = 2; public static final int TYPE_RACER = 3; int type; private Player(int type) { this.type = type; } public static Player newRunner() { return new Player(TYPE_RUNNER); } public static Player newSwimmer() { return new Player(TYPE_SWIMMER); } public static Player newRacer() { return new Player(TYPE_RACER); } } 注意其中的构造方法被声明为了 private，这样可以防止它被外部调用，于是调用方在使用 Player 实例的时候，基本上就必须通过 newRunner、newSwimmer、newRacer 这几个静态工厂方法来创建，调用方无须知道也无须指定 type 值，这样就能把 type 的赋值的范围控制住，防止前面所说的异常值的情况。\n多了一层控制，方便统一修改 我们在开发中一定遇到过很多次这样的场景：在写一个界面时，服务端的数据还没准备好，这时候我们经常就需要自己在客户端编写一个测试的数据，来进行界面的测试，像这样：\n1 2 3 4 5 6 7 8 // 创建一个测试数据 User tester = new User(); tester.setName(\"小明\"); tester.setAge(16); tester.setDescription(\"测试数据\"); // use tester bindUI(tester); //、、 要写一连串的测试代码，如果需要测试的界面有多个，那么这一连串的代码可能还会被复制多次到项目的多个位置。这种写法的缺点呢，首先是代码臃肿、混乱；其次是万一上线的时候漏掉了某一处，忘记修改，那就可以说是灾难了。但是如果你像我一样，习惯了用静态工厂方法代替构造器的话，则会很自然地这么写，先在User 中定义一个 newTestInstance 方法：\n1 2 3 4 5 6 7 8 9 10 11 12 static class User{ String name ; int age ; String description; public static User newTestInstance() { User tester = new User(); tester.setName(\"隔壁老张\"); tester.setAge(16); tester.setDescription(\"我住隔壁我姓张！\"); return tester; } } 然后调用的地方就可以这样写了：\n1 2 3 4 // 创建一个测试数据 User tester = User.newTestInstance(); // use tester bindUI(tester); 是不是瞬间就觉得优雅了很多？！而且不只是代码简洁优雅，由于所有测试实例的创建都是在这一个地方，所以在需要正式数据的时候，也只需把这个方法随意删除或者修改一下，所有调用者都会编译不通过，彻底杜绝了由于疏忽导致线上还有测试代码的情况。\n静态工厂返回对象的类，可以随每次调用而变化（因静态工厂方法的参数值不同） 只要是已声明的返回类型的子类，都是可以返回的。返回对象的类也可能因版本而异。\n例如，EnumSet类是没有公共构造函数的，只有静态工厂方法。在 OpenJDK 实现中，因底层 enum 类型的大小不同，这个静态工厂方法会返回两个子类中的一个实例。\n1 2 3 4 5 6 7 8 9 10 11 12 public static ",
   "wordCount" : "41928",
   "inLanguage": "en",
   "datePublished": "2021-02-09T15:50:13Z",
@@ -489,8 +489,8 @@ Creating and Destroying Objects
   <div class="post-content"><h1 id="chapter_02-创建和销毁对象">chapter_02 创建和销毁对象<a hidden class="anchor" aria-hidden="true" href="#chapter_02-创建和销毁对象">#</a></h1>
 <p><strong>Creating and Destroying Objects</strong></p>
 <p>本章涉及创建和销毁对象：何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们被及时销毁，以及如何管理在销毁之前必须执行的清理操作。</p>
-<p>一些参考，原文读起来有些费劲
-<a href="https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/tree/master">github</a>
+<p>一些参考，原文读起来有些费劲<br>
+<a href="https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/tree/master">github</a><br>
 <a href="https://github.com/mengdd/Effective-Java-Reading-Notes">github</a></p>
 <h2 id="item-1用静态工厂方法代替构造函数">Item-1：用静态工厂方法代替构造函数<a hidden class="anchor" aria-hidden="true" href="#item-1用静态工厂方法代替构造函数">#</a></h2>
 <p>在 Java 中，获得一个类实例最简单的方法就是使用 new 关键字，即通过构造函数来实现对象的创建。就像这样：</p>
@@ -538,11 +538,11 @@ Creating and Destroying Objects
 </span></span><span style="display:flex;"><span>Date date5 = <span style="color:#fff;font-weight:bold">new</span> Date(1,2,1,1,1,1);
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Date 类有很多重载函数，对于开发者来说，假如不是特别熟悉的话，恐怕是需要犹豫一下，才能找到合适的构造函数的。而对于其他的代码阅读者来说，估计更是需要查看文档，才能明白每个参数的含义了。
-Date 类在目前的 Java 版本中，只保留了一个无参和一个有参的构造函数，其他的都已经标记为 @Deprecated 了。
+</div><p>Date 类有很多重载函数，对于开发者来说，假如不是特别熟悉的话，恐怕是需要犹豫一下，才能找到合适的构造函数的。而对于其他的代码阅读者来说，估计更是需要查看文档，才能明白每个参数的含义了。<br>
+Date 类在目前的 Java 版本中，只保留了一个无参和一个有参的构造函数，其他的都已经标记为 @Deprecated 了。<br>
 而如果使用静态工厂方法，就可以给方法起更多有意义的名字，比如前面的 <code>valueOf、newInstance、getInstance</code> 等，对于代码的编写和阅读都能够更清晰。</p>
 <h3 id="静态工厂方法不需要在每次调用时创建新对象">静态工厂方法不需要在每次调用时创建新对象。<a hidden class="anchor" aria-hidden="true" href="#静态工厂方法不需要在每次调用时创建新对象">#</a></h3>
-<p>这允许不可变类使用预先构造的实例，或在构造实例时缓存实例，并重复分配它们以避免创建不必要的重复对象。<code>Boolean.valueOf(boolean)</code> 方法说明了这种技术：它从不创建对象。这种技术类似于享元模式。如果经常请求相同的对象，特别是在创建对象的代价很高时，它可以极大地提高性能。
+<p>这允许不可变类使用预先构造的实例，或在构造实例时缓存实例，并重复分配它们以避免创建不必要的重复对象。<code>Boolean.valueOf(boolean)</code> 方法说明了这种技术：它从不创建对象。这种技术类似于享元模式。如果经常请求相同的对象，特别是在创建对象的代价很高时，它可以极大地提高性能。<br>
 有时候外部调用者只需要拿到一个实例，而不关心是否是新的实例；又或者我们想对外提供一个单例时，如果使用工厂方法，就可以很容易的在内部控制，防止创建不必要的对象，减少开销。在实际的场景中，单例的写法也大都是用静态工厂方法来实现的。</p>
 <h3 id="可以通过静态工厂方法获取返回类型的任何子类的对象">可以通过静态工厂方法获取返回类型的任何子类的对象。<a hidden class="anchor" aria-hidden="true" href="#可以通过静态工厂方法获取返回类型的任何子类的对象">#</a></h3>
 <p>这条不用多说，设计模式中的基本的原则之一：『里氏替换』原则，就是说子类应该能替换父类。显然，构造方法只能返回确切的自身类型，而静态工厂方法则能够更加灵活，可以根据需要方便地返回任何它的子类型的实例。</p>
@@ -838,7 +838,7 @@ Date 类在目前的 Java 版本中，只保留了一个无参和一个有参的
 </div>
 </div><p>是不是瞬间就觉得优雅了很多？！而且不只是代码简洁优雅，由于所有测试实例的创建都是在这一个地方，所以在需要正式数据的时候，也只需把这个方法随意删除或者修改一下，所有调用者都会编译不通过，彻底杜绝了由于疏忽导致线上还有测试代码的情况。</p>
 <h3 id="静态工厂返回对象的类可以随每次调用而变化因静态工厂方法的参数值不同">静态工厂返回对象的类，可以随每次调用而变化（因静态工厂方法的参数值不同）<a hidden class="anchor" aria-hidden="true" href="#静态工厂返回对象的类可以随每次调用而变化因静态工厂方法的参数值不同">#</a></h3>
-<p>只要是已声明的返回类型的子类，都是可以返回的。返回对象的类也可能因版本而异。
+<p>只要是已声明的返回类型的子类，都是可以返回的。返回对象的类也可能因版本而异。<br>
 例如，EnumSet类是没有公共构造函数的，只有静态工厂方法。在 OpenJDK 实现中，因底层 enum 类型的大小不同，这个静态工厂方法会返回两个子类中的一个实例。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -872,11 +872,11 @@ Date 类在目前的 Java 版本中，只保留了一个无参和一个有参的
 </div>
 </div><p>客户端看不到这两个实现类的存在。如果 RegularEnumSet 不再为小型 enum 类型提供性能优势，它可能会在未来的版本中被消除，而不会产生不良影响。类似地，如果事实证明 EnumSet 有益于性能，未来的版本可以添加第三或第四个 EnumSet 实现。客户端既不知道也不关心从工厂返回的对象的类；它们只关心它是EnumSet 的某个子类。</p>
 <h3 id="当编写包含静态工厂方法的类时返回对象的类不需要存在">当编写包含静态工厂方法的类时，返回对象的类不需要存在。<a hidden class="anchor" aria-hidden="true" href="#当编写包含静态工厂方法的类时返回对象的类不需要存在">#</a></h3>
-<p>这种灵活的静态工厂方法构成了服务提供者框架的基础，比如 Java 数据库连接 API（JDBC）。
-PS：这部分主要说了服务提供者框架，原文说的特别晦涩难懂，直接参考如下。
+<p>这种灵活的静态工厂方法构成了服务提供者框架的基础，比如 Java 数据库连接 API（JDBC）。<br>
+PS：这部分主要说了服务提供者框架，原文说的特别晦涩难懂，直接参考如下。<br>
 <a href="https://www.jianshu.com/p/72d1b41f7cde">参考这里，说明了服务提供者框架</a></p>
 <h3 id="静态工厂的缺点一">静态工厂的缺点一<a hidden class="anchor" aria-hidden="true" href="#静态工厂的缺点一">#</a></h3>
-<p>如果类中没有公有构造器或受保护的构造器，就不能被子类继承。
+<p>如果类中没有公有构造器或受保护的构造器，就不能被子类继承。<br>
 这可能是一种因祸得福的做法，因为它鼓励程序员使用组合而不是继承。</p>
 <h3 id="静态工厂的缺点二">静态工厂的缺点二<a hidden class="anchor" aria-hidden="true" href="#静态工厂的缺点二">#</a></h3>
 <p>程序员很难找到静态工厂方法。 它们在 API 文档中不像构造函数那样引人注目，因此很难弄清楚如何实例化一个只提供静态工厂方法而没有构造函数的类。Javadoc 工具总有一天会关注到静态工厂方法。与此同时，你可以通过在类或接口文档中对静态工厂方法多加留意，以及遵守通用命名约定的方式来减少这个困扰。</p>
@@ -940,7 +940,7 @@ PS：这部分主要说了服务提供者框架，原文说的特别晦涩难懂
 </div>
 </div><ul>
 <li>
-<p>getType，类似于 getInstance，但如果工厂方法位于不同的类中，则使用此方法。其类型是工厂方法返回
+<p>getType，类似于 getInstance，但如果工厂方法位于不同的类中，则使用此方法。其类型是工厂方法返回<br>
 的对象类型，例如：<code>FileStore fs = Files.getFileStore(path);</code></p>
 </li>
 <li>
@@ -966,11 +966,11 @@ PS：这部分主要说了服务提供者框架，原文说的特别晦涩难懂
 <pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List&lt;Complaint&gt; litany = Collections.<span style="color:#007f7f">list</span>(legacyLitany);
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>总之，『考虑使用静态工厂方法代替构造器』，除了上面说的优势，更多的是在工程学上的意义：
+</div><p>总之，『考虑使用静态工厂方法代替构造器』，除了上面说的优势，更多的是在工程学上的意义：<br>
 <code>能够增大类的提供者对自己所提供的类的控制力。</code></p>
 <h2 id="item-2当构造函数有多个参数时考虑改用构建器">Item-2：当构造函数有多个参数时，考虑改用构建器<a hidden class="anchor" aria-hidden="true" href="#item-2当构造函数有多个参数时考虑改用构建器">#</a></h2>
 <p>（Consider a builder when faced with many constructor parameters）</p>
-<p>静态工厂和构造函数都有一个局限：它们不能对大量可选参数做很好的扩展。以一个类为例，它表示包装食品上的营养标签。这些标签上有一些字段是必需的，如：净含量、毛重和每单位份量的卡路里，另有超过 20个可选的字段，如：总脂肪、饱和脂肪、反式脂肪、胆固醇、钠等等。
+<p>静态工厂和构造函数都有一个局限：它们不能对大量可选参数做很好的扩展。以一个类为例，它表示包装食品上的营养标签。这些标签上有一些字段是必需的，如：净含量、毛重和每单位份量的卡路里，另有超过 20个可选的字段，如：总脂肪、饱和脂肪、反式脂肪、胆固醇、钠等等。<br>
 大多数产品只需要这些可选字段中的几个，且具有非零值。怎么给这样的类编写构造函数或静态工厂呢？传统的方式是使用可伸缩构造函数，在这种模式中，只向构造函数提供必需的参数。即，向第一个构造函数提供单个可选参数，向第二个构造函数提供两个可选参数，以此类推，最后一个构造函数是具有所有可选参数的。这是它在实际应用中的样子。为了简洁起见，只展示具备四个可选字段的情况：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1121,7 +1121,7 @@ PS：这部分主要说了服务提供者框架，原文说的特别晦涩难懂
 </div>
 </div><p>但是，JavaBean 模式本身有严重的缺点。因为构建是在多个调用之间进行的，所以 JavaBean 可能在构建的过程中处于不一致的状态。该类不能仅通过检查构造函数参数的有效性来强制一致性。在不一致的状态下尝试使用对象可能会导致错误的发生，而包含这些错误的代码很难调试。另一个缺点是，JavaBean 模式很难让类不可变，并且需要程序员额外的努力来确保线程安全。</p>
 <p>通过在对象构建完成时手动「冻结」对象，并在冻结之前不允许使用对象，可以减少这些缺陷，但是这种变通方式很笨拙，在实践中很少使用。此外，它可能在运行时导致错误，因为编译器不能确保程序员在使用对象之前调用它的 freeze 方法。</p>
-<p>幸运的是，还有第三种选择，它结合了可伸缩构造函数模式的安全性和 JavaBean 模式的可读性。它是建造者模式的一种形式。客户端不直接生成所需的对象，而是使用所有必需的参数调用构造函数（或静态工厂），并获得一个 builder 对象。然后，客户端在构建器对象上调用像 setter 这样的方法来设置每个需要的可选参数。
+<p>幸运的是，还有第三种选择，它结合了可伸缩构造函数模式的安全性和 JavaBean 模式的可读性。它是建造者模式的一种形式。客户端不直接生成所需的对象，而是使用所有必需的参数调用构造函数（或静态工厂），并获得一个 builder 对象。然后，客户端在构建器对象上调用像 setter 这样的方法来设置每个需要的可选参数。<br>
 最后，客户端调用一个无参数的构建方法来生成对象，这通常是不可变的。构建器通常是它构建的类的静态成员类。示例如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1256,7 +1256,7 @@ PS：这部分主要说了服务提供者框架，原文说的特别晦涩难懂
 </span></span><span style="display:flex;"><span>.<span style="color:#007f7f">calories</span>(100).<span style="color:#007f7f">sodium</span>(35).<span style="color:#007f7f">carbohydrate</span>(27).<span style="color:#007f7f">build</span>();
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>该客户端代码易于编写，更重要的是易于阅读。
+</div><p>该客户端代码易于编写，更重要的是易于阅读。<br>
 PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。或可将「构建器」独立出来，广泛适应多个实体类。以下案例仅供参考：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1442,7 +1442,7 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>请注意，Pizza.Builder 是具有递归类型参数的泛型类型。这与抽象 self 方法一起，允许方法链接在子类中正常工作，而不需要强制转换。对于 Java 缺少自类型这一事实，这种变通方法称为模拟自类型习惯用法。
+</div><p>请注意，Pizza.Builder 是具有递归类型参数的泛型类型。这与抽象 self 方法一起，允许方法链接在子类中正常工作，而不需要强制转换。对于 Java 缺少自类型这一事实，这种变通方法称为模拟自类型习惯用法。<br>
 这里有两个具体的比萨子类，一个是标准的纽约风格的比萨，另一个是 calzone。前者有一个所需的大小参数，而后者让你指定酱料应该是内部还是外部：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1612,7 +1612,7 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>私有构造函数只调用一次，用于初始化 public static final 修饰的 Elvis 类型字段 INSTANCE。由于没有 public或 protected 的构造函数，保证了Elvis的全局唯一性：一旦初始化了 Elvis 类，就只会存在一个 Elvis 实例。
+</div><p>私有构造函数只调用一次，用于初始化 public static final 修饰的 Elvis 类型字段 INSTANCE。由于没有 public或 protected 的构造函数，保证了Elvis的全局唯一性：一旦初始化了 Elvis 类，就只会存在一个 Elvis 实例。<br>
 但有一点需要注意：拥有特殊权限的客户端可以借助<code>AccessibleObject.setAccessible</code>方法利用反射调用私有构造函数。如果需要防范这种攻击，请修改构造函数，使其在请求创建第二个实例时抛出异常。</p>
 <p>使用<code>AccessibleObject.setAccessible</code>方法调用私有构造函数示例：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1679,7 +1679,7 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 <p>如果应用程序需要的话，可以编写泛型的单例工厂。</p>
 </li>
 <li>
-<p>方法引用能够作为一个提供者，例如<code>Elvis::getInstance 是 Supplier&lt;Elvis&gt;的提供者。</code>
+<p>方法引用能够作为一个提供者，例如<code>Elvis::getInstance 是 Supplier&lt;Elvis&gt;的提供者。</code><br>
 方法引用作为提供者的例子：</p>
 </li>
 </ul>
@@ -1758,8 +1758,8 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>因为显式构造函数是私有的，所以在类之外是不可访问的。
-不是必须抛出<code>AssertionError()</code>异常，但是抛异常可以防止构造函数被意外调用。
+</div><p>因为显式构造函数是私有的，所以在类之外是不可访问的。<br>
+不是必须抛出<code>AssertionError()</code>异常，但是抛异常可以防止构造函数被意外调用。<br>
 它保证类在任何情况下都不会被实例化。这个习惯用法有点违反常规，因为构造函数是明确提供的，但不能调用它。因此，如上述代码所示，包含注释是明智的做法。</p>
 <p>这种做法也有副作用，它使得一个类不能被继承。因为所有子类构造函数都必须调用超类构造函数，无论是显式的还是隐式的，但这种情况下子类都没有可访问的超类构造函数可调用。</p>
 <h2 id="item-5优先考虑依赖注人来引用资源">Item-5：优先考虑依赖注人来引用资源<a hidden class="anchor" aria-hidden="true" href="#item-5优先考虑依赖注人来引用资源">#</a></h2>
@@ -1808,9 +1808,9 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这两种方法都不好，这里只使用一个字典，实际上每种语言都有自己的字典。
+</div><p>这两种方法都不好，这里只使用一个字典，实际上每种语言都有自己的字典。<br>
 静态工具类和单例不适用于需要引用底层资源的类。</p>
-<p>我们需要SpellChecker 支持多个dictionary实例。所以可以在创建新实例时将资源传递给构造函数。
+<p>我们需要SpellChecker 支持多个dictionary实例。所以可以在创建新实例时将资源传递给构造函数。<br>
 这就是依赖注入的一种形式：字典是拼写检查器的依赖项，在创建它时被注入到拼写检查器中。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1837,7 +1837,7 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>依赖注入模式非常简单，许多程序员在不知道其名称的情况下使用了多年。虽然拼写检查器示例只有一个资源（字典），但是依赖注入可以处理任意数量的资源和任意依赖路径。它保持了不可变性，因此多个客户端可以共享依赖对象（假设客户端需要相同的底层资源）。依赖注入同样适用于构造函数、静态工厂和构建器。</p>
-<p>这种模式的另一种表现形式，是将资源工厂传递给构造函数。工厂是一个对象，可以反复调用它来创建类的实例。这就是工厂方法模式。Java 8 中引入的<code>Supplier&lt;T&gt;</code>非常适合表示工厂。
+<p>这种模式的另一种表现形式，是将资源工厂传递给构造函数。工厂是一个对象，可以反复调用它来创建类的实例。这就是工厂方法模式。Java 8 中引入的<code>Supplier&lt;T&gt;</code>非常适合表示工厂。<br>
 带有<code>Supplier&lt;T&gt;</code>的方法，应该限制输入工厂的类型参数使用有限制的通配符类型，以便客户端能够传入一个工厂，来创建指定类型的任意子类型。</p>
 <p>例如，这里有一个生产瓷砖方法，每块瓷砖都使用客户提供的工厂来制作瓷砖：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1871,8 +1871,8 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这是单个 String 实例，而不是每次执行时都创建一个新的实例。只要字符串字面量相同，同一虚拟机中运行的其他代码都可以复用该对象。</p>
-<p>我们应该用静态工厂方法代替构造函数，以避免创建不必要的对象。
-静态工厂方法<code>Boolean.valueOf(String)</code>，比构造函数<code>Boolean(String)</code>好很多。
+<p>我们应该用静态工厂方法代替构造函数，以避免创建不必要的对象。<br>
+静态工厂方法<code>Boolean.valueOf(String)</code>，比构造函数<code>Boolean(String)</code>好很多。<br>
 每次调用构造函数都会创建一个新的对象，而静态工厂方法只会创建一个对象。</p>
 <p>除了复用不可变对象之外，如果知道可变对象不会被修改，也可以复用它们。有些对象的创建的代价相比而言要昂贵得多。如果你需要重复地使用这样一个「昂贵的对象」，那么最好将其缓存以供复用。假设你要编写一个方法来确定字符串是否为有效的罗马数字。下面是使用正则表达式最简单的方法：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1887,7 +1887,7 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个方法依赖<code>String.matches</code>方法，虽然<code>String.matches</code>方法是检查字符串和正则表达式是否匹配的最简单方法，但是不适合在注重性能的情景重复使用。因为<code>String.matches</code>方法在内部为正则表达式创建了一个 Pattern 实例，并且只使用一次，之后就进行垃圾收集了。创建一个 Pattern 实例是很昂贵的，因为它需要将正则表达式编译成有限状态机。
+</div><p>这个方法依赖<code>String.matches</code>方法，虽然<code>String.matches</code>方法是检查字符串和正则表达式是否匹配的最简单方法，但是不适合在注重性能的情景重复使用。因为<code>String.matches</code>方法在内部为正则表达式创建了一个 Pattern 实例，并且只使用一次，之后就进行垃圾收集了。创建一个 Pattern 实例是很昂贵的，因为它需要将正则表达式编译成有限状态机。<br>
 为了提升性能，应该显示的将正则表达式编译成一个Pattern实例（它是不可变的），让它成为类初始化的一部分，并将它缓存起来，并在每次调用 <code>isRomanNumeral</code> 方法时复用同一个实例：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1909,17 +1909,17 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果频繁调用 isRomanNumeral，改进版本将提供显著的性能提升。在我的机器上，初始版本输入 8 字符的字符串花费 1.1μs（微秒），而改进的版本需要 0.17μs，快了6.5 倍。不仅性能得到了改善，代码也更清晰。
+</div><p>如果频繁调用 isRomanNumeral，改进版本将提供显著的性能提升。在我的机器上，初始版本输入 8 字符的字符串花费 1.1μs（微秒），而改进的版本需要 0.17μs，快了6.5 倍。不仅性能得到了改善，代码也更清晰。<br>
 将不可见的Pattern实例做成final静态域，合理的命名，这样比正则表达式可读性更好。</p>
-<p>如果加载包含改进版 isRomanNumeral 方法的类时，该方法从未被调用过，那么初始化字段 ROMAN 是不必要的。因此，可以用延迟初始化字段的方式在第一次调用 isRomanNumeral 方法时才初始化字段，而不是在类加载时初始化，但不建议这样做。通常情况下，延迟初始化会使实现复杂化，而没有明显的性能改善。
+<p>如果加载包含改进版 isRomanNumeral 方法的类时，该方法从未被调用过，那么初始化字段 ROMAN 是不必要的。因此，可以用延迟初始化字段的方式在第一次调用 isRomanNumeral 方法时才初始化字段，而不是在类加载时初始化，但不建议这样做。通常情况下，延迟初始化会使实现复杂化，而没有明显的性能改善。<br>
 注：类加载通常指的是类的生命周期中加载、连接、初始化三个阶段。当方法没有在类加载过程中被使用时，可以不初始化与之相关的字段。</p>
-<p>如果一个对象是不可变的，那么它可以被安全的重用。但有时并不是这样，适配器就是这样，有时候也叫视图。
+<p>如果一个对象是不可变的，那么它可以被安全的重用。但有时并不是这样，适配器就是这样，有时候也叫视图。<br>
 适配器指的是：它把功能委托给一个后备对象，并为后备对象提供一个可替代的接口。由于适配器除了后备对象之外，没有其他状态信息，所以针对某个给定对象的特定适配器而言，它不需要创建多个适配器实例。</p>
-<p>例如，Map 接口的 keySet 方法返回 Map 对象的 Set 视图，其中包含 Map 中的所有键。
-你可能以为，对 keySet 的每次调用都必须创建一个新的 Set 实例，但是对给定 Map 对象上的 keySet 的每次调用都可能返回相同的 Set 实例。虽然返回的 Set 实例通常是可变的，但所有返回的对象在功能上都是相同的：当返回的对象之一发生更改时，所有其他对象也会发生更改，因为它们都由相同的 Map 实例支持。
+<p>例如，Map 接口的 keySet 方法返回 Map 对象的 Set 视图，其中包含 Map 中的所有键。<br>
+你可能以为，对 keySet 的每次调用都必须创建一个新的 Set 实例，但是对给定 Map 对象上的 keySet 的每次调用都可能返回相同的 Set 实例。虽然返回的 Set 实例通常是可变的，但所有返回的对象在功能上都是相同的：当返回的对象之一发生更改时，所有其他对象也会发生更改，因为它们都由相同的 Map 实例支持。<br>
 虽然创建 keySet 视图对象的多个实例基本上是无害的，但这是不必要的，也没有好处。</p>
-<p>自动装箱允许程序员混合基本类型和包装类型，根据需要自动装箱和拆箱，但是自动装箱会创建不必要的对象。
-自动装箱模糊了基本类型和包装类型之间的区别， 两者有细微的语义差别和不明显的性能差别。
+<p>自动装箱允许程序员混合基本类型和包装类型，根据需要自动装箱和拆箱，但是自动装箱会创建不必要的对象。<br>
+自动装箱模糊了基本类型和包装类型之间的区别， 两者有细微的语义差别和不明显的性能差别。<br>
 下面的方法计算所有正整数的和。为了做到这一点，程序必须使用 long，因为 int 值不够大，不足以容纳所有正整数值的和：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2045,12 +2045,12 @@ PS：若实体类数量较多时，内嵌静态类的方式还是比较冗长。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>用 null 处理过时引用的另一个好处是，如果它们随后被错误地关联引用，程序将立即失败，抛出
+</div><p>用 null 处理过时引用的另一个好处是，如果它们随后被错误地关联引用，程序将立即失败，抛出<br>
 NullPointerException异常，而不是悄悄的错误运行下去，尽早的检测出程序中的错误总是有益的。</p>
 <p>对于每一个对象引用，一旦程序不再用到它，就把它清空。其实完全没必要这样，因为这样会把代码弄的很乱。清空对象引用应该是一种例外，而不是一种规范行为。消除过期引用最好的方法是，让包含该引用的变量结束其生命周期。如果你在最狭窄的范围内定义每个变量，那么这种情况自然而然会发生。</p>
 <p>那么，什么时候应该取消引用呢？Stack 类的哪些方面容易导致内存泄漏？问题在于，stack类自己管理内存。存储池包含了elements数组（对象引用单元，而不是对象本身）的元素。数组活动区域（同前面的定义）中的元素是已分配的（allocated），而数组其余元素则是空闲的。但垃圾回收器并不知道这一点，对垃圾回收器而言，elements数组中的所有对象引用都同样有效。只有程序员知道数组的非活动部分不重要。只要数组元素成为非活动部分的一部分，程序员就可以通过手动清空数组元素，有效地将这个情况传递给垃圾收集器。</p>
 <p>一般来说，一个类管理它自己的内存时，程序员应该警惕内存泄漏。当释放一个元素时，该元素中包含的任何对象引用都应该被置为 null。</p>
-<p>另一个常见的内存泄漏来源是缓存。一旦将对象引用放入缓存中，就很容易忘记它。并且在它变得无关紧要之后很久仍将它留在缓存中。有几个解决办法。如果你要实现这样的缓存：只要缓存之外存在某个项的键的引用，该项就有意义，那么就可以用WeakHashMap代表缓存，当条目过时后，条目将被自动删除。
+<p>另一个常见的内存泄漏来源是缓存。一旦将对象引用放入缓存中，就很容易忘记它。并且在它变得无关紧要之后很久仍将它留在缓存中。有几个解决办法。如果你要实现这样的缓存：只要缓存之外存在某个项的键的引用，该项就有意义，那么就可以用WeakHashMap代表缓存，当条目过时后，条目将被自动删除。<br>
 记住，WeakHashMap 只有在缓存条目的预期生存期由键的外部引用（而不是值）决定时才有用。</p>
 <p>缓存的生命周期不是很容易确定，随着时间的推移，一些缓存变的无用。所以应该定时清空无用的缓存。这些清除工作可以由一个后台线程（可能是ScheduledThreadPoolExecutor）来完成，或者向缓存添加新条目时顺便进行清理。LinkedHashMap 类通过其 removeEldestEntry 方法可以很容易地实现后一种方案。对于更复杂的缓存，你可能需要直接使用 java.lang.ref。</p>
 <p>内存泄露的第三个来源是监听器或其他回调。如果你实现了一个api，客户端在这个api中注册回调，却没有显式的取消注册，除非你采取某些动作，否则它们就会不断的堆积起来。确保回调被及时地垃圾收集的一种方法是仅存储对它们的弱引用，例如，将它们作为键存储在 WeakHashMap 中。</p>
@@ -2064,14 +2064,14 @@ NullPointerException异常，而不是悄悄的错误运行下去，尽早的检
 <p>为类提供终结器可能会延迟其实例的回收。一个长期运行的程序出现了OOM，程序死掉的时候，终结方法队列中有数千个图形对象正在等待被终结和回收，但是，终结方法的线程优先级，比该应用的其他线程优先级要低的多，所以图形对象的终结速度赶不上进入队列的速度。</p>
 <p>java语言规范不仅不保证终结方法或清除方法会及时执行，而且就不保证它们会被执行。当一个程序终止的时候，某些已经无法访问的对象上的终结方法却根本没有被执行，这是完全有可能的。结论是：永远不应该依赖终结方法或者清除方法来更新重要的持久状态。例如，依赖终结方法或者清除方法来释放共享资源(比如数据库)上的永久锁，这很容易让整个分布式系统垮掉。</p>
 <p>不要被<code>System.gc()</code>和<code>System.runFinalization();</code>这两个方法所诱惑。它们确实增加了终结方法或者清除方法被执行的机会，但是它们并不保证终结方法或者清除方法一定会被执行。唯一声称保证它们会被执行的两个方法是<code>System.runFinalizersOnExit();</code>及其臭名昭著的孪生兄弟<code>Runtime.runFinalizersOnExit();</code>。这两个方法都有致命的缺陷，并且已经被废弃很久了。</p>
-<p>终结器的另一个问题是，在终结期间抛出的未捕获异常被忽略，该对象的终结过程也会终止。未捕获的异常会使对象处于损坏状态，如果另一个线程试图使用这样一个损坏的对象，可能会导致任意的不确定性行为。
+<p>终结器的另一个问题是，在终结期间抛出的未捕获异常被忽略，该对象的终结过程也会终止。未捕获的异常会使对象处于损坏状态，如果另一个线程试图使用这样一个损坏的对象，可能会导致任意的不确定性行为。<br>
 正常情况下，未捕获的异常将终止线程并打印堆栈跟踪（Stack Trace），但如果在终结器中出现，则不会打印警告。清除器没有这个问题，因为使用清除器的库可以控制它的线程。</p>
-<p>使用终结器和清除器会严重影响性能。在我的机器上，创建一个简单的 AutoCloseable 对象，使用
+<p>使用终结器和清除器会严重影响性能。在我的机器上，创建一个简单的 AutoCloseable 对象，使用<br>
 try-with-resources 关闭它以及让垃圾收集器回收它的时间大约是 12ns。相反，使用终结器将时间增加到550ns。换句话说，使用终结器创建和销毁对象大约要慢 50 倍。这主要是因为终结器抑制了有效的垃圾收集。</p>
-<p>终结器有一个严重的安全问题：它们会让你的类受到终结器攻击。终结器攻击背后的思想很简单：如果从构造函数或它的序列化等价物（readObject 和 readResolve 方法（Item-12））抛出一个异常，恶意子类的终结器就可以运行在部分构造的对象上，而这个对象本来应该半途夭折。这个终结器可以在静态字段中记录对对象的引用，防止它被垃圾收集。一旦记录到异常对象，就很容易在这个对象上调用本来就不应该存在的任意方法。
+<p>终结器有一个严重的安全问题：它们会让你的类受到终结器攻击。终结器攻击背后的思想很简单：如果从构造函数或它的序列化等价物（readObject 和 readResolve 方法（Item-12））抛出一个异常，恶意子类的终结器就可以运行在部分构造的对象上，而这个对象本来应该半途夭折。这个终结器可以在静态字段中记录对对象的引用，防止它被垃圾收集。一旦记录到异常对象，就很容易在这个对象上调用本来就不应该存在的任意方法。<br>
 从构造函数抛出异常应该足以防止对象的出现；在有终结器的情况下，就不是这样了。final类不会受到终结方法攻击，因为没有人能够编写出final类的恶意子类。为了防止非final类受到终结方法攻击，要编写一个空的final的finalize方法。</p>
 <p>那么，如果类的对象中封装的资源（例如文件或者线程）确实需要终止，应该怎么做才能不用编写终结方法或者清除方法呢？只需让类实现AutoCloseable，并要求其客户端在每个实例不再需要的时候调用close方法，一般是利用<code>try-with-resources</code>确保终止，即使遇到异常也是如此（详见第9条）。值得提及的一个细节是，该实例必须记录下自己是否已经被关闭了：close方法必须在一个私有域中记录下“该对象已经不再有效”。如果这些方法是在对象已经终止之后被调用，其他的方法就必须检查这个域，并抛出<code>IllegalstateException</code>异常。</p>
-<p>那么终结方法和清除方法有什么好处呢？它们有两种合法用途。第一种用途是，当资源的所有者忘记调用它的close方法时，终结方法或者清除方法可以充当“安全网”。虽然这样做并不能保证终结方法或者清除方法会被及时地运行，但是在客户端无法正常结束操作的情况下，迟一点释放资源总比永远不释放要好。如果考虑编写这样的安全网终结方法，就要认真考虑清楚，这种保护是否值得付出这样的代价。
+<p>那么终结方法和清除方法有什么好处呢？它们有两种合法用途。第一种用途是，当资源的所有者忘记调用它的close方法时，终结方法或者清除方法可以充当“安全网”。虽然这样做并不能保证终结方法或者清除方法会被及时地运行，但是在客户端无法正常结束操作的情况下，迟一点释放资源总比永远不释放要好。如果考虑编写这样的安全网终结方法，就要认真考虑清楚，这种保护是否值得付出这样的代价。<br>
 一些 Java 库类，如<code>FileInputStream、FileOutputStream、ThreadPoolExecutor 和 java.sql.Connection</code>，都有终结器作为安全网。</p>
 <p>清除方法的第二种合理用途与对象的本地对等体（native peer)有关。本地对等体是一个本地（非Java的）对象（native object)，普通对象通过本地方法（native method)委托给一个本地对象。因为本地对等体不是一个普通对象，所以垃圾回收器不会知道它，当它的Java对等体被回收的时候，它不会被回收。如果本地对等体没有关键资源，并且性能也可以接受的话，那么清除方法或者终结方法正是执行这项任务最合适的工具。如果本地对等体拥有必须被及时终止的资源，或者性能无法接受，那么该类就应该具有一个close方法，如前所述。</p>
 <p>清除方法的使用有一定的技巧。下面以一个简单的Room类为例。假设房间在收回之前必须进行清除。Room类实现了<code>AutoCloseable</code>，它利用清除方法自动清除安全网的过程只不过是一个实现细节。与终结方法不同的是，清除方法不会污染类的公有API：</p>
@@ -2197,10 +2197,10 @@ try-with-resources 关闭它以及让垃圾收集器回收它的时间大约是 
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>你可能期望打印出Peace out，然后是Cleaning room，但是在我的机器上，它没有打印出Cleaning room，就退出程序了。这就是我们之前提到过的不可预见性。Cleaner规范指出：“清除方法在<code>System.exit</code>期间的行为是与实现相关的。不确保清除动作是否会被调用。”虽然规范没有指明，其实对于正常的程序退出也是如此。在我的机器上，只要在Teenager的main方法上添加代码行<code>System.gc()</code>，就足以让它在退出之前打印出cleaning room，但是不能保证在你的机器上也能看到相同的行为。
+</div><p>你可能期望打印出Peace out，然后是Cleaning room，但是在我的机器上，它没有打印出Cleaning room，就退出程序了。这就是我们之前提到过的不可预见性。Cleaner规范指出：“清除方法在<code>System.exit</code>期间的行为是与实现相关的。不确保清除动作是否会被调用。”虽然规范没有指明，其实对于正常的程序退出也是如此。在我的机器上，只要在Teenager的main方法上添加代码行<code>System.gc()</code>，就足以让它在退出之前打印出cleaning room，但是不能保证在你的机器上也能看到相同的行为。<br>
 总而言之，除非是作为安全网，或者是为了终止非关键的本地资源，否则请不要使用清除方法，对于在Java9之前的发行版本，则尽量不要使用终结方法。若使用了终结方法或者清除方法，则要注意它的不确定性和性能后果。</p>
 <h2 id="item-9使用-try-with-resources-优于-try-finally">Item-9：使用 try-with-resources 优于 try-finally<a hidden class="anchor" aria-hidden="true" href="#item-9使用-try-with-resources-优于-try-finally">#</a></h2>
-<p>Java类库中包括许多必须通过调用close方法来手工关闭的资源。
+<p>Java类库中包括许多必须通过调用close方法来手工关闭的资源。<br>
 例如<code>Inputstream、Outputstream和java.sql.Connection</code>。客户端经常会忽略资源的关闭，这会造成严重的性能后果。虽然这其中的许多资源都是用终结方法作为安全网，但是效果并不理想。</p>
 <p>根据经验，try-finally 语句是确保正确关闭资源的最佳方法，即使在出现异常或返回时也是如此：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -2316,7 +2316,7 @@ try-with-resources 关闭它以及让垃圾收集器回收它的时间大约是 
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>使用 <code>try-with-resources</code> 不仅使代码变得更简洁易懂，也更容易进行诊断。以 <code>firstLineOfFile()</code> 方法为例，如果调用 readline和(不可见的) close方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想要看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 <code>get Suppressed</code> 方法还可以访问到它们，<code>getsuppressed</code>方法也已经添加在Java7的 Throwable中了。
+</div><p>使用 <code>try-with-resources</code> 不仅使代码变得更简洁易懂，也更容易进行诊断。以 <code>firstLineOfFile()</code> 方法为例，如果调用 readline和(不可见的) close方法都抛出异常，后一个异常就会被禁止，以保留第一个异常。事实上，为了保留你想要看到的那个异常，即便多个异常都可以被禁止。这些被禁止的异常并不是简单地被抛弃了，而是会被打印在堆栈轨迹中，并注明它们是被禁止的异常。通过编程调用 <code>get Suppressed</code> 方法还可以访问到它们，<code>getsuppressed</code>方法也已经添加在Java7的 Throwable中了。<br>
 在 <code>try-with- resources</code> 语句中还可以使用 catch子句，就像在平时的<code>try-finally</code>语句中一样。这样既可以处理异常，又不需要再套用一层代码。下面举一个稍费了点心思的范例。这个<code>firstLineOfFile()</code>方法没有抛出异常，但是如果它无法打开文件，或者无法从中读取，就会返回一个默认值。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2348,19 +2348,19 @@ try-with-resources 关闭它以及让垃圾收集器回收它的时间大约是 
 <p>覆盖 equals 方法很简单，但有些时候不应该覆盖equals()：</p>
 <ul>
 <li>
-<p>类的每个实例本质上都是唯一的。
+<p>类的每个实例本质上都是唯一的。<br>
 对于像 Thread 这样表示活动实体类而不是值类来说也是如此。Object 提供的 equals 实现对于这些类具有完全正确的行为。</p>
 </li>
 <li>
-<p>该类不需要提供「逻辑相等」测试。
+<p>该类不需要提供「逻辑相等」测试。<br>
 例如，<code>java.util.regex.Pattern</code> 可以覆盖 equals 来检查两个 Pattern实例是否表示完全相同的正则表达式，但设计人员认为客户端不需要或不需要这个功能。在这种情况下，从Object 继承的 equals 完全足够。</p>
 </li>
 <li>
-<p>超类已经覆盖了 equals，超类行为适合于这个类。
+<p>超类已经覆盖了 equals，超类行为适合于这个类。<br>
 例如，大多数 Set 的实现从 AbstractSet 继承其对等实现，List 从 AbstractList 继承实现，Map 从 AbstractMap 继承实现。</p>
 </li>
 <li>
-<p>类是私有的或包私有的，并且你确信它的 equals 方法永远不会被调用。
+<p>类是私有的或包私有的，并且你确信它的 equals 方法永远不会被调用。<br>
 如果你想要规避风险，你可以覆盖equals 方法，以确保它不会意外调用：</p>
 </li>
 </ul>
@@ -2440,7 +2440,7 @@ try-with-resources 关闭它以及让垃圾收集器回收它的时间大约是 
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>枚举类不需要覆盖 equals 方法，在枚举类中，每个值至多只存在一个对象。对枚举类而言，逻辑相同和对象相同是一回事，因此对象的equals 方法函数与逻辑 equals 方法相同。</p>
-<p>当你覆盖 equals 方法时，你必须遵守它的通用约定。以下是具体内容，来自 Object 规范：
+<p>当你覆盖 equals 方法时，你必须遵守它的通用约定。以下是具体内容，来自 Object 规范：<br>
 equals 方法实现了等价关系，其属性如下：</p>
 <ul>
 <li>自反性（reflexive)：对于任何非null的引用值x，x.equals(x)必须返回true。</li>
@@ -2507,7 +2507,7 @@ equals 方法实现了等价关系，其属性如下：</p>
 </span></span><span style="display:flex;"><span>String s = <span style="color:#0ff;font-weight:bold">&#34;polish&#34;</span>;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>正如预期的那样，cis.equals(s) 返回 true。问题是，虽然 CaseInsensitiveString 中的 equals 方法知道普通字符串，但是 String 中的 equals 方法对不区分大小写的字符串不知情。因此，s.equals(cis) 返回 false，这明显违反了对称性。
+</div><p>正如预期的那样，cis.equals(s) 返回 true。问题是，虽然 CaseInsensitiveString 中的 equals 方法知道普通字符串，但是 String 中的 equals 方法对不区分大小写的字符串不知情。因此，s.equals(cis) 返回 false，这明显违反了对称性。<br>
 为了消除这个问题，只需从 equals 方法中删除与 String 互操作的错误尝试。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2722,37 +2722,37 @@ equals 方法实现了等价关系，其属性如下：</p>
 <h3 id="综上所述构建高质量-equals-方法的秘诀">综上所述，构建高质量 equals 方法的秘诀：<a hidden class="anchor" aria-hidden="true" href="#综上所述构建高质量-equals-方法的秘诀">#</a></h3>
 <ul>
 <li>
-<p>使用 == 运算符检查参数是否是对该对象的引用。
+<p>使用 == 运算符检查参数是否是对该对象的引用。<br>
 如果是，返回 true。这只是一种性能优化，但如果比较的代价可能很高，那么这种优化是值得的。</p>
 </li>
 <li>
-<p>使用 instanceof 运算符检查参数是否具有正确的类型。 如果不是，返回 false。
+<p>使用 instanceof 运算符检查参数是否具有正确的类型。 如果不是，返回 false。<br>
 一般来说，所谓正确的类型，是指equals方法所在的那个类。有时候，它是由这个类实现的某个接口。如果类实现了一个接口，该接口对 equals 约定进行了改进，以允许在实现了该接口的类之间进行比较，则使用接口。集合接口，如 Set、List、Map 和 Map.Entry 具有这样的特性。</p>
 </li>
 <li>
-<p>将参数转换为正确的类型。
+<p>将参数转换为正确的类型。<br>
 因为在这个强制类型转换之前有一个instanceof测试，所以转换肯定会成功。</p>
 </li>
 <li>
-<p>对于类中的每个「重要」字段，检查参数的字段是否与该对象的相应字段匹配。
+<p>对于类中的每个「重要」字段，检查参数的字段是否与该对象的相应字段匹配。<br>
 如果所有这些测试都成功，返回 true；否则返回 false。如果第 2 步中的类型是接口，则必须通过接口方法访问参数的字段；如果是类，你可以根据字段的可访问性直接访问它们。</p>
 </li>
 </ul>
-<p>对于既不是float也不是double类型的基本类型域，可以使用 == 操作符进行比较；
-对于对象引用域，可以递归地调用equals方法；
-对于float域，可以使用静态方法<code>Float.compare(float,float)</code>；
+<p>对于既不是float也不是double类型的基本类型域，可以使用 == 操作符进行比较；<br>
+对于对象引用域，可以递归地调用equals方法；<br>
+对于float域，可以使用静态方法<code>Float.compare(float,float)</code>；<br>
 对于double域，则使用<code>Double.compare(double,double)</code>。</p>
-<p>对float和double域进行特殊的处理是有必要的，因为存在着Float.NaN、-0.0f以及类似的double常量；虽然可以用静态方法<code>Float.equals</code>和<code>Double.equals</code>对float和double域进行比较，但是每次比较都要进行自动装箱，这会导致性能下降。
-对于数组域，则要把以上这些指导原则应用到每一个元素上。
+<p>对float和double域进行特殊的处理是有必要的，因为存在着Float.NaN、-0.0f以及类似的double常量；虽然可以用静态方法<code>Float.equals</code>和<code>Double.equals</code>对float和double域进行比较，但是每次比较都要进行自动装箱，这会导致性能下降。<br>
+对于数组域，则要把以上这些指导原则应用到每一个元素上。<br>
 如果数组域中的每个元素都很重要，就可以使用其中一个Arrays.equals方法。</p>
 <p>有些对象引用域包含null可能是合法的，所以，为了避免可能导致NullPointerException异常，则使用静态方法Objects.equals(Object,Object)来检查这类域的等同性。</p>
-<p>对于有些类，比如前面提到的 CaseInsensitivestring类，域的比较要比简单的等同性测试复杂得多。
+<p>对于有些类，比如前面提到的 CaseInsensitivestring类，域的比较要比简单的等同性测试复杂得多。<br>
 如果是这种情况，可能希望保存该域的一个“范式”，这样 equals方法就可以根据这些范式进行低开销的精确比较，而不是高开销的非精确比较。这种方法对于不可变类是最为合适的；如果对象可能发生变化，就必须使其范式保持最新。</p>
-<p>字段的比较顺序可能会影响 equals 方法的性能。
-为了获得最佳的性能，应该最先比较最有可能不一致的字段，或者是开销最低的字段，最理想的情况是两个条件同时满足的字段。
-不应该比较那些不属于对象逻辑状态的字段，例如用于同步操作的Lock字段。
-也不需要比较衍生字段，因为这些域可以由“关键字段”计算获得，但是这样做有可能提高 equals方法的性能。
-如果衍生字段代表了整个对象的综合描述，比较这个字段可以节省在比较失败时去比较实际数据所需要的开销。
+<p>字段的比较顺序可能会影响 equals 方法的性能。<br>
+为了获得最佳的性能，应该最先比较最有可能不一致的字段，或者是开销最低的字段，最理想的情况是两个条件同时满足的字段。<br>
+不应该比较那些不属于对象逻辑状态的字段，例如用于同步操作的Lock字段。<br>
+也不需要比较衍生字段，因为这些域可以由“关键字段”计算获得，但是这样做有可能提高 equals方法的性能。<br>
+如果衍生字段代表了整个对象的综合描述，比较这个字段可以节省在比较失败时去比较实际数据所需要的开销。<br>
 例如，假设有一个多边形类，并缓存了该多边形的面积。如果两个多边形有着不同的面积，就没有必要去比较它们的边和顶点。</p>
 <p>写完 equals 方法后，问自己三个问题：它具备对称性吗？具备传递性吗？具备一致性吗？ 不要只问自己，要编写单元测试来检查，除非使用 AutoValue来生成 equals 方法，在这种情况下，你可以安全地省略测试。如果属性不能保持，请找出原因，并相应地修改 equals 方法。当然，equals 方法还必须满足其他两个属性（反身性和非无效性），但这两个通常会自己处理。</p>
 <p>在这个简单的 PhoneNumber 类中，根据前面的方法构造了一个 equals 方法：</p>
@@ -2820,7 +2820,7 @@ equals 方法实现了等价关系，其属性如下：</p>
 <p>当你覆盖 equals 时，也覆盖 hashCode。</p>
 </li>
 <li>
-<p>不要企图让 equals() 方法过于智能。如果只是简单地测试域中的值是否相等，则不难做到遵守 equals约定。
+<p>不要企图让 equals() 方法过于智能。如果只是简单地测试域中的值是否相等，则不难做到遵守 equals约定。<br>
 如果想过度地去寻求各种等价关系，则很容易陷人麻烦之中。</p>
 </li>
 <li>
@@ -2886,7 +2886,7 @@ equals 方法实现了等价关系，其属性如下：</p>
 </span></span><span style="display:flex;"><span>m.<span style="color:#007f7f">put</span>(<span style="color:#fff;font-weight:bold">new</span> PhoneNumber(707, 867, 5309), <span style="color:#0ff;font-weight:bold">&#34;Jenny&#34;</span>);
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>此时，你可能期望<code>m.get(new PhoneNumber(707,867,5309))</code>会返回&quot;Jenny&quot;，但它实际上返回的是null。
+</div><p>此时，你可能期望<code>m.get(new PhoneNumber(707,867,5309))</code>会返回&quot;Jenny&quot;，但它实际上返回的是null。<br>
 注意，这里涉及两个PhoneNumber实例：第一个被插入HashMap中，第二个实例与第一个相等，用于从Map中根据PhoneNumber去获取用户名字。</p>
 <p>由于PhoneNumber类没有覆盖hashCode方法，从而导致两个相等的实例具有不相等的散列码，违反了hashCode的约定。put方法把电话号码对象存放在一个散列桶（hashbucket)中，get方法却在另一个散列桶中查找这个电话号码。</p>
 <p>即使这两个实例正好被放到同一个散列桶中，get方法也必定会返回null，因为HashMap有一项优化，可以将与每个项相关联的散列码缓存起来，如果散列码不匹配，也就不再去检验对象的等同性。</p>
@@ -2914,14 +2914,14 @@ equals 方法实现了等价关系，其属性如下：</p>
 <li>为字段计算一个整数散列码 c：
 <ul>
 <li>如果字段是基本数据类型，计算 Type.hashCode(f)，其中 type 是与 f 类型对应的包装类。</li>
-<li>如果字段是对象引用，并且该类的 equals 方法通过递归调用 equals 方法来比较字段，则递归调
+<li>如果字段是对象引用，并且该类的 equals 方法通过递归调用 equals 方法来比较字段，则递归调<br>
 用字段上的 hashCode 方法。如果字段的值为空，则使用 0（或其他常数，但 0 是惯用的）。</li>
-<li>如果字段是一个数组，则将其每个重要元素都视为一个单独的字段。也就是说，通过递归地应用
-这些规则计算每个重要元素的散列码，并将每个步骤的值组合起来。如果数组中没有重要元素，则
+<li>如果字段是一个数组，则将其每个重要元素都视为一个单独的字段。也就是说，通过递归地应用<br>
+这些规则计算每个重要元素的散列码，并将每个步骤的值组合起来。如果数组中没有重要元素，则<br>
 使用常量，最好不是 0。如果所有元素都很重要，那么使用 Arrays.hashCode。</li>
 </ul>
 </li>
-<li>将步骤 2.a 中计算的散列码 c 合并到 result 变量，如下所示：
+<li>将步骤 2.a 中计算的散列码 c 合并到 result 变量，如下所示：<br>
 <code>result = 31 * result + c;</code></li>
 </ul>
 </li>
@@ -2964,9 +2964,9 @@ equals 方法实现了等价关系，其属性如下：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果一个类是不可变的，并且计算散列码的开销也比较大，就应该考虑把散列码缓存在对象内部，而不是每次请求的时候都重新计算散列码。如果你觉得这种类型的大多数对象会被用作散列键（hashkeys)，就应该在创建实例的时候计算散列码。
-否则，可以选择“延迟初始化”散列码，即一直到hashCode被第一次调用的时候才初始化。
-虽然我们的PhoneNumber类不值得这样处理，但是可以通过它来说明这种方法该如何实现。
+</div><p>如果一个类是不可变的，并且计算散列码的开销也比较大，就应该考虑把散列码缓存在对象内部，而不是每次请求的时候都重新计算散列码。如果你觉得这种类型的大多数对象会被用作散列键（hashkeys)，就应该在创建实例的时候计算散列码。<br>
+否则，可以选择“延迟初始化”散列码，即一直到hashCode被第一次调用的时候才初始化。<br>
+虽然我们的PhoneNumber类不值得这样处理，但是可以通过它来说明这种方法该如何实现。<br>
 注意hashCode域的初始值（在本例中是0)一般不能成为创建的实例的散列码：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -3018,22 +3018,22 @@ equals 方法实现了等价关系，其属性如下：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>但是这样显示并不理想，所以建议所有子类都覆盖这个方法。
-当对象被传递给println、printf、+（字符串品频接）、assert等时，toString方法会被自动调用。
+</div><p>但是这样显示并不理想，所以建议所有子类都覆盖这个方法。<br>
+当对象被传递给println、printf、+（字符串品频接）、assert等时，toString方法会被自动调用。<br>
 toString 方法应该返回对象中包含的所有有用信息。如果对象太大，难以用字符串表述信息，那么toString应该返回摘要信息。</p>
-<p>无论是否指定格式，都应该在文档中表明这个toString的返回意图。
+<p>无论是否指定格式，都应该在文档中表明这个toString的返回意图。<br>
 类应该提供途径获取toString返回值中包括的每个信息，例如给每个信息（成员变量）都增加一个get方法。</p>
 <h2 id="item-13谨慎的覆盖clone">Item-13：谨慎的覆盖clone<a hidden class="anchor" aria-hidden="true" href="#item-13谨慎的覆盖clone">#</a></h2>
 <ul>
 <li>事实上，实现cloneable接口的类是为了提供一个功能适当的共有clone方法。</li>
 <li>不可变的类永远都不应该提供clone方法。</li>
 <li>clone就是另一个构造器，必须确保他不会伤害到原始的对象，并正确的创建被克隆对象中的约束条件。</li>
-<li>cloneable架构与引用可变对象的final域的正常用法是相互冲突的，除非原对象和克隆对象中此变量可以
+<li>cloneable架构与引用可变对象的final域的正常用法是相互冲突的，除非原对象和克隆对象中此变量可以<br>
 共享，否贼为了使类可以被克隆，有必要从某些域中去掉final修饰符</li>
 <li>对象拷贝的更好方法是采用拷贝构造器或者拷贝工厂（详见第一章第一条静态工厂），因为他们不存在clone的约束</li>
 </ul>
 <h2 id="item-14考虑实现-comparable-接口">Item-14：考虑实现 Comparable 接口<a hidden class="anchor" aria-hidden="true" href="#item-14考虑实现-comparable-接口">#</a></h2>
-<p>compareTo 是 Comparable 接口中的唯一方法，一个类实现了 Comparable接口，就表明该类具有内在的排序关系。对实现 Comparable 的对象数组进行排序非常简单：
+<p>compareTo 是 Comparable 接口中的唯一方法，一个类实现了 Comparable接口，就表明该类具有内在的排序关系。对实现 Comparable 的对象数组进行排序非常简单：<br>
 <code>Arrays.sort(a);</code></p>
 <p>对存储在集合中的对象（实现了Comparable接口），进行搜索、计算极限值也很简单：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -3069,7 +3069,7 @@ toString 方法应该返回对象中包含的所有有用信息。如果对象�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>compareTo方法的定义如下：
+</div><p>compareTo方法的定义如下：<br>
 将这个对象与指定对象进行比较。</p>
 <ul>
 <li>当该对象小于指定对象：返回负整数</li>
@@ -3077,7 +3077,7 @@ toString 方法应该返回对象中包含的所有有用信息。如果对象�
 <li>当该对象大于指定对象：返回正整数</li>
 </ul>
 <p>如果该对象和指定对象类型不一致，则抛出ClassCastException。</p>
-<p>jdk7之后，所有的装箱基本类型中都增加了compare方法，因此在compareTo方法中不建议使用<code>&gt;，&lt;，=</code>
+<p>jdk7之后，所有的装箱基本类型中都增加了compare方法，因此在compareTo方法中不建议使用<code>&gt;，&lt;，=</code><br>
 这样的比较符是非常繁琐的且容易出错。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -3575,7 +3575,7 @@ toString 方法应该返回对象中包含的所有有用信息。如果对象�
 <h2 id="item-83谨慎地使用延迟初始化use-lazy-initialization-judiciously">Item-83：谨慎地使用延迟初始化（Use lazy initialization judiciously）<a hidden class="anchor" aria-hidden="true" href="#item-83谨慎地使用延迟初始化use-lazy-initialization-judiciously">#</a></h2>
 <h2 id="item-84不要依赖线程调度器dont-depend-on-the-thread-scheduler">Item-84：不要依赖线程调度器（Don’t depend on the thread scheduler）<a hidden class="anchor" aria-hidden="true" href="#item-84不要依赖线程调度器dont-depend-on-the-thread-scheduler">#</a></h2>
 <h1 id="序列化serialization">序列化（Serialization）<a hidden class="anchor" aria-hidden="true" href="#序列化serialization">#</a></h1>
-<p>内存中的数据对象只有转换为二进制流才可以进行数据持久化和网络传输。将数据对象转换为二进制流的过程称为对象的序列化（ Serialization ）。
+<p>内存中的数据对象只有转换为二进制流才可以进行数据持久化和网络传输。将数据对象转换为二进制流的过程称为对象的序列化（ Serialization ）。<br>
 反之，将二进制流恢复为数据对象的过程称为反序列化（ Deserialization ）。序列化需要保留充分的信息以恢复数据对象，但是为了节约存储空间和网络带宽，序列化后的二进制流又要尽可能小。</p>
 <h2 id="item-85java-序列化的替代方案prefer-alternatives-to-java-serialization">Item-85：Java 序列化的替代方案（Prefer alternatives to Java serialization）<a hidden class="anchor" aria-hidden="true" href="#item-85java-序列化的替代方案prefer-alternatives-to-java-serialization">#</a></h2>
 <h2 id="item-86谨慎地实现-serializable接口implement-serializable-with-great-caution">Item-86：谨慎地实现 Serializable接口（Implement Serializable with great caution）<a hidden class="anchor" aria-hidden="true" href="#item-86谨慎地实现-serializable接口implement-serializable-with-great-caution">#</a></h2>

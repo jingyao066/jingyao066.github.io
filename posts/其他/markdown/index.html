@@ -120,8 +120,8 @@
   "keywords": [
     "其他"
   ],
-  "articleBody": "标题 总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。\n一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 和h1到h6一样，字体由大到小\n文本样式 加粗 字体两边各加两个星号 ** 快捷键ctrl+b\n斜体 字体两边各加 __ 快捷键 ctrl+i\n删除线 各加两个波浪线。 快捷键：ctrl+u ,和uc浏览器有热键冲突 换行 换行：只需在行末加两个空格键和一个回车键即可换行\n分段 分段：段落之间空一行即可。\n列表 无序列表 使用星号(*)、加号(+)或是减号(-)作为列表标记，注意符号后边一定要跟一个空格。 在星号前加两个空格键或者一个tab键就可以产生一个子列表。\n有序列表 在文本前加字母或数字即可生成一个有序列表。 注意，当你第一个序号使用什么作为标记的，那么同级别的列表就会自动使用其作为标记。 引用 文本前加大于号 \u003e 即可 图片和连接 图片 ![图片描述](连接地址)：感叹号+中括号[图片描述]+小括号(连接地址)\n连接 [文本内容](连接地址)：中括号+小括号 图片比连接多一个感叹号 水平线 三个减号---或者三个星号***都可以画出一条水平分割线，需要和上边的内容空出一行\n代码段 点：指的是键盘tab上边那个小点 这是一行代码，用两点包裹\n1 2 这是一段代码， 上下分别用三个点包裹 注意：如果三个点后边有空格，会导致解析错误。样式直接飞了，还很不容易发现。所以如果样式飞了，就从样式错乱的位置找代码段。\n在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。方法是在第一排的三个点右边加上想要的语言标识符。 目前已知可用： java js javascript sql xml\n表格 在 Markdown下制作表格，是非常非常麻烦的一件事，必须画出来才行。 注释 和html里的注释是一样，注释是给自己看的，预览时也不会出现，当然发布出去别人也不会看见。\n制表 记录一种最简单的制表方法\ntitle1 title1 content1 content2 content3 content4 content5 content6 1 2 3 4 5 title1 | title1 -- | -- content1 | content2 content3 | content4 content5 | content6 表头必须和内容间隔一行，表头和内容之间由 分隔，一个 – 表示一个表头，中间由竖线分隔，不需要加空格。如果表头有四个， – – 这样就可以了。 内容由竖线分隔。 一个制表的网站\n锚点 在需要跳转的位置添加锚点，语法如下： 跳转到的地方\n在需要点击跳转的位置，使用上面的id，格式类似超链接的形式： [点击跳转](#jump)\n",
-  "wordCount" : "964",
+  "articleBody": "标题 总共六级标题，建议在井号后加一个空格，这是最标准的 Markdown 语法。\n一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 和h1到h6一样，字体由大到小\n文本样式 加粗\n字体两边各加两个星号 ** 快捷键ctrl+b\n斜体\n字体两边各加 __ 快捷键 ctrl+i\n删除线\n各加两个波浪线。 快捷键：ctrl+u ,和uc浏览器有热键冲突\n分段\n分段：段落之间空一行即可。\n换行 1. 普通换行（软换行）\n在行尾添加 两个空格，然后按回车键。（注意：空格在渲染后不可见，但会触发换行）\n1 2 这是第一行（末尾两个空格） 这是第二行 效果：\n这是第一行\n这是第二行\n2. 段落换行（硬换行）\n直接空一行（按两次回车），会创建一个新段落（段落间有默认间距）。\n1 2 3 这是第一段 这是第二段 效果：\n这是第一段\n这是第二段\n3. HTML 换行（兼容性更强）\n使用 HTML 的 标签（某些严格解析的 Markdown 编辑器可能需要此方式）：\n1 2 这是第一行\u003cbr\u003e 这是第二行 效果：\n这是第一行\n这是第二行\nhugo换行\n如果使用hugo，可以在配置文件中添加： 1 2 3 4 markup: goldmark: renderer: hardWraps: true 这样直接回车就可以换行了。\n列表 无序列表\n使用星号(*)、加号(+)或是减号(-)作为列表标记，注意符号后边一定要跟一个空格。\n在星号前加两个空格键或者一个tab键就可以产生一个子列表。\n有序列表\n在文本前加字母或数字即可生成一个有序列表。\n注意，当你第一个序号使用什么作为标记的，那么同级别的列表就会自动使用其作为标记。\n引用 文本前加大于号 \u003e 即可\n图片和连接 图片\n![图片描述](连接地址)：感叹号+中括号[图片描述]+小括号(连接地址)\n连接\n[文本内容](连接地址)：中括号+小括号\n图片比连接多一个感叹号\n水平线 三个减号---或者三个星号***都可以画出一条水平分割线，需要和上边的内容空出一行\n代码段 点：指的是键盘tab上边那个小点\n这是一行代码，用两点包裹\n1 2 这是一段代码， 上下分别用三个点包裹 注意：如果三个点后边有空格，会导致解析错误。样式直接飞了，还很不容易发现。所以如果样式飞了，就从样式错乱的位置找代码段。\n在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。方法是在第一排的三个点右边加上想要的语言标识符。\n目前已知可用：\njava\njs\njavascript\nsql\nxml\n表格 在 Markdown下制作表格，是非常非常麻烦的一件事，必须画出来才行。\n注释 和html里的注释是一样，注释是给自己看的，预览时也不会出现，当然发布出去别人也不会看见。\n制表 记录一种最简单的制表方法\ntitle1 title1 content1 content2 content3 content4 content5 content6 1 2 3 4 5 title1 | title1 -- | -- content1 | content2 content3 | content4 content5 | content6 表头必须和内容间隔一行，表头和内容之间由 分隔，一个 – 表示一个表头，中间由竖线分隔，不需要加空格。如果表头有四个， – – 这样就可以了。 内容由竖线分隔。 一个制表的网站\n锚点 在需要跳转的位置添加锚点，语法如下：\n跳转到的地方\n在需要点击跳转的位置，使用上面的id，格式类似超链接的形式：\n[点击跳转](#jump)\n",
+  "wordCount" : "1211",
   "inLanguage": "en",
   "datePublished": "2018-09-06T14:48:51Z",
   "dateModified": "2018-09-06T14:48:51Z",
@@ -258,6 +258,8 @@
                 <li>
                     <a href="#%e6%96%87%e6%9c%ac%e6%a0%b7%e5%bc%8f" aria-label="文本样式">文本样式</a></li>
                 <li>
+                    <a href="#%e6%8d%a2%e8%a1%8c" aria-label="换行">换行</a></li>
+                <li>
                     <a href="#%e5%88%97%e8%a1%a8" aria-label="列表">列表</a></li>
                 <li>
                     <a href="#%e5%bc%95%e7%94%a8" aria-label="引用">引用</a></li>
@@ -293,54 +295,117 @@
 <h1 id="文本样式">文本样式<a hidden class="anchor" aria-hidden="true" href="#文本样式">#</a></h1>
 <ul>
 <li>
-<p>加粗
+<p>加粗<br>
 字体两边各加两个星号 ** 快捷键ctrl+b</p>
 </li>
 <li>
-<p>斜体
+<p>斜体<br>
 字体两边各加  __ 快捷键 ctrl+i</p>
 </li>
 <li>
-<p>删除线
-各加两个波浪线。  快捷键：ctrl+u ,和uc浏览器有热键冲突
+<p>删除线<br>
+各加两个波浪线。  快捷键：ctrl+u ,和uc浏览器有热键冲突<br>
 <img alt="文本样式" loading="lazy" src="MarkDown/1.png"></p>
 </li>
 <li>
-<p>换行
-换行：只需在行末加两个空格键和一个回车键即可换行</p>
-</li>
-<li>
-<p>分段
+<p>分段<br>
 分段：段落之间空一行即可。</p>
 </li>
 </ul>
+<h1 id="换行">换行<a hidden class="anchor" aria-hidden="true" href="#换行">#</a></h1>
+<p>1. <strong>普通换行（软换行）</strong><br>
+在行尾添加 <strong>两个空格</strong>，然后按回车键。（注意：空格在渲染后不可见，但会触发换行）</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>这是第一行（末尾两个空格）  
+</span></span><span style="display:flex;"><span>这是第二行
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>效果：</strong><br>
+这是第一行<br>
+这是第二行</p>
+<p>2. <strong>段落换行（硬换行）</strong><br>
+直接空一行（按两次回车），会创建一个新段落（段落间有默认间距）。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>这是第一段
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>这是第二段
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>效果：</strong><br>
+这是第一段</p>
+<p>这是第二段</p>
+<p>3. <strong>HTML 换行（兼容性更强）</strong><br>
+使用 HTML 的 <code>&lt;br&gt;</code> 标签（某些严格解析的 Markdown 编辑器可能需要此方式）：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>这是第一行&lt;<span style="font-weight:bold">br</span>&gt;
+</span></span><span style="display:flex;"><span>这是第二行
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>效果：</strong><br>
+这是第一行<br><br>
+这是第二行</p>
+<ol start="4">
+<li>hugo换行<br>
+如果使用hugo，可以在配置文件中添加：</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="font-weight:bold">markup</span>:
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">goldmark</span>:
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">renderer</span>:
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">hardWraps</span>: <span style="color:#fff;font-weight:bold">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样直接回车就可以换行了。</p>
 <h1 id="列表">列表<a hidden class="anchor" aria-hidden="true" href="#列表">#</a></h1>
 <ul>
 <li>
-<p>无序列表
-使用星号(*)、加号(+)或是减号(-)作为列表标记，注意符号后边一定要跟一个空格。
+<p>无序列表<br>
+使用星号(*)、加号(+)或是减号(-)作为列表标记，注意符号后边一定要跟一个空格。<br>
 在星号前加两个空格键或者一个tab键就可以产生一个子列表。</p>
 </li>
 <li>
-<p>有序列表
-在文本前加字母或数字即可生成一个有序列表。
-注意，当你第一个序号使用什么作为标记的，那么同级别的列表就会自动使用其作为标记。
+<p>有序列表<br>
+在文本前加字母或数字即可生成一个有序列表。<br>
+注意，当你第一个序号使用什么作为标记的，那么同级别的列表就会自动使用其作为标记。<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/markdown/2.png"></p>
 </li>
 </ul>
 <h1 id="引用">引用<a hidden class="anchor" aria-hidden="true" href="#引用">#</a></h1>
-<p>文本前加大于号  &gt;  即可
+<p>文本前加大于号  &gt;  即可<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/markdown/3.png"></p>
 <h1 id="图片和连接">图片和连接<a hidden class="anchor" aria-hidden="true" href="#图片和连接">#</a></h1>
 <ul>
 <li>
-<p>图片
+<p>图片<br>
 <code>![图片描述](连接地址)：感叹号+中括号[图片描述]+小括号(连接地址)</code></p>
 </li>
 <li>
-<p>连接
-<code>[文本内容](连接地址)：中括号+小括号</code>
-图片比连接多一个感叹号
+<p>连接<br>
+<code>[文本内容](连接地址)：中括号+小括号</code><br>
+图片比连接多一个感叹号<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/markdown/4.png"></p>
 </li>
 </ul>
@@ -348,7 +413,7 @@
 <p>三个减号<code>---</code>或者三个星号<code>***</code>都可以画出一条水平分割线，需要和上边的内容空出一行</p>
 <hr>
 <h1 id="代码段">代码段<a hidden class="anchor" aria-hidden="true" href="#代码段">#</a></h1>
-<p>点：指的是键盘tab上边那个小点
+<p>点：指的是键盘tab上边那个小点<br>
 <code>这是一行代码，用两点包裹</code></p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -361,18 +426,18 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>注意：如果三个点后边有空格，会导致解析错误。样式直接飞了，还很不容易发现。所以如果样式飞了，就从样式错乱的位置找代码段。</p>
-<p>在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。方法是在第一排的三个点右边加上想要的语言标识符。
-目前已知可用：
-java
-js
-javascript
-sql
+<p>在围栏式代码块中，你可以指定一个可选的语言标识符，然后我们就可以为它启用语法着色了。方法是在第一排的三个点右边加上想要的语言标识符。<br>
+目前已知可用：<br>
+java<br>
+js<br>
+javascript<br>
+sql<br>
 xml</p>
 <h1 id="表格">表格<a hidden class="anchor" aria-hidden="true" href="#表格">#</a></h1>
-<p>在 Markdown下制作表格，是非常非常麻烦的一件事，必须画出来才行。
+<p>在 Markdown下制作表格，是非常非常麻烦的一件事，必须画出来才行。<br>
 <img loading="lazy" src="/posts/%E5%85%B6%E4%BB%96/markdown/5.png"></p>
 <h1 id="注释">注释<a hidden class="anchor" aria-hidden="true" href="#注释">#</a></h1>
-<p><code>&lt;!-- 一段注释 --&gt;</code>
+<p><code>&lt;!-- 一段注释 --&gt;</code><br>
 和html里的注释是一样，注释是给自己看的，预览时也不会出现，当然发布出去别人也不会看见。</p>
 <h1 id="制表">制表<a hidden class="anchor" aria-hidden="true" href="#制表">#</a></h1>
 <p>记录一种最简单的制表方法</p>
@@ -442,9 +507,9 @@ xml</p>
 </table>
 <p><a href="https://tableconvert.com/">一个制表的网站</a></p>
 <h1 id="锚点">锚点<a hidden class="anchor" aria-hidden="true" href="#锚点">#</a></h1>
-<p>在需要跳转的位置添加锚点，语法如下：
+<p>在需要跳转的位置添加锚点，语法如下：<br>
 <code>&lt;span id=&quot;jump&quot;&gt;跳转到的地方&lt;/span&gt;</code></p>
-<p>在需要点击跳转的位置，使用上面的id，格式类似超链接的形式：
+<p>在需要点击跳转的位置，使用上面的id，格式类似超链接的形式：<br>
 <code>[点击跳转](#jump)</code></p>
 
   </div>

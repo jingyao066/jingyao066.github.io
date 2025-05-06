@@ -64,7 +64,8 @@
 <meta property="og:url" content="https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E5%BE%AE%E4%BF%A1%E7%9B%B8%E5%85%B3%E5%BC%80%E5%8F%91/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="微信相关开发">
-  <meta property="og:description" content="概述 公众号类型功能介绍 微信官方介绍 公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。">
+  <meta property="og:description" content="概述 公众号类型功能介绍 微信官方介绍
+公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -105,11 +106,11 @@
   "@type": "BlogPosting",
   "headline": "微信相关开发",
   "name": "微信相关开发",
-  "description": "概述 公众号类型功能介绍 微信官方介绍 公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。\n",
+  "description": "概述 公众号类型功能介绍 微信官方介绍\n公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。\n",
   "keywords": [
     "其他"
   ],
-  "articleBody": "概述 公众号类型功能介绍 微信官方介绍 公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。\n订阅号：偏于为用户传达资讯，每天只可以发送一条群发，用户不会收到即时消息提醒，因为所有的订阅号都被收在了订阅号文件夹中。订阅号适用于个人和组织。 想看一个订阅号的消息，有两种方法：\n打开订阅号文件夹查看订阅号有没有更新消息； 打开微信手机通讯录，点开公众号选项，是你关注的所有公众号(包括订阅号和服务号)。 服务号：偏于服务交互(如：招商银行信用卡、微信读书、京东白条)，每月可群发四条消息，收费，不适用于个人，微信支付需要微信认证服务号才可以。\n选择： 想简单的发送消息，达到宣传效果，建议选择订阅号。 想用公众号获得更多功能，如开通微信支付，建议选择服务号。\n服务号、订阅号功能对比： 微信开放平台、公众平台区别 公众平台 官网 技术文档 微信公众平台是运营者通过公众号为微信用户提供资讯和服务的平台，登录公众平台账号后，可以看到它有一个不错的交互界面。可以提供给公司的运营人员使用，用来发布消息和提供服务。\n开放平台 官网 是为开发者（程序员）提供的一个平台，在这里你可以将你的公众平台下的公众号（订阅号、服务号）绑定到你的开放平台账号下，从而可以基于订阅号、服务号做更多的开发。公众号中的订阅号接口权限是有限的，比如它无法获得网页授权的权限，也就无法通过网页授权获取用户的基本信息（比如openID、unionID等）。\n微信h5分享 参考地址\n流程图： 准备：公众号、已经备案好的域名\n步骤：\n配置JS回调域名和ip白名单 获取appId和secret 从官方代码copy签名函数 获取access_token、ticket 获取url，并进行签名 集成进java web 前端config函数配置 获取appId和secret 可以在基本配置中找到AppID和AppSecret。\n配置JS回调域名： 登录微信公众平台-\u003e公众号设置-\u003e功能设置-\u003eJS接口安全域名。填写你要分享的网页所在的域名。\n配置ip白名单： 登录微信公众平台-\u003e基本配置-\u003eIP白名单。 必须配置ip白名单，否则无法获取access_token\n从官方代码copy签名函数 打开微信分享官方文档，在页面最下面找到并下载示例代码 我们将java中的sign.java直接放到项目中备用。\n公众号获取access_token官方文档 小程序获取access_token官方文档\n获取access_token、ticket 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 public static WxShare getWxEntity(String url,StringRedisTemplate template) { String access_token = template.opsForValue().get(\"wx_base_access_token\"); String ticket = template.opsForValue().get(\"wx_jsapi_ticket\"); if(StringUtils.isEmpty(access_token)){ System.out.println(\"\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e重新获取access_token和ticket\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\"); //已经超时，重新获取 access_token = getAccessToken(template); //如果重新获取了access_token，ticket也要重新获取 ticket = getTicket(access_token,template); } Map resultMap = Sign.sign(ticket, url); WxShare wx = new WxShare(); wx.setTicket(resultMap.get(\"jsapi_ticket\")); wx.setSignature(resultMap.get(\"signature\")); wx.setNoncestr(resultMap.get(\"nonceStr\")); wx.setTimestamp(resultMap.get(\"timestamp\")); return wx; } //获取token private static String getAccessToken(StringRedisTemplate template) { String access_token = \"\"; //获取access_token填写client_credential String grant_type = \"client_credential\"; //第三方用户唯一凭证 String AppId= PayConstant.WX_H5_APPID; //第三方用户唯一凭证密钥，即appsecret String secret=PayConstant.WX_H5_APPSECRET; //访问链接,这个url链接地址和参数皆不能变 String url = \"https://api.weixin.qq.com/cgi-bin/token?grant_type=\"+grant_type+\"\u0026appid=\"+AppId+\"\u0026secret=\"+secret; try { URL urlGet = new URL(url); HttpURLConnection http = (HttpURLConnection) urlGet.openConnection(); http.setRequestMethod(\"GET\"); // 必须是get方式请求 http.setRequestProperty(\"Content-Type\",\"application/x-www-form-urlencoded\"); http.setDoOutput(true); http.setDoInput(true); /*System.setProperty(\"sun.net.client.defaultConnectTimeout\", \"30000\");// 连接超时30秒 System.setProperty(\"sun.net.client.defaultReadTimeout\", \"30000\"); // 读取超时30秒 */ http.connect(); InputStream is = http.getInputStream(); int size = is.available(); byte[] jsonBytes = new byte[size]; is.read(jsonBytes); String message = new String(jsonBytes, \"UTF-8\"); JSONObject demoJson = JSONObject.fromObject(message); access_token = demoJson.getString(\"access_token\"); //缓存到redis，一定要缓存，每天只能请求2000次 template.opsForValue().set(\"wx_base_access_token\",access_token,2, TimeUnit.HOURS); is.close(); } catch (Exception e) { e.printStackTrace(); } return access_token; } //获取ticket private static String getTicket(String access_token,StringRedisTemplate template) { String ticket = null; //这个url链接和参数不能变 String url = \"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=\"+ access_token +\"\u0026type=jsapi\"; try { URL urlGet = new URL(url); HttpURLConnection http = (HttpURLConnection) urlGet.openConnection(); http.setRequestMethod(\"GET\"); // 必须是get方式请求 http.setRequestProperty(\"Content-Type\",\"application/x-www-form-urlencoded\"); http.setDoOutput(true); http.setDoInput(true); System.setProperty(\"sun.net.client.defaultConnectTimeout\", \"30000\");// 连接超时30秒 System.setProperty(\"sun.net.client.defaultReadTimeout\", \"30000\"); // 读取超时30秒 http.connect(); InputStream is = http.getInputStream(); int size = is.available(); byte[] jsonBytes = new byte[size]; is.read(jsonBytes); String message = new String(jsonBytes, \"UTF-8\"); JSONObject demoJson = JSONObject.fromObject(message); ticket = demoJson.getString(\"ticket\"); //缓存到redis，一定要缓存，每天只能请求2000次 template.opsForValue().set(\"wx_jsapi_ticket\",ticket,2, TimeUnit.HOURS); is.close(); } catch (Exception e) { e.printStackTrace(); } return ticket; } 获取url，并进行签名 url的获取要特别注意，因为微信在分享时会在原来的url上加上一些\u0026from=singlemessage、\u0026from=…的，所以url必须要动态获取，网上有些用ajax，在网页通过“location.href.split(‘#’)“ 获取url，在用ajax传给后台，这种方法可行，但是不推荐，一方面用ajax返回，就要访问分享的逻辑，这样后台分享的逻辑增加复杂度，带来不便，是代码不易于维护，可读性低！另一方面分享是返回页面，而ajax是返回json，又增加了复杂度。所以，一个java程序员是不会通过ajax从前台获取url的，这里我们用HttpRequest的方法即可，不管微信加多少后缀，都可以获取到完整的当前url。\n获取url的controller如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 @PostMapping(\"/share\") public ResponseUtil getQuestionList(@RequestBody Map paramMap){ LOGGER.info( \"\\n***************************************\" + \"\\n\" + \"start share\" + \"\\n\" + \"分享\" + \"\\n\" + \"\\n********************************************\" ); ResponseUtil response = ResponseUtil.success(); CodeEnum code = CodeEnum.FAIL; try { LOGGER.info(\"前端传过来的\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c：\" + paramMap.get(\"strUrl\")); LOGGER.info(\"URI解码\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c：\" + URI.create(paramMap.get(\"strUrl\")).getPath()); response.setData(wxUtil.getWxEntity(URI.create(paramMap.get(\"strUrl\")).getPath(),redisTemplate)); } catch (Exception e) { e.printStackTrace(); response.setCode(code); response.setMessage(e.getMessage()); } return response; } 需要注意：这个url是前端动态获取的，不能写死。如果带参数，或是中文，前端要对url做encodeURIComponent转码，后台再使用URI.create(paramMap.get(\"strUrl\")).getPath()进行解码。\n我们再新建一个存放微信信息的实体类：wx.java\n1 2 3 4 5 6 7 8 9 10 11 public class wx { private String access_token; private String ticket ; private String noncestr; private String timestamp; private String str; private String signature; ...setter and getter... } sign类里面有一个签名的方法sign，传入ticket和url即可。也就是WeinXinUtil的getWinXinEntity方法，并将返回的map的信息读取存入WinXinEntity中。 在调试时，把sign返回的map打印出来，主要看看生成的signature。然后，把jsapi_ticket、noncestr、timestamp、url 复制到微信提供的微信 JS 接口签名校验工具， 比较代码签名生成的signature与校验工具生成的签名signature是否一致，如果一致，说明前面的步骤都是正确的，如果不一致，仔细检查。\ncontroller 我们把微信分享分解成3个工具类，现在在处理分享的controller，只要两句话就可以调用微信分享，一句获取url，一句获取WinXinEntity，代码已经在上边给出了。\n前端config函数配置 下面的代码放在网页js代码的最前面！ ”var url = location.href.split(‘#’)[0];“ 页面的url也可以从后台传过来，也可以通过location.href.split(‘#’)[0]获取。 为了一点微不足道的速度，这里才用网页获取方式。（网页的url跟前面的后台签名时得url是一样的，只是绕过了ajax）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 ",
+  "articleBody": "概述 公众号类型功能介绍 微信官方介绍\n公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。\n订阅号：偏于为用户传达资讯，每天只可以发送一条群发，用户不会收到即时消息提醒，因为所有的订阅号都被收在了订阅号文件夹中。订阅号适用于个人和组织。\n想看一个订阅号的消息，有两种方法：\n打开订阅号文件夹查看订阅号有没有更新消息； 打开微信手机通讯录，点开公众号选项，是你关注的所有公众号(包括订阅号和服务号)。 服务号：偏于服务交互(如：招商银行信用卡、微信读书、京东白条)，每月可群发四条消息，收费，不适用于个人，微信支付需要微信认证服务号才可以。\n选择：\n想简单的发送消息，达到宣传效果，建议选择订阅号。\n想用公众号获得更多功能，如开通微信支付，建议选择服务号。\n服务号、订阅号功能对比：\n微信开放平台、公众平台区别 公众平台\n官网\n技术文档\n微信公众平台是运营者通过公众号为微信用户提供资讯和服务的平台，登录公众平台账号后，可以看到它有一个不错的交互界面。可以提供给公司的运营人员使用，用来发布消息和提供服务。\n开放平台\n官网\n是为开发者（程序员）提供的一个平台，在这里你可以将你的公众平台下的公众号（订阅号、服务号）绑定到你的开放平台账号下，从而可以基于订阅号、服务号做更多的开发。公众号中的订阅号接口权限是有限的，比如它无法获得网页授权的权限，也就无法通过网页授权获取用户的基本信息（比如openID、unionID等）。\n微信h5分享 参考地址\n流程图：\n准备：公众号、已经备案好的域名\n步骤：\n配置JS回调域名和ip白名单 获取appId和secret 从官方代码copy签名函数 获取access_token、ticket 获取url，并进行签名 集成进java web 前端config函数配置 获取appId和secret 可以在基本配置中找到AppID和AppSecret。\n配置JS回调域名：\n登录微信公众平台-\u003e公众号设置-\u003e功能设置-\u003eJS接口安全域名。填写你要分享的网页所在的域名。\n配置ip白名单：\n登录微信公众平台-\u003e基本配置-\u003eIP白名单。\n必须配置ip白名单，否则无法获取access_token\n从官方代码copy签名函数 打开微信分享官方文档，在页面最下面找到并下载示例代码\n我们将java中的sign.java直接放到项目中备用。\n公众号获取access_token官方文档\n小程序获取access_token官方文档\n获取access_token、ticket 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 public static WxShare getWxEntity(String url,StringRedisTemplate template) { String access_token = template.opsForValue().get(\"wx_base_access_token\"); String ticket = template.opsForValue().get(\"wx_jsapi_ticket\"); if(StringUtils.isEmpty(access_token)){ System.out.println(\"\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e重新获取access_token和ticket\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\"); //已经超时，重新获取 access_token = getAccessToken(template); //如果重新获取了access_token，ticket也要重新获取 ticket = getTicket(access_token,template); } Map resultMap = Sign.sign(ticket, url); WxShare wx = new WxShare(); wx.setTicket(resultMap.get(\"jsapi_ticket\")); wx.setSignature(resultMap.get(\"signature\")); wx.setNoncestr(resultMap.get(\"nonceStr\")); wx.setTimestamp(resultMap.get(\"timestamp\")); return wx; } //获取token private static String getAccessToken(StringRedisTemplate template) { String access_token = \"\"; //获取access_token填写client_credential String grant_type = \"client_credential\"; //第三方用户唯一凭证 String AppId= PayConstant.WX_H5_APPID; //第三方用户唯一凭证密钥，即appsecret String secret=PayConstant.WX_H5_APPSECRET; //访问链接,这个url链接地址和参数皆不能变 String url = \"https://api.weixin.qq.com/cgi-bin/token?grant_type=\"+grant_type+\"\u0026appid=\"+AppId+\"\u0026secret=\"+secret; try { URL urlGet = new URL(url); HttpURLConnection http = (HttpURLConnection) urlGet.openConnection(); http.setRequestMethod(\"GET\"); // 必须是get方式请求 http.setRequestProperty(\"Content-Type\",\"application/x-www-form-urlencoded\"); http.setDoOutput(true); http.setDoInput(true); /*System.setProperty(\"sun.net.client.defaultConnectTimeout\", \"30000\");// 连接超时30秒 System.setProperty(\"sun.net.client.defaultReadTimeout\", \"30000\"); // 读取超时30秒 */ http.connect(); InputStream is = http.getInputStream(); int size = is.available(); byte[] jsonBytes = new byte[size]; is.read(jsonBytes); String message = new String(jsonBytes, \"UTF-8\"); JSONObject demoJson = JSONObject.fromObject(message); access_token = demoJson.getString(\"access_token\"); //缓存到redis，一定要缓存，每天只能请求2000次 template.opsForValue().set(\"wx_base_access_token\",access_token,2, TimeUnit.HOURS); is.close(); } catch (Exception e) { e.printStackTrace(); } return access_token; } //获取ticket private static String getTicket(String access_token,StringRedisTemplate template) { String ticket = null; //这个url链接和参数不能变 String url = \"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=\"+ access_token +\"\u0026type=jsapi\"; try { URL urlGet = new URL(url); HttpURLConnection http = (HttpURLConnection) urlGet.openConnection(); http.setRequestMethod(\"GET\"); // 必须是get方式请求 http.setRequestProperty(\"Content-Type\",\"application/x-www-form-urlencoded\"); http.setDoOutput(true); http.setDoInput(true); System.setProperty(\"sun.net.client.defaultConnectTimeout\", \"30000\");// 连接超时30秒 System.setProperty(\"sun.net.client.defaultReadTimeout\", \"30000\"); // 读取超时30秒 http.connect(); InputStream is = http.getInputStream(); int size = is.available(); byte[] jsonBytes = new byte[size]; is.read(jsonBytes); String message = new String(jsonBytes, \"UTF-8\"); JSONObject demoJson = JSONObject.fromObject(message); ticket = demoJson.getString(\"ticket\"); //缓存到redis，一定要缓存，每天只能请求2000次 template.opsForValue().set(\"wx_jsapi_ticket\",ticket,2, TimeUnit.HOURS); is.close(); } catch (Exception e) { e.printStackTrace(); } return ticket; } 获取url，并进行签名 url的获取要特别注意，因为微信在分享时会在原来的url上加上一些\u0026from=singlemessage、\u0026from=…的，所以url必须要动态获取，网上有些用ajax，在网页通过“location.href.split(‘#’)“ 获取url，在用ajax传给后台，这种方法可行，但是不推荐，一方面用ajax返回，就要访问分享的逻辑，这样后台分享的逻辑增加复杂度，带来不便，是代码不易于维护，可读性低！另一方面分享是返回页面，而ajax是返回json，又增加了复杂度。所以，一个java程序员是不会通过ajax从前台获取url的，这里我们用HttpRequest的方法即可，不管微信加多少后缀，都可以获取到完整的当前url。\n获取url的controller如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 @PostMapping(\"/share\") public ResponseUtil getQuestionList(@RequestBody Map paramMap){ LOGGER.info( \"\\n***************************************\" + \"\\n\" + \"start share\" + \"\\n\" + \"分享\" + \"\\n\" + \"\\n********************************************\" ); ResponseUtil response = ResponseUtil.success(); CodeEnum code = CodeEnum.FAIL; try { LOGGER.info(\"前端传过来的\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c：\" + paramMap.get(\"strUrl\")); LOGGER.info(\"URI解码\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c\u003c：\" + URI.create(paramMap.get(\"strUrl\")).getPath()); response.setData(wxUtil.getWxEntity(URI.create(paramMap.get(\"strUrl\")).getPath(),redisTemplate)); } catch (Exception e) { e.printStackTrace(); response.setCode(code); response.setMessage(e.getMessage()); } return response; } 需要注意：这个url是前端动态获取的，不能写死。如果带参数，或是中文，前端要对url做encodeURIComponent转码，后台再使用URI.create(paramMap.get(\"strUrl\")).getPath()进行解码。\n我们再新建一个存放微信信息的实体类：wx.java\n1 2 3 4 5 6 7 8 9 10 11 public class wx { private String access_token; private String ticket ; private String noncestr; private String timestamp; private String str; private String signature; ...setter and getter... } sign类里面有一个签名的方法sign，传入ticket和url即可。也就是WeinXinUtil的getWinXinEntity方法，并将返回的map的信息读取存入WinXinEntity中。\n在调试时，把sign返回的map打印出来，主要看看生成的signature。然后，把jsapi_ticket、noncestr、timestamp、url 复制到微信提供的微信 JS 接口签名校验工具，\n比较代码签名生成的signature与校验工具生成的签名signature是否一致，如果一致，说明前面的步骤都是正确的，如果不一致，仔细检查。\ncontroller 我们把微信分享分解成3个工具类，现在在处理分享的controller，只要两句话就可以调用微信分享，一句获取url，一句获取WinXinEntity，代码已经在上边给出了。\n前端config函数配置 下面的代码放在网页js代码的最前面！\n”var url = location.href.split(‘#’)[0];“ 页面的url也可以从后台传过来，也可以通过location.href.split(‘#’)[0]获取。\n为了一点微不足道的速度，这里才用网页获取方式。（网页的url跟前面的后台签名时得url是一样的，只是绕过了ajax）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 ",
   "wordCount" : "14202",
   "inLanguage": "en",
   "datePublished": "2019-04-25T10:04:49Z",
@@ -287,37 +288,37 @@
 
   <div class="post-content"><h1 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h1>
 <h2 id="公众号类型功能介绍">公众号类型功能介绍<a hidden class="anchor" aria-hidden="true" href="#公众号类型功能介绍">#</a></h2>
-<p><a href="http://kf.qq.com/faq/170815aUZjeQ170815mU7bI7.html">微信官方介绍</a>
+<p><a href="http://kf.qq.com/faq/170815aUZjeQ170815mU7bI7.html">微信官方介绍</a><br>
 公众号，是订阅号和服务号的统称。订阅号是公众号、服务号也是公众号。</p>
-<p>订阅号：偏于为用户传达资讯，每天只可以发送一条群发，用户不会收到即时消息提醒，因为所有的订阅号都被收在了订阅号文件夹中。订阅号适用于个人和组织。
+<p>订阅号：偏于为用户传达资讯，每天只可以发送一条群发，用户不会收到即时消息提醒，因为所有的订阅号都被收在了订阅号文件夹中。订阅号适用于个人和组织。<br>
 想看一个订阅号的消息，有两种方法：</p>
 <ul>
 <li>打开订阅号文件夹查看订阅号有没有更新消息；</li>
 <li>打开微信手机通讯录，点开公众号选项，是你关注的所有公众号(包括订阅号和服务号)。</li>
 </ul>
 <p>服务号：偏于服务交互(如：招商银行信用卡、微信读书、京东白条)，每月可群发四条消息，收费，不适用于个人，微信支付需要<strong>微信认证服务号</strong>才可以。</p>
-<p>选择：
-想简单的发送消息，达到宣传效果，建议选择订阅号。
+<p>选择：<br>
+想简单的发送消息，达到宣传效果，建议选择订阅号。<br>
 想用公众号获得更多功能，如开通微信支付，建议选择服务号。</p>
-<p>服务号、订阅号功能对比：
+<p>服务号、订阅号功能对比：<br>
 <img loading="lazy" src="1.jpg"></p>
 <h2 id="微信开放平台公众平台区别">微信开放平台、公众平台区别<a hidden class="anchor" aria-hidden="true" href="#微信开放平台公众平台区别">#</a></h2>
 <ul>
 <li>
-<p>公众平台
-<a href="https://mp.weixin.qq.com/">官网</a>
-<a href="https://mp.weixin.qq.com/wiki">技术文档</a>
+<p>公众平台<br>
+<a href="https://mp.weixin.qq.com/">官网</a><br>
+<a href="https://mp.weixin.qq.com/wiki">技术文档</a><br>
 微信公众平台是运营者通过公众号为微信用户提供资讯和服务的平台，登录公众平台账号后，可以看到它有一个不错的交互界面。可以提供给公司的运营人员使用，用来发布消息和提供服务。</p>
 </li>
 <li>
-<p>开放平台
-<a href="https://open.weixin.qq.com/">官网</a>
+<p>开放平台<br>
+<a href="https://open.weixin.qq.com/">官网</a><br>
 是为开发者（程序员）提供的一个平台，在这里你可以将你的公众平台下的公众号（订阅号、服务号）绑定到你的开放平台账号下，从而可以基于订阅号、服务号做更多的开发。公众号中的订阅号接口权限是有限的，比如它无法获得网页授权的权限，也就无法通过网页授权获取用户的基本信息（比如openID、unionID等）。</p>
 </li>
 </ul>
 <h1 id="微信h5分享">微信h5分享<a hidden class="anchor" aria-hidden="true" href="#微信h5分享">#</a></h1>
 <p><a href="https://blog.csdn.net/change_on/article/details/75264843">参考地址</a></p>
-<p>流程图：
+<p>流程图：<br>
 <img loading="lazy" src="2.png"></p>
 <p>准备：公众号、已经备案好的域名</p>
 <p>步骤：</p>
@@ -332,15 +333,15 @@
 </ol>
 <h2 id="获取appid和secret">获取appId和secret<a hidden class="anchor" aria-hidden="true" href="#获取appid和secret">#</a></h2>
 <p>可以在基本配置中找到AppID和AppSecret。</p>
-<p>配置JS回调域名：
+<p>配置JS回调域名：<br>
 登录微信公众平台-&gt;公众号设置-&gt;功能设置-&gt;JS接口安全域名。填写你要分享的网页所在的域名。</p>
-<p>配置ip白名单：
-登录微信公众平台-&gt;基本配置-&gt;IP白名单。
+<p>配置ip白名单：<br>
+登录微信公众平台-&gt;基本配置-&gt;IP白名单。<br>
 必须配置ip白名单，否则无法获取access_token</p>
 <h2 id="从官方代码copy签名函数">从官方代码copy签名函数<a hidden class="anchor" aria-hidden="true" href="#从官方代码copy签名函数">#</a></h2>
-<p>打开<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115">微信分享官方文档</a>，在页面最下面找到并下载<a href="http://demo.open.weixin.qq.com/jssdk/sample.zip">示例代码</a>
+<p>打开<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115">微信分享官方文档</a>，在页面最下面找到并下载<a href="http://demo.open.weixin.qq.com/jssdk/sample.zip">示例代码</a><br>
 我们将java中的<code>sign.java</code>直接放到项目中备用。</p>
-<p><a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html">公众号获取access_token官方文档</a>
+<p><a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html">公众号获取access_token官方文档</a><br>
 <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html">小程序获取access_token官方文档</a></p>
 <h2 id="获取access_tokenticket">获取access_token、ticket<a hidden class="anchor" aria-hidden="true" href="#获取access_tokenticket">#</a></h2>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -602,14 +603,14 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>sign类里面有一个签名的方法<code>sign</code>，传入ticket和url即可。也就是WeinXinUtil的getWinXinEntity方法，并将返回的map的信息读取存入WinXinEntity中。
-在调试时，把sign返回的map打印出来，主要看看生成的signature。然后，把jsapi_ticket、noncestr、timestamp、url 复制到微信提供的<a href="https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign">微信 JS 接口签名校验工具</a>，
+</div><p>sign类里面有一个签名的方法<code>sign</code>，传入ticket和url即可。也就是WeinXinUtil的getWinXinEntity方法，并将返回的map的信息读取存入WinXinEntity中。<br>
+在调试时，把sign返回的map打印出来，主要看看生成的signature。然后，把jsapi_ticket、noncestr、timestamp、url 复制到微信提供的<a href="https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign">微信 JS 接口签名校验工具</a>，<br>
 比较代码签名生成的signature与校验工具生成的签名signature是否一致，如果一致，说明前面的步骤都是正确的，如果不一致，仔细检查。</p>
 <h2 id="controller">controller<a hidden class="anchor" aria-hidden="true" href="#controller">#</a></h2>
 <p>我们把微信分享分解成3个工具类，现在在处理分享的controller，只要两句话就可以调用微信分享，一句获取url，一句获取WinXinEntity，代码已经在上边给出了。</p>
 <h2 id="前端config函数配置">前端config函数配置<a hidden class="anchor" aria-hidden="true" href="#前端config函数配置">#</a></h2>
-<p>下面的代码放在网页js代码的最前面！
-”var url = location.href.split(‘#’)[0];“ 页面的url也可以从后台传过来，也可以通过location.href.split(‘#’)[0]获取。
+<p>下面的代码放在网页js代码的最前面！<br>
+”var url = location.href.split(‘#’)[0];“ 页面的url也可以从后台传过来，也可以通过location.href.split(‘#’)[0]获取。<br>
 为了一点微不足道的速度，这里才用网页获取方式。（网页的url跟前面的后台签名时得url是一样的，只是绕过了ajax）</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -708,17 +709,17 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="分享链接带参数的情况">分享链接带参数的情况<a hidden class="anchor" aria-hidden="true" href="#分享链接带参数的情况">#</a></h2>
-<p>前端的链接如果带参数，<code>www.xxx.com/xxx?a=1&amp;b=2</code>，传给后台必须使用<code>encodeURIComponent</code>转码，<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115">参考官方文档</a>，
-但是官方文档并没有说，后台要把前端传的url再解码！即：
-<code>URI.create(paramMap.get(&quot;strUrl&quot;)).getPath()</code>
+<p>前端的链接如果带参数，<code>www.xxx.com/xxx?a=1&amp;b=2</code>，传给后台必须使用<code>encodeURIComponent</code>转码，<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115">参考官方文档</a>，<br>
+但是官方文档并没有说，后台要把前端传的url再解码！即：<br>
+<code>URI.create(paramMap.get(&quot;strUrl&quot;)).getPath()</code><br>
 不要使用<code>URLDecoder.decode(paramMap.get(&quot;strUrl&quot;))</code>，该方法将要被废弃。</p>
-<p>不带参数可以不转码，若带参数必须转码，后台再解码！！
+<p>不带参数可以不转码，若带参数必须转码，后台再解码！！<br>
 <a href="https://www.cnblogs.com/vipstone/p/6732660.html">参考地址</a></p>
 <h1 id="微信小程序登录">微信小程序登录<a hidden class="anchor" aria-hidden="true" href="#微信小程序登录">#</a></h1>
-<p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html">官方文档</a>
-登录流程时序图
-<img loading="lazy" src="3.jpg">
-微信的文档写的像狗屎，所以我抄了一份时序图：
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html">官方文档</a><br>
+登录流程时序图<br>
+<img loading="lazy" src="3.jpg"><br>
+微信的文档写的像狗屎，所以我抄了一份时序图：<br>
 <img loading="lazy" src="4.jpg"></p>
 <p>大致流程如下：</p>
 <ul>
@@ -736,7 +737,7 @@
 <li>服务器A根据3rdSessionId从缓存中获取session_key</li>
 <li>在服务器A使用AES解密encryptedData，从而实现用户敏感数据解密</li>
 </ul>
-<p>重点在6、7、8三个环节。
+<p>重点在6、7、8三个环节。<br>
 AES解密三个参数：</p>
 <ul>
 <li>密文 encryptedData</li>
@@ -989,7 +990,7 @@ AES解密三个参数：</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="5">
-<li>后端用session_key，encryptedData，iv解密获取用户信息userinfo。
+<li>后端用session_key，encryptedData，iv解密获取用户信息userinfo。<br>
 后端解密其实就这么简单，只要流程对了就可以解密，如果解密出错，基本就是流程出错了。不用再去换什么解密算法。</li>
 </ol>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1067,8 +1068,8 @@ AES解密三个参数：</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>上边分别请求了两次后台接口，其实完全可以合并成一次请求，参考下边获取手机号的内容。</p>
-<p><a href="https://www.cnblogs.com/cangqinglang/p/8944681.html">参考1</a>
-<a href="https://blog.csdn.net/qi923701/article/details/81534820">参考2</a>
+<p><a href="https://www.cnblogs.com/cangqinglang/p/8944681.html">参考1</a><br>
+<a href="https://blog.csdn.net/qi923701/article/details/81534820">参考2</a><br>
 <a href="https://blog.csdn.net/weixin_38429587/article/details/82814325">参考3</a></p>
 <h1 id="小程序获取手机号">小程序获取手机号<a hidden class="anchor" aria-hidden="true" href="#小程序获取手机号">#</a></h1>
 <p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">官方文档</a></p>
@@ -1108,10 +1109,10 @@ AES解密三个参数：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>后台拿到数据后，我们把session_key存到redis，然后把session_key存在redis中的key返回给前端。因为微信官方说：
+</div><p>后台拿到数据后，我们把session_key存到redis，然后把session_key存在redis中的key返回给前端。因为微信官方说：<br>
 <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html">为了应用自身的数据安全，开发者服务器不应该把会话密钥下发到小程序，也不应该对外提供这个密钥</a></p>
 <ol start="3">
-<li>前端调用 getPhoneNumber组件，用户确认授权。拿到encryptedData和iv。并传给后端。
+<li>前端调用 getPhoneNumber组件，用户确认授权。拿到encryptedData和iv。并传给后端。<br>
 <code>&lt;button open-type=&quot;getPhoneNumber&quot; bindgetphonenumber=&quot;getPhoneNumber&quot;&gt; &lt;/button&gt;</code></li>
 </ol>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1131,7 +1132,7 @@ AES解密三个参数：</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="4">
-<li>后端用session_key，encryptedData，iv解密获取手机号。
+<li>后端用session_key，encryptedData，iv解密获取手机号。<br>
 后端解密其实就这么简单，只要流程对了就可以解密，如果解密出错，基本就是流程出错了。不用再去换什么解密算法。</li>
 </ol>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1315,13 +1316,13 @@ AES解密三个参数：</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这个接口，我接收了code、iv、encryptedData三个参数。
-其中code是前端请求<code>wx.login()</code>返回的，<code>iv、encryptedData</code>是前端请求<code>wx.userinfo()</code>返回的。
-我的接口中，先通过code请求微信服务器，获取<code>session_key</code>和<code>openid</code>，然后通过<code>session_key、iv、encryptedData</code>进行解密，就得到了用户手机号。
+</div><p>这个接口，我接收了code、iv、encryptedData三个参数。<br>
+其中code是前端请求<code>wx.login()</code>返回的，<code>iv、encryptedData</code>是前端请求<code>wx.userinfo()</code>返回的。<br>
+我的接口中，先通过code请求微信服务器，获取<code>session_key</code>和<code>openid</code>，然后通过<code>session_key、iv、encryptedData</code>进行解密，就得到了用户手机号。<br>
 后续是自己业务的逻辑，即通过手机号判断自己的数据库是否有这个用户，有-&gt;返回用户信息(即登录)，没有-&gt;注册并返回用户信息。</p>
-<p><a href="https://blog.csdn.net/qq_36466653/article/details/83374485">参考1</a>
+<p><a href="https://blog.csdn.net/qq_36466653/article/details/83374485">参考1</a><br>
 <a href="https://blog.csdn.net/Lonely_Devil/article/details/90024579">参考2</a></p>
-<p>获取手机号和获取用户信息，两套流程的区别，只在于前端第二次请求微信接口的不同。每个步骤，对于后台来说都是一样的。
+<p>获取手机号和获取用户信息，两套流程的区别，只在于前端第二次请求微信接口的不同。每个步骤，对于后台来说都是一样的。<br>
 后台只需要通过前端获取的code，获取session_id和openid，然后再用三个参数<code>session_key，iv，encryptedData</code>进行解密即可。</p>
 <ul>
 <li>获取用户信息，前端调用<code>wx.getUserInfo(Object object)</code><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserInfo.html">官方文档</a></li>
@@ -1330,24 +1331,24 @@ AES解密三个参数：</p>
 <p>所以，获取用户信息和获取用户手机号，后台只需一个接口即可，但是需要注意，解密出来的，一个是手机号，一个是用户信息，所以可能还需要在自己的业务中，对两种不同的参数采取不同的处理。</p>
 <p><strong>后台请求微信授权，在本地即可以测试，只要有code或encryptedData和iv(这三个参数需要前端给你)，不用非拿到线上去测。而且，小程序后台，也无需配置服务器域名啥的。</strong></p>
 <h1 id="小程序发送消息">小程序发送消息<a hidden class="anchor" aria-hidden="true" href="#小程序发送消息">#</a></h1>
-<p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/server-ability/message-push.html">官方文档</a>
-<a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html">文档2</a>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/server-ability/message-push.html">官方文档</a><br>
+<a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html">文档2</a><br>
 微信的官方文档真的是屎一样，毫无逻辑调理。每次要写和微信相关的功能头都很大。</p>
-<p>功能介绍：
-前端添加按钮后，用户点击按钮，即可跳转到小程序客服界面。
-此时有三种做法：
-1.前端直接请求微信接口给客服发送消息。
-2.前端请求开发者的服务器接口，由开发者服务器请求微信服务器，发送消息。
-3.通过小程序后台的配置，由微信服务器请求开发者服务器，发送消息。
+<p>功能介绍：<br>
+前端添加按钮后，用户点击按钮，即可跳转到小程序客服界面。<br>
+此时有三种做法：<br>
+1.前端直接请求微信接口给客服发送消息。<br>
+2.前端请求开发者的服务器接口，由开发者服务器请求微信服务器，发送消息。<br>
+3.通过小程序后台的配置，由微信服务器请求开发者服务器，发送消息。<br>
 这里我们使用第三种方法。</p>
 <ul>
-<li>登录<a href="https://mp.weixin.qq.com/">微信公众平台</a>
-小程序管理后台-&gt;开发-&gt;开发设置-&gt;消息推送-&gt;启用。
-几个需要填写的参数：
-URL(服务器地址)：填写我们自己服务器可以get请求的一个方法，必须是方法的全路径，如：<code>http://test.api.zjxk12.com/zjx/api/pay/checkSignature</code>
-token令牌：随便写，但是要保存在程序中，用于验证一致性。
-EncodingAESKey(消息加密密钥)：在当前页面自动生成。
-消息加密方式：推荐兼容模式。
+<li>登录<a href="https://mp.weixin.qq.com/">微信公众平台</a><br>
+小程序管理后台-&gt;开发-&gt;开发设置-&gt;消息推送-&gt;启用。<br>
+几个需要填写的参数：<br>
+URL(服务器地址)：填写我们自己服务器可以get请求的一个方法，必须是方法的全路径，如：<code>http://test.api.zjxk12.com/zjx/api/pay/checkSignature</code><br>
+token令牌：随便写，但是要保存在程序中，用于验证一致性。<br>
+EncodingAESKey(消息加密密钥)：在当前页面自动生成。<br>
+消息加密方式：推荐兼容模式。<br>
 数据格式：我选的json。</li>
 </ul>
 <p>此时点确定还是不行的，因为我们的服务端还没有接口，这个接口就是上边我们填写的地址，点击确定的时候，微信服务器会调用这个接口。</p>
@@ -1728,8 +1729,8 @@ EncodingAESKey(消息加密密钥)：在当前页面自动生成。
 </div>
 </div><p>传到服务器上，小程序客服就可以发送消息了。</p>
 <h2 id="传媒体文件到微信服务器">传媒体文件到微信服务器<a hidden class="anchor" aria-hidden="true" href="#传媒体文件到微信服务器">#</a></h2>
-<p><a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.uploadTempMedia.html">官方文档</a>
-如果想发送图片消息，根据官方文档提示，我们需要<code>media_id</code>。现在讲如何获取这个media_id。
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.uploadTempMedia.html">官方文档</a><br>
+如果想发送图片消息，根据官方文档提示，我们需要<code>media_id</code>。现在讲如何获取这个media_id。<br>
 首先需要准备3个参数：</p>
 <ul>
 <li>access_token：小程序的access_token（注意和公众号的access_token区分）</li>
@@ -1939,17 +1940,17 @@ EncodingAESKey(消息加密密钥)：在当前页面自动生成。
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>media_id的有消息为3天，即72小时，一定要缓存到redis，时间也是72小时即可，避免重复上传。超时之后，再重新上传，重新获取media_id。
+</div><p>media_id的有消息为3天，即72小时，一定要缓存到redis，时间也是72小时即可，避免重复上传。超时之后，再重新上传，重新获取media_id。<br>
 有了media_id，我们就可以在发客服消息时，使用media_id来发送图片了。</p>
 <h1 id="信公众号发送模板消息">信公众号发送模板消息<a hidden class="anchor" aria-hidden="true" href="#信公众号发送模板消息">#</a></h1>
-<p><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277">公众号发送消息官方文档</a>
-要推送微信的模板消息，我们需要准备的条件有：
-1、有效的access_token
-2、微信公众号提供的消息模板的Template_id
-access_token：
-公众平台以access_token为接口调用凭据，来调用接口，所有接口的调用需要先获取access_token，access_token在2小时内有效，过期需要重新获取，但1天内获取次数有限，开发者需自行存储，详见获取接口调用凭据（access_token）文档。
-我将access_token存到了redis中，有效期两小时，两小时过期后，再到微信服务器重新获取access_token。
-Template_id：
+<p><a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277">公众号发送消息官方文档</a><br>
+要推送微信的模板消息，我们需要准备的条件有：<br>
+1、有效的access_token<br>
+2、微信公众号提供的消息模板的Template_id<br>
+access_token：<br>
+公众平台以access_token为接口调用凭据，来调用接口，所有接口的调用需要先获取access_token，access_token在2小时内有效，过期需要重新获取，但1天内获取次数有限，开发者需自行存储，详见获取接口调用凭据（access_token）文档。<br>
+我将access_token存到了redis中，有效期两小时，两小时过期后，再到微信服务器重新获取access_token。<br>
+Template_id：<br>
 Template_id是我们需要推送的模板消息的模板的唯一标识，微信公众平台提供了很多模板，也支持自定义格式。在实际使用时，我们需要到微信公众平台申请开启模板消息功能。在微信公众平台的首页，左侧菜单有一个“添加功能插件”，选择模板消息，微信平台审核需要一定时间。</p>
 <p>消息模板举例：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1966,7 +1967,7 @@ Template_id是我们需要推送的模板消息的模板的唯一标识，微信
 </span></span><span style="display:flex;"><span>{{keyword3.DATA}}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>为了方便封装数据，我们使用模板类来包装要发送的信息：
+</div><p>为了方便封装数据，我们使用模板类来包装要发送的信息：<br>
 TemplateParam 类封装了模板消息中的一个数据，比如上面的“{{first.DATA}} ”，具体属性可阅读注释：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2321,13 +2322,13 @@ TemplateParam 类封装了模板消息中的一个数据，比如上面的“{{f
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="击推送消息跳转到网页或者小程序">击推送消息跳转到网页或者小程序<a hidden class="anchor" aria-hidden="true" href="#击推送消息跳转到网页或者小程序">#</a></h2>
-<p>需求：消息推送后，点击推送的消息，可以跳转到公众号内部的某些页面，这个页面是我们自己的。
-<a href="https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html">模板消息官方文档</a>一定仔细阅读官方文档。
-根据微信官网提供的接口文档，可以知道要跳转的条件有以下四个参数：
-url：模板跳转链接（海外帐号没有跳转能力）
-miniprogram：跳小程序所需数据，不需跳小程序可不用传该数据
-appid：所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系，暂不支持小游戏）
-pagepath：所需跳转到小程序的具体页面路径，支持带参数,（示例index?foo=bar），要求该小程序已发布，暂不支持小游戏
+<p>需求：消息推送后，点击推送的消息，可以跳转到公众号内部的某些页面，这个页面是我们自己的。<br>
+<a href="https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html">模板消息官方文档</a>一定仔细阅读官方文档。<br>
+根据微信官网提供的接口文档，可以知道要跳转的条件有以下四个参数：<br>
+url：模板跳转链接（海外帐号没有跳转能力）<br>
+miniprogram：跳小程序所需数据，不需跳小程序可不用传该数据<br>
+appid：所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系，暂不支持小游戏）<br>
+pagepath：所需跳转到小程序的具体页面路径，支持带参数,（示例index?foo=bar），要求该小程序已发布，暂不支持小游戏<br>
 <a href="https://blog.csdn.net/qq_27185879/article/details/103385345">参考</a></p>
 <h1 id="小程序发送模板消息">小程序发送模板消息<a hidden class="anchor" aria-hidden="true" href="#小程序发送模板消息">#</a></h1>
 <h2 id="后端需要实现的功能">后端需要实现的功能<a hidden class="anchor" aria-hidden="true" href="#后端需要实现的功能">#</a></h2>
@@ -2443,7 +2444,7 @@ pagepath：所需跳转到小程序的具体页面路径，支持带参数,（�
 <li>确保你获取用来签名的url是动态获取的，动态页面可参见实例代码中php的实现方式。如果是html的静态页面在前端通过ajax将url传到后台签名，前端需要用js获取当前页面除去&rsquo;#&lsquo;hash部分的链接（可用location.href.split(&rsquo;#&rsquo;)[0]获取,而且需要encodeURIComponent，后台decodeURIComponent解码），因为页面一旦分享，微信客户端会在你的链接末尾加入其它参数，如果不是动态获取当前链接，将导致分享后的页面签名失败。</li>
 </ul>
 <h2 id="小程序报错">小程序报错<a hidden class="anchor" aria-hidden="true" href="#小程序报错">#</a></h2>
-<p><code>{&quot;errcode&quot;:40163,&quot;errmsg&quot;:&quot;code been used, hints: [ req_id: UGKfDXXBe-rIpWva ]&quot;}</code>
+<p><code>{&quot;errcode&quot;:40163,&quot;errmsg&quot;:&quot;code been used, hints: [ req_id: UGKfDXXBe-rIpWva ]&quot;}</code><br>
 前端获取code，通过code请求后台接口，后台通过code获取openid和session_key。偶尔会报上边的错。原因：前端传了重复的code，小程序的code只能用一次，每次使用都要重新获取，不能缓存。</p>
 
   </div>

@@ -22,7 +22,7 @@
       <guid>https://009965.xyz/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E7%B4%A2%E5%BC%95/</guid>
       <description>&lt;h1 id=&#34;索引概述&#34;&gt;索引概述&lt;/h1&gt;
 &lt;p&gt;原文：https://mp.weixin.qq.com/s/rF3zP99Bqw7PzVXfqfzF0w&lt;/p&gt;
-&lt;p&gt;在关系数据库中，索引是一种单独的、物理的对数据库表中一列或多列的值进行排序的一种存储结构，它是某个表中一列或若干列值的集合和相应的指向表中物理标识这些值的数据页的逻辑指针清单。
+&lt;p&gt;在关系数据库中，索引是一种单独的、物理的对数据库表中一列或多列的值进行排序的一种存储结构，它是某个表中一列或若干列值的集合和相应的指向表中物理标识这些值的数据页的逻辑指针清单。&lt;br&gt;
 简单来说，索引的作用相当于图书的目录，可以根据目录中的页码快速找到所需的内容。&lt;/p&gt;</description>
     </item>
     <item>
@@ -42,7 +42,7 @@
       <pubDate>Thu, 05 Dec 2019 20:08:17 +0000</pubDate>
       <guid>https://009965.xyz/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。
+&lt;p&gt;SQL语句需要先编译然后执行，而存储过程（Stored Procedure）是一组为了完成特定功能的SQL语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给定参数（如果该存储过程带有参数）来调用执行它。&lt;br&gt;
 存储过程是可编程的函数，在数据库中(数据字典表)创建并保存，可以由SQL语句和控制结构组成。当想要在不同的应用程序或平台上执行相同的函数，或者封装特定功能时，存储过程是非常有用的。数据库中的存储过程可以看做是对编程中面向对象方法的模拟，它允许控制数据的访问方式。&lt;/p&gt;</description>
     </item>
     <item>
@@ -51,9 +51,9 @@
       <pubDate>Wed, 04 Dec 2019 18:27:30 +0000</pubDate>
       <guid>https://009965.xyz/posts/mysql/mysql%E8%BF%9B%E9%98%B6-%E8%A7%86%E5%9B%BE/</guid>
       <description>&lt;h1 id=&#34;视图&#34;&gt;视图&lt;/h1&gt;
-&lt;p&gt;概念：
-视图就是一条SELECT语句执行后返回的结果集。
-视图（view）是一种虚拟存在的表，是一个逻辑表，本身并不包含数据。作为一个select语句保存在数据字典中的。
+&lt;p&gt;概念：&lt;br&gt;
+视图就是一条SELECT语句执行后返回的结果集。&lt;br&gt;
+视图（view）是一种虚拟存在的表，是一个逻辑表，本身并不包含数据。作为一个select语句保存在数据字典中的。&lt;br&gt;
 所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。&lt;/p&gt;</description>
     </item>
     <item>

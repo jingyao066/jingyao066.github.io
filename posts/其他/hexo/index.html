@@ -128,7 +128,7 @@
   "keywords": [
     "其他"
   ],
-  "articleBody": "总体步骤：\n安装Git Bash 安装NodeJs 安装hexo 生成SSH并添加到github 部署项目 上传到github 绑定个人域名 修改及配置主题 写文章部分 安装git、NodeJs，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。\n安装Hexo 先进行npm的设置\n1 2 3 4 5 npm config set proxy null npm config set https-proxy null npm config set strict-ssl false // 安装cnmp，并使用淘宝镜像 npm install -g cnpm --registry=https://registry.npm.taobao.org Hexo官网地址\n在git和node安装完毕后，即可使用 npm 安装 Hexo cnpm install -g hexo-cli\nhexo安装完之后，初始化Hexo，先 cd 到想存放博客文件的父目录 hexo init \u003c文件夹名\u003e\n进入hexo文件夹 cd \u003c文件夹名\u003e\n安装npm组件 cnpm install\n坑： 因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令hexo init hexoBlog报错： Unexpected end off JSON input while parsing near ... WARN Failed to install dependencies. Please run npm install manually!\n解决办法： 安装指令： npm install --registry=https://registry.npm.taobao.org --loglevel=silly\n清除缓存 npm cache clean --force\n修改配置文件 执行如下命令\n1 2 3 hexo clean hexo generate hexo server 注：hexo 3.0把服务器独立成个别模块，需要单独安装： npm i hexo-server 然后打开 http://localhost:4000 就可以看到hexo的默认页面了\n重新安装hexo后，执行hexo clean报错： (node:17148) ExperimentalWarning: The fs.promises API is experimental\n原因：nodejs不是最新版本。 解决：更新nodejs版本。\nwindows直接到官网下载最新版本即可，linux、mac执行如下命令\n清除npm缓存 npm cache clean -f\n安装n模块 npm install -g n\n升级node.js到最新稳定版 n stable\n上传到github 修改hexo安装目录下的_config.yml文件：\n1 2 3 4 deploy: type: git repo: https://github.com/ayanamiq/ayanamiq.github.io branch: master 注意：\nrepo是在github上创建好的仓库地址，仓库名字必须是username.github.io key和后面value之间必须有空格。 先安装： npm install hexo-deployer-git --save 这样才能将你写好的文章部署到github服务器上并让别人浏览到。\n初始化本地git仓库： git init\n设置用户名: git config --global user.name \"王靖尧\" 设置邮箱： git config --global user.email \"xxx@xxx.com\" 关联远程仓库： git remote add origin git@github.com:ayanamiq/learngit.git\n执行命令\n1 2 3 hexo clean hexo generate hexo deploy 如果执行第一个指令就报： Usage: hexo 原因：我认为是没有生成本地服务 解决：执行指令 $ npm install hexo-server --save 还是不行…为啥呢？ 因为指令必须在hexo的安装目录下执行！！！\n注意deploy的过程中要输入你github的username和password 然后打开： https://ayanamiq.github.io/ 就可以看到刚才在本地一样访问 http://localhost:4000 一样的页面了\n坑：这里在deploy的时候报错了。 HttpRequestException encountered 问题：Github 禁用了TLS v1.0 and v1.1，必须更新Windows的git凭证管理器 下载并安装第一个GCMW-1.18.3.exe文件(请注意版本迭代)。 然后再deploy就可以了。\n修改及配置主题 直接去github看hexo的最新内容 一定要去github下载最新版本。\n切换主题 根目录配置文件_config.yml\n1 theme: landscape //默认主题 将landscape改成next\n切换主题样式 主题配置文件_config.yml\n1 2 3 4 5 # Schemes #scheme: Muse scheme: Mist #scheme: Pisces #scheme: Gemini 设置Menu 默认只有两个首页和归档，还可以添加关于、标签、搜索 根目录-\u003ethemes-\u003enext 通过如上路径找到_config.yml，在文件中搜索menu。\n1 2 3 4 5 6 7 8 9 menu: home: / || fa fa-home #about: /about/ || fa fa-user tags: /tags/ || fa fa-tags #categories: /categories/ || fa fa-th archives: /archives/ || fa fa-archive #schedule: /schedule/ || fa fa-calendar #sitemap: /sitemap.xml || fa fa-sitemap #commonweal: /404/ || fa fa-heartbeat 去掉注释即可显示对应标签。 需要注意：tags、about、categories等标签，需要通过hexo指令单独创建后才能显示。\n底部隐藏由Hexo强力驱动、主题–NexT.Mist 主题_config.yml中搜索power和theme，将下边的enable和version都改成false\n更改底部图标 在这找到喜欢的图标 主题_config.yml中搜索footer，找到下面的icon，替换成自己想要的。 推荐snowflake-o和heart\n修改动画速度 themes/next/source/js/src/motion.js 打开上边的js，搜索duration，动画速度，值越大速度越慢。 默认的都是200，建议修改为100，值太低会显得太突兀。\n阅读全文 next默认将文章全部现实出来，可以添加阅读全文功能。 主题_config.yml中搜索auto_excerpt，改为true\n注意： 6.x版本之后，上述的方法已经不再适用，有几种解决办法。\n方法1：写概述\n1 2 3 4 5 --- title: 让首页显示部分内容 date: 2020-02-23 22:55:10 description: 这是显示在首页的概述，正文内容均会被隐藏。 --- abstract： 文章的摘要，会显示在博客的列表页，正文会被隐藏\n方法2：文章截断 在需要截断的地方加入： next主题版本升级(5.1.x-6.x) 参考官方文档 6.x版本仓库地址 通过新仓库，将源码下载解压到hexo的thems文件夹下，将之改名为next-reloaded 注意：之前的next文件夹不要删除，里面还留了很多需要的配置，而且如果新的主题出现问题，还可以及时切换回就版本。\n在Hexo的_config.yml中配置新的主题： theme: next-reloaded\n更新语言配置： 从 v6.0.3版本起，zh-Hans改名为zh-CN，新版本需要显式修改_config.xml里的language配置，否则语言显示不正确。 然后可以参照之前配置好的next配置文件_config.xml，来配置新的_config.xml。\n写文章 hexo new 'blogName' 其他指令参考官方文档\n然后可以在’source/_posts’下看到新建的文章了，生成的是.md文件，推荐使用markdown编译器。 markdown编译器有一堆，比较有名的是markdownPad，但是我懒，还是直接用nodePad++好了。\n1.安装MarkdownViewer++ 最近发现新版的nodepad 7.6.2，新增了plugins admin即插件中心,搜索markdown，选中markdownViewer++，点击右侧的install，等待nodepad++重启就安装好了。\n备用方案： 自行安装plugin manager 下载对应自己NotePad版本的安装包，解压后得到两个文件夹，plugins和updater， 分别将文件夹中的文件粘贴到nodePad++安装路径下的plugins和updater文件夹下， 然后重启NotePad，就会在插件一栏的下面看到plugin manager，打开，找到MarkdownViewer++， 选择右下角的install，安装完之后根据提示重启。\n2.导入自定义语言格式 为了设置符合markdown语言的显示效果，需要下载Markdown语言格式的xml配置文件 下载之后解压缩，然后打开NotePad，选择语言-\u003e自定义语言格式-\u003e导入-\u003e选择到刚才解压的文件夹的四个theme文件夹中的任意一个，建议选择default，因为nodePad默认就是白底的，其他几个太扎眼。\n添加“分类”选项 进入博客所在文件夹，打开gitbush，执行命令 $ hexo new page categories 成功后会提示： INFO Created: ~/Documents/blog/source/categories/index.md\n根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：\n1 2 3 4 --- title: 文章分类 date: 2017-05-27 13:47:40 --- 添加type: “categories\"到内容中，添加后是这样的：\n1 2 3 4 5 --- title: 文章分类 date: 2019-05-27 13:47:40 type: \"categories\" --- 给文章添加“categories”属性 打开需要添加分类的文章，为其添加categories属性。\n1 2 3 4 5 --- title: java基础 date: 2018-12-31 12:12:57 categories: - java --- 注意：hexo一篇文章只能属于一个分类 至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。 当然，只有添加了categories: xxx的文章才会被收录到首页的“分类”中。\n创建“标签”选项 进入博客所在文件夹，打开gitbush,执行命令 $ hexo new page tags 成功后会提示： INFO Created: ~/Documents/blog/source/tags/index.md 根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：\n1 2 3 4 --- title: tags date: 2020-08-05 17:45:59 --- 在date下面添加一行\n1 2 3 4 5 --- title: tags date: 2020-08-05 17:45:59 type: \"tags\" --- 保存并关闭文件。\n给文章添加“tags”属性 打开需要添加标签的文章，为其添加tags属性。\n1 2 3 4 5 6 7 8 9 --- title: java基础 date: 2017-05-26 12:12:57 categories: - java基础 tags: - java - 基础 --- 至此，成功给文章添加分类，点击首页的“标签”可以看到该标签下的所有文章。 当然，只有添加了tags: xxx的文章才会被收录到首页的“标签”中。\n细心的朋友可能已经发现，这两个的设置几乎一模一样！是的，没错，思路都是一样的。 所以我们可以打开scaffolds/post.md文件，在tages:上面加入categories:, 保存后，之后执行hexo new 文章名命令生成的文件，页面里就有categories:项了。\nscaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。\n添加about标签 hexo new page 'about' 在安装位置下的source文件夹下会有about文件夹，打开，编辑里面的index.md\n引用图片 总体来说有两种引用方式：\n公网图片地址 将图片引入项目内，使用相对路径 公网图片地址总是不可靠的，不定哪会就失效了，又没有自己的服务器。 可行的办法：\n把图片上传到新浪图床 在github新建一个仓库，专门用来存放图片。 我采用另外一种办法，将图片引入项目内：\n修改项目的_config.yml post_asset_folder:true Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder 当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，便可以更方便的使用资源。\n在hexo的目录下执行 npm install https://github.com/CodeFalling/hexo-asset-image --save 需要等待一段时间\n完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。结构如下：\n1 2 3 4 5 本地图片测试 ├── apppicker.jpg ├── logo.jpg └── rules.jpg 本地图片测试.md 这样的目录结构（目录名和文章名一致），只要使用![logo](本地图片测试/logo.jpg)就可以插入图片。 生成的结构为\n1 2 3 4 5 public/2016/3/9/本地图片测试 ├── apppicker.jpg ├── index.html ├── logo.jpg └── rules.jpg 同时，生成的 html 是 而不是 多台电脑操作hexo博客 多台电脑操作hexo 目的：在公司和家里都可以写博客。 思路：git分支 hexo生成的静态博客文件默认放在master分支上。 hexo的源文件（部署环境文件）可以都放在hexo分支上（可以新创建一个hexo分支），换新电脑时，直接： git clone git@github.com:ayanamiq/ayanamiq.github.io.git\nhexo搭建博客原理 参考hexo本机安装目录结构：\n1 2 3 4 5 6 7 8 .deploy_git：上传到github的文件 node_modules：hexo需要的模块，不需要上传github public：生成的静态文件 scaffolds：hexo new 'name' 时的配置文件 source：博文的.md文件 themes：主题文件 _config.yml：全局配置文件 package.json：记录hexo需要的包信息 hexo帮助把博客发送到github，同时把md文件转换成网页文件。 hexo目录下的文件和github上的文件是不同的，public文件夹的文件通过hexo d上传到github去了，其他的文件则留在本地目录下。\n对username.github.io仓库新建hexo分支，并克隆 在Github的username.github.io仓库上新建一个hexo分支，然后将该分支设为默认分支。 Settings-\u003eBranches-\u003eDefault branch中将默认分支设为hexo，save保存。\n然后将该仓库克隆到本地： git clone git@github.com:ayanamiq/ayanamiq.github.io.git clone完成后，在blog目录使用git branch，查看当前所在分支，应该是新建的分支hexo。 注意blog目录在clone下来目录的下一层。\n将本地博客的部署文件拷贝进刚才拉下来的分支文件目录 将本地博客的部署文件（Hexo目录下的全部文件）全部拷贝进刚才拉下来的分支文件目录中去。 接下来，进入hexo分支文件目录下，将该目录下的一些文件提交到hexo分支： scaffolds、source、themes、package.json、node_modules、_config.yml\n提交之前需注意：\n将themes目录以内中的主题的.git目录删除（如果有），因为一个git仓库中不能包含另一个git仓库，提交主题文件夹会失败。 可能有人会问，删除了themes目录中的.git不就不能git pull更新主题了吗，很简单，需要更新主题时在另一个地方git clone下来该主题的最新版本，然后将内容拷到当前主题目录即可。 提交hexo分支 依次执行 git add . git commit -m 'back up hexo files' git push 即可将博客的hexo部署环境提交到GitHub个人仓库的xxx分支。现在可以在GitHub上的username.github.io仓库看到两个分支的差异了。\nmaster分支和 hexo 分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问。 hexo 分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！\n在新电脑上执行下列操作： 至此，博客已经可以在其他电脑上进行同步更新和维护了。 将新电脑的生成的ssh key添加到GitHub账户上 在新电脑上克隆username.github.io仓库的xxx分支到本地，此时本地git仓库处于xxx分支： git clone git@github.com:ayanamiq/ayanamiq.github.io.git 切换到username.github.io目录，执行npm install (由于仓库有一个.gitignore文件，里面默认是忽略掉 node_modules文件夹的，也就是说仓库的hexo分支并没有存储该目录(也不需要)，所以需要install) 在新电脑上安装hexo命令 npm install -g hexo-cli 注意：linux安装hexo后，还需要把hexo的命令添加到全局，否则hexo的指令是无法使用的。 sudo ln -s /home/wjy/install/node-v10.15.3-linux-x64/lib/node_modules/hexo-cli/bin/hexo /usr/local/bin/hexo 到这里了就可以开始在新的电脑上写博客了！\n编辑、撰写文章 依次执行git add .、git commit -m 'some change'、git push指令，保证 hexo 分支版本最新 执行hexo d -g指令（在此之前，有时可能需要执行hexo clean），完成后就会发现，最新改动已经更新到master分支了，两个分支互不干扰！ 如果使用了algolia，还需要在新电脑上安装并配置API-KEY\n1 2 3 npm install --save hexo-algolia export HEXO_ALGOLIA_INDEXING_KEY=你的API Key hexo algolia 回到之前的电脑上更新并提交博客 注：每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先git pull。 按照之前的方法写自己博客，然后将目录切换下username.github.io下，此时需要安装一下npm install，最后执行hexo d -g即可提交成功。\n其他参考 参考\n使用LeanCloud统计文章访问次数 LeanCloud官网\n注册\n登录\n验证邮箱\n创建应用-选择开发板 注：开发版免费使用，但是有请求次数限制： 总请求数不超过每日 30,000 次 云端并发线程数低于 3 个 无自动备份\n点击存储，进入到控制台页面\n创建class，名字必须是Counter，其他全部默认，点击创建class\n点击左侧设置–应用key，可以看到自己的App ID,App Key\n找到next主题的_config.yml文件，搜索leancloud_visitors，enable改为true，然后写上LeanCloud的App ID,App Key\n设置安全域名：设置–安全中心–Web安全域名，输入自己hexo博客地址的线上域名\n不蒜子统计访问人数、访问总量 不蒜子官网\n找到next主题的_config.yml文件，搜索busuanzi_count 将配置做如下更改 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # count values only if the other configs are false enable: true # custom uv span for the whole site site_uv: true site_uv_header: 访问人数 site_uv_footer: 次 # custom pv span for the whole site site_pv: true site_pv_header: 访问总量 site_pv_footer: 次 # custom pv span for one page only page_pv: true page_pv_header: 浏览 page_pv_footer: 次 不蒜子统计无法显示问题 原因：不蒜子的域名过期 解决： /theme/next/layout/_third-party/analytics/busuanzi-counter.swig 按照上边路径找到该文件，修改域名为： https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js\nNexT主题的搜索功能 官方文档\n添加百度/谷歌/本地 自定义站点内容搜索\n安装 hexo-generator-searchdb，在站点的根目录下执行以下命令： npm install hexo-generator-searchdb --save\n编辑 站点配置文件，新增以下内容到任意位置：\n1 2 3 4 5 6 7 search: path: search.xml field: post # 是否包含文章内容，如果为false，则只搜索文件标题 content: true format: html limit: 10000 编辑 主题配置文件，启用本地搜索功能： 1 2 3 # Local search local_search: enable: true 添加algolia搜索 目前版本5.1.4已经集成algolia搜索，只需在next主题的配置文件中修改即可。 但是首先需要到官网注册\n注册成功后，进入到hashboard，点击左侧的Indices 点击create index，名字随便起。 点击左侧的API keys，在根目录的站点配置文件_config.yml中加入如下配置，参照官网中的各种key值 1 2 3 4 5 6 7 8 9 10 11 12 13 #添加搜索 algolia: applicationID: '你的applicationID' apiKey: '你的apiKey' adminApiKey: '你的adminApiKey' indexName: '新建的index名字' chunkSize: 5000 fields: - title - slug - path - content:strip 注意缩进！注意缩进！注意缩进！\n在Hexo工程根目录下执行npm install hexo-algolia --save 执行hexo algolia 更新索引，这一步会把自己站点的索引数据上传到Algolia，如果上传成功可以在官网看到自己站点的索引数据。 启用配置搜索功能 修改主题配置文件，在其中找到algolia_search属性，将其enable子属性改为true，然后再看其labels子属性，修改相应的提示文本，使之更加适合自己的风格 1 2 3 input_placeholder: 输入关键字 hits_empty: \"没有找到关于 ${query} 的文章\" hits_stats: \"${hits} 相关记录，共耗时 ${time} ms\" 最后，每次进行更新、删除文章等操作，都需要在提交前执行 hexo algolia 更新索引。\nnext主题升级6.0导致的问题 next6.0之后，algolia需要其他配置 还有其他问题，如:\n1 2 3 4 5 6 7 8 9 10 11 Refused to apply style from 'http://localhost:4000/lib/font-awesome/css/font-awesome.min.css?v=4.6.2' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled. localhost/:1 Refused to apply style from 'http://localhost:4000/lib/algolia-instant-search/instantsearch.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled. (index):2462 GET http://localhost:4000/lib/algolia-instant-search/instantsearch.min.js net::ERR_ABORTED 404 (Not Found) (index):1 Refused to apply style from 'http://localhost:4000/lib/algolia-instant-search/instantsearch.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled. (index):2462 GET http://localhost:4000/lib/algolia-instant-search/instantsearch.min.js net::ERR_ABORTED 404 (Not Found) algolia-search.js?v=7.1.0:14 Uncaught ReferenceError: instantsearch is not defined at HTMLDocument. (algolia-search.js?v=7.1.0:14) at j (index.js?v=2.1.3:2) at Object.fireWith [as resolveWith] (index.js?v=2.1.3:2) at Function.ready (index.js?v=2.1.3:2) at HTMLDocument.I (index.js?v=2.1.3:2) 参考官网解决问题\n其他问题 数据上传到algolia后，发现搜索出来的文章地址是： yoursite.com/2018/12/20/map 点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。 解决： 找到根目录的站点配置文件_config.yml，将url：yoursite.com，替换成自己的站点地址。\nPlease provide an Algolia index name in your hexo _config.yml flle 根目录的站点配置文件中加入的内容 apiKey/adminApiKey 等等没有缩进，然后一直报上面这个错误…注意缩进,一个tab或四个空格\n报错：\n1 2 ERROR [Algolia] Please set an HEXO_ALGOLIA_INDEXING_KEY environment variable t o enable content indexing. ERROR \u003e\u003e Read https://npmjs.com/hexo-algolia#api-key for more informations. 在执行hexo algolia前，需要先在git bush下执行：export HEXO_ALGOLIA_INDEXING_KEY=你的API Key 就是你的Search-Only API Key，必须在git bush下执行。但该方法设置的环境变量为临时变量，重启电脑就会失效。 右键点击我的电脑 \u003e 属性 \u003e 高级系统设置 \u003e 环境变量 添加环境变量名为 HEXO_ALGOLIA_INDEXING_KEY，值为 Algolia admin key，添加后点击确认，重启电脑后新增的环境变量生效。\n需要注意 文章名不要使用特殊符号，如冒号、下划线、逗号、问号、大于小于( /、\\、？、*、:、\"\"、| )等等 因为创建文章时，会创建同名的文件夹，linux文件夹、文件可以使用一些特殊符号，而windows中就不可以，这样会造成：在linux(我的公司电脑)写的文章，windows(家中电脑)无法拉取代码，因为windows无法创建带特殊符号的文件夹、文件，一定要注意。\n在文章中引入视频 1 2 3 {% raw %} {% endraw%} 解决github提交commit,contributions不统计显示绿色的问题 最近在提交博文的收，发现提交之后github上没有绿色小方块。 我找到仓库的递交记录，发现竟然是两个账号提交的，此时想到应该是git设置用户名和邮箱的问题。 先查看现在的用户名和邮箱： git config user.name git config user.email 发现是和github的账号不对应，于是重新设置邮箱： git config --global user.name \"xxx\" git config --global user.email \"xxx\" 然后提交一次试试，发现github可以显示contributions了。\n那么之前错误的如何补救呢？ github官方给出了解决方案\n打开gitbash，克隆仓库 git clone --bare https://github.com/user/repo.git 进入仓库 cd repo.git 在仓库的根目录创建一个脚本文件1.sh，并替换头部的三个变量为自己的。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 #!/bin/sh git filter-branch --env-filter ' OLD_EMAIL=\"your-old-email@example.com\" CORRECT_NAME=\"Your Correct Name\" CORRECT_EMAIL=\"your-correct-email@example.com\" if [ \"$GIT_COMMITTER_EMAIL\" = \"$OLD_EMAIL\" ] then export GIT_COMMITTER_NAME=\"$CORRECT_NAME\" export GIT_COMMITTER_EMAIL=\"$CORRECT_EMAIL\" fi if [ \"$GIT_AUTHOR_EMAIL\" = \"$OLD_EMAIL\" ] then export GIT_AUTHOR_NAME=\"$CORRECT_NAME\" export GIT_AUTHOR_EMAIL=\"$CORRECT_EMAIL\" fi ' --tag-name-filter cat -- --branches --tags 执行脚本 ./1.sh 执行过程中会显示 Rewrite f8da63b882603d90c7f9c6286494bb0d20289a50 (125/258) (42 seconds passed, remaining 44 predicted)\n在github的仓库页面查看记录是否修改过来了。 将更正的历史记录推送到GitHub： git push --force --tags origin 'refs/heads/*'\n然后将临时克隆的仓库删除即可。\n如果不知道错误的邮箱是什么，可以通过git log查看仓库的提交记录，记录了每一次的提交人和邮箱，一直往下翻就行了。\nhexo从github迁移到gitee 国内访问github的pages实在是拉稀，不得不转到国内的代码仓库。 公司的项目都在coding上，想体验点新的，于是想到了gitee。 总体步骤和部署到github类似。\n在gitee创建存放博客的仓库 如果你想你的 pages 首页访问地址不带二级目录，如ipvb.gitee.io，你需要建立一个与自己个性地址同名的仓库，如 https://gitee.com/ipvb 这个用户，想要创建一个自己的站点，但不想以子目录的方式访问，想以ipvb.gitee.io直接访问，那么他就可以创建一个名字为ipvb的仓库 https://gitee.com/ipvb/ipvb 部署完成后，就可以以 https://ipvb.gitee.io 进行访问了。 修改项目根目录_config.yml文件，修改repo的值 1 2 3 4 deploy: type: git repo: https://gitee.com/jingyao066/jingyao066.git branch: master 执行命令 1 2 hexo cl hexo d -g 然后会让输入gitee的用户名和密码，输入完成后就可以在gitee上看到我们上传的代码了。\n如果在hexo d -g的时候报错： ERROR Deployer not found: git 就是没有安装deployer，那么安装它： npm install --save hexo-deployer-git\n在仓库上方的bar找到服务，点击gitee pages，然后根据提示开启Gitee Pages 服务。 需要注意，仓库中起码有一个index.html，才可以开启pages服务，否则是找不到pages选项的。 根据提示访问： https://jingyao066.gitee.io 访问成功。 想要多端操作，参考前边写的\ngitee也拉稀了，最近在部署的时候，提示这个：\n1 2 部署失败 错误信息: page/12/index.html 包含违禁违规内容，请排查调整后再行重试，谢谢！ hexo文章加密 hexo插件中心 github\n安装： npm install --save hexo-blog-encrypt 或： yarn add hexo-blog-encrypt（需要安装Yarn）\n首先需要在站点配置文件_config.yml中增加配置：\n1 2 3 4 5 6 7 8 9 10 11 #文章加密 encrypt: enable: true message: 您好, 这里需要密码。 abstract: 这里有东西被加密了，需要输入密码查看。 template: {{hbeMessage}} wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试 wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容 tags: - {name: tagName, password: 密码A} - {name: tagName, password: 密码B} 这样，对于每一篇需要加密的文章就不必都在在头部添加 abstract 和 message 字段了，脚本会自动添加默认的内容填充。\n然后在文档头部加上字段： password： 本文章的密码\nmessage： 这个是博客查看时，密码输入框上面的描述性文字\nabstract： 文章的概述，因为文章加密了，也就失效了，所以需要用这个字段来增加概述。\n1 2 3 4 5 6 7 8 9 title: Hello World tags: - 加密文章tag date: 2020-03-13 21:12:21 password: wjy abstract: 这里有东西被加密了，需要输入密码查看哦。 message: 您好，这里需要密码。 wrong_pass_message: 抱歉，这个密码看着不太对，请再试试。 wrong_hash_message: 抱歉，这个文章不能被纠正，不过您还是能看看解密后的内容。 参考\n将hexo部署到自己的服务器 gitee pages也不行了\n本站正在进行绿色网络环境改造，服务改造结束前，无法重新开启您的Gitee Pages服务。 该 Page 服务已被屏蔽（ 存在政治敏感不合规） 只能自己买服务器了，现在阿里云在搞活动，178元3年，1核2G1M，够用了。\n安装git yum install git\n创建git用户 adduser git\n设置Git用户的密码 passwd git\n添加新用户 git useradd git\n设置密码 passwd git\n这步很重要，不切换用户后面会很麻烦 su git cd /home/git/\n创建存放项目的目录 mkdir -p projects/blog 创建git 仓库 mkdir repos \u0026\u0026 cd repos\n初始化一个git 裸库 git init --bare blog.git\n进入git仓库 cd blog.git/hooks\n创建 hook 钩子函数，输入了内容如下 vi post-receive\n#!/bin/sh git --work-tree=/home/git/projects/blog --git-dir=/home/git/repos/blog.git checkout -f\n添加完毕后修改权限 chmod +x post-receive exit // 退出到 root 登录 chown -R git:git /home/git/repos/blog.git // 添加权限\n测试git仓库是否可用 git clone git@server_ip:/home/git/repos/blog.git 如果能把空仓库拉下来，就说明 git 仓库搭建成功了\n建立ssh信任关系，在本地电脑 ssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip 如果自己电脑没有创建过公钥，那么执行ssh-keygen -t rsa，创建公钥，再执行上边的指令\n测试是否能登录 ssh git@server_ip 如果不需要密码就能登录服务器，那么成功，否则就问题，仔细检查上边的步骤。\n为了安全起见禁用 git 用户的 shell 登录权限，从而只能用 git clone，git push 等登录 查看 git-shell 是否在登录方式里面 cat /etc/shells\n// 查看是否安装 which git-shell\nvim /etc/shells 在最下边添加上2步显示出来的路径，通常是/usr/bin/git-shell\n修改/etc/passwd中的权限，将原来的 git:x:1000:1000::/home/git:/bin/bash 修改为 git:x:1000:1000::/home/git:/usr/bin/git-shell 此时再尝试ssh登录，则会提示fatal: Interactive git shell is not enabled\n注：如果第二台电脑想要建立ssh信任关系，需要先将/etc/passwd中内容改成 git:x:1000:1000::/home/git:/bin/bash 否则 ssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip 这一步就会报错。建立了信任关系，再改回来 git:x:1000:1000::/home/git:/usr/bin/git-shell\n安装nginx，略，参考文章 linux 修改nginx配置文件nginx.conf，修改root为刚才创建的文件夹\n1 2 3 4 server{ # root index.html; root /home/git/projects/blog; } 将配置文件顶部的user，后边改为root，然后启动nginx。\n配置本地_config.yml文件的deploy， repo: git@server_ip:/home/git/repos/blog.git\n然后， hexo cl hexo d -g 访问浏览器服务器ip，访问成功。 参考\nhexo多终端 原理： 多终端，即多台电脑操作hexo。比如：公司电脑和家里电脑。\nhexo有两种文件：\n源文件 我们编辑的就是hexo的源文件，即xxx.md。这些源文件的位置是： hexo根目录\\source\\_posts 所以只需要用代码仓库同步这些源文件即可。\nhexo根据源文件生成的静态文件 hexo generate，就会根据我们的.md文件，生成html。 hexo deploy，就是将这些静态文件推送到远程服务器。\n所以，只需要一个代码仓库（一个master分支即可），就可以实现多端同步了。 部署的话，分两种情况。\n部署到自己的服务器，直接根据上一小节将hexo部署到自己的服务器操作即可。 如果部署到github的pages服务，还需要在github新建一个仓库，存放部署后的静态文件，然后开启pages服务。 即：\n代码仓库1， 无论是自建仓库还是github的仓库，用来同步hexo的源文件。使用git push等git命令。\n代码仓库2， 无论是自建仓库还是github的仓库，用来部署hexo生成的静态文件，使用hexo generate等hexo命令来部署。\nps：当然你想用一个仓库，多个分支也可以。 另外，如果主题文件夹，也是用git拉下来的，这样会出现仓库嵌套仓库的情况。这时建议删除主题仓库的.git文件夹，就不会影响hexo部署了。\n在本地初始化git仓库 git init\n编辑.gitignore，在后面添加/.deploy_git和/public，表示这两个文件夹不用上传到仓库。\n和远程仓库关联，这个仓库存放博客的源文件，（可以用gitee、github、或者自建的仓库） git remote add origin git@仓库地址:/home/git\n添加到缓存区 git add .\n提交 git commit -m 'hexo 源文件'\n推送更新到远程仓库 git push -u origin master\nhexo目录里的文件都推送到了远程仓库，包括我们自己编写的markdown文件。\n新电脑操作步骤：\n拉代码 git clone https://gitee.com/jingyao066/hexo_source.git 以下两个指令，是否需要执行。存疑 git fetch –all git reset –hard origin/master\n更新node版本，windows直接官网下载最新版本的安装包，重新安装即可。\n安装cnpm，用cnpm安装hexo，安装需要的插件，如引用图片插件 cnpm install https://github.com/CodeFalling/hexo-asset-image --save\n建立ssh信任关系 因为源码仓库和hexo d，不是一个仓库，所以需要分别建立如下两个信任。\n建立和源码仓库的信任，git push时候会提示。 建立hexo d的信任，hexo d -g的时候会提示。 检查hexo命令能否正确执行 hexo cl \u0026\u0026 hexo g \u0026\u0026 hexo s 查看本地博客 localhost:4000\n在本地编辑文章，然后执行 git add . git commit -m \"更新信息\" 以后每次提交可以直接git push git push -u origin master\n执行hexo部署 hexo cl hexo d -g\n最后： 无论在哪台电脑编辑markdown，都要先执行 git pull\n编辑完成后，先推送源文件 git add . git commit -m ‘提交源文件’ git push -u origin master（可简写成git push）\n执行hexo部署 hexo cl hexo d -g\n快速重建hexo 需要复制的文件\n根目录 source 文件夹，最重要，所有的markdown文件都在这里 根目录的_config.yml 根目录 themes 文件夹，主题文件 脚本部署，定时部署 在windows合适位置，新建bat脚本： 拉代码脚本，hexo_pull.bat\n1 2 3 4 5 cd /d D:/hexo git pull origin master pause 推送脚本，hexo_deploy.bat\n1 2 3 4 5 6 7 8 9 10 11 cd /d D:/hexo git pull origin master git add . git commit -m \"add post\" git push --all hexo cl \u0026\u0026 hexo d -g pause 这样，双击脚本就可以拉代码和推送了。\nwindows定时任务 我们需要两个定时任务，上午拉代码，晚上部署代码。\nwin+R，运行taskschd.msc，打开任务计划程序 创建基本任务-\u003e填写任务名-\u003e选择触发器(选择每天)-\u003e选择每天的执行时间-\u003e启动程序-\u003e选择刚才创建的脚本。\n依次创建两个脚本，早8点拉取代码，晚7点部署代码。\nhexo 升级 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 # 使用淘宝源的 cnpm 替换 npm npm install -g cnpm --registry=https://registry.npm.taobao.org cnpm install -g cnpm # 升级 npm cnpm cache clean -f # 清除 npm 缓存 ===更新 hexo: 进入 blog 目录，执行如下命令=== # 更新 package.json 中的 hexo 及个插件版本 cnpm install -g npm-check # 检查之前安装的插件，都有哪些是可以升级的 cnpm install -g npm-upgrade # 升级系统中的插件 npm-check npm-upgrade # 更新 hexo 及所有插件 cnpm update # 确认 hexo 已经更新 hexo -v ",
+  "articleBody": "总体步骤：\n安装Git Bash 安装NodeJs 安装hexo 生成SSH并添加到github 部署项目 上传到github 绑定个人域名 修改及配置主题 写文章部分 安装git、NodeJs，创建github账号-创建仓库userName.github.io-将本地git通过ssh和远程github关联等等不再赘述。\n安装Hexo 先进行npm的设置\n1 2 3 4 5 npm config set proxy null npm config set https-proxy null npm config set strict-ssl false // 安装cnmp，并使用淘宝镜像 npm install -g cnpm --registry=https://registry.npm.taobao.org Hexo官网地址\n在git和node安装完毕后，即可使用 npm 安装 Hexo\ncnpm install -g hexo-cli\nhexo安装完之后，初始化Hexo，先 cd 到想存放博客文件的父目录\nhexo init \u003c文件夹名\u003e\n进入hexo文件夹\ncd \u003c文件夹名\u003e\n安装npm组件\ncnpm install\n坑：\n因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令hexo init hexoBlog报错：\nUnexpected end off JSON input while parsing near ...\nWARN Failed to install dependencies. Please run npm install manually!\n解决办法：\n安装指令：\nnpm install --registry=https://registry.npm.taobao.org --loglevel=silly\n清除缓存\nnpm cache clean --force\n修改配置文件 执行如下命令\n1 2 3 hexo clean hexo generate hexo server 注：hexo 3.0把服务器独立成个别模块，需要单独安装：\nnpm i hexo-server\n然后打开\nhttp://localhost:4000\n就可以看到hexo的默认页面了\n重新安装hexo后，执行hexo clean报错：\n(node:17148) ExperimentalWarning: The fs.promises API is experimental\n原因：nodejs不是最新版本。\n解决：更新nodejs版本。\nwindows直接到官网下载最新版本即可，linux、mac执行如下命令\n清除npm缓存\nnpm cache clean -f\n安装n模块\nnpm install -g n\n升级node.js到最新稳定版\nn stable\n上传到github 修改hexo安装目录下的_config.yml文件：\n1 2 3 4 deploy: type: git repo: https://github.com/ayanamiq/ayanamiq.github.io branch: master 注意：\nrepo是在github上创建好的仓库地址，仓库名字必须是username.github.io key和后面value之间必须有空格。 先安装：\nnpm install hexo-deployer-git --save\n这样才能将你写好的文章部署到github服务器上并让别人浏览到。\n初始化本地git仓库：\ngit init\n设置用户名:\ngit config --global user.name \"王靖尧\"\n设置邮箱：\ngit config --global user.email \"xxx@xxx.com\"\n关联远程仓库：\ngit remote add origin git@github.com:ayanamiq/learngit.git\n执行命令\n1 2 3 hexo clean hexo generate hexo deploy 如果执行第一个指令就报：\nUsage: hexo 原因：我认为是没有生成本地服务\n解决：执行指令\n$ npm install hexo-server --save\n还是不行…为啥呢？\n因为指令必须在hexo的安装目录下执行！！！\n注意deploy的过程中要输入你github的username和password\n然后打开：\nhttps://ayanamiq.github.io/\n就可以看到刚才在本地一样访问\nhttp://localhost:4000\n一样的页面了\n坑：这里在deploy的时候报错了。\nHttpRequestException encountered\n问题：Github 禁用了TLS v1.0 and v1.1，必须更新Windows的git凭证管理器\n下载并安装第一个GCMW-1.18.3.exe文件(请注意版本迭代)。\n然后再deploy就可以了。\n修改及配置主题 直接去github看hexo的最新内容\n一定要去github下载最新版本。\n切换主题 根目录配置文件_config.yml\n1 theme: landscape //默认主题 将landscape改成next\n切换主题样式 主题配置文件_config.yml\n1 2 3 4 5 # Schemes #scheme: Muse scheme: Mist #scheme: Pisces #scheme: Gemini 设置Menu 默认只有两个首页和归档，还可以添加关于、标签、搜索\n根目录-\u003ethemes-\u003enext\n通过如上路径找到_config.yml，在文件中搜索menu。\n1 2 3 4 5 6 7 8 9 menu: home: / || fa fa-home #about: /about/ || fa fa-user tags: /tags/ || fa fa-tags #categories: /categories/ || fa fa-th archives: /archives/ || fa fa-archive #schedule: /schedule/ || fa fa-calendar #sitemap: /sitemap.xml || fa fa-sitemap #commonweal: /404/ || fa fa-heartbeat 去掉注释即可显示对应标签。\n需要注意：tags、about、categories等标签，需要通过hexo指令单独创建后才能显示。\n底部隐藏由Hexo强力驱动、主题–NexT.Mist 主题_config.yml中搜索power和theme，将下边的enable和version都改成false\n更改底部图标 在这找到喜欢的图标\n主题_config.yml中搜索footer，找到下面的icon，替换成自己想要的。\n推荐snowflake-o和heart\n修改动画速度 themes/next/source/js/src/motion.js\n打开上边的js，搜索duration，动画速度，值越大速度越慢。\n默认的都是200，建议修改为100，值太低会显得太突兀。\n阅读全文 next默认将文章全部现实出来，可以添加阅读全文功能。\n主题_config.yml中搜索auto_excerpt，改为true\n注意：\n6.x版本之后，上述的方法已经不再适用，有几种解决办法。\n方法1：写概述\n1 2 3 4 5 --- title: 让首页显示部分内容 date: 2020-02-23 22:55:10 description: 这是显示在首页的概述，正文内容均会被隐藏。 --- abstract：\n文章的摘要，会显示在博客的列表页，正文会被隐藏\n方法2：文章截断\n在需要截断的地方加入：\nnext主题版本升级(5.1.x-6.x) 参考官方文档\n6.x版本仓库地址\n通过新仓库，将源码下载解压到hexo的thems文件夹下，将之改名为next-reloaded\n注意：之前的next文件夹不要删除，里面还留了很多需要的配置，而且如果新的主题出现问题，还可以及时切换回就版本。\n在Hexo的_config.yml中配置新的主题：\ntheme: next-reloaded\n更新语言配置：\n从 v6.0.3版本起，zh-Hans改名为zh-CN，新版本需要显式修改_config.xml里的language配置，否则语言显示不正确。\n然后可以参照之前配置好的next配置文件_config.xml，来配置新的_config.xml。\n写文章 hexo new 'blogName'\n其他指令参考官方文档\n然后可以在’source/_posts’下看到新建的文章了，生成的是.md文件，推荐使用markdown编译器。\nmarkdown编译器有一堆，比较有名的是markdownPad，但是我懒，还是直接用nodePad++好了。\n1.安装MarkdownViewer++\n最近发现新版的nodepad 7.6.2，新增了plugins admin即插件中心,搜索markdown，选中markdownViewer++，点击右侧的install，等待nodepad++重启就安装好了。\n备用方案：\n自行安装plugin manager\n下载对应自己NotePad版本的安装包，解压后得到两个文件夹，plugins和updater，\n分别将文件夹中的文件粘贴到nodePad++安装路径下的plugins和updater文件夹下，\n然后重启NotePad，就会在插件一栏的下面看到plugin manager，打开，找到MarkdownViewer++，\n选择右下角的install，安装完之后根据提示重启。\n2.导入自定义语言格式\n为了设置符合markdown语言的显示效果，需要下载Markdown语言格式的xml配置文件\n下载之后解压缩，然后打开NotePad，选择语言-\u003e自定义语言格式-\u003e导入-\u003e选择到刚才解压的文件夹的四个theme文件夹中的任意一个，建议选择default，因为nodePad默认就是白底的，其他几个太扎眼。\n添加“分类”选项 进入博客所在文件夹，打开gitbush，执行命令\n$ hexo new page categories\n成功后会提示：\nINFO Created: ~/Documents/blog/source/categories/index.md\n根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：\n1 2 3 4 --- title: 文章分类 date: 2017-05-27 13:47:40 --- 添加type: “categories\"到内容中，添加后是这样的：\n1 2 3 4 5 --- title: 文章分类 date: 2019-05-27 13:47:40 type: \"categories\" --- 给文章添加“categories”属性 打开需要添加分类的文章，为其添加categories属性。\n1 2 3 4 5 --- title: java基础 date: 2018-12-31 12:12:57 categories: - java --- 注意：hexo一篇文章只能属于一个分类\n至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。\n当然，只有添加了categories: xxx的文章才会被收录到首页的“分类”中。\n创建“标签”选项 进入博客所在文件夹，打开gitbush,执行命令\n$ hexo new page tags\n成功后会提示：\nINFO Created: ~/Documents/blog/source/tags/index.md\n根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：\n1 2 3 4 --- title: tags date: 2020-08-05 17:45:59 --- 在date下面添加一行\n1 2 3 4 5 --- title: tags date: 2020-08-05 17:45:59 type: \"tags\" --- 保存并关闭文件。\n给文章添加“tags”属性 打开需要添加标签的文章，为其添加tags属性。\n1 2 3 4 5 6 7 8 9 --- title: java基础 date: 2017-05-26 12:12:57 categories: - java基础 tags: - java - 基础 --- 至此，成功给文章添加分类，点击首页的“标签”可以看到该标签下的所有文章。\n当然，只有添加了tags: xxx的文章才会被收录到首页的“标签”中。\n细心的朋友可能已经发现，这两个的设置几乎一模一样！是的，没错，思路都是一样的。\n所以我们可以打开scaffolds/post.md文件，在tages:上面加入categories:,\n保存后，之后执行hexo new 文章名命令生成的文件，页面里就有categories:项了。\nscaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。\n添加about标签 hexo new page 'about'\n在安装位置下的source文件夹下会有about文件夹，打开，编辑里面的index.md\n引用图片 总体来说有两种引用方式：\n公网图片地址 将图片引入项目内，使用相对路径 公网图片地址总是不可靠的，不定哪会就失效了，又没有自己的服务器。\n可行的办法：\n把图片上传到新浪图床 在github新建一个仓库，专门用来存放图片。 我采用另外一种办法，将图片引入项目内：\n修改项目的_config.yml\npost_asset_folder:true\nHexo 提供了一种更方便管理 Asset 的设定：post_asset_folder\n当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，便可以更方便的使用资源。\n在hexo的目录下执行\nnpm install https://github.com/CodeFalling/hexo-asset-image --save\n需要等待一段时间\n完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。结构如下：\n1 2 3 4 5 本地图片测试 ├── apppicker.jpg ├── logo.jpg └── rules.jpg 本地图片测试.md 这样的目录结构（目录名和文章名一致），只要使用![logo](本地图片测试/logo.jpg)就可以插入图片。\n生成的结构为\n1 2 3 4 5 public/2016/3/9/本地图片测试 ├── apppicker.jpg ├── index.html ├── logo.jpg └── rules.jpg 同时，生成的 html 是\n而不是\n多台电脑操作hexo博客 多台电脑操作hexo\n目的：在公司和家里都可以写博客。\n思路：git分支\nhexo生成的静态博客文件默认放在master分支上。\nhexo的源文件（部署环境文件）可以都放在hexo分支上（可以新创建一个hexo分支），换新电脑时，直接：\ngit clone git@github.com:ayanamiq/ayanamiq.github.io.git\nhexo搭建博客原理 参考hexo本机安装目录结构：\n1 2 3 4 5 6 7 8 .deploy_git：上传到github的文件 node_modules：hexo需要的模块，不需要上传github public：生成的静态文件 scaffolds：hexo new 'name' 时的配置文件 source：博文的.md文件 themes：主题文件 _config.yml：全局配置文件 package.json：记录hexo需要的包信息 hexo帮助把博客发送到github，同时把md文件转换成网页文件。\nhexo目录下的文件和github上的文件是不同的，public文件夹的文件通过hexo d上传到github去了，其他的文件则留在本地目录下。\n对username.github.io仓库新建hexo分支，并克隆 在Github的username.github.io仓库上新建一个hexo分支，然后将该分支设为默认分支。\nSettings-\u003eBranches-\u003eDefault branch中将默认分支设为hexo，save保存。\n然后将该仓库克隆到本地：\ngit clone git@github.com:ayanamiq/ayanamiq.github.io.git\nclone完成后，在blog目录使用git branch，查看当前所在分支，应该是新建的分支hexo。\n注意blog目录在clone下来目录的下一层。\n将本地博客的部署文件拷贝进刚才拉下来的分支文件目录 将本地博客的部署文件（Hexo目录下的全部文件）全部拷贝进刚才拉下来的分支文件目录中去。\n接下来，进入hexo分支文件目录下，将该目录下的一些文件提交到hexo分支：\nscaffolds、source、themes、package.json、node_modules、_config.yml\n提交之前需注意：\n将themes目录以内中的主题的.git目录删除（如果有），因为一个git仓库中不能包含另一个git仓库，提交主题文件夹会失败。 可能有人会问，删除了themes目录中的.git不就不能git pull更新主题了吗，很简单，需要更新主题时在另一个地方git clone下来该主题的最新版本，然后将内容拷到当前主题目录即可。 提交hexo分支 依次执行\ngit add .\ngit commit -m 'back up hexo files'\ngit push\n即可将博客的hexo部署环境提交到GitHub个人仓库的xxx分支。现在可以在GitHub上的username.github.io仓库看到两个分支的差异了。\nmaster分支和 hexo 分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问。\nhexo 分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！\n在新电脑上执行下列操作： 至此，博客已经可以在其他电脑上进行同步更新和维护了。 将新电脑的生成的ssh key添加到GitHub账户上 在新电脑上克隆username.github.io仓库的xxx分支到本地，此时本地git仓库处于xxx分支：\ngit clone git@github.com:ayanamiq/ayanamiq.github.io.git 切换到username.github.io目录，执行npm install\n(由于仓库有一个.gitignore文件，里面默认是忽略掉 node_modules文件夹的，也就是说仓库的hexo分支并没有存储该目录(也不需要)，所以需要install) 在新电脑上安装hexo命令\nnpm install -g hexo-cli\n注意：linux安装hexo后，还需要把hexo的命令添加到全局，否则hexo的指令是无法使用的。\nsudo ln -s /home/wjy/install/node-v10.15.3-linux-x64/lib/node_modules/hexo-cli/bin/hexo /usr/local/bin/hexo 到这里了就可以开始在新的电脑上写博客了！\n编辑、撰写文章 依次执行git add .、git commit -m 'some change'、git push指令，保证 hexo 分支版本最新 执行hexo d -g指令（在此之前，有时可能需要执行hexo clean），完成后就会发现，最新改动已经更新到master分支了，两个分支互不干扰！ 如果使用了algolia，还需要在新电脑上安装并配置API-KEY\n1 2 3 npm install --save hexo-algolia export HEXO_ALGOLIA_INDEXING_KEY=你的API Key hexo algolia 回到之前的电脑上更新并提交博客 注：每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先git pull。\n按照之前的方法写自己博客，然后将目录切换下username.github.io下，此时需要安装一下npm install，最后执行hexo d -g即可提交成功。\n其他参考\n参考\n使用LeanCloud统计文章访问次数 LeanCloud官网\n注册\n登录\n验证邮箱\n创建应用-选择开发板\n注：开发版免费使用，但是有请求次数限制：\n总请求数不超过每日 30,000 次\n云端并发线程数低于 3 个\n无自动备份\n点击存储，进入到控制台页面\n创建class，名字必须是Counter，其他全部默认，点击创建class\n点击左侧设置–应用key，可以看到自己的App ID,App Key\n找到next主题的_config.yml文件，搜索leancloud_visitors，enable改为true，然后写上LeanCloud的App ID,App Key\n设置安全域名：设置–安全中心–Web安全域名，输入自己hexo博客地址的线上域名\n不蒜子统计访问人数、访问总量 不蒜子官网\n找到next主题的_config.yml文件，搜索busuanzi_count 将配置做如下更改 1 2 3 4 5 6 7 8 9 10 11 12 13 14 # count values only if the other configs are false enable: true # custom uv span for the whole site site_uv: true site_uv_header: 访问人数 site_uv_footer: 次 # custom pv span for the whole site site_pv: true site_pv_header: 访问总量 site_pv_footer: 次 # custom pv span for one page only page_pv: true page_pv_header: 浏览 page_pv_footer: 次 不蒜子统计无法显示问题 原因：不蒜子的域名过期\n解决：\n/theme/next/layout/_third-party/analytics/busuanzi-counter.swig\n按照上边路径找到该文件，修改域名为：\nhttps://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js\nNexT主题的搜索功能 官方文档\n添加百度/谷歌/本地 自定义站点内容搜索\n安装 hexo-generator-searchdb，在站点的根目录下执行以下命令：\nnpm install hexo-generator-searchdb --save\n编辑 站点配置文件，新增以下内容到任意位置：\n1 2 3 4 5 6 7 search: path: search.xml field: post # 是否包含文章内容，如果为false，则只搜索文件标题 content: true format: html limit: 10000 编辑 主题配置文件，启用本地搜索功能： 1 2 3 # Local search local_search: enable: true 添加algolia搜索 目前版本5.1.4已经集成algolia搜索，只需在next主题的配置文件中修改即可。\n但是首先需要到官网注册\n注册成功后，进入到hashboard，点击左侧的Indices 点击create index，名字随便起。 点击左侧的API keys，在根目录的站点配置文件_config.yml中加入如下配置，参照官网中的各种key值 1 2 3 4 5 6 7 8 9 10 11 12 13 #添加搜索 algolia: applicationID: '你的applicationID' apiKey: '你的apiKey' adminApiKey: '你的adminApiKey' indexName: '新建的index名字' chunkSize: 5000 fields: - title - slug - path - content:strip 注意缩进！注意缩进！注意缩进！\n在Hexo工程根目录下执行npm install hexo-algolia --save 执行hexo algolia 更新索引，这一步会把自己站点的索引数据上传到Algolia，如果上传成功可以在官网看到自己站点的索引数据。 启用配置搜索功能\n修改主题配置文件，在其中找到algolia_search属性，将其enable子属性改为true，然后再看其labels子属性，修改相应的提示文本，使之更加适合自己的风格 1 2 3 input_placeholder: 输入关键字 hits_empty: \"没有找到关于 ${query} 的文章\" hits_stats: \"${hits} 相关记录，共耗时 ${time} ms\" 最后，每次进行更新、删除文章等操作，都需要在提交前执行\nhexo algolia\n更新索引。\nnext主题升级6.0导致的问题 next6.0之后，algolia需要其他配置\n还有其他问题，如:\n1 2 3 4 5 6 7 8 9 10 11 Refused to apply style from 'http://localhost:4000/lib/font-awesome/css/font-awesome.min.css?v=4.6.2' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled. localhost/:1 Refused to apply style from 'http://localhost:4000/lib/algolia-instant-search/instantsearch.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled. (index):2462 GET http://localhost:4000/lib/algolia-instant-search/instantsearch.min.js net::ERR_ABORTED 404 (Not Found) (index):1 Refused to apply style from 'http://localhost:4000/lib/algolia-instant-search/instantsearch.min.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled. (index):2462 GET http://localhost:4000/lib/algolia-instant-search/instantsearch.min.js net::ERR_ABORTED 404 (Not Found) algolia-search.js?v=7.1.0:14 Uncaught ReferenceError: instantsearch is not defined at HTMLDocument. (algolia-search.js?v=7.1.0:14) at j (index.js?v=2.1.3:2) at Object.fireWith [as resolveWith] (index.js?v=2.1.3:2) at Function.ready (index.js?v=2.1.3:2) at HTMLDocument.I (index.js?v=2.1.3:2) 参考官网解决问题\n其他问题 数据上传到algolia后，发现搜索出来的文章地址是：\nyoursite.com/2018/12/20/map\n点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。\n解决：\n找到根目录的站点配置文件_config.yml，将url：yoursite.com，替换成自己的站点地址。\nPlease provide an Algolia index name in your hexo _config.yml flle\n根目录的站点配置文件中加入的内容 apiKey/adminApiKey 等等没有缩进，然后一直报上面这个错误…注意缩进,一个tab或四个空格\n报错：\n1 2 ERROR [Algolia] Please set an HEXO_ALGOLIA_INDEXING_KEY environment variable t o enable content indexing. ERROR \u003e\u003e Read https://npmjs.com/hexo-algolia#api-key for more informations. 在执行hexo algolia前，需要先在git bush下执行：export HEXO_ALGOLIA_INDEXING_KEY=你的API Key\n就是你的Search-Only API Key，必须在git bush下执行。但该方法设置的环境变量为临时变量，重启电脑就会失效。\n右键点击我的电脑 \u003e 属性 \u003e 高级系统设置 \u003e 环境变量\n添加环境变量名为 HEXO_ALGOLIA_INDEXING_KEY，值为 Algolia admin key，添加后点击确认，重启电脑后新增的环境变量生效。\n需要注意 文章名不要使用特殊符号，如冒号、下划线、逗号、问号、大于小于( /、\\、？、*、:、\"\"、| )等等\n因为创建文章时，会创建同名的文件夹，linux文件夹、文件可以使用一些特殊符号，而windows中就不可以，这样会造成：在linux(我的公司电脑)写的文章，windows(家中电脑)无法拉取代码，因为windows无法创建带特殊符号的文件夹、文件，一定要注意。\n在文章中引入视频 1 2 3 {% raw %} {% endraw%} 解决github提交commit,contributions不统计显示绿色的问题 最近在提交博文的收，发现提交之后github上没有绿色小方块。\n我找到仓库的递交记录，发现竟然是两个账号提交的，此时想到应该是git设置用户名和邮箱的问题。\n先查看现在的用户名和邮箱：\ngit config user.name\ngit config user.email\n发现是和github的账号不对应，于是重新设置邮箱：\ngit config --global user.name \"xxx\"\ngit config --global user.email \"xxx\"\n然后提交一次试试，发现github可以显示contributions了。\n那么之前错误的如何补救呢？\ngithub官方给出了解决方案\n打开gitbash，克隆仓库\ngit clone --bare https://github.com/user/repo.git\n进入仓库\ncd repo.git 在仓库的根目录创建一个脚本文件1.sh，并替换头部的三个变量为自己的。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 #!/bin/sh git filter-branch --env-filter ' OLD_EMAIL=\"your-old-email@example.com\" CORRECT_NAME=\"Your Correct Name\" CORRECT_EMAIL=\"your-correct-email@example.com\" if [ \"$GIT_COMMITTER_EMAIL\" = \"$OLD_EMAIL\" ] then export GIT_COMMITTER_NAME=\"$CORRECT_NAME\" export GIT_COMMITTER_EMAIL=\"$CORRECT_EMAIL\" fi if [ \"$GIT_AUTHOR_EMAIL\" = \"$OLD_EMAIL\" ] then export GIT_AUTHOR_NAME=\"$CORRECT_NAME\" export GIT_AUTHOR_EMAIL=\"$CORRECT_EMAIL\" fi ' --tag-name-filter cat -- --branches --tags 执行脚本\n./1.sh\n执行过程中会显示\nRewrite f8da63b882603d90c7f9c6286494bb0d20289a50 (125/258) (42 seconds passed, remaining 44 predicted)\n在github的仓库页面查看记录是否修改过来了。\n将更正的历史记录推送到GitHub：\ngit push --force --tags origin 'refs/heads/*'\n然后将临时克隆的仓库删除即可。\n如果不知道错误的邮箱是什么，可以通过git log查看仓库的提交记录，记录了每一次的提交人和邮箱，一直往下翻就行了。\nhexo从github迁移到gitee 国内访问github的pages实在是拉稀，不得不转到国内的代码仓库。\n公司的项目都在coding上，想体验点新的，于是想到了gitee。\n总体步骤和部署到github类似。\n在gitee创建存放博客的仓库\n如果你想你的 pages 首页访问地址不带二级目录，如ipvb.gitee.io，你需要建立一个与自己个性地址同名的仓库，如 https://gitee.com/ipvb 这个用户，想要创建一个自己的站点，但不想以子目录的方式访问，想以ipvb.gitee.io直接访问，那么他就可以创建一个名字为ipvb的仓库 https://gitee.com/ipvb/ipvb 部署完成后，就可以以 https://ipvb.gitee.io 进行访问了。 修改项目根目录_config.yml文件，修改repo的值 1 2 3 4 deploy: type: git repo: https://gitee.com/jingyao066/jingyao066.git branch: master 执行命令 1 2 hexo cl hexo d -g 然后会让输入gitee的用户名和密码，输入完成后就可以在gitee上看到我们上传的代码了。\n如果在hexo d -g的时候报错：\nERROR Deployer not found: git\n就是没有安装deployer，那么安装它：\nnpm install --save hexo-deployer-git\n在仓库上方的bar找到服务，点击gitee pages，然后根据提示开启Gitee Pages 服务。\n需要注意，仓库中起码有一个index.html，才可以开启pages服务，否则是找不到pages选项的。\n根据提示访问：\nhttps://jingyao066.gitee.io\n访问成功。 想要多端操作，参考前边写的\ngitee也拉稀了，最近在部署的时候，提示这个：\n1 2 部署失败 错误信息: page/12/index.html 包含违禁违规内容，请排查调整后再行重试，谢谢！ hexo文章加密 hexo插件中心\ngithub\n安装：\nnpm install --save hexo-blog-encrypt\n或：\nyarn add hexo-blog-encrypt（需要安装Yarn）\n首先需要在站点配置文件_config.yml中增加配置：\n1 2 3 4 5 6 7 8 9 10 11 #文章加密 encrypt: enable: true message: 您好, 这里需要密码。 abstract: 这里有东西被加密了，需要输入密码查看。 template: {{hbeMessage}} wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试 wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容 tags: - {name: tagName, password: 密码A} - {name: tagName, password: 密码B} 这样，对于每一篇需要加密的文章就不必都在在头部添加 abstract 和 message 字段了，脚本会自动添加默认的内容填充。\n然后在文档头部加上字段：\npassword：\n本文章的密码\nmessage：\n这个是博客查看时，密码输入框上面的描述性文字\nabstract：\n文章的概述，因为文章加密了，也就失效了，所以需要用这个字段来增加概述。\n1 2 3 4 5 6 7 8 9 title: Hello World tags: - 加密文章tag date: 2020-03-13 21:12:21 password: wjy abstract: 这里有东西被加密了，需要输入密码查看哦。 message: 您好，这里需要密码。 wrong_pass_message: 抱歉，这个密码看着不太对，请再试试。 wrong_hash_message: 抱歉，这个文章不能被纠正，不过您还是能看看解密后的内容。 参考\n将hexo部署到自己的服务器 gitee pages也不行了\n本站正在进行绿色网络环境改造，服务改造结束前，无法重新开启您的Gitee Pages服务。\n该 Page 服务已被屏蔽（ 存在政治敏感不合规）\n只能自己买服务器了，现在阿里云在搞活动，178元3年，1核2G1M，够用了。\n安装git\nyum install git\n创建git用户\nadduser git\n设置Git用户的密码\npasswd git\n添加新用户 git\nuseradd git\n设置密码\npasswd git\n这步很重要，不切换用户后面会很麻烦\nsu git cd /home/git/\n创建存放项目的目录\nmkdir -p projects/blog 创建git 仓库\nmkdir repos \u0026\u0026 cd repos\n初始化一个git 裸库\ngit init --bare blog.git\n进入git仓库\ncd blog.git/hooks\n创建 hook 钩子函数，输入了内容如下\nvi post-receive\n#!/bin/sh\ngit --work-tree=/home/git/projects/blog --git-dir=/home/git/repos/blog.git checkout -f\n添加完毕后修改权限\nchmod +x post-receive\nexit // 退出到 root 登录\nchown -R git:git /home/git/repos/blog.git // 添加权限\n测试git仓库是否可用\ngit clone git@server_ip:/home/git/repos/blog.git\n如果能把空仓库拉下来，就说明 git 仓库搭建成功了\n建立ssh信任关系，在本地电脑\nssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip\n如果自己电脑没有创建过公钥，那么执行ssh-keygen -t rsa，创建公钥，再执行上边的指令\n测试是否能登录\nssh git@server_ip\n如果不需要密码就能登录服务器，那么成功，否则就问题，仔细检查上边的步骤。\n为了安全起见禁用 git 用户的 shell 登录权限，从而只能用 git clone，git push 等登录\n查看 git-shell 是否在登录方式里面\ncat /etc/shells\n// 查看是否安装\nwhich git-shell\nvim /etc/shells\n在最下边添加上2步显示出来的路径，通常是/usr/bin/git-shell\n修改/etc/passwd中的权限，将原来的\ngit:x:1000:1000::/home/git:/bin/bash\n修改为\ngit:x:1000:1000::/home/git:/usr/bin/git-shell\n此时再尝试ssh登录，则会提示fatal: Interactive git shell is not enabled\n注：如果第二台电脑想要建立ssh信任关系，需要先将/etc/passwd中内容改成\ngit:x:1000:1000::/home/git:/bin/bash\n否则\nssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip\n这一步就会报错。建立了信任关系，再改回来\ngit:x:1000:1000::/home/git:/usr/bin/git-shell\n安装nginx，略，参考文章 linux\n修改nginx配置文件nginx.conf，修改root为刚才创建的文件夹\n1 2 3 4 server{ # root index.html; root /home/git/projects/blog; } 将配置文件顶部的user，后边改为root，然后启动nginx。\n配置本地_config.yml文件的deploy，\nrepo: git@server_ip:/home/git/repos/blog.git\n然后，\nhexo cl\nhexo d -g\n访问浏览器服务器ip，访问成功。\n参考\nhexo多终端 原理：\n多终端，即多台电脑操作hexo。比如：公司电脑和家里电脑。\nhexo有两种文件：\n源文件\n我们编辑的就是hexo的源文件，即xxx.md。这些源文件的位置是：\nhexo根目录\\source\\_posts\n所以只需要用代码仓库同步这些源文件即可。\nhexo根据源文件生成的静态文件\nhexo generate，就会根据我们的.md文件，生成html。\nhexo deploy，就是将这些静态文件推送到远程服务器。\n所以，只需要一个代码仓库（一个master分支即可），就可以实现多端同步了。\n部署的话，分两种情况。\n部署到自己的服务器，直接根据上一小节将hexo部署到自己的服务器操作即可。 如果部署到github的pages服务，还需要在github新建一个仓库，存放部署后的静态文件，然后开启pages服务。 即：\n代码仓库1，\n无论是自建仓库还是github的仓库，用来同步hexo的源文件。使用git push等git命令。\n代码仓库2，\n无论是自建仓库还是github的仓库，用来部署hexo生成的静态文件，使用hexo generate等hexo命令来部署。\nps：当然你想用一个仓库，多个分支也可以。\n另外，如果主题文件夹，也是用git拉下来的，这样会出现仓库嵌套仓库的情况。这时建议删除主题仓库的.git文件夹，就不会影响hexo部署了。\n在本地初始化git仓库\ngit init\n编辑.gitignore，在后面添加/.deploy_git和/public，表示这两个文件夹不用上传到仓库。\n和远程仓库关联，这个仓库存放博客的源文件，（可以用gitee、github、或者自建的仓库）\ngit remote add origin git@仓库地址:/home/git\n添加到缓存区\ngit add .\n提交\ngit commit -m 'hexo 源文件'\n推送更新到远程仓库\ngit push -u origin master\nhexo目录里的文件都推送到了远程仓库，包括我们自己编写的markdown文件。\n新电脑操作步骤：\n拉代码\ngit clone https://gitee.com/jingyao066/hexo_source.git\n以下两个指令，是否需要执行。存疑\ngit fetch –all\ngit reset –hard origin/master\n更新node版本，windows直接官网下载最新版本的安装包，重新安装即可。\n安装cnpm，用cnpm安装hexo，安装需要的插件，如引用图片插件\ncnpm install https://github.com/CodeFalling/hexo-asset-image --save\n建立ssh信任关系\n因为源码仓库和hexo d，不是一个仓库，所以需要分别建立如下两个信任。\n建立和源码仓库的信任，git push时候会提示。 建立hexo d的信任，hexo d -g的时候会提示。 检查hexo命令能否正确执行\nhexo cl \u0026\u0026 hexo g \u0026\u0026 hexo s\n查看本地博客\nlocalhost:4000\n在本地编辑文章，然后执行\ngit add .\ngit commit -m \"更新信息\" 以后每次提交可以直接git push\ngit push -u origin master\n执行hexo部署\nhexo cl\nhexo d -g\n最后：\n无论在哪台电脑编辑markdown，都要先执行\ngit pull\n编辑完成后，先推送源文件\ngit add .\ngit commit -m ‘提交源文件’\ngit push -u origin master（可简写成git push）\n执行hexo部署\nhexo cl\nhexo d -g\n快速重建hexo 需要复制的文件\n根目录 source 文件夹，最重要，所有的markdown文件都在这里 根目录的_config.yml 根目录 themes 文件夹，主题文件 脚本部署，定时部署 在windows合适位置，新建bat脚本：\n拉代码脚本，hexo_pull.bat\n1 2 3 4 5 cd /d D:/hexo git pull origin master pause 推送脚本，hexo_deploy.bat\n1 2 3 4 5 6 7 8 9 10 11 cd /d D:/hexo git pull origin master git add . git commit -m \"add post\" git push --all hexo cl \u0026\u0026 hexo d -g pause 这样，双击脚本就可以拉代码和推送了。\nwindows定时任务 我们需要两个定时任务，上午拉代码，晚上部署代码。\nwin+R，运行taskschd.msc，打开任务计划程序\n创建基本任务-\u003e填写任务名-\u003e选择触发器(选择每天)-\u003e选择每天的执行时间-\u003e启动程序-\u003e选择刚才创建的脚本。\n依次创建两个脚本，早8点拉取代码，晚7点部署代码。\nhexo 升级 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 # 使用淘宝源的 cnpm 替换 npm npm install -g cnpm --registry=https://registry.npm.taobao.org cnpm install -g cnpm # 升级 npm cnpm cache clean -f # 清除 npm 缓存 ===更新 hexo: 进入 blog 目录，执行如下命令=== # 更新 package.json 中的 hexo 及个插件版本 cnpm install -g npm-check # 检查之前安装的插件，都有哪些是可以升级的 cnpm install -g npm-upgrade # 升级系统中的插件 npm-check npm-upgrade # 更新 hexo 及所有插件 cnpm update # 确认 hexo 已经更新 hexo -v ",
   "wordCount" : "12157",
   "inLanguage": "en",
   "datePublished": "2018-11-05T13:54:31Z",
@@ -385,22 +385,22 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><a href="https://hexo.io/zh-cn/docs/">Hexo官网地址</a></p>
-<p>在git和node安装完毕后，即可使用 npm 安装 Hexo
+<p>在git和node安装完毕后，即可使用 npm 安装 Hexo<br>
 <code>cnpm install -g hexo-cli</code></p>
-<p>hexo安装完之后，初始化Hexo，先 cd 到想存放博客文件的父目录
+<p>hexo安装完之后，初始化Hexo，先 cd 到想存放博客文件的父目录<br>
 <code>hexo init &lt;文件夹名&gt;</code></p>
-<p>进入hexo文件夹
+<p>进入hexo文件夹<br>
 <code>cd &lt;文件夹名&gt;</code></p>
-<p>安装npm组件
+<p>安装npm组件<br>
 <code>cnpm install</code></p>
-<p>坑：
-因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令<code>hexo init hexoBlog</code>报错：
-<code>Unexpected end off JSON input while parsing near ...</code>
+<p>坑：<br>
+因为刚开始文件夹的名字写错了，所以直接将hexo初始化的文件夹删掉了。然后再次运行初始化指令<code>hexo init hexoBlog</code>报错：<br>
+<code>Unexpected end off JSON input while parsing near ...</code><br>
 <code>WARN Failed to install dependencies. Please run npm install manually!</code></p>
-<p>解决办法：
-安装指令：
+<p>解决办法：<br>
+安装指令：<br>
 <code>npm install --registry=https://registry.npm.taobao.org --loglevel=silly</code></p>
-<p>清除缓存
+<p>清除缓存<br>
 <code>npm cache clean --force</code></p>
 <h1 id="修改配置文件">修改配置文件<a hidden class="anchor" aria-hidden="true" href="#修改配置文件">#</a></h1>
 <p>执行如下命令</p>
@@ -416,21 +416,21 @@
 </span></span><span style="display:flex;"><span>hexo server
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>注：hexo 3.0把服务器独立成个别模块，需要单独安装：
-<code>npm i hexo-server</code>
-然后打开
-http://localhost:4000
+</div><p>注：hexo 3.0把服务器独立成个别模块，需要单独安装：<br>
+<code>npm i hexo-server</code><br>
+然后打开<br>
+http://localhost:4000<br>
 就可以看到hexo的默认页面了</p>
-<p>重新安装hexo后，执行<code>hexo clean</code>报错：
+<p>重新安装hexo后，执行<code>hexo clean</code>报错：<br>
 <code>(node:17148) ExperimentalWarning: The fs.promises API is experimental</code></p>
-<p>原因：nodejs不是最新版本。
+<p>原因：nodejs不是最新版本。<br>
 解决：更新nodejs版本。</p>
 <p>windows直接到官网下载最新版本即可，linux、mac执行如下命令</p>
-<p>清除npm缓存
+<p>清除npm缓存<br>
 <code>npm cache clean -f</code></p>
-<p>安装n模块
+<p>安装n模块<br>
 <code>npm install -g n</code></p>
-<p>升级node.js到最新稳定版
+<p>升级node.js到最新稳定版<br>
 <code>n stable</code></p>
 <h1 id="上传到github">上传到github<a hidden class="anchor" aria-hidden="true" href="#上传到github">#</a></h1>
 <p>修改hexo安装目录下的_config.yml文件：</p>
@@ -453,16 +453,16 @@ http://localhost:4000
 <li>repo是在github上创建好的仓库地址，仓库名字必须是username.github.io</li>
 <li>key和后面value之间必须有空格。</li>
 </ul>
-<p>先安装：
-<code>npm install hexo-deployer-git --save</code>
+<p>先安装：<br>
+<code>npm install hexo-deployer-git --save</code><br>
 这样才能将你写好的文章部署到github服务器上并让别人浏览到。</p>
-<p>初始化本地git仓库：
+<p>初始化本地git仓库：<br>
 <code>git init</code></p>
-<p>设置用户名:
-<code>git config --global user.name &quot;王靖尧&quot;</code>
-设置邮箱：
-<code>git config --global user.email &quot;xxx@xxx.com&quot;</code>
-关联远程仓库：
+<p>设置用户名:<br>
+<code>git config --global user.name &quot;王靖尧&quot;</code><br>
+设置邮箱：<br>
+<code>git config --global user.email &quot;xxx@xxx.com&quot;</code><br>
+关联远程仓库：<br>
 <code>git remote add origin git@github.com:ayanamiq/learngit.git</code></p>
 <p>执行命令</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -477,26 +477,26 @@ http://localhost:4000
 </span></span><span style="display:flex;"><span>hexo deploy
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果执行第一个指令就报：
-<code>Usage: hexo &lt;command&gt;</code>
-原因：我认为是没有生成本地服务
-解决：执行指令
-<code>$ npm install hexo-server --save</code>
-还是不行&hellip;为啥呢？
+</div><p>如果执行第一个指令就报：<br>
+<code>Usage: hexo &lt;command&gt;</code><br>
+原因：我认为是没有生成本地服务<br>
+解决：执行指令<br>
+<code>$ npm install hexo-server --save</code><br>
+还是不行&hellip;为啥呢？<br>
 因为指令必须在hexo的安装目录下执行！！！</p>
-<p>注意deploy的过程中要输入你github的username和password
-然后打开：
-<a href="https://ayanamiq.github.io/">https://ayanamiq.github.io/</a>
-就可以看到刚才在本地一样访问
-http://localhost:4000
+<p>注意deploy的过程中要输入你github的username和password<br>
+然后打开：<br>
+<a href="https://ayanamiq.github.io/">https://ayanamiq.github.io/</a><br>
+就可以看到刚才在本地一样访问<br>
+http://localhost:4000<br>
 一样的页面了</p>
-<p>坑：这里在deploy的时候报错了。
-<code>HttpRequestException encountered</code>
-问题：Github 禁用了TLS v1.0 and v1.1，必须<a href="https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/">更新Windows的git凭证管理器</a>
-下载并安装第一个GCMW-1.18.3.exe文件(请注意版本迭代)。
+<p>坑：这里在deploy的时候报错了。<br>
+<code>HttpRequestException encountered</code><br>
+问题：Github 禁用了TLS v1.0 and v1.1，必须<a href="https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/">更新Windows的git凭证管理器</a><br>
+下载并安装第一个GCMW-1.18.3.exe文件(请注意版本迭代)。<br>
 然后再deploy就可以了。</p>
 <h1 id="修改及配置主题">修改及配置主题<a hidden class="anchor" aria-hidden="true" href="#修改及配置主题">#</a></h1>
-<p><a href="https://github.com/theme-next/hexo-theme-next">直接去github看hexo的最新内容</a>
+<p><a href="https://github.com/theme-next/hexo-theme-next">直接去github看hexo的最新内容</a><br>
 一定要去github下载最新版本。</p>
 <h2 id="切换主题">切换主题<a hidden class="anchor" aria-hidden="true" href="#切换主题">#</a></h2>
 <p>根目录配置文件_config.yml</p>
@@ -528,8 +528,8 @@ http://localhost:4000
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="设置menu">设置Menu<a hidden class="anchor" aria-hidden="true" href="#设置menu">#</a></h2>
-<p>默认只有两个首页和归档，还可以添加<code>关于、标签、搜索</code>
-<code>根目录-&gt;themes-&gt;next</code>
+<p>默认只有两个首页和归档，还可以添加<code>关于、标签、搜索</code><br>
+<code>根目录-&gt;themes-&gt;next</code><br>
 通过如上路径找到<code>_config.yml</code>，在文件中搜索<code>menu</code>。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -555,22 +555,22 @@ http://localhost:4000
 </span></span><span style="display:flex;"><span>  #commonweal: /404/ || fa fa-heartbeat
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>去掉注释即可显示对应标签。
+</div><p>去掉注释即可显示对应标签。<br>
 需要注意：tags、about、categories等标签，需要通过hexo指令单独创建后才能显示。</p>
 <h2 id="底部隐藏由hexo强力驱动主题--nextmist">底部隐藏由Hexo强力驱动、主题&ndash;NexT.Mist<a hidden class="anchor" aria-hidden="true" href="#底部隐藏由hexo强力驱动主题--nextmist">#</a></h2>
 <p>主题_config.yml中搜索<code>power</code>和<code>theme</code>，将下边的<code>enable</code>和<code>version</code>都改成false</p>
 <h2 id="更改底部图标">更改底部图标<a hidden class="anchor" aria-hidden="true" href="#更改底部图标">#</a></h2>
-<p><a href="https://fontawesome.com/v4.7.0/icons/">在这找到喜欢的图标</a>
-主题_config.yml中搜索<code>footer</code>，找到下面的icon，替换成自己想要的。
+<p><a href="https://fontawesome.com/v4.7.0/icons/">在这找到喜欢的图标</a><br>
+主题_config.yml中搜索<code>footer</code>，找到下面的icon，替换成自己想要的。<br>
 推荐<code>snowflake-o</code>和<code>heart</code></p>
 <h2 id="修改动画速度">修改动画速度<a hidden class="anchor" aria-hidden="true" href="#修改动画速度">#</a></h2>
-<p>themes/next/source/js/src/motion.js
-打开上边的js，搜索<code>duration</code>，动画速度，值越大速度越慢。
+<p>themes/next/source/js/src/motion.js<br>
+打开上边的js，搜索<code>duration</code>，动画速度，值越大速度越慢。<br>
 默认的都是200，建议修改为100，值太低会显得太突兀。</p>
 <h2 id="阅读全文">阅读全文<a hidden class="anchor" aria-hidden="true" href="#阅读全文">#</a></h2>
-<p>next默认将文章全部现实出来，可以添加阅读全文功能。
+<p>next默认将文章全部现实出来，可以添加阅读全文功能。<br>
 主题_config.yml中搜索<code>auto_excerpt</code>，改为true</p>
-<p>注意：
+<p>注意：<br>
 6.x版本之后，上述的方法已经不再适用，有几种解决办法。</p>
 <p>方法1：写概述</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -589,41 +589,41 @@ http://localhost:4000
 </span></span><span style="display:flex;"><span>---
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>abstract：
+</div><p>abstract：<br>
 文章的摘要，会显示在博客的列表页，正文会被隐藏</p>
-<p>方法2：文章截断
-在需要截断的地方加入：
+<p>方法2：文章截断<br>
+在需要截断的地方加入：<br>
 <code>&lt;!--more--&gt;</code></p>
 <h2 id="next主题版本升级51x-6x">next主题版本升级(5.1.x-6.x)<a hidden class="anchor" aria-hidden="true" href="#next主题版本升级51x-6x">#</a></h2>
-<p><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/UPDATE-FROM-5.1.X.md">参考官方文档</a>
-<a href="https://github.com/theme-next/hexo-theme-next">6.x版本仓库地址</a>
-通过新仓库，将源码下载解压到hexo的thems文件夹下，将之改名为<code>next-reloaded</code>
+<p><a href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/UPDATE-FROM-5.1.X.md">参考官方文档</a><br>
+<a href="https://github.com/theme-next/hexo-theme-next">6.x版本仓库地址</a><br>
+通过新仓库，将源码下载解压到hexo的thems文件夹下，将之改名为<code>next-reloaded</code><br>
 注意：之前的next文件夹不要删除，里面还留了很多需要的配置，而且如果新的主题出现问题，还可以及时切换回就版本。</p>
-<p>在Hexo的_config.yml中配置新的主题：
+<p>在Hexo的_config.yml中配置新的主题：<br>
 <code>theme: next-reloaded</code></p>
-<p>更新语言配置：
-从 v6.0.3版本起，zh-Hans改名为zh-CN，新版本需要显式修改_config.xml里的language配置，否则语言显示不正确。
+<p>更新语言配置：<br>
+从 v6.0.3版本起，zh-Hans改名为zh-CN，新版本需要显式修改_config.xml里的language配置，否则语言显示不正确。<br>
 然后可以参照之前配置好的next配置文件_config.xml，来配置新的_config.xml。</p>
 <h1 id="写文章">写文章<a hidden class="anchor" aria-hidden="true" href="#写文章">#</a></h1>
-<p><code>hexo new 'blogName'</code>
+<p><code>hexo new 'blogName'</code><br>
 <a href="https://hexo.io/zh-cn/docs/writing">其他指令参考官方文档</a></p>
-<p>然后可以在&rsquo;source/_posts&rsquo;下看到新建的文章了，生成的是.md文件，推荐使用markdown编译器。
+<p>然后可以在&rsquo;source/_posts&rsquo;下看到新建的文章了，生成的是.md文件，推荐使用markdown编译器。<br>
 markdown编译器有一堆，比较有名的是markdownPad，但是我懒，还是直接用nodePad++好了。</p>
-<p>1.安装MarkdownViewer++
+<p>1.安装MarkdownViewer++<br>
 最近发现新版的nodepad 7.6.2，新增了plugins admin即插件中心,搜索markdown，选中markdownViewer++，点击右侧的install，等待nodepad++重启就安装好了。</p>
-<p>备用方案：
-<a href="https://github.com/bruderstein/nppPluginManager/releases">自行安装plugin manager</a>
-下载对应自己NotePad版本的安装包，解压后得到两个文件夹，plugins和updater，
-分别将文件夹中的文件粘贴到nodePad++安装路径下的plugins和updater文件夹下，
-然后重启NotePad，就会在插件一栏的下面看到plugin manager，打开，找到MarkdownViewer++，
+<p>备用方案：<br>
+<a href="https://github.com/bruderstein/nppPluginManager/releases">自行安装plugin manager</a><br>
+下载对应自己NotePad版本的安装包，解压后得到两个文件夹，plugins和updater，<br>
+分别将文件夹中的文件粘贴到nodePad++安装路径下的plugins和updater文件夹下，<br>
+然后重启NotePad，就会在插件一栏的下面看到plugin manager，打开，找到MarkdownViewer++，<br>
 选择右下角的install，安装完之后根据提示重启。</p>
-<p>2.导入自定义语言格式
-为了设置符合markdown语言的显示效果，需要<a href="https://github.com/Edditoria/markdown-plus-plus">下载Markdown语言格式的xml配置文件</a>
+<p>2.导入自定义语言格式<br>
+为了设置符合markdown语言的显示效果，需要<a href="https://github.com/Edditoria/markdown-plus-plus">下载Markdown语言格式的xml配置文件</a><br>
 下载之后解压缩，然后打开NotePad，选择语言-&gt;自定义语言格式-&gt;导入-&gt;选择到刚才解压的文件夹的四个theme文件夹中的任意一个，建议选择default，因为nodePad默认就是白底的，其他几个太扎眼。</p>
 <h1 id="添加分类选项">添加“分类”选项<a hidden class="anchor" aria-hidden="true" href="#添加分类选项">#</a></h1>
-<p>进入博客所在文件夹，打开gitbush，执行命令
-<code>$ hexo new page categories</code>
-成功后会提示：
+<p>进入博客所在文件夹，打开gitbush，执行命令<br>
+<code>$ hexo new page categories</code><br>
+成功后会提示：<br>
 <code>INFO Created: ~/Documents/blog/source/categories/index.md</code></p>
 <p>根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -675,14 +675,14 @@ markdown编译器有一堆，比较有名的是markdownPad，但是我懒，还�
 </span></span><span style="display:flex;"><span>---
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>注意：hexo一篇文章只能属于一个分类
-至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。
+</div><p>注意：hexo一篇文章只能属于一个分类<br>
+至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。<br>
 当然，只有添加了categories: xxx的文章才会被收录到首页的“分类”中。</p>
 <h1 id="创建标签选项">创建“标签”选项<a hidden class="anchor" aria-hidden="true" href="#创建标签选项">#</a></h1>
-<p>进入博客所在文件夹，打开gitbush,执行命令
-<code>$ hexo new page tags</code>
-成功后会提示：
-<code>INFO Created: ~/Documents/blog/source/tags/index.md</code>
+<p>进入博客所在文件夹，打开gitbush,执行命令<br>
+<code>$ hexo new page tags</code><br>
+成功后会提示：<br>
+<code>INFO Created: ~/Documents/blog/source/tags/index.md</code><br>
 根据上面的路径，找到index.md这个文件，打开后默认内容是这样的：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -742,14 +742,14 @@ markdown编译器有一堆，比较有名的是markdownPad，但是我懒，还�
 </span></span><span style="display:flex;"><span>---
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>至此，成功给文章添加分类，点击首页的“标签”可以看到该标签下的所有文章。
+</div><p>至此，成功给文章添加分类，点击首页的“标签”可以看到该标签下的所有文章。<br>
 当然，只有添加了tags: xxx的文章才会被收录到首页的“标签”中。</p>
-<p>细心的朋友可能已经发现，这两个的设置几乎一模一样！是的，没错，思路都是一样的。
-所以我们可以打开scaffolds/post.md文件，在tages:上面加入categories:,
+<p>细心的朋友可能已经发现，这两个的设置几乎一模一样！是的，没错，思路都是一样的。<br>
+所以我们可以打开scaffolds/post.md文件，在tages:上面加入categories:,<br>
 保存后，之后执行hexo new 文章名命令生成的文件，页面里就有categories:项了。</p>
 <p>scaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。</p>
 <h1 id="添加about标签">添加about标签<a hidden class="anchor" aria-hidden="true" href="#添加about标签">#</a></h1>
-<p><code>hexo new page 'about'</code>
+<p><code>hexo new page 'about'</code><br>
 在安装位置下的source文件夹下会有about文件夹，打开，编辑里面的index.md</p>
 <h1 id="引用图片">引用图片<a hidden class="anchor" aria-hidden="true" href="#引用图片">#</a></h1>
 <p>总体来说有两种引用方式：</p>
@@ -757,7 +757,7 @@ markdown编译器有一堆，比较有名的是markdownPad，但是我懒，还�
 <li>公网图片地址</li>
 <li>将图片引入项目内，使用相对路径</li>
 </ul>
-<p>公网图片地址总是不可靠的，不定哪会就失效了，又没有自己的服务器。
+<p>公网图片地址总是不可靠的，不定哪会就失效了，又没有自己的服务器。<br>
 可行的办法：</p>
 <ul>
 <li>把图片上传到新浪图床</li>
@@ -766,14 +766,14 @@ markdown编译器有一堆，比较有名的是markdownPad，但是我懒，还�
 <p>我采用另外一种办法，将图片引入项目内：</p>
 <ul>
 <li>
-<p>修改项目的_config.yml
-<code>post_asset_folder:true</code>
-Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder
+<p>修改项目的_config.yml<br>
+<code>post_asset_folder:true</code><br>
+Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder<br>
 当您设置post_asset_folder为true参数后，在建立文件时，Hexo会自动建立一个与文章同名的文件夹，您可以把与该文章相关的所有资源都放到那个文件夹，如此一来，便可以更方便的使用资源。</p>
 </li>
 <li>
-<p>在hexo的目录下执行
-<code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code>
+<p>在hexo的目录下执行<br>
+<code>npm install https://github.com/CodeFalling/hexo-asset-image --save</code><br>
 需要等待一段时间</p>
 </li>
 <li>
@@ -796,7 +796,7 @@ Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder
 </span></span><span style="display:flex;"><span>本地图片测试.md
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这样的目录结构（目录名和文章名一致），只要使用<code>![logo](本地图片测试/logo.jpg)</code>就可以插入图片。
+</div><p>这样的目录结构（目录名和文章名一致），只要使用<code>![logo](本地图片测试/logo.jpg)</code>就可以插入图片。<br>
 生成的结构为</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -814,16 +814,16 @@ Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder
 </span></span><span style="display:flex;"><span>└── rules.jpg
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>同时，生成的 html 是
+</div><p>同时，生成的 html 是<br>
 <code>&lt;img src=&quot;/2016/3/9/本地图片测试/logo.jpg&quot; alt=&quot;logo&quot;&gt;</code></p>
-<p>而不是
+<p>而不是<br>
 <code>&lt;img src=&quot;本地图片测试/logo.jpg&quot; alt=&quot;logo&quot;&gt;</code></p>
 <h1 id="多台电脑操作hexo博客">多台电脑操作hexo博客<a hidden class="anchor" aria-hidden="true" href="#多台电脑操作hexo博客">#</a></h1>
-<p><span id="jump">多台电脑操作hexo</span>
-目的：在公司和家里都可以写博客。
-思路：git分支
-hexo生成的静态博客文件默认放在master分支上。
-hexo的源文件（部署环境文件）可以都放在hexo分支上（可以新创建一个hexo分支），换新电脑时，直接：
+<p><span id="jump">多台电脑操作hexo</span><br>
+目的：在公司和家里都可以写博客。<br>
+思路：git分支<br>
+hexo生成的静态博客文件默认放在master分支上。<br>
+hexo的源文件（部署环境文件）可以都放在hexo分支上（可以新创建一个hexo分支），换新电脑时，直接：<br>
 <code>git clone git@github.com:ayanamiq/ayanamiq.github.io.git</code></p>
 <h2 id="hexo搭建博客原理">hexo搭建博客原理<a hidden class="anchor" aria-hidden="true" href="#hexo搭建博客原理">#</a></h2>
 <p>参考hexo本机安装目录结构：</p>
@@ -849,18 +849,18 @@ hexo的源文件（部署环境文件）可以都放在hexo分支上（可以新
 </span></span><span style="display:flex;"><span>package.json：记录hexo需要的包信息
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>hexo帮助把博客发送到github，同时把md文件转换成网页文件。
+</div><p>hexo帮助把博客发送到github，同时把md文件转换成网页文件。<br>
 hexo目录下的文件和github上的文件是不同的，public文件夹的文件通过<code>hexo d</code>上传到github去了，其他的文件则留在本地目录下。</p>
 <h3 id="对usernamegithubio仓库新建hexo分支并克隆">对username.github.io仓库新建hexo分支，并克隆<a hidden class="anchor" aria-hidden="true" href="#对usernamegithubio仓库新建hexo分支并克隆">#</a></h3>
-<p>在Github的username.github.io仓库上新建一个<code>hexo</code>分支，然后将该分支设为默认分支。
+<p>在Github的username.github.io仓库上新建一个<code>hexo</code>分支，然后将该分支设为默认分支。<br>
 Settings-&gt;Branches-&gt;Default branch中将默认分支设为<code>hexo</code>，save保存。</p>
-<p>然后将该仓库克隆到本地：
-<code>git clone git@github.com:ayanamiq/ayanamiq.github.io.git</code>
-clone完成后，在blog目录使用<code>git branch</code>，查看当前所在分支，应该是新建的分支<code>hexo</code>。
+<p>然后将该仓库克隆到本地：<br>
+<code>git clone git@github.com:ayanamiq/ayanamiq.github.io.git</code><br>
+clone完成后，在blog目录使用<code>git branch</code>，查看当前所在分支，应该是新建的分支<code>hexo</code>。<br>
 注意blog目录在clone下来目录的下一层。</p>
 <h3 id="将本地博客的部署文件拷贝进刚才拉下来的分支文件目录">将本地博客的部署文件拷贝进刚才拉下来的分支文件目录<a hidden class="anchor" aria-hidden="true" href="#将本地博客的部署文件拷贝进刚才拉下来的分支文件目录">#</a></h3>
-<p>将本地博客的部署文件（Hexo目录下的全部文件）全部拷贝进刚才拉下来的分支文件目录中去。
-接下来，进入<code>hexo</code>分支文件目录下，将该目录下的一些文件提交到hexo分支：
+<p>将本地博客的部署文件（Hexo目录下的全部文件）全部拷贝进刚才拉下来的分支文件目录中去。<br>
+接下来，进入<code>hexo</code>分支文件目录下，将该目录下的一些文件提交到hexo分支：<br>
 scaffolds、source、themes、package.json、node_modules、_config.yml</p>
 <p>提交之前需注意：</p>
 <ul>
@@ -868,24 +868,24 @@ scaffolds、source、themes、package.json、node_modules、_config.yml</p>
 <li>可能有人会问，删除了themes目录中的.git不就不能git pull更新主题了吗，很简单，需要更新主题时在另一个地方git clone下来该主题的最新版本，然后将内容拷到当前主题目录即可。</li>
 </ul>
 <h3 id="提交hexo分支">提交hexo分支<a hidden class="anchor" aria-hidden="true" href="#提交hexo分支">#</a></h3>
-<p>依次执行
-<code>git add .</code>
-<code>git commit -m 'back up hexo files'</code>
-<code>git push</code>
+<p>依次执行<br>
+<code>git add .</code><br>
+<code>git commit -m 'back up hexo files'</code><br>
+<code>git push</code><br>
 即可将博客的hexo部署环境提交到GitHub个人仓库的xxx分支。现在可以在GitHub上的username.github.io仓库看到两个分支的差异了。</p>
-<p>master分支和 hexo 分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问。
+<p>master分支和 hexo 分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问。<br>
 hexo 分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！</p>
 <h2 id="在新电脑上执行下列操作">在新电脑上执行下列操作：<a hidden class="anchor" aria-hidden="true" href="#在新电脑上执行下列操作">#</a></h2>
 <h3 id="至此博客已经可以在其他电脑上进行同步更新和维护了">至此，博客已经可以在其他电脑上进行同步更新和维护了。<a hidden class="anchor" aria-hidden="true" href="#至此博客已经可以在其他电脑上进行同步更新和维护了">#</a></h3>
 <ul>
 <li>将新电脑的生成的ssh key添加到GitHub账户上</li>
-<li>在新电脑上克隆username.github.io仓库的xxx分支到本地，此时本地git仓库处于xxx分支：
+<li>在新电脑上克隆username.github.io仓库的xxx分支到本地，此时本地git仓库处于xxx分支：<br>
 <code>git clone git@github.com:ayanamiq/ayanamiq.github.io.git</code></li>
-<li>切换到username.github.io目录，执行<code>npm install</code>
+<li>切换到username.github.io目录，执行<code>npm install</code><br>
 (由于仓库有一个.gitignore文件，里面默认是忽略掉 node_modules文件夹的，也就是说仓库的hexo分支并没有存储该目录(也不需要)，所以需要install)</li>
-<li>在新电脑上安装hexo命令
-<code>npm install -g hexo-cli</code>
-注意：linux安装hexo后，还需要把hexo的命令添加到全局，否则hexo的指令是无法使用的。
+<li>在新电脑上安装hexo命令<br>
+<code>npm install -g hexo-cli</code><br>
+注意：linux安装hexo后，还需要把hexo的命令添加到全局，否则hexo的指令是无法使用的。<br>
 <code>sudo ln -s /home/wjy/install/node-v10.15.3-linux-x64/lib/node_modules/hexo-cli/bin/hexo  /usr/local/bin/hexo</code></li>
 </ul>
 <p>到这里了就可以开始在新的电脑上写博客了！</p>
@@ -908,9 +908,9 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="回到之前的电脑上更新并提交博客">回到之前的电脑上更新并提交博客<a hidden class="anchor" aria-hidden="true" href="#回到之前的电脑上更新并提交博客">#</a></h2>
-<p>注：每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先git pull。
+<p>注：每次换电脑进行博客更新时，不管上次在其他电脑有没有更新，最好先git pull。<br>
 按照之前的方法写自己博客，然后将目录切换下username.github.io下，此时需要安装一下npm install，最后执行<code>hexo d -g</code>即可提交成功。</p>
-<p><a href="https://juejin.cn/post/6844903605435138062#comment">其他参考</a>
+<p><a href="https://juejin.cn/post/6844903605435138062#comment">其他参考</a><br>
 <a href="https://www.jianshu.com/p/b19173aae49a">参考</a></p>
 <h1 id="使用leancloud统计文章访问次数">使用LeanCloud统计文章访问次数<a hidden class="anchor" aria-hidden="true" href="#使用leancloud统计文章访问次数">#</a></h1>
 <p><a href="https://leancloud.cn/">LeanCloud官网</a></p>
@@ -925,10 +925,10 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 <p>验证邮箱</p>
 </li>
 <li>
-<p>创建应用-选择开发板
-注：开发版免费使用，但是有请求次数限制：
-总请求数不超过每日 30,000 次
-云端并发线程数低于 3 个
+<p>创建应用-选择开发板<br>
+注：开发版免费使用，但是有请求次数限制：<br>
+总请求数不超过每日 30,000 次<br>
+云端并发线程数低于 3 个<br>
 无自动备份</p>
 </li>
 <li>
@@ -988,17 +988,17 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="不蒜子统计无法显示问题">不蒜子统计无法显示问题<a hidden class="anchor" aria-hidden="true" href="#不蒜子统计无法显示问题">#</a></h2>
-<p>原因：不蒜子的域名过期
-解决：
-/theme/next/layout/_third-party/analytics/busuanzi-counter.swig
-按照上边路径找到该文件，修改域名为：
+<p>原因：不蒜子的域名过期<br>
+解决：<br>
+/theme/next/layout/_third-party/analytics/busuanzi-counter.swig<br>
+按照上边路径找到该文件，修改域名为：<br>
 <a href="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js</a></p>
 <h1 id="next主题的搜索功能">NexT主题的搜索功能<a hidden class="anchor" aria-hidden="true" href="#next主题的搜索功能">#</a></h1>
 <p><a href="http://theme-next.iissnan.com/third-party-services.html#local-search">官方文档</a></p>
 <p>添加百度/谷歌/本地 自定义站点内容搜索</p>
 <ol>
 <li>
-<p>安装 <code>hexo-generator-searchdb</code>，在站点的根目录下执行以下命令：
+<p>安装 <code>hexo-generator-searchdb</code>，在站点的根目录下执行以下命令：<br>
 <code> npm install hexo-generator-searchdb --save</code></p>
 </li>
 <li>
@@ -1041,7 +1041,7 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="添加algolia搜索">添加algolia搜索<a hidden class="anchor" aria-hidden="true" href="#添加algolia搜索">#</a></h1>
-<p>目前版本5.1.4已经集成algolia搜索，只需在next主题的配置文件中修改即可。
+<p>目前版本5.1.4已经集成algolia搜索，只需在next主题的配置文件中修改即可。<br>
 但是首先需要到<a href="https://www.algolia.com/">官网注册</a></p>
 <ul>
 <li>注册成功后，进入到hashboard，点击左侧的Indices</li>
@@ -1084,7 +1084,7 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 <ul>
 <li>在Hexo工程根目录下执行<code>npm install hexo-algolia --save</code></li>
 <li>执行<code>hexo algolia</code> 更新索引，这一步会把自己站点的索引数据上传到Algolia，如果上传成功可以在官网看到自己站点的索引数据。</li>
-<li>启用配置搜索功能
+<li>启用配置搜索功能<br>
 修改主题配置文件，在其中找到algolia_search属性，将其enable子属性改为true，然后再看其labels子属性，修改相应的提示文本，使之更加适合自己的风格</li>
 </ul>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1099,11 +1099,11 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span><span style="display:flex;"><span>hits_stats: &#34;${hits} 相关记录，共耗时 ${time} ms&#34;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>最后，每次进行更新、删除文章等操作，都需要在提交前执行
-<code>hexo algolia</code>
+</div><p>最后，每次进行更新、删除文章等操作，都需要在提交前执行<br>
+<code>hexo algolia</code><br>
 更新索引。</p>
 <h2 id="next主题升级60导致的问题">next主题升级6.0导致的问题<a hidden class="anchor" aria-hidden="true" href="#next主题升级60导致的问题">#</a></h2>
-<p>next6.0之后，<a href="https://github.com/theme-next/theme-next-algolia-instant-search">algolia需要其他配置</a>
+<p>next6.0之后，<a href="https://github.com/theme-next/theme-next-algolia-instant-search">algolia需要其他配置</a><br>
 还有其他问题，如:</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1137,14 +1137,14 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 <h2 id="其他问题">其他问题<a hidden class="anchor" aria-hidden="true" href="#其他问题">#</a></h2>
 <ul>
 <li>
-<p>数据上传到algolia后，发现搜索出来的文章地址是：
-<code>yoursite.com/2018/12/20/map</code>
-点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。
-解决：
+<p>数据上传到algolia后，发现搜索出来的文章地址是：<br>
+<code>yoursite.com/2018/12/20/map</code><br>
+点击，自然是请求不到的，因为需要把yoursite.com替换成自己的站点地址。<br>
+解决：<br>
 找到根目录的站点配置文件_config.yml，将url：yoursite.com，替换成自己的站点地址。</p>
 </li>
 <li>
-<p>Please provide an Algolia index name in your hexo _config.yml flle
+<p>Please provide an Algolia index name in your hexo _config.yml flle<br>
 根目录的站点配置文件中加入的内容 apiKey/adminApiKey 等等没有缩进，然后一直报上面这个错误&hellip;注意缩进,一个tab或四个空格</p>
 </li>
 <li>
@@ -1161,12 +1161,12 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span><span style="display:flex;"><span>ERROR &gt;&gt; Read https://npmjs.com/hexo-algolia<span style="color:#007f7f">#api-key for more informations.</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在执行<code>hexo algolia</code>前，需要先在git bush下执行：<code>export HEXO_ALGOLIA_INDEXING_KEY=你的API Key</code>
-就是你的Search-Only API Key，必须在git bush下执行。但该方法设置的环境变量为临时变量，重启电脑就会失效。
-右键点击我的电脑 &gt; 属性 &gt; 高级系统设置 &gt; 环境变量
+</div><p>在执行<code>hexo algolia</code>前，需要先在git bush下执行：<code>export HEXO_ALGOLIA_INDEXING_KEY=你的API Key</code><br>
+就是你的Search-Only API Key，必须在git bush下执行。但该方法设置的环境变量为临时变量，重启电脑就会失效。<br>
+右键点击我的电脑 &gt; 属性 &gt; 高级系统设置 &gt; 环境变量<br>
 添加环境变量名为 HEXO_ALGOLIA_INDEXING_KEY，值为 Algolia admin key，添加后点击确认，重启电脑后新增的环境变量生效。</p>
 <h1 id="需要注意">需要注意<a hidden class="anchor" aria-hidden="true" href="#需要注意">#</a></h1>
-<p>文章名不要使用特殊符号，如冒号、下划线、逗号、问号、大于小于( /、\、？、*、:、&quot;&quot;、| )等等
+<p>文章名不要使用特殊符号，如冒号、下划线、逗号、问号、大于小于( /、\、？、*、:、&quot;&quot;、| )等等<br>
 因为创建文章时，会创建同名的文件夹，linux文件夹、文件可以使用一些特殊符号，而windows中就不可以，这样会造成：在linux(我的公司电脑)写的文章，windows(家中电脑)无法拉取代码，因为windows无法创建带特殊符号的文件夹、文件，一定要注意。</p>
 <h1 id="在文章中引入视频">在文章中引入视频<a hidden class="anchor" aria-hidden="true" href="#在文章中引入视频">#</a></h1>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1182,21 +1182,21 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="解决github提交commitcontributions不统计显示绿色的问题">解决github提交commit,contributions不统计显示绿色的问题<a hidden class="anchor" aria-hidden="true" href="#解决github提交commitcontributions不统计显示绿色的问题">#</a></h1>
-<p>最近在提交博文的收，发现提交之后github上没有绿色小方块。
-我找到仓库的递交记录，发现竟然是两个账号提交的，此时想到应该是git设置用户名和邮箱的问题。
-先查看现在的用户名和邮箱：
-<code>git config user.name</code>
-<code>git config user.email</code>
-发现是和github的账号不对应，于是重新设置邮箱：
-<code>git config --global user.name &quot;xxx&quot;</code>
-<code>git config --global user.email &quot;xxx&quot;</code>
+<p>最近在提交博文的收，发现提交之后github上没有绿色小方块。<br>
+我找到仓库的递交记录，发现竟然是两个账号提交的，此时想到应该是git设置用户名和邮箱的问题。<br>
+先查看现在的用户名和邮箱：<br>
+<code>git config user.name</code><br>
+<code>git config user.email</code><br>
+发现是和github的账号不对应，于是重新设置邮箱：<br>
+<code>git config --global user.name &quot;xxx&quot;</code><br>
+<code>git config --global user.email &quot;xxx&quot;</code><br>
 然后提交一次试试，发现github可以显示contributions了。</p>
-<p>那么之前错误的如何补救呢？
+<p>那么之前错误的如何补救呢？<br>
 <a href="https://help.github.com/en/github/using-git/changing-author-info">github官方给出了解决方案</a></p>
 <ul>
-<li>打开gitbash，克隆仓库
-<code>git clone --bare https://github.com/user/repo.git</code>
-进入仓库
+<li>打开gitbash，克隆仓库<br>
+<code>git clone --bare https://github.com/user/repo.git</code><br>
+进入仓库<br>
 <code>cd repo.git</code></li>
 </ul>
 <p>在仓库的根目录创建一个脚本文件1.sh，并替换头部的三个变量为自己的。</p>
@@ -1244,21 +1244,21 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&#39;</span> --tag-name-filter cat -- --branches --tags
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>执行脚本
-<code>./1.sh</code>
-执行过程中会显示
+</div><p>执行脚本<br>
+<code>./1.sh</code><br>
+执行过程中会显示<br>
 <code>Rewrite f8da63b882603d90c7f9c6286494bb0d20289a50 (125/258) (42 seconds passed, remaining 44 predicted)</code></p>
-<p>在github的仓库页面查看记录是否修改过来了。
-将更正的历史记录推送到GitHub：
+<p>在github的仓库页面查看记录是否修改过来了。<br>
+将更正的历史记录推送到GitHub：<br>
 <code>git push --force --tags origin 'refs/heads/*'</code></p>
 <p>然后将临时克隆的仓库删除即可。</p>
 <p>如果不知道错误的邮箱是什么，可以通过<code>git log</code>查看仓库的提交记录，记录了每一次的提交人和邮箱，一直往下翻就行了。</p>
 <h1 id="hexo从github迁移到gitee">hexo从github迁移到gitee<a hidden class="anchor" aria-hidden="true" href="#hexo从github迁移到gitee">#</a></h1>
-<p>国内访问github的pages实在是拉稀，不得不转到国内的代码仓库。
-公司的项目都在coding上，想体验点新的，于是想到了gitee。
+<p>国内访问github的pages实在是拉稀，不得不转到国内的代码仓库。<br>
+公司的项目都在coding上，想体验点新的，于是想到了gitee。<br>
 总体步骤和部署到github类似。</p>
 <ul>
-<li>在gitee创建存放博客的仓库
+<li>在gitee创建存放博客的仓库<br>
 如果你想你的 pages 首页访问地址不带二级目录，如ipvb.gitee.io，你需要建立一个与自己个性地址同名的仓库，如 <a href="https://gitee.com/ipvb">https://gitee.com/ipvb</a> 这个用户，想要创建一个自己的站点，但不想以子目录的方式访问，想以ipvb.gitee.io直接访问，那么他就可以创建一个名字为ipvb的仓库 <a href="https://gitee.com/ipvb/ipvb">https://gitee.com/ipvb/ipvb</a> 部署完成后，就可以以 <a href="https://ipvb.gitee.io">https://ipvb.gitee.io</a> 进行访问了。</li>
 <li>修改项目根目录_config.yml文件，修改<code>repo</code>的值</li>
 </ul>
@@ -1290,15 +1290,15 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后会让输入gitee的用户名和密码，输入完成后就可以在gitee上看到我们上传的代码了。</p>
-<p>如果在<code>hexo d -g</code>的时候报错：
-<code>ERROR Deployer not found: git</code>
-就是没有安装deployer，那么安装它：
+<p>如果在<code>hexo d -g</code>的时候报错：<br>
+<code>ERROR Deployer not found: git</code><br>
+就是没有安装deployer，那么安装它：<br>
 <code>npm install --save hexo-deployer-git</code></p>
 <ul>
-<li>在仓库上方的bar找到服务，点击gitee pages，然后根据提示开启Gitee Pages 服务。
-需要注意，仓库中起码有一个index.html，才可以开启pages服务，否则是找不到pages选项的。
-根据提示访问：
-<code>https://jingyao066.gitee.io</code>
+<li>在仓库上方的bar找到服务，点击gitee pages，然后根据提示开启Gitee Pages 服务。<br>
+需要注意，仓库中起码有一个index.html，才可以开启pages服务，否则是找不到pages选项的。<br>
+根据提示访问：<br>
+<code>https://jingyao066.gitee.io</code><br>
 访问成功。</li>
 </ul>
 <p>想要多端操作，<a href="/posts/%E5%85%B6%E4%BB%96/hexo/#jump">参考前边写的</a></p>
@@ -1314,11 +1314,11 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="hexo文章加密">hexo文章加密<a hidden class="anchor" aria-hidden="true" href="#hexo文章加密">#</a></h1>
-<p><a href="https://hexo.io/plugins/">hexo插件中心</a>
+<p><a href="https://hexo.io/plugins/">hexo插件中心</a><br>
 <a href="https://github.com/MikeCoder/hexo-blog-encrypt/blob/master/ReadMe.zh.md">github</a></p>
-<p>安装：
-<code>npm install --save hexo-blog-encrypt</code>
-或：
+<p>安装：<br>
+<code>npm install --save hexo-blog-encrypt</code><br>
+或：<br>
 <code>yarn add hexo-blog-encrypt</code>（需要安装Yarn）</p>
 <p>首先需要在站点配置文件<code>_config.yml</code>中增加配置：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -1350,12 +1350,12 @@ hexo 分支用于备份博客部署文件，供自己维护更新，两者在一
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样，对于每一篇需要加密的文章就不必都在在头部添加 abstract 和 message 字段了，脚本会自动添加默认的内容填充。</p>
-<p>然后在文档头部加上字段：
-password：
+<p>然后在文档头部加上字段：<br>
+password：<br>
 本文章的密码</p>
-<p>message：
+<p>message：<br>
 这个是博客查看时，密码输入框上面的描述性文字</p>
-<p>abstract：
+<p>abstract：<br>
 文章的概述，因为文章加密了，<code>&lt;!--more--&gt;</code>也就失效了，所以需要用这个字段来增加概述。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1384,66 +1384,66 @@ password：
 </div><p><a href="https://zhuanlan.zhihu.com/p/113235573">参考</a></p>
 <h1 id="将hexo部署到自己的服务器">将hexo部署到自己的服务器<a hidden class="anchor" aria-hidden="true" href="#将hexo部署到自己的服务器">#</a></h1>
 <p>gitee pages也不行了</p>
-<p><code>本站正在进行绿色网络环境改造，服务改造结束前，无法重新开启您的Gitee Pages服务。</code>
-<code>该 Page 服务已被屏蔽（ 存在政治敏感不合规）</code>
+<p><code>本站正在进行绿色网络环境改造，服务改造结束前，无法重新开启您的Gitee Pages服务。</code><br>
+<code>该 Page 服务已被屏蔽（ 存在政治敏感不合规）</code><br>
 只能自己买服务器了，现在阿里云在搞活动，178元3年，1核2G1M，够用了。</p>
-<p>安装git
+<p>安装git<br>
 <code>yum install git</code></p>
-<p>创建git用户
+<p>创建git用户<br>
 <code>adduser git</code></p>
-<p>设置Git用户的密码
+<p>设置Git用户的密码<br>
 <code>passwd git</code></p>
-<p>添加新用户 git
+<p>添加新用户 git<br>
 <code>useradd git</code></p>
-<p>设置密码
+<p>设置密码<br>
 <code>passwd git</code></p>
-<p>这步很重要，不切换用户后面会很麻烦
+<p>这步很重要，不切换用户后面会很麻烦<br>
 <code>su git </code></p>
 <p><code>cd /home/git/</code></p>
-<p>创建存放项目的目录
+<p>创建存放项目的目录<br>
 <code>mkdir -p projects/blog </code></p>
-<p>创建git 仓库
+<p>创建git 仓库<br>
 <code>mkdir repos &amp;&amp; cd repos</code></p>
-<p>初始化一个git 裸库
+<p>初始化一个git 裸库<br>
 <code>git init --bare blog.git</code></p>
-<p>进入git仓库
+<p>进入git仓库<br>
 <code>cd blog.git/hooks</code></p>
-<p>创建 hook 钩子函数，输入了内容如下
+<p>创建 hook 钩子函数，输入了内容如下<br>
 <code>vi post-receive</code></p>
-<p>#!/bin/sh
+<p>#!/bin/sh<br>
 <code>git --work-tree=/home/git/projects/blog --git-dir=/home/git/repos/blog.git checkout -f</code></p>
-<p>添加完毕后修改权限
-<code>chmod +x post-receive</code>
-exit // 退出到 root 登录
+<p>添加完毕后修改权限<br>
+<code>chmod +x post-receive</code><br>
+exit // 退出到 root 登录<br>
 chown -R git:git /home/git/repos/blog.git // 添加权限</p>
-<p>测试git仓库是否可用
-<code>git clone git@server_ip:/home/git/repos/blog.git</code>
+<p>测试git仓库是否可用<br>
+<code>git clone git@server_ip:/home/git/repos/blog.git</code><br>
 如果能把空仓库拉下来，就说明 git 仓库搭建成功了</p>
-<p>建立ssh信任关系，在本地电脑
-<code>ssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip</code>
+<p>建立ssh信任关系，在本地电脑<br>
+<code>ssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip</code><br>
 如果自己电脑没有创建过公钥，那么执行<code>ssh-keygen -t rsa</code>，创建公钥，再执行上边的指令</p>
-<p>测试是否能登录
-<code>ssh git@server_ip</code>
+<p>测试是否能登录<br>
+<code>ssh git@server_ip</code><br>
 如果不需要密码就能登录服务器，那么成功，否则就问题，仔细检查上边的步骤。</p>
-<p>为了安全起见禁用 git 用户的 shell 登录权限，从而只能用 git clone，git push 等登录
-查看 git-shell 是否在登录方式里面
+<p>为了安全起见禁用 git 用户的 shell 登录权限，从而只能用 git clone，git push 等登录<br>
+查看 git-shell 是否在登录方式里面<br>
 <code>cat /etc/shells</code></p>
-<p>// 查看是否安装
+<p>// 查看是否安装<br>
 <code>which git-shell</code></p>
-<p><code>vim /etc/shells</code>
+<p><code>vim /etc/shells</code><br>
 在最下边添加上2步显示出来的路径，通常是<code>/usr/bin/git-shell</code></p>
-<p>修改/etc/passwd中的权限，将原来的
-<code>git:x:1000:1000::/home/git:/bin/bash</code>
-修改为
-<code>git:x:1000:1000::/home/git:/usr/bin/git-shell</code>
+<p>修改/etc/passwd中的权限，将原来的<br>
+<code>git:x:1000:1000::/home/git:/bin/bash</code><br>
+修改为<br>
+<code>git:x:1000:1000::/home/git:/usr/bin/git-shell</code><br>
 此时再尝试ssh登录，则会提示<code>fatal: Interactive git shell is not enabled</code></p>
-<p>注：如果第二台电脑想要建立ssh信任关系，需要先将<code>/etc/passwd</code>中内容改成
-<code>git:x:1000:1000::/home/git:/bin/bash</code>
-否则
-<code>ssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip</code>
-这一步就会报错。建立了信任关系，再改回来
+<p>注：如果第二台电脑想要建立ssh信任关系，需要先将<code>/etc/passwd</code>中内容改成<br>
+<code>git:x:1000:1000::/home/git:/bin/bash</code><br>
+否则<br>
+<code>ssh-copy-id -i C:/Users/yourname/.ssh/id_rsa.pub git@server_ip</code><br>
+这一步就会报错。建立了信任关系，再改回来<br>
 <code>git:x:1000:1000::/home/git:/usr/bin/git-shell</code></p>
-<p>安装nginx，略，参考文章 linux
+<p>安装nginx，略，参考文章 linux<br>
 修改nginx配置文件<code>nginx.conf</code>，修改root为刚才创建的文件夹</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1460,31 +1460,31 @@ chown -R git:git /home/git/repos/blog.git // 添加权限</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>将配置文件顶部的user，后边改为root，然后启动nginx。</p>
-<p>配置本地_config.yml文件的deploy，
+<p>配置本地_config.yml文件的deploy，<br>
 <code>repo: git@server_ip:/home/git/repos/blog.git</code></p>
-<p>然后，
-hexo cl
-hexo d -g
-访问浏览器服务器ip，访问成功。
+<p>然后，<br>
+hexo cl<br>
+hexo d -g<br>
+访问浏览器服务器ip，访问成功。<br>
 <a href="https://blog.csdn.net/qq_35561857/article/details/81590953">参考</a></p>
 <h1 id="hexo多终端">hexo多终端<a hidden class="anchor" aria-hidden="true" href="#hexo多终端">#</a></h1>
-<p>原理：
+<p>原理：<br>
 多终端，即多台电脑操作hexo。比如：公司电脑和家里电脑。</p>
 <p>hexo有两种文件：</p>
 <ul>
 <li>
-<p>源文件
-我们编辑的就是hexo的源文件，即xxx.md。这些源文件的位置是：
-<code>hexo根目录\source\_posts</code>
+<p>源文件<br>
+我们编辑的就是hexo的源文件，即xxx.md。这些源文件的位置是：<br>
+<code>hexo根目录\source\_posts</code><br>
 所以只需要用代码仓库同步这些源文件即可。</p>
 </li>
 <li>
-<p>hexo根据源文件生成的静态文件
-<code>hexo generate</code>，就会根据我们的.md文件，生成html。
+<p>hexo根据源文件生成的静态文件<br>
+<code>hexo generate</code>，就会根据我们的.md文件，生成html。<br>
 <code>hexo deploy</code>，就是将这些静态文件推送到远程服务器。</p>
 </li>
 </ul>
-<p>所以，只需要一个代码仓库（一个master分支即可），就可以实现多端同步了。
+<p>所以，只需要一个代码仓库（一个master分支即可），就可以实现多端同步了。<br>
 部署的话，分两种情况。</p>
 <ul>
 <li>部署到自己的服务器，直接根据上一小节<code>将hexo部署到自己的服务器</code>操作即可。</li>
@@ -1493,46 +1493,46 @@ hexo d -g
 <p>即：</p>
 <ul>
 <li>
-<p>代码仓库1，
+<p>代码仓库1，<br>
 无论是自建仓库还是github的仓库，用来同步hexo的源文件。使用git push等git命令。</p>
 </li>
 <li>
-<p>代码仓库2，
+<p>代码仓库2，<br>
 无论是自建仓库还是github的仓库，用来部署hexo生成的静态文件，使用<code>hexo generate</code>等hexo命令来部署。</p>
 </li>
 </ul>
-<p>ps：当然你想用一个仓库，多个分支也可以。
+<p>ps：当然你想用一个仓库，多个分支也可以。<br>
 另外，如果主题文件夹，也是用git拉下来的，这样会出现仓库嵌套仓库的情况。这时建议删除主题仓库的.git文件夹，就不会影响hexo部署了。</p>
-<p>在本地初始化git仓库
+<p>在本地初始化git仓库<br>
 <code>git init</code></p>
 <p>编辑.gitignore，在后面添加/.deploy_git和/public，表示这两个文件夹不用上传到仓库。</p>
-<p>和远程仓库关联，这个仓库存放博客的源文件，（可以用gitee、github、或者自建的仓库）
+<p>和远程仓库关联，这个仓库存放博客的源文件，（可以用gitee、github、或者自建的仓库）<br>
 <code>git remote add origin git@仓库地址:/home/git</code></p>
-<p>添加到缓存区
+<p>添加到缓存区<br>
 <code>git add .</code></p>
-<p>提交
+<p>提交<br>
 <code>git commit -m 'hexo 源文件'</code></p>
-<p>推送更新到远程仓库
+<p>推送更新到远程仓库<br>
 <code>git push -u origin master</code></p>
 <p>hexo目录里的文件都推送到了远程仓库，包括我们自己编写的markdown文件。</p>
 <p>新电脑操作步骤：</p>
 <ol>
 <li>
-<p>拉代码
-git clone <a href="https://gitee.com/jingyao066/hexo_source.git">https://gitee.com/jingyao066/hexo_source.git</a>
-以下两个指令，是否需要执行。存疑
-git fetch &ndash;all
+<p>拉代码<br>
+git clone <a href="https://gitee.com/jingyao066/hexo_source.git">https://gitee.com/jingyao066/hexo_source.git</a><br>
+以下两个指令，是否需要执行。存疑<br>
+git fetch &ndash;all<br>
 git reset &ndash;hard origin/master</p>
 </li>
 <li>
 <p>更新node版本，windows直接官网下载最新版本的安装包，重新安装即可。</p>
 </li>
 <li>
-<p>安装cnpm，用cnpm安装hexo，安装需要的插件，如引用图片插件
+<p>安装cnpm，用cnpm安装hexo，安装需要的插件，如引用图片插件<br>
 <code>cnpm install https://github.com/CodeFalling/hexo-asset-image --save</code></p>
 </li>
 <li>
-<p>建立ssh信任关系
+<p>建立ssh信任关系<br>
 因为源码仓库和hexo d，不是一个仓库，所以需要分别建立如下两个信任。</p>
 </li>
 </ol>
@@ -1542,31 +1542,31 @@ git reset &ndash;hard origin/master</p>
 </ul>
 <ol start="5">
 <li>
-<p>检查hexo命令能否正确执行
-<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo s</code>
-查看本地博客
+<p>检查hexo命令能否正确执行<br>
+<code>hexo cl &amp;&amp; hexo g &amp;&amp; hexo s</code><br>
+查看本地博客<br>
 <code>localhost:4000</code></p>
 </li>
 <li>
-<p>在本地编辑文章，然后执行
-<code>git add .</code>
+<p>在本地编辑文章，然后执行<br>
+<code>git add .</code><br>
 <code>git commit -m &quot;更新信息&quot;  </code></p>
 </li>
 </ol>
-<p>以后每次提交可以直接git push
+<p>以后每次提交可以直接git push<br>
 <code>git push -u origin master</code></p>
-<p>执行hexo部署
-<code>hexo cl</code>
+<p>执行hexo部署<br>
+<code>hexo cl</code><br>
 <code>hexo d -g</code></p>
-<p>最后：
-无论在哪台电脑编辑markdown，都要先执行
+<p>最后：<br>
+无论在哪台电脑编辑markdown，都要先执行<br>
 <code>git pull</code></p>
-<p>编辑完成后，先推送源文件
-git add .
-git commit -m &lsquo;提交源文件&rsquo;
+<p>编辑完成后，先推送源文件<br>
+git add .<br>
+git commit -m &lsquo;提交源文件&rsquo;<br>
 git push -u origin master（可简写成git push）</p>
-<p>执行hexo部署
-<code>hexo cl</code>
+<p>执行hexo部署<br>
+<code>hexo cl</code><br>
 <code>hexo d -g</code></p>
 <h1 id="快速重建hexo">快速重建hexo<a hidden class="anchor" aria-hidden="true" href="#快速重建hexo">#</a></h1>
 <p>需要复制的文件</p>
@@ -1576,7 +1576,7 @@ git push -u origin master（可简写成git push）</p>
 <li>根目录 themes 文件夹，主题文件</li>
 </ul>
 <h1 id="脚本部署定时部署">脚本部署，定时部署<a hidden class="anchor" aria-hidden="true" href="#脚本部署定时部署">#</a></h1>
-<p>在windows合适位置，新建bat脚本：
+<p>在windows合适位置，新建bat脚本：<br>
 拉代码脚本，hexo_pull.bat</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1626,7 +1626,7 @@ git push -u origin master（可简写成git push）</p>
 </div><p>这样，双击脚本就可以拉代码和推送了。</p>
 <h2 id="windows定时任务">windows定时任务<a hidden class="anchor" aria-hidden="true" href="#windows定时任务">#</a></h2>
 <p>我们需要两个定时任务，上午拉代码，晚上部署代码。</p>
-<p>win+R，运行<code>taskschd.msc</code>，打开任务计划程序
+<p>win+R，运行<code>taskschd.msc</code>，打开任务计划程序<br>
 创建基本任务-&gt;填写任务名-&gt;选择触发器(选择每天)-&gt;选择每天的执行时间-&gt;启动程序-&gt;选择刚才创建的脚本。</p>
 <p>依次创建两个脚本，早8点拉取代码，晚7点部署代码。</p>
 <h1 id="hexo-升级">hexo 升级<a hidden class="anchor" aria-hidden="true" href="#hexo-升级">#</a></h1>

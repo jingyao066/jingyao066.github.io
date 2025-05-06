@@ -103,7 +103,7 @@
   "keywords": [
     "spring"
   ],
-  "articleBody": "简单的hello world 创建简单的信息类：\n1 2 3 4 5 6 7 8 9 10 11 public class HelloWorld { private String message; public String getMessage() { return message; } public void setMessage(String message) { this.message = message; } } 创建 bean 的配置文件beans.xml，如果是普通的web项目，需要将这个类放到WEB-INFO下，如果是spring-boot项目，需要将这个类放到resources目录下。 在resources目录上右键新建文件，选择XML Configuration File-\u003eSpring config\n1 2 3 4 5 6 7 8 9 10 \u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e ",
+  "articleBody": "简单的hello world 创建简单的信息类：\n1 2 3 4 5 6 7 8 9 10 11 public class HelloWorld { private String message; public String getMessage() { return message; } public void setMessage(String message) { this.message = message; } } 创建 bean 的配置文件beans.xml，如果是普通的web项目，需要将这个类放到WEB-INFO下，如果是spring-boot项目，需要将这个类放到resources目录下。\n在resources目录上右键新建文件，选择XML Configuration File-\u003eSpring config\n1 2 3 4 5 6 7 8 9 10 \u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e ",
   "wordCount" : "60477",
   "inLanguage": "en",
   "datePublished": "2020-01-15T14:13:12Z",
@@ -452,7 +452,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>创建 bean 的配置文件<code>beans.xml</code>，如果是普通的web项目，需要将这个类放到<code>WEB-INFO</code>下，如果是spring-boot项目，需要将这个类放到<code>resources</code>目录下。
+</div><p>创建 bean 的配置文件<code>beans.xml</code>，如果是普通的web项目，需要将这个类放到<code>WEB-INFO</code>下，如果是spring-boot项目，需要将这个类放到<code>resources</code>目录下。<br>
 在<code>resources</code>目录上右键新建文件，选择<code>XML Configuration File</code>-&gt;<code>Spring config</code></p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -504,22 +504,22 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行主程序，可以看到控制台输出
-<code>Hello World!</code>
+</div><p>运行主程序，可以看到控制台输出<br>
+<code>Hello World!</code><br>
 我们已经成功地创建了你的第一个 Spring 应用程序。</p>
 <h1 id="beanfactory">BeanFactory<a hidden class="anchor" aria-hidden="true" href="#beanfactory">#</a></h1>
-<p>什么是Ioc/DI？
-IoC 容器：最主要是完成了完成对象的创建和依赖的管理注入等等。
-先从我们自己设计这样一个视角来考虑：
+<p>什么是Ioc/DI？<br>
+IoC 容器：最主要是完成了完成对象的创建和依赖的管理注入等等。<br>
+先从我们自己设计这样一个视角来考虑：<br>
 所谓控制反转，就是把原先我们代码里面需要实现的对象创建、依赖的代码，反转给容器来帮忙实现。那么必然的我们需要创建一个容器，同时需要一种描述来让容器知道需要创建的对象与对象的关系。这个描述最具体表现就是我们可配置的文件。</p>
-<p>对象和对象关系怎么表示？
+<p>对象和对象关系怎么表示？<br>
 可以用 xml ， properties 文件等语义化配置文件表示。</p>
-<p>描述对象关系的文件存放在哪里？
-可能是 classpath ， filesystem ，或者是 URL 网络资源， servletContext 等。
-回到正题，有了配置文件，还需要对配置文件解析。
-不同的配置文件对对象的描述不一样，如标准的，自定义声明式的，如何统一？ 在内部需要有一个统一的关于对象的定义，所有外部的描述都必须转化成统一的描述定义。
+<p>描述对象关系的文件存放在哪里？<br>
+可能是 classpath ， filesystem ，或者是 URL 网络资源， servletContext 等。<br>
+回到正题，有了配置文件，还需要对配置文件解析。<br>
+不同的配置文件对对象的描述不一样，如标准的，自定义声明式的，如何统一？ 在内部需要有一个统一的关于对象的定义，所有外部的描述都必须转化成统一的描述定义。<br>
 如何对不同的配置文件进行解析？需要对不同的配置文件语法，采用不同的解析器</p>
-<p>Spring Bean的创建是典型的工厂模式，这一系列的Bean工厂，也即IOC容器为开发者管理对象间的依赖关系提供了很多便利和基础服务，在Spring中有许多的IOC容器的实现供用户选择和使用，其相互关系如下：
+<p>Spring Bean的创建是典型的工厂模式，这一系列的Bean工厂，也即IOC容器为开发者管理对象间的依赖关系提供了很多便利和基础服务，在Spring中有许多的IOC容器的实现供用户选择和使用，其相互关系如下：<br>
 <img loading="lazy" src="/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/5.png"></p>
 <p>其中BeanFactory作为最顶层的一个接口类，它定义了IOC容器的基本功能规范，BeanFactory 有三个子类：ListableBeanFactory、HierarchicalBeanFactory 和AutowireCapableBeanFactory。但是从上图中我们可以发现最终的默认实现类是 DefaultListableBeanFactory，他实现了所有的接口。那为何要定义这么多层次的接口呢？查阅这些接口的源码和说明发现，每个接口都有他使用的场合，它主要是为了区分在 Spring 内部在操作过程中对象的传递和转化过程中，对对象的数据访问所做的限制。例如 ListableBeanFactory 接口表示这些 Bean 是可列表的，而 HierarchicalBeanFactory 表示的是这些 Bean 是有继承关系的，也就是每个Bean 有可能有父 Bean。AutowireCapableBeanFactory 接口定义 Bean 的自动装配规则。这四个接口共同定义了 Bean 的集合、Bean 之间的关系、以及 Bean 行为。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -578,13 +578,13 @@ IoC 容器：最主要是完成了完成对象的创建和依赖的管理注入�
 </span></span><span style="display:flex;"><span> }
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在BeanFactory里只对IOC容器的基本行为作了定义，根本不关心你的bean是如何定义怎样加载的。正如我们只关心工厂里得到什么的产品对象，至于工厂是怎么生产这些对象的，这个基本的接口不关心。而要知道工厂是如何产生对象的，我们需要看具体的IOC容器实现，spring提供了许多IOC容器的实现。
-<code>比如XmlBeanFactory</code>，<code>ClasspathXmlApplicationContext</code>等。
-其中XmlBeanFactory就是针对最基本的ioc容器的实现，这个IOC容器可以读取XML文件定义
-的BeanDefinition（XML文件中对bean的描述）,如果说XmlBeanFactory是容器中的屌丝，
+</div><p>在BeanFactory里只对IOC容器的基本行为作了定义，根本不关心你的bean是如何定义怎样加载的。正如我们只关心工厂里得到什么的产品对象，至于工厂是怎么生产这些对象的，这个基本的接口不关心。而要知道工厂是如何产生对象的，我们需要看具体的IOC容器实现，spring提供了许多IOC容器的实现。<br>
+<code>比如XmlBeanFactory</code>，<code>ClasspathXmlApplicationContext</code>等。<br>
+其中XmlBeanFactory就是针对最基本的ioc容器的实现，这个IOC容器可以读取XML文件定义<br>
+的BeanDefinition（XML文件中对bean的描述）,如果说XmlBeanFactory是容器中的屌丝，<br>
 ApplicationContext应该算容器中的高帅富。</p>
 <h1 id="applicationcontext">ApplicationContext<a hidden class="anchor" aria-hidden="true" href="#applicationcontext">#</a></h1>
-<p>ApplicationContext是Spring提供的一个高级的IoC容器，它除了能够提供IoC容器的基本功能外，还为用户提供了以下的附加服务。
+<p>ApplicationContext是Spring提供的一个高级的IoC容器，它除了能够提供IoC容器的基本功能外，还为用户提供了以下的附加服务。<br>
 从ApplicationContext接口的实现，我们看出其特点：</p>
 <ol>
 <li>支持信息源，可以实现国际化。（实现MessageSource接口）</li>
@@ -594,30 +594,30 @@ ApplicationContext应该算容器中的高帅富。</p>
 <p>最常被使用的 ApplicationContext 接口实现：</p>
 <ul>
 <li>
-<p>FileSystemXmlApplicationContext：
+<p>FileSystemXmlApplicationContext：<br>
 该容器从 XML 文件中加载已被定义的 bean。在这里，你需要提供给构造器 XML 文件的完整路径。</p>
 </li>
 <li>
-<p>ClassPathXmlApplicationContext：
-该容器从 XML 文件中加载已被定义的 bean。在这里，你不需要提供 XML 文件的完整路径，只需正确配
+<p>ClassPathXmlApplicationContext：<br>
+该容器从 XML 文件中加载已被定义的 bean。在这里，你不需要提供 XML 文件的完整路径，只需正确配<br>
 置 CLASSPATH 环境变量即可，因为，容器会从 CLASSPATH 中搜索 bean 配置文件。</p>
 </li>
 <li>
-<p>WebXmlApplicationContext：
+<p>WebXmlApplicationContext：<br>
 该容器会在一个 web 应用程序的范围内加载在 XML 文件中已被定义的 bean。</p>
 </li>
 </ul>
 <p>我们已经在前边使用过ClassPathXmlApplicationContext了。</p>
 <h1 id="beandefinition">BeanDefinition<a hidden class="anchor" aria-hidden="true" href="#beandefinition">#</a></h1>
-<p>SpringIOC容器管理了我们定义的各种Bean对象及其相互的关系，Bean对象在Spring实现中是以
-BeanDefinition来描述的，其继承体系如下：
+<p>SpringIOC容器管理了我们定义的各种Bean对象及其相互的关系，Bean对象在Spring实现中是以<br>
+BeanDefinition来描述的，其继承体系如下：<br>
 <img loading="lazy" src="/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/6.png"></p>
-<p>Bean 的解析过程非常复杂，功能被分的很细，因为这里需要被扩展的地方很多，必须保证有足够的灵活性，以应对可能的变化。Bean 的解析主要就是对 Spring 配置文件的解析。这个解析过程主要通过下图中的类完成：
+<p>Bean 的解析过程非常复杂，功能被分的很细，因为这里需要被扩展的地方很多，必须保证有足够的灵活性，以应对可能的变化。Bean 的解析主要就是对 Spring 配置文件的解析。这个解析过程主要通过下图中的类完成：<br>
 <img loading="lazy" src="/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/7.png"></p>
 <h1 id="ioc容器的初始化">IoC容器的初始化<a hidden class="anchor" aria-hidden="true" href="#ioc容器的初始化">#</a></h1>
-<p>IoC容器的初始化包括BeanDefinition的资源定位、载入和注册这三个基本的过程。
-我们以ApplicationContext为例讲解，ApplicationContext系列容器也许是我们最熟悉的，因为web项
-目中使用的XmlWebApplicationContext就属于这个继承体系，还有ClasspathXmlApplicationContext等，其继承体系如下图所示：
+<p>IoC容器的初始化包括BeanDefinition的资源定位、载入和注册这三个基本的过程。<br>
+我们以ApplicationContext为例讲解，ApplicationContext系列容器也许是我们最熟悉的，因为web项<br>
+目中使用的XmlWebApplicationContext就属于这个继承体系，还有ClasspathXmlApplicationContext等，其继承体系如下图所示：<br>
 <img loading="lazy" src="/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/8.png"></p>
 <p>ApplicationContext允许上下文嵌套，通过保持父上下文可以维持一个上下文体系。对于bean的查找可以在这个上下文体系中发生，首先检查当前上下文，其次是父上下文，逐级向上，这样为不同的Spring应用提供了一个共享的bean定义环境。</p>
 <p>下面我们分别简单地演示一下两种ioc容器的创建过程。</p>
@@ -688,13 +688,13 @@ BeanDefinition来描述的，其继承体系如下：
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>设置资源加载器和资源定位
-通过分析FileSystemXmlApplicationContext的源代码，在创建FileSystemXmlApplicationContext容
-器时，构造方法做以下两项重要工作：
-首先，调用父类容器的构造方法(super(parent)方法)为容器设置好Bean资源加载器。
-然后，再调用父类AbstractRefreshableConfigApplicationContext的
+</div><p>设置资源加载器和资源定位<br>
+通过分析FileSystemXmlApplicationContext的源代码，在创建FileSystemXmlApplicationContext容<br>
+器时，构造方法做以下两项重要工作：<br>
+首先，调用父类容器的构造方法(super(parent)方法)为容器设置好Bean资源加载器。<br>
+然后，再调用父类AbstractRefreshableConfigApplicationContext的<br>
 setConfigLocations(configLocations)方法设置Bean定义资源文件的定位路径。</p>
-<p>通过追踪FileSystemXmlApplicationContext的继承体系，发现其父类的父类
+<p>通过追踪FileSystemXmlApplicationContext的继承体系，发现其父类的父类<br>
 AbstractApplicationContext中初始化IoC容器所做的主要源码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -742,7 +742,7 @@ AbstractApplicationContext中初始化IoC容器所做的主要源码如下：</p
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>AbstractApplicationContext构造方法中调用
+</div><p>AbstractApplicationContext构造方法中调用<br>
 PathMatchingResourcePatternResolver的构造方法创建Spring资源加载器：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -807,14 +807,14 @@ PathMatchingResourcePatternResolver的构造方法创建Spring资源加载器：
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>通过这两个方法的源码我们可以看出，我们既可以使用一个字符串来配置多个Spring Bean定义资源文件，也可以使用字符串数组，即下面两种方式都是可以的：
-<code>ClasspathResource res = new ClasspathResource(“a.xml,b.xml,……”);</code>
+</div><p>通过这两个方法的源码我们可以看出，我们既可以使用一个字符串来配置多个Spring Bean定义资源文件，也可以使用字符串数组，即下面两种方式都是可以的：<br>
+<code>ClasspathResource res = new ClasspathResource(“a.xml,b.xml,……”);</code><br>
 多个资源文件路径之间可以是用” ,; /t/n”等分隔。</p>
-<p>ClasspathResource res = new ClasspathResource(newString[]{“a.xml”,”b.xml”,……});
+<p>ClasspathResource res = new ClasspathResource(newString[]{“a.xml”,”b.xml”,……});<br>
 至此，Spring IoC容器在初始化时将配置的Bean定义资源文件定位为Spring封装的Resource。</p>
 <h2 id="abstractapplicationcontext的refresh函数载入bean定义过程">AbstractApplicationContext的refresh函数载入Bean定义过程<a hidden class="anchor" aria-hidden="true" href="#abstractapplicationcontext的refresh函数载入bean定义过程">#</a></h2>
 <p>Spring IoC容器对Bean定义资源的载入是从refresh()函数开始的，refresh()是一个模板方法，refresh()方法的作用是：在创建IoC容器前，如果已经有容器存在，则需要把已有的容器销毁和关闭，以保证在refresh之后使用的是新建立起来的IoC容器。refresh的作用类似于对IoC容器的重启，在新建立好的容器中对容器进行初始化，对Bean定义资源进行载入。</p>
-<p>FileSystemXmlApplicationContext通过调用其父类AbstractApplicationContext的refresh()函数启动
+<p>FileSystemXmlApplicationContext通过调用其父类AbstractApplicationContext的refresh()函数启动<br>
 整个IoC容器对Bean定义的载入过程：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -900,12 +900,12 @@ PathMatchingResourcePatternResolver的构造方法创建Spring资源加载器：
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>refresh()方法主要为IoC容器Bean的生命周期管理提供条件，
-Spring IoC容器载入Bean定义资源文件从其子类容器的refreshBeanFactory()方法启动，
-所以整个refresh()中
-<code>ConfigurableListableBeanFactory beanFactory =obtainFreshBeanFactory();</code>
+</div><p>refresh()方法主要为IoC容器Bean的生命周期管理提供条件，<br>
+Spring IoC容器载入Bean定义资源文件从其子类容器的refreshBeanFactory()方法启动，<br>
+所以整个refresh()中<br>
+<code>ConfigurableListableBeanFactory beanFactory =obtainFreshBeanFactory();</code><br>
 这句以后代码的都是注册容器的信息源和生命周期事件，载入过程就是从这句代码启动。</p>
-<p>AbstractApplicationContext的obtainFreshBeanFactory()方法调用子类容器的refreshBeanFactory()
+<p>AbstractApplicationContext的obtainFreshBeanFactory()方法调用子类容器的refreshBeanFactory()<br>
 方法，启动容器载入Bean定义资源文件的过程，代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -931,7 +931,7 @@ Spring IoC容器载入Bean定义资源文件从其子类容器的refreshBeanFact
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>AbstractApplicationContext类中只抽象定义了refreshBeanFactory()方法，容器真正调用的是其子类
+</div><p>AbstractApplicationContext类中只抽象定义了refreshBeanFactory()方法，容器真正调用的是其子类<br>
 AbstractRefreshableApplicationContext实现的 refreshBeanFactory()方法，方法的源码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -981,7 +981,7 @@ AbstractRefreshableApplicationContext实现的 refreshBeanFactory()方法，方�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在这个方法中，先判断BeanFactory是否存在，如果存在则先销毁beans并关闭beanFactory，
+</div><p>在这个方法中，先判断BeanFactory是否存在，如果存在则先销毁beans并关闭beanFactory，<br>
 接着创建DefaultListableBeanFactory，并调用loadBeanDefinitions(beanFactory)装载beanDefinition。</p>
 <h2 id="abstractrefreshableapplicationcontext子类的loadbeandefinitions方法">AbstractRefreshableApplicationContext子类的loadBeanDefinitions方法<a hidden class="anchor" aria-hidden="true" href="#abstractrefreshableapplicationcontext子类的loadbeandefinitions方法">#</a></h2>
 <p>AbstractRefreshableApplicationContext中只定义了抽象的loadBeanDefinitions方法，容器真正调用的是其子类AbstractXmlApplicationContext对该方法的实现，AbstractXmlApplicationContext的主要源码如下：</p>
@@ -1073,7 +1073,7 @@ AbstractRefreshableApplicationContext实现的 refreshBeanFactory()方法，方�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>XmlBeanDefinitionReader 调用其父类AbstractBeanDefinitionReader的 reader.loadBeanDefinitions
+</div><p>XmlBeanDefinitionReader 调用其父类AbstractBeanDefinitionReader的 reader.loadBeanDefinitions<br>
 方法读取Bean定义资源。</p>
 <p>由于我们使用FileSystemXmlApplicationContext作为例子分析，因此getConfigResources的返回值为null，因此程序执行reader.loadBeanDefinitions(configLocations)分支。</p>
 <h2 id="abstractbeandefinitionreader读取bean定义资源">AbstractBeanDefinitionReader读取Bean定义资源<a hidden class="anchor" aria-hidden="true" href="#abstractbeandefinitionreader读取bean定义资源">#</a></h2>
@@ -1180,14 +1180,14 @@ AbstractRefreshableApplicationContext实现的 refreshBeanFactory()方法，方�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>loadBeanDefinitions(Resource&hellip;resources)方法和上面分析的3个方法类似，
-同样也是调用XmlBeanDefinitionReader的loadBeanDefinitions方法。
+</div><p>loadBeanDefinitions(Resource&hellip;resources)方法和上面分析的3个方法类似，<br>
+同样也是调用XmlBeanDefinitionReader的loadBeanDefinitions方法。<br>
 从对AbstractBeanDefinitionReader的loadBeanDefinitions方法源码分析可以看出该方法做了以下两件事：首先，调用资源加载器的获取资源方法resourceLoader.getResource(location)，获取到要加载的资源。其次，真正执行加载功能是其子类XmlBeanDefinitionReader的loadBeanDefinitions方法。</p>
-<p>看到第8、16行，结合上面的ResourceLoader与ApplicationContext的继承关系图，可以知道此时调用的是DefaultResourceLoader中的getSource()方法定位Resource，因为
-FileSystemXmlApplicationContext本身就是DefaultResourceLoader的实现类，所以此时又回到了
+<p>看到第8、16行，结合上面的ResourceLoader与ApplicationContext的继承关系图，可以知道此时调用的是DefaultResourceLoader中的getSource()方法定位Resource，因为<br>
+FileSystemXmlApplicationContext本身就是DefaultResourceLoader的实现类，所以此时又回到了<br>
 FileSystemXmlApplicationContext中来。</p>
 <h2 id="资源加载器获取要读入的资源">资源加载器获取要读入的资源<a hidden class="anchor" aria-hidden="true" href="#资源加载器获取要读入的资源">#</a></h2>
-<p>XmlBeanDefinitionReader通过调用其父类DefaultResourceLoader的getResource方法获取要加载的
+<p>XmlBeanDefinitionReader通过调用其父类DefaultResourceLoader的getResource方法获取要加载的<br>
 资源，其源码如下</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1254,10 +1254,10 @@ FileSystemXmlApplicationContext中来。</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这样代码就回到了 FileSystemXmlApplicationContext 中来，他提供了FileSystemResource 来完成从文件系统得到配置文件的资源定义。
+</div><p>这样代码就回到了 FileSystemXmlApplicationContext 中来，他提供了FileSystemResource 来完成从文件系统得到配置文件的资源定义。<br>
 这样，就可以从文件系统路径上对IOC 配置文件进行加载 - 当然我们可以按照这个逻辑从任何地方加载，在Spring 中我们看到它提供 的各种资源抽象，比如ClassPathResource，URLResource，FileSystemResource 等来供我们使用。上面我们看到的是定位Resource 的一个过程，而这只是加载过程的一部分。</p>
 <h2 id="xmlbeandefinitionreader加载bean定义资源">XmlBeanDefinitionReader加载Bean定义资源<a hidden class="anchor" aria-hidden="true" href="#xmlbeandefinitionreader加载bean定义资源">#</a></h2>
-<p>Bean定义的Resource得到了。
+<p>Bean定义的Resource得到了。<br>
 继续回到XmlBeanDefinitionReader的loadBeanDefinitions(Resource …)方法看到代表bean文件的资源定义以后的载入过程。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1430,10 +1430,10 @@ FileSystemXmlApplicationContext中来。</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>该解析过程调用JavaEE标准的JAXP标准进行处理。
+</div><p>该解析过程调用JavaEE标准的JAXP标准进行处理。<br>
 至此Spring IoC容器根据定位的Bean定义资源文件，将其加载读入并转换成为Document对象过程完成。接下来我们要继续分析Spring IoC容器将载入的Bean定义资源文件转换为Document对象之后，是如何将其解析为Spring IoC管理的Bean对象并将其注册到容器中的。</p>
 <h2 id="xmlbeandefinitionreader解析载入的bean定义资源文件">XmlBeanDefinitionReader解析载入的Bean定义资源文件<a hidden class="anchor" aria-hidden="true" href="#xmlbeandefinitionreader解析载入的bean定义资源文件">#</a></h2>
-<p>XmlBeanDefinitionReader类中的doLoadBeanDefinitions方法是从特定XML文件中实际载入Bean定义资源的方法，该方法在载入Bean定义资源之后将其转换为Document对象，接下来调用
+<p>XmlBeanDefinitionReader类中的doLoadBeanDefinitions方法是从特定XML文件中实际载入Bean定义资源的方法，该方法在载入Bean定义资源之后将其转换为Document对象，接下来调用<br>
 registerBeanDefinitions启动Spring IoC容器对Bean定义的解析过程，registerBeanDefinitions方法源码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -1473,12 +1473,12 @@ registerBeanDefinitions启动Spring IoC容器对Bean定义的解析过程，regi
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Bean定义资源的载入解析分为以下两个过程：
-首先，通过调用XML解析器将Bean定义资源文件转换得到Document对象，但是这些Document对象并没有按照Spring的Bean规则进行解析。这一步是载入的过程。
-其次，在完成通用的XML解析之后，按照Spring的Bean规则对Document对象进行解析。
+</div><p>Bean定义资源的载入解析分为以下两个过程：<br>
+首先，通过调用XML解析器将Bean定义资源文件转换得到Document对象，但是这些Document对象并没有按照Spring的Bean规则进行解析。这一步是载入的过程。<br>
+其次，在完成通用的XML解析之后，按照Spring的Bean规则对Document对象进行解析。<br>
 按照Spring的Bean规则对Document对象解析的过程是在接口BeanDefinitionDocumentReader的实现类DefaultBeanDefinitionDocumentReader中实现的。</p>
 <h2 id="defaultbeandefinitiondocumentreader对bean定义的document对象解析">DefaultBeanDefinitionDocumentReader对Bean定义的Document对象解析<a hidden class="anchor" aria-hidden="true" href="#defaultbeandefinitiondocumentreader对bean定义的document对象解析">#</a></h2>
-<p>BeanDefinitionDocumentReader接口通过registerBeanDefinitions方法调用其实现类
+<p>BeanDefinitionDocumentReader接口通过registerBeanDefinitions方法调用其实现类<br>
 DefaultBeanDefinitionDocumentReader对Document对象进行解析，解析的代码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -2120,8 +2120,8 @@ DefaultBeanDefinitionDocumentReader对Document对象进行解析，解析的代�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>只要使用过Spring，对Spring配置文件比较熟悉的人，通过对上述源码的分析，就会明白我们在Spring配置文件中<code>&lt;Bean&gt;</code>元素的中配置的属性就是通过该方法解析和设置到Bean中去的。
-注意：在解析<code>&lt;Bean&gt;</code>元素过程中没有创建和实例化Bean对象，只是创建了Bean对象的定义类
+</div><p>只要使用过Spring，对Spring配置文件比较熟悉的人，通过对上述源码的分析，就会明白我们在Spring配置文件中<code>&lt;Bean&gt;</code>元素的中配置的属性就是通过该方法解析和设置到Bean中去的。<br>
+注意：在解析<code>&lt;Bean&gt;</code>元素过程中没有创建和实例化Bean对象，只是创建了Bean对象的定义类<br>
 BeanDefinition，将<code>&lt;Bean&gt;</code>元素中的配置信息设置到BeanDefinition中作为记录，当依赖注入时才使用这些记录信息创建和实例化具体的Bean对象。</p>
 <p>上面方法中一些对一些配置如元信息(meta)、qualifier等的解析，我们在Spring中配置时使用的也不多，我们在使用Spring的<code>&lt;Bean&gt;</code>元素时，配置最多的是<code>&lt;property&gt;</code>属性，因此我们下面继续分析源码，了解Bean的属性在解析时是如何设置的。</p>
 <h2 id="beandefinitionparserdelegate解析property元素">BeanDefinitionParserDelegate解析<code>&lt;property&gt;</code>元素<a hidden class="anchor" aria-hidden="true" href="#beandefinitionparserdelegate解析property元素">#</a></h2>
@@ -2338,7 +2338,7 @@ BeanDefinition，将<code>&lt;Bean&gt;</code>元素中的配置信息设置到Be
 <ul>
 <li>ref被封装为指向依赖对象一个引用。</li>
 <li>value配置都会封装成一个字符串类型的对象。</li>
-<li>ref和value都通过“解析的数据类型属性值.setSource(extractSource(ele));”方法将属性值/引用与所
+<li>ref和value都通过“解析的数据类型属性值.setSource(extractSource(ele));”方法将属性值/引用与所<br>
 引用的属性关联起来。</li>
 </ul>
 <p>在方法的最后对于<code>&lt;property&gt;</code>元素的子元素通过parsePropertySubElement 方法解析，我们继续分析该方法的源码，了解其解析过程。</p>
@@ -2627,7 +2627,7 @@ BeanDefinition，将<code>&lt;Bean&gt;</code>元素中的配置信息设置到Be
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>当调用BeanDefinitionReaderUtils向IoC容器注册解析的BeanDefinition时，真正完成注册功能的是
+</div><p>当调用BeanDefinitionReaderUtils向IoC容器注册解析的BeanDefinition时，真正完成注册功能的是<br>
 DefaultListableBeanFactory。</p>
 <h2 id="defaultlistablebeanfactory向ioc容器注册解析后的beandefinition">DefaultListableBeanFactory向IoC容器注册解析后的BeanDefinition<a hidden class="anchor" aria-hidden="true" href="#defaultlistablebeanfactory向ioc容器注册解析后的beandefinition">#</a></h2>
 <p>DefaultListableBeanFactory中使用一个HashMap的集合对象存放IoC容器中注册解析的BeanDefinition，向IoC容器注册的主要源码如下</p>
@@ -2728,14 +2728,14 @@ DefaultListableBeanFactory。</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>至此，Bean定义资源文件中配置的Bean被解析过后，已经注册到IoC容器中，被容器管理起来，真正完成了IoC容器初始化所做的全部工作。现  在IoC容器中已经建立了整个Bean的配置信息，这些BeanDefinition信息已经可以使用，并且可以被检索，IoC容器的作用就是对这些注册的Bean定义信息进行处理和维护。这些的注册的Bean定义信息是IoC容器控制反转的基础，正是有了这些注册的数据，容器才可以进行依赖注入。</p>
-<p>总结：
-通过上面的代码，总结一下IOC容器初始化的基本步骤：
-初始化的入口在容器实现中的 refresh()调用来完成。
-对 bean 定义载入 IOC 容器使用的方法是 loadBeanDefinition，其中的大致过程如下：
+<p>总结：<br>
+通过上面的代码，总结一下IOC容器初始化的基本步骤：<br>
+初始化的入口在容器实现中的 refresh()调用来完成。<br>
+对 bean 定义载入 IOC 容器使用的方法是 loadBeanDefinition，其中的大致过程如下：<br>
 通过 ResourceLoader 来完成资源文件位置的定位，DefaultResourceLoader 是默认的实现，同时上下文本身就给出了 ResourceLoader 的实现，可以从类路径，文件系统, URL 等方式来定为资源位置。如果是 XmlBeanFactory作为 IOC 容器，那么需要为它指定 bean 定义的资源，也就是说 bean 定义文件时通过抽象成 Resource 来被 IOC 容器处理的，容器通过 BeanDefinitionReader来完成定义信息的解析和Bean 信息的注册,往往使用的是XmlBeanDefinitionReader 来解析 bean 的 xml 定义文件 - 实际的处理过程是委托给 BeanDefinitionParserDelegate 来完成的，从而得到 bean 的定义信息，这些信息在 Spring 中使用 BeanDefinition 对象来表示 - 这个名字可以让我们想到loadBeanDefinition，RegisterBeanDefinition这些相关的方法 - 他们都是为处理 BeanDefinitin 服务的， 容器解析得到 BeanDefinitionIoC 以后，需要把它在 IOC 容器中注册，这由 IOC 实现 BeanDefinitionRegistry 接口来实现。注册过程就是在 IOC 容器内部维护的一个HashMap 来保存得到的 BeanDefinition 的过程。这个 HashMap 是 IoC 容器持有 bean 信息的场所，以后对 bean 的操作都是围绕这个HashMap 来实现的。</p>
 <p>然后我们就可以通过 BeanFactory 和 ApplicationContext 来享受到 Spring IOC 的服务了，在使用 IOC 容器的时候，我们注意到除了少量粘合代码，绝大多数以正确 IoC 风格编写的应用程序代码完全不用关心如何到达工厂，因为容器将把这些对象与容器管理的其他对象钩在一起。基本的策略是把工厂放到已知的地方，最好是放在对预期使用的上下文有意义的地方，以及代码将实际需要访问工厂的地方。 Spring 本身提供了对声明式载入 web 应用程序用法的应用程序上下文,并将其存储在ServletContext 中的框架实现。</p>
-<p>在使用 Spring IOC 容器的时候我们还需要区别两个概念:
-Beanfactory 和 Factory bean，其中 BeanFactory 指的是 IOC 容器的编程抽象，
+<p>在使用 Spring IOC 容器的时候我们还需要区别两个概念:<br>
+Beanfactory 和 Factory bean，其中 BeanFactory 指的是 IOC 容器的编程抽象，<br>
 比如 ApplicationContext， XmlBeanFactory 等，这些都是 IOC 容器的具体表现，需要使用什么样的容器由客户决定,但 Spring 为我们提供了丰富的选择。 FactoryBean 只是一个可以在 IOC而容器中被管理的一个bean,是对各种处理过程和资源使用的抽象,Factory bean 在需要时产生另一个对象，而不返回 FactoryBean本身,我们可以把它看成是一个抽象工厂，对它的调用返回的是工厂生产的产品。所有的 Factory bean 都实现特殊的org.springframework.beans.factory.FactoryBean 接口，当使用容器中 factory bean 的时候，该容器不会返回 factory bean 本身,而是返回其生成的对象。Spring 包括了大部分的通用资源和服务访问抽象的 Factory bean 的实现，其中包括:对 JNDI 查询的处理，对代理对象的处理，对事务性代理的处理，对 RMI 代理的处理等，这些我们都可以看成是具体的工厂,看成是SPRING 为我们建立好的工厂。也就是说Spring 通过使用抽象工厂模式为我们准备了一系列工厂来生产一些特定的对象,免除我们手工重复的工作，我们要使用时只需要在 IOC 容器里配置好就能很方便的使用了。</p>
 <h1 id="ioc容器的依赖注入">IOC容器的依赖注入<a hidden class="anchor" aria-hidden="true" href="#ioc容器的依赖注入">#</a></h1>
 <h2 id="依赖注入发生的时间">依赖注入发生的时间<a hidden class="anchor" aria-hidden="true" href="#依赖注入发生的时间">#</a></h2>
@@ -3092,7 +3092,7 @@ Beanfactory 和 Factory bean，其中 BeanFactory 指的是 IOC 容器的编程�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>通过上面对向IoC容器获取Bean方法的分析，我们可以看到在Spring中，如果Bean定义的单态模式(Singleton)，则容器在创建之前先从缓存中查找，以确保整个容器中只存在一个实例对象。
+</div><p>通过上面对向IoC容器获取Bean方法的分析，我们可以看到在Spring中，如果Bean定义的单态模式(Singleton)，则容器在创建之前先从缓存中查找，以确保整个容器中只存在一个实例对象。<br>
 如果Bean定义的是原型模式(Prototype)，则容器每次都会创建一个新的实例对象。除此之外，Bean定义还可以扩展为指定其生命周期范围。</p>
 <p>上面的源码只是定义了根据Bean定义的模式，采取的不同创建Bean实例对象的策略，具体的Bean实例对象的创建过程由实现了ObejctFactory接口的匿名内部类的createBean方法完成，ObejctFactory使用委派模式，具体的Bean实例创建过程交由其实现类AbstractAutowireCapableBeanFactory完成，我们继续分析AbstractAutowireCapableBeanFactory的createBean方法的源码，理解其创建Bean实例的具体实现过程。</p>
 <h2 id="abstractautowirecapablebeanfactory创建bean实例对象">AbstractAutowireCapableBeanFactory创建Bean实例对象<a hidden class="anchor" aria-hidden="true" href="#abstractautowirecapablebeanfactory创建bean实例对象">#</a></h2>
@@ -3615,8 +3615,8 @@ Beanfactory 和 Factory bean，其中 BeanFactory 指的是 IOC 容器的编程�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>通过上面的代码分析，我们看到了如果Bean有方法被覆盖了，则使用JDK的反射机制进行实例化，否则，使用CGLIB进行实例化。
-instantiateWithMethodInjection方法调用SimpleInstantiationStrategy的子类
+</div><p>通过上面的代码分析，我们看到了如果Bean有方法被覆盖了，则使用JDK的反射机制进行实例化，否则，使用CGLIB进行实例化。<br>
+instantiateWithMethodInjection方法调用SimpleInstantiationStrategy的子类<br>
 CglibSubclassingInstantiationStrategy使用CGLIB来进行初始化，其源码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -4025,7 +4025,7 @@ CglibSubclassingInstantiationStrategy使用CGLIB来进行初始化，其源码�
 </div><p>分析上述代码，我们可以看出，对属性的注入过程分以下两种情况：</p>
 <ul>
 <li>属性值类型不需要转换时，不需要解析属性值，直接准备进行依赖注入。</li>
-<li>属性值需要进行类型转换时，如对其他对象的引用等，首先需要解析属性值，然后对解析后的属性值进行依赖注入。
+<li>属性值需要进行类型转换时，如对其他对象的引用等，首先需要解析属性值，然后对解析后的属性值进行依赖注入。<br>
 对属性值的解析是在BeanDefinitionValueResolver类中的resolveValueIfNecessary方法中进行的，对属性值的依赖注入是通过bw.setPropertyValues方法实现的，在分析属性值的依赖注入之前，我们先分析一下对属性值的解析过程。</li>
 </ul>
 <h2 id="beandefinitionvalueresolver解析属性值">BeanDefinitionValueResolver解析属性值<a hidden class="anchor" aria-hidden="true" href="#beandefinitionvalueresolver解析属性值">#</a></h2>
@@ -4944,16 +4944,16 @@ CglibSubclassingInstantiationStrategy使用CGLIB来进行初始化，其源码�
 <li>对于集合类型的属性，将其属性值解析为目标类型的集合后直接赋值给属性。</li>
 <li>对于非集合类型的属性，大量使用了JDK的反射和内省机制，通过属性的getter方法(reader method)获取指定属性注入以前的值，同时调用属性的setter方法(writer method)为属性设置注入后的值。看到这里相信很多人都明白了Spring的setter注入原理。</li>
 </ul>
-<p>至此Spring IoC容器对Bean定义资源文件的定位，载入、解析和依赖注入已经全部分析完毕，现在
+<p>至此Spring IoC容器对Bean定义资源文件的定位，载入、解析和依赖注入已经全部分析完毕，现在<br>
 Spring IoC容器中管理了一系列靠依赖关系联系起来的Bean，程序不需要应用自己手动创建所需的对象，Spring IoC容器会在我们使用的时候自动为我们创建，并且为我们注入好相关的依赖，这就是Spring核心功能的控制反转和依赖注入的相关功能。</p>
 <h1 id="ioc容器的高级特性">IoC容器的高级特性<a hidden class="anchor" aria-hidden="true" href="#ioc容器的高级特性">#</a></h1>
 <p>通过前面4篇文章对Spring IoC容器的源码分析，我们已经基本上了解了Spring IoC容器对Bean定义资源的定位、读入和解析过程，同时也清楚了当用户通过getBean方法向IoC容器获取被管理的Bean时，IoC容器对Bean进行的初始化和依赖注入过程，这些是Spring IoC容器的基本功能特性。Spring IoC容器还有一些高级特性，如使用lazy-init属性对Bean预初始化、FactoryBean产生或者修饰Bean对象的生成、IoC容器初始化Bean过程中使用BeanPostProcessor后置处理器对Bean声明周期事件管理和IoC容器的autowiring自动装配功能等。</p>
 <h2 id="spring-ioc容器的lazy-init属性实现预实例化">Spring IoC容器的lazy-init属性实现预实例化<a hidden class="anchor" aria-hidden="true" href="#spring-ioc容器的lazy-init属性实现预实例化">#</a></h2>
 <p>通过前面我们对IoC容器的实现和工作原理分析，我们知道IoC容器的初始化过程就是对Bean定义资源的定位、载入和注册，此时容器对Bean的依赖注入并没有发生，依赖注入主要是在应用程序第一次向容器索取Bean时，通过getBean方法的调用完成。</p>
-<p>当Bean定义资源的<code>&lt;Bean&gt;</code>元素中配置了lazy-init属性时，容器将会在初始化的时候对所配置的Bean进行预实例化，Bean的依赖注入在容器初始化的时候就已经完成。这样，当应用程序第一次向容器索取被管理的Bean时，就不用再初始化和对Bean进行依赖注入了，直接从容器中获取已经完成依赖注入的现成Bean，可以提高应用第一次向容器获取Bean的性能。
+<p>当Bean定义资源的<code>&lt;Bean&gt;</code>元素中配置了lazy-init属性时，容器将会在初始化的时候对所配置的Bean进行预实例化，Bean的依赖注入在容器初始化的时候就已经完成。这样，当应用程序第一次向容器索取被管理的Bean时，就不用再初始化和对Bean进行依赖注入了，直接从容器中获取已经完成依赖注入的现成Bean，可以提高应用第一次向容器获取Bean的性能。<br>
 下面我们通过代码分析容器预实例化的实现过程：</p>
 <ul>
-<li>refresh()
+<li>refresh()<br>
 先从IoC容器的初始化过程开始，通过前面文章分析，我们知道IoC容器读入已经定位的Bean定义资源是从refresh方法开始的，我们首先从AbstractApplicationContext类的refresh方法入手分析，源码如下：</li>
 </ul>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -5042,10 +5042,10 @@ Spring IoC容器中管理了一系列靠依赖关系联系起来的Bean，程序
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在refresh方法中ConfigurableListableBeanFactorybeanFactory = obtainFreshBeanFactory();
+</div><p>在refresh方法中ConfigurableListableBeanFactorybeanFactory = obtainFreshBeanFactory();<br>
 启动了Bean定义资源的载入、注册过程，而finishBeanFactoryInitialization方法是对注册后的Bean定义中的预实例化(lazy-init=false，Spring默认就是预实例化，即为true)的Bean进行处理的地方。</p>
 <ul>
-<li>finishBeanFactoryInitialization处理预实例化Bean
+<li>finishBeanFactoryInitialization处理预实例化Bean<br>
 当Bean定义资源被载入IoC容器之后，容器将Bean定义资源解析为容器内部的数据结构BeanDefinition注册到容器中，AbstractApplicationContext类中的finishBeanFactoryInitialization方法对配置了预实例化属性的Bean进行预初始化过程，源码如下：</li>
 </ul>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -5086,7 +5086,7 @@ Spring IoC容器中管理了一系列靠依赖关系联系起来的Bean，程序
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>ConfigurableListableBeanFactory是一个接口，其preInstantiateSingletons方法由其子类
+</div><p>ConfigurableListableBeanFactory是一个接口，其preInstantiateSingletons方法由其子类<br>
 DefaultListableBeanFactory提供。</p>
 <ul>
 <li>DefaultListableBeanFactory对配置lazy-init属性单态Bean的预实例化</li>
@@ -5187,11 +5187,11 @@ DefaultListableBeanFactory提供。</p>
 </div>
 </div><p>通过对lazy-init处理源码的分析，我们可以看出，如果设置了lazy-init属性，则容器在完成Bean定义的注册之后，会通过getBean方法，触发对指定Bean的初始化和依赖注入过程，这样当应用第一次向容器索取所需的Bean时，容器不再需要对Bean进行初始化和依赖注入，直接从已经完成实例化和依赖注入的Bean中取一个线程的Bean，这样就提高了第一次获取Bean的性能。</p>
 <h2 id="factorybean的实现">FactoryBean的实现<a hidden class="anchor" aria-hidden="true" href="#factorybean的实现">#</a></h2>
-<p>在Spring中，有两个很容易混淆的类：BeanFactory和FactoryBean。
+<p>在Spring中，有两个很容易混淆的类：BeanFactory和FactoryBean。<br>
 BeanFactory：Bean工厂，是一个工厂(Factory)，我们Spring IoC容器的最顶层接口就是这个BeanFactory，它的作用是管理Bean，即实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。</p>
 <p>FactoryBean：工厂Bean，是一个Bean，作用是产生其他bean实例。通常情况下，这种bean没有什么特别的要求，仅需要提供一个工厂方法，该方法用来返回其他bean实例。通常情况下，bean无须自己实现工厂模式，Spring容器担任工厂角色；但少数情况下，容器中的bean本身就是工厂，其作用是产生其它bean实例。</p>
-<p>当用户使用容器本身时，可以使用转义字符”&amp;”来得到FactoryBean本身，以区别通过FactoryBean产生的实例对象和FactoryBean对象本身。在BeanFactory中通过如下代码定义了该转义字符：
-<code>StringFACTORY_BEAN_PREFIX = &quot;&amp;&quot;;</code>
+<p>当用户使用容器本身时，可以使用转义字符”&amp;”来得到FactoryBean本身，以区别通过FactoryBean产生的实例对象和FactoryBean对象本身。在BeanFactory中通过如下代码定义了该转义字符：<br>
+<code>StringFACTORY_BEAN_PREFIX = &quot;&amp;&quot;;</code><br>
 如果myJndiObject是一个FactoryBean，则使用&amp;myJndiObject得到的是myJndiObject对象，而不是myJndiObject产生出来的对象。</p>
 <h3 id="factorybean的源码如下">FactoryBean的源码如下<a hidden class="anchor" aria-hidden="true" href="#factorybean的源码如下">#</a></h3>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -5368,8 +5368,8 @@ BeanFactory：Bean工厂，是一个工厂(Factory)，我们Spring IoC容器的�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在上面获取给定Bean的实例对象的getObjectForBeanInstance方法中，
-会调用FactoryBeanRegistrySupport类的getObjectFromFactoryBean方法，该方法实现了Bean工厂生产Bean实例对象。
+</div><p>在上面获取给定Bean的实例对象的getObjectForBeanInstance方法中，<br>
+会调用FactoryBeanRegistrySupport类的getObjectFromFactoryBean方法，该方法实现了Bean工厂生产Bean实例对象。<br>
 Dereference(解引用)：一个在C/C++中应用比较多的术语，在C++中，”*”是解引用符号，而”&amp;”是引用符号，解引用是指变量指向的是所引用对象的本身数据，而不是引用对象的内存地址。</p>
 <h3 id="abstractbeanfactory生产bean实例对象">AbstractBeanFactory生产Bean实例对象<a hidden class="anchor" aria-hidden="true" href="#abstractbeanfactory生产bean实例对象">#</a></h3>
 <p>AbstractBeanFactory类中生产Bean实例对象的主要源码如下：</p>
@@ -5525,7 +5525,7 @@ Dereference(解引用)：一个在C/C++中应用比较多的术语，在C++中�
 </div>
 </div><p>从上面的源码分析中，我们可以看出，BeanFactory接口调用其实现类的getObject方法来实现创建Bean实例对象的功能。</p>
 <h3 id="工厂bean的实现类getobject方法创建bean实例对象">工厂Bean的实现类getObject方法创建Bean实例对象<a hidden class="anchor" aria-hidden="true" href="#工厂bean的实现类getobject方法创建bean实例对象">#</a></h3>
-<p>FactoryBean的实现类有非常多，比如：Proxy、RMI、JNDI、ServletContextFactoryBean等等，
+<p>FactoryBean的实现类有非常多，比如：Proxy、RMI、JNDI、ServletContextFactoryBean等等，<br>
 FactoryBean接口为Spring容器提供了一个很好的封装机制，具体的getObject有不同的实现类根据不同的实现策略来具体提供，我们分析一个最简单的AnnotationTestFactoryBean的实现源码：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5567,7 +5567,7 @@ FactoryBean接口为Spring容器提供了一个很好的封装机制，具体的
 </div>
 </div><p>其他的Proxy，RMI，JNDI等等，都是根据相应的策略提供getObject的实现。这里不做一一分析，这已经不是Spring的核心功能，有需要的时候再去深入研究。</p>
 <h2 id="beanpostprocessor后置处理器的实现">BeanPostProcessor后置处理器的实现<a hidden class="anchor" aria-hidden="true" href="#beanpostprocessor后置处理器的实现">#</a></h2>
-<p>BeanPostProcessor后置处理器是Spring IoC容器经常使用到的一个特性，这个Bean后置处理器是一个监听器，可以监听容器触发的Bean声明周期事件。后置处理器向容器注册以后，容器中管理的Bean就具备了接收IoC容器事件回调的能力。
+<p>BeanPostProcessor后置处理器是Spring IoC容器经常使用到的一个特性，这个Bean后置处理器是一个监听器，可以监听容器触发的Bean声明周期事件。后置处理器向容器注册以后，容器中管理的Bean就具备了接收IoC容器事件回调的能力。<br>
 BeanPostProcessor的使用非常简单，只需要提供一个实现接口BeanPostProcessor的实现类，然后在Bean的配置文件中设置即可。</p>
 <h3 id="beanpostprocessor的源码如下">BeanPostProcessor的源码如下：<a hidden class="anchor" aria-hidden="true" href="#beanpostprocessor的源码如下">#</a></h3>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -5594,7 +5594,7 @@ BeanPostProcessor的使用非常简单，只需要提供一个实现接口BeanPo
 </div>
 </div><p>这两个回调的入口都是和容器管理的Bean的生命周期事件紧密相关，可以为用户提供在Spring IoC容器初始化Bean过程中自定义的处理操作。</p>
 <h3 id="abstractautowirecapablebeanfactory类对容器生成的bean添加后置处理器">AbstractAutowireCapableBeanFactory类对容器生成的Bean添加后置处理器<a hidden class="anchor" aria-hidden="true" href="#abstractautowirecapablebeanfactory类对容器生成的bean添加后置处理器">#</a></h3>
-<p>BeanPostProcessor后置处理器的调用发生在Spring IoC容器完成对Bean实例对象的创建和属性的依赖注入完成之后，在对Spring依赖注入的源码分析过程中我们知道，当应用程序第一次调用getBean方法(lazy-init预实例化除外)向Spring IoC容器索取指定Bean时触发Spring IoC容器创建Bean实例对象并进行依赖注入的过程，其中真正实现创建Bean对象并进行依赖注入的方法是
+<p>BeanPostProcessor后置处理器的调用发生在Spring IoC容器完成对Bean实例对象的创建和属性的依赖注入完成之后，在对Spring依赖注入的源码分析过程中我们知道，当应用程序第一次调用getBean方法(lazy-init预实例化除外)向Spring IoC容器索取指定Bean时触发Spring IoC容器创建Bean实例对象并进行依赖注入的过程，其中真正实现创建Bean对象并进行依赖注入的方法是<br>
 AbstractAutowireCapableBeanFactory类的doCreateBean方法，主要源码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -5842,14 +5842,14 @@ AbstractAutowireCapableBeanFactory类的doCreateBean方法，主要源码如下�
 <h2 id="spring-ioc容器autowiring实现原理">Spring IoC容器autowiring实现原理<a hidden class="anchor" aria-hidden="true" href="#spring-ioc容器autowiring实现原理">#</a></h2>
 <p>Spring IoC容器提供了两种管理Bean依赖关系的方式</p>
 <ul>
-<li>显式管理：
+<li>显式管理：<br>
 通过BeanDefinition的属性值和构造方法实现Bean依赖关系管理。</li>
-<li>autowiring：
+<li>autowiring：<br>
 Spring IoC容器的依赖自动装配功能，不需要对Bean属性的依赖关系做显式的声明，只需要在配置好autowiring属性，IoC容器会自动使用反射查找属性的类型和名称，然后基于属性的类型或者名称来自动匹配容器中管理的Bean，从而自动地完成依赖注入。</li>
 </ul>
 <p>通过对autowiring自动装配特性的理解，我们知道容器对Bean的自动装配发生在容器对Bean依赖注入的过程中。在前面对Spring IoC容器的依赖注入过程源码分析中，我们已经知道了容器对Bean实例对象的属性注入的处理发生在AbstractAutoWireCapableBeanFactory类中的populateBean方法中，我们通过程序流程分析autowiring的实现原理：</p>
 <h3 id="abstractautowirecapablebeanfactory对bean实例进行属性依赖注入">AbstractAutoWireCapableBeanFactory对Bean实例进行属性依赖注入<a hidden class="anchor" aria-hidden="true" href="#abstractautowirecapablebeanfactory对bean实例进行属性依赖注入">#</a></h3>
-<p>应用第一次通过getBean方法(配置了lazy-init预实例化属性的除外)向IoC容器索取Bean时，容器创建Bean实例对象，并且对Bean实例对象进行属性依赖注入，AbstractAutoWireCapableBeanFactory的
+<p>应用第一次通过getBean方法(配置了lazy-init预实例化属性的除外)向IoC容器索取Bean时，容器创建Bean实例对象，并且对Bean实例对象进行属性依赖注入，AbstractAutoWireCapableBeanFactory的<br>
 populateBean方法就是实现Bean属性依赖注入的功能，其主要源码如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -6130,12 +6130,12 @@ populateBean方法就是实现Bean属性依赖注入的功能，其主要源码�
 <li>将依赖Bean的属性引用设置到被依赖的Bean属性上。</li>
 <li>将依赖Bean的名称和被依赖Bean的名称存储在IoC容器的集合中。</li>
 </ol>
-<p>Spring IoC容器的autowiring属性自动依赖注入是一个很方便的特性，可以简化开发时的配置，但是凡是都有两面性，自动属性依赖注入也有不足，首先，Bean的依赖关系在配置文件中无法很清楚地看出来，对于维护造成一定困难。其次，由于自动依赖注入是Spring容器自动执行的，容器是不会智能判断的，如果配置不当，将会带来无法预料的后果，所以自动依赖注入特性在使用时还是综合考虑。
-<a href="https://www.cnblogs.com/ITtangtang/p/3978349.html">参考</a>
+<p>Spring IoC容器的autowiring属性自动依赖注入是一个很方便的特性，可以简化开发时的配置，但是凡是都有两面性，自动属性依赖注入也有不足，首先，Bean的依赖关系在配置文件中无法很清楚地看出来，对于维护造成一定困难。其次，由于自动依赖注入是Spring容器自动执行的，容器是不会智能判断的，如果配置不当，将会带来无法预料的后果，所以自动依赖注入特性在使用时还是综合考虑。<br>
+<a href="https://www.cnblogs.com/ITtangtang/p/3978349.html">参考</a><br>
 参考：《Spring 技术内幕》</p>
 <h1 id="spring-bean">Spring bean<a hidden class="anchor" aria-hidden="true" href="#spring-bean">#</a></h1>
-<p>bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。
-这些 bean 是由元数据创建的，比如前边Beans.xml中写的。
+<p>bean 是一个被实例化，组装，并通过 Spring IoC 容器所管理的对象。<br>
+这些 bean 是由元数据创建的，比如前边Beans.xml中写的。<br>
 通过元数据构建一个bean，通常需要下面的属性：</p>
 <table>
 <thead>
@@ -6183,7 +6183,7 @@ populateBean方法就是实现Bean属性依赖注入的功能，其主要源码�
 </tr>
 </tbody>
 </table>
-<p>Bean 与 IOC 容器的关系
+<p>Bean 与 IOC 容器的关系<br>
 <img loading="lazy" src="/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/9.png"></p>
 <p>有下面三个重要的方法把配置元数据提供给 Spring 容器：</p>
 <ul>
@@ -6191,7 +6191,7 @@ populateBean方法就是实现Bean属性依赖注入的功能，其主要源码�
 <li>基于注解的配置</li>
 <li>基于 Java 的配置</li>
 </ul>
-<p>提示：对于基于 XML 的配置，Spring 2.0 以后使用 Schema 的格式，使得不同类型的配置拥有了自己的命名空间，使配置文件更具扩展性。
+<p>提示：对于基于 XML 的配置，Spring 2.0 以后使用 Schema 的格式，使得不同类型的配置拥有了自己的命名空间，使配置文件更具扩展性。<br>
 你已经看到了如何把基于 XML 的配置元数据提供给容器，但是让我们看看另一个基于 XML 配置文件的例子，这个配置文件中有不同的 bean 定义，包括延迟初始化，初始化方法和销毁方法的：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -6259,10 +6259,10 @@ populateBean方法就是实现Bean属性依赖注入的功能，其主要源码�
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在上述示例中：
-①xmlns=&ldquo;<a href="http://www.springframework.org/schema/beans%22">http://www.springframework.org/schema/beans"</a>，
+</div><p>在上述示例中：<br>
+①xmlns=&ldquo;<a href="http://www.springframework.org/schema/beans%22">http://www.springframework.org/schema/beans"</a>，<br>
 默认命名空间：它没有空间名，用于Spring Bean的定义；</p>
-<p>②xmlns:xsi=&ldquo;<a href="http://www.w3.org/2001/XMLSchema-instance%22">http://www.w3.org/2001/XMLSchema-instance"</a>，xsi命名空间：
+<p>②xmlns:xsi=&ldquo;<a href="http://www.w3.org/2001/XMLSchema-instance%22">http://www.w3.org/2001/XMLSchema-instance"</a>，xsi命名空间：<br>
 这个命名空间用于为每个文档中命名空间指定相应的Schema样式文件，是标准组织定义的标准命名空间。</p>
 <h2 id="bean的作用域">bean的作用域<a hidden class="anchor" aria-hidden="true" href="#bean的作用域">#</a></h2>
 <p>当在 Spring 中定义一个 bean 时，你必须声明该 bean 的作用域。</p>
@@ -6375,14 +6375,14 @@ populateBean方法就是实现Bean属性依赖注入的功能，其主要源码�
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>输出
-I&rsquo;m object A
-I&rsquo;m object A
+</div><p>输出<br>
+I&rsquo;m object A<br>
+I&rsquo;m object A<br>
 修改了objA，objB也改变了。</p>
 <h3 id="prototype-作用域">prototype 作用域<a hidden class="anchor" aria-hidden="true" href="#prototype-作用域">#</a></h3>
-<p>Prototype 作用域表示，每次对该 bean 请求时都会创建一个新的 bean 实例。
+<p>Prototype 作用域表示，每次对该 bean 请求时都会创建一个新的 bean 实例。<br>
 （请求：将其注入到另一个 bean 中，或者以程序的方式调用容器的 getBean() 方法）</p>
-<p>Prototype 是原型类型，它在我们创建容器的时候并没有实例化，而是当我们获取bean的时候才会去创建一个对象，而且我们每次获取到的对象都不是同一个对象。
+<p>Prototype 是原型类型，它在我们创建容器的时候并没有实例化，而是当我们获取bean的时候才会去创建一个对象，而且我们每次获取到的对象都不是同一个对象。<br>
 根据经验，对有状态的 bean 应该使用 prototype 作用域，而对无状态的bean则应该使用 singleton 作用域。你可以在 bean 的配置文件中设置作用域的属性为 prototype，如下所示：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -6425,14 +6425,14 @@ I&rsquo;m object A
 </span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&lt;/beans&gt;
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>主类不变，输出如下：
-I&rsquo;m object A
-Hello World!
+</div><p>主类不变，输出如下：<br>
+I&rsquo;m object A<br>
+Hello World!<br>
 修改了objA，objB没有改变，还是xml中定义的默认值。</p>
 <h2 id="bean的生命周期">bean的生命周期<a hidden class="anchor" aria-hidden="true" href="#bean的生命周期">#</a></h2>
 <p>Bean的生命周期可以表达为：Bean的定义——Bean的初始化——Bean的使用——Bean的销毁</p>
 <h3 id="初始化回调">初始化回调<a hidden class="anchor" aria-hidden="true" href="#初始化回调">#</a></h3>
-<p>org.springframework.beans.factory.InitializingBean接口中有一个方法：
+<p>org.springframework.beans.factory.InitializingBean接口中有一个方法：<br>
 <code>void afterPropertiesSet() throws Exception;</code></p>
 <p>实现该接口，重写方法即可：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -6453,8 +6453,8 @@ Hello World!
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>或者在基于 XML 的配置元数据的情况下，你可以使用 init-method 属性来指定带有 void 无参数方法的名称。
-<code>&lt;bean id=&quot;exampleBean&quot;  class=&quot;examples.ExampleBean&quot; init-method=&quot;init&quot;/&gt;</code>
+</div><p>或者在基于 XML 的配置元数据的情况下，你可以使用 init-method 属性来指定带有 void 无参数方法的名称。<br>
+<code>&lt;bean id=&quot;exampleBean&quot;  class=&quot;examples.ExampleBean&quot; init-method=&quot;init&quot;/&gt;</code><br>
 注意：bean的作用域必须是scope=&ldquo;singleton&rdquo;</p>
 <p>下面是类的定义：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -6474,7 +6474,7 @@ Hello World!
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="销毁回调">销毁回调<a hidden class="anchor" aria-hidden="true" href="#销毁回调">#</a></h3>
-<p>org.springframework.beans.factory.DisposableBean
+<p>org.springframework.beans.factory.DisposableBean<br>
 <code>void destroy() throws Exception;</code></p>
 <p>实现该接口，重写方法即可：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -6495,8 +6495,8 @@ Hello World!
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>或者在基于 XML 的配置元数据的情况下，你可以使用 destroy-method 属性来指定带有 void 无参数方法的名称。
-<code>&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot; destroy-method=&quot;destroy&quot;/&gt;</code>
+</div><p>或者在基于 XML 的配置元数据的情况下，你可以使用 destroy-method 属性来指定带有 void 无参数方法的名称。<br>
+<code>&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot; destroy-method=&quot;destroy&quot;/&gt;</code><br>
 注意：bean的作用域必须是scope=&ldquo;singleton&rdquo;</p>
 <p>下面是类的定义：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -6746,11 +6746,11 @@ Hello World!
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>输出：
-BeforeInitialization : helloWorld
-Bean is going through init.
-AfterInitialization : helloWorld
-Hello World!
+</div><p>输出：<br>
+BeforeInitialization : helloWorld<br>
+Bean is going through init.<br>
+AfterInitialization : helloWorld<br>
+Hello World!<br>
 Bean will destroy now.</p>
 <h2 id="bean的继承">bean的继承<a hidden class="anchor" aria-hidden="true" href="#bean的继承">#</a></h2>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -6791,8 +6791,8 @@ Bean will destroy now.</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&lt;/beans&gt;
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>第一个bean，HelloWorld有两个属性message1和message2。
-第二个bean，helloChina继承自helloWorld，重写了message1属性，继承了message2属性，
+</div><p>第一个bean，HelloWorld有两个属性message1和message2。<br>
+第二个bean，helloChina继承自helloWorld，重写了message1属性，继承了message2属性，<br>
 并且引入一个新的属性 message3。</p>
 <p>两个类</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -6940,11 +6940,11 @@ Bean will destroy now.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-Hello World!
-Hello Second World!
-Hello China!
-Hello Second World!
+</div><p>运行结果<br>
+Hello World!<br>
+Hello Second World!<br>
+Hello China!<br>
+Hello Second World!<br>
 Hello China again!</p>
 <p>Bean 定义模板</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -7145,9 +7145,9 @@ Hello China again!</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果：
-Inside SpellChecker constructor.
-Inside TextEditor constructor.
+</div><p>运行结果：<br>
+Inside SpellChecker constructor.<br>
+Inside TextEditor constructor.<br>
 Inside checkSpelling.</p>
 <p>如果构造函数需要多个参数，那么按照顺序传参即可：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -7371,12 +7371,12 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-Inside SpellChecker constructor.
-Inside setSpellChecker.
+</div><p>运行结果<br>
+Inside SpellChecker constructor.<br>
+Inside setSpellChecker.<br>
 Inside checkSpelling.</p>
-<p>使用 p-namespace 实现 XML 配置：
-如果你有许多的设值函数方法，那么在 XML 配置文件中使用 p-namespace 是非常方便的。
+<p>使用 p-namespace 实现 XML 配置：<br>
+如果你有许多的设值函数方法，那么在 XML 配置文件中使用 p-namespace 是非常方便的。<br>
 看一下区别，以带有 标签的标准 XML 配置文件为例：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -7462,7 +7462,7 @@ Inside checkSpelling.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="注入内部beans">注入内部beans<a hidden class="anchor" aria-hidden="true" href="#注入内部beans">#</a></h2>
-<p>java的内部类是在类的内部定义的，同理，内部bean是在其他bean内定义的。
+<p>java的内部类是在类的内部定义的，同理，内部bean是在其他bean内定义的。<br>
 <property />或<constructor-arg />元素中的<bean />元素称为内部bean，如下所示。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -7498,7 +7498,7 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span>&lt;/beans&gt;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>示例：
+</div><p>示例：<br>
 继续使用上边的例子，只改变beans.xml</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -7532,9 +7532,9 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行主程序，结果：
-Inside SpellChecker constructor.
-Inside TextEditor constructor.
+</div><p>运行主程序，结果：<br>
+Inside SpellChecker constructor.<br>
+Inside TextEditor constructor.<br>
 Inside checkSpelling.</p>
 <h2 id="注入集合">注入集合<a hidden class="anchor" aria-hidden="true" href="#注入集合">#</a></h2>
 <p>前边已经说了</p>
@@ -7786,10 +7786,10 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-List Elements :[北京, 上海, 广州, 深圳]
-Set Elements :[北京, 上海, 广州, 深圳]
-Map Elements :{1=北京, 2=上海, 3=广州, 4=深圳}
+</div><p>运行结果<br>
+List Elements :[北京, 上海, 广州, 深圳]<br>
+Set Elements :[北京, 上海, 广州, 深圳]<br>
+Map Elements :{1=北京, 2=上海, 3=广州, 4=深圳}<br>
 Property Elements :{two=上海, one=北京, three=广州, four=深圳}</p>
 <p>在集合中注册bean的引用，下面的 Bean 定义将帮助你理解如何注入 bean 的引用作为集合的元素。甚至你可以将引用和值混合在一起，如下所示：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -7909,7 +7909,7 @@ Property Elements :{two=上海, one=北京, three=广州, four=深圳}</p>
 <h1 id="bean的自动装配">bean的自动装配<a hidden class="anchor" aria-hidden="true" href="#bean的自动装配">#</a></h1>
 <p>Spring 容器可以在不使用<code>&lt;constructor-arg&gt;和&lt;property&gt;</code>元素的情况下自动装配相互协作的 bean 之间的关系，这样可以缩短xml文件。</p>
 <h2 id="byname">byName<a hidden class="anchor" aria-hidden="true" href="#byname">#</a></h2>
-<p>这种模式由属性名称指定自动装配。在 XML 配置文件中 beans 的 auto-wire 属性设置为 byName。
+<p>这种模式由属性名称指定自动装配。在 XML 配置文件中 beans 的 auto-wire 属性设置为 byName。<br>
 然后，它尝试将它的属性与配置文件中定义为相同名称的 beans 进行匹配和连接。如果找到匹配项，它将注入这些 beans，否则，它将抛出异常。</p>
 <p>例如，在配置文件中，如果一个 bean 定义设置为自动装配 byName，并且它包含 spellChecker 属性，即，它有一个 setSpellChecker(&hellip;) 方法，那么 Spring 就会查找定义名为 spellChecker 的 bean，并且用它来设置这个属性。你仍然可以使用<code>&lt;property&gt;</code>标签连接其余的属性。下面的例子将说明这个概念。注：必须有set方法，spring才能通过byName找到bean</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -8074,16 +8074,16 @@ Property Elements :{two=上海, one=北京, three=广州, four=深圳}</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">&lt;/beans&gt;
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-Inside SpellChecker constructor.
+</div><p>运行结果<br>
+Inside SpellChecker constructor.<br>
 Inside checkSpelling.</p>
 <h2 id="bytype">byType<a hidden class="anchor" aria-hidden="true" href="#bytype">#</a></h2>
 <p>这种模式由属性类型指定自动装配。在 XML 配置文件中 beans 的 autowire 属性设置为 byType。然后，如果它的 type 恰好与配置文件中 beans 名称中的一个相匹配，它将尝试匹配和连接它的属性。如果找到匹配项，它将注入这些 beans，否则，它将抛出异常。</p>
 <p>例如，在配置文件中，如果一个 bean 定义设置为自动装配 byType，并且它包含 SpellChecker 类型的spellChecker 属性，那么 Spring 就会查找定义名为 SpellChecker 的 bean，并且用它来设置这个属性。你仍然可以使用<code>&lt;property&gt;</code>标签连接其余属性。下面的例子将说明这个概念，你会发现和上面的例子没有什么区别，除了 XML 配置文件已经被改变。</p>
-<p>继续使用上边byName的例子，只改变Beans.xml中autowire的属性值
+<p>继续使用上边byName的例子，只改变Beans.xml中autowire的属性值<br>
 <code>autowire=&quot;byType&quot;</code></p>
-<p>运行结果
-Inside SpellChecker constructor.
+<p>运行结果<br>
+Inside SpellChecker constructor.<br>
 Inside checkSpelling.</p>
 <h2 id="由构造函数自动装配">由构造函数自动装配<a hidden class="anchor" aria-hidden="true" href="#由构造函数自动装配">#</a></h2>
 <p>这种模式与 byType 非常相似，但它应用于构造器参数。在 XML 配置文件中 beans 的 autowire 属性设置为 constructor。然后，它尝试把它的构造函数的参数与配置文件中 beans 名称中的一个进行匹配和连线。如果找到匹配项，它会注入这些 bean，否则，它会抛出异常。</p>
@@ -8250,11 +8250,11 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-Inside SpellChecker constructor.
+</div><p>运行结果<br>
+Inside SpellChecker constructor.<br>
 Inside checkSpelling.</p>
 <h1 id="基于注解的配置">基于注解的配置<a hidden class="anchor" aria-hidden="true" href="#基于注解的配置">#</a></h1>
-<p>从 Spring 2.5 开始就可以使用注解来配置依赖注入，而不是使用xml。
+<p>从 Spring 2.5 开始就可以使用注解来配置依赖注入，而不是使用xml。<br>
 基于注解的配置在spring中默认不打开，我们将需要在我们的 Spring 配置文件中启用它。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -8396,15 +8396,15 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果：
-Name : wjy
+</div><p>运行结果：<br>
+Name : wjy<br>
 Age : 18</p>
-<p>注意：spring 5.1版本开始，@Required注解已经被标记为过时，不要再使用该注解了。
+<p>注意：spring 5.1版本开始，@Required注解已经被标记为过时，不要再使用该注解了。<br>
 <a href="https://stackoverflow.com/questions/53358568/springs-annotation-type-required-deprecation">参考stackoverflow上的解释</a></p>
 <h2 id="autowired">@Autowired<a hidden class="anchor" aria-hidden="true" href="#autowired">#</a></h2>
 <p>autowired这个单词是自动连线，自动装配的意思。这个词语本来的意思是指的一些工业上的用机器代替人口，自动将一些需要完成的组装任务，或者别的一些任务完成。</p>
-<p>该注解可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。通过 @Autowired的使用来消除 set ，get方法。在使用@Autowired之前，我们对一个bean配置属性时，是这样的
-<code>&lt;property name=&quot;属性名&quot; value=&quot; 属性值&quot;/&gt; </code>
+<p>该注解可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。通过 @Autowired的使用来消除 set ，get方法。在使用@Autowired之前，我们对一个bean配置属性时，是这样的<br>
+<code>&lt;property name=&quot;属性名&quot; value=&quot; 属性值&quot;/&gt; </code><br>
 通过这种方式来，配置比较繁琐，而且代码比较多。在Spring 2.5 引入了 @Autowired 注释。</p>
 <p>本来 autowire 是在xml文件中进行配置的，可以设置为byName、byType、constructor和autodetect。@Autowired是用在JavaBean中的注解，通过byType形式，用来给指定的字段或方法注入所需的外部资源。两者的功能是一样的，就是能减少或者消除属性或构造器参数的设置，只是配置地方不一样而已。</p>
 <p>autowire四种模式的区别：</p>
@@ -8551,11 +8551,11 @@ Age : 18</p>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-Inside SpellChecker constructor.
+</div><p>运行结果<br>
+Inside SpellChecker constructor.<br>
 Inside checkSpelling.</p>
 <h3 id="在属性上使用autowired">在属性上使用@Autowired<a hidden class="anchor" aria-hidden="true" href="#在属性上使用autowired">#</a></h3>
-<p>可以将 @Autowired 写在属性上，这样就不用写该属性的setter方法了。
+<p>可以将 @Autowired 写在属性上，这样就不用写该属性的setter方法了。<br>
 只修改TextEditor，其他不变</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -8591,9 +8591,9 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果：
-Inside TextEditor constructor.
-Inside SpellChecker constructor.
+</div><p>运行结果：<br>
+Inside TextEditor constructor.<br>
+Inside SpellChecker constructor.<br>
 Inside checkSpelling.</p>
 <h3 id="在构造函数上使用autowired">在构造函数上使用@Autowired<a hidden class="anchor" aria-hidden="true" href="#在构造函数上使用autowired">#</a></h3>
 <p>只修改TextEditor，其他不变</p>
@@ -8631,14 +8631,14 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-Inside TextEditor constructor.
-Inside SpellChecker constructor.
+</div><p>运行结果<br>
+Inside TextEditor constructor.<br>
+Inside SpellChecker constructor.<br>
 Inside checkSpelling.</p>
 <h3 id="autowiredrequired--false">@Autowired(required = false)<a hidden class="anchor" aria-hidden="true" href="#autowiredrequired--false">#</a></h3>
 <p>表示该属性不是必须的</p>
 <h3 id="使用autowired的原理是什么">使用@Autowired的原理是什么？<a hidden class="anchor" aria-hidden="true" href="#使用autowired的原理是什么">#</a></h3>
-<p>其实在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给该对象的属性。
+<p>其实在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给该对象的属性。<br>
 <code>&lt;bean class=&quot;org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor&quot;/&gt;  </code></p>
 <p><a href="https://my.oschina.net/HeliosFly/blog/203902">@Autowired详细解读</a></p>
 <h2 id="qualifier">@Qualifier<a hidden class="anchor" aria-hidden="true" href="#qualifier">#</a></h2>
@@ -8793,9 +8793,9 @@ Inside checkSpelling.</p>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果
-Inside Profile constructor.
-Age : 20
+</div><p>运行结果<br>
+Inside Profile constructor.<br>
+Age : 20<br>
 Name : wjy</p>
 <h2 id="jsr-250">JSR-250<a hidden class="anchor" aria-hidden="true" href="#jsr-250">#</a></h2>
 <h3 id="postconstruct-和-predestroy-注释">@PostConstruct 和 @PreDestroy 注释<a hidden class="anchor" aria-hidden="true" href="#postconstruct-和-predestroy-注释">#</a></h3>
@@ -8896,9 +8896,9 @@ Name : wjy</p>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>运行结果：
-Bean is going through init.
-Your Message : Hello World!
+</div><p>运行结果：<br>
+Bean is going through init.<br>
+Your Message : Hello World!<br>
 Bean will destroy now.</p>
 <h3 id="resource">@Resource<a hidden class="anchor" aria-hidden="true" href="#resource">#</a></h3>
 <p>@Resource装配顺序</p>
@@ -8911,21 +8911,21 @@ Bean will destroy now.</p>
 <p>@Resource和@Autowired的区别</p>
 <ul>
 <li>
-<p>bean实例化的时候，
-@Resource使用的是CommonAnnotationBeanPostProcessor后置处理器，
+<p>bean实例化的时候，<br>
+@Resource使用的是CommonAnnotationBeanPostProcessor后置处理器，<br>
 而@Autowired使用的是AutowiredAnnotationBeanPostProcessor后置处理器</p>
 </li>
 <li>
 <p>@Autowired可以用在构造方法上，@Resource不可以</p>
 </li>
 <li>
-<p>@Autowired默认按类型装配（byType），默认情况下必须要求依赖对象必须存在，如果要允许null值，可以设置它的required属性为false
+<p>@Autowired默认按类型装配（byType），默认情况下必须要求依赖对象必须存在，如果要允许null值，可以设置它的required属性为false<br>
 @Resource默认按照名称进行装配（byName），名称可以通过name属性进行指定，如果没有指定name属性，当注解写在字段上时，默认取字段名进行安装名称查找，如果注解写在setter方法上默认取属性名进行装配。当找不到与名称匹配的bean时才按照类型进行装配。但是需要注意的是，如果name属性一旦指定，就只会按照名称进行装配。</p>
 </li>
 </ul>
 <h1 id="spring-基于-java-的配置">Spring 基于 Java 的配置<a hidden class="anchor" aria-hidden="true" href="#spring-基于-java-的配置">#</a></h1>
 <h2 id="configuration-和-bean">@Configuration 和 @Bean<a hidden class="anchor" aria-hidden="true" href="#configuration-和-bean">#</a></h2>
-<p>带有@Configuration的类，表示这个类可以使用 Spring IoC 容器作为 bean 定义的来源。
+<p>带有@Configuration的类，表示这个类可以使用 Spring IoC 容器作为 bean 定义的来源。<br>
 带有 @Bean 的注解方法将返回一个对象，该对象应该被注册为在 Spring 应用程序上下文中的 bean。</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -9069,7 +9069,7 @@ Bean will destroy now.</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>不需要xml配置文件，运行主程序：
+</div><p>不需要xml配置文件，运行主程序：<br>
 Your Message : Hello World!</p>
 <h2 id="注入-bean-的依赖性">注入 Bean 的依赖性<a hidden class="anchor" aria-hidden="true" href="#注入-bean-的依赖性">#</a></h2>
 <p>当 @Beans 依赖对方时，表达这种依赖性非常简单，只要有一个 bean 方法调用另一个，如下所示：</p>
@@ -9192,9 +9192,9 @@ Your Message : Hello World!</p>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>不需要xml配置文件，运行主程序：
-Inside SpellChecker constructor.
-Inside TextEditor constructor.
+</div><p>不需要xml配置文件，运行主程序：<br>
+Inside SpellChecker constructor.<br>
+Inside TextEditor constructor.<br>
 Inside checkSpelling.</p>
 <h2 id="import">@Import<a hidden class="anchor" aria-hidden="true" href="#import">#</a></h2>
 <p>@import 注解允许从另一个配置类中加载 @Bean 定义</p>
@@ -9320,35 +9320,35 @@ Inside checkSpelling.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="spring-中的事件处理">Spring 中的事件处理<a hidden class="anchor" aria-hidden="true" href="#spring-中的事件处理">#</a></h1>
-<p>ApplicationContext 是Spring 的核心，它负责管理 beans 的完整生命周期。当加载 beans 时，
-ApplicationContext 会发布某些类型的事件，例如，当上下文启动时，ContextStartedEvent 发布，
+<p>ApplicationContext 是Spring 的核心，它负责管理 beans 的完整生命周期。当加载 beans 时，<br>
+ApplicationContext 会发布某些类型的事件，例如，当上下文启动时，ContextStartedEvent 发布，<br>
 当上下文停止时，ContextStoppedEvent 发布。</p>
-<p>ApplicationContext 通过 ApplicationEvent类 和 ApplicationListener 接口，处理事件。
-如果一个 bean 实现 ApplicationListener，那么每次 ApplicationEvent 被发布到 ApplicationContext 上，那个 bean 会被通知。
+<p>ApplicationContext 通过 ApplicationEvent类 和 ApplicationListener 接口，处理事件。<br>
+如果一个 bean 实现 ApplicationListener，那么每次 ApplicationEvent 被发布到 ApplicationContext 上，那个 bean 会被通知。<br>
 Spring 提供了以下的标准事件：</p>
 <ul>
 <li>
-<p>ContextRefreshedEvent
-ApplicationContext 被初始化或刷新时，该事件被发布。这也可以在 ConfigurableApplicationContext
+<p>ContextRefreshedEvent<br>
+ApplicationContext 被初始化或刷新时，该事件被发布。这也可以在 ConfigurableApplicationContext<br>
 接口中使用 refresh() 方法来发生。</p>
 </li>
 <li>
-<p>ContextStartedEvent
-当使用 ConfigurableApplicationContext 接口中的 start() 方法启动 ApplicationContext 时，该事件被
+<p>ContextStartedEvent<br>
+当使用 ConfigurableApplicationContext 接口中的 start() 方法启动 ApplicationContext 时，该事件被<br>
 发布。你可以调查你的数据库，或者你可以在接受到这个事件后重启任何停止的应用程序。</p>
 </li>
 <li>
-<p>ContextStoppedEvent
-当使用 ConfigurableApplicationContext 接口中的 stop() 方法停止 ApplicationContext 时，发布这个
+<p>ContextStoppedEvent<br>
+当使用 ConfigurableApplicationContext 接口中的 stop() 方法停止 ApplicationContext 时，发布这个<br>
 事件。你可以在接受到这个事件后做必要的清理的工作。</p>
 </li>
 <li>
-<p>ContextClosedEvent
-当使用 ConfigurableApplicationContext 接口中的 close() 方法关闭 ApplicationContext 时，该事件
+<p>ContextClosedEvent<br>
+当使用 ConfigurableApplicationContext 接口中的 close() 方法关闭 ApplicationContext 时，该事件<br>
 被发布。一个已关闭的上下文到达生命周期末端；它不能被刷新或重启。</p>
 </li>
 <li>
-<p>RequestHandledEvent
+<p>RequestHandledEvent<br>
 这是一个 web-specific 事件，告诉所有 bean HTTP 请求已经被服务。</p>
 </li>
 </ul>
@@ -9473,9 +9473,9 @@ ApplicationContext 被初始化或刷新时，该事件被发布。这也可以�
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>主程序运行结果
-ContextStoppedEvent Received
-Your Message : Hello World!
+</div><p>主程序运行结果<br>
+ContextStoppedEvent Received<br>
+Your Message : Hello World!<br>
 ContextStoppedEvent Received</p>
 <h1 id="spring-中的自定义事件">Spring 中的自定义事件<a hidden class="anchor" aria-hidden="true" href="#spring-中的自定义事件">#</a></h1>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
@@ -9594,8 +9594,8 @@ ContextStoppedEvent Received</p>
 </span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/beans&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>主程序运行结果：
-My Custom Event
+</div><p>主程序运行结果：<br>
+My Custom Event<br>
 My Custom Event</p>
 <p><a href="https://www.w3cschool.cn/wkspring/j3181mm3.html">参考</a></p>
 
