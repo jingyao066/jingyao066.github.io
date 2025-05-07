@@ -1038,6 +1038,20 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
 &lt;code&gt;java源码-&amp;gt;字节码（byte code）-&amp;gt;java Virture Machine -&amp;gt;windows\linux code&lt;/code&gt;&lt;/p&gt;</description>
     </item>
     <item>
+      <title>23_MyBatis</title>
+      <link>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/23_mybatis/</link>
+      <pubDate>Thu, 18 Aug 2022 15:40:43 +0000</pubDate>
+      <guid>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/23_mybatis/</guid>
+      <description>一、MyBatis概述 1.1 框架 在文献中看到的framework被翻译为框架 Java常用框架： SSM三大框架：Spring + SpringMVC + MyBatis SpringBoot SpringCloud 等。。 框架</description>
+    </item>
+    <item>
+      <title>22_Servlet</title>
+      <link>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/22_servlet/</link>
+      <pubDate>Wed, 17 Aug 2022 15:40:43 +0000</pubDate>
+      <guid>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/22_servlet/</guid>
+      <description>Servlet 关于系统架构 系统架构包括什么形式？ C/S架构 B/S架构 C/S架构？ Client / Server（客户端 / 服务器） C/S架构的软件或者说系统有哪些？qq</description>
+    </item>
+    <item>
       <title>21_web开发</title>
       <link>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/21_web%E5%BC%80%E5%8F%91/</link>
       <pubDate>Tue, 16 Aug 2022 15:40:43 +0000</pubDate>
