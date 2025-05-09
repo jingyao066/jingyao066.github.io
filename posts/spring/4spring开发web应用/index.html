@@ -3976,19 +3976,19 @@ Spring虽然都可以集成任何Web框架，但是，Spring本身也开发了�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>下一步就是正常启动Web应用程序，不要关闭它，我们打开另一个命令行窗口，输入<code>jconsole</code>启动JavaSE自带的一个JMX客户端程序：</p>
-<p><img alt="jconsole" loading="lazy" src="https://liaoxuefeng.com/books/java/spring/integration/jmx/jconsole.png"></p>
+<p><img alt="jconsole" loading="lazy" src="/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/499311b33ff58770ba5ef7d7e0cc5e68_MD5.png"></p>
 <p>通过jconsole连接到一个Java进程最简单的方法是直接在Local Process中找到正在运行的<code>AppConfig</code>，点击Connect即可连接到我们当前正在运行的Web应用，在jconsole中可直接看到内存、CPU等资源的监控。</p>
 <p>我们点击MBean，左侧按分类列出所有MBean，可以在<code>java.lang</code>查看内存等信息：</p>
-<p><img alt="mbean" loading="lazy" src="https://liaoxuefeng.com/books/java/spring/integration/jmx/mbeans.png"></p>
+<p><img alt="mbean" loading="lazy" src="/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/e622806dcac6b36236a68b5a30586cfe_MD5.png"></p>
 <p>细心的童鞋可以看到HikariCP连接池也是通过JMX监控的。</p>
 <p>在<code>sample</code>中可以看到我们自己的MBean，点击可查看属性<code>blacklist</code>：</p>
-<p><img alt="mbean-value" loading="lazy" src="https://liaoxuefeng.com/books/java/spring/integration/jmx/my-mbean.png"></p>
+<p><img alt="mbean-value" loading="lazy" src="/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/662a2bd23e9d59e27b8b8cd28454ff8c_MD5.png"></p>
 <p>点击<code>Operations</code>-<code>addBlacklist</code>，可以填入<code>127.0.0.1</code>并点击<code>addBlacklist</code>按钮，相当于jconsole通过JMX接口，调用了我们自己的<code>BlacklistMBean</code>的<code>addBlacklist()</code>方法，传入的参数就是填入的<code>127.0.0.1</code>：</p>
-<p><img alt="mbean-invoke-ok" loading="lazy" src="https://liaoxuefeng.com/books/java/spring/integration/jmx/mbean-edit.png"></p>
+<p><img alt="mbean-invoke-ok" loading="lazy" src="/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/c90309745b72d659b8285d51fcde30e8_MD5.png"></p>
 <p>再次查看属性<code>blacklist</code>，可以看到结果已经更新了：</p>
-<p><img alt="mbean-modified" loading="lazy" src="https://liaoxuefeng.com/books/java/spring/integration/jmx/mbean-attr.png"></p>
+<p><img alt="mbean-modified" loading="lazy" src="/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/21a48a3d07636f47d6911b2dc55d505e_MD5.png"></p>
 <p>我们可以在浏览器中测试一下黑名单功能是否已生效：</p>
-<p><img alt="403" loading="lazy" src="https://liaoxuefeng.com/books/java/spring/integration/jmx/mbean-enabled.png"></p>
+<p><img alt="403" loading="lazy" src="/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/39b5229fd3b85ed2c43bf86f9dc723b0_MD5.png"></p>
 <p>可见，<code>127.0.0.1</code>确实被添加到了黑名单，后台日志打印如下：</p>
 <div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">

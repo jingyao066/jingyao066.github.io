@@ -6,15 +6,8 @@
     <description>Recent content in Java on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 06 Mar 2024 18:18:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Sep 2022 17:54:53 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/java/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>手写Tomcat</title>
-      <link>https://009965.xyz/posts/java/%E6%89%8B%E5%86%99tomcat/</link>
-      <pubDate>Wed, 06 Mar 2024 18:18:52 +0000</pubDate>
-      <guid>https://009965.xyz/posts/java/%E6%89%8B%E5%86%99tomcat/</guid>
-      <description>对于Java后端开发的同学来说，Tomcat服务器肯定不陌生。开发Java Web App，最后通常都会部署到Tomcat这样的服务器上。 很多同学可</description>
-    </item>
     <item>
       <title>JSR303</title>
       <link>https://009965.xyz/posts/java/jsr303/</link>

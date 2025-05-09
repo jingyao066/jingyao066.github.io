@@ -176,10 +176,10 @@
     <loc>https://009965.xyz/posts/%E7%AE%97%E6%B3%95/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/</loc>
     <lastmod>2024-03-29T10:57:33+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/tags/java/</loc>
+    <loc>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/24_%E6%89%8B%E5%86%99tomcat/</loc>
     <lastmod>2024-03-06T18:18:52+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/posts/java/%E6%89%8B%E5%86%99tomcat/</loc>
+    <loc>https://009965.xyz/tags/java%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2024-03-06T18:18:52+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/google%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7/</loc>
@@ -272,6 +272,9 @@
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/hugo/</loc>
     <lastmod>2023-02-03T10:14:27+00:00</lastmod>
   </url><url>
+    <loc>https://009965.xyz/tags/java/</loc>
+    <lastmod>2022-09-30T17:54:53+00:00</lastmod>
+  </url><url>
     <loc>https://009965.xyz/posts/java/jsr303/</loc>
     <lastmod>2022-09-30T17:54:53+00:00</lastmod>
   </url><url>
@@ -285,9 +288,6 @@
     <lastmod>2022-09-01T18:16:18+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/23_mybatis/</loc>
-    <lastmod>2022-08-18T15:40:43+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/java%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2022-08-18T15:40:43+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/22_servlet/</loc>
@@ -401,11 +401,8 @@
     <loc>https://009965.xyz/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</loc>
     <lastmod>2020-01-15T14:13:12+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/posts/spring/springmvc/</loc>
+    <loc>https://009965.xyz/posts/springmvc/%E7%AC%AC15%E7%AB%A0-springmvc%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</loc>
     <lastmod>2020-01-13T23:35:36+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/posts/spring/spring-boot/</loc>
-    <lastmod>2020-01-12T17:27:28+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/java/kit/</loc>
     <lastmod>2020-01-11T10:27:48+00:00</lastmod>

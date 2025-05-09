@@ -39,33 +39,6 @@
       <description>简单的hello world 创建简单的信息类： 1 2 3 4 5 6 7 8 9 10 11 public class HelloWorld { private String message; public String getMessage() { return message; } public void setMessage(String message) { this.message = message; } } 创建 bean 的配置文件beans.xml</description>
     </item>
     <item>
-      <title>springMVC</title>
-      <link>https://009965.xyz/posts/spring/springmvc/</link>
-      <pubDate>Mon, 13 Jan 2020 23:35:36 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/springmvc/</guid>
-      <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
-&lt;p&gt;MVC，即 model模型，view视图，controller控制。&lt;br&gt;
-spring mvc可以用来开发灵活、松散耦合的 web 应用程序。&lt;br&gt;
-MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;模型封装了应用程序数据，通常由POJO组成。&lt;/li&gt;
-&lt;li&gt;视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。&lt;/li&gt;
-&lt;li&gt;控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    <item>
-      <title>spring boot</title>
-      <link>https://009965.xyz/posts/spring/spring-boot/</link>
-      <pubDate>Sun, 12 Jan 2020 17:27:28 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/spring-boot/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
-&lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    <item>
       <title>6、SpringCloud开发</title>
       <link>https://009965.xyz/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</link>
       <pubDate>Mon, 06 Jan 2020 13:22:38 +0000</pubDate>

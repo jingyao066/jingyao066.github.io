@@ -345,10 +345,10 @@
       <description>概述 在互联网中，我们经常遇到需要在大量数据中判断目标数据是否存在的情况。例如，在网络爬虫中，我们需要判断某个网址是否已经被访问过。为了实现这</description>
     </item>
     <item>
-      <title>手写Tomcat</title>
-      <link>https://009965.xyz/posts/java/%E6%89%8B%E5%86%99tomcat/</link>
+      <title>24_手写Tomcat</title>
+      <link>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/24_%E6%89%8B%E5%86%99tomcat/</link>
       <pubDate>Wed, 06 Mar 2024 18:18:52 +0000</pubDate>
-      <guid>https://009965.xyz/posts/java/%E6%89%8B%E5%86%99tomcat/</guid>
+      <guid>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/24_%E6%89%8B%E5%86%99tomcat/</guid>
       <description>对于Java后端开发的同学来说，Tomcat服务器肯定不陌生。开发Java Web App，最后通常都会部署到Tomcat这样的服务器上。 很多同学可</description>
     </item>
     <item>
@@ -1398,10 +1398,10 @@ dao层接口&lt;br&gt;
       <description>简单的hello world 创建简单的信息类： 1 2 3 4 5 6 7 8 9 10 11 public class HelloWorld { private String message; public String getMessage() { return message; } public void setMessage(String message) { this.message = message; } } 创建 bean 的配置文件beans.xml</description>
     </item>
     <item>
-      <title>springMVC</title>
-      <link>https://009965.xyz/posts/spring/springmvc/</link>
+      <title>springMVC常用注解</title>
+      <link>https://009965.xyz/posts/springmvc/%E7%AC%AC15%E7%AB%A0-springmvc%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</link>
       <pubDate>Mon, 13 Jan 2020 23:35:36 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/springmvc/</guid>
+      <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC15%E7%AB%A0-springmvc%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</guid>
       <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
 &lt;p&gt;MVC，即 model模型，view视图，controller控制。&lt;br&gt;
 spring mvc可以用来开发灵活、松散耦合的 web 应用程序。&lt;br&gt;
@@ -1411,18 +1411,6 @@ MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI
 &lt;li&gt;视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。&lt;/li&gt;
 &lt;li&gt;控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。&lt;/li&gt;
 &lt;/ul&gt;</description>
-    </item>
-    <item>
-      <title>spring boot</title>
-      <link>https://009965.xyz/posts/spring/spring-boot/</link>
-      <pubDate>Sun, 12 Jan 2020 17:27:28 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/spring-boot/</guid>
-      <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;官网：https://spring.io/projects/spring-boot&lt;/p&gt;
-&lt;p&gt;为什么用SpringBoot？&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can &amp;ldquo;just run&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;</description>
     </item>
     <item>
       <title>kit</title>

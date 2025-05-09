@@ -106,5 +106,20 @@
       <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC1%E7%AB%A0-%E5%88%9D%E8%AF%86springmvc/</guid>
       <description>学习本套教程前的知识储备 JavaSE HTML+CSS+JavaScript Vue AJAX + axios Thymeleaf Servlet Maven Spring 什么是MVC MVC架构模式相关课程，在老杜的JavaWeb课程中已经详细的讲解了，如果没有学过的</description>
     </item>
+    <item>
+      <title>springMVC常用注解</title>
+      <link>https://009965.xyz/posts/springmvc/%E7%AC%AC15%E7%AB%A0-springmvc%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</link>
+      <pubDate>Mon, 13 Jan 2020 23:35:36 +0000</pubDate>
+      <guid>https://009965.xyz/posts/springmvc/%E7%AC%AC15%E7%AB%A0-springmvc%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</guid>
+      <description>&lt;h1 id=&#34;spring-mvc-概述&#34;&gt;spring mvc 概述&lt;/h1&gt;
+&lt;p&gt;MVC，即 model模型，view视图，controller控制。&lt;br&gt;
+spring mvc可以用来开发灵活、松散耦合的 web 应用程序。&lt;br&gt;
+MVC 模式使应用程序的不同方面分离(输入逻辑、业务逻辑和 UI 逻辑)，同时提供了在这些元素之间的松散耦合。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模型封装了应用程序数据，通常由POJO组成。&lt;/li&gt;
+&lt;li&gt;视图主要用于展示模型数据，并且通常它生成客户端的浏览器可以解释的 HTML 输出。&lt;/li&gt;
+&lt;li&gt;控制器主要用于处理用户请求，并且构建合适的模型并将其传递到视图呈现。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
   </channel>
 </rss>

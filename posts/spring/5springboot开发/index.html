@@ -2103,7 +2103,7 @@ Spring Boot在未指定Profile时默认为default。</p>
 <li>org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0</li>
 </ul>
 <p>然后呢？没有然后了，直接启动应用，打开浏览器输入<code>http://localhost:8080/swagger-ui.html</code>：</p>
-<p><img alt="swagger-ui" loading="lazy" src="https://liaoxuefeng.com/books/java/springboot/integration/open-api/open-api.png"></p>
+<p><img alt="swagger-ui" loading="lazy" src="/posts/spring/5springboot%E5%BC%80%E5%8F%91/8e47e29b7175af6455d3f09736a53b64_MD5.png"></p>
 <p>立刻可以看到自动生成的API文档，这里列出了3个API，来自<code>api-controller</code>（因为定义在<code>ApiController</code>这个类中），点击某个API还可以交互，即输入API参数，点“Try it out”按钮，获得运行结果。</p>
 <h2 id="是不是太方便了">是不是太方便了！<a hidden class="anchor" aria-hidden="true" href="#是不是太方便了">#</a></h2>
 <p>因为我们引入<code>springdoc-openapi-ui</code>这个依赖后，它自动引入Swagger UI用来创建API文档。可以给API加入一些描述信息，例如：</p>
@@ -2136,7 +2136,7 @@ Spring Boot在未指定Profile时默认为default。</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>@Operation</code>可以对API进行描述，<code>@Parameter</code>可以对参数进行描述，它们的目的是用于生成API文档的描述信息。添加了描述的API文档如下：</p>
-<p><img alt="api-description" loading="lazy" src="https://liaoxuefeng.com/books/java/springboot/integration/open-api/open-api-desc.png"></p>
+<p><img alt="api-description" loading="lazy" src="/posts/spring/5springboot%E5%BC%80%E5%8F%91/5c7a6bf732bf2092acad8a31fa978ef3_MD5.png"></p>
 <p>大多数情况下，不需要任何配置，我们就直接得到了一个运行时动态生成的可交互的API文档，该API文档总是和代码保持同步，大大简化了文档的编写工作。</p>
 <p>要自定义文档的样式、控制某些API显示等，请参考<a href="https://springdoc.org/">springdoc文档</a>。</p>
 <h3 id="配置反向代理">配置反向代理<a hidden class="anchor" aria-hidden="true" href="#配置反向代理">#</a></h3>
@@ -2702,7 +2702,7 @@ Spring Boot在未指定Profile时默认为default。</p>
 <p>AMQP是一种使用广泛的独立于语言的消息协议，它的全称是Advanced Message Queuing Protocol，即高级消息队列协议，它定义了一种二进制格式的消息流，任何编程语言都可以实现该协议。实际上，Artemis也支持AMQP，但实际应用最广泛的AMQP服务器是使用<a href="https://www.erlang.org/">Erlang</a>编写的<a href="https://www.rabbitmq.com/">RabbitMQ</a>。</p>
 <h3 id="安装rabbitmq">安装RabbitMQ<a hidden class="anchor" aria-hidden="true" href="#安装rabbitmq">#</a></h3>
 <p>我们先从RabbitMQ的官网<a href="https://www.rabbitmq.com/download.html">下载</a>并安装RabbitMQ，安装和启动RabbitMQ请参考官方文档。要验证启动是否成功，可以访问RabbitMQ的管理后台<a href="http://localhost:15672/">http://localhost:15672</a>，如能看到登录界面表示RabbitMQ启动成功：</p>
-<p><img alt="rabbitmq-manage" loading="lazy" src="https://liaoxuefeng.com/books/java/springboot/integration/rabbitmq/rabbitmq.jpg"></p>
+<p><img alt="rabbitmq-manage" loading="lazy" src="/posts/spring/5springboot%E5%BC%80%E5%8F%91/483477a502aa3954a71a18f5a95ddd11_MD5.jpg"></p>
 <p>RabbitMQ后台管理的默认用户名和口令均为<code>guest</code>。</p>
 <h3 id="amqp协议">AMQP协议<a hidden class="anchor" aria-hidden="true" href="#amqp协议">#</a></h3>
 <p>AMQP协议和前面我们介绍的JMS协议有所不同。在JMS中，有两种类型的消息通道：</p>
@@ -2741,13 +2741,13 @@ Spring Boot在未指定Profile时默认为default。</p>
 </div>
 </div><p>如果某个Exchange总是把消息发送到固定的Queue，那么这个消息通道就相当于JMS的Queue。如果某个Exchange把消息发送到多个Queue，那么这个消息通道就相当于JMS的Topic。和JMS的Topic相比，Exchange的投递规则更灵活，比如一个“登录成功”的消息被投递到Queue-1和Queue-2，而“登录失败”的消息则被投递到Queue-3。这些路由规则称之为Binding，通常都在RabbitMQ的管理后台设置。</p>
 <p>我们以具体的业务为例子，在RabbitMQ中，首先创建3个Queue，分别用于发送邮件、短信和App通知：</p>
-<p><img alt="queues" loading="lazy" src="https://liaoxuefeng.com/books/java/springboot/integration/rabbitmq/queue.jpg"></p>
+<p><img alt="queues" loading="lazy" src="/posts/spring/5springboot%E5%BC%80%E5%8F%91/ebd684077321bbccfddaa3264005b29c_MD5.jpg"></p>
 <p>创建Queue时注意到可配置为持久化（Durable）和非持久化（Transient），当Consumer不在线时，持久化的Queue会暂存消息，非持久化的Queue会丢弃消息。</p>
 <p>紧接着，我们在Exchanges中创建一个Direct类型的Exchange，命名为<code>registration</code>，并添加如下两个Binding：</p>
-<p><img alt="exchange-registration" loading="lazy" src="https://liaoxuefeng.com/books/java/springboot/integration/rabbitmq/exchange.png"></p>
+<p><img alt="exchange-registration" loading="lazy" src="/posts/spring/5springboot%E5%BC%80%E5%8F%91/9471bd4e35d077cac93ccee75fdddf7b_MD5.png"></p>
 <p>上述Binding的规则就是：凡是发送到<code>registration</code>这个Exchange的消息，均被发送到<code>q_mail</code>和<code>q_sms</code>这两个Queue。</p>
 <p>我们再创建一个Direct类型的Exchange，命名为<code>login</code>，并添加如下Binding：</p>
-<p><img alt="exchange-login" loading="lazy" src="https://liaoxuefeng.com/books/java/springboot/integration/rabbitmq/exchange2.png"></p>
+<p><img alt="exchange-login" loading="lazy" src="/posts/spring/5springboot%E5%BC%80%E5%8F%91/5d84d498806d76530f864c2c64c40fd9_MD5.png"></p>
 <p>上述Binding的规则稍微复杂一点，当发送消息给<code>login</code>这个Exchange时，如果消息没有指定Routing Key，则被投递到<code>q_app</code>和<code>q_mail</code>，如果消息指定了Routing Key=&ldquo;login_failed&rdquo;，那么消息被投递到<code>q_sms</code>。</p>
 <p>配置好RabbitMQ后，我们就可以基于Spring Boot开发AMQP程序。</p>
 <h3 id="使用rabbitmq">使用RabbitMQ<a hidden class="anchor" aria-hidden="true" href="#使用rabbitmq">#</a></h3>

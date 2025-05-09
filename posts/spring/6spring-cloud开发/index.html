@@ -356,7 +356,7 @@
 <li>暂无后台管理功能。</li>
 </ul>
 <p>项目名称暂定为Warp Exchange，采用<a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPL v3</a>授权协议。项目最终完成后，效果如下：</p>
-<p><img alt="warpexchange" loading="lazy" src="https://liaoxuefeng.com/books/java/springcloud/architecture/snapshot.png"></p>
+<p><img alt="warpexchange" loading="lazy" src="/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/088355409dc1f53939a96f958ff7228a_MD5.png"></p>
 <h2 id="系统模块">系统模块<a hidden class="anchor" aria-hidden="true" href="#系统模块">#</a></h2>
 <p>对一个系统来说，建立一个简单可靠的模型，不但能大大简化系统的设计，而且能以较少的代码实现一个稳定运行的系统，最大限度地减少各种难以预测的错误。</p>
 <p>我们来看证券交易系统的业务模型。</p>
@@ -883,7 +883,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>在Docker Desktop中可看到运行状态：</p>
-<p><img alt="docker-desktop" loading="lazy" src="https://liaoxuefeng.com/books/java/springcloud/project/docker.png"></p>
+<p><img alt="docker-desktop" loading="lazy" src="/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/fb21515e3a924be44e44d1a6c5a3b0e1_MD5.png"></p>
 <p>如果要删除开发环境的所有数据，首先停止运行Docker容器进程并删除，然后删除<code>build</code>目录下的<code>docker</code>目录，重新运行<code>docker-compose</code>即可。</p>
 <h2 id="spring-cloud-config">Spring Cloud Config<a hidden class="anchor" aria-hidden="true" href="#spring-cloud-config">#</a></h2>
 <p>Spring Cloud Config是Spring Cloud的一个子项目，它的主要目的是解决多个Spring Boot应用启动时，应该如何读取配置文件的问题。</p>
@@ -1933,7 +1933,7 @@
 <p>在证券市场中，撮合交易是一种微观价格发现模型，它允许买卖双方各自提交买卖订单并报价，按价格优先，时间优先的顺序，凡买单价格大于等于卖单价格时，双方即达成价格协商并成交。在A股身经百战的老股民对此规则应该非常熟悉，这里不再详述。</p>
 <p>我们将讨论如何从技术上来实现它。对于撮合引擎来说，它必须维护两个买卖盘列表，一个买盘，一个卖盘，买盘按价格从高到低排序，确保报价最高的订单排在最前面；卖盘则相反，按照价格从低到高排序，确保报价最低的卖单排在最前面。</p>
 <p>下图是一个实际的买卖盘：</p>
-<p><img alt="orderbook" loading="lazy" src="https://liaoxuefeng.com/books/java/springcloud/engine/match/orderbook.jpg"></p>
+<p><img alt="orderbook" loading="lazy" src="/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/3085bc794924f6ebef233cd62c59ad68_MD5.jpg"></p>
 <p>对于买盘来说，上图的订单排序为<code>2086.50</code>，<code>2086.09</code>，<code>2086.06</code>，<code>2086.00</code>，<code>2085.97</code>，……</p>
 <p>对于卖盘来说，上图的订单排序为<code>2086.55</code>，<code>2086.75</code>，<code>2086.77</code>，<code>2086.90</code>，<code>2086.99</code>，……</p>
 <p>不可能出现买1价格大于等于卖1价格的情况，因为这意味着应该成交的买卖订单没有成交却在订单簿上等待成交。</p>
@@ -5023,7 +5023,7 @@
 <li>index.html：交易页。</li>
 </ul>
 <p>页面功能主要由JavaScript实现，我们选择Vue前端框架，最终实现效果如下：</p>
-<p><img alt="warpexchange" loading="lazy" src="https://liaoxuefeng.com/books/java/springcloud/ui/snapshot.png"></p>
+<p><img alt="warpexchange" loading="lazy" src="/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/088355409dc1f53939a96f958ff7228a_MD5.png"></p>
 <p>最后，在后台注册时，如果检测到本地开发环境，就自动调用内部API给用户添加一些资产，否则新注册用户无法交易。</p>
 <p><strong>小结</strong></p>
 <p>UI系统是标准的Web系统，除了注册、登录外，主要交易功能均由页面JavaScript实现。UI系统本身不是交易入口，它通过转发JavaScript请求至真正的API入口。</p>

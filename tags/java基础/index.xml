@@ -6,8 +6,15 @@
     <description>Recent content in Java基础 on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 18 Aug 2022 15:40:43 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 06 Mar 2024 18:18:52 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>24_手写Tomcat</title>
+      <link>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/24_%E6%89%8B%E5%86%99tomcat/</link>
+      <pubDate>Wed, 06 Mar 2024 18:18:52 +0000</pubDate>
+      <guid>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/24_%E6%89%8B%E5%86%99tomcat/</guid>
+      <description>对于Java后端开发的同学来说，Tomcat服务器肯定不陌生。开发Java Web App，最后通常都会部署到Tomcat这样的服务器上。 很多同学可</description>
+    </item>
     <item>
       <title>23_MyBatis</title>
       <link>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/23_mybatis/</link>
