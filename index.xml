@@ -6,8 +6,22 @@
     <description>Recent content on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 06 May 2025 15:52:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 May 2025 10:35:13 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mybatis</title>
+      <link>https://009965.xyz/posts/mybatis/mybatis/</link>
+      <pubDate>Mon, 26 May 2025 10:35:13 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mybatis/mybatis/</guid>
+      <description>一、MyBatis概述 1.1 框架 在文献中看到的framework被翻译为框架 Java常用框架： SSM三大框架：Spring + SpringMVC + MyBatis SpringBoot SpringCloud 等。。 框架</description>
+    </item>
+    <item>
+      <title>配眼镜攻略</title>
+      <link>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E9%85%8D%E7%9C%BC%E9%95%9C%E6%94%BB%E7%95%A5/</link>
+      <pubDate>Mon, 19 May 2025 10:23:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E9%85%8D%E7%9C%BC%E9%95%9C%E6%94%BB%E7%95%A5/</guid>
+      <description>先上结论： 防蓝光没用 推荐蔡司智锐铂金膜定制版（智锐库存片=普通镜片，甚至不如泽锐） 原厂加工单+授权码就可以保正。 原文：【2025年眼镜的选择</description>
+    </item>
     <item>
       <title>第6章 SpringBoot实用技术整合</title>
       <link>https://009965.xyz/posts/springboot/%E7%AC%AC6%E7%AB%A0-springboot%E5%AE%9E%E7%94%A8%E6%8A%80%E6%9C%AF%E6%95%B4%E5%90%88/</link>
@@ -1316,9 +1330,9 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>mybatis-plus</title>
-      <link>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis-plus/</link>
+      <link>https://009965.xyz/posts/mybatis/mybatis-plus/</link>
       <pubDate>Sat, 28 Mar 2020 15:07:56 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis-plus/</guid>
+      <guid>https://009965.xyz/posts/mybatis/mybatis-plus/</guid>
       <description>&lt;p&gt;官网&lt;br&gt;
 &lt;a href=&#34;https://baomidou.com/&#34;&gt;https://baomidou.com/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;其他参考&lt;br&gt;
@@ -1327,9 +1341,9 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>mybatis</title>
-      <link>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis/</link>
+      <link>https://009965.xyz/posts/mybatis/mybatis1/</link>
       <pubDate>Fri, 27 Mar 2020 15:07:56 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis/</guid>
+      <guid>https://009965.xyz/posts/mybatis/mybatis1/</guid>
       <description>&lt;h1 id=&#34;基础&#34;&gt;基础&lt;/h1&gt;
 &lt;h2 id=&#34;面向接口编程&#34;&gt;面向接口编程&lt;/h2&gt;
 &lt;ol&gt;

@@ -6,8 +6,15 @@
     <description>Recent content in Mysql on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 26 Jul 2023 05:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 May 2025 10:35:13 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mybatis</title>
+      <link>https://009965.xyz/posts/mybatis/mybatis/</link>
+      <pubDate>Mon, 26 May 2025 10:35:13 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mybatis/mybatis/</guid>
+      <description>一、MyBatis概述 1.1 框架 在文献中看到的framework被翻译为框架 Java常用框架： SSM三大框架：Spring + SpringMVC + MyBatis SpringBoot SpringCloud 等。。 框架</description>
+    </item>
     <item>
       <title>15_MySQL三大日志</title>
       <link>https://009965.xyz/posts/interview/15_mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</link>

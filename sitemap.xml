@@ -2,16 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://009965.xyz/posts/</loc>
-    <lastmod>2025-05-06T15:52:55+00:00</lastmod>
+    <loc>https://009965.xyz/posts/mybatis/mybatis/</loc>
+    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/tags/springboot/</loc>
-    <lastmod>2025-05-06T15:52:55+00:00</lastmod>
+    <loc>https://009965.xyz/tags/mysql/</loc>
+    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/</loc>
+    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/tags/</loc>
-    <lastmod>2025-05-06T15:52:55+00:00</lastmod>
+    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/</loc>
+    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</loc>
+    <lastmod>2025-05-19T10:23:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E9%85%8D%E7%9C%BC%E9%95%9C%E6%94%BB%E7%95%A5/</loc>
+    <lastmod>2025-05-19T10:23:58+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/springboot/</loc>
     <lastmod>2025-05-06T15:52:55+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/springboot/%E7%AC%AC6%E7%AB%A0-springboot%E5%AE%9E%E7%94%A8%E6%8A%80%E6%9C%AF%E6%95%B4%E5%90%88/</loc>
@@ -33,9 +45,6 @@
     <lastmod>2025-05-06T11:11:53+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E4%B8%8B%E8%BD%BD%E8%A7%86%E9%A2%91/</loc>
-    <lastmod>2025-04-25T17:25:35+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</loc>
     <lastmod>2025-04-25T17:25:35+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/springmvc/%E7%AC%AC14%E7%AB%A0-ssm%E6%95%B4%E5%90%88/</loc>
@@ -218,9 +227,6 @@
     <loc>https://009965.xyz/posts/interview/15_mysql%E4%B8%89%E5%A4%A7%E6%97%A5%E5%BF%97/</loc>
     <lastmod>2023-07-26T05:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/tags/mysql/</loc>
-    <lastmod>2023-07-26T05:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://009965.xyz/posts/interview/14_mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
     <lastmod>2023-07-24T05:00:00+00:00</lastmod>
   </url><url>
@@ -383,10 +389,10 @@
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/json/</loc>
     <lastmod>2020-08-07T11:47:04+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis-plus/</loc>
+    <loc>https://009965.xyz/posts/mybatis/mybatis-plus/</loc>
     <lastmod>2020-03-28T15:07:56+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/mybatis/</loc>
+    <loc>https://009965.xyz/posts/mybatis/mybatis1/</loc>
     <lastmod>2020-03-27T15:07:56+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/</loc>

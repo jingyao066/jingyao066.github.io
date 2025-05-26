@@ -6,13 +6,13 @@
     <description>Recent content in Tags on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 06 May 2025 15:52:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 May 2025 10:35:13 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Springboot</title>
-      <link>https://009965.xyz/tags/springboot/</link>
+      <title>Mysql</title>
+      <link>https://009965.xyz/tags/mysql/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/tags/springboot/</guid>
+      <guid>https://009965.xyz/tags/mysql/</guid>
       <description></description>
     </item>
     <item>
@@ -20,6 +20,13 @@
       <link>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Springboot</title>
+      <link>https://009965.xyz/tags/springboot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://009965.xyz/tags/springboot/</guid>
       <description></description>
     </item>
     <item>
@@ -69,13 +76,6 @@
       <link>https://009965.xyz/tags/interview/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://009965.xyz/tags/interview/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Mysql</title>
-      <link>https://009965.xyz/tags/mysql/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/tags/mysql/</guid>
       <description></description>
     </item>
     <item>
