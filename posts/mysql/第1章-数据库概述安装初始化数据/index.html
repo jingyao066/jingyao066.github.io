@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>第1章 数据库概述,安装,初始化数据 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="mysql">
+<meta name="description" content="什么是数据库 数据库是一门独立的学科，只要是做软件开发的，数据库都要学。 数据库（电子化的文件柜）是“按照数据结构来组织、存储和管理数据的仓库”">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="第1章 数据库概述,安装,初始化数据">
+  <meta property="og:description" content="什么是数据库 数据库是一门独立的学科，只要是做软件开发的，数据库都要学。 数据库（电子化的文件柜）是“按照数据结构来组织、存储和管理数据的仓库”">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-25T18:12:58+00:00">
+    <meta property="article:modified_time" content="2025-05-25T18:12:58+00:00">
+    <meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第1章 数据库概述,安装,初始化数据">
+<meta name="twitter:description" content="什么是数据库 数据库是一门独立的学科，只要是做软件开发的，数据库都要学。 数据库（电子化的文件柜）是“按照数据结构来组织、存储和管理数据的仓库”">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "第1章 数据库概述,安装,初始化数据",
+      "item": "https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第1章 数据库概述,安装,初始化数据",
+  "name": "第1章 数据库概述,安装,初始化数据",
+  "description": "什么是数据库 数据库是一门独立的学科，只要是做软件开发的，数据库都要学。 数据库（电子化的文件柜）是“按照数据结构来组织、存储和管理数据的仓库”",
+  "keywords": [
+    "mysql"
+  ],
+  "articleBody": "什么是数据库 数据库是一门独立的学科，只要是做软件开发的，数据库都要学。 数据库（电子化的文件柜）是“按照数据结构来组织、存储和管理数据的仓库”。是一个长期存储在计算机内的、有组织的、可共享的、统一管理的大量数据的集合。 它的存储空间很大，可以存放百万条、千万条、上亿条数据。 数据库并不是随意地将数据进行存放，是有一定的规则的，否则查询的效率会很低。 当今世界是一个充满着数据的互联网世界，充斥着大量的数据。即这个互联网世界就是数据世界。数据的来源有很多，比如出行记录、消费记录、浏览的网页、发送的消息等等。除了文本类型的数据，图像、音乐、声音都是数据。 数据库对应的英文单词是DataBase，简称DB。 数据库类型 关系型数据库 关系型数据库是依据关系模型来创建的数据库。所谓关系模型就是“一对一、一对多、多对多”等关系模型，关系模型就是指二维表格模型，因而一个关系型数据库就是由二维表及其之间的联系组成的一个数据组织。 关系型数据可以很好地存储一些关系模型的数据，比如一个老师对应多个学生的数据（“多对多”），一本书对应多个作者（“一对多”），一本书对应一个出版日期（“一对一”）。 关系模型包括数据结构（数据存储的问题，二维表）、操作指令集合（SQL语句）、完整性约束(表内数据约束、表与表之间的约束)。 非关系型数据库（NoSQL） NoSQL，泛指非关系型的数据库。随着互联网web2.0网站的兴起，传统的关系数据库在处理web2.0网站，特别是超大规模和高并发的SNS类型的web2.0纯动态网站已经显得力不从心，出现了很多难以克服的问题，而非关系型的数据库则由于其本身的特点得到了非常迅速的发展。 NoSQL数据库的产生就是为了解决大规模数据集合多重数据种类带来的挑战，特别是大数据应用难题。NoSQL最常见的解释是“non-relational”， “Not Only SQL”也被很多人接受。 NoSQL仅仅是一个概念，泛指非关系型的数据库，区别于关系数据库，它们不保证关系数据的ACID特性。NoSQL是一项全新的数据库革命性运动，其拥护者们提倡运用非关系型的数据存储，相对于铺天盖地的关系型数据库运用，这一概念无疑是一种全新的思维的注入。 NoSQL有如下优点：易扩展，NoSQL数据库种类繁多，但是一个共同的特点都是去掉关系数据库的关系型特性。数据之间无关系，这样就非常容易扩展。无形之间也在架构的层面上带来了可扩展的能力。大数据量，高性能，NoSQL数据库都具有非常高的读写性能，尤其在大数据量下，同样表现优秀。这得益于它的无关系性，数据库的结构简单。 数据库管理系统 数据库管理系统（Database Management System，简称DBMS）是为管理数据库而设计的电脑软件系统，一般具有存储、截取、安全保障、备份等基础功能。 数据库管理系统是数据库系统的核心组成部分，主要完成对数据库的操作与管理功能，实现数据库对象的创建、数据库存储数据的查询、添加、修改与删除操作和数据库的用户管理、权限管理等。 常见的数据库管理系统有：MySQL、Oracle、DB2、MS SQL Server、SQLite、PostgreSQL、Sybase等。 什么是SQL 结构化查询语言（Structured Query Language）简称SQL，是一种特殊目的的编程语言，是一种数据库查询和程序设计语言，用于存取数据以及查询、更新和管理关系数据库系统。 结构化查询语言是高级的非过程化编程语言，允许用户在高层数据结构上工作。它不要求用户指定对数据的存放方法，也不需要用户了解具体的数据存放方式，所以具有完全不同底层结构的不同数据库系统, 可以使用相同的结构化查询语言作为数据输入与管理的接口。结构化查询语言语句可以嵌套，这使它具有极大的灵活性和强大的功能。 SQL的分类 DQL 数据查询语言（Data Query Language, DQL）是SQL语言中，负责进行数据查询而不会对数据本身进行修改的语句，这是最基本的SQL语句。保留字SELECT是DQL（也是所有SQL）用得最多的动词，其他DQL常用的保留字有FROM，WHERE，GROUP BY，HAVING和ORDER BY。这些DQL保留字常与其他类型的SQL语句一起使用。 DDL 数据定义语言 (Data Definition Language, DDL) 是SQL语言集中，负责数据结构定义与数据库对象定义的语言，由CREATE、ALTER与DROP三个语法所组成，最早是由 Codasyl (Conference on Data Systems Languages) 数据模型开始，现在被纳入 SQL 指令中作为其中一个子集。 DML 数据操纵语言（Data Manipulation Language, DML）是SQL语言中，负责对数据库对象运行数据访问工作的指令集，以INSERT、UPDATE、DELETE三种指令为核心，分别代表插入、更新与删除。 DCL 数据控制语言 (Data Control Language) 在SQL语言中，是一种可对数据访问权进行控制的指令，它可以控制特定用户账户对数据表、查看表、预存程序、用户自定义函数等数据库对象的控制权。由 GRANT 和 REVOKE 两个指令组成。DCL以控制用户的访问权限为主，GRANT为授权语句，对应的REVOKE是撤销授权语句。 TPL 数据事务管理语言（Transaction Processing Language）它的语句能确保被DML语句影响的表的所有行及时得以更新。TPL语句包括BEGIN TRANSACTION，COMMIT和ROLLBACK。 CCL 指针控制语言（Cursor Control Language），它的语句，像DECLARE CURSOR，FETCH INTO和UPDATE WHERE CURRENT用于对一个或多个表单独行的操作。 DBMS、SQL、DB之间的关系 DBMS通过执行SQL来操作DB中的数据。 MySQL概述 MySQL是一个关系型数据库管理系统，由瑞典MySQL AB公司开发，MySQL AB公司被Sun公司收购，Sun公司又被Oracle公司收购，目前属于Oracle公司。 MySQL是目前最流行的关系型数据库管理系统，在WEB应用方面MySQL是最好的RDBMS应用软件之一。 国内淘宝网站就使用的是MySQL集群。 MySQL特点 MySQL有开源版本和收费版本，你使用开源版本是不收费的。 MySQL支持大型数据库，可以处理上千万记录的大型数据库。 MySQL使用标准的SQL数据库语言形式。 MySQL在很多系统上面都支持。 MySQL对Java，C都有很好的支持，当然其他的语言也支持比如Python、PHP。 MySQL是可以定制的，采用了GPL协议，你可以修改源码来开发自己的MySQL系统。 MySQL的下载 官网下载 第一步：打开MySQL官网https://www.mysql.com/ 第二步：点击\"DOWNLOADS\" 第三步：当前页继续下拉，直到找到下图链接 第四步：点击上图链接，进入下面页面，其中“MySQL Community Server”是解压版mysql，“MySQL Installer for Windows”是安装版，这里我们选择解压版 第五步：点击上图“MySQL Community Server” 第六步：点击上图第1个“Download” 第七步：点击上图“No thanks, just start my download.”开始下载，直到下载完毕。 网盘下载 链接：https://pan.baidu.com/s/1lRWC069K8GE-8rxr259ArQ?pwd=2009 提取码：2009\nMySQL安装与配置 将下载的zip压缩包解压，我这里直接解压到C盘的根目录下 mysql的根目录为：C:\\mysql-8.0.24-winx64\n将C:\\mysql-8.0.24-winx64\\bin目录配置到环境变量path当中 初始化data目录 使用管理员身份打开dos命令窗口（按win键，输入cmd，点击管理员身份运行）\ncd命令切换到mysql的bin目录下，执行mysqld –initialize –console进行data目录初始化，此时会在控制台生成一个随机密码，下图红框中就是随机密码\n技巧：左键选中密码，直接点击右键，此时密码已经复制到剪贴板中了，\n然后随便找一个文件，将密码粘贴到文件中保存起来。\n安装MySQL服务：cd命令切换到bin目录下，执行命令mysqld -install 查看mysql服务名称：此电脑-右键-管理-服务和应用程序-服务-找MySQL服务，如下图mysql服务名称：MySQL 启动MySQL服务：net start mysql，注意start后面是mysql服务的名称 停止mysql服务的命令：net stop mysql\n注意：启停mysql服务也可以在上一步的图中点击右键进行启停服务。\n登录mysql：输入mysql -uroot -p，然后回车，输入刚才的随机密码，然后回车，看到下图表示成功登录mysql 修改MySQL的root账户密码：ALTER USER ‘root’@’localhost’ IDENTIFIED WITH mysql_native_password BY ‘新密码’; 使用新密码登录mysql MySQL卸载 停止mysql的服务 删除mysql服务 删除mysql的目录 登录MySQL 本地登录 如果mysql的服务是启动的，打开dos命令窗口，输入：mysql -uroot -p，回车，然后输入root账户的密码 解释“mysql -uroot -p”：\nmysql是一个命令，在bin目录下，对应的命令文件是mysql.exe，如果将bin目录配置到环境\n变量path中，才可以在以上位置使用该命令。\n-uroot 表示登录的用户是root，u实际上是user单词的首字母。\n-p 表示登录时使用密码，p实际上是password单词的首字母。\n也可以将密码以明文的形式写到-p后面，这样做可能会导致你的密码泄露 远程登录 假设mysql安装在A机器上，现在你要在B机器上连接mysql数据库，此时需要使用远程登录，远程登录时加上远程机器的ip地址即可 -h中的h实际上是host单词的首字母。在-h后面的是远程计算机的ip地址。\n127.0.0.1是计算机默认的本机IP地址。\n127.0.0.1又可以写作：localhost，他们是等效的。\n注意：mysql默认情况下root账户是不支持远程登录的，其实这是一种安全策略，\n为了保护root账户的安全。如果希望root账户支持远程登录，这是需要进行设置的。\nmysql8 开放root账户远程登录权限（危险动作）\n第一步：现在本地使用root账户登录mysql\n第二步：use mysql;\n第三步：update user set host = ‘%’ where user = ‘root’;\n第四步：flush privileges;\nMySQL命令行基本命令 列出当前数据库管理系统中有哪些数据库。 1 show databases; 创建数据库，起名bjpowernode。 1 create database bjpowernode; 使用bjpowernode数据库。 1 use bjpowernode; 查看当前用的是哪个数据库。 1 select database(); 查看当前数据库中有哪些表。 1 show tables; 删除数据库bjpowernode。 1 drop database bjpowernode; 退出mysql\n8. exit\n9. quit\n10. ctrl + c 查看当前mysql版本 1 select version(); 还可以使用mysql.exe命令来查看版本信息（在没有登录mysql之前使用）：mysql –version\n数据库表的概述 name age gender 张三 20 男 李四 22 女 以上就是数据库表格的直观展示形式。 表格英文单词table。 表是数据库存储数据的基本单元，数据库存储数据的时候，是将数据存储在表对象当中的。为什么将数据存储在表中呢？因为表存储数据非常直观。 任何一张表都有行和列： 行：记录（一行就是一条数据） 列：字段（name字段、age字段、gender字段） 每个字段包含以下属性： 字段名：name、age、gender都是字段的名字 字段的数据类型：每个字段都有数据类型，比如：字符类型、数字类型、日期类型 字段的数据长度：每个字段有可能会有长度的限制 字段的约束：比如某些字段要求该字段下的数据不能重复、不能为空等，用来保证表格中数据合法有效 初始化测试数据 为了方便后面内容的学习，老师提前准备了表以及表中的测试数据，以下是建表并且初始化数据的sql脚本\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 DROP TABLE IF EXISTS EMP; DROP TABLE IF EXISTS DEPT; DROP TABLE IF EXISTS SALGRADE; CREATE TABLE DEPT(DEPTNO int(2) not null , DNAME VARCHAR(14) , LOC VARCHAR(13), primary key (DEPTNO) ); CREATE TABLE EMP(EMPNO int(4) not null , ENAME VARCHAR(10), JOB VARCHAR(9), MGR INT(4), HIREDATE DATE DEFAULT NULL, SAL DOUBLE(7,2), COMM DOUBLE(7,2), primary key (EMPNO), DEPTNO INT(2) ); CREATE TABLE SALGRADE( GRADE INT, LOSAL INT, HISAL INT ); INSERT INTO DEPT ( DEPTNO, DNAME, LOC ) VALUES ( 10, 'ACCOUNTING', 'NEW YORK'); INSERT INTO DEPT ( DEPTNO, DNAME, LOC ) VALUES ( 20, 'RESEARCH', 'DALLAS'); INSERT INTO DEPT ( DEPTNO, DNAME, LOC ) VALUES ( 30, 'SALES', 'CHICAGO'); INSERT INTO DEPT ( DEPTNO, DNAME, LOC ) VALUES ( 40, 'OPERATIONS', 'BOSTON'); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7369, 'SMITH', 'CLERK', 7902, '1980-12-17', 800, NULL, 20); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7499, 'ALLEN', 'SALESMAN', 7698, '1981-02-20', 1600, 300, 30); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7521, 'WARD', 'SALESMAN', 7698, '1981-02-22', 1250, 500, 30); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7566, 'JONES', 'MANAGER', 7839, '1981-04-02', 2975, NULL, 20); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7654, 'MARTIN', 'SALESMAN', 7698, '1981-09-28', 1250, 1400, 30); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7698, 'BLAKE', 'MANAGER', 7839, '1981-05-01', 2850, NULL, 30); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7782, 'CLARK', 'MANAGER', 7839, '1981-06-09', 2450, NULL, 10); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7788, 'SCOTT', 'ANALYST', 7566, '1987-04-19', 3000, NULL, 20); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7839, 'KING', 'PRESIDENT', NULL, '1981-11-17', 5000, NULL, 10); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7844, 'TURNER', 'SALESMAN', 7698, '1981-09-08', 1500, 0, 30); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7876, 'ADAMS', 'CLERK', 7788, '1987-05-23', 1100, NULL, 20); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7900, 'JAMES', 'CLERK', 7698, '1981-12-03', 950, NULL, 30); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7902, 'FORD', 'ANALYST', 7566, '1981-12-03', 3000, NULL, 20); INSERT INTO EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) VALUES ( 7934, 'MILLER', 'CLERK', 7782, '1982-01-23', 1300, NULL, 10); INSERT INTO SALGRADE ( GRADE, LOSAL, HISAL ) VALUES ( 1, 700, 1200); INSERT INTO SALGRADE ( GRADE, LOSAL, HISAL ) VALUES ( 2, 1201, 1400); INSERT INTO SALGRADE ( GRADE, LOSAL, HISAL ) VALUES ( 3, 1401, 2000); INSERT INTO SALGRADE ( GRADE, LOSAL, HISAL ) VALUES ( 4, 2001, 3000); INSERT INTO SALGRADE ( GRADE, LOSAL, HISAL ) VALUES ( 5, 3001, 9999); commit; 什么是sql脚本：文件名是.sql，并且该文件中编写了大量的SQL语句，执行sql脚本程序就相当于批量执行SQL语句。 你入职的时候，项目一般都是进展了一部分，多数情况下你进项目组的时候数据库的表以及数据都是有的，项目经理第一天可能会给你一个较大的sql脚本文件，你需要执行这个脚本文件来初始化你的本地数据库。（当然，也有可能数据库是共享的。） 创建文件：bjpowernode.sql，把以上SQL语句全部复制到sql脚本文件中。 执行SQL脚本文件，初始化数据库 第一步：命令窗口登录mysql 第二步：创建数据库bjpowernode（如果之前已经创建就不需要再创建了）：create database bjpowernode; 第三步：使用数据库bjpowernode：use bjpowernode; 第四步：source命令执行sql脚本，注意：source命令后面是sql脚本文件的绝对路径。 第五步：查看是否初始化成功，执行：show tables; 使用其他的mysql客户端工具也可以执行sql脚本，比如navicat。使用source命令执行sql脚本的优点：可支持大文件。 熟悉测试数据 emp dept salgrade三张表分别存储什么信息\nemp：员工信息 dept：部门信息 salgrade：工资等级信息 查看表结构：desc或describe，语法格式：desc或describe +表名\n以上的结果展示的不是表中的数据，而是表的结构。\nField是字段名 Type是这个字段的数据类型 Null是这个字段是否允许为空 Key是这个字段是否为主键或外键 Default是这个字段的默认值 对以上表结构进行解释说明：\nemp表 empno：员工编号，int类型（整数），不能为空，主键（主键后期学习约束时会进行说明） ename：员工姓名，varchar类型（字符串） job：工作岗位，varchar类型 mgr：上级领导编号，int类型 hiredate：雇佣日期，date类型（日期类型） sal：月薪，double类型（带有浮点的数字） comm：补助津贴，double类型 deptno：部门编号，int类型 dept表 deptno：部门编号，int类型，主键 dname：部门名称，varchar类型 loc：位置，varchar类型 salgrade表 grade：等级，int类型 losal：最低工资，int类型 hisal：最高工资，int类型 对于以上表结构要提前了解，后面学习的内容需要你马上反应出：哪个字段是什么意思。\n查看一下表中的数据，来加深一下印象（以下SQL语句会在后面课程中学习）：\n",
+  "wordCount" : "6272",
+  "inLanguage": "en",
+  "datePublished": "2025-05-25T18:12:58Z",
+  "dateModified": "2025-05-25T18:12:58Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://009965.xyz/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      第1章 数据库概述,安装,初始化数据
+    </h1>
+    <div class="post-meta"><span title='2025-05-25 18:12:58 +0000 UTC'>2025-05-25</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e6%95%b0%e6%8d%ae%e5%ba%93" aria-label="什么是数据库">什么是数据库</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e7%b1%bb%e5%9e%8b" aria-label="数据库类型">数据库类型</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e7%ae%a1%e7%90%86%e7%b3%bb%e7%bb%9f" aria-label="数据库管理系统">数据库管理系统</a></li>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afsql" aria-label="什么是SQL">什么是SQL</a></li>
+                <li>
+                    <a href="#mysql%e6%a6%82%e8%bf%b0" aria-label="MySQL概述">MySQL概述</a></li>
+                <li>
+                    <a href="#mysql%e7%9a%84%e4%b8%8b%e8%bd%bd" aria-label="MySQL的下载">MySQL的下载</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%98%e7%bd%91%e4%b8%8b%e8%bd%bd" aria-label="官网下载">官网下载</a></li>
+                <li>
+                    <a href="#%e7%bd%91%e7%9b%98%e4%b8%8b%e8%bd%bd" aria-label="网盘下载">网盘下载</a></li></ul>
+                </li>
+                <li>
+                    <a href="#mysql%e5%ae%89%e8%a3%85%e4%b8%8e%e9%85%8d%e7%bd%ae" aria-label="MySQL安装与配置">MySQL安装与配置</a></li>
+                <li>
+                    <a href="#mysql%e5%8d%b8%e8%bd%bd" aria-label="MySQL卸载">MySQL卸载</a></li>
+                <li>
+                    <a href="#%e7%99%bb%e5%bd%95mysql" aria-label="登录MySQL">登录MySQL</a><ul>
+                        
+                <li>
+                    <a href="#%e6%9c%ac%e5%9c%b0%e7%99%bb%e5%bd%95" aria-label="本地登录">本地登录</a></li>
+                <li>
+                    <a href="#%e8%bf%9c%e7%a8%8b%e7%99%bb%e5%bd%95" aria-label="远程登录">远程登录</a></li></ul>
+                </li>
+                <li>
+                    <a href="#mysql%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%9f%ba%e6%9c%ac%e5%91%bd%e4%bb%a4" aria-label="MySQL命令行基本命令">MySQL命令行基本命令</a></li>
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e8%a1%a8%e7%9a%84%e6%a6%82%e8%bf%b0" aria-label="数据库表的概述">数据库表的概述</a></li>
+                <li>
+                    <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96%e6%b5%8b%e8%af%95%e6%95%b0%e6%8d%ae" aria-label="初始化测试数据">初始化测试数据</a></li>
+                <li>
+                    <a href="#%e7%86%9f%e6%82%89%e6%b5%8b%e8%af%95%e6%95%b0%e6%8d%ae" aria-label="熟悉测试数据">熟悉测试数据</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="什么是数据库">什么是数据库<a hidden class="anchor" aria-hidden="true" href="#什么是数据库">#</a></h1>
+<hr>
+<ul>
+<li>数据库是一门独立的学科，只要是做软件开发的，数据库都要学。</li>
+<li>数据库（电子化的文件柜）是“按照数据结构来组织、存储和管理数据的仓库”。是一个长期存储在计算机内的、有组织的、可共享的、统一管理的大量数据的集合。</li>
+<li>它的存储空间很大，可以存放百万条、千万条、上亿条数据。</li>
+<li>数据库并不是随意地将数据进行存放，是有一定的规则的，否则查询的效率会很低。</li>
+<li>当今世界是一个充满着数据的互联网世界，充斥着大量的数据。即这个互联网世界就是数据世界。数据的来源有很多，比如出行记录、消费记录、浏览的网页、发送的消息等等。除了文本类型的数据，图像、音乐、声音都是数据。</li>
+<li>数据库对应的英文单词是DataBase，简称DB。</li>
+</ul>
+<h1 id="数据库类型">数据库类型<a hidden class="anchor" aria-hidden="true" href="#数据库类型">#</a></h1>
+<hr>
+<ul>
+<li>关系型数据库
+<ul>
+<li>关系型数据库是依据关系模型来创建的数据库。所谓关系模型就是“一对一、一对多、多对多”等关系模型，关系模型就是指二维表格模型，因而一个关系型数据库就是由二维表及其之间的联系组成的一个数据组织。</li>
+<li>关系型数据可以很好地存储一些关系模型的数据，比如一个老师对应多个学生的数据（“多对多”），一本书对应多个作者（“一对多”），一本书对应一个出版日期（“一对一”）。</li>
+<li>关系模型包括数据结构（数据存储的问题，二维表）、操作指令集合（SQL语句）、完整性约束(表内数据约束、表与表之间的约束)。</li>
+</ul>
+</li>
+<li>非关系型数据库（NoSQL）
+<ul>
+<li>NoSQL，泛指非关系型的数据库。随着互联网web2.0网站的兴起，传统的关系数据库在处理web2.0网站，特别是超大规模和高并发的SNS类型的web2.0纯动态网站已经显得力不从心，出现了很多难以克服的问题，而非关系型的数据库则由于其本身的特点得到了非常迅速的发展。</li>
+<li>NoSQL数据库的产生就是为了解决大规模数据集合多重数据种类带来的挑战，特别是大数据应用难题。NoSQL最常见的解释是“non-relational”， “Not Only SQL”也被很多人接受。</li>
+<li>NoSQL仅仅是一个概念，泛指非关系型的数据库，区别于关系数据库，它们不保证关系数据的ACID特性。NoSQL是一项全新的数据库革命性运动，其拥护者们提倡运用非关系型的数据存储，相对于铺天盖地的关系型数据库运用，这一概念无疑是一种全新的思维的注入。</li>
+<li>NoSQL有如下优点：易扩展，NoSQL数据库种类繁多，但是一个共同的特点都是去掉关系数据库的关系型特性。数据之间无关系，这样就非常容易扩展。无形之间也在架构的层面上带来了可扩展的能力。大数据量，高性能，NoSQL数据库都具有非常高的读写性能，尤其在大数据量下，同样表现优秀。这得益于它的无关系性，数据库的结构简单。</li>
+</ul>
+</li>
+</ul>
+<h1 id="数据库管理系统">数据库管理系统<a hidden class="anchor" aria-hidden="true" href="#数据库管理系统">#</a></h1>
+<hr>
+<ul>
+<li>数据库管理系统（Database Management System，简称DBMS）是为管理数据库而设计的电脑软件系统，一般具有存储、截取、安全保障、备份等基础功能。</li>
+<li>数据库管理系统是数据库系统的核心组成部分，主要完成对数据库的操作与管理功能，实现数据库对象的创建、数据库存储数据的查询、添加、修改与删除操作和数据库的用户管理、权限管理等。</li>
+<li>常见的数据库管理系统有：MySQL、Oracle、DB2、MS SQL Server、SQLite、PostgreSQL、Sybase等。</li>
+</ul>
+<h1 id="什么是sql">什么是SQL<a hidden class="anchor" aria-hidden="true" href="#什么是sql">#</a></h1>
+<hr>
+<ul>
+<li>结构化查询语言（Structured Query Language）简称SQL，是一种特殊目的的编程语言，是一种数据库查询和程序设计语言，用于存取数据以及查询、更新和管理关系数据库系统。</li>
+<li>结构化查询语言是高级的非过程化编程语言，允许用户在高层数据结构上工作。它不要求用户指定对数据的存放方法，也不需要用户了解具体的数据存放方式，所以具有完全不同底层结构的不同数据库系统, 可以使用相同的结构化查询语言作为数据输入与管理的接口。结构化查询语言语句可以嵌套，这使它具有极大的灵活性和强大的功能。</li>
+<li>SQL的分类
+<ul>
+<li>DQL
+<ul>
+<li>数据查询语言（Data Query Language, DQL）是SQL语言中，负责进行数据查询而不会对数据本身进行修改的语句，这是最基本的SQL语句。保留字SELECT是DQL（也是所有SQL）用得最多的动词，其他DQL常用的保留字有FROM，WHERE，GROUP BY，HAVING和ORDER BY。这些DQL保留字常与其他类型的SQL语句一起使用。</li>
+</ul>
+</li>
+<li>DDL
+<ul>
+<li>数据定义语言 (Data Definition Language, DDL) 是SQL语言集中，负责数据结构定义与数据库对象定义的语言，由CREATE、ALTER与DROP三个语法所组成，最早是由 Codasyl (Conference on Data Systems Languages) 数据模型开始，现在被纳入 SQL 指令中作为其中一个子集。</li>
+</ul>
+</li>
+<li>DML
+<ul>
+<li>数据操纵语言（Data Manipulation Language, DML）是SQL语言中，负责对数据库对象运行数据访问工作的指令集，以INSERT、UPDATE、DELETE三种指令为核心，分别代表插入、更新与删除。</li>
+</ul>
+</li>
+<li>DCL
+<ul>
+<li>数据控制语言 (Data Control Language) 在SQL语言中，是一种可对数据访问权进行控制的指令，它可以控制特定用户账户对数据表、查看表、预存程序、用户自定义函数等数据库对象的控制权。由 GRANT 和 REVOKE 两个指令组成。DCL以控制用户的访问权限为主，GRANT为授权语句，对应的REVOKE是撤销授权语句。</li>
+</ul>
+</li>
+<li>TPL
+<ul>
+<li>数据事务管理语言（Transaction Processing Language）它的语句能确保被DML语句影响的表的所有行及时得以更新。TPL语句包括BEGIN TRANSACTION，COMMIT和ROLLBACK。</li>
+</ul>
+</li>
+<li>CCL
+<ul>
+<li>指针控制语言（Cursor Control Language），它的语句，像DECLARE CURSOR，FETCH INTO和UPDATE WHERE CURRENT用于对一个或多个表单独行的操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DBMS、SQL、DB之间的关系
+<ul>
+<li>DBMS通过执行SQL来操作DB中的数据。</li>
+</ul>
+</li>
+</ul>
+<h1 id="mysql概述">MySQL概述<a hidden class="anchor" aria-hidden="true" href="#mysql概述">#</a></h1>
+<hr>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/d0376ec46a29a4b79e44880d42cf3650_MD5.png"></p>
+<ul>
+<li>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB公司开发，MySQL AB公司被Sun公司收购，Sun公司又被Oracle公司收购，目前属于Oracle公司。</li>
+<li>MySQL是目前最流行的关系型数据库管理系统，在WEB应用方面MySQL是最好的RDBMS应用软件之一。 国内淘宝网站就使用的是MySQL集群。</li>
+<li>MySQL特点
+<ul>
+<li>MySQL有开源版本和收费版本，你使用开源版本是不收费的。</li>
+<li>MySQL支持大型数据库，可以处理上千万记录的大型数据库。</li>
+<li>MySQL使用标准的SQL数据库语言形式。</li>
+<li>MySQL在很多系统上面都支持。</li>
+<li>MySQL对Java，C都有很好的支持，当然其他的语言也支持比如Python、PHP。</li>
+<li>MySQL是可以定制的，采用了GPL协议，你可以修改源码来开发自己的MySQL系统。</li>
+</ul>
+</li>
+</ul>
+<h1 id="mysql的下载">MySQL的下载<a hidden class="anchor" aria-hidden="true" href="#mysql的下载">#</a></h1>
+<hr>
+<h2 id="官网下载">官网下载<a hidden class="anchor" aria-hidden="true" href="#官网下载">#</a></h2>
+<ul>
+<li>第一步：打开MySQL官网<a href="https://www.mysql.com/">https://www.mysql.com/</a></li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/888a84b44545867af1b3efd0a0c38005_MD5.png"></p>
+<ul>
+<li>第二步：点击&quot;DOWNLOADS&quot;</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/d7898b80ae689fa96972132bce3f08dc_MD5.png"></p>
+<ul>
+<li>第三步：当前页继续下拉，直到找到下图链接</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/ee8c39ade053a1daf8f3c5c21e9ce93c_MD5.png"></p>
+<ul>
+<li>第四步：点击上图链接，进入下面页面，其中“MySQL Community Server”是解压版mysql，“MySQL Installer for Windows”是安装版，这里我们选择解压版</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/f69dc317732caedd9c06668e9aecaf65_MD5.png"></p>
+<ul>
+<li>第五步：点击上图“MySQL Community Server”</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/5450bd3314e366eefad196b275beafff_MD5.png"></p>
+<ul>
+<li>第六步：点击上图第1个“Download”</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/e15d9fd0ab2d27ea192d2a0407174b92_MD5.png"></p>
+<ul>
+<li>第七步：点击上图“No thanks, just start my download.”开始下载，直到下载完毕。</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/57b2921b8778d3a1a6615e1983b4c29a_MD5.png"></p>
+<h2 id="网盘下载">网盘下载<a hidden class="anchor" aria-hidden="true" href="#网盘下载">#</a></h2>
+<p>链接：<a href="https://pan.baidu.com/s/1lRWC069K8GE-8rxr259ArQ?pwd=2009">https://pan.baidu.com/s/1lRWC069K8GE-8rxr259ArQ?pwd=2009</a> 提取码：2009</p>
+<h1 id="mysql安装与配置">MySQL安装与配置<a hidden class="anchor" aria-hidden="true" href="#mysql安装与配置">#</a></h1>
+<hr>
+<ul>
+<li>将下载的zip压缩包解压，我这里直接解压到C盘的根目录下</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/57b2921b8778d3a1a6615e1983b4c29a_MD5.png"><br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/5a67513374377dbd19810e4514d9918f_MD5.png"><br>
+mysql的根目录为：C:\mysql-8.0.24-winx64</p>
+<ul>
+<li>将C:\mysql-8.0.24-winx64\bin目录配置到环境变量path当中</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/d8da2f693dc6ef77291011bd70290d3e_MD5.png"></p>
+<ul>
+<li>初始化data目录</li>
+</ul>
+<p>使用管理员身份打开dos命令窗口（按win键，输入cmd，点击管理员身份运行）<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/cf1de614d2214285e91ca9a5e2540ec8_MD5.png"><br>
+cd命令切换到mysql的bin目录下，执行mysqld &ndash;initialize &ndash;console进行data目录初始化，此时会在控制台生成一个随机密码，下图红框中就是随机密码<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/44cac4d42e9db482ad3fdaea35a904f4_MD5.png"><br>
+技巧：左键选中密码，直接点击右键，此时密码已经复制到剪贴板中了，<br>
+然后随便找一个文件，将密码粘贴到文件中保存起来。</p>
+<ul>
+<li>安装MySQL服务：cd命令切换到bin目录下，执行命令mysqld -install</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/55e2b892b6ca9b57a909bc4d5a921b6d_MD5.png"></p>
+<ul>
+<li>查看mysql服务名称：此电脑-右键-管理-服务和应用程序-服务-找MySQL服务，如下图mysql服务名称：MySQL</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/88fde423825dff5ffd7af0b9d36ee201_MD5.png"></p>
+<ul>
+<li>启动MySQL服务：net start mysql，注意start后面是mysql服务的名称</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/330434faa0379843c667257521493283_MD5.png"><br>
+停止mysql服务的命令：net stop mysql<br>
+注意：启停mysql服务也可以在上一步的图中点击右键进行启停服务。</p>
+<ul>
+<li>登录mysql：输入mysql -uroot -p，然后回车，输入刚才的随机密码，然后回车，看到下图表示成功登录mysql</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/e09c47210494b7757a66958642e87538_MD5.png"></p>
+<ul>
+<li>修改MySQL的root账户密码：ALTER USER &lsquo;root&rsquo;@&rsquo;localhost&rsquo; IDENTIFIED WITH mysql_native_password BY &lsquo;新密码&rsquo;;</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/82eff8f129cd8fc64953eebab381225c_MD5.png"></p>
+<ul>
+<li>使用新密码登录mysql</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/8c4282234cbb4f5f4c2b993d00a9ec0a_MD5.png"></p>
+<h1 id="mysql卸载">MySQL卸载<a hidden class="anchor" aria-hidden="true" href="#mysql卸载">#</a></h1>
+<hr>
+<ul>
+<li>停止mysql的服务</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/b0efc8ab10f19b72b7a58e0391bc7ab1_MD5.png"></p>
+<ul>
+<li>删除mysql服务</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/da2566910ae134471af356a7858547c6_MD5.png"></p>
+<ul>
+<li>删除mysql的目录</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/91e9a4d0c00f4dda898908c63952dee1_MD5.png"></p>
+<h1 id="登录mysql">登录MySQL<a hidden class="anchor" aria-hidden="true" href="#登录mysql">#</a></h1>
+<hr>
+<h2 id="本地登录">本地登录<a hidden class="anchor" aria-hidden="true" href="#本地登录">#</a></h2>
+<ul>
+<li>如果mysql的服务是启动的，打开dos命令窗口，输入：mysql -uroot -p，回车，然后输入root账户的密码</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/3d1eb1d69a9e632aa7ab09edee580a87_MD5.png"><br>
+解释“mysql -uroot -p”：<br>
+mysql是一个命令，在bin目录下，对应的命令文件是mysql.exe，如果将bin目录配置到环境<br>
+变量path中，才可以在以上位置使用该命令。<br>
+-uroot 表示登录的用户是root，u实际上是user单词的首字母。<br>
+-p 表示登录时使用密码，p实际上是password单词的首字母。</p>
+<ul>
+<li>也可以将密码以明文的形式写到-p后面，这样做可能会导致你的密码泄露</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/714de6cc5f06e36ed049c9dfc948d5e3_MD5.png"></p>
+<h2 id="远程登录">远程登录<a hidden class="anchor" aria-hidden="true" href="#远程登录">#</a></h2>
+<ul>
+<li>假设mysql安装在A机器上，现在你要在B机器上连接mysql数据库，此时需要使用远程登录，远程登录时加上远程机器的ip地址即可</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/fd36e0b50bc43d86522e335d681603cf_MD5.png"><br>
+-h中的h实际上是host单词的首字母。在-h后面的是远程计算机的ip地址。<br>
+127.0.0.1是计算机默认的本机IP地址。<br>
+127.0.0.1又可以写作：localhost，他们是等效的。<br>
+注意：mysql默认情况下root账户是不支持远程登录的，其实这是一种安全策略，<br>
+为了保护root账户的安全。如果希望root账户支持远程登录，这是需要进行设置的。</p>
+<ul>
+<li>
+<p>mysql8 开放root账户远程登录权限（危险动作）</p>
+<p>第一步：现在本地使用root账户登录mysql</p>
+<p>第二步：use mysql;</p>
+<p>第三步：update user set host = &lsquo;%&rsquo; where user = &lsquo;root&rsquo;;</p>
+<p>第四步：flush privileges;</p>
+</li>
+</ul>
+<h1 id="mysql命令行基本命令">MySQL命令行基本命令<a hidden class="anchor" aria-hidden="true" href="#mysql命令行基本命令">#</a></h1>
+<hr>
+<ol>
+<li>列出当前数据库管理系统中有哪些数据库。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">show</span> databases;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/8a74c99f2d411a14d0aeffa877d24562_MD5.png"></p>
+<ol start="2">
+<li>创建数据库，起名bjpowernode。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">create</span> <span style="color:#fff;font-weight:bold">database</span> bjpowernode;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/65ccbf4cf20e988cb1d782eab222e7f1_MD5.png"></p>
+<ol start="3">
+<li>使用bjpowernode数据库。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>use bjpowernode;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/30c2558f3a3cfcd1e9e0232c0e18dc42_MD5.png"></p>
+<ol start="4">
+<li>查看当前用的是哪个数据库。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">select</span> <span style="color:#fff;font-weight:bold">database</span>();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/2338794f20a8ab1553a233c9a4b621f6_MD5.png"></p>
+<ol start="5">
+<li>查看当前数据库中有哪些表。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">show</span> tables;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/5cd1e8f27f7071e75c7250a1925acb59_MD5.png"><br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/a328044b9481173fb5ca2ac0dea5aded_MD5.png"></p>
+<ol start="6">
+<li>删除数据库bjpowernode。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">drop</span> <span style="color:#fff;font-weight:bold">database</span> bjpowernode;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/b500622ffb1f85234191294a66adb74d_MD5.png"></p>
+<ol start="7">
+<li>退出mysql<br>
+8. exit<br>
+9. quit<br>
+10. ctrl + c</li>
+<li>查看当前mysql版本</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">select</span> <span style="color:#fff;font-weight:bold">version</span>();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/c8ea5b220b0608ff9f4699acd555a34e_MD5.png"><br>
+还可以使用mysql.exe命令来查看版本信息（在没有登录mysql之前使用）：mysql &ndash;version<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/4c3bb6ae347179edf21b20a811ee0d9b_MD5.png"></p>
+<h1 id="数据库表的概述">数据库表的概述<a hidden class="anchor" aria-hidden="true" href="#数据库表的概述">#</a></h1>
+<hr>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>张三</td>
+<td>20</td>
+<td>男</td>
+</tr>
+<tr>
+<td>李四</td>
+<td>22</td>
+<td>女</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>以上就是数据库表格的直观展示形式。</li>
+<li>表格英文单词table。</li>
+<li>表是数据库存储数据的基本单元，数据库存储数据的时候，是将数据存储在表对象当中的。为什么将数据存储在表中呢？因为表存储数据非常直观。</li>
+<li>任何一张表都有行和列：
+<ul>
+<li>行：记录（一行就是一条数据）</li>
+<li>列：字段（name字段、age字段、gender字段）</li>
+</ul>
+</li>
+<li>每个字段包含以下属性：
+<ul>
+<li>字段名：name、age、gender都是字段的名字</li>
+<li>字段的数据类型：每个字段都有数据类型，比如：字符类型、数字类型、日期类型</li>
+<li>字段的数据长度：每个字段有可能会有长度的限制</li>
+<li>字段的约束：比如某些字段要求该字段下的数据不能重复、不能为空等，用来保证表格中数据合法有效</li>
+</ul>
+</li>
+</ul>
+<h1 id="初始化测试数据">初始化测试数据<a hidden class="anchor" aria-hidden="true" href="#初始化测试数据">#</a></h1>
+<hr>
+<p>为了方便后面内容的学习，老师提前准备了表以及表中的测试数据，以下是建表并且初始化数据的sql脚本</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">51
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">DROP</span> <span style="color:#fff;font-weight:bold">TABLE</span> <span style="color:#fff;font-weight:bold">IF</span> <span style="color:#fff;font-weight:bold">EXISTS</span> EMP;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">DROP</span> <span style="color:#fff;font-weight:bold">TABLE</span> <span style="color:#fff;font-weight:bold">IF</span> <span style="color:#fff;font-weight:bold">EXISTS</span> DEPT;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">DROP</span> <span style="color:#fff;font-weight:bold">TABLE</span> <span style="color:#fff;font-weight:bold">IF</span> <span style="color:#fff;font-weight:bold">EXISTS</span> SALGRADE;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">CREATE</span> <span style="color:#fff;font-weight:bold">TABLE</span> DEPT(DEPTNO <span style="color:#fff;font-weight:bold">int</span>(<span style="color:#ff0;font-weight:bold">2</span>) <span style="color:#fff;font-weight:bold">not</span> <span style="color:#fff;font-weight:bold">null</span> ,
+</span></span><span style="display:flex;"><span>	DNAME <span style="color:#fff;font-weight:bold">VARCHAR</span>(<span style="color:#ff0;font-weight:bold">14</span>) ,
+</span></span><span style="display:flex;"><span>	LOC <span style="color:#fff;font-weight:bold">VARCHAR</span>(<span style="color:#ff0;font-weight:bold">13</span>),
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">primary</span> <span style="color:#fff;font-weight:bold">key</span> (DEPTNO)
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">CREATE</span> <span style="color:#fff;font-weight:bold">TABLE</span> EMP(EMPNO <span style="color:#fff;font-weight:bold">int</span>(<span style="color:#ff0;font-weight:bold">4</span>)  <span style="color:#fff;font-weight:bold">not</span> <span style="color:#fff;font-weight:bold">null</span> ,
+</span></span><span style="display:flex;"><span>	ENAME <span style="color:#fff;font-weight:bold">VARCHAR</span>(<span style="color:#ff0;font-weight:bold">10</span>),
+</span></span><span style="display:flex;"><span>	JOB <span style="color:#fff;font-weight:bold">VARCHAR</span>(<span style="color:#ff0;font-weight:bold">9</span>),
+</span></span><span style="display:flex;"><span>	MGR <span style="color:#fff;font-weight:bold">INT</span>(<span style="color:#ff0;font-weight:bold">4</span>),
+</span></span><span style="display:flex;"><span>	HIREDATE <span style="color:#fff;font-weight:bold">DATE</span>  <span style="color:#fff;font-weight:bold">DEFAULT</span> <span style="color:#fff;font-weight:bold">NULL</span>,
+</span></span><span style="display:flex;"><span>	SAL DOUBLE(<span style="color:#ff0;font-weight:bold">7</span>,<span style="color:#ff0;font-weight:bold">2</span>),
+</span></span><span style="display:flex;"><span>	COMM DOUBLE(<span style="color:#ff0;font-weight:bold">7</span>,<span style="color:#ff0;font-weight:bold">2</span>),
+</span></span><span style="display:flex;"><span>	<span style="color:#fff;font-weight:bold">primary</span> <span style="color:#fff;font-weight:bold">key</span> (EMPNO),
+</span></span><span style="display:flex;"><span>	DEPTNO <span style="color:#fff;font-weight:bold">INT</span>(<span style="color:#ff0;font-weight:bold">2</span>) 
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">CREATE</span> <span style="color:#fff;font-weight:bold">TABLE</span> SALGRADE( GRADE <span style="color:#fff;font-weight:bold">INT</span>,
+</span></span><span style="display:flex;"><span>	LOSAL <span style="color:#fff;font-weight:bold">INT</span>,
+</span></span><span style="display:flex;"><span>	HISAL <span style="color:#fff;font-weight:bold">INT</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> DEPT ( DEPTNO, DNAME, LOC ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">10</span>, <span style="color:#0ff;font-weight:bold">&#39;ACCOUNTING&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;NEW YORK&#39;</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> DEPT ( DEPTNO, DNAME, LOC ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">20</span>, <span style="color:#0ff;font-weight:bold">&#39;RESEARCH&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;DALLAS&#39;</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> DEPT ( DEPTNO, DNAME, LOC ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">30</span>, <span style="color:#0ff;font-weight:bold">&#39;SALES&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;CHICAGO&#39;</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> DEPT ( DEPTNO, DNAME, LOC ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">40</span>, <span style="color:#0ff;font-weight:bold">&#39;OPERATIONS&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;BOSTON&#39;</span>); 
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7369</span>, <span style="color:#0ff;font-weight:bold">&#39;SMITH&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;CLERK&#39;</span>, <span style="color:#ff0;font-weight:bold">7902</span>,  <span style="color:#0ff;font-weight:bold">&#39;1980-12-17&#39;</span>, <span style="color:#ff0;font-weight:bold">800</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">20</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7499</span>, <span style="color:#0ff;font-weight:bold">&#39;ALLEN&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;SALESMAN&#39;</span>, <span style="color:#ff0;font-weight:bold">7698</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-02-20&#39;</span>, <span style="color:#ff0;font-weight:bold">1600</span>, <span style="color:#ff0;font-weight:bold">300</span>, <span style="color:#ff0;font-weight:bold">30</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7521</span>, <span style="color:#0ff;font-weight:bold">&#39;WARD&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;SALESMAN&#39;</span>, <span style="color:#ff0;font-weight:bold">7698</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-02-22&#39;</span>, <span style="color:#ff0;font-weight:bold">1250</span>, <span style="color:#ff0;font-weight:bold">500</span>, <span style="color:#ff0;font-weight:bold">30</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7566</span>, <span style="color:#0ff;font-weight:bold">&#39;JONES&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;MANAGER&#39;</span>, <span style="color:#ff0;font-weight:bold">7839</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-04-02&#39;</span>, <span style="color:#ff0;font-weight:bold">2975</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">20</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7654</span>, <span style="color:#0ff;font-weight:bold">&#39;MARTIN&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;SALESMAN&#39;</span>, <span style="color:#ff0;font-weight:bold">7698</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-09-28&#39;</span>, <span style="color:#ff0;font-weight:bold">1250</span>, <span style="color:#ff0;font-weight:bold">1400</span>, <span style="color:#ff0;font-weight:bold">30</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7698</span>, <span style="color:#0ff;font-weight:bold">&#39;BLAKE&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;MANAGER&#39;</span>, <span style="color:#ff0;font-weight:bold">7839</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-05-01&#39;</span>, <span style="color:#ff0;font-weight:bold">2850</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">30</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7782</span>, <span style="color:#0ff;font-weight:bold">&#39;CLARK&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;MANAGER&#39;</span>, <span style="color:#ff0;font-weight:bold">7839</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-06-09&#39;</span>, <span style="color:#ff0;font-weight:bold">2450</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">10</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7788</span>, <span style="color:#0ff;font-weight:bold">&#39;SCOTT&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;ANALYST&#39;</span>, <span style="color:#ff0;font-weight:bold">7566</span>,  <span style="color:#0ff;font-weight:bold">&#39;1987-04-19&#39;</span>, <span style="color:#ff0;font-weight:bold">3000</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">20</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7839</span>, <span style="color:#0ff;font-weight:bold">&#39;KING&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;PRESIDENT&#39;</span>, <span style="color:#fff;font-weight:bold">NULL</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-11-17&#39;</span>, <span style="color:#ff0;font-weight:bold">5000</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">10</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7844</span>, <span style="color:#0ff;font-weight:bold">&#39;TURNER&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;SALESMAN&#39;</span>, <span style="color:#ff0;font-weight:bold">7698</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-09-08&#39;</span>, <span style="color:#ff0;font-weight:bold">1500</span>, <span style="color:#ff0;font-weight:bold">0</span>, <span style="color:#ff0;font-weight:bold">30</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7876</span>, <span style="color:#0ff;font-weight:bold">&#39;ADAMS&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;CLERK&#39;</span>, <span style="color:#ff0;font-weight:bold">7788</span>,  <span style="color:#0ff;font-weight:bold">&#39;1987-05-23&#39;</span>, <span style="color:#ff0;font-weight:bold">1100</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">20</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7900</span>, <span style="color:#0ff;font-weight:bold">&#39;JAMES&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;CLERK&#39;</span>, <span style="color:#ff0;font-weight:bold">7698</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-12-03&#39;</span>, <span style="color:#ff0;font-weight:bold">950</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">30</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7902</span>, <span style="color:#0ff;font-weight:bold">&#39;FORD&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;ANALYST&#39;</span>, <span style="color:#ff0;font-weight:bold">7566</span>,  <span style="color:#0ff;font-weight:bold">&#39;1981-12-03&#39;</span>, <span style="color:#ff0;font-weight:bold">3000</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">20</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> EMP ( EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM,DEPTNO ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">7934</span>, <span style="color:#0ff;font-weight:bold">&#39;MILLER&#39;</span>, <span style="color:#0ff;font-weight:bold">&#39;CLERK&#39;</span>, <span style="color:#ff0;font-weight:bold">7782</span>,  <span style="color:#0ff;font-weight:bold">&#39;1982-01-23&#39;</span>, <span style="color:#ff0;font-weight:bold">1300</span>, <span style="color:#fff;font-weight:bold">NULL</span>, <span style="color:#ff0;font-weight:bold">10</span>); 
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> SALGRADE ( GRADE, LOSAL, HISAL ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">1</span>, <span style="color:#ff0;font-weight:bold">700</span>, <span style="color:#ff0;font-weight:bold">1200</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> SALGRADE ( GRADE, LOSAL, HISAL ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">2</span>, <span style="color:#ff0;font-weight:bold">1201</span>, <span style="color:#ff0;font-weight:bold">1400</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> SALGRADE ( GRADE, LOSAL, HISAL ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">3</span>, <span style="color:#ff0;font-weight:bold">1401</span>, <span style="color:#ff0;font-weight:bold">2000</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> SALGRADE ( GRADE, LOSAL, HISAL ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">4</span>, <span style="color:#ff0;font-weight:bold">2001</span>, <span style="color:#ff0;font-weight:bold">3000</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">INSERT</span> <span style="color:#fff;font-weight:bold">INTO</span> SALGRADE ( GRADE, LOSAL, HISAL ) <span style="color:#fff;font-weight:bold">VALUES</span> ( <span style="color:#ff0;font-weight:bold">5</span>, <span style="color:#ff0;font-weight:bold">3001</span>, <span style="color:#ff0;font-weight:bold">9999</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">commit</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>什么是sql脚本：文件名是.sql，并且该文件中编写了大量的SQL语句，执行sql脚本程序就相当于批量执行SQL语句。</li>
+<li>你入职的时候，项目一般都是进展了一部分，多数情况下你进项目组的时候数据库的表以及数据都是有的，项目经理第一天可能会给你一个较大的sql脚本文件，你需要执行这个脚本文件来初始化你的本地数据库。（当然，也有可能数据库是共享的。）</li>
+<li>创建文件：bjpowernode.sql，把以上SQL语句全部复制到sql脚本文件中。</li>
+<li>执行SQL脚本文件，初始化数据库
+<ul>
+<li>第一步：命令窗口登录mysql</li>
+<li>第二步：创建数据库bjpowernode（如果之前已经创建就不需要再创建了）：create database bjpowernode;</li>
+<li>第三步：使用数据库bjpowernode：use bjpowernode;</li>
+<li>第四步：source命令执行sql脚本，注意：source命令后面是sql脚本文件的绝对路径。</li>
+</ul>
+</li>
+</ul>
+<p>        <img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/4c356fa033aa5f6a7a827b76edace747_MD5.png"></p>
+<ul>
+<li>第五步：查看是否初始化成功，执行：show tables;</li>
+</ul>
+<p>        <img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/32b107929d152cd076f27ce29483548a_MD5.png"></p>
+<ul>
+<li>使用其他的mysql客户端工具也可以执行sql脚本，比如navicat。使用source命令执行sql脚本的优点：<strong>可支持大文件</strong>。</li>
+</ul>
+<h1 id="熟悉测试数据">熟悉测试数据<a hidden class="anchor" aria-hidden="true" href="#熟悉测试数据">#</a></h1>
+<hr>
+<p>emp dept salgrade三张表分别存储什么信息</p>
+<ul>
+<li>emp：员工信息</li>
+<li>dept：部门信息</li>
+<li>salgrade：工资等级信息</li>
+</ul>
+<p>查看表结构：desc或describe，语法格式：desc或describe +表名<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/a93a05eea46fef1452843e373ef004e0_MD5.png"><br>
+以上的结果展示的不是表中的数据，而是表的结构。</p>
+<ul>
+<li>Field是字段名</li>
+<li>Type是这个字段的数据类型</li>
+<li>Null是这个字段是否允许为空</li>
+<li>Key是这个字段是否为主键或外键</li>
+<li>Default是这个字段的默认值</li>
+</ul>
+<p>对以上表结构进行解释说明：</p>
+<ul>
+<li>emp表
+<ul>
+<li>empno：员工编号，int类型（整数），不能为空，主键（主键后期学习约束时会进行说明）</li>
+<li>ename：员工姓名，varchar类型（字符串）</li>
+<li>job：工作岗位，varchar类型</li>
+<li>mgr：上级领导编号，int类型</li>
+<li>hiredate：雇佣日期，date类型（日期类型）</li>
+<li>sal：月薪，double类型（带有浮点的数字）</li>
+<li>comm：补助津贴，double类型</li>
+<li>deptno：部门编号，int类型</li>
+</ul>
+</li>
+<li>dept表
+<ul>
+<li>deptno：部门编号，int类型，主键</li>
+<li>dname：部门名称，varchar类型</li>
+<li>loc：位置，varchar类型</li>
+</ul>
+</li>
+<li>salgrade表
+<ul>
+<li>grade：等级，int类型</li>
+<li>losal：最低工资，int类型</li>
+<li>hisal：最高工资，int类型</li>
+</ul>
+</li>
+</ul>
+<p>对于以上表结构要提前了解，后面学习的内容需要你马上反应出：哪个字段是什么意思。<br>
+查看一下表中的数据，来加深一下印象（以下SQL语句会在后面课程中学习）：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/771a3acddd5a8b51489b3b89dc9b295f_MD5.png"></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://009965.xyz/tags/mysql/">Mysql</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

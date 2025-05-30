@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>第5章 事务 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="mysql">
+<meta name="description" content="事务概述 事务是一个最小的工作单元。在数据库当中，事务表示一件完整的事儿。 一个业务的完成可能需要多条DML语句共同配合才能完成，例如转账业务，">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="第5章 事务">
+  <meta property="og:description" content="事务概述 事务是一个最小的工作单元。在数据库当中，事务表示一件完整的事儿。 一个业务的完成可能需要多条DML语句共同配合才能完成，例如转账业务，">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-25T18:13:02+00:00">
+    <meta property="article:modified_time" content="2025-05-25T18:13:02+00:00">
+    <meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第5章 事务">
+<meta name="twitter:description" content="事务概述 事务是一个最小的工作单元。在数据库当中，事务表示一件完整的事儿。 一个业务的完成可能需要多条DML语句共同配合才能完成，例如转账业务，">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "第5章 事务",
+      "item": "https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第5章 事务",
+  "name": "第5章 事务",
+  "description": "事务概述 事务是一个最小的工作单元。在数据库当中，事务表示一件完整的事儿。 一个业务的完成可能需要多条DML语句共同配合才能完成，例如转账业务，",
+  "keywords": [
+    "mysql"
+  ],
+  "articleBody": "事务概述 事务是一个最小的工作单元。在数据库当中，事务表示一件完整的事儿。 一个业务的完成可能需要多条DML语句共同配合才能完成，例如转账业务，需要执行两条DML语句，先更新张三账户的余额，再更新李四账户的余额，为了保证转账业务不出现问题，就必须保证要么同时成功，要么同时失败，怎么保证同时成功或者同时失败呢？就需要使用事务机制。 也就是说用了事务机制之后，在同一个事务当中，多条DML语句会同时成功，或者同时失败，不会出现一部分成功，一部分失败的现象。 事务只针对DML语句有效：因为只有这三个语句是改变表中数据的。 insert delete update 事务四大特性：ACID 原子性（Atomicity）：是指事务包含的所有操作要么全部成功，要么同时失败。 一致性（Consistency）：是指事务开始前，和事务完成后，数据应该是一致的。例如张三和李四的钱加起来是5000，中间不管进行过多少次的转账操作(update)，总量5000是不会变的。这就是事务的一致性。 隔离性（Isolation）：隔离性是当多个⽤户并发访问数据库时，⽐如操作同⼀张表时，数据库为每⼀个⽤户开启的事务，不能被其他事务的操作所⼲扰，多个并发事务之间要相互隔离。 持久性（Durability）：持久性是指⼀个事务⼀旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。 演示MySQL事务 在dos命令窗口中开启MySQL事务：start transaction; 或者：begin;\n回滚事务：rollback;\n提交事务：commit;\n只要执行以上的rollback或者commit，事务都会结束。\nMySQL默认情况下采用的事务机制是：自动提交。所谓自动提交就是只要执行一条DML语句则提交一次。\n事务隔离级别 隔离级别从低到高排序：读未提交 \u003c 读提交 \u003c 可重复读 \u003c 串行化\n不同隔离级别会存在不同的现象，现象按照严重性从高到低排序：脏读 \u003e 不可重复读 \u003e 幻读\n查看与设置隔离级别 mysql默认的隔离级别：可重复读（REPEATABLE READ）。\n查看当前会话的隔离级别：select @@transaction_isolation; 查看全局的隔离级别：select @@gobal.transaction_isolation; 设置事务隔离级别：\n会话级：set session transaction isolation level read committed; 全局级：set global transaction isolation level read committed; 不同现象 脏读 指的是一个事务读取了另一个事务尚未提交的数据，即读取了另一个事务中的脏数据（Dirty Data）。在此情况下，如果另一个事务回滚了或者修改了这些数据，那么读取这些脏数据的事务所处理的数据就是不准确的。\n不可重复读 指在一个事务内，多次读取同一个数据行，得到的结果可能是不一样的。这是由于其他事务对数据行做出了修改操作，导致数据的不一致性。\n幻读 指在事务执行过程中，前后两次相同的查询条件得到的结果集不一致，可能会变多或变少。\n隔离级别 读未提交（READ UNCOMMITTED） A事务与B事务，A事务可以读取到B事务未提交的数据。这是最低的隔离级别。几乎两个事务之间没有隔离。这种隔离级别是一种理论层面的，在实际的数据库产品中，没有从这个级别起步的。\n当事务隔离级别是读未提交时，三种现象都存在：脏读，不可重复读，幻读。\n我们可以开启两个DOS命令窗口，模拟两个事务，演示一下这种隔离级别。三种现象中最严重的是脏读，我们只需要演示脏读问题即可，因为存在脏读的话，就一定存在不可重复读和幻读问题。\n将全局事务隔离级别设置为：READ UNCOMMITTED\n1 set global transaction isolation level read uncommitted; 开启两个DOS命令窗口来模拟两个事务：A事务与B事务。\nA事务 B事务 mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; mysql\u003e insert into a values(4); mysql\u003e select * from a; 通过以上测试，可以看到，A事务读取到了B事务还没有提交的数据。这种现象就是脏读。\n读提交（READ COMMITTED） A事务与B事务，A事务可以读取到B事务提交之后的数据。Oracle数据库默认的就是这种隔离级别。\n将数据库的全局事务隔离级别设置为读提交：READ COMMITTED\n1 set global transaction isolation level read committed; 演示：\nA事务 B事务 mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; mysql\u003e insert into a values(4); mysql\u003e select * from a; mysql\u003e commit; mysql\u003e select * from a; 通过以上测试看出，A事务只能读取到B事务提交之后的数据。这种隔离级别解决了脏读问题，但肯定是存在不可重复读和幻读问题。因为只要事务B进行了增删改操作之后并提交了，事务A读取到的数据肯定是不同的。即：不可重复读和幻读都存在。\n可重复读（REPEATABLE READ） 这个隔离级别是MySQL数据库默认的。\nA事务和B事务，A事务开启后，读取了某一条记录，然后B事务对这条记录进行修改并提交，A事务读取到的还是修改前的数据。这种隔离级别称为可重复读。\n将数据库全局隔离级别修改为可重复读：\n1 set global transaction isolation level repeatable read; 演示：\nA事务 B事务 mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select empno,ename,sal from emp where empno=7369; mysql\u003e update emp set ename=‘SMITH’,sal=8000 where empno=7369; mysql\u003e commit; mysql\u003e select empno,ename,sal from emp where empno=7369; 通过以上测试得知：当事务隔离级别设置为可重复读时，避免了不可重复读问题。\n那么在MySQL当中，当事务隔离级别设置为可重复读时，能够避免幻读问题吗？测试一下：\n事务A 事务B mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; mysql\u003e insert into a values(5); mysql\u003e commit; mysql\u003e select * from a; 通过以上测试得知：**当事务隔离级别设置为可重复读时，也避免了幻读问题。是完全避免了幻读问题吗？并不是。**请看以下测试：\n事务A 事务B mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; mysql\u003e insert into a values(6); mysql\u003e commit; mysql\u003e select * from a for update; 通过以上测试得知：当事务隔离级别设置为可重复读，MySQL会尽最大努力避免幻读问题，但这种隔离级别无法完全避免幻读问题。\n串行化（SERIALIZABLE） 这种隔离级别最高，避免了所有的问题，缺点是效率低，因为这种隔离级别会导致事务排队处理，不支持并发。\n设置数据库全局隔离级别为串行化：\n1 set global transaction isolation level serializable; 演示：\n事务A 事务B mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; mysql\u003e insert into a values(7); mysql\u003e select * from a; mysql\u003e commit; 通过以上测试得知：当事务隔离级别设置为串行化时，事务只能排队执行，不支持并发。\n可重复读的幻读问题 在上面讲解过程中我提到，MySQL默认的隔离级别可重复读，在很大程度上避免了幻读问题（并不能完全解决），那么它是如何解决幻读问题的呢，解决方案包括两种：\n针对快照读（普通 select 语句），是通过 MVCC 方式解决了幻读，因为可重复读隔离级别下，事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，即使中途有其他事务插入了一条数据，是查询不出来这条数据的，所以就很好的避免了幻读问题。 针对当前读（select … for update 等语句），是通过 next-key lock（记录锁+间隙锁）方式解决了幻读，因为当执行 select … for update 语句的时候，会加上 next-key lock，如果有其他事务在 next-key lock 锁范围内插入了一条记录，那么这个插入语句就会被阻塞，无法成功插入，所以就很好的避免了幻读问题。 快照读是如何解决幻读的 什么是快照读？普通的select语句都是采用的快照读。顾名思义：在整个事务的处理过程中，执行相同的一个select语句时，每次都是读取的快照。（快照指的是固定的某个时刻的数据，就像现实世界中的拍照一样，把那个美好的时刻留下来）。也就是说，当事务隔离级别是可重复读，并且执行的select语句是一个普通的select语句时，都会采用快照读的方式读取数据，底层实现原理是：\n底层由 MVCC（多版本并发控制）实现，实现的方式是开始事务后，在执行第一个查询语句后，会创建一个 Read View，后续的查询语句利用这个 Read View，通过这个 Read View 就可以在 undo log 版本链找到事务开始时的数据，所以事务过程中每次查询的数据都是一样的，即使中途有其他事务插入了新纪录，是查询不出来这条数据的，所以就很好的避免了幻读问题。 演示：\n事务A 事务B mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; //快照读 mysql\u003e insert into a values(5); mysql\u003e commit; mysql\u003e select * from a; //快照读 当前读是如何解决幻读的 当前读，顾名思义：每一次都读取最新的数据。当前读包括：update、delete、insert、select…for update。这个很好理解，因为增删改的时候都要基于最新的数据进行增删改。\n而select…for update原理是：对查询范围内的数据进行加锁，不允许其它事务对这个范围内的数据进行增删改。也就是说这个select语句范围内的数据是不允许并发的，只能排队执行，从而避免幻读问题。\nselect…for update加的锁叫做：next-key lock。我们可以称其为：间隙锁 + 记录锁。间隙锁用来保证在锁定的范围内不允许insert操作。记录锁用来保证在锁定的范围内不允许delete和update操作。\n假如有这样的数据：\nSQL语句是这样写的：\n1 select * from a where id between 2 and 4 for update; 那么id在[2-4]区间的所有记录行被锁定，不能插入3是通过间隙锁来搞定的。不能修改或删除2和4是通过记录锁来搞定的。\n演示：\n事务A 事务B mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a where id between 2 and 4 for update; // 当前读 出现幻读的两种情况 在同一个事务处理过程中，如果前后两次都采用快照读，或者都采用当前读，则不会出现幻读问题。如果第一次使用快照读，后面使用了当前读，则会出现幻读问题。\n第一种产生幻读的场景 A事务与B事务。在A事务中第一次查询使用快照读，B事务插入数据。然后在A事务中第二次查询使用当前读。则会产生幻读现象。\n演示：\n事务A 事务B mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; mysql\u003e insert into a values(5); mysql\u003e commit; mysql\u003e select * from a for update; // 产生了幻读 第二种产生幻读的场景 事务A与事务B，在事务A中第一次查询使用快照读，在事务B中插入一条数据，然后在事务A中更新事务B插入的那条记录，最后在事务A中再次使用快照读。则会发生幻读现象。\n事务A 事务B mysql\u003e use powernode mysql\u003e use powernode mysql\u003e start transaction; mysql\u003e start transaction; mysql\u003e select * from a; mysql\u003e insert into a values(6); mysql\u003e commit; mysql\u003e update a set id=100 where id=6; //主要是因为这个SQL语句的执行触发了当前读 mysql\u003e select * from a; // 产生了幻读 总结可重复读的幻读问题 MySQL的可重复读隔离级别（默认隔离级），根据不同的查询方式，分别提出了避免幻读的方案：\n针对快照读（普通 select 语句），是通过 MVCC 方式解决了幻读。 针对当前读（select … for update 等语句），是通过 next-key lock（记录锁+间隙锁）方式解决了幻读。 我举例了两个发生幻读场景的例子。\n第一个例子：对于快照读， MVCC 并不能完全避免幻读现象。因为当事务 A 更新了一条事务 B 插入的记录，那么事务 A 前后两次查询的记录条目就不一样了，所以就发生幻读。 第二个例子：对于当前读，如果事务开启后，并没有执行当前读，而是先快照读，然后这期间如果其他事务插入了一条记录，那么事务后续使用当前读进行查询的时候，就会发现两次查询的记录条目就不一样了，所以就发生幻读。 所以，MySQL 可重复读隔离级别并没有彻底解决幻读，只是很大程度上避免了幻读现象的发生。\n要避免这类特殊场景下发生幻读的现象的话，就是尽量在开启事务之后，马上执行 select … for update 这类当前读的语句，因为它会对记录加 next-key lock，从而避免其他事务插入一条新记录。\n",
+  "wordCount" : "4338",
+  "inLanguage": "en",
+  "datePublished": "2025-05-25T18:13:02Z",
+  "dateModified": "2025-05-25T18:13:02Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://009965.xyz/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      第5章 事务
+    </h1>
+    <div class="post-meta"><span title='2025-05-25 18:13:02 +0000 UTC'>2025-05-25</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%ba%8b%e5%8a%a1%e6%a6%82%e8%bf%b0" aria-label="事务概述">事务概述</a></li>
+                <li>
+                    <a href="#%e4%ba%8b%e5%8a%a1%e5%9b%9b%e5%a4%a7%e7%89%b9%e6%80%a7acid" aria-label="事务四大特性：ACID">事务四大特性：ACID</a></li>
+                <li>
+                    <a href="#%e6%bc%94%e7%a4%bamysql%e4%ba%8b%e5%8a%a1" aria-label="演示MySQL事务">演示MySQL事务</a></li>
+                <li>
+                    <a href="#%e4%ba%8b%e5%8a%a1%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab" aria-label="事务隔离级别">事务隔离级别</a><ul>
+                        
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8b%e4%b8%8e%e8%ae%be%e7%bd%ae%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab" aria-label="查看与设置隔离级别">查看与设置隔离级别</a></li>
+                <li>
+                    <a href="#%e4%b8%8d%e5%90%8c%e7%8e%b0%e8%b1%a1" aria-label="不同现象">不同现象</a><ul>
+                        
+                <li>
+                    <a href="#%e8%84%8f%e8%af%bb" aria-label="脏读">脏读</a></li>
+                <li>
+                    <a href="#%e4%b8%8d%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bb" aria-label="不可重复读">不可重复读</a></li>
+                <li>
+                    <a href="#%e5%b9%bb%e8%af%bb" aria-label="幻读">幻读</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab" aria-label="隔离级别">隔离级别</a><ul>
+                        
+                <li>
+                    <a href="#%e8%af%bb%e6%9c%aa%e6%8f%90%e4%ba%a4read-uncommitted" aria-label="读未提交（READ UNCOMMITTED）">读未提交（READ UNCOMMITTED）</a></li>
+                <li>
+                    <a href="#%e8%af%bb%e6%8f%90%e4%ba%a4read-committed" aria-label="读提交（READ COMMITTED）">读提交（READ COMMITTED）</a></li>
+                <li>
+                    <a href="#%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bbrepeatable-read" aria-label="可重复读（REPEATABLE READ）">可重复读（REPEATABLE READ）</a></li>
+                <li>
+                    <a href="#%e4%b8%b2%e8%a1%8c%e5%8c%96serializable" aria-label="串行化（SERIALIZABLE）">串行化（SERIALIZABLE）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bb%e7%9a%84%e5%b9%bb%e8%af%bb%e9%97%ae%e9%a2%98" aria-label="可重复读的幻读问题">可重复读的幻读问题</a><ul>
+                        
+                <li>
+                    <a href="#%e5%bf%ab%e7%85%a7%e8%af%bb%e6%98%af%e5%a6%82%e4%bd%95%e8%a7%a3%e5%86%b3%e5%b9%bb%e8%af%bb%e7%9a%84" aria-label="快照读是如何解决幻读的">快照读是如何解决幻读的</a></li>
+                <li>
+                    <a href="#%e5%bd%93%e5%89%8d%e8%af%bb%e6%98%af%e5%a6%82%e4%bd%95%e8%a7%a3%e5%86%b3%e5%b9%bb%e8%af%bb%e7%9a%84" aria-label="当前读是如何解决幻读的">当前读是如何解决幻读的</a></li>
+                <li>
+                    <a href="#%e5%87%ba%e7%8e%b0%e5%b9%bb%e8%af%bb%e7%9a%84%e4%b8%a4%e7%a7%8d%e6%83%85%e5%86%b5" aria-label="出现幻读的两种情况">出现幻读的两种情况</a><ul>
+                        
+                <li>
+                    <a href="#%e7%ac%ac%e4%b8%80%e7%a7%8d%e4%ba%a7%e7%94%9f%e5%b9%bb%e8%af%bb%e7%9a%84%e5%9c%ba%e6%99%af" aria-label="第一种产生幻读的场景">第一种产生幻读的场景</a></li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%ba%8c%e7%a7%8d%e4%ba%a7%e7%94%9f%e5%b9%bb%e8%af%bb%e7%9a%84%e5%9c%ba%e6%99%af" aria-label="第二种产生幻读的场景">第二种产生幻读的场景</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%80%bb%e7%bb%93%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bb%e7%9a%84%e5%b9%bb%e8%af%bb%e9%97%ae%e9%a2%98" aria-label="总结可重复读的幻读问题">总结可重复读的幻读问题</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="事务概述">事务概述<a hidden class="anchor" aria-hidden="true" href="#事务概述">#</a></h1>
+<ol>
+<li>事务是一个最小的工作单元。在数据库当中，事务表示一件完整的事儿。</li>
+<li>一个业务的完成可能需要多条DML语句共同配合才能完成，例如转账业务，需要执行两条DML语句，先更新张三账户的余额，再更新李四账户的余额，为了保证转账业务不出现问题，就必须保证要么同时成功，要么同时失败，怎么保证同时成功或者同时失败呢？就需要使用事务机制。</li>
+<li>也就是说用了事务机制之后，在同一个事务当中，多条DML语句会同时成功，或者同时失败，不会出现一部分成功，一部分失败的现象。</li>
+<li>事务只针对DML语句有效：因为只有这三个语句是改变表中数据的。
+<ol>
+<li>insert</li>
+<li>delete</li>
+<li>update</li>
+</ol>
+</li>
+</ol>
+<h1 id="事务四大特性acid">事务四大特性：ACID<a hidden class="anchor" aria-hidden="true" href="#事务四大特性acid">#</a></h1>
+<ol>
+<li>原子性（Atomicity）：是指事务包含的所有操作要么全部成功，要么同时失败。</li>
+<li>一致性（Consistency）：是指事务开始前，和事务完成后，数据应该是一致的。例如张三和李四的钱加起来是5000，中间不管进行过多少次的转账操作(update)，总量5000是不会变的。这就是事务的一致性。</li>
+<li>隔离性（Isolation）：隔离性是当多个⽤户并发访问数据库时，⽐如操作同⼀张表时，数据库为每⼀个⽤户开启的事务，不能被其他事务的操作所⼲扰，多个并发事务之间要相互隔离。</li>
+<li>持久性（Durability）：持久性是指⼀个事务⼀旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。</li>
+</ol>
+<h1 id="演示mysql事务">演示MySQL事务<a hidden class="anchor" aria-hidden="true" href="#演示mysql事务">#</a></h1>
+<p>在dos命令窗口中开启MySQL事务：start transaction; 或者：begin;<br>
+回滚事务：rollback;<br>
+提交事务：commit;<br>
+只要执行以上的rollback或者commit，事务都会结束。<br>
+MySQL默认情况下采用的事务机制是：自动提交。所谓自动提交就是只要执行一条DML语句则提交一次。</p>
+<h1 id="事务隔离级别">事务隔离级别<a hidden class="anchor" aria-hidden="true" href="#事务隔离级别">#</a></h1>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/91f07cb547f1a95444d7c6623e102230_MD5.png"><br>
+<strong>隔离级别从低到高排序：读未提交 &lt; 读提交 &lt; 可重复读 &lt; 串行化</strong><br>
+<strong>不同隔离级别会存在不同的现象，现象按照严重性从高到低排序：脏读 &gt; 不可重复读 &gt; 幻读</strong></p>
+<h2 id="查看与设置隔离级别">查看与设置隔离级别<a hidden class="anchor" aria-hidden="true" href="#查看与设置隔离级别">#</a></h2>
+<p>mysql默认的隔离级别：可重复读（REPEATABLE READ）。</p>
+<ul>
+<li>查看当前会话的隔离级别：select @@transaction_isolation;</li>
+<li>查看全局的隔离级别：select @@gobal.transaction_isolation;</li>
+</ul>
+<p>设置事务隔离级别：</p>
+<ul>
+<li>会话级：set session transaction isolation level read committed;</li>
+<li>全局级：set global transaction isolation level read committed;</li>
+</ul>
+<h2 id="不同现象">不同现象<a hidden class="anchor" aria-hidden="true" href="#不同现象">#</a></h2>
+<h3 id="脏读">脏读<a hidden class="anchor" aria-hidden="true" href="#脏读">#</a></h3>
+<p>指的是一个事务读取了另一个事务尚未提交的数据，即读取了另一个事务中的脏数据（Dirty Data）。在此情况下，如果另一个事务回滚了或者修改了这些数据，那么读取这些脏数据的事务所处理的数据就是不准确的。</p>
+<h3 id="不可重复读">不可重复读<a hidden class="anchor" aria-hidden="true" href="#不可重复读">#</a></h3>
+<p>指在一个事务内，多次读取同一个数据行，得到的结果可能是不一样的。这是由于其他事务对数据行做出了修改操作，导致数据的不一致性。</p>
+<h3 id="幻读">幻读<a hidden class="anchor" aria-hidden="true" href="#幻读">#</a></h3>
+<p>指在事务执行过程中，前后两次相同的查询条件得到的结果集不一致，可能会变多或变少。</p>
+<h2 id="隔离级别">隔离级别<a hidden class="anchor" aria-hidden="true" href="#隔离级别">#</a></h2>
+<h3 id="读未提交read-uncommitted">读未提交（READ UNCOMMITTED）<a hidden class="anchor" aria-hidden="true" href="#读未提交read-uncommitted">#</a></h3>
+<p>A事务与B事务，A事务可以读取到B事务未提交的数据。这是最低的隔离级别。几乎两个事务之间没有隔离。这种隔离级别是一种理论层面的，在实际的数据库产品中，没有从这个级别起步的。<br>
+当事务隔离级别是读未提交时，三种现象都存在：脏读，不可重复读，幻读。<br>
+我们可以开启两个DOS命令窗口，模拟两个事务，演示一下这种隔离级别。三种现象中最严重的是脏读，我们只需要演示脏读问题即可，因为存在脏读的话，就一定存在不可重复读和幻读问题。</p>
+<p>将全局事务隔离级别设置为：READ UNCOMMITTED</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> <span style="color:#fff;font-weight:bold">global</span> <span style="color:#fff;font-weight:bold">transaction</span> <span style="color:#fff;font-weight:bold">isolation</span> <span style="color:#fff;font-weight:bold">level</span> <span style="color:#fff;font-weight:bold">read</span> <span style="color:#fff;font-weight:bold">uncommitted</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>开启两个DOS命令窗口来模拟两个事务：A事务与B事务。</p>
+<table>
+<thead>
+<tr>
+<th><strong>A事务</strong></th>
+<th><strong>B事务</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/47b139876f377ab69f3fd34134e6aa45_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; insert into a values(4);</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/d7072a308f377f594fcfc78850dc5032_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>通过以上测试，可以看到，A事务读取到了B事务还没有提交的数据。这种现象就是脏读。</p>
+<h3 id="读提交read-committed">读提交（READ COMMITTED）<a hidden class="anchor" aria-hidden="true" href="#读提交read-committed">#</a></h3>
+<p>A事务与B事务，A事务可以读取到B事务提交之后的数据。Oracle数据库默认的就是这种隔离级别。</p>
+<p>将数据库的全局事务隔离级别设置为读提交：READ COMMITTED</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> <span style="color:#fff;font-weight:bold">global</span> <span style="color:#fff;font-weight:bold">transaction</span> <span style="color:#fff;font-weight:bold">isolation</span> <span style="color:#fff;font-weight:bold">level</span> <span style="color:#fff;font-weight:bold">read</span> <span style="color:#fff;font-weight:bold">committed</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>演示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>A事务</strong></th>
+<th><strong>B事务</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/ec2628647be0eab655e949fe1b6fe8b6_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; insert into a values(4);</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/ec2628647be0eab655e949fe1b6fe8b6_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; commit;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/3dd9de23326621698596848b564ab46a_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>通过以上测试看出，A事务只能读取到B事务提交之后的数据。这种隔离级别解决了脏读问题，但肯定是存在不可重复读和幻读问题。因为只要事务B进行了增删改操作之后并提交了，事务A读取到的数据肯定是不同的。即：不可重复读和幻读都存在。</p>
+<h3 id="可重复读repeatable-read">可重复读（REPEATABLE READ）<a hidden class="anchor" aria-hidden="true" href="#可重复读repeatable-read">#</a></h3>
+<p>这个隔离级别是MySQL数据库默认的。<br>
+A事务和B事务，A事务开启后，读取了某一条记录，然后B事务对这条记录进行修改并提交，A事务读取到的还是修改前的数据。这种隔离级别称为可重复读。</p>
+<p>将数据库全局隔离级别修改为可重复读：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> <span style="color:#fff;font-weight:bold">global</span> <span style="color:#fff;font-weight:bold">transaction</span> <span style="color:#fff;font-weight:bold">isolation</span> <span style="color:#fff;font-weight:bold">level</span> <span style="color:#fff;font-weight:bold">repeatable</span> <span style="color:#fff;font-weight:bold">read</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>演示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>A事务</strong></th>
+<th><strong>B事务</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select empno,ename,sal from emp where empno=7369;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/aa93c6095bfad7fef91da85480e25573_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; update emp set ename=&lsquo;SMITH&rsquo;,sal=8000 where empno=7369;</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; commit;</td>
+</tr>
+<tr>
+<td>mysql&gt; select empno,ename,sal from emp where empno=7369;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/bfe6e8d6287b58b480e87eb6c439eafd_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>通过以上测试得知：当事务隔离级别设置为可重复读时，避免了不可重复读问题。</p>
+<p>那么在MySQL当中，当事务隔离级别设置为可重复读时，能够避免幻读问题吗？测试一下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>事务A</strong></th>
+<th><strong>事务B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/f6f3a8354729d4b55b864c451170b3fb_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; insert into a values(5);</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; commit;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/60942b19358cce26a31344fae5593401_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>通过以上测试得知：**当事务隔离级别设置为可重复读时，也避免了幻读问题。是完全避免了幻读问题吗？并不是。**请看以下测试：</p>
+<table>
+<thead>
+<tr>
+<th><strong>事务A</strong></th>
+<th><strong>事务B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/f14b3ea343f37ed8bf35cf78d3f2d111_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; insert into a values(6);</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; commit;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a <strong>for update;</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/53563c9f66e8eb020327e81abe8b1ba0_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>通过以上测试得知：<strong>当事务隔离级别设置为可重复读，MySQL会尽最大努力避免幻读问题，但这种隔离级别无法完全避免幻读问题。</strong></p>
+<h3 id="串行化serializable">串行化（SERIALIZABLE）<a hidden class="anchor" aria-hidden="true" href="#串行化serializable">#</a></h3>
+<p>这种隔离级别最高，避免了所有的问题，缺点是效率低，因为这种隔离级别会导致事务排队处理，不支持并发。</p>
+<p>设置数据库全局隔离级别为串行化：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">set</span> <span style="color:#fff;font-weight:bold">global</span> <span style="color:#fff;font-weight:bold">transaction</span> <span style="color:#fff;font-weight:bold">isolation</span> <span style="color:#fff;font-weight:bold">level</span> <span style="color:#fff;font-weight:bold">serializable</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>演示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>事务A</strong></th>
+<th><strong>事务B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/d30ad345b4328e73e66a042c4a4c10ed_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td>mysql&gt; insert into a values(7);</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; select * from a;</td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/a0fa0f769c76dfd054b79d7ed674f533_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td>mysql&gt; commit;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/98a3e2fe7955f1e9459fad9522e0437e_MD5.png"></td>
+</tr>
+</tbody>
+</table>
+<p>通过以上测试得知：当事务隔离级别设置为串行化时，事务只能排队执行，不支持并发。</p>
+<h2 id="可重复读的幻读问题">可重复读的幻读问题<a hidden class="anchor" aria-hidden="true" href="#可重复读的幻读问题">#</a></h2>
+<p>在上面讲解过程中我提到，MySQL默认的隔离级别可重复读，在很大程度上避免了幻读问题（并不能完全解决），那么它是如何解决幻读问题的呢，解决方案包括两种：</p>
+<ul>
+<li>针对<strong>快照读</strong>（普通 select 语句），是<strong>通过 MVCC 方式解决了幻读</strong>，因为可重复读隔离级别下，事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，即使中途有其他事务插入了一条数据，是查询不出来这条数据的，所以就很好的避免了幻读问题。</li>
+<li>针对<strong>当前读</strong>（select &hellip; for update 等语句），是<strong>通过 next-key lock（记录锁+间隙锁）方式解决了幻读</strong>，因为当执行 select &hellip; for update 语句的时候，会加上 next-key lock，如果有其他事务在 next-key lock 锁范围内插入了一条记录，那么这个插入语句就会被阻塞，无法成功插入，所以就很好的避免了幻读问题。</li>
+</ul>
+<h3 id="快照读是如何解决幻读的">快照读是如何解决幻读的<a hidden class="anchor" aria-hidden="true" href="#快照读是如何解决幻读的">#</a></h3>
+<p>什么是快照读？普通的select语句都是采用的快照读。顾名思义：在整个事务的处理过程中，执行相同的一个select语句时，每次都是读取的快照。（快照指的是固定的某个时刻的数据，就像现实世界中的拍照一样，把那个美好的时刻留下来）。也就是说，当事务隔离级别是可重复读，并且执行的select语句是一个普通的select语句时，都会采用快照读的方式读取数据，底层实现原理是：</p>
+<ul>
+<li>底层由 MVCC（多版本并发控制）实现，实现的方式是开始事务后，在执行第一个查询语句后，会创建一个 Read View，后续的查询语句利用这个 Read View，通过这个 Read View 就可以在 undo log 版本链找到事务开始时的数据，所以事务过程中每次查询的数据都是一样的，即使中途有其他事务插入了新纪录，是查询不出来这条数据的，所以就很好的避免了幻读问题。</li>
+</ul>
+<p>演示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>事务A</strong></th>
+<th><strong>事务B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a; //快照读</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/f6f3a8354729d4b55b864c451170b3fb_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; insert into a values(5);</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; commit;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a; //快照读</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/60942b19358cce26a31344fae5593401_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="当前读是如何解决幻读的">当前读是如何解决幻读的<a hidden class="anchor" aria-hidden="true" href="#当前读是如何解决幻读的">#</a></h3>
+<p>当前读，顾名思义：每一次都读取最新的数据。当前读包括：update、delete、insert、select&hellip;for update。这个很好理解，因为增删改的时候都要基于最新的数据进行增删改。<br>
+而select&hellip;for update原理是：对查询范围内的数据进行加锁，不允许其它事务对这个范围内的数据进行增删改。也就是说这个select语句范围内的数据是不允许并发的，只能排队执行，从而避免幻读问题。<br>
+select&hellip;for update加的锁叫做：next-key lock。我们可以称其为：间隙锁 + 记录锁。间隙锁用来保证在锁定的范围内不允许insert操作。记录锁用来保证在锁定的范围内不允许delete和update操作。</p>
+<p>假如有这样的数据：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/29865561a5a01d2d3839cb3ff9469fbb_MD5.png"><br>
+SQL语句是这样写的：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">select</span> * <span style="color:#fff;font-weight:bold">from</span> a <span style="color:#fff;font-weight:bold">where</span> id <span style="color:#fff;font-weight:bold">between</span> <span style="color:#ff0;font-weight:bold">2</span> <span style="color:#fff;font-weight:bold">and</span> <span style="color:#ff0;font-weight:bold">4</span> <span style="color:#fff;font-weight:bold">for</span> <span style="color:#fff;font-weight:bold">update</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么id在[2-4]区间的所有记录行被锁定，不能插入3是通过间隙锁来搞定的。不能修改或删除2和4是通过记录锁来搞定的。</p>
+<p>演示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>事务A</strong></th>
+<th><strong>事务B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a where id between 2 and 4 for update; // 当前读</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/0e1b9f0b89c1d6395667a072899cf842_MD5.png"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="出现幻读的两种情况">出现幻读的两种情况<a hidden class="anchor" aria-hidden="true" href="#出现幻读的两种情况">#</a></h3>
+<p>在同一个事务处理过程中，如果前后两次都采用快照读，或者都采用当前读，则不会出现幻读问题。如果第一次使用快照读，后面使用了当前读，则会出现幻读问题。</p>
+<h4 id="第一种产生幻读的场景">第一种产生幻读的场景<a hidden class="anchor" aria-hidden="true" href="#第一种产生幻读的场景">#</a></h4>
+<p>A事务与B事务。在A事务中第一次查询使用快照读，B事务插入数据。然后在A事务中第二次查询使用当前读。则会产生幻读现象。<br>
+演示：</p>
+<table>
+<thead>
+<tr>
+<th><strong>事务A</strong></th>
+<th><strong>事务B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/5880c38505039a1428785010b1ca1f67_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; insert into a values(5);</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; commit;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a for update; // 产生了幻读</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/cd38f8e42ef3f91268b61962f95ef7d8_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="第二种产生幻读的场景">第二种产生幻读的场景<a hidden class="anchor" aria-hidden="true" href="#第二种产生幻读的场景">#</a></h4>
+<p>事务A与事务B，在事务A中第一次查询使用快照读，在事务B中插入一条数据，然后在事务A中更新事务B插入的那条记录，最后在事务A中再次使用快照读。则会发生幻读现象。</p>
+<table>
+<thead>
+<tr>
+<th><strong>事务A</strong></th>
+<th><strong>事务B</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mysql&gt; use powernode</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; use powernode</td>
+</tr>
+<tr>
+<td>mysql&gt; start transaction;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; start transaction;</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a;</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/69047bc8dd088eaf3464f21e80596152_MD5.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; insert into a values(6);</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; commit;</td>
+</tr>
+<tr>
+<td>mysql&gt; update a set id=100 where id=6; //主要是因为这个SQL语句的执行触发了当前读</td>
+<td></td>
+</tr>
+<tr>
+<td>mysql&gt; select * from a; // 产生了幻读</td>
+<td></td>
+</tr>
+<tr>
+<td><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/be94f09d876cb578053830966d8793d8_MD5.png"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="总结可重复读的幻读问题">总结可重复读的幻读问题<a hidden class="anchor" aria-hidden="true" href="#总结可重复读的幻读问题">#</a></h3>
+<p>MySQL的可重复读隔离级别（默认隔离级），根据不同的查询方式，分别提出了避免幻读的方案：</p>
+<ul>
+<li>针对快照读（普通 select 语句），是通过 MVCC 方式解决了幻读。</li>
+<li>针对当前读（select &hellip; for update 等语句），是通过 next-key lock（记录锁+间隙锁）方式解决了幻读。</li>
+</ul>
+<p>我举例了两个发生幻读场景的例子。</p>
+<ul>
+<li>第一个例子：对于快照读， MVCC 并不能完全避免幻读现象。因为当事务 A 更新了一条事务 B 插入的记录，那么事务 A 前后两次查询的记录条目就不一样了，所以就发生幻读。</li>
+<li>第二个例子：对于当前读，如果事务开启后，并没有执行当前读，而是先快照读，然后这期间如果其他事务插入了一条记录，那么事务后续使用当前读进行查询的时候，就会发现两次查询的记录条目就不一样了，所以就发生幻读。</li>
+</ul>
+<p>所以，MySQL 可重复读隔离级别并没有彻底解决幻读，只是很大程度上避免了幻读现象的发生。<br>
+要避免这类特殊场景下发生幻读的现象的话，就是尽量在开启事务之后，马上执行 select &hellip; for update 这类当前读的语句，因为它会对记录加 next-key lock，从而避免其他事务插入一条新记录。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://009965.xyz/tags/mysql/">Mysql</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

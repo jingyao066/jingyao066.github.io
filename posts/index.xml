@@ -6,14 +6,84 @@
     <description>Recent content in Posts on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 26 May 2025 10:35:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 May 2025 18:13:07 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>mybatis</title>
-      <link>https://009965.xyz/posts/mybatis/mybatis/</link>
-      <pubDate>Mon, 26 May 2025 10:35:13 +0000</pubDate>
-      <guid>https://009965.xyz/posts/mybatis/mybatis/</guid>
-      <description>一、MyBatis概述 1.1 框架 在文献中看到的framework被翻译为框架 Java常用框架： SSM三大框架：Spring + SpringMVC + MyBatis SpringBoot SpringCloud 等。。 框架</description>
+      <title>第11章 企业真题</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC11%E7%AB%A0-%E4%BC%81%E4%B8%9A%E7%9C%9F%E9%A2%98/</link>
+      <pubDate>Sun, 25 May 2025 18:13:07 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC11%E7%AB%A0-%E4%BC%81%E4%B8%9A%E7%9C%9F%E9%A2%98/</guid>
+      <description>第一题 1 2 3 4 5 # 第一步：找小于等于80分的学员姓名 select distinct name from t_student where fenshu &amp;lt;= 80 # 第二步：not in select distinct name from t_student where name not in(select distinct name from t_student where fenshu &amp;lt;= 80) 第二题 其中，两个表</description>
+    </item>
+    <item>
+      <title>第10章 MySQL优化</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC10%E7%AB%A0-mysql%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Sun, 25 May 2025 18:13:06 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC10%E7%AB%A0-mysql%E4%BC%98%E5%8C%96/</guid>
+      <description>MySQL优化手段 MySQL数据库的优化手段通常包括但不限于： SQL查询优化：这是最低成本的优化手段，通过优化查询语句、适当添加索引等方式进</description>
+    </item>
+    <item>
+      <title>第9章 索引</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/</link>
+      <pubDate>Sun, 25 May 2025 18:13:06 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/</guid>
+      <description>什么是索引 索引是一种能够提高检索（查询）效率的提前排好序的数据结构。例如：书的目录就是一种索引机制。索引是解决SQL慢查询的一种方式。 索引的</description>
+    </item>
+    <item>
+      <title>第8章 存储引擎</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC8%E7%AB%A0-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</link>
+      <pubDate>Sun, 25 May 2025 18:13:05 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC8%E7%AB%A0-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</guid>
+      <description>存储引擎概述 MySQL存储引擎决定了数据在磁盘上的存储方式和访问方式。不同的存储引擎实现了不同的存储和检索算法，因此它们在处理和管理数据的方</description>
+    </item>
+    <item>
+      <title>第7章 存储过程</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC7%E7%AB%A0-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</link>
+      <pubDate>Sun, 25 May 2025 18:13:04 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC7%E7%AB%A0-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</guid>
+      <description>什么是存储过程？ 存储过程可称为过程化SQL语言，是在普通SQL语句的基础上增加了编程语言的特点，把数据操作语句(DML)和查询语句(DQL)</description>
+    </item>
+    <item>
+      <title>第6章 DBA命令</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC6%E7%AB%A0-dba%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Sun, 25 May 2025 18:13:03 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC6%E7%AB%A0-dba%E5%91%BD%E4%BB%A4/</guid>
+      <description>新建用户 创建一个用户名为java1，密码设置为123的本地用户： 1 create user &amp;#39;java1&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;123&amp;#39;; 创建一个用户名为java2，密码设置为123的外网用户： 1 create user</description>
+    </item>
+    <item>
+      <title>第5章 事务</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/</link>
+      <pubDate>Sun, 25 May 2025 18:13:02 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/</guid>
+      <description>事务概述 事务是一个最小的工作单元。在数据库当中，事务表示一件完整的事儿。 一个业务的完成可能需要多条DML语句共同配合才能完成，例如转账业务，</description>
+    </item>
+    <item>
+      <title>第4章 三范式</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC4%E7%AB%A0-%E4%B8%89%E8%8C%83%E5%BC%8F/</link>
+      <pubDate>Sun, 25 May 2025 18:13:01 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC4%E7%AB%A0-%E4%B8%89%E8%8C%83%E5%BC%8F/</guid>
+      <description>什么是数据库设计三范式 数据库表设计的原则。教你怎么设计数据库表有效，并且节省空间。 三范式 第一范式：任何一张表都应该有主键，每个字段是原子性的</description>
+    </item>
+    <item>
+      <title>第3章 表相关</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC3%E7%AB%A0-%E8%A1%A8%E7%9B%B8%E5%85%B3/</link>
+      <pubDate>Sun, 25 May 2025 18:13:00 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC3%E7%AB%A0-%E8%A1%A8%E7%9B%B8%E5%85%B3/</guid>
+      <description>创建表 语法格式： 1 2 3 4 5 6 create table 表名( 字段名1 数据类型, 字段名2 数据类型, 字段名3 数据类型, ...... ); 例如：创建学生表 1 2 3 4 5 create table t_student( no int, name varchar, gender char(1)</description>
+    </item>
+    <item>
+      <title>第2章 查询DQL专题</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC2%E7%AB%A0-%E6%9F%A5%E8%AF%A2dql%E4%B8%93%E9%A2%98/</link>
+      <pubDate>Sun, 25 May 2025 18:12:59 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC2%E7%AB%A0-%E6%9F%A5%E8%AF%A2dql%E4%B8%93%E9%A2%98/</guid>
+      <description>简单查询 查询是SQL语言的核心，用于表达SQL查询的select查询命令是功能最强也是最为复杂的SQL语句，它的作用就是从数据库中检索数据，</description>
+    </item>
+    <item>
+      <title>第1章 数据库概述,安装,初始化数据</title>
+      <link>https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Sun, 25 May 2025 18:12:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/</guid>
+      <description>什么是数据库 数据库是一门独立的学科，只要是做软件开发的，数据库都要学。 数据库（电子化的文件柜）是“按照数据结构来组织、存储和管理数据的仓库”</description>
     </item>
     <item>
       <title>配眼镜攻略</title>
@@ -1063,7 +1133,7 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
       <link>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/22_servlet/</link>
       <pubDate>Wed, 17 Aug 2022 15:40:43 +0000</pubDate>
       <guid>https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/22_servlet/</guid>
-      <description>Servlet 关于系统架构 系统架构包括什么形式？ C/S架构 B/S架构 C/S架构？ Client / Server（客户端 / 服务器） C/S架构的软件或者说系统有哪些？qq</description>
+      <description>系统架构概述 一、系统架构的形式 系统架构主要包括以下两种形式： C/S 架构（Client/Server） B/S 架构（Browser/Server） 二、C</description>
     </item>
     <item>
       <title>21_web开发</title>
@@ -1341,9 +1411,9 @@ Java 语言并不直接将代码编译成与系统有关的机器码，而是编
     </item>
     <item>
       <title>mybatis</title>
-      <link>https://009965.xyz/posts/mybatis/mybatis1/</link>
+      <link>https://009965.xyz/posts/mybatis/mybatis/</link>
       <pubDate>Fri, 27 Mar 2020 15:07:56 +0000</pubDate>
-      <guid>https://009965.xyz/posts/mybatis/mybatis1/</guid>
+      <guid>https://009965.xyz/posts/mybatis/mybatis/</guid>
       <description>&lt;h1 id=&#34;基础&#34;&gt;基础&lt;/h1&gt;
 &lt;h2 id=&#34;面向接口编程&#34;&gt;面向接口编程&lt;/h2&gt;
 &lt;ol&gt;

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>第9章 索引 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="mysql">
+<meta name="description" content="什么是索引 索引是一种能够提高检索（查询）效率的提前排好序的数据结构。例如：书的目录就是一种索引机制。索引是解决SQL慢查询的一种方式。 索引的">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="第9章 索引">
+  <meta property="og:description" content="什么是索引 索引是一种能够提高检索（查询）效率的提前排好序的数据结构。例如：书的目录就是一种索引机制。索引是解决SQL慢查询的一种方式。 索引的">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-25T18:13:06+00:00">
+    <meta property="article:modified_time" content="2025-05-25T18:13:06+00:00">
+    <meta property="article:tag" content="Mysql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第9章 索引">
+<meta name="twitter:description" content="什么是索引 索引是一种能够提高检索（查询）效率的提前排好序的数据结构。例如：书的目录就是一种索引机制。索引是解决SQL慢查询的一种方式。 索引的">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "第9章 索引",
+      "item": "https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第9章 索引",
+  "name": "第9章 索引",
+  "description": "什么是索引 索引是一种能够提高检索（查询）效率的提前排好序的数据结构。例如：书的目录就是一种索引机制。索引是解决SQL慢查询的一种方式。 索引的",
+  "keywords": [
+    "mysql"
+  ],
+  "articleBody": "什么是索引 索引是一种能够提高检索（查询）效率的提前排好序的数据结构。例如：书的目录就是一种索引机制。索引是解决SQL慢查询的一种方式。\n索引的创建和删除 主键会自动添加索引 主键字段会自动添加索引，不需要程序员干涉，主键字段上的索引被称为主键索引\nunique约束的字段自动添加索引 unique约束的字段也会自动添加索引，不需要程序员干涉，这种字段上添加的索引称为唯一索引\n给指定的字段添加索引 建表时添加索引：\n1 2 3 4 5 6 CREATE TABLE emp ( ... name varchar(255), ... INDEX idx_name (name) ); 如果表已经创建好了，后期给字段添加索引\n1 ALTER TABLE emp ADD INDEX idx_name (name); 也可以这样添加索引：\n1 create index idx_name on emp(name); 删除指定字段上的索引 1 ALTER TABLE emp DROP INDEX idx_name; 查看某张表上添加了哪些索引 1 show index from 表名; 索引的分类 不同的存储引擎有不同的索引类型和实现：\n按照数据结构分类： B+树 索引（mysql的InnoDB存储引擎采用的就是这种索引）采用 B+树 的数据结构 Hash 索引（仅 memory 存储引擎支持）：采用 哈希表 的数据结构 按照物理存储分类： 聚集索引：索引和表中数据在一起，数据存储的时候就是按照索引顺序存储的。一张表只能有一个聚集索引。 非聚集索引：索引和表中数据是分开的，索引是独立于表空间的，一张表可以有多个非聚集索引。 按照字段特性分类： 主键索引（primary key） 唯一索引（unique） 普通索引（index） 全文索引（fulltext：仅 InnoDB和MyISAM 存储引擎支持） 按照字段个数分类： 单列索引、联合索引（也叫复合索引、组合索引） MySQL索引采用了B+树数据结构 常见的树相关的数据结构包括：\n二叉树 红黑树 B树 B+树 区别：树的高度不同。树的高度越低，性能越高。这是因为每一个节点都是一次I/O\n二叉树 有这样一张表\n如果不给id字段添加索引，默认进行全表扫描，假设查询id=10的数据，那至少要进行10次磁盘IO。效率低。可以给id字段添加索引，假设该索引使用了二叉树这种数据结构，这个二叉树是这样的（推荐一个数据结构可视化网站Data Structure Visualizations，是旧金山大学（USFCA）的一个网站）：https://www.cs.usfca.edu/~galles/visualization/Algorithms.html\n如果这个时候要找id=10的数据，需要的IO次数是？4次。效率显著提升了。\n但是MySQL并没有直接使用这种普通的二叉树，这种普通二叉树在数据极端的情况下，效率较低。比如下面的数据：\n如果给id字段添加索引，并且该索引底层使用了普通二叉树，这棵树会是这样的：\n你虽然使用了二叉树，但这更像一个链表。查找效率等同于链表查询O(n)【查找算法的时间复杂度是线性的】。查找效率极低。\n因此对于MySQL来说，它并没有选择这种数据结构作为索引。\n红黑树（自平衡二叉树） 通过自旋平衡规则进行旋转，子节点会自动分叉为2个分支，从而减少树的高度，当数据有序插入时比二叉树数据检索性能更好。\n例如有以下数据\n给id字段添加索引，并且该索引使用了红黑树数据结构，那么会是这样：\n如果查找id=10的数据，磁盘IO次数为：5次。效率比普通二叉树要高一些。\n但是如果数据量庞大，例如500万条数据，也会导致树的高度很高，磁盘IO次数仍然很多，查询效率也会比较低。\n因此MySQL并没有使用红黑树这种数据结构作为索引。\nB Trees（B树） B Trees首先是一个自平衡的。\nB Trees每个节点下的子节点数量 \u003e 2。\nB Trees每个节点中也不是存储单个数据，可以存储多个数据。\nB Trees又称为平衡多路查找树。\nB Trees分支的数量不是2，是大于2，具体是多少个分支，由阶决定。例如：\n3阶的B Trees，一个节点下最多有3个子节点，每个节点中最多有2个数据。 4阶的B Trees，一个节点下最多有4个子节点，每个节点中最多有3个数据。 5阶（5, 4） 6阶（6, 5） …. 16阶（16, 15）【MySQL采用了16阶】 采用B Trees，你会发现相同的数据量，B Tree 树的高度更低。磁盘IO次数更少。\n3阶的B Trees：\n假设id字段添加了索引，并且采用了B Trees数据结构，查找id=10的数据，只需要3次磁盘IO。\n4阶的B Trees：\n更加详细的存储是这样的，请看下图：\n在B Trees中，每个节点不仅存储了索引值，还存储该索引值对应的数据行。\n并且每个节点中的p1 p2 p3是指向下一个节点的指针。\nB Trees数据结构存在的缺点是：不适合做区间查找，对于区间查找效率较低。假设要查id在[3~7]之间的，需要查找的是3,4,5,6,7。那么查这每个索引值都需要从头节点开始。\n因此MySQL使用了B+ Trees解决了这个问题。\nB+ Trees（B+ 树） B+ Trees 相较于 B Trees改进了哪些？\nB+树将数据都存储在叶子节点中。并且叶子节点之间使用链表连接，这样很适合范围查询。 B+树的非叶子节点上只有索引值，没有数据，所以非叶子节点可以存储更多的索引值，这样让B+树更矮更胖，提高检索效率。 假设有这样一张表：\nB+ Trees方式存储的话如下图所示：\n**经典面试题：**mysql为什么选择B+树作为索引的数据结构，而不是B树？\n非叶子节点上可以存储更多的键值，阶数可以更大，更矮更胖，磁盘IO次数少，数据查询效率高。 所有数据都是有序存储在叶子节点上，让范围查找，分组查找效率更高。 数据页之间、数据记录之间采用链表链接，让升序降序更加方便操作。 **经典面试题：**如果一张表没有主键索引，那还会创建B+树吗？\n当一张表没有主键索引时，默认会使用一个隐藏的内置的聚集索引（clustered index）。这个聚集索引是基于表的物理存储顺序构建的，通常是使用B+树来实现的。\n其他索引及相关调优 Hash索引 支持Hash索引的存储引擎有：\nInnoDB（不支持手动创建Hash索引，系统会自动维护一个自适应的Hash索引） 对于InnoDB来说，即使手动指定了某字段采用Hash索引，最终show index from 表名的时候，还是BTREE。 Memory（支持Hash索引） Hash索引底层的数据结构就是哈希表。一个数组，数组中每个元素是链表。和java中HashMap一样。哈希表中每个元素都是key value结构。key存储索引值，value存储行指针。\n原理如下：\n如果name字段上添加了Hash索引idx_name\nHash索引长这个样子：\n检索原理：假设 name=‘孙行者’。通过哈希算法将’孙行者’转换为数组下标，通过下标找链表，在链表上遍历找到孙行者的行指针。\n注意：不同的字符串，经过哈希算法得到的数组下标可能相同，这叫做哈希碰撞/哈希冲突。【不过，好的哈希算法应该具有很低的碰撞概率。常用的哈希算法如MD5、SHA-1、SHA-256等都被设计为尽可能减少碰撞的发生。】\nHash索引优缺点：\n优点：只能用在等值比较中，效率很高。例如：name=‘孙悟空’ 缺点：不支持排序，不支持范围查找。 聚集索引和非聚集索引 按照数据的物理存储方式不同，可以将索引分为聚集索引（聚簇索引）和非聚集索引（非聚簇索引）。\n存储引擎是InnoDB的，主键上的索引属于聚集索引。\n存储引擎是MyISAM的，任意字段上的索引都是非聚集索引。\nInnoDB的物理存储方式：当创建一张表t_user，并使用InnoDB存储引擎时，会在硬盘上生成这样一个文件：\nt_user.ibd （InnoDB data表索引 + 数据） t_user.frm （存储表结构信息） MyISAM的物理存储方式：当创建一张表t_user，并使用MyISAM存储引擎时，会在硬盘上生成这样一个文件：\nt_user.MYD （表数据） t_user.MYI （表索引） t_user.frm （表结构） 注意：从MySQL8.0开始，不再生成frm文件了，引入了数据字典，用数据字典来统一存储表结构信息，例如：\ninformation_schema.TABLES （表包含了数据库中所有表的信息，例如表名、数据库名、引擎类型等） information_schema.COLUMNS（表包含了数据库中所有表的列信息，例如列名、数据类型、默认值等） 聚集索引的原理图：（B+树，叶子节点上存储了索引值 + 数据）\n非聚集索引的原理图：（B+树，叶子节点上存储了索引值 + 行指针）\n聚集索引的优点和缺点：\n优点：聚集索引将数据存储在索引树的叶子节点上。可以减少一次查询，因为查询索引树的同时可以获取数据。 缺点：对数据进行修改或删除时需要更新索引树，会增加系统的开销。 二级索引 二级索引也属于非聚集索引。也有人把二级索引称为辅助索引。\n有表t_user，id是主键。age是非主键。在age字段上添加的索引称为二级索引。（所有非主键索引都是二级索引）\n二级索引的数据结构：\n二级索引的查询原理：\n假设查询语句为：\n1 select * from t_user where age = 30; 为什么会“回表”？因为使用了select *\n避免“回表【回到原数据表】”是提高SQL执行效率的手段。例如：select id from t_user where age = 30; 这样的SQL语句是不需要回表的。\n覆盖索引 覆盖索引（Covering Index），顾名思义，是指某个查询语句可以通过索引的覆盖来完成，而不需要回表查询真实数据。其中的覆盖指的是在执行查询语句时，查询需要的所有列都可以从索引中提取到，而不需要再去查询实际数据行获取查询所需数据。\n当使用覆盖索引时，MySQL可以直接通过索引，也就是索引上的数据来获取所需的结果，而不必再去查找表中的数据。这样可以显著提高查询性能。\n假设有一个用户表（user）包含以下列：id, username, email, age。\n常见的查询是根据用户名查询用户的邮箱。如果为了提高这个查询的性能，可以创建一个覆盖索引，包含（username, email）这两列。\n创建覆盖索引的SQL语句可以如下：\n1 CREATE INDEX idx_user_username_email ON user (username, email); 当执行以下查询时：\n1 SELECT email FROM user WHERE username = 'lucy'; MySQL可以直接使用覆盖索引（idx_user_username_email）来获取查询结果，而不必再去查找用户表中的数据。这样可以减少磁盘I/O并提高查询效率。而如果没有覆盖索引，MySQL会先使用索引（username）来找到匹配的行，然后再回表查询获取邮箱，这个过程会增加更多的磁盘I/O和查询时间。\n值得注意的是，覆盖索引的创建需要考虑查询的字段选择。如果查询需要的字段较多，可能需要创建包含更多列的覆盖索引，以满足完全覆盖查询的需要。\n覆盖索引具有以下优点：\n提高查询性能：覆盖索引能够满足查询的所有需求，同时不需要访问表中的实际数据行，从而可以提高查询性能。这是因为DBMS可以直接使用索引来执行查询，而不需要从磁盘读取实际的数据行。 减少磁盘和内存访问次数：当使用覆盖索引时，DBMS不需要访问实际的数据行。这样可以减少磁盘和内存访问次数，从而提高查询性能。 减少网络传输：由于在覆盖索引中可以存储所有查询所需的列，因此可以减少数据的网络传输次数，从而提高查询的性能。 可以降低系统开销：在高压力的数据库系统中，使用覆盖索引可以减少系统开销，从而提高系统的可靠性和可维护性。 覆盖索引的缺点包括：\n需要更多的内存：覆盖索引需要存储查询所需的所有列，因此需要更多的内存来存储索引。在大型数据库系统中，这可能会成为一项挑战。 会使索引变得庞大：当索引中包含了许多列时，它们可能会使索引变得非常庞大，从而影响查询性能，并且可能会占用大量的磁盘空间。 只有在查询中包含了索引列时才能使用：只有当查询中包含了所有的索引列时才能使用覆盖索引。如果查询中包含了其他列，DBMS仍然需要访问实际的数据行，并且无法使用覆盖索引提高查询性能。 索引下推 索引下推（Index Condition Pushdown）是一种 MySQL 中的优化方法，它可以将查询中的过滤条件下推到索引层级中处理，从而减少回表次数，优化查询性能。\n具体来说，在使用索引下推时，MySQL 会在索引的叶节点层级执行查询的过滤条件，过滤掉无用的索引记录，仅返回符合条件的记录的主键，这样就可以避免查询时回表读取表格的数据行，从而缩短了整个查询过程的时间。\n假设有以下表结构：\n表名：users\nid name age city 1 John 25 New York 2 Alice 30 London 3 Bob 40 Paris 4 Olivia 35 Berlin 5 Michael 28 Sydney 现在我们创建了一个多列索引：（索引下推通常是基于多列索引的。）\n1 ALTER TABLE users ADD INDEX idx_name_city_age (name, city, age); 假设我们要查询年龄大于30岁，并且所在城市是\"London\"的用户，假设只给age字段添加了索引，它就不会使用索引下推。传统的查询优化器会将所有满足年龄大于30岁的记录读入内存，然后再根据城市进行筛选。\n使用索引下推优化后，在索引范围扫描的过程中，优化器会判断只有在城市列为\"London\"的情况下，才会将满足年龄大于30岁的记录加载到内存中。这样就可以避免不必要的IO和数据传输，提高查询性能。\n具体的查询语句可以是：\n1 SELECT * FROM users WHERE age \u003e 30 AND city = 'London'; 在执行这个查询时，优化器会使用索引下推技术，先根据索引范围扫描找到所有满足条件的记录，然后再回到原数据表中获取完整的行数据，最终返回结果。\n单列索引（单一索引） 单列索引是指对数据库表中的某一列或属性进行索引创建，对该列进行快速查找和排序操作。单列索引可以加快查询速度，提高数据库的性能。\n举个例子，假设我们有一个学生表（student），其中有以下几个列：学生编号（student_id）、姓名（name）、年龄（age）和性别（gender）。\n如果我们针对学生表的学生编号（student_id）列创建了单列索引，那么可以快速地根据学生编号进行查询或排序操作。例如，我们可以使用以下SQL语句查询学生编号为123456的学生信息：\n1 SELECT * FROM student WHERE student_id = 123456; 由于我们对学生编号列建立了单列索引，所以数据库可以直接通过索引快速定位到具有学生编号123456的那一行记录，从而加快查询速度。\n复合索引（组合索引） 复合索引（Compound Index）也称为多列索引（Multi-Column Index），是指对数据库表中多个列进行索引创建。\n与单列索引不同，复合索引可以包含多个列。这样可以将多个列的值组合起来作为索引的键，以提高多列条件查询的效率。\n举个例子，假设我们有一个订单表（Order），其中包含以下几个列：订单编号（OrderID）、客户编号（CustomerID）、订单日期（OrderDate）和订单金额（OrderAmount）。\n如果我们为订单表的客户编号和订单日期这两列创建复合索引（CustomerID, OrderDate），那么可以在查询时同时根据客户编号和订单日期来快速定位到匹配的记录。\n例如，我们可以使用以下SQL语句查询客户编号为123456且订单日期为2021-01-01的订单信息：\n1 SELECT * FROM Order WHERE CustomerID = 123456 AND OrderDate = '2021-01-01'; 由于我们为客户编号和订单日期创建了复合索引，数据库可以使用这个索引来快速定位到符合条件的记录，从而加快查询速度。复合索引的使用能够提高多列条件查询的效率，但需要注意的是，复合索引的创建和维护可能会增加索引的存储空间和对于写操作的影响。\n相对于单列索引，复合索引有以下几个优势：\n减少索引的数量：复合索引可以包含多个列，因此可以减少索引的数量，减少索引的存储空间和维护成本。 提高查询性能：当查询条件中涉及到复合索引的多个列时，数据库可以使用复合索引进行快速定位和过滤，从而提高查询性能。 覆盖查询：如果复合索引包含了所有查询需要的列，那么数据库可以直接使用索引中的数据，而不需要再进行表的读取，从而提高查询性能。 排序和分组：由于复合索引包含多个列，因此可以用于排序和分组操作，从而提高排序和分组的性能。 索引的优缺点 索引是数据库中一种重要的数据结构，用于加速数据的检索和查询操作。它的优点和缺点如下：\n优点：\n提高查询性能：通过创建索引，可以大大减少数据库查询的数据量，从而提升查询的速度。 加速排序：当查询需要按照某个字段进行排序时，索引可以加速排序的过程，提高排序的效率。 减少磁盘IO：索引可以减少磁盘IO的次数，这对于磁盘读写速度较低的场景，尤其重要。 缺点：\n占据额外的存储空间：索引需要占据额外的存储空间，特别是在大型数据库系统中，索引可能占据较大的空间。 增删改操作的性能损耗：每次对数据表进行插入、更新、删除等操作时，需要更新索引，会导致操作的性能降低。 资源消耗较大：索引需要占用内存和CPU资源，特别是在大规模并发访问的情况下，可能对系统的性能产生影响。 何时用索引 在以下情况下建议使用索引：\n频繁执行查询操作的字段：如果这些字段经常被查询，使用索引可以提高查询的性能，减少查询的时间。 大表：当表的数据量较大时，使用索引可以快速定位到所需的数据，提高查询效率。 需要排序或者分组的字段：在对字段进行排序或者分组操作时，索引可以减少排序或者分组的时间。 外键关联的字段：在进行表之间的关联查询时，使用索引可以加快关联查询的速度。 在以下情况下不建议使用索引：\n频繁执行更新操作的表：如果表经常被更新数据，使用索引可能会降低更新操作的性能，因为每次更新都需要维护索引。 小表：对于数据量较小的表，使用索引可能并不会带来明显的性能提升，反而会占用额外的存储空间。 对于唯一性很差的字段，一般不建议添加索引。当一个字段的唯一性很差时，查询操作基本上需要扫描整个表的大部分数据。如果为这样的字段创建索引，索引的大小可能会比数据本身还大，导致索引的存储空间占用过高，同时也会导致查询操作的性能下降。 总之，索引需要根据具体情况进行使用和权衡，需要考虑到表的大小、查询频率、更新频率以及业务需求等因素。\n",
+  "wordCount" : "7028",
+  "inLanguage": "en",
+  "datePublished": "2025-05-25T18:13:06Z",
+  "dateModified": "2025-05-25T18:13:06Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://009965.xyz/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      第9章 索引
+    </h1>
+    <div class="post-meta"><span title='2025-05-25 18:13:06 +0000 UTC'>2025-05-25</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e7%b4%a2%e5%bc%95" aria-label="什么是索引">什么是索引</a></li>
+                <li>
+                    <a href="#%e7%b4%a2%e5%bc%95%e7%9a%84%e5%88%9b%e5%bb%ba%e5%92%8c%e5%88%a0%e9%99%a4" aria-label="索引的创建和删除">索引的创建和删除</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%bb%e9%94%ae%e4%bc%9a%e8%87%aa%e5%8a%a8%e6%b7%bb%e5%8a%a0%e7%b4%a2%e5%bc%95" aria-label="主键会自动添加索引">主键会自动添加索引</a></li>
+                <li>
+                    <a href="#unique%e7%ba%a6%e6%9d%9f%e7%9a%84%e5%ad%97%e6%ae%b5%e8%87%aa%e5%8a%a8%e6%b7%bb%e5%8a%a0%e7%b4%a2%e5%bc%95" aria-label="unique约束的字段自动添加索引">unique约束的字段自动添加索引</a></li>
+                <li>
+                    <a href="#%e7%bb%99%e6%8c%87%e5%ae%9a%e7%9a%84%e5%ad%97%e6%ae%b5%e6%b7%bb%e5%8a%a0%e7%b4%a2%e5%bc%95" aria-label="给指定的字段添加索引">给指定的字段添加索引</a></li>
+                <li>
+                    <a href="#%e5%88%a0%e9%99%a4%e6%8c%87%e5%ae%9a%e5%ad%97%e6%ae%b5%e4%b8%8a%e7%9a%84%e7%b4%a2%e5%bc%95" aria-label="删除指定字段上的索引">删除指定字段上的索引</a></li>
+                <li>
+                    <a href="#%e6%9f%a5%e7%9c%8b%e6%9f%90%e5%bc%a0%e8%a1%a8%e4%b8%8a%e6%b7%bb%e5%8a%a0%e4%ba%86%e5%93%aa%e4%ba%9b%e7%b4%a2%e5%bc%95" aria-label="查看某张表上添加了哪些索引">查看某张表上添加了哪些索引</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%b4%a2%e5%bc%95%e7%9a%84%e5%88%86%e7%b1%bb" aria-label="索引的分类">索引的分类</a></li>
+                <li>
+                    <a href="#mysql%e7%b4%a2%e5%bc%95%e9%87%87%e7%94%a8%e4%ba%86b%e6%a0%91%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" aria-label="MySQL索引采用了B&#43;树数据结构">MySQL索引采用了B+树数据结构</a><ul>
+                        
+                <li>
+                    <a href="#%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="二叉树">二叉树</a></li>
+                <li>
+                    <a href="#%e7%ba%a2%e9%bb%91%e6%a0%91%e8%87%aa%e5%b9%b3%e8%a1%a1%e4%ba%8c%e5%8f%89%e6%a0%91" aria-label="红黑树（自平衡二叉树）">红黑树（自平衡二叉树）</a></li>
+                <li>
+                    <a href="#b-treesb%e6%a0%91" aria-label="B Trees（B树）">B Trees（B树）</a></li>
+                <li>
+                    <a href="#b-treesb-%e6%a0%91" aria-label="B&#43; Trees（B&#43; 树）">B+ Trees（B+ 树）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96%e7%b4%a2%e5%bc%95%e5%8f%8a%e7%9b%b8%e5%85%b3%e8%b0%83%e4%bc%98" aria-label="其他索引及相关调优">其他索引及相关调优</a><ul>
+                        
+                <li>
+                    <a href="#hash%e7%b4%a2%e5%bc%95" aria-label="Hash索引">Hash索引</a></li>
+                <li>
+                    <a href="#%e8%81%9a%e9%9b%86%e7%b4%a2%e5%bc%95%e5%92%8c%e9%9d%9e%e8%81%9a%e9%9b%86%e7%b4%a2%e5%bc%95" aria-label="聚集索引和非聚集索引">聚集索引和非聚集索引</a></li>
+                <li>
+                    <a href="#%e4%ba%8c%e7%ba%a7%e7%b4%a2%e5%bc%95" aria-label="二级索引">二级索引</a></li>
+                <li>
+                    <a href="#%e8%a6%86%e7%9b%96%e7%b4%a2%e5%bc%95" aria-label="覆盖索引">覆盖索引</a></li>
+                <li>
+                    <a href="#%e7%b4%a2%e5%bc%95%e4%b8%8b%e6%8e%a8" aria-label="索引下推">索引下推</a></li>
+                <li>
+                    <a href="#%e5%8d%95%e5%88%97%e7%b4%a2%e5%bc%95%e5%8d%95%e4%b8%80%e7%b4%a2%e5%bc%95" aria-label="单列索引（单一索引）">单列索引（单一索引）</a></li>
+                <li>
+                    <a href="#%e5%a4%8d%e5%90%88%e7%b4%a2%e5%bc%95%e7%bb%84%e5%90%88%e7%b4%a2%e5%bc%95" aria-label="复合索引（组合索引）">复合索引（组合索引）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%b4%a2%e5%bc%95%e7%9a%84%e4%bc%98%e7%bc%ba%e7%82%b9" aria-label="索引的优缺点">索引的优缺点</a></li>
+                <li>
+                    <a href="#%e4%bd%95%e6%97%b6%e7%94%a8%e7%b4%a2%e5%bc%95" aria-label="何时用索引">何时用索引</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="什么是索引">什么是索引<a hidden class="anchor" aria-hidden="true" href="#什么是索引">#</a></h1>
+<p>索引是一种能够提高检索（查询）效率的提前排好序的数据结构。例如：书的目录就是一种索引机制。索引是解决SQL慢查询的一种方式。</p>
+<h1 id="索引的创建和删除">索引的创建和删除<a hidden class="anchor" aria-hidden="true" href="#索引的创建和删除">#</a></h1>
+<h2 id="主键会自动添加索引">主键会自动添加索引<a hidden class="anchor" aria-hidden="true" href="#主键会自动添加索引">#</a></h2>
+<p>主键字段会自动添加索引，不需要程序员干涉，主键字段上的索引被称为<code>主键索引</code></p>
+<h2 id="unique约束的字段自动添加索引">unique约束的字段自动添加索引<a hidden class="anchor" aria-hidden="true" href="#unique约束的字段自动添加索引">#</a></h2>
+<p>unique约束的字段也会自动添加索引，不需要程序员干涉，这种字段上添加的索引称为<code>唯一索引</code></p>
+<h2 id="给指定的字段添加索引">给指定的字段添加索引<a hidden class="anchor" aria-hidden="true" href="#给指定的字段添加索引">#</a></h2>
+<p>建表时添加索引：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">CREATE</span> <span style="color:#fff;font-weight:bold">TABLE</span> emp (
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    name <span style="color:#fff;font-weight:bold">varchar</span>(<span style="color:#ff0;font-weight:bold">255</span>),
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">INDEX</span> idx_name (name)
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果表已经创建好了，后期给字段添加索引</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">ALTER</span> <span style="color:#fff;font-weight:bold">TABLE</span> emp <span style="color:#fff;font-weight:bold">ADD</span> <span style="color:#fff;font-weight:bold">INDEX</span> idx_name (name);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也可以这样添加索引：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">create</span> <span style="color:#fff;font-weight:bold">index</span> idx_name <span style="color:#fff;font-weight:bold">on</span> emp(name);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="删除指定字段上的索引">删除指定字段上的索引<a hidden class="anchor" aria-hidden="true" href="#删除指定字段上的索引">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">ALTER</span> <span style="color:#fff;font-weight:bold">TABLE</span> emp <span style="color:#fff;font-weight:bold">DROP</span> <span style="color:#fff;font-weight:bold">INDEX</span> idx_name;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="查看某张表上添加了哪些索引">查看某张表上添加了哪些索引<a hidden class="anchor" aria-hidden="true" href="#查看某张表上添加了哪些索引">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">show</span> <span style="color:#fff;font-weight:bold">index</span> <span style="color:#fff;font-weight:bold">from</span> <span style="color:#f00">表名</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="索引的分类">索引的分类<a hidden class="anchor" aria-hidden="true" href="#索引的分类">#</a></h1>
+<p>不同的<code>存储引擎</code>有不同的索引类型和实现：</p>
+<ul>
+<li>按照数据结构分类：
+<ul>
+<li>B+树 索引（mysql的InnoDB存储引擎采用的就是这种索引）采用 B+树  的数据结构</li>
+<li>Hash 索引（仅 <code>memory</code> 存储引擎支持）：采用  哈希表  的数据结构</li>
+</ul>
+</li>
+<li>按照物理存储分类：
+<ul>
+<li>聚集索引：索引和表中数据在一起，数据存储的时候就是按照索引顺序存储的。一张表只能有一个聚集索引。</li>
+<li>非聚集索引：索引和表中数据是分开的，索引是独立于表空间的，一张表可以有多个非聚集索引。</li>
+</ul>
+</li>
+<li>按照字段特性分类：
+<ul>
+<li>主键索引（primary key）</li>
+<li>唯一索引（unique）</li>
+<li>普通索引（index）</li>
+<li>全文索引（fulltext：仅 <code>InnoDB和MyISAM</code> 存储引擎支持）</li>
+</ul>
+</li>
+<li>按照字段个数分类：
+<ul>
+<li>单列索引、联合索引（也叫复合索引、组合索引）</li>
+</ul>
+</li>
+</ul>
+<h1 id="mysql索引采用了b树数据结构">MySQL索引采用了B+树数据结构<a hidden class="anchor" aria-hidden="true" href="#mysql索引采用了b树数据结构">#</a></h1>
+<p>常见的树相关的数据结构包括：</p>
+<ul>
+<li>二叉树</li>
+<li>红黑树</li>
+<li>B树</li>
+<li>B+树</li>
+</ul>
+<p>区别：树的高度不同。树的高度越低，性能越高。这是因为每一个节点都是一次I/O</p>
+<h2 id="二叉树">二叉树<a hidden class="anchor" aria-hidden="true" href="#二叉树">#</a></h2>
+<p>有这样一张表<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/2aabe25eb386e8d4c1603aa3e63747e9_MD5.png"><br>
+如果不给id字段添加索引，默认进行全表扫描，假设查询id=10的数据，那至少要进行10次磁盘IO。效率低。可以给id字段添加索引，假设该索引使用了二叉树这种数据结构，这个二叉树是这样的（<strong>推荐一个数据结构可视化网站Data Structure Visualizations，是旧金山大学（USFCA）的一个网站</strong>）：<a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a></p>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/6e41c58d701a6cc8e6b6b5392f9f142d_MD5.png"><br>
+如果这个时候要找id=10的数据，需要的IO次数是？4次。效率显著提升了。<br>
+但是MySQL并没有直接使用这种普通的二叉树，这种普通二叉树在<code>数据极端</code>的情况下，效率较低。比如下面的数据：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/cef7985beeb29808106e29795aa1307e_MD5.png"><br>
+如果给id字段添加索引，并且该索引底层使用了普通二叉树，这棵树会是这样的：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/2811b4e5c38db11b0d8faa80da6e57b7_MD5.png"><br>
+你虽然使用了二叉树，但这更像一个链表。查找效率等同于链表查询O(n)【<strong>查找算法的时间复杂度是线性的</strong>】。查找效率极低。<br>
+因此对于MySQL来说，它并没有选择这种数据结构作为索引。</p>
+<h2 id="红黑树自平衡二叉树">红黑树（自平衡二叉树）<a hidden class="anchor" aria-hidden="true" href="#红黑树自平衡二叉树">#</a></h2>
+<p>通过自旋平衡规则进行旋转，子节点会自动分叉为2个分支，从而减少树的高度，当数据有序插入时比二叉树数据检索性能更好。<br>
+例如有以下数据<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/cef7985beeb29808106e29795aa1307e_MD5.png"><br>
+给id字段添加索引，并且该索引使用了<code>红黑树</code>数据结构，那么会是这样：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/5e620895e0455744825c2cfbbdbbcaa1_MD5.png"><br>
+如果查找id=10的数据，磁盘IO次数为：5次。效率比普通二叉树要高一些。</p>
+<p>但是如果数据量庞大，例如500万条数据，也会导致树的高度很高，磁盘IO次数仍然很多，查询效率也会比较低。</p>
+<p>因此MySQL并没有使用红黑树这种数据结构作为索引。</p>
+<h2 id="b-treesb树">B Trees（B树）<a hidden class="anchor" aria-hidden="true" href="#b-treesb树">#</a></h2>
+<p>B Trees首先是一个<code>自平衡</code>的。<br>
+B Trees每个节点下的子节点数量 &gt; 2。<br>
+B Trees每个节点中也不是存储单个数据，可以存储多个数据。<br>
+B Trees又称为<code>平衡多路查找树</code>。</p>
+<p>B Trees分支的数量不是2，是大于2，具体是多少个分支，由<code>阶</code>决定。例如：</p>
+<ul>
+<li>3阶的B Trees，一个节点下最多有3个子节点，每个节点中最多有2个数据。</li>
+<li>4阶的B Trees，一个节点下最多有4个子节点，每个节点中最多有3个数据。</li>
+<li>5阶（5, 4）</li>
+<li>6阶（6, 5）</li>
+<li>&hellip;.</li>
+<li>16阶（16, 15）【MySQL采用了16阶】</li>
+</ul>
+<p>采用B Trees，你会发现相同的数据量，<strong>B Tree 树的高度更低</strong>。磁盘IO次数更少。<br>
+3阶的B Trees：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/bf2566fda0f552a85bd05b6f19d6f2ac_MD5.png"><br>
+<strong>假设id字段添加了索引，并且采用了B Trees数据结构，查找id=10的数据，只需要3次磁盘IO。</strong><br>
+4阶的B Trees：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/dfafd5fbb4d2dc8611d78e77704198f6_MD5.png"></p>
+<p>更加详细的存储是这样的，请看下图：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/f51f4c4dec4fc6765637184e829651f1_MD5.png"><br>
+<img alt="未命名文件.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/01557e026bbdcd33b43b2b3424ff2727_MD5.png"><br>
+在B Trees中，每个节点不仅存储了<code>索引值</code>，还存储该索引值对应的<code>数据行</code>。<br>
+并且每个节点中的p1 p2 p3是指向下一个节点的指针。</p>
+<p>B Trees数据结构存在的缺点是：不适合做区间查找，对于区间查找效率较低。假设要查id在[3~7]之间的，需要查找的是3,4,5,6,7。那么查这每个索引值都需要从头节点开始。<br>
+因此MySQL使用了B+ Trees解决了这个问题。</p>
+<h2 id="b-treesb-树">B+ Trees（B+ 树）<a hidden class="anchor" aria-hidden="true" href="#b-treesb-树">#</a></h2>
+<p>B+ Trees 相较于 B Trees改进了哪些？</p>
+<ul>
+<li>B+树将数据都存储在叶子节点中。并且叶子节点之间使用链表连接，这样很适合范围查询。</li>
+<li>B+树的非叶子节点上只有索引值，没有数据，所以非叶子节点可以存储更多的索引值，这样让B+树更矮更胖，提高检索效率。</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/457b26bab666b47e7867e3afd2b35e81_MD5.png"></p>
+<p>假设有这样一张表：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/93f7efb072fc32c7f1116a7ad7232884_MD5.png"><br>
+B+ Trees方式存储的话如下图所示：<br>
+<img alt="未命名文件 (1).png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/1fffface7fb2552d55c3bca8e470170c_MD5.png"></p>
+<p>**经典面试题：**mysql为什么选择B+树作为索引的数据结构，而不是B树？</p>
+<ol>
+<li>非叶子节点上可以存储更多的键值，阶数可以更大，更矮更胖，磁盘IO次数少，数据查询效率高。</li>
+<li>所有数据都是有序存储在叶子节点上，让范围查找，分组查找效率更高。</li>
+<li>数据页之间、数据记录之间采用链表链接，让升序降序更加方便操作。</li>
+</ol>
+<p>**经典面试题：**如果一张表没有主键索引，那还会创建B+树吗？<br>
+当一张表没有主键索引时，默认会使用一个隐藏的内置的聚集索引（clustered index）。这个聚集索引是基于表的物理存储顺序构建的，通常是使用B+树来实现的。</p>
+<h1 id="其他索引及相关调优">其他索引及相关调优<a hidden class="anchor" aria-hidden="true" href="#其他索引及相关调优">#</a></h1>
+<h2 id="hash索引">Hash索引<a hidden class="anchor" aria-hidden="true" href="#hash索引">#</a></h2>
+<p>支持Hash索引的存储引擎有：</p>
+<ul>
+<li>InnoDB（不支持手动创建Hash索引，系统会自动维护一个<code>自适应的Hash索引</code>）
+<ul>
+<li>对于InnoDB来说，即使手动指定了某字段采用Hash索引，最终<code>show index from 表名</code>的时候，还是<code>BTREE</code>。</li>
+</ul>
+</li>
+<li>Memory（支持Hash索引）</li>
+</ul>
+<p>Hash索引底层的数据结构就是哈希表。一个数组，数组中每个元素是链表。和java中HashMap一样。哈希表中每个元素都是key value结构。key存储<code>索引值</code>，value存储<code>行指针</code>。</p>
+<p>原理如下：<br>
+<img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/f8cc5ab6b4c1f0192e9c7e428af292c2_MD5.png"><br>
+如果name字段上添加了Hash索引idx_name</p>
+<p>Hash索引长这个样子：<br>
+<img alt="无标题.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/9e8caaf3bc88959b911e0b2073340d88_MD5.png"></p>
+<p>检索原理：假设 name=&lsquo;孙行者&rsquo;。通过哈希算法将&rsquo;孙行者&rsquo;转换为数组下标，通过下标找链表，在链表上遍历找到孙行者的行指针。</p>
+<p>注意：不同的字符串，经过哈希算法得到的数组下标可能相同，这叫做哈希碰撞/哈希冲突。【不过，好的哈希算法应该具有很低的碰撞概率。常用的哈希算法如MD5、SHA-1、SHA-256等都被设计为尽可能减少碰撞的发生。】</p>
+<p>Hash索引优缺点：</p>
+<ul>
+<li>优点：只能用在等值比较中，效率很高。例如：name=&lsquo;孙悟空&rsquo;</li>
+<li>缺点：不支持排序，不支持范围查找。</li>
+</ul>
+<h2 id="聚集索引和非聚集索引">聚集索引和非聚集索引<a hidden class="anchor" aria-hidden="true" href="#聚集索引和非聚集索引">#</a></h2>
+<p>按照数据的物理存储方式不同，可以将索引分为聚集索引（聚簇索引）和非聚集索引（非聚簇索引）。</p>
+<p>存储引擎是InnoDB的，主键上的索引属于聚集索引。<br>
+存储引擎是MyISAM的，任意字段上的索引都是非聚集索引。</p>
+<p>InnoDB的物理存储方式：当创建一张表t_user，并使用InnoDB存储引擎时，会在硬盘上生成这样一个文件：</p>
+<ul>
+<li>t_user.ibd （InnoDB data表索引 + 数据）</li>
+<li>t_user.frm （存储表结构信息）</li>
+</ul>
+<p>MyISAM的物理存储方式：当创建一张表t_user，并使用MyISAM存储引擎时，会在硬盘上生成这样一个文件：</p>
+<ul>
+<li>t_user.MYD （表数据）</li>
+<li>t_user.MYI （表索引）</li>
+<li>t_user.frm （表结构）</li>
+</ul>
+<p><strong>注意：从MySQL8.0开始，不再生成frm文件了，引入了数据字典，用数据字典来统一存储表结构信息，例如：</strong></p>
+<ul>
+<li><strong>information_schema.TABLES （表包含了数据库中所有表的信息，例如表名、数据库名、引擎类型等）</strong></li>
+<li><strong>information_schema.COLUMNS（表包含了数据库中所有表的列信息，例如列名、数据类型、默认值等）</strong></li>
+</ul>
+<p>聚集索引的原理图：（B+树，叶子节点上存储了索引值 + 数据）<br>
+<img alt="未命名文件 (1).png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/1fffface7fb2552d55c3bca8e470170c_MD5.png"></p>
+<p>非聚集索引的原理图：（B+树，叶子节点上存储了索引值 + 行指针）<br>
+<img alt="未命名文件 (1).png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/4179d85332a8430de9dc70c9d3326eb2_MD5.png"></p>
+<p>聚集索引的优点和缺点：</p>
+<ol>
+<li>优点：聚集索引将数据存储在索引树的叶子节点上。可以减少一次查询，因为查询索引树的同时可以获取数据。</li>
+<li>缺点：对数据进行修改或删除时需要更新索引树，会增加系统的开销。</li>
+</ol>
+<h2 id="二级索引">二级索引<a hidden class="anchor" aria-hidden="true" href="#二级索引">#</a></h2>
+<p>二级索引也属于非聚集索引。也有人把二级索引称为辅助索引。<br>
+有表t_user，id是主键。age是非主键。在age字段上添加的索引称为二级索引。（所有非主键索引都是二级索引）</p>
+<p><img alt="image.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/5725d230418e8c7d2597c7196390c33b_MD5.png"></p>
+<p>二级索引的数据结构：<br>
+<img alt="无标题.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/4d0d32c184df38ca5d7feabfe368311f_MD5.png"></p>
+<p>二级索引的查询原理：<br>
+假设查询语句为：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">select</span> * <span style="color:#fff;font-weight:bold">from</span> t_user <span style="color:#fff;font-weight:bold">where</span> age = <span style="color:#ff0;font-weight:bold">30</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img alt="无标题.png" loading="lazy" src="/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/7fdd89eb7cd7c36668eb04acd3479037_MD5.png"></p>
+<p>为什么会“回表”？因为使用了<code>select *</code><br>
+避免“回表【回到原数据表】”是提高SQL执行效率的手段。例如：select id from t_user where age = 30; 这样的SQL语句是不需要回表的。</p>
+<h2 id="覆盖索引">覆盖索引<a hidden class="anchor" aria-hidden="true" href="#覆盖索引">#</a></h2>
+<p>覆盖索引（Covering Index），顾名思义，是指某个查询语句可以通过索引的覆盖来完成，而不需要回表查询真实数据。其中的覆盖指的是在执行查询语句时，查询需要的所有列都可以从索引中提取到，而不需要再去查询实际数据行获取查询所需数据。<br>
+当使用覆盖索引时，MySQL可以直接通过索引，也就是索引上的数据来获取所需的结果，而不必再去查找表中的数据。这样可以显著提高查询性能。</p>
+<p>假设有一个用户表（user）包含以下列：id, username, email, age。</p>
+<p>常见的查询是根据用户名查询用户的邮箱。如果为了提高这个查询的性能，可以创建一个覆盖索引，包含（username, email）这两列。</p>
+<p>创建覆盖索引的SQL语句可以如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">CREATE</span> <span style="color:#fff;font-weight:bold">INDEX</span> idx_user_username_email <span style="color:#fff;font-weight:bold">ON</span> <span style="color:#fff;font-weight:bold">user</span> (username, email);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当执行以下查询时：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">SELECT</span> email <span style="color:#fff;font-weight:bold">FROM</span> <span style="color:#fff;font-weight:bold">user</span> <span style="color:#fff;font-weight:bold">WHERE</span> username = <span style="color:#0ff;font-weight:bold">&#39;lucy&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>MySQL可以直接使用覆盖索引（idx_user_username_email）来获取查询结果，而不必再去查找用户表中的数据。这样可以减少磁盘I/O并提高查询效率。而如果没有覆盖索引，MySQL会先使用索引（username）来找到匹配的行，然后再回表查询获取邮箱，这个过程会增加更多的磁盘I/O和查询时间。</p>
+<p>值得注意的是，覆盖索引的创建需要考虑查询的字段选择。如果查询需要的字段较多，可能需要创建包含更多列的覆盖索引，以满足完全覆盖查询的需要。</p>
+<p>覆盖索引具有以下优点：</p>
+<ol>
+<li>提高查询性能：覆盖索引能够满足查询的所有需求，同时不需要访问表中的实际数据行，从而可以提高查询性能。这是因为DBMS可以直接使用索引来执行查询，而不需要从磁盘读取实际的数据行。</li>
+<li>减少磁盘和内存访问次数：当使用覆盖索引时，DBMS不需要访问实际的数据行。这样可以减少磁盘和内存访问次数，从而提高查询性能。</li>
+<li>减少网络传输：由于在覆盖索引中可以存储所有查询所需的列，因此可以减少数据的网络传输次数，从而提高查询的性能。</li>
+<li>可以降低系统开销：在高压力的数据库系统中，使用覆盖索引可以减少系统开销，从而提高系统的可靠性和可维护性。</li>
+</ol>
+<p>覆盖索引的缺点包括：</p>
+<ol>
+<li>需要更多的内存：覆盖索引需要存储查询所需的所有列，因此需要更多的内存来存储索引。在大型数据库系统中，这可能会成为一项挑战。</li>
+<li>会使索引变得庞大：当索引中包含了许多列时，它们可能会使索引变得非常庞大，从而影响查询性能，并且可能会占用大量的磁盘空间。</li>
+<li>只有在查询中包含了索引列时才能使用：只有当查询中包含了所有的索引列时才能使用覆盖索引。如果查询中包含了其他列，DBMS仍然需要访问实际的数据行，并且无法使用覆盖索引提高查询性能。</li>
+</ol>
+<h2 id="索引下推">索引下推<a hidden class="anchor" aria-hidden="true" href="#索引下推">#</a></h2>
+<p>索引下推（Index Condition Pushdown）是一种 MySQL 中的优化方法，它可以将查询中的过滤条件下推到索引层级中处理，从而减少回表次数，优化查询性能。</p>
+<p>具体来说，在使用索引下推时，MySQL 会在索引的叶节点层级执行查询的过滤条件，过滤掉无用的索引记录，仅返回符合条件的记录的主键，这样就可以避免查询时回表读取表格的数据行，从而缩短了整个查询过程的时间。</p>
+<p>假设有以下表结构：</p>
+<p>表名：users</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>age</th>
+<th>city</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>John</td>
+<td>25</td>
+<td>New York</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Alice</td>
+<td>30</td>
+<td>London</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Bob</td>
+<td>40</td>
+<td>Paris</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Olivia</td>
+<td>35</td>
+<td>Berlin</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Michael</td>
+<td>28</td>
+<td>Sydney</td>
+</tr>
+</tbody>
+</table>
+<p>现在我们创建了一个多列索引：（索引下推通常是基于多列索引的。）</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ALTER TABLE users ADD INDEX idx_name_city_age (name, city, age);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>假设我们要查询年龄大于30岁，并且所在城市是&quot;London&quot;的用户，假设只给age字段添加了索引，它就不会使用索引下推。传统的查询优化器会将所有满足年龄大于30岁的记录读入内存，然后再根据城市进行筛选。</p>
+<p>使用索引下推优化后，在索引范围扫描的过程中，优化器会判断只有在城市列为&quot;London&quot;的情况下，才会将满足年龄大于30岁的记录加载到内存中。这样就可以避免不必要的IO和数据传输，提高查询性能。</p>
+<p>具体的查询语句可以是：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>SELECT * FROM users WHERE age &gt; 30 AND city = &#39;London&#39;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在执行这个查询时，优化器会使用索引下推技术，先根据索引范围扫描找到所有满足条件的记录，然后再回到原数据表中获取完整的行数据，最终返回结果。</p>
+<h2 id="单列索引单一索引">单列索引（单一索引）<a hidden class="anchor" aria-hidden="true" href="#单列索引单一索引">#</a></h2>
+<p>单列索引是指对数据库表中的某一列或属性进行索引创建，对该列进行快速查找和排序操作。单列索引可以加快查询速度，提高数据库的性能。</p>
+<p>举个例子，假设我们有一个学生表（student），其中有以下几个列：学生编号（student_id）、姓名（name）、年龄（age）和性别（gender）。</p>
+<p>如果我们针对学生表的学生编号（student_id）列创建了单列索引，那么可以快速地根据学生编号进行查询或排序操作。例如，我们可以使用以下SQL语句查询学生编号为123456的学生信息：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">SELECT</span> * <span style="color:#fff;font-weight:bold">FROM</span> student <span style="color:#fff;font-weight:bold">WHERE</span> student_id = <span style="color:#ff0;font-weight:bold">123456</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于我们对学生编号列建立了单列索引，所以数据库可以直接通过索引快速定位到具有学生编号123456的那一行记录，从而加快查询速度。</p>
+<h2 id="复合索引组合索引">复合索引（组合索引）<a hidden class="anchor" aria-hidden="true" href="#复合索引组合索引">#</a></h2>
+<p>复合索引（Compound Index）也称为多列索引（Multi-Column Index），是指对数据库表中多个列进行索引创建。</p>
+<p>与单列索引不同，复合索引可以包含多个列。这样可以将多个列的值组合起来作为索引的键，以提高多列条件查询的效率。</p>
+<p>举个例子，假设我们有一个订单表（Order），其中包含以下几个列：订单编号（OrderID）、客户编号（CustomerID）、订单日期（OrderDate）和订单金额（OrderAmount）。</p>
+<p>如果我们为订单表的客户编号和订单日期这两列创建复合索引（CustomerID, OrderDate），那么可以在查询时同时根据客户编号和订单日期来快速定位到匹配的记录。</p>
+<p>例如，我们可以使用以下SQL语句查询客户编号为123456且订单日期为2021-01-01的订单信息：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">SELECT</span> * <span style="color:#fff;font-weight:bold">FROM</span> <span style="color:#fff;font-weight:bold">Order</span> <span style="color:#fff;font-weight:bold">WHERE</span> CustomerID = <span style="color:#ff0;font-weight:bold">123456</span> <span style="color:#fff;font-weight:bold">AND</span> OrderDate = <span style="color:#0ff;font-weight:bold">&#39;2021-01-01&#39;</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于我们为客户编号和订单日期创建了复合索引，数据库可以使用这个索引来快速定位到符合条件的记录，从而加快查询速度。复合索引的使用能够提高多列条件查询的效率，但需要注意的是，复合索引的创建和维护可能会增加索引的存储空间和对于写操作的影响。</p>
+<p><strong>相对于单列索引，复合索引有以下几个优势：</strong></p>
+<ol>
+<li>减少索引的数量：复合索引可以包含多个列，因此可以减少索引的数量，减少索引的存储空间和维护成本。</li>
+<li>提高查询性能：当查询条件中涉及到复合索引的多个列时，数据库可以使用复合索引进行快速定位和过滤，从而提高查询性能。</li>
+<li>覆盖查询：如果复合索引包含了所有查询需要的列，那么数据库可以直接使用索引中的数据，而不需要再进行表的读取，从而提高查询性能。</li>
+<li>排序和分组：由于复合索引包含多个列，因此可以用于排序和分组操作，从而提高排序和分组的性能。</li>
+</ol>
+<h1 id="索引的优缺点">索引的优缺点<a hidden class="anchor" aria-hidden="true" href="#索引的优缺点">#</a></h1>
+<p>索引是数据库中一种重要的数据结构，用于加速数据的检索和查询操作。它的优点和缺点如下：</p>
+<p>优点：</p>
+<ol>
+<li>提高查询性能：通过创建索引，可以大大减少数据库查询的数据量，从而提升查询的速度。</li>
+<li>加速排序：当查询需要按照某个字段进行排序时，索引可以加速排序的过程，提高排序的效率。</li>
+<li>减少磁盘IO：索引可以减少磁盘IO的次数，这对于磁盘读写速度较低的场景，尤其重要。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>占据额外的存储空间：索引需要占据额外的存储空间，特别是在大型数据库系统中，索引可能占据较大的空间。</li>
+<li>增删改操作的性能损耗：每次对数据表进行插入、更新、删除等操作时，需要更新索引，会导致操作的性能降低。</li>
+<li>资源消耗较大：索引需要占用内存和CPU资源，特别是在大规模并发访问的情况下，可能对系统的性能产生影响。</li>
+</ol>
+<h1 id="何时用索引">何时用索引<a hidden class="anchor" aria-hidden="true" href="#何时用索引">#</a></h1>
+<p>在以下情况下建议使用索引：</p>
+<ol>
+<li>频繁执行查询操作的字段：如果这些字段经常被查询，使用索引可以提高查询的性能，减少查询的时间。</li>
+<li>大表：当表的数据量较大时，使用索引可以快速定位到所需的数据，提高查询效率。</li>
+<li>需要排序或者分组的字段：在对字段进行排序或者分组操作时，索引可以减少排序或者分组的时间。</li>
+<li>外键关联的字段：在进行表之间的关联查询时，使用索引可以加快关联查询的速度。</li>
+</ol>
+<p>在以下情况下不建议使用索引：</p>
+<ol>
+<li>频繁执行更新操作的表：如果表经常被更新数据，使用索引可能会降低更新操作的性能，因为每次更新都需要维护索引。</li>
+<li>小表：对于数据量较小的表，使用索引可能并不会带来明显的性能提升，反而会占用额外的存储空间。</li>
+<li>对于唯一性很差的字段，一般不建议添加索引。当一个字段的唯一性很差时，查询操作基本上需要扫描整个表的大部分数据。如果为这样的字段创建索引，索引的大小可能会比数据本身还大，导致索引的存储空间占用过高，同时也会导致查询操作的性能下降。</li>
+</ol>
+<p>总之，索引需要根据具体情况进行使用和权衡，需要考虑到表的大小、查询频率、更新频率以及业务需求等因素。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://009965.xyz/tags/mysql/">Mysql</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -2,20 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://009965.xyz/posts/mybatis/mybatis/</loc>
-    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
-  </url><url>
     <loc>https://009965.xyz/tags/mysql/</loc>
-    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
+    <lastmod>2025-05-25T18:13:07+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/</loc>
-    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
+    <lastmod>2025-05-25T18:13:07+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/tags/</loc>
-    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
+    <lastmod>2025-05-25T18:13:07+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/</loc>
-    <lastmod>2025-05-26T10:35:13+00:00</lastmod>
+    <lastmod>2025-05-25T18:13:07+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC11%E7%AB%A0-%E4%BC%81%E4%B8%9A%E7%9C%9F%E9%A2%98/</loc>
+    <lastmod>2025-05-25T18:13:07+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC10%E7%AB%A0-mysql%E4%BC%98%E5%8C%96/</loc>
+    <lastmod>2025-05-25T18:13:06+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC9%E7%AB%A0-%E7%B4%A2%E5%BC%95/</loc>
+    <lastmod>2025-05-25T18:13:06+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC8%E7%AB%A0-%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/</loc>
+    <lastmod>2025-05-25T18:13:05+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC7%E7%AB%A0-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</loc>
+    <lastmod>2025-05-25T18:13:04+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC6%E7%AB%A0-dba%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2025-05-25T18:13:03+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC5%E7%AB%A0-%E4%BA%8B%E5%8A%A1/</loc>
+    <lastmod>2025-05-25T18:13:02+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC4%E7%AB%A0-%E4%B8%89%E8%8C%83%E5%BC%8F/</loc>
+    <lastmod>2025-05-25T18:13:01+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC3%E7%AB%A0-%E8%A1%A8%E7%9B%B8%E5%85%B3/</loc>
+    <lastmod>2025-05-25T18:13:00+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC2%E7%AB%A0-%E6%9F%A5%E8%AF%A2dql%E4%B8%93%E9%A2%98/</loc>
+    <lastmod>2025-05-25T18:12:59+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/mysql/%E7%AC%AC1%E7%AB%A0-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2025-05-25T18:12:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/tags/%E7%94%9F%E6%B4%BB/</loc>
     <lastmod>2025-05-19T10:23:58+00:00</lastmod>
@@ -392,7 +422,7 @@
     <loc>https://009965.xyz/posts/mybatis/mybatis-plus/</loc>
     <lastmod>2020-03-28T15:07:56+00:00</lastmod>
   </url><url>
-    <loc>https://009965.xyz/posts/mybatis/mybatis1/</loc>
+    <loc>https://009965.xyz/posts/mybatis/mybatis/</loc>
     <lastmod>2020-03-27T15:07:56+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/%E7%BD%91%E7%AB%99%E7%9A%84%E6%89%A9%E5%B1%95/</loc>
