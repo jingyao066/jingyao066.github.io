@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Wjy&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="概念 参考：一文带你 &ldquo;看见&rdquo; MCP 的过程，彻底理解 MCP 的概念 模型上下文协议（Model Context Protocol，简称MCP）是一个">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/ai/mcp/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/ai/mcp/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/ai/mcp/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="Wjy&#39;s Blog">
+  <meta property="og:description" content="概念 参考：一文带你 “看见” MCP 的过程，彻底理解 MCP 的概念 模型上下文协议（Model Context Protocol，简称MCP）是一个">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="概念 参考：一文带你 &ldquo;看见&rdquo; MCP 的过程，彻底理解 MCP 的概念 模型上下文协议（Model Context Protocol，简称MCP）是一个">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "",
+      "item": "https://009965.xyz/posts/ai/mcp/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "name": "",
+  "description": "概念 参考：一文带你 \u0026ldquo;看见\u0026rdquo; MCP 的过程，彻底理解 MCP 的概念 模型上下文协议（Model Context Protocol，简称MCP）是一个",
+  "keywords": [
+    
+  ],
+  "articleBody": "概念 参考：一文带你 “看见” MCP 的过程，彻底理解 MCP 的概念\n模型上下文协议（Model Context Protocol，简称MCP）是一个由 Anthropic 在 2024 年 11 月 25 日开源的新标准。MCP 是一个开放标准，旨在连接AI助手与数据所在的系统，包括内容存储库、业务工具和开发环境。其目标是帮助前沿模型产生更好、更相关的响应。\nMCP 的核心 从技术角度看，MCP 遵循客户端-服务器架构，其中主机应用可以连接到多个服务器。\nMCP 有三个关键组件：\n主机(Host)：代表任何提供 AI 交互环境的应用程序(如 Cherry studio、Cursor)，它能访问工具和数据，并运行 MCP 客户端。 客户端(Client)：在主机内运行，使其能与 MCP 服务器通信。 服务器(Server)：暴露特定功能并提供数据访问，例如： 工具：使 LLM 能通过服务器执行操作 资源：向 LLM 公开服务器中的数据和内容 提示：创建可重用的提示模板和工作流 mcp和传统API对比 传统 API ：\n客户端想服务器发送参数，服务器根据参数返回相应结果。如果 API 最初需要两个参数(例如天气服务的位置和日期)，用户集成应用程序会发送带有这些确切参数的请求。\n如果后来添加第三个必需参数(例如温度单位，如摄氏度或华氏度)，API的合约就会改变。这意味着所有 API 用户必须更新代码以包含新参数。如果不更新，请求可能失败、返回错误或提供不完整结果。\nMCP：\n当客户端(如 Claude 桌面版)连接到 MCP 服务器(如您的天气服务)时，它发送初始请求以了解服务器的能力。 服务器响应其可用工具、资源、提示和参数的详细信息。例如，如果您的天气 API 最初支持位置和日期，服务器会将这些作为其功能的一部分进行通信。 如果您稍后添加单位参数，MCP 服务器可以在下一次交换期间动态更新其功能描述。客户端不需要硬编码或预定义参数—只需查询服务器的当前功能并相应地适应。 这样，客户端可以及时调整其行为，使用更新的功能(例如在请求中包含单位)，无需重写或重新部署代码。 mcp过程 首先需要在主机上自动或手动配置 MCP 服务，当用户输入问题时， MCP 客户端让 大语言模型选择 MCP 工具，大模型选择好 MCP 工具以后， MCP 客户端寻求用户同意（很多产品支持配置自动同意），MCP 客户端请求 MCP 服务器， MCP 服务调用工具并将工具的结果返回给 MCP 客户端， MCP 客户端将模型调用结果和用户的查询发送给大语言模型，大语言模型组织答案给用户。\n其实 RAG 、Function Call 和 MCP 本质上都是一样，都是为了借助外部工具帮助大模型完成更复杂的事情。\n注册高德 参考高德官方文档，注册成为高德开发者，并获取key：https://lbs.amap.com/api/mcp-server/summary\n主意：你的key不要随意分享，因为每个账号可以调用的次数是有限的。用量管理 | 高德控制台\n在Cherry Studio中使用MCP 参考官方文档：MCP 环境安装 | CherryStudio\nMCP 环境安装 准备工作：安装 uv、bun\n在 设置 - MCP 服务器 中，点击 安装 按钮，即可自动下载并安装。因为是直接从 GitHub 上下载，速度可能会比较慢，且有较大可能失败。安装成功与否，以下文提到的文件夹内是否有文件为准。\n可执行程序安装目录：\nWindows: C:\\Users\\用户名\\.cherrystudio\\bin\nmacOS、Linux: ~/.cherrystudio/bin\n无法正常安装的情况下：\n可以将系统中的相对应命令使用软链接的方式链接到这里，如果没有对应目录，需要手动建立。也可以手动下载可执行文件放到这个目录下面：\nBun: https://github.com/oven-sh/bun/releases\nUV: https://github.com/astral-sh/uv/releases\n配置mcp 打开 Cherry Studio 设置。 找到 MCP 服务器 选项。 点击 添加服务器-从json导入。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 { \"mcpServers\": { \"amap-maps\": { \"isActive\": true, \"name\": \"amap-maps\", \"description\": \"高德mcp\", \"command\": \"npx\", \"args\": [ \"-y\", \"@amap/amap-maps-mcp-server\" ], \"env\": { \"AMAP_MAPS_API_KEY\": \"你的高德key\" } } } } 系统会自动加载高德地图的 MCP 服务，会在下方显示高德地图支持的工具，就是 AI 模型可以调用的工具。\n使用mcp 确认 AI 模型的函数调用功能：\n打开 Cherry Studio 设置，打开模型服务，找到你的模型，右边有个扳手的表示模型支持调用MCP工具。\n然后打开聊天框，找到聊天框下面的mcp服务器，勾选刚才添加的高德mcp服务器。\n开始提问，prompt如下：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 基于下面的规范，使用高德mcp，帮我生成一份杭州五日游的攻略。 # 旅行规划表设计提示词 你是一位优秀的平面设计师和前端开发工程师，具有丰富的旅行信息可视化经验，曾为众多知名旅游平台设计过清晰实用的旅行规划表。现在需要为我创建一个A4纸张大小的旅行规划表，适合打印出来随身携带使用。请使用HTML、CSS和JavaScript代码实现以下要求： ## 基本要求 **尺寸与基础结构** - 严格符合A4纸尺寸（210mm×297mm），比例为1:1.414 - 适合打印的设计，预留适当的打印边距（建议上下左右各10mm） - 允许多页打印，内容现在可以自然流动到多页 - 信息分区清晰，使用网格布局确保整洁有序 - 打印友好的配色方案，避免过深的背景色和过小的字体 **技术实现** - 使用打印友好的CSS设计 - 提供专用的打印按钮，优化打印样式，优化打印分页，防止它们在打印时被切割 - 使用高对比度的配色方案，确保打印后清晰可读 - 可选择性地添加虚线辅助剪裁线 - 使用Google Fonts或其他CDN加载适合的现代字体 - 引用Font Awesome提供图标支持 **专业设计技巧** **图形元素与图表：** 1. **图标 (Font Awesome)：** * **来源：** 通过 CDN 引入 Font Awesome (v5/v6)。 * **风格：** 偏好简洁、现代的**线框风格 (outline-style)** 图标。 * **使用：** 放置于主标题附近，可选择性地（且需微妙地）用于迷你卡片内部（靠近标题处）、列表前缀等。**严格禁止使用 Emoji 作为功能性图标**。颜色应协调；关键图标可使用高亮色。 2. **数据可视化 (推荐 Chart.js)：** * **应用场景：** 用于展示趋势、增长率、构成（饼图/环形图）、比较（柱状图）等适合的数据 [引用：数据可视化最佳实践]。 * **技术：** 通过 CDN 嵌入 Chart.js。 * **位置：** 放置在讨论财务或业务分析的相关主卡片内部。 * **样式：** 确保图表清晰、易读且响应式。 **技术与动画：** 1. **技术栈：** * HTML5, TailwindCSS 3+ (CDN), 原生 JavaScript (用于 Intersection Observer/图表初始化), Font Awesome (CDN), Chart.js (CDN)。 2. **动画 (CSS Transitions \u0026 Intersection Observer)：** * **触发：** 当元素（所有主卡片、所有迷你卡片、其他内容块）滚动进入视口时。 * **效果：** 平滑、微妙的**淡入/向上滑动**效果（模仿 Apple 风格）。通过 JavaScript 的 `Intersection Observer API` 添加/移除 CSS 类来触发 `CSS Transitions` 实现。确保动画性能流畅。为网格项应用轻微延迟以产生交错效果。 3. **响应式设计：** * **强制要求**。使用 Tailwind 的响应式修饰符（特别是针对网格布局），确保在手机、平板和桌面设备上均具有出色的显示效果和可用性。 - 使用图标和颜色编码区分不同类型的活动（景点、餐饮、交通等） - 为景点和活动设计简洁的时间轴或表格布局 - 使用简明的图示代替冗长文字描述 - 为重要信息添加视觉强调（如框线、加粗、不同颜色等） - 在设计中融入城市地标元素作为装饰，增强辨识度 ## 设计风格 - **实用为主的旅行工具风格**：以清晰的信息呈现为首要目标 - **专业旅行指南风格**：参考Lonely Planet等专业旅游指南的排版和布局 - **信息图表风格**：将复杂行程转化为直观的图表和时间轴 - **简约现代设计**：干净的线条、充分的留白和清晰的层次结构 - **整洁的表格布局**：使用表格组织景点、活动和时间信息 - **地图元素整合**：在合适位置添加简化的路线或位置示意图 - **打印友好的灰度设计**：即使黑白打印也能保持良好的可读性和美观 ## 内容区块 1. **行程标题区**： - 目的地名称（主标题，醒目位置） - 旅行日期和总天数 - 旅行者姓名/团队名称（可选） - 天气信息摘要 2. **行程概览区**： - 按日期分区的行程简表 - 每天主要活动/景点的概览 - 使用图标标识不同类型的活动 3. **详细时间表区**： - 以表格或时间轴形式呈现详细行程 - 包含时间、地点、活动描述 - 每个景点的停留时间 - 标注门票价格和必要预订信息 4. **交通信息区**： - 主要交通换乘点及方式 - 地铁/公交线路和站点信息 - 预计交通时间 - 使用箭头或连线表示行程路线 5. **住宿与餐饮区**： - 酒店/住宿地址和联系方式 - 入住和退房时间 - 推荐餐厅列表（标注特色菜和价格区间） - 附近便利设施（如超市、药店等） 6. **实用信息区**： - 紧急联系电话 - 重要提示和注意事项 - 预算摘要 - 行李清单提醒 ## 示例内容（基于上海一日游） **目的地**：上海一日游 **日期**：2025年3月30日（星期日） **天气**：阴，13°C/7°C，东风1-3级 **时间表**： | 时间 | 活动 | 地点 | 详情 | |-------------|----------------|--------------|-------------| | 09:00-11:00 | 游览豫园 | 福佑路168号 | 门票：40元 | | 11:00-12:30 | 城隍庙午餐 | 城隍庙商圈 | 推荐：南翔小笼包 | | 13:30-15:00 | 参观东方明珠 | 世纪大道1号 | 门票：80元起 | | 15:30-17:30 | 漫步陆家嘴 | 陆家嘴金融区 | 免费活动 | | 18:30-21:00 | 迪士尼小镇或黄浦江夜游 | 详见备注 | 夜游票：120元 | **交通路线**： - 豫园→东方明珠：乘坐地铁14号线（豫园站→陆家嘴站），步行10分钟，约25分钟 - 东方明珠→迪士尼：地铁2号线→16号线→11号线，约50分钟 **实用提示**： - 下载\"上海地铁\"APP查询路线 - 携带雨伞，天气多变 - 避开东方明珠12:00-14:00高峰期 - 提前充值交通卡或准备移动支付 - 城隍庙游客较多，注意保管随身物品 **重要电话**： - 旅游咨询：021-12301 - 紧急求助：110（警察）/120（急救） 请创建一个既美观又实用的旅行规划表，适合打印在A4纸上随身携带，帮助用户清晰掌握行程安排。 在Cursor中使用mcp 参考cursor官方文档：https://docs.cursor.com/context/model-context-protocol#model-context-protocol\n设置-\u003eMCP Tools-\u003eNew MCP Server-\u003e填写你的高德mcp配置json：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 { \"mcpServers\": { \"amap-maps\": { \"isActive\": true, \"name\": \"amap-maps\", \"description\": \"高德mcp\", \"command\": \"npx\", \"args\": [ \"-y\", \"@amap/amap-maps-mcp-server\" ], \"env\": { \"AMAP_MAPS_API_KEY\": \"你的高德key\" } } } } 检查 MCP 设置状态。\n回到之前的 MCP 设置页面，查看对应服务是否显示为绿色（表示连接正常）。\n在聊天中使用mcp：\n1 使用高德mcp，帮我规划杭州五日游攻略。 ",
+  "wordCount" : "4292",
+  "inLanguage": "en",
+  "datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/ai/mcp/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://009965.xyz/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      
+    </h1>
+    <div class="post-meta">Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%a6%82%e5%bf%b5" aria-label="概念">概念</a><ul>
+                        <ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#mcp-%e7%9a%84%e6%a0%b8%e5%bf%83" aria-label="MCP 的核心">MCP 的核心</a></li></ul>
+                    </ul>
+                    
+                <li>
+                    <a href="#mcp%e5%92%8c%e4%bc%a0%e7%bb%9fapi%e5%af%b9%e6%af%94" aria-label="mcp和传统API对比">mcp和传统API对比</a></li>
+                <li>
+                    <a href="#mcp%e8%bf%87%e7%a8%8b" aria-label="mcp过程">mcp过程</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%b3%a8%e5%86%8c%e9%ab%98%e5%be%b7" aria-label="注册高德">注册高德</a><ul>
+                        
+                <li>
+                    <a href="#%e5%9c%a8cherry-studio%e4%b8%ad%e4%bd%bf%e7%94%a8mcp" aria-label="在Cherry Studio中使用MCP">在Cherry Studio中使用MCP</a><ul>
+                        
+                <li>
+                    <a href="#mcp-%e7%8e%af%e5%a2%83%e5%ae%89%e8%a3%85" aria-label="MCP 环境安装">MCP 环境安装</a></li>
+                <li>
+                    <a href="#%e9%85%8d%e7%bd%aemcp" aria-label="配置mcp">配置mcp</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8mcp" aria-label="使用mcp">使用mcp</a></li>
+                <li>
+                    <a href="#%e5%9c%a8cursor%e4%b8%ad%e4%bd%bf%e7%94%a8mcp" aria-label="在Cursor中使用mcp">在Cursor中使用mcp</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="概念">概念<a hidden class="anchor" aria-hidden="true" href="#概念">#</a></h1>
+<p>参考：<a href="https://mp.weixin.qq.com/s/UfzmzJ3zTOQ45ppRy5D6kA">一文带你 &ldquo;看见&rdquo; MCP 的过程，彻底理解 MCP 的概念</a></p>
+<p>模型上下文协议（Model Context Protocol，简称MCP）是一个由 Anthropic 在 2024 年 11 月 25 日开源的新标准。MCP 是一个开放标准，旨在连接AI助手与数据所在的系统，包括内容存储库、业务工具和开发环境。其目标是帮助前沿模型产生更好、更相关的响应。</p>
+<h4 id="mcp-的核心"><strong>MCP 的核心</strong><a hidden class="anchor" aria-hidden="true" href="#mcp-的核心">#</a></h4>
+<p>从技术角度看，MCP 遵循客户端-服务器架构，其中主机应用可以连接到多个服务器。</p>
+<p>MCP 有三个关键组件：</p>
+<ul>
+<li>主机(Host)：<strong>代表任何提供 AI 交互环境的应用程序(如 Cherry studio、Cursor)，它能访问工具和数据，并运行 MCP 客户端。</strong></li>
+<li>客户端(Client)：<strong>在主机内运行，使其能与 MCP 服务器通信。</strong></li>
+<li>服务器(Server)：<strong>暴露特定功能并提供数据访问，例如：</strong>
+<ul>
+<li>工具：使 LLM 能通过服务器执行操作</li>
+<li>资源：向 LLM 公开服务器中的数据和内容</li>
+<li>提示：创建可重用的提示模板和工作流</li>
+</ul>
+</li>
+</ul>
+<h2 id="mcp和传统api对比">mcp和传统API对比<a hidden class="anchor" aria-hidden="true" href="#mcp和传统api对比">#</a></h2>
+<p>传统 API ：<br>
+客户端想服务器发送参数，服务器根据参数返回相应结果。如果 API 最初需要两个参数(例如天气服务的位置和日期)，用户集成应用程序会发送带有这些确切参数的请求。<br>
+如果后来添加第三个必需参数(例如温度单位，如摄氏度或华氏度)，API的合约就会改变。这意味着所有 API 用户必须更新代码以包含新参数。如果不更新，请求可能失败、返回错误或提供不完整结果。</p>
+<p>MCP：</p>
+<ol>
+<li>当客户端(如 Claude 桌面版)连接到 MCP 服务器(如您的天气服务)时，它发送初始请求以了解服务器的能力。</li>
+<li>服务器响应其可用工具、资源、提示和参数的详细信息。例如，如果您的天气 API 最初支持位置和日期，服务器会将这些作为其功能的一部分进行通信。</li>
+<li>如果您稍后添加单位参数，MCP 服务器可以在下一次交换期间动态更新其功能描述。客户端不需要硬编码或预定义参数—只需查询服务器的当前功能并相应地适应。</li>
+<li>这样，客户端可以及时调整其行为，使用更新的功能(例如在请求中包含单位)，无需重写或重新部署代码。</li>
+</ol>
+<h2 id="mcp过程">mcp过程<a hidden class="anchor" aria-hidden="true" href="#mcp过程">#</a></h2>
+<p>首先需要在主机上自动或手动配置 MCP 服务，当用户输入问题时， MCP 客户端让 大语言模型选择 MCP 工具，大模型选择好 MCP 工具以后， MCP 客户端寻求用户同意（很多产品支持配置自动同意），MCP 客户端请求 MCP 服务器， MCP 服务调用工具并将工具的结果返回给 MCP 客户端， MCP 客户端将模型调用结果和用户的查询发送给大语言模型，大语言模型组织答案给用户。</p>
+<p><strong>其实 RAG 、Function Call 和 MCP 本质上都是一样，都是为了借助外部工具帮助大模型完成更复杂的事情。</strong></p>
+<h1 id="注册高德">注册高德<a hidden class="anchor" aria-hidden="true" href="#注册高德">#</a></h1>
+<p>参考高德官方文档，注册成为高德开发者，并获取key：https://lbs.amap.com/api/mcp-server/summary<br>
+主意：你的key不要随意分享，因为每个账号可以调用的次数是有限的。<a href="https://console.amap.com/dev/flow/manage">用量管理 | 高德控制台</a></p>
+<h2 id="在cherry-studio中使用mcp">在Cherry Studio中使用MCP<a hidden class="anchor" aria-hidden="true" href="#在cherry-studio中使用mcp">#</a></h2>
+<p>参考官方文档：<a href="https://docs.cherry-ai.com/advanced-basic/mcp/install">MCP 环境安装 | CherryStudio</a></p>
+<h3 id="mcp-环境安装">MCP 环境安装<a hidden class="anchor" aria-hidden="true" href="#mcp-环境安装">#</a></h3>
+<p><strong>准备工作：安装 uv、bun</strong><br>
+在 <code>设置 - MCP 服务器</code> 中，点击 <code>安装</code> 按钮，即可自动下载并安装。因为是直接从 GitHub 上下载，速度可能会比较慢，且有较大可能失败。安装成功与否，以下文提到的文件夹内是否有文件为准。</p>
+<p><strong>可执行程序安装目录：</strong></p>
+<p>Windows: <code>C:\Users\用户名\.cherrystudio\bin</code></p>
+<p>macOS、Linux: <code>~/.cherrystudio/bin</code></p>
+<p><strong>无法正常安装的情况下：</strong></p>
+<p>可以将系统中的相对应命令使用软链接的方式链接到这里，如果没有对应目录，需要手动建立。也可以手动下载可执行文件放到这个目录下面：</p>
+<p>Bun: <a href="https://github.com/oven-sh/bun/releases">https://github.com/oven-sh/bun/releases</a></p>
+<p>UV: <a href="https://github.com/astral-sh/uv/releases">https://github.com/astral-sh/uv/releases</a></p>
+<h3 id="配置mcp">配置mcp<a hidden class="anchor" aria-hidden="true" href="#配置mcp">#</a></h3>
+<ol>
+<li>打开 Cherry Studio 设置。</li>
+<li>找到 <code>MCP 服务器</code> 选项。</li>
+<li>点击 <code>添加服务器</code>-从json导入。</li>
+</ol>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&#34;mcpServers&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&#34;amap-maps&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;isActive&#34;</span>: <span style="color:#fff;font-weight:bold">true</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;amap-maps&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;description&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;高德mcp&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;command&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;npx&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;args&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#0ff;font-weight:bold">&#34;-y&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0ff;font-weight:bold">&#34;@amap/amap-maps-mcp-server&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;env&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&#34;AMAP_MAPS_API_KEY&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;你的高德key&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>系统会自动加载高德地图的 MCP 服务，会在下方显示高德地图支持的工具，就是 AI 模型可以调用的工具。</p>
+<h2 id="使用mcp">使用mcp<a hidden class="anchor" aria-hidden="true" href="#使用mcp">#</a></h2>
+<p>确认 AI 模型的函数调用功能：<br>
+打开 Cherry Studio 设置，打开模型服务，找到你的模型，右边有个扳手的表示模型支持调用MCP工具。</p>
+<p>然后打开聊天框，找到聊天框下面的mcp服务器，勾选刚才添加的高德mcp服务器。<br>
+开始提问，prompt如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">123
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>基于下面的规范，使用高德mcp，帮我生成一份杭州五日游的攻略。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 旅行规划表设计提示词
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>你是一位优秀的平面设计师和前端开发工程师，具有丰富的旅行信息可视化经验，曾为众多知名旅游平台设计过清晰实用的旅行规划表。现在需要为我创建一个A4纸张大小的旅行规划表，适合打印出来随身携带使用。请使用HTML、CSS和JavaScript代码实现以下要求：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 基本要求
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**尺寸与基础结构**
+</span></span><span style="display:flex;"><span>- 严格符合A4纸尺寸（210mm×297mm），比例为1:1.414
+</span></span><span style="display:flex;"><span>- 适合打印的设计，预留适当的打印边距（建议上下左右各10mm）
+</span></span><span style="display:flex;"><span>- 允许多页打印，内容现在可以自然流动到多页
+</span></span><span style="display:flex;"><span>- 信息分区清晰，使用网格布局确保整洁有序
+</span></span><span style="display:flex;"><span>- 打印友好的配色方案，避免过深的背景色和过小的字体
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**技术实现**
+</span></span><span style="display:flex;"><span>- 使用打印友好的CSS设计
+</span></span><span style="display:flex;"><span>- 提供专用的打印按钮，优化打印样式，优化打印分页，防止它们在打印时被切割
+</span></span><span style="display:flex;"><span>- 使用高对比度的配色方案，确保打印后清晰可读
+</span></span><span style="display:flex;"><span>- 可选择性地添加虚线辅助剪裁线
+</span></span><span style="display:flex;"><span>- 使用Google Fonts或其他CDN加载适合的现代字体
+</span></span><span style="display:flex;"><span>- 引用Font Awesome提供图标支持
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**专业设计技巧**
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**图形元素与图表：**
+</span></span><span style="display:flex;"><span>1.  **图标 (Font Awesome)：**
+</span></span><span style="display:flex;"><span>    * **来源：** 通过 CDN 引入 Font Awesome (v5/v6)。
+</span></span><span style="display:flex;"><span>    * **风格：** 偏好简洁、现代的**线框风格 (outline-style)** 图标。
+</span></span><span style="display:flex;"><span>    * **使用：** 放置于主标题附近，可选择性地（且需微妙地）用于迷你卡片内部（靠近标题处）、列表前缀等。**严格禁止使用 Emoji 作为功能性图标**。颜色应协调；关键图标可使用高亮色。
+</span></span><span style="display:flex;"><span>2.  **数据可视化 (推荐 Chart.js)：**
+</span></span><span style="display:flex;"><span>    * **应用场景：** 用于展示趋势、增长率、构成（饼图/环形图）、比较（柱状图）等适合的数据 [引用：数据可视化最佳实践]。
+</span></span><span style="display:flex;"><span>    * **技术：** 通过 CDN 嵌入 Chart.js。
+</span></span><span style="display:flex;"><span>    * **位置：** 放置在讨论财务或业务分析的相关主卡片内部。
+</span></span><span style="display:flex;"><span>    * **样式：** 确保图表清晰、易读且响应式。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**技术与动画：**
+</span></span><span style="display:flex;"><span>1.  **技术栈：**
+</span></span><span style="display:flex;"><span>    * HTML5, TailwindCSS 3+ (CDN), 原生 JavaScript (用于 Intersection Observer/图表初始化), Font Awesome (CDN), Chart.js (CDN)。
+</span></span><span style="display:flex;"><span>2.  **动画 (CSS Transitions &amp; Intersection Observer)：**
+</span></span><span style="display:flex;"><span>    * **触发：** 当元素（所有主卡片、所有迷你卡片、其他内容块）滚动进入视口时。
+</span></span><span style="display:flex;"><span>    * **效果：** 平滑、微妙的**淡入/向上滑动**效果（模仿 Apple 风格）。通过 JavaScript 的 `Intersection Observer API` 添加/移除 CSS 类来触发 `CSS Transitions` 实现。确保动画性能流畅。为网格项应用轻微延迟以产生交错效果。
+</span></span><span style="display:flex;"><span>3.  **响应式设计：**
+</span></span><span style="display:flex;"><span>    * **强制要求**。使用 Tailwind 的响应式修饰符（特别是针对网格布局），确保在手机、平板和桌面设备上均具有出色的显示效果和可用性。
+</span></span><span style="display:flex;"><span>    - 使用图标和颜色编码区分不同类型的活动（景点、餐饮、交通等）
+</span></span><span style="display:flex;"><span>    - 为景点和活动设计简洁的时间轴或表格布局
+</span></span><span style="display:flex;"><span>    - 使用简明的图示代替冗长文字描述
+</span></span><span style="display:flex;"><span>    - 为重要信息添加视觉强调（如框线、加粗、不同颜色等）
+</span></span><span style="display:flex;"><span>    - 在设计中融入城市地标元素作为装饰，增强辨识度
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 设计风格
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>- **实用为主的旅行工具风格**：以清晰的信息呈现为首要目标
+</span></span><span style="display:flex;"><span>- **专业旅行指南风格**：参考Lonely Planet等专业旅游指南的排版和布局
+</span></span><span style="display:flex;"><span>- **信息图表风格**：将复杂行程转化为直观的图表和时间轴
+</span></span><span style="display:flex;"><span>- **简约现代设计**：干净的线条、充分的留白和清晰的层次结构
+</span></span><span style="display:flex;"><span>- **整洁的表格布局**：使用表格组织景点、活动和时间信息
+</span></span><span style="display:flex;"><span>- **地图元素整合**：在合适位置添加简化的路线或位置示意图
+</span></span><span style="display:flex;"><span>- **打印友好的灰度设计**：即使黑白打印也能保持良好的可读性和美观
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 内容区块
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1.  **行程标题区**：
+</span></span><span style="display:flex;"><span>    - 目的地名称（主标题，醒目位置）
+</span></span><span style="display:flex;"><span>    - 旅行日期和总天数
+</span></span><span style="display:flex;"><span>    - 旅行者姓名/团队名称（可选）
+</span></span><span style="display:flex;"><span>    - 天气信息摘要
+</span></span><span style="display:flex;"><span>2.  **行程概览区**：
+</span></span><span style="display:flex;"><span>    - 按日期分区的行程简表
+</span></span><span style="display:flex;"><span>    - 每天主要活动/景点的概览
+</span></span><span style="display:flex;"><span>    - 使用图标标识不同类型的活动
+</span></span><span style="display:flex;"><span>3.  **详细时间表区**：
+</span></span><span style="display:flex;"><span>    - 以表格或时间轴形式呈现详细行程
+</span></span><span style="display:flex;"><span>    - 包含时间、地点、活动描述
+</span></span><span style="display:flex;"><span>    - 每个景点的停留时间
+</span></span><span style="display:flex;"><span>    - 标注门票价格和必要预订信息
+</span></span><span style="display:flex;"><span>4.  **交通信息区**：
+</span></span><span style="display:flex;"><span>    - 主要交通换乘点及方式
+</span></span><span style="display:flex;"><span>    - 地铁/公交线路和站点信息
+</span></span><span style="display:flex;"><span>    - 预计交通时间
+</span></span><span style="display:flex;"><span>    - 使用箭头或连线表示行程路线
+</span></span><span style="display:flex;"><span>5.  **住宿与餐饮区**：
+</span></span><span style="display:flex;"><span>    - 酒店/住宿地址和联系方式
+</span></span><span style="display:flex;"><span>    - 入住和退房时间
+</span></span><span style="display:flex;"><span>    - 推荐餐厅列表（标注特色菜和价格区间）
+</span></span><span style="display:flex;"><span>    - 附近便利设施（如超市、药店等）
+</span></span><span style="display:flex;"><span>6.  **实用信息区**：
+</span></span><span style="display:flex;"><span>    - 紧急联系电话
+</span></span><span style="display:flex;"><span>    - 重要提示和注意事项
+</span></span><span style="display:flex;"><span>    - 预算摘要
+</span></span><span style="display:flex;"><span>    - 行李清单提醒
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## 示例内容（基于上海一日游）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**目的地**：上海一日游
+</span></span><span style="display:flex;"><span>**日期**：2025年3月30日（星期日）
+</span></span><span style="display:flex;"><span>**天气**：阴，13°C/7°C，东风1-3级
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**时间表**：
+</span></span><span style="display:flex;"><span>| 时间        | 活动           | 地点         | 详情        |
+</span></span><span style="display:flex;"><span>|-------------|----------------|--------------|-------------|
+</span></span><span style="display:flex;"><span>| 09:00-11:00 | 游览豫园       | 福佑路168号  | 门票：40元  |
+</span></span><span style="display:flex;"><span>| 11:00-12:30 | 城隍庙午餐     | 城隍庙商圈   | 推荐：南翔小笼包 |
+</span></span><span style="display:flex;"><span>| 13:30-15:00 | 参观东方明珠   | 世纪大道1号  | 门票：80元起 |
+</span></span><span style="display:flex;"><span>| 15:30-17:30 | 漫步陆家嘴     | 陆家嘴金融区 | 免费活动    |
+</span></span><span style="display:flex;"><span>| 18:30-21:00 | 迪士尼小镇或黄浦江夜游 | 详见备注     | 夜游票：120元 |
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**交通路线**：
+</span></span><span style="display:flex;"><span>- 豫园→东方明珠：乘坐地铁14号线（豫园站→陆家嘴站），步行10分钟，约25分钟
+</span></span><span style="display:flex;"><span>- 东方明珠→迪士尼：地铁2号线→16号线→11号线，约50分钟
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**实用提示**：
+</span></span><span style="display:flex;"><span>- 下载&#34;上海地铁&#34;APP查询路线
+</span></span><span style="display:flex;"><span>- 携带雨伞，天气多变
+</span></span><span style="display:flex;"><span>- 避开东方明珠12:00-14:00高峰期
+</span></span><span style="display:flex;"><span>- 提前充值交通卡或准备移动支付
+</span></span><span style="display:flex;"><span>- 城隍庙游客较多，注意保管随身物品
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**重要电话**：
+</span></span><span style="display:flex;"><span>- 旅游咨询：021-12301
+</span></span><span style="display:flex;"><span>- 紧急求助：110（警察）/120（急救）
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>请创建一个既美观又实用的旅行规划表，适合打印在A4纸上随身携带，帮助用户清晰掌握行程安排。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="在cursor中使用mcp">在Cursor中使用mcp<a hidden class="anchor" aria-hidden="true" href="#在cursor中使用mcp">#</a></h2>
+<p>参考cursor官方文档：https://docs.cursor.com/context/model-context-protocol#model-context-protocol</p>
+<p>设置-&gt;MCP Tools-&gt;New MCP Server-&gt;填写你的高德mcp配置json：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&#34;mcpServers&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold">&#34;amap-maps&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;isActive&#34;</span>: <span style="color:#fff;font-weight:bold">true</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;name&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;amap-maps&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;description&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;高德mcp&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;command&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;npx&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;args&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#0ff;font-weight:bold">&#34;-y&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#0ff;font-weight:bold">&#34;@amap/amap-maps-mcp-server&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="font-weight:bold">&#34;env&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="font-weight:bold">&#34;AMAP_MAPS_API_KEY&#34;</span>: <span style="color:#0ff;font-weight:bold">&#34;你的高德key&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>检查 MCP 设置状态。</strong><br>
+回到之前的 MCP 设置页面，查看对应服务是否显示为绿色（表示连接正常）。</p>
+<p>在聊天中使用mcp：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>使用高德mcp，帮我规划杭州五日游攻略。
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
