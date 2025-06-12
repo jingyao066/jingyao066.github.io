@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 25 May 2025 18:13:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Jun 2025 12:30:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mcp</title>
+      <link>https://009965.xyz/posts/ai/mcp/</link>
+      <pubDate>Wed, 11 Jun 2025 12:30:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/ai/mcp/</guid>
+      <description>概念 参考：一文带你 &amp;ldquo;看见&amp;rdquo; MCP 的过程，彻底理解 MCP 的概念 模型上下文协议（Model Context Protocol，简称MCP）是一个</description>
+    </item>
     <item>
       <title>第11章 企业真题</title>
       <link>https://009965.xyz/posts/mysql/%E7%AC%AC11%E7%AB%A0-%E4%BC%81%E4%B8%9A%E7%9C%9F%E9%A2%98/</link>
@@ -289,10 +296,10 @@
       <description>从云计算到云原生：从概念到落地 云计算最近几年已经火得不行，云原生（Cloud Native）这个概念又来了，如果上云不“原生”，那就等于白上云</description>
     </item>
     <item>
-      <title>httpClient</title>
-      <link>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/httpclient/</link>
+      <title>idea-httpClient工具</title>
+      <link>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/idea-httpclient%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Mon, 30 Dec 2024 17:58:58 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/httpclient/</guid>
+      <guid>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/idea-httpclient%E5%B7%A5%E5%85%B7/</guid>
       <description>概述 官方介绍：https://www.jetbrains.com/help/idea/http-client-in-product-code</description>
     </item>
     <item>
@@ -1878,7 +1885,7 @@ StringBuilder 和 StringBuffer都是可变的字符序列。它们都继承于Ab
       <link>https://009965.xyz/posts/java/java-http%E8%AF%B7%E6%B1%82/</link>
       <pubDate>Tue, 30 Apr 2019 11:36:55 +0000</pubDate>
       <guid>https://009965.xyz/posts/java/java-http%E8%AF%B7%E6%B1%82/</guid>
-      <description>使用Java 11+的HttpClient (推荐) Java 11引入了新的HttpClient API，位于java.net.http包中： 1 2 3 4 5 6</description>
+      <description>webClient 官网介绍：https://docs.spring.io/spring-framework/reference/web/webflux-we</description>
     </item>
     <item>
       <title>equals</title>
@@ -3200,13 +3207,6 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <guid>https://009965.xyz/posts/%E7%94%9F%E6%B4%BB/%E8%AF%97/</guid>
       <description>&lt;h1 id=&#34;整首诗词&#34;&gt;整首诗词&lt;/h1&gt;
 &lt;h2 id=&#34;岳阳楼记&#34;&gt;岳阳楼记&lt;/h2&gt;</description>
-    </item>
-    <item>
-      <title></title>
-      <link>https://009965.xyz/posts/ai/mcp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/posts/ai/mcp/</guid>
-      <description>概念 参考：一文带你 &amp;ldquo;看见&amp;rdquo; MCP 的过程，彻底理解 MCP 的概念 模型上下文协议（Model Context Protocol，简称MCP）是一个</description>
     </item>
     <item>
       <title></title>

@@ -6,8 +6,15 @@
     <description>Recent content in Tags on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 25 May 2025 18:13:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Jun 2025 12:30:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI</title>
+      <link>https://009965.xyz/tags/ai/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://009965.xyz/tags/ai/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Mysql</title>
       <link>https://009965.xyz/tags/mysql/</link>
@@ -41,13 +48,6 @@
       <link>https://009965.xyz/tags/spring/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://009965.xyz/tags/spring/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>AI</title>
-      <link>https://009965.xyz/tags/ai/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/tags/ai/</guid>
       <description></description>
     </item>
     <item>

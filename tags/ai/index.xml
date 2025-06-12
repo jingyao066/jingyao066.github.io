@@ -6,8 +6,15 @@
     <description>Recent content in AI on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 03 Mar 2025 17:30:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Jun 2025 12:30:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mcp</title>
+      <link>https://009965.xyz/posts/ai/mcp/</link>
+      <pubDate>Wed, 11 Jun 2025 12:30:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/ai/mcp/</guid>
+      <description>概念 参考：一文带你 &amp;ldquo;看见&amp;rdquo; MCP 的过程，彻底理解 MCP 的概念 模型上下文协议（Model Context Protocol，简称MCP）是一个</description>
+    </item>
     <item>
       <title>prompt</title>
       <link>https://009965.xyz/posts/ai/prompt/</link>
