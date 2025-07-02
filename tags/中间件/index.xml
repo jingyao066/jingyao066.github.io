@@ -60,10 +60,10 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
       <description>&lt;p&gt;redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>es</title>
-      <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/es/</link>
+      <title>Elasticsearch</title>
+      <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/es/</guid>
+      <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/elasticsearch/</guid>
       <description>&lt;p&gt;Elasticsearch&lt;/p&gt;</description>
     </item>
   </channel>
