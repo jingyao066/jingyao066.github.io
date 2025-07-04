@@ -53,10 +53,10 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
 &lt;p&gt;全文搜索引擎是目前广泛应用的主流搜索引擎。它的工作原理是计算机索引程序通过扫描文章中的每一个词，对每一个词建立一个索引，指明该词在文章中出现的次数和位置，当用户查询时，检索程序就根据事先建立的索引进行查找，并将查找的结果反馈给用户的检索方式。这个过程类似于通过字典中的检索字表查字的过程。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>redis</title>
-      <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/</link>
+      <title>redis基础</title>
+      <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Sat, 06 Oct 2018 18:10:43 +0000</pubDate>
-      <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/</guid>
+      <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis%E5%9F%BA%E7%A1%80/</guid>
       <description>&lt;p&gt;redis是一个开源的，使用C语言编写的，支持网络交互的、可基于内存也可持久化的Key-Value数据库。&lt;/p&gt;</description>
     </item>
     <item>
