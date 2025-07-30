@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>24_业务场景 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="interview">
+<meta name="description" content="秒杀 针对秒杀场景，有下几个需要解决的问题点： 瞬时流量的承接 防止超卖 预防黑产 避免对正常服务的影响 兜底方案 然后可以从前后端两个视角向面试官阐述整">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://009965.xyz/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://009965.xyz/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
+<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://009965.xyz/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="24_业务场景">
+  <meta property="og:description" content="秒杀 针对秒杀场景，有下几个需要解决的问题点： 瞬时流量的承接 防止超卖 预防黑产 避免对正常服务的影响 兜底方案 然后可以从前后端两个视角向面试官阐述整">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-07T06:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-07T06:00:00+00:00">
+    <meta property="article:tag" content="Interview">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="24_业务场景">
+<meta name="twitter:description" content="秒杀 针对秒杀场景，有下几个需要解决的问题点： 瞬时流量的承接 防止超卖 预防黑产 避免对正常服务的影响 兜底方案 然后可以从前后端两个视角向面试官阐述整">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://009965.xyz/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "24_业务场景",
+      "item": "https://009965.xyz/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "24_业务场景",
+  "name": "24_业务场景",
+  "description": "秒杀 针对秒杀场景，有下几个需要解决的问题点： 瞬时流量的承接 防止超卖 预防黑产 避免对正常服务的影响 兜底方案 然后可以从前后端两个视角向面试官阐述整",
+  "keywords": [
+    "interview"
+  ],
+  "articleBody": "秒杀 针对秒杀场景，有下几个需要解决的问题点：\n瞬时流量的承接 防止超卖 预防黑产 避免对正常服务的影响 兜底方案 然后可以从前后端两个视角向面试官阐述整体的设计点：\n前端：\n利用 CDN 缓存静态资源（秒杀页面的 HTML、CSS、JS 等），减轻服务器的压力 客户端限流，在前端随机限流，降低请求量 按钮防抖，防止用户重复多次点击发出大量请求 后端：\nNginx（或其他接入层）做统一接入，负载均衡与流量过滤、限流 业务端限流，可以自定义实现本地 guava 限流或利用 sentinel 等 服务拆分，将秒杀功能拆分为独立的服务，避免对现有服务产生影响 秒杀数据的拆分和缓存，缓存可以使用分布式缓存或本地缓存方案，且需要缓存预热 精准地库存扣减，防止超卖发生 风控识别黑产，进行流量防控且需要动态黑名单机制 验证码、答题等手段预防脚本刷单 幂等操作，防止重复下单 业务手段降低并发量，例如通过预约、预售。 兜底方案，如果服务压力过大或者代码有漏洞，那么关闭秒杀直接返回秒杀结束，降低服务压力及时止损。 详细分析 瞬时流量的承接 一般情况下，秒杀的流量特性就是持续性短和大。\n流量集中在活动即将开始的时候，会有很多用户开始持续性地刷新页面。前端资源的访问也需要损耗大量的资源，因此需要利用 CDN 缓存秒杀页面的一些静态资源，将这部分压力给到 CDN 厂商。\n并且静态资源放在 CDN 厂商那之后，地理位置也距离用户更近，用户访问也就更快，体验上也更好！\n秒杀页面可手动推给 CDN 预热。\n秒杀流量还有个特点，就是大部分请求实际都是无效的，因为秒杀的商品库存往往都是个位数，而抢购的用户是其成千上万倍。\n假设有 100 万的请求来抢购一台 iPhone，那么需要放这 100 万请求直接打到后端服务吗？显然不需要。\n针对这个情况，我们就需要层层过滤请求。\n例如前面提到的客户端限流，即在前端随机限流，降低请求量。说的更直白一些即部分用户点击抢购按钮，但是请求都发不到后端，直接前端代码返回秒杀结束。（如果预测量是在太大，可以这样操作，毕竟也是随机的）\n如果前端请求发出来了，那么可以利用 nginx 统一接入，针对更大的流量可以在 nginx 前面再加 lvs。\nlvs 四层转发请求打到多台 nginx 上， nginx 再负载均衡到多台后端服务，且 nginx 有限流功能，例如 ip 限流，还可以配置黑名单等等，其实已经可以拦截大量请求流量。\n请求到达后端服务之前还可以再进行限流，比如使用 sentinel 再拦截一道。\n最终请求打到后端服务，涉及到一些读取数据和写数据的操作。如果量级不大且数据库配置高，理论上可以用数据库来承接（数据库层面也是有优化的，后面介绍）。\n这时候也可以利用缓存来承接读写，可以用本地缓存或分布式缓存，如 Redis。\n最终一个相对而言比较完整的请求链路如下：\n我把 DNS 解析也加上了，因为对一些大公司而言，DNS 其实也是一个分流的手段。\n在量级没这么大的情况下，实际上的秒杀架构不需要如上图所示，例如不需要引入 lvs、本地缓存之类的。\n库存扣减设计 先看一下正常扣减库存的思路：\n这样的设计会有什么问题？并发问题，导致超卖。\n此时可以加锁，比如利用数据库的锁，针对这个场景数据库常用的是乐观锁。\n1 2 update inventory set available_inventory = available_inventory - 1 where sku_id = 1 and available_inventory \u003e 0; 数据库热点行问题解决方案 如果使用这个语句，在高并发场景下，实际上就会产生热点行问题。\n我之前公司基于数据库扣减方案，压测单台机子下单链路的并发只能达到 70。单个扣减库存的接口并发只有 200 就把数据库 CPU 压满了。（各公司实际内部业务不同，仅供参考）\n数据库补丁优化 我们当时数据库用的是阿里云的 RDS，实际上有一个可落地的优化方案：Inventory hint + Returning。\n如果你公司本身用的就是阿里云的 RDS，这个改造成本就很低，仅需在 SQL 上填写一些 hint 即可。\n在 SQL 表名前加 /*+ COMMIT_ON_SUCCESS ROLLBACK_ON_FAIL TARGET_AFFECT_ROW(1)*/\n1 2 3 4 update /*+ COMMIT_ON_SUCCESS ROLLBACK_ON_FAIL TARGET_AFFECT_ROW(1)*/ inventory set available_inventory = available_inventory - 1 where sku_id = 1 and available_inventory \u003e 0; Inventory hint 原理简单介绍：\nCOMMIT_ON_SUCCESS：当前语句执行成功就提交事务上下文。 ROLLBACK_ON_FAIL：当前语句执行失败就回滚事务上下文。 TARGET_AFFECT_ROW(NUMBER)：如果当前语句影响行数是指定的就成功，否则语句失败。 设置了这几个 hint 后，当前的语句会按照主键（或唯一键）分组，将相同行的请求修改分为一组，分组后仅组内第一条 SQL 需要抢锁，后续的都不需要申请锁，减少申请锁的流程。\n然后组内第一条 SQL 已经遍历 B+树查询到数据了，后续组内库存扣减直接改即可，不用再次查询。且组内 SQL 都修改完之后，仅需一次分组提交事务即可。\n根据阿里云介绍，结合 Inventory hint 单行 TPS 可达 3.1w：\n还可以配合 Returning 使用：\n1 2 3 4 CALL dbms_trans.returning(\"*\", \"update /*+ COMMIT_ON_SUCCESS ROLLBACK_ON_FAIL TARGET_AFFECT_ROW(1)*/ inventory set available_inventory = available_inventory - 1 where sku_id = 1 and available_inventory \u003e 0;\"); 正常情况下，如果我们 update 扣减了一次库存之后，如果想得知最新的库存，那么需要再执行一次 select 操作，而 Returning 可以直接返回实时的库存，减少一次查询。\n利用 Returning，我们可以得知实时的库存，发现没库存后，可以直接设置一个标志位，表明秒杀已经结束，快速 fail 请求，降低服务的压力。\n还有一个 Statement queue 我之前没用到，关于这几个 hint 的详情，可以查看这个介绍链接\n库存拆分 除了数据库补丁优化，从业务角度，我们可以将库存进行拆分。\n上面举例是 1 个库存，但有时候的秒杀的库存会更多，例如 1000 个库存，此时就可以将这 1000 个库存拆分成 100 个小库存，每个小库存内有 10 个库存。\n这样其实就是人为的把热点行拆分了，可以把小库存分散到不同的表或者库中，等于将并发度提升了 10 倍。\n看起来挺简单，实际对于整个库存扣减流程的改造还是挺大的，例如分桶的库存调配、创建库存时分桶的库存分配、表的映射、库的映射等等。\n插入库存扣减流水 既然直接 update 有热点行问题，那么就将 update 改为 insert 。\n实际上用户的购买从更新库存变成插入流水，然后异步定时将流水库存同步到剩余库存中。\n这个手段确实避免了热点行的问题，但插入数据不好控制总的数据量，容易导致超卖。\n可以跟面试官提一下这个方案，跟他说清这个方案是有超卖的问题。表明你知道这个思路，也知道这个方案的缺点。\n这个思路实际上在非限制库存的热点行场景可以使用。\n缓存 利用缓存来承接热点数据是很多人都熟知的方案，例如使用 Redis。\n可以将库存提前同步到 Redis 中，然后利用 redis + lua 脚本控制库存的扣减。\nlua 脚本的内容实际上很简单，我用文字来描述一下：\n根据商品 key 获取库存 如果有则库存-1，返回新库存 如果没库存，则返回没库存 redis + lua 可以保证操作的原子性，且性能足够优秀，因此是一个非常高效的库存扣减方案。\n然后 redis 扣减完毕之后，可以发送一个异步消息（消息队列削峰填谷），后端服务异步消费把数据库中的库存给扣了，实现最终一致性。\n看到这肯定有同学会问：“redis 操作成功后，mq发送失败怎么办？”\n因此，我们还需要一个准实时对账机制，lua 脚本内不仅要扣减库存，还需要利用 zset 增加流水，score 设置为时间。定时拉取一段时间流水记录比对数据库的库存是否一致，如果不一致则补偿。\n至于本地缓存，理论上性能更高，但是方案设计上会更复杂，因为库存被分配到多个应用中。需要在秒杀预热的时候，给后端服务预分配好库存，然后应用各自承接库存扣减，也需要做好对账，防止意外的发生。\n预防黑产 大一点的公司都会有风控机制，借助一些算法对用户的来源、行为数据等等进行分析，如果发现不法分子，则将其加入到黑名单中。\n脚本抢购实际上可以用验证码、答题等机制拦截，并且这种机制也可以打散用户的请求，降低瞬时流量高峰。\n幂等设计 可以看这题：如何避免用户重复下单（多次下单未支付，占用库存）\n业务手段 预约 例如 Nike 设计就是抢购，预约有一个比较长的时间段，例如 15 分钟。然后预约通过后等待最终抽签结果即可。\n这样的设计通过一段时间的预约，可减少瞬时的压力，再异步通过后台实现抽签来间接解决秒杀的问题。\n预售 例如现在的电商活动都搞定金预售。\n通过下定让用户感觉这个商品已经到手了，不需要再等到双十一或者 618 零点准时抢购，均摊了请求，减少准点抢购的压力。\n避免对正常服务的影响 大部分公司秒杀都是和正常服务糅合在一起的，没有做区分。\n如果成本允许，且为了避免对正常业务产生影响，则可以将秒杀单独剥离出一套，独立域名、独立服务器部署等。\n不过这样实现起来其实很麻烦，最终的数据还是需要同步的正常服务中的，成本比较大。\n兜底方案 或许在真正的业务中，很少有人会做兜底方案，都仅考虑正向业务，但是兜底确实很重要！\n所以在业务上的设计我们要尽量考虑异常极端情况，设计一个简单的兜底也比没兜底好。\n在面试中，那就得疯狂兜底！向面试官展示出你的方案面面俱到！\n针对秒杀，其实最简单的方案就是加个开关：关闭秒杀，直接返回秒杀结束。\n这个兜底是为了避免极端情况发生，严重影响正常业务的进行或产生资损。\n因为秒杀对用户而言本身是一个可以接受失败的场景，没抢到很正常。只要用户来参加我们的活动，营销目的也达到了，所以在严重影响正常业务进行或者发现代码出现漏洞，被人薅羊毛的情况下，关闭秒杀是最好的选择！\n",
+  "wordCount" : "3539",
+  "inLanguage": "en",
+  "datePublished": "2023-08-07T06:00:00Z",
+  "dateModified": "2023-08-07T06:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://009965.xyz/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://009965.xyz/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://009965.xyz/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      24_业务场景
+    </h1>
+    <div class="post-meta"><span title='2023-08-07 06:00:00 +0000 UTC'>2023-08-07</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%a7%92%e6%9d%80" aria-label="秒杀">秒杀</a><ul>
+                        
+                <li>
+                    <a href="#%e8%af%a6%e7%bb%86%e5%88%86%e6%9e%90" aria-label="详细分析">详细分析</a><ul>
+                        
+                <li>
+                    <a href="#%e7%9e%ac%e6%97%b6%e6%b5%81%e9%87%8f%e7%9a%84%e6%89%bf%e6%8e%a5" aria-label="瞬时流量的承接">瞬时流量的承接</a></li>
+                <li>
+                    <a href="#%e5%ba%93%e5%ad%98%e6%89%a3%e5%87%8f%e8%ae%be%e8%ae%a1" aria-label="库存扣减设计">库存扣减设计</a><ul>
+                        
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e7%83%ad%e7%82%b9%e8%a1%8c%e9%97%ae%e9%a2%98%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" aria-label="数据库热点行问题解决方案">数据库热点行问题解决方案</a><ul>
+                        
+                <li>
+                    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e8%a1%a5%e4%b8%81%e4%bc%98%e5%8c%96" aria-label="数据库补丁优化">数据库补丁优化</a></li>
+                <li>
+                    <a href="#%e5%ba%93%e5%ad%98%e6%8b%86%e5%88%86" aria-label="库存拆分">库存拆分</a></li>
+                <li>
+                    <a href="#%e6%8f%92%e5%85%a5%e5%ba%93%e5%ad%98%e6%89%a3%e5%87%8f%e6%b5%81%e6%b0%b4" aria-label="插入库存扣减流水">插入库存扣减流水</a></li>
+                <li>
+                    <a href="#%e7%bc%93%e5%ad%98" aria-label="缓存">缓存</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%a2%84%e9%98%b2%e9%bb%91%e4%ba%a7" aria-label="预防黑产">预防黑产</a></li>
+                <li>
+                    <a href="#%e5%b9%82%e7%ad%89%e8%ae%be%e8%ae%a1" aria-label="幂等设计">幂等设计</a></li>
+                <li>
+                    <a href="#%e4%b8%9a%e5%8a%a1%e6%89%8b%e6%ae%b5" aria-label="业务手段">业务手段</a><ul>
+                        
+                <li>
+                    <a href="#%e9%a2%84%e7%ba%a6" aria-label="预约">预约</a></li>
+                <li>
+                    <a href="#%e9%a2%84%e5%94%ae" aria-label="预售">预售</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e9%81%bf%e5%85%8d%e5%af%b9%e6%ad%a3%e5%b8%b8%e6%9c%8d%e5%8a%a1%e7%9a%84%e5%bd%b1%e5%93%8d" aria-label="避免对正常服务的影响">避免对正常服务的影响</a></li>
+                <li>
+                    <a href="#%e5%85%9c%e5%ba%95%e6%96%b9%e6%a1%88" aria-label="兜底方案">兜底方案</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="秒杀">秒杀<a hidden class="anchor" aria-hidden="true" href="#秒杀">#</a></h1>
+<p>针对秒杀场景，有下几个需要解决的问题点：</p>
+<ol>
+<li>瞬时流量的承接</li>
+<li>防止超卖</li>
+<li>预防黑产</li>
+<li>避免对正常服务的影响</li>
+<li>兜底方案</li>
+</ol>
+<p>然后可以从前后端两个视角向面试官阐述整体的设计点：</p>
+<p>前端：</p>
+<ul>
+<li>利用 CDN 缓存静态资源（秒杀页面的 HTML、CSS、JS 等），减轻服务器的压力</li>
+<li>客户端限流，在前端随机限流，降低请求量</li>
+<li>按钮防抖，防止用户重复多次点击发出大量请求</li>
+</ul>
+<p>后端：</p>
+<ul>
+<li>Nginx（或其他接入层）做统一接入，负载均衡与流量过滤、限流</li>
+<li>业务端限流，可以自定义实现本地 guava 限流或利用 sentinel 等</li>
+<li>服务拆分，将秒杀功能拆分为独立的服务，避免对现有服务产生影响</li>
+<li>秒杀数据的拆分和缓存，缓存可以使用分布式缓存或本地缓存方案，且需要缓存预热</li>
+<li>精准地库存扣减，防止超卖发生</li>
+<li>风控识别黑产，进行流量防控且需要动态黑名单机制</li>
+<li>验证码、答题等手段预防脚本刷单</li>
+<li>幂等操作，防止重复下单</li>
+<li>业务手段降低并发量，例如通过预约、预售。</li>
+<li>兜底方案，如果服务压力过大或者代码有漏洞，那么关闭秒杀直接返回秒杀结束，降低服务压力及时止损。</li>
+</ul>
+<h2 id="详细分析">详细分析<a hidden class="anchor" aria-hidden="true" href="#详细分析">#</a></h2>
+<h3 id="瞬时流量的承接">瞬时流量的承接<a hidden class="anchor" aria-hidden="true" href="#瞬时流量的承接">#</a></h3>
+<p>一般情况下，秒杀的流量特性就是<strong>持续性短</strong>和<strong>大</strong>。</p>
+<p>流量集中在活动即将开始的时候，会有很多用户开始持续性地刷新页面。前端资源的访问也需要损耗大量的资源，因此需要利用 CDN 缓存秒杀页面的一些静态资源，将这部分压力给到 CDN 厂商。</p>
+<p>并且静态资源放在 CDN 厂商那之后，地理位置也距离用户更近，用户访问也就更快，体验上也更好！</p>
+<p><img loading="lazy" src="/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/863196a7b0d462cce933e72d6c85e566_MD5.png"></p>
+<p>秒杀页面可手动推给 CDN 预热。</p>
+<p>秒杀流量还有个特点，就是<strong>大部分请求实际都是无效的</strong>，因为秒杀的商品库存往往都是个位数，而抢购的用户是其成千上万倍。</p>
+<p>假设有 100 万的请求来抢购一台 iPhone，那么需要放这 100 万请求直接打到后端服务吗？显然不需要。</p>
+<p>针对这个情况，我们就需要<strong>层层过滤请求</strong>。</p>
+<p>例如前面提到的客户端限流，即在前端随机限流，降低请求量。说的更直白一些即部分用户点击抢购按钮，但是请求都发不到后端，直接前端代码返回秒杀结束。（如果预测量是在太大，可以这样操作，毕竟也是随机的）</p>
+<p>如果前端请求发出来了，那么可以利用 nginx 统一接入，针对更大的流量可以在 nginx 前面再加 lvs。</p>
+<p>lvs 四层转发请求打到多台 nginx 上， nginx 再负载均衡到多台后端服务，且 nginx 有限流功能，例如 ip 限流，还可以配置黑名单等等，其实已经可以拦截大量请求流量。</p>
+<p>请求到达后端服务之前还可以再进行限流，比如使用 sentinel 再拦截一道。</p>
+<p>最终请求打到后端服务，涉及到一些读取数据和写数据的操作。如果量级不大且数据库配置高，理论上可以用数据库来承接（数据库层面也是有优化的，后面介绍）。</p>
+<p>这时候也可以利用缓存来承接读写，可以用本地缓存或分布式缓存，如 Redis。</p>
+<p>最终一个相对而言比较完整的请求链路如下：</p>
+<p><img loading="lazy" src="/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/9b12bfc461aa16d1028da972a39efde1_MD5.png"></p>
+<p>我把 DNS 解析也加上了，因为对一些大公司而言，DNS 其实也是一个分流的手段。</p>
+<p>在量级没这么大的情况下，实际上的秒杀架构不需要如上图所示，例如不需要引入 lvs、本地缓存之类的。</p>
+<h3 id="库存扣减设计">库存扣减设计<a hidden class="anchor" aria-hidden="true" href="#库存扣减设计">#</a></h3>
+<p>先看一下正常扣减库存的思路：</p>
+<p><img loading="lazy" src="/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/60eed5d7e90d13413f4655559ad88122_MD5.png"></p>
+<p>这样的设计会有什么问题？<strong>并发问题，导致超卖</strong>。</p>
+<p><img loading="lazy" src="/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/90b2ec5770bcf884f3d8c103c7f57d83_MD5.png"></p>
+<p>此时可以加锁，比如利用数据库的锁，针对这个场景数据库常用的是乐观锁。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">update</span> inventory <span style="color:#fff;font-weight:bold">set</span> available_inventory = available_inventory - <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">where</span> sku_id = <span style="color:#ff0;font-weight:bold">1</span> <span style="color:#fff;font-weight:bold">and</span> available_inventory &gt; <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="数据库热点行问题解决方案">数据库热点行问题解决方案<a hidden class="anchor" aria-hidden="true" href="#数据库热点行问题解决方案">#</a></h4>
+<p>如果使用这个语句，在高并发场景下，实际上就会产生<strong>热点行</strong>问题。</p>
+<p>我之前公司基于数据库扣减方案，压测单台机子下单链路的并发只能达到 70。单个扣减库存的接口并发只有 200 就把数据库 CPU 压满了。（各公司实际内部业务不同，仅供参考）</p>
+<h5 id="数据库补丁优化">数据库补丁优化<a hidden class="anchor" aria-hidden="true" href="#数据库补丁优化">#</a></h5>
+<p>我们当时数据库用的是阿里云的 RDS，实际上有一个可落地的优化方案：<code>Inventory hint</code> + <code>Returning</code>。</p>
+<p>如果你公司本身用的就是阿里云的 RDS，这个改造成本就很低，仅需在 SQL 上填写一些 hint 即可。</p>
+<p>在 SQL 表名前加 <code>/*+ COMMIT_ON_SUCCESS ROLLBACK_ON_FAIL TARGET_AFFECT_ROW(1)*/</code></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">update</span> <span style="color:#007f7f">/*+ COMMIT_ON_SUCCESS ROLLBACK_ON_FAIL
+</span></span></span><span style="display:flex;"><span><span style="color:#007f7f">  TARGET_AFFECT_ROW(1)*/</span> inventory 
+</span></span><span style="display:flex;"><span> <span style="color:#fff;font-weight:bold">set</span> available_inventory = available_inventory - <span style="color:#ff0;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">where</span> sku_id = <span style="color:#ff0;font-weight:bold">1</span> <span style="color:#fff;font-weight:bold">and</span> available_inventory &gt; <span style="color:#ff0;font-weight:bold">0</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>Inventory hint</code> 原理简单介绍：</p>
+<ul>
+<li>COMMIT_ON_SUCCESS：当前语句执行成功就提交事务上下文。</li>
+<li>ROLLBACK_ON_FAIL：当前语句执行失败就回滚事务上下文。</li>
+<li>TARGET_AFFECT_ROW(NUMBER)：如果当前语句影响行数是指定的就成功，否则语句失败。</li>
+</ul>
+<p>设置了这几个 hint 后，当前的语句会按照主键（或唯一键）分组，将相同行的请求修改分为一组，分组后仅组内第一条 SQL 需要抢锁，后续的都不需要申请锁，减少申请锁的流程。</p>
+<p>然后组内第一条 SQL 已经遍历 B+树查询到数据了，后续组内库存扣减直接改即可，不用再次查询。且组内 SQL 都修改完之后，仅需一次分组提交事务即可。</p>
+<p>根据阿里云介绍，结合 <code>Inventory hint</code> 单行 TPS 可达 3.1w：</p>
+<p><img alt="image.png" loading="lazy" src="/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/89f39af8e27647fe123ceb81093326a9_MD5.png"></p>
+<p>还可以配合 <code>Returning</code> 使用：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">CALL</span> dbms_trans.returning(<span style="color:#0ff;font-weight:bold">&#34;*&#34;</span>, <span style="color:#0ff;font-weight:bold">&#34;update /*+ COMMIT_ON_SUCCESS ROLLBACK_ON_FAIL
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">  TARGET_AFFECT_ROW(1)*/ inventory 
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold"> set available_inventory = available_inventory - 1
+</span></span></span><span style="display:flex;"><span><span style="color:#0ff;font-weight:bold">where sku_id = 1 and available_inventory &gt; 0;&#34;</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>正常情况下，如果我们 update 扣减了一次库存之后，如果想得知最新的库存，那么需要再执行一次 select 操作，而 <code>Returning</code> 可以直接返回实时的库存，减少一次查询。</p>
+<p>利用 <code>Returning</code>，我们可以得知实时的库存，发现没库存后，可以直接设置一个标志位，表明秒杀已经结束，快速 fail 请求，降低服务的压力。</p>
+<p>还有一个 <code>Statement queue</code> 我之前没用到，关于这几个 hint 的详情，可以查看这个<a href="https://www.alibabacloud.com/help/zh/rds/apsaradb-rds-for-mysql/inventory-hint#section-e99-qg7-ceh">介绍链接</a></p>
+<h5 id="库存拆分">库存拆分<a hidden class="anchor" aria-hidden="true" href="#库存拆分">#</a></h5>
+<p>除了数据库补丁优化，从业务角度，我们可以将库存进行拆分。</p>
+<p>上面举例是 1 个库存，但有时候的秒杀的库存会更多，例如 1000 个库存，此时就可以将这 1000 个库存拆分成 100 个小库存，每个小库存内有 10 个库存。</p>
+<p><img loading="lazy" src="/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/7a43402278e28f28affeac164786485b_MD5.png"></p>
+<p>这样其实就是人为的把热点行拆分了，可以把小库存分散到不同的表或者库中，等于将并发度提升了 10 倍。</p>
+<p>看起来挺简单，实际对于整个库存扣减流程的改造还是挺大的，例如分桶的库存调配、创建库存时分桶的库存分配、表的映射、库的映射等等。</p>
+<h5 id="插入库存扣减流水">插入库存扣减流水<a hidden class="anchor" aria-hidden="true" href="#插入库存扣减流水">#</a></h5>
+<p>既然直接 update 有热点行问题，那么就将 update 改为 insert 。</p>
+<p>实际上用户的购买从更新库存变成插入流水，然后异步定时将流水库存同步到剩余库存中。</p>
+<p>这个手段确实避免了热点行的问题，但插入数据不好控制总的数据量，<strong>容易导致超卖</strong>。</p>
+<p>可以跟面试官提一下这个方案，跟他说清这个方案是有超卖的问题。表明你知道这个思路，也知道这个方案的缺点。</p>
+<p>这个思路实际上在非限制库存的热点行场景可以使用。</p>
+<h5 id="缓存">缓存<a hidden class="anchor" aria-hidden="true" href="#缓存">#</a></h5>
+<p>利用缓存来承接热点数据是很多人都熟知的方案，例如使用 Redis。</p>
+<p>可以将库存提前同步到 Redis 中，然后利用 redis + lua 脚本控制库存的扣减。</p>
+<p>lua 脚本的内容实际上很简单，我用文字来描述一下：</p>
+<ol>
+<li>根据商品 key 获取库存</li>
+<li>如果有则库存-1，返回新库存</li>
+<li>如果没库存，则返回没库存</li>
+</ol>
+<p>redis + lua 可以保证操作的原子性，且性能足够优秀，因此是一个非常高效的库存扣减方案。</p>
+<p>然后 redis 扣减完毕之后，可以发送一个异步消息（消息队列削峰填谷），后端服务异步消费把数据库中的库存给扣了，实现<strong>最终一致性</strong>。</p>
+<p><img loading="lazy" src="/posts/interview/24_%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/10bf24ba764dae29205feb962cb27b32_MD5.png"></p>
+<p>看到这肯定有同学会问：“redis 操作成功后，mq发送失败怎么办？”</p>
+<p>因此，我们还需要一个<strong>准实时对账机制</strong>，lua 脚本内不仅要扣减库存，还需要利用 zset 增加流水，score 设置为时间。定时拉取一段时间流水记录比对数据库的库存是否一致，如果不一致则补偿。</p>
+<p>至于本地缓存，理论上性能更高，但是方案设计上会更复杂，因为库存被分配到多个应用中。需要在秒杀预热的时候，给后端服务预分配好库存，然后应用各自承接库存扣减，也需要做好对账，防止意外的发生。</p>
+<h3 id="预防黑产">预防黑产<a hidden class="anchor" aria-hidden="true" href="#预防黑产">#</a></h3>
+<p>大一点的公司都会有风控机制，借助一些算法对用户的来源、行为数据等等进行分析，如果发现不法分子，则将其加入到黑名单中。</p>
+<p>脚本抢购实际上可以用验证码、答题等机制拦截，并且这种机制也可以打散用户的请求，降低瞬时流量高峰。</p>
+<h3 id="幂等设计">幂等设计<a hidden class="anchor" aria-hidden="true" href="#幂等设计">#</a></h3>
+<p>可以看这题：<a href="https://www.mianshiya.com/bank/1795650132375805954/question/1856228340908228610">如何避免用户重复下单（多次下单未支付，占用库存）</a></p>
+<h3 id="业务手段">业务手段<a hidden class="anchor" aria-hidden="true" href="#业务手段">#</a></h3>
+<h4 id="预约">预约<a hidden class="anchor" aria-hidden="true" href="#预约">#</a></h4>
+<p>例如 Nike 设计就是抢购，预约有一个比较长的时间段，例如 15 分钟。然后预约通过后等待最终抽签结果即可。</p>
+<p>这样的设计通过一段时间的预约，可减少瞬时的压力，再异步通过后台实现抽签来间接解决秒杀的问题。</p>
+<h4 id="预售">预售<a hidden class="anchor" aria-hidden="true" href="#预售">#</a></h4>
+<p>例如现在的电商活动都搞定金预售。</p>
+<p>通过下定让用户感觉这个商品已经到手了，不需要再等到双十一或者 618 零点准时抢购，均摊了请求，减少准点抢购的压力。</p>
+<h3 id="避免对正常服务的影响">避免对正常服务的影响<a hidden class="anchor" aria-hidden="true" href="#避免对正常服务的影响">#</a></h3>
+<p>大部分公司秒杀都是和正常服务糅合在一起的，没有做区分。</p>
+<p>如果成本允许，且为了避免对正常业务产生影响，则可以将秒杀单独剥离出一套，独立域名、独立服务器部署等。</p>
+<p>不过这样实现起来其实很麻烦，最终的数据还是需要同步的正常服务中的，成本比较大。</p>
+<h3 id="兜底方案">兜底方案<a hidden class="anchor" aria-hidden="true" href="#兜底方案">#</a></h3>
+<p>或许在真正的业务中，很少有人会做兜底方案，都仅考虑正向业务，但是兜底确实很重要！</p>
+<p>所以在业务上的设计我们要尽量考虑异常极端情况，设计一个简单的兜底也比没兜底好。</p>
+<p>在面试中，那就得疯狂兜底！向面试官展示出你的方案面面俱到！</p>
+<p>针对秒杀，其实最简单的方案就是加个开关：关闭秒杀，直接返回秒杀结束。</p>
+<p>这个兜底是为了避免极端情况发生，严重影响正常业务的进行或产生资损。</p>
+<p>因为秒杀对用户而言本身是一个可以接受失败的场景，没抢到很正常。只要用户来参加我们的活动，营销目的也达到了，所以在严重影响正常业务进行或者发现代码出现漏洞，被人薅羊毛的情况下，关闭秒杀是最好的选择！</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://009965.xyz/tags/interview/">Interview</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
