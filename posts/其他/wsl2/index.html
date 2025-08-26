@@ -103,8 +103,8 @@
   "keywords": [
     "其他"
   ],
-  "articleBody": "win11开启wsl2 参考：https://learn.microsoft.com/zh-cn/windows/wsl/\n参考：https://www.sysgeek.cn/install-wsl-2-windows/\nWSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。\n首先确保虚拟化选项开启。\n进任务管理器-\u003e性能-\u003ecpu，查看虚拟化是启用状态，这个如果没有开启的话，需要进电脑的BIOS设置里开启。 控制面板-\u003e程序-\u003e启用或关闭 windows 功能，勾选适用于linux的windows子系统、虚拟机平台\n注意：如果没有虚拟机平台，可能显示的是英文：virtual machine platform，两个是一样的。勾选完成后，Windows11 会自己下载些东西，并提示你重启。等电脑彻底重启完以后，进行后续操作。注意：Hyper-V 无需勾选。 升级wsl：wsl --update 命令行安装Ubuntu发行版。\n查看可以安装的版本：wsl --list --online\n安装喜欢的版本（推荐Ubuntu）： wsl --install -d \u003c发行版名称\u003e\n或者直接安装最新的发行版：wsl --install\n或者通过Microsoft Store安装：直接在商店搜索wsl，选择安装即可（推荐Ubuntu）。 安装成功后，按照提示重启电脑（可能不需要重启）。 设置root用户密码 其他配置 默认用户切换为root用户 打开cmd执行：\n1 ubuntu config --default-user root 注意这里的ubuntu应该是你安装的发行版名称，例如我安装的发行版是：Ubuntu-22.04，所以我执行的命令是：\n1 ubuntu2204 config --default-user root 执行完后，就会以root用户登录。\n修改密码 参考：https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password\nhttps://cloud.tencent.com/developer/article/1883289\n打开cmd执行：\n1 2 3 wsl -u root passwd root 连续输入两次密码后就成功了。\n不知道为什么，这里只能修改root用户的密码，修改其他用户的密码会提示：passwd: unknown user wjy。\n所以可以先用root用户登录，然后用root用户修改用户wjy的密码。\n1 passwd wjy 然后再切换回wjy为默认用户：\n1 ubuntu2204 config --default-user wjy WSL2迁移至其他目录 wsl存放的发行版文件系统位于C盘，根据自己的需求，可选择将其跟文件系统迁移至其他目录，例如D盘等。\nWSL 2.3.11 及更高版本：\n列出已安装的发行版：\n1 wsl --list 将特定发行版移动到指定路径：\n1 wsl --manage Ubuntu-22.04 --move d:\\wsl\\ubuntu 低版本：\n停止正在运行的wsl：wsl --shutdown 将需要迁移的Linux，进行导出。先查看所有WSL：wsl -l --all -v，然后导出到D盘：wsl --export 发行版Linux tar包路径。示例：wsl --export Ubuntu-20.04 d:\\ubuntu20.04.tar 导出完成之后，将原有的Linux注销。wsl --unregister 发行版Linux。示例执行：wsl --unregister Ubuntu-20.04 然后将导出的文件放到需要保存的地方，进行导入即可。wsl --import \u003c安装位置\u003e 。示例执行：wsl --import Ubuntu-20.04 d:\\ubuntu d:\\ubuntu20.04.tar --version 2 可以在D盘看到linux系统磁盘文件。至此，完成了在win平台上的WSL中创建linux子系统。 问题：迁移后出现：\n1 2 无法将磁盘“d:\\wsl\\Ubuntu\\ext4.vhdx”附加到 WSL2： 拒绝访问。 错误代码: Wsl/Service/CreateInstance/MountVhd/HCS/E_ACCESSDENIED 看样子是权限问题，找到迁移后的ext4.vhdx，右键属性-\u003e安全-\u003e编辑-\u003e勾选完全控制-\u003e确定。\nwsl2卸载 在程序中卸载wsl和linux发行版（ubuntu等） 控制面板-\u003e程序-\u003e启用过关闭window功能-\u003e取消勾选适用于linux的windows子系统和虚拟机平台 根据提示重启电脑，卸载完成。 wsl2安装mysql 更新：\n1 sudo apt update 安装mysql：\n1 sudo apt install mysql-server 确认安装并获取版本号：\n1 mysql --version 启动 MySQL Server / 检查状态：\n1 systemctl status mysql 登录mysql：\n1 mysql -u root -p root默认没有密码，可以直接登录成功。\n注意：如果不能登录，使用如下命令可以直接进入：\n1 sudo mysql 修改root用户密码\n1 2 3 show databases; use mysql; show tables; 用户信息都在user表中。\n1 2 3 4 5 select user, host, plugin from user; localhost说明只允许本地登录。\nMySQL8.0 中用户默认认证方式为 caching_sha2_password，虽然安全性有保障，但是对于使用本地或者远程连接都造成了一定困扰。因此可以将用户认证方式改为MySQL5.X常用的mysql_native_password方式，只有此种方式才能在MySQL8.0中更改用户密码。\n1 2 # 修改root用户的密码为root，认证方式为mysql_native_password alter user 'root'@'localhost' identified with mysql_native_password by 'root'; 刷新\n1 flush privileges; 现在可以使用dataGrip等数据库链接工具链接这个mysql了。\nurl：jdbc:mysql://localhost:3306\nuser：root\npassword：root\n设置root用户的远程访问 此时root用户的host属性仍然是localhost，也就是只能从本地访问，因此可以将root用户的访问权限由本地改为本地和外部都可以访问，将host的值由localhost改为 %。\n1 2 3 4 update user set user.host='%' where user.user='root'; # 刷新 flush privileges 此时root用户的host访问权限已经改为本地和外部都可以。\n修改MySQL配置文件实现真正的远程访问 此时使用127.0.0.1或者localhost连接都没有问题，但是在外部一旦换成Ubuntu真正的IP地址访问就会报错。\n这时还需要修改MySQL配置文件中的相关配置项\n1 /etc/mysql//mysql.conf.d/mysqld.cnf 修改 bind-address = 0.0.0.0 。\n重启MySQL后，再次通过IP地址远程连接。\nMySQL8.0卸载 1 2 3 4 sudo apt purge mysql-* sudo rm -rf /etc/mysql/ /var/lib/mysql sudo apt autoremove sudo apt autoclean 安装redis 官网：\nhttps://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/install-redis-on-linux/\n1 2 3 4 5 6 7 8 9 sudo apt-get install lsb-release curl gpg curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg sudo chmod 644 /usr/share/keyrings/redis-archive-keyring.gpg echo \"deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main\" | sudo tee /etc/apt/sources.list.d/redis.list sudo apt-get update sudo apt-get install redis sudo systemctl enable redis-server sudo systemctl start redis-server 安装docker https://linux.do/t/topic/207951\n一键安装脚本：\n1 curl -fsSL https://get.docker.com | bash -s docker --mirror AzureChinaCloud 安装 docker 安装必要支持\n1 sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release 添加 gpg key（内容为 ubuntu，如果你是 debian 就自行把链接中的 ubuntu 改成 debian 就行）\n#添加 Docker 官方gpg key （可能国内现在访问会存在问题） curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg # 阿里源（推荐使用阿里的gpg KEY） curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg\n添加源\n#Docker官方源 echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list \u003e /dev/null #阿里apt源 echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list \u003e /dev/null\n更新源\n1 sudo apt update sudo apt-get update 安装docker本体：\n1 sudo apt install docker-ce docker-ce-cli containerd.io #docker-compose sudo apt install docker-compose 安装 Docker 命令补全工具\nsudo apt-get install bash-completion sudo curl -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker -o /etc/bash_completion.d/docker.sh source /etc/bash_completion.d/docker.sh\n配置 wsl/docker 配置 wsl2 启动 docker\n添加文件\nsudo touch /etc/fstab\n更改网络适配器\nsudo update-alternatives --set iptables /usr/sbin/iptables-legacy # for ipv4 sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy # for ipv6\n启用 systemd\n用文本编辑器打开 /etc/wsl.conf（不熟悉 Linux 直接在 windows 下进入后用文本文档打开就行）\n然后添加\n[boot] systemd=true\n然后重启 (powershell)\nwsl --shutdown\n在 Linux 下使用\nsystemctl start docker\n测试是否支持 systemd\n如果是直接看下一步\n如果否接着看\n安装 distrod\ncurl -L -O \"https://raw.githubusercontent.com/nullpo-head/wsl-distrod/main/install.sh\" chmod +x install.sh sudo ./install.sh install\n等待安装完成后设置开机自启\nsudo /opt/distrod/bin/distrod enable --start-on-windows-boot\n重启 wsl2\nwsl --shutdown\n然后测试 systemd 是否正常\nsystemctl list-unit-files | grep docker\n如果该命令没有输出任何结果，，可能是因为 Docker 服务单元没有正确安装。\n您可以尝试重新安装 Docker 引擎，并确保在安装过程中没有出现任何错误。\n接下来设置非 root 账户的 docker 许可\n添加 docker 账户组\nsudo groupadd docker\n将当前用户添加到用户组\nsudo usermod -aG docker $USER\n使权限生效\nnewgrp docker\n测试一下\n#查看所有容器 docker ps -a\n更新.bashrc 文件\n编辑～/.bashrc 文件，并在文件末尾增加如下一行，如果不在.bashrc 文件中增加下面这一行命令\n#如果没有此行命令，你会发现，当你每次打开新的终端 #你都必须先执行一次 “newgrp docker” 命令 #否则当前用户还是不可以执行docker命令 groupadd -f docker\n设置局域网访问 在 C:\\Users\\ 你的用户名中打开.wslconfig (没有就新建一个)\n输入以下配置\n[wsl2] networkingMode=mirrored # 镜像网络模式 dnsTunneling=true #与主机共用dns autoProxy=true # 与自动与主机共用代理 [experimental] hostAddressLoopback=true #下面说\n这个 “hostAddressLoopback” 的作用是 (转自知乎 Memorandum)\n默认情况下，loopback 的只有 127.0.0.1 (i.e., localhost)，并且强制 loopback。也就是说，在 wsl2 中开启的网络端口（例如通过 8022 开启 ssh 登录端口），会通过 localhost 映射到 win11 上，可以在 win11 宿主机使用 ssh -p 8022 username@localhost 登录，但是通过 win11 的局域网或公网 IP 是不能登录的。将这个选项设置为 true 之后，就可以在宿主机使用局域网或公网 IP 通过 8022 端口直接进行 wsl2 的 ssh 登录。\n如果你有 docker 服务需要访问的话，在 “/etc/docker/daemon.json” 中添加如下\n{ iptables\": false }\n记得关闭防火墙 windows/wsl 的防火墙\n这样子你就可以用 windows 的局域网 ip / 公网 ip:wls (docker) 的 port 来访问服务了\n如果需要内网穿透也可以直接在 windows 下穿透 127.0.0.1:port\n或者 windows 下 ddns, 然后用 v6 访问\n安装 1panel 官网\n这个就附一条官方给的命令，没啥好说的\ncurl -sSL https://resource.fit2cloud.com/1panel/package/quick_start.sh -o quick_start.sh \u0026\u0026 bash quick_start.sh\n接下来你就可以用\n1pctl\n来查看 1panel 面板指令\n一些 docker 的镜像源 \"https://docker.registry.cyou\", \"https://docker-cf.registry.cyou\", \"https://dockercf.jsdelivr.fyi\", \"https://docker.jsdelivr.fyi\", \"https://dockertest.jsdelivr.fyi\", \"https://mirror.aliyuncs.com\", \"https://dockerproxy.com\", \"https://mirror.baidubce.com\", \"https://docker.m.daocloud.io\", \"https://docker.nju.edu.cn\", \"https://docker.mirrors.sjtug.sjtu.edu.cn\", \"https://docker.mirrors.ustc.edu.cn\", \"https://mirror.iscas.ac.cn\", \"https://docker.rainbond.cc\"\n",
-  "wordCount" : "3487",
+  "articleBody": "win11开启wsl2 参考：https://learn.microsoft.com/zh-cn/windows/wsl/\n参考：https://www.sysgeek.cn/install-wsl-2-windows/\nWSL（windows sub system），是适用于 Linux 的 Windows 子系统，可让开发人员按原样运行 GNU/Linux 环境 - 包括大多数命令行工具、实用工具和应用程序 - 且不会产生传统虚拟机或双启动设置开销。\n首先确保虚拟化选项开启。\n进任务管理器-\u003e性能-\u003ecpu，查看虚拟化是启用状态，这个如果没有开启的话，需要进电脑的BIOS设置里开启。 控制面板-\u003e程序-\u003e启用或关闭 windows 功能，勾选适用于linux的windows子系统、虚拟机平台\n注意：如果没有虚拟机平台，可能显示的是英文：virtual machine platform，两个是一样的。勾选完成后，Windows11 会自己下载些东西，并提示你重启。等电脑彻底重启完以后，进行后续操作。注意：Hyper-V 无需勾选。 升级wsl：wsl --update 命令行安装Ubuntu发行版。\n查看可以安装的版本：wsl --list --online\n安装喜欢的版本（推荐Ubuntu）： wsl --install -d \u003c发行版名称\u003e\n或者直接安装最新的发行版：wsl --install\n或者通过Microsoft Store安装：直接在商店搜索wsl，选择安装即可（推荐Ubuntu）。 安装成功后，按照提示重启电脑（可能不需要重启）。 设置root用户密码 其他配置 默认用户切换为root用户 打开cmd执行：\n1 ubuntu config --default-user root 注意这里的ubuntu应该是你安装的发行版名称，例如我安装的发行版是：Ubuntu-22.04，所以我执行的命令是：\n1 ubuntu2204 config --default-user root 执行完后，就会以root用户登录。\n修改密码 参考：https://learn.microsoft.com/zh-cn/windows/wsl/setup/environment#set-up-your-linux-username-and-password\nhttps://cloud.tencent.com/developer/article/1883289\n打开cmd执行：\n1 2 3 wsl -u root passwd root 连续输入两次密码后就成功了。\n不知道为什么，这里只能修改root用户的密码，修改其他用户的密码会提示：passwd: unknown user wjy。\n所以可以先用root用户登录，然后用root用户修改用户wjy的密码。\n1 passwd wjy 然后再切换回wjy为默认用户：\n1 ubuntu2204 config --default-user wjy WSL2迁移至其他目录 wsl存放的发行版文件系统位于C盘，根据自己的需求，可选择将其跟文件系统迁移至其他目录，例如D盘等。\nWSL 2.3.11 及更高版本：\n列出已安装的发行版：\n1 wsl --list 将特定发行版移动到指定路径：\n1 wsl --manage Ubuntu-22.04 --move d:\\wsl\\ubuntu 低版本：\n停止正在运行的wsl：wsl --shutdown 将需要迁移的Linux，进行导出。先查看所有WSL：wsl -l --all -v，然后导出到D盘：wsl --export 发行版Linux tar包路径。示例：wsl --export Ubuntu-20.04 d:\\ubuntu20.04.tar 导出完成之后，将原有的Linux注销。wsl --unregister 发行版Linux。示例执行：wsl --unregister Ubuntu-20.04 然后将导出的文件放到需要保存的地方，进行导入即可。wsl --import \u003c安装位置\u003e 。示例执行：wsl --import Ubuntu-20.04 d:\\ubuntu d:\\ubuntu20.04.tar --version 2 可以在D盘看到linux系统磁盘文件。至此，完成了在win平台上的WSL中创建linux子系统。 问题：迁移后出现：\n1 2 无法将磁盘“d:\\wsl\\Ubuntu\\ext4.vhdx”附加到 WSL2： 拒绝访问。 错误代码: Wsl/Service/CreateInstance/MountVhd/HCS/E_ACCESSDENIED 看样子是权限问题，找到迁移后的ext4.vhdx，右键属性-\u003e安全-\u003e编辑-\u003e勾选完全控制-\u003e确定。\nwsl2卸载 在程序中卸载wsl和linux发行版（ubuntu等） 控制面板-\u003e程序-\u003e启用过关闭window功能-\u003e取消勾选适用于linux的windows子系统和虚拟机平台 根据提示重启电脑，卸载完成。 wsl2安装mysql 更新：\n1 sudo apt update 安装mysql：\n1 sudo apt install mysql-server 确认安装并获取版本号：\n1 mysql --version 启动 MySQL Server / 检查状态：\n1 systemctl status mysql 登录mysql：\n1 mysql -u root -p root默认没有密码，可以直接登录成功。\n注意：如果不能登录，使用如下命令可以直接进入：\n1 sudo mysql 修改root用户密码\n1 2 3 show databases; use mysql; show tables; 用户信息都在user表中。\n1 2 3 4 5 select user, host, plugin from user; localhost说明只允许本地登录。\nMySQL8.0 中用户默认认证方式为 caching_sha2_password，虽然安全性有保障，但是对于使用本地或者远程连接都造成了一定困扰。因此可以将用户认证方式改为MySQL5.X常用的mysql_native_password方式，只有此种方式才能在MySQL8.0中更改用户密码。\n1 2 # 修改root用户的密码为root，认证方式为mysql_native_password alter user 'root'@'localhost' identified with mysql_native_password by 'root'; 刷新\n1 flush privileges; 现在可以使用dataGrip等数据库链接工具链接这个mysql了。\nurl：jdbc:mysql://localhost:3306\nuser：root\npassword：root\n设置root用户的远程访问 此时root用户的host属性仍然是localhost，也就是只能从本地访问，因此可以将root用户的访问权限由本地改为本地和外部都可以访问，将host的值由localhost改为 %。\n1 2 3 4 update user set user.host='%' where user.user='root'; # 刷新 flush privileges 此时root用户的host访问权限已经改为本地和外部都可以。\n修改MySQL配置文件实现真正的远程访问 此时使用127.0.0.1或者localhost连接都没有问题，但是在外部一旦换成Ubuntu真正的IP地址访问就会报错。\n这时还需要修改MySQL配置文件中的相关配置项\n1 /etc/mysql//mysql.conf.d/mysqld.cnf 修改 bind-address = 0.0.0.0 。\n重启MySQL后，再次通过IP地址远程连接。\nMySQL8.0卸载 1 2 3 4 sudo apt purge mysql-* sudo rm -rf /etc/mysql/ /var/lib/mysql sudo apt autoremove sudo apt autoclean 安装redis 官网：\nhttps://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/install-redis-on-linux/\n1 2 3 4 5 6 7 8 9 sudo apt-get install lsb-release curl gpg curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg sudo chmod 644 /usr/share/keyrings/redis-archive-keyring.gpg echo \"deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main\" | sudo tee /etc/apt/sources.list.d/redis.list sudo apt-get update sudo apt-get install redis sudo systemctl enable redis-server sudo systemctl start redis-server 安装docker https://linux.do/t/topic/207951\n一键安装脚本：\n1 curl -fsSL https://get.docker.com | bash -s docker --mirror AzureChinaCloud 安装 docker 安装必要支持\n1 sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release 添加 gpg key（内容为 ubuntu，如果你是 debian 就自行把链接中的 ubuntu 改成 debian 就行）\n#添加 Docker 官方gpg key （可能国内现在访问会存在问题） curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg # 阿里源（推荐使用阿里的gpg KEY） curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg\n添加源\n#Docker官方源 echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list \u003e /dev/null #阿里apt源 echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list \u003e /dev/null\n更新源\n1 sudo apt update sudo apt-get update 安装docker本体：\n1 sudo apt install docker-ce docker-ce-cli containerd.io #docker-compose sudo apt install docker-compose 安装 Docker 命令补全工具\nsudo apt-get install bash-completion sudo curl -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker -o /etc/bash_completion.d/docker.sh source /etc/bash_completion.d/docker.sh\n配置 wsl/docker 配置 wsl2 启动 docker\n添加文件\nsudo touch /etc/fstab\n更改网络适配器\nsudo update-alternatives --set iptables /usr/sbin/iptables-legacy # for ipv4 sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy # for ipv6\n启用 systemd\n用文本编辑器打开 /etc/wsl.conf（不熟悉 Linux 直接在 windows 下进入后用文本文档打开就行）\n然后添加\n[boot] systemd=true\n然后重启 (powershell)\nwsl --shutdown\n在 Linux 下使用\nsystemctl start docker\n测试是否支持 systemd\n如果是直接看下一步\n如果否接着看\n安装 distrod\ncurl -L -O \"https://raw.githubusercontent.com/nullpo-head/wsl-distrod/main/install.sh\" chmod +x install.sh sudo ./install.sh install\n等待安装完成后设置开机自启\nsudo /opt/distrod/bin/distrod enable --start-on-windows-boot\n重启 wsl2\nwsl --shutdown\n然后测试 systemd 是否正常\nsystemctl list-unit-files | grep docker\n如果该命令没有输出任何结果，，可能是因为 Docker 服务单元没有正确安装。\n您可以尝试重新安装 Docker 引擎，并确保在安装过程中没有出现任何错误。\n接下来设置非 root 账户的 docker 许可\n添加 docker 账户组\nsudo groupadd docker\n将当前用户添加到用户组\nsudo usermod -aG docker $USER\n使权限生效\nnewgrp docker\n测试一下\n#查看所有容器 docker ps -a\n更新.bashrc 文件\n编辑～/.bashrc 文件，并在文件末尾增加如下一行，如果不在.bashrc 文件中增加下面这一行命令\n#如果没有此行命令，你会发现，当你每次打开新的终端 #你都必须先执行一次 “newgrp docker” 命令 #否则当前用户还是不可以执行docker命令 groupadd -f docker\n设置局域网访问 在 C:\\Users\\ 你的用户名中打开.wslconfig (没有就新建一个)\n输入以下配置\n[wsl2] networkingMode=mirrored # 镜像网络模式 dnsTunneling=true #与主机共用dns autoProxy=true # 与自动与主机共用代理 [experimental] hostAddressLoopback=true #下面说\n这个 “hostAddressLoopback” 的作用是 (转自知乎 Memorandum)\n默认情况下，loopback 的只有 127.0.0.1 (i.e., localhost)，并且强制 loopback。也就是说，在 wsl2 中开启的网络端口（例如通过 8022 开启 ssh 登录端口），会通过 localhost 映射到 win11 上，可以在 win11 宿主机使用 ssh -p 8022 username@localhost 登录，但是通过 win11 的局域网或公网 IP 是不能登录的。将这个选项设置为 true 之后，就可以在宿主机使用局域网或公网 IP 通过 8022 端口直接进行 wsl2 的 ssh 登录。\n如果你有 docker 服务需要访问的话，在 “/etc/docker/daemon.json” 中添加如下\n{ iptables\": false }\n记得关闭防火墙 windows/wsl 的防火墙\n这样子你就可以用 windows 的局域网 ip / 公网 ip:wls (docker) 的 port 来访问服务了\n如果需要内网穿透也可以直接在 windows 下穿透 127.0.0.1:port\n或者 windows 下 ddns, 然后用 v6 访问\n安装 1panel 官网\n这个就附一条官方给的命令，没啥好说的\ncurl -sSL https://resource.fit2cloud.com/1panel/package/quick_start.sh -o quick_start.sh \u0026\u0026 bash quick_start.sh\n接下来你就可以用\n1pctl\n来查看 1panel 面板指令\n一些 docker 的镜像源 \"https://docker.registry.cyou\", \"https://docker-cf.registry.cyou\", \"https://dockercf.jsdelivr.fyi\", \"https://docker.jsdelivr.fyi\", \"https://dockertest.jsdelivr.fyi\", \"https://mirror.aliyuncs.com\", \"https://dockerproxy.com\", \"https://mirror.baidubce.com\", \"https://docker.m.daocloud.io\", \"https://docker.nju.edu.cn\", \"https://docker.mirrors.sjtug.sjtu.edu.cn\", \"https://docker.mirrors.ustc.edu.cn\", \"https://mirror.iscas.ac.cn\", \"https://docker.rainbond.cc\"\n安装java 1 sudo apt install openjdk-17-jdk -y 验证安装：\n1 java -version 安装RecketMQ 下载 访问 ​​Apache RocketMQ 官方下载页面​​，找到最新版本的二进制文件（例如 rocketmq-all-5.4.0-bin-release.zip）。右键复制其链接地址。 在 WSL2 终端中，使用 wget下载（请将链接替换为最新的版本）： 1 wget https://archive.apache.org/dist/rocketmq/5.4.0/rocketmq-all-5.4.0-bin-release.zip 安装 unzip并解压文件： 1 sudo apt install unzip -y unzip rocketmq-all-5.4.0-bin-release.zip 为了方便，重命名目录并进入 1 mv rocketmq-all-5.4.0-bin-release rocketmq cd rocketmq 调整 RocketMQ 配置（关键步骤） 由于 WSL2 的虚拟化网络和内存限制，默认配置需要修改才能正常运行。\n​​A. 修改 Broker 配置以识别 WSL2 IP​​\n默认情况下，Broker 会注册内网 IP，导致外部（甚至 WSL2 内部）无法正确连接。我们需要告诉 Broker 使用 localhost。\n编辑 conf/broker.conf文件：\nnano conf/broker.conf\n在文件末尾添加以下配置：\n1 2 brokerIP1 = 127.0.0.1 autoCreateTopicEnable = true brokerIP1 = 127.0.0.1：强制 Broker 使用本地回环地址，这是最重要的一步。\nautoCreateTopicEnable = true：允许自动创建Topic，方便测试。\n按下 Ctrl + X，然后按 Y，再按 Enter保存并退出。\nB. 修改 JVM 内存参数（避免内存不足）​​\nRocketMQ 的 NameServer 和 Broker 启动脚本默认分配的内存较大，可能超过 WSL2 的默认内存限制，导致进程被杀死。\n编辑 bin/runserver.sh(NameServer 脚本)：\n1 nano bin/runserver.sh 找到关于 JAVA_OPT的内存设置部分，通常如下：\n1 JAVA_OPT=\"${JAVA_OPT} -server -Xms4g -Xmx4g -Xmn2g -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m\" 将其修改为较小的值，例如：\n1 JAVA_OPT=\"${JAVA_OPT} -server -Xms256m -Xmx256m -Xmn128m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m\" 保存并退出。\n同样地，编辑 bin/runbroker.sh(Broker 脚本)：\n1 nano bin/runbroker.sh 找到类似的行并修改，例如：\n1 JAVA_OPT=\"${JAVA_OPT} -server -Xms256m -Xmx256m -Xmn128m\" 保存并退出。\n​​提示​​：你也可以通过 Windows 文件资源管理器直接进入 \\\\wsl$\\\\home\\\\rocketmq路径，用 VS Code 或 Notepad++ 等图形化编辑器来修改这些文件，可能更方便。\n启动 重要：你需要打开两个独立的终端窗口​​。\n终端 1 - 启动 NameServer​\n1 2 3 4 5 6 cd ~/rocketmq bin/mqnamesrv 后台启动： nohup sh mqnamesrv \u003e ../namesrv.log \u0026 如果成功，你将看到 The Name Server boot success. serializeType=JSON的提示。\n终端 2 - 启动 Broker​​\n1 2 3 4 5 6 cd ~/rocketmq bin/mqbroker -n localhost:9876 -c conf/broker.conf 后台启动： nohup sh mqbroker -c ../conf/broker.conf \u003e ../broker.log \u0026 -n localhost:9876：指定 NameServer 的地址和端口。 -c conf/broker.conf：指定我们刚刚修改过的配置文件。 如果成功，你将看到 The broker[, 127.0.0.1:10911] boot success. serializeType=JSON的提示。\n测试 RocketMQ 提供了内置的测试工具来验证生产和消费消息。\n打开​​第三个终端窗口​​：\n设置环境变量​​（让工具知道 NameServer 在哪）： 1 export NAMESRV_ADDR=localhost:9876 发送测试消息​​（生产者）： 1 bin/tools.sh org.apache.rocketmq.example.quickstart.Producer 你会看到一堆成功的发送日志。 接收测试消息​​（消费者）： 1 bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer 你会看到消费者接收到刚才生产者发送的所有消息并打印出来。 ",
+  "wordCount" : "4554",
   "inLanguage": "en",
   "datePublished": "2024-12-13T17:37:56Z",
   "dateModified": "2024-12-13T17:37:56Z",
@@ -253,8 +253,23 @@
                 <li>
                     <a href="#httpslinuxdottopic207951p-1831891-h-1panel-7%e5%ae%89%e8%a3%85-1panel" aria-label="安装 1panel">安装 1panel</a></li>
                 <li>
-                    <a href="#httpslinuxdottopic207951p-1831891-docker-8%e4%b8%80%e4%ba%9b-docker-%e7%9a%84%e9%95%9c%e5%83%8f%e6%ba%90" aria-label="一些 docker 的镜像源">一些 docker 的镜像源</a>
+                    <a href="#httpslinuxdottopic207951p-1831891-docker-8%e4%b8%80%e4%ba%9b-docker-%e7%9a%84%e9%95%9c%e5%83%8f%e6%ba%90" aria-label="一些 docker 的镜像源">一些 docker 的镜像源</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85java" aria-label="安装java">安装java</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85recketmq" aria-label="安装RecketMQ">安装RecketMQ</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%8b%e8%bd%bd" aria-label="下载">下载</a></li>
+                <li>
+                    <a href="#%e8%b0%83%e6%95%b4-rocketmq-%e9%85%8d%e7%bd%ae%e5%85%b3%e9%94%ae%e6%ad%a5%e9%aa%a4" aria-label="调整 RocketMQ 配置（关键步骤）">调整 RocketMQ 配置（关键步骤）</a></li>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8" aria-label="启动">启动</a></li>
+                <li>
+                    <a href="#%e6%b5%8b%e8%af%95" aria-label="测试">测试</a>
                 </li>
+            </ul>
+            </li>
             </ul>
         </div>
     </details>
@@ -672,6 +687,210 @@
 <p>来查看 1panel 面板指令</p>
 <h1 id="httpslinuxdottopic207951p-1831891-docker-8一些-docker-的镜像源"><a href="https://linux.do/t/topic/207951#p-1831891-docker-8"></a>一些 docker 的镜像源<a hidden class="anchor" aria-hidden="true" href="#httpslinuxdottopic207951p-1831891-docker-8一些-docker-的镜像源">#</a></h1>
 <p><code>&quot;https://docker.registry.cyou&quot;, &quot;https://docker-cf.registry.cyou&quot;, &quot;https://dockercf.jsdelivr.fyi&quot;, &quot;https://docker.jsdelivr.fyi&quot;, &quot;https://dockertest.jsdelivr.fyi&quot;, &quot;https://mirror.aliyuncs.com&quot;, &quot;https://dockerproxy.com&quot;, &quot;https://mirror.baidubce.com&quot;, &quot;https://docker.m.daocloud.io&quot;, &quot;https://docker.nju.edu.cn&quot;, &quot;https://docker.mirrors.sjtug.sjtu.edu.cn&quot;, &quot;https://docker.mirrors.ustc.edu.cn&quot;, &quot;https://mirror.iscas.ac.cn&quot;, &quot;https://docker.rainbond.cc&quot;</code></p>
+<h1 id="安装java">安装java<a hidden class="anchor" aria-hidden="true" href="#安装java">#</a></h1>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt install openjdk-17-jdk -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>验证安装：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>java -version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="安装recketmq">安装RecketMQ<a hidden class="anchor" aria-hidden="true" href="#安装recketmq">#</a></h1>
+<h2 id="下载">下载<a hidden class="anchor" aria-hidden="true" href="#下载">#</a></h2>
+<ol>
+<li>访问 ​<strong>​Apache RocketMQ 官方下载页面​</strong>​，找到最新版本的二进制文件（例如 <code>rocketmq-all-5.4.0-bin-release.zip</code>）。右键复制其链接地址。</li>
+<li>在 WSL2 终端中，使用 <code>wget</code>下载（请将链接替换为最新的版本）：
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>wget https://archive.apache.org/dist/rocketmq/5.4.0/rocketmq-all-5.4.0-bin-release.zip
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>安装 <code>unzip</code>并解压文件：
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo apt install unzip -y unzip rocketmq-all-5.4.0-bin-release.zip
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>为了方便，重命名目录并进入
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mv rocketmq-all-5.4.0-bin-release rocketmq cd rocketmq
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="调整-rocketmq-配置关键步骤">调整 RocketMQ 配置（关键步骤）<a hidden class="anchor" aria-hidden="true" href="#调整-rocketmq-配置关键步骤">#</a></h2>
+<p>由于 WSL2 的虚拟化网络和内存限制，默认配置需要修改才能正常运行。</p>
+<p>​<strong>​A. 修改 Broker 配置以识别 WSL2 IP​</strong>​</p>
+<p>默认情况下，Broker 会注册内网 IP，导致外部（甚至 WSL2 内部）无法正确连接。我们需要告诉 Broker 使用 <code>localhost</code>。</p>
+<p>编辑 <code>conf/broker.conf</code>文件：</p>
+<p><code>nano conf/broker.conf</code></p>
+<p>在文件末尾添加以下配置：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>brokerIP1 = 127.0.0.1
+</span></span><span style="display:flex;"><span>autoCreateTopicEnable = true
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>brokerIP1 = 127.0.0.1</code>：强制 Broker 使用本地回环地址，这是最重要的一步。<br>
+<code>autoCreateTopicEnable = true</code>：允许自动创建Topic，方便测试。<br>
+按下 <code>Ctrl + X</code>，然后按 <code>Y</code>，再按 <code>Enter</code>保存并退出。</p>
+<p><strong>B. 修改 JVM 内存参数（避免内存不足）​</strong>​</p>
+<p>RocketMQ 的 NameServer 和 Broker 启动脚本默认分配的内存较大，可能超过 WSL2 的默认内存限制，导致进程被杀死。</p>
+<p>编辑 <code>bin/runserver.sh</code>(NameServer 脚本)：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>nano bin/runserver.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>找到关于 <code>JAVA_OPT</code>的内存设置部分，通常如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>JAVA_OPT=&#34;${JAVA_OPT} -server -Xms4g -Xmx4g -Xmn2g -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将其修改为较小的值，例如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>JAVA_OPT=&#34;${JAVA_OPT} -server -Xms256m -Xmx256m -Xmn128m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存并退出。</p>
+<p>同样地，编辑 <code>bin/runbroker.sh</code>(Broker 脚本)：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>nano bin/runbroker.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>找到类似的行并修改，例如：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>JAVA_OPT=&#34;${JAVA_OPT} -server -Xms256m -Xmx256m -Xmn128m&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存并退出。</p>
+<p>​<strong>​提示​</strong>​：你也可以通过 Windows 文件资源管理器直接进入 <code>\\wsl$\&lt;DistroName&gt;\home\&lt;username&gt;\rocketmq</code>路径，用 VS Code 或 Notepad++ 等图形化编辑器来修改这些文件，可能更方便。</p>
+<h2 id="启动">启动<a hidden class="anchor" aria-hidden="true" href="#启动">#</a></h2>
+<p><strong>重要：你需要打开两个独立的终端窗口​</strong>​。</p>
+<p><strong>终端 1 - 启动 NameServer​</strong></p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cd ~/rocketmq
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bin/mqnamesrv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>后台启动：
+</span></span><span style="display:flex;"><span>nohup sh mqnamesrv &gt; ../namesrv.log &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果成功，你将看到 <code>The Name Server boot success. serializeType=JSON</code>的提示。</p>
+<p><strong>终端 2 - 启动 Broker​</strong>​</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cd ~/rocketmq
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bin/mqbroker -n localhost:9876 -c conf/broker.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>后台启动：
+</span></span><span style="display:flex;"><span>nohup sh mqbroker -c ../conf/broker.conf &gt; ../broker.log &amp;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>-n localhost:9876</code>：指定 NameServer 的地址和端口。</li>
+<li><code>-c conf/broker.conf</code>：指定我们刚刚修改过的配置文件。</li>
+</ul>
+<p>如果成功，你将看到 <code>The broker[&lt;broker-name&gt;, 127.0.0.1:10911] boot success. serializeType=JSON</code>的提示。</p>
+<h2 id="测试">测试<a hidden class="anchor" aria-hidden="true" href="#测试">#</a></h2>
+<p>RocketMQ 提供了内置的测试工具来验证生产和消费消息。</p>
+<p>打开​<strong>​第三个终端窗口​</strong>​：</p>
+<ol>
+<li><strong>设置环境变量​</strong>​（让工具知道 NameServer 在哪）：
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">export</span> NAMESRV_ADDR=localhost:<span style="color:#ff0;font-weight:bold">9876</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>发送测试消息​</strong>​（生产者）：
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>bin/tools.sh org.apache.rocketmq.example.quickstart.Producer
+</span></span></code></pre></td></tr></table>
+</div>
+</div>你会看到一堆成功的发送日志。</li>
+<li><strong>接收测试消息​</strong>​（消费者）：
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer
+</span></span></code></pre></td></tr></table>
+</div>
+</div>你会看到消费者接收到刚才生产者发送的所有消息并打印出来。</li>
+</ol>
 
 
   </div>
