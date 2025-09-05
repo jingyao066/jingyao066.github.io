@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 11 Jun 2025 12:30:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Sep 2025 10:57:58 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI-editor</title>
+      <link>https://009965.xyz/posts/ai/ai-editor/</link>
+      <pubDate>Fri, 05 Sep 2025 10:57:58 +0000</pubDate>
+      <guid>https://009965.xyz/posts/ai/ai-editor/</guid>
+      <description>前言 参考： https://linux.do/t/topic/836055 https://rysonai.com/ cursor 独立ide。官网下载安装 https://cursor.com/cn augment 直接在idea中搜索插件安装。 claude code claude出的 cli。 Gemini cli 安装nodejs。 1 brew install node 安装 Gemini CLI</description>
+    </item>
     <item>
       <title>mcp</title>
       <link>https://009965.xyz/posts/ai/mcp/</link>
