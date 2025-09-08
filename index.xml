@@ -6,8 +6,15 @@
     <description>Recent content on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 05 Sep 2025 10:57:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Sep 2025 20:04:00 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MapStruct</title>
+      <link>https://009965.xyz/posts/java/mapstruct/</link>
+      <pubDate>Fri, 05 Sep 2025 20:04:00 +0000</pubDate>
+      <guid>https://009965.xyz/posts/java/mapstruct/</guid>
+      <description>概述 原文： https://www.baeldung-cn.com/mapstruct MapStruct 是一个 Java Bean mapper，用于Java Bean 之间的转换。MapStruct 基于约定优于配置的设计思想，相较于常用的 BeanUtils.copyProperties 它更高效、优雅。</description>
+    </item>
     <item>
       <title>AI-editor</title>
       <link>https://009965.xyz/posts/ai/ai-editor/</link>

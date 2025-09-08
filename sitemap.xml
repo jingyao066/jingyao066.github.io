@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://009965.xyz/tags/java/</loc>
+    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/java/mapstruct/</loc>
+    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/</loc>
+    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/</loc>
+    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/</loc>
+    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
+  </url><url>
     <loc>https://009965.xyz/tags/ai/</loc>
     <lastmod>2025-09-05T10:57:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/ai/ai-editor/</loc>
-    <lastmod>2025-09-05T10:57:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/posts/</loc>
-    <lastmod>2025-09-05T10:57:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/</loc>
-    <lastmod>2025-09-05T10:57:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/</loc>
     <lastmod>2025-09-05T10:57:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/ai/mcp/</loc>
@@ -319,9 +325,6 @@
   </url><url>
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/hugo/</loc>
     <lastmod>2023-02-03T10:14:27+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/java/</loc>
-    <lastmod>2022-09-30T17:54:53+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/java/jsr303/</loc>
     <lastmod>2022-09-30T17:54:53+00:00</lastmod>
