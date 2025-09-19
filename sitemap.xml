@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://009965.xyz/posts/</loc>
+    <lastmod>2025-09-12T09:27:52+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/</loc>
+    <lastmod>2025-09-12T09:27:52+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/win-%E8%BD%AC-mac/</loc>
+    <lastmod>2025-09-12T09:27:52+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/</loc>
+    <lastmod>2025-09-12T09:27:52+00:00</lastmod>
+  </url><url>
+    <loc>https://009965.xyz/tags/%E5%85%B6%E4%BB%96/</loc>
+    <lastmod>2025-09-12T09:27:52+00:00</lastmod>
+  </url><url>
     <loc>https://009965.xyz/tags/java/</loc>
     <lastmod>2025-09-05T20:04:00+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/java/mapstruct/</loc>
-    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/posts/</loc>
-    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/</loc>
-    <lastmod>2025-09-05T20:04:00+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/</loc>
     <lastmod>2025-09-05T20:04:00+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/tags/ai/</loc>
@@ -162,9 +168,6 @@
     <lastmod>2025-01-06T12:05:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/idea-httpclient%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2024-12-30T17:58:58+00:00</lastmod>
-  </url><url>
-    <loc>https://009965.xyz/tags/%E5%85%B6%E4%BB%96/</loc>
     <lastmod>2024-12-30T17:58:58+00:00</lastmod>
   </url><url>
     <loc>https://009965.xyz/posts/%E5%85%B6%E4%BB%96/wsl2/</loc>
