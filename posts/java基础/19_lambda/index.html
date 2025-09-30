@@ -20,16 +20,16 @@ Java不支持单独定义函数，但可以把静态方法视为独立的函数�
 函数式编程最早是数学家阿隆佐·邱奇研究的一套函数变换逻辑，又称Lambda Calculus（λ-Calculus），所以也经常把函数式编程称为Lambda计算。
 Java平台从Java 8开始，支持函数式编程。">
 <meta name="author" content="Wjy">
-<link rel="canonical" href="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/19_lambda/">
+<link rel="canonical" href="https://wjy6.netlify.app/posts/java%E5%9F%BA%E7%A1%80/19_lambda/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://009965.xyz/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
-<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<link rel="icon" href="https://wjy6.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://wjy6.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://wjy6.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://wjy6.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://wjy6.netlify.app/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/19_lambda/">
+<link rel="alternate" hreflang="en" href="https://wjy6.netlify.app/posts/java%E5%9F%BA%E7%A1%80/19_lambda/">
 <noscript>
     <style>
         #theme-toggle,
@@ -69,7 +69,7 @@ Java平台从Java 8开始，支持函数式编程。">
 </noscript>
   
 
-<meta property="og:url" content="https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/19_lambda/">
+<meta property="og:url" content="https://wjy6.netlify.app/posts/java%E5%9F%BA%E7%A1%80/19_lambda/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="19_lambda">
   <meta property="og:description" content="函数式编程 我们先看看什么是函数。函数是一种最基本的任务，一个大型程序就是一个顶层函数调用若干底层函数，这些被调用的函数又可以调用其他函数，即大任务被一层层拆解并执行。所以函数就是面向过程的程序设计的基本单元。
@@ -114,13 +114,13 @@ Java平台从Java 8开始，支持函数式编程。">
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://009965.xyz/posts/"
+      "item": "https://wjy6.netlify.app/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "19_lambda",
-      "item": "https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/19_lambda/"
+      "item": "https://wjy6.netlify.app/posts/java%E5%9F%BA%E7%A1%80/19_lambda/"
     }
   ]
 }
@@ -146,14 +146,14 @@ Java平台从Java 8开始，支持函数式编程。">
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://009965.xyz/posts/java%E5%9F%BA%E7%A1%80/19_lambda/"
+    "@id": "https://wjy6.netlify.app/posts/java%E5%9F%BA%E7%A1%80/19_lambda/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://009965.xyz/favicon.ico"
+      "url": "https://wjy6.netlify.app/favicon.ico"
     }
   }
 }
@@ -175,7 +175,7 @@ Java平台从Java 8开始，支持函数式编程。">
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="https://wjy6.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -201,27 +201,27 @@ Java平台从Java 8开始，支持函数式编程。">
         </div>
         <ul id="menu">
             <li>
-                <a href="https://009965.xyz/" title="🏠主页">
+                <a href="https://wjy6.netlify.app/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/posts" title="📚文章">
+                <a href="https://wjy6.netlify.app/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                <a href="https://wjy6.netlify.app/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/tags" title="🔖标签">
+                <a href="https://wjy6.netlify.app/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://wjy6.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -232,7 +232,7 @@ Java平台从Java 8开始，支持函数式编程。">
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://wjy6.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://wjy6.netlify.app/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       19_lambda
     </h1>
@@ -6087,14 +6087,14 @@ flatMap 的入参接受一个返回对象流的函数。为了处理每个foo中
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://009965.xyz/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a></li>
+      <li><a href="https://wjy6.netlify.app/tags/java%E5%9F%BA%E7%A1%80/">Java基础</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+        <span>&copy; 2025 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
 
     <span>
         Powered by

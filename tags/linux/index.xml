@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Linux on Wjy&#39;s Blog</title>
-    <link>https://009965.xyz/tags/linux/</link>
+    <link>https://wjy6.netlify.app/tags/linux/</link>
     <description>Recent content in Linux on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
     <lastBuildDate>Wed, 17 Apr 2019 11:05:53 +0000</lastBuildDate>
-    <atom:link href="https://009965.xyz/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://wjy6.netlify.app/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>linux服务器加固</title>
-      <link>https://009965.xyz/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</link>
+      <link>https://wjy6.netlify.app/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</link>
       <pubDate>Wed, 17 Apr 2019 11:05:53 +0000</pubDate>
-      <guid>https://009965.xyz/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</guid>
+      <guid>https://wjy6.netlify.app/posts/linux/linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A0%E5%9B%BA/</guid>
       <description>linux加固 参考：一台新到手的VPS服务器必做十二项配置（以Ubuntu为例） - 开发调优 - LINUX DO 【配置优化】我拿到VPS服务器必做的那些事 -</description>
     </item>
     <item>
       <title>linux</title>
-      <link>https://009965.xyz/posts/linux/linux/</link>
+      <link>https://wjy6.netlify.app/posts/linux/linux/</link>
       <pubDate>Sun, 05 Mar 2017 10:49:36 +0000</pubDate>
-      <guid>https://009965.xyz/posts/linux/linux/</guid>
+      <guid>https://wjy6.netlify.app/posts/linux/linux/</guid>
       <description>&lt;h1 id=&#34;文件目录解析&#34;&gt;文件目录解析&lt;/h1&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://009965.xyz/posts/linux/linux/1.png&#34;&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://wjy6.netlify.app/posts/linux/linux/1.png&#34;&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

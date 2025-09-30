@@ -2,61 +2,61 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Spring on Wjy&#39;s Blog</title>
-    <link>https://009965.xyz/tags/spring/</link>
+    <link>https://wjy6.netlify.app/tags/spring/</link>
     <description>Recent content in Spring on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
     <lastBuildDate>Mon, 10 Mar 2025 10:50:58 +0000</lastBuildDate>
-    <atom:link href="https://009965.xyz/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://wjy6.netlify.app/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>spring security</title>
-      <link>https://009965.xyz/posts/spring/spring-security/</link>
+      <link>https://wjy6.netlify.app/posts/spring/spring-security/</link>
       <pubDate>Mon, 10 Mar 2025 10:50:58 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/spring-security/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/spring-security/</guid>
       <description>概述 官网：Spring Security 参考：springsecurity自学笔记 参考：Spring Security 认证流程 - 知乎 Spring Security 是采用 AOP，基于 Servlet 过滤器实现的安全</description>
     </item>
     <item>
       <title>spring6</title>
-      <link>https://009965.xyz/posts/spring/spring6/</link>
+      <link>https://wjy6.netlify.app/posts/spring/spring6/</link>
       <pubDate>Sun, 12 Jan 2025 17:27:28 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/spring6/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/spring6/</guid>
       <description>一、Spring启示录 阅读以下代码： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 public class UserController { private UserService userService = new UserServiceImpl(); public void login(){ String username = &amp;#34;admin&amp;#34;; String password = &amp;#34;123456&amp;#34;; boolean success = userService.login(username, password); if (success) { // 登录成功 } else {</description>
     </item>
     <item>
       <title>手写Spring</title>
-      <link>https://009965.xyz/posts/spring/%E6%89%8B%E5%86%99spring/</link>
+      <link>https://wjy6.netlify.app/posts/spring/%E6%89%8B%E5%86%99spring/</link>
       <pubDate>Thu, 13 Apr 2023 15:50:13 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/%E6%89%8B%E5%86%99spring/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/%E6%89%8B%E5%86%99spring/</guid>
       <description>&lt;h1 id=&#34;实现ioc容器&#34;&gt;实现IOC容器&lt;/h1&gt;
 &lt;p&gt;Spring的核心就是能管理一组Bean，并能自动配置依赖关系的IoC容器。而我们的Summer Framework的核心context模块就是要实现IoC容器。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1539348902182944&#34;&gt;手写Spring - 廖雪峰的官方网站 (liaoxuefeng.com)&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>spring代码示例</title>
-      <link>https://009965.xyz/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
+      <link>https://wjy6.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</link>
       <pubDate>Wed, 15 Jan 2020 14:13:12 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/spring%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B/</guid>
       <description>简单的hello world 创建简单的信息类： 1 2 3 4 5 6 7 8 9 10 11 public class HelloWorld { private String message; public String getMessage() { return message; } public void setMessage(String message) { this.message = message; } } 创建 bean 的配置文件beans.xml</description>
     </item>
     <item>
       <title>6、SpringCloud开发</title>
-      <link>https://009965.xyz/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</link>
+      <link>https://wjy6.netlify.app/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</link>
       <pubDate>Mon, 06 Jan 2020 13:22:38 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/6spring-cloud%E5%BC%80%E5%8F%91/</guid>
       <description>概述 Spring是JavaEE的一个轻量级开发框架，主营IoC和AOP，集成JDBC、ORM、MVC等功能便于开发。 Spring Boot是基于Spri</description>
     </item>
     <item>
       <title>5、SpringBoot开发</title>
-      <link>https://009965.xyz/posts/spring/5springboot%E5%BC%80%E5%8F%91/</link>
+      <link>https://wjy6.netlify.app/posts/spring/5springboot%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 05 Jan 2020 10:15:56 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/5springboot%E5%BC%80%E5%8F%91/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/5springboot%E5%BC%80%E5%8F%91/</guid>
       <description>概述 我们已经在前面详细介绍了Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。 那么，</description>
     </item>
     <item>
       <title>4、Spring开发web应用</title>
-      <link>https://009965.xyz/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</link>
+      <link>https://wjy6.netlify.app/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</link>
       <pubDate>Sat, 04 Jan 2020 18:56:17 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/4spring%E5%BC%80%E5%8F%91web%E5%BA%94%E7%94%A8/</guid>
       <description>&lt;h1 id=&#34;开发web应用&#34;&gt;开发Web应用&lt;/h1&gt;
 &lt;p&gt;在&lt;a href=&#34;https://www.liaoxuefeng.com/wiki/1252599548343744/1255945497738400&#34;&gt;Web开发&lt;/a&gt;一章中，我们已经详细介绍了JavaEE中Web开发的基础：Servlet。具体地说，有以下几点：&lt;/p&gt;
 &lt;ol&gt;
@@ -77,16 +77,16 @@
     </item>
     <item>
       <title>3、访问数据库</title>
-      <link>https://009965.xyz/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <link>https://wjy6.netlify.app/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
       <pubDate>Fri, 03 Jan 2020 09:25:58 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/3%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
       <description>概述 数据库基本上是现代应用程序的标准存储，绝大多数程序都把自己的业务数据存储在关系数据库中，可见，访问数据库几乎是所有应用程序必备能力。 我们</description>
     </item>
     <item>
       <title>2、AOP</title>
-      <link>https://009965.xyz/posts/spring/2aop/</link>
+      <link>https://wjy6.netlify.app/posts/spring/2aop/</link>
       <pubDate>Thu, 02 Jan 2020 16:21:14 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/2aop/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/2aop/</guid>
       <description>&lt;h1 id=&#34;使用aop&#34;&gt;使用AOP&lt;/h1&gt;
 &lt;p&gt;AOP是Aspect Oriented Programming，即面向切面编程。&lt;/p&gt;
 &lt;p&gt;那什么是AOP？&lt;/p&gt;
@@ -94,9 +94,9 @@
     </item>
     <item>
       <title>1、IoC容器</title>
-      <link>https://009965.xyz/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</link>
+      <link>https://wjy6.netlify.app/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</link>
       <pubDate>Wed, 01 Jan 2020 15:32:45 +0000</pubDate>
-      <guid>https://009965.xyz/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</guid>
+      <guid>https://wjy6.netlify.app/posts/spring/1ioc%E5%AE%B9%E5%99%A8/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
 &lt;p&gt;Spring是一个支持快速开发Java EE应用程序的框架。它提供了一系列底层容器和基础设施，并可以和大量常用的开源框架无缝集成，可以说是开发Java EE应用程序的必备。&lt;/p&gt;
 &lt;p&gt;Spring最早是由Rod Johnson这哥们在他的《&lt;a href=&#34;https://book.douban.com/subject/1426848/&#34;&gt;Expert One-on-One J2EE Development without EJB&lt;/a&gt;》一书中提出的用来取代EJB的轻量级框架。随后这哥们又开始专心开发这个基础框架，并起名为Spring Framework。&lt;/p&gt;

@@ -12,16 +12,16 @@ wait(), notify(), notifyAll()等方法介绍
 在Object类中，定义了wait()，notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时wait()也会让当前线程释放它持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程，notify()是唤醒单个线程，notifyAll()是唤醒所有线程。
 wait()，notify()必须和 synchronized 配合使用。">
 <meta name="author" content="Wjy">
-<link rel="canonical" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
+<link rel="canonical" href="https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://009965.xyz/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
-<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<link rel="icon" href="https://wjy6.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://wjy6.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://wjy6.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://wjy6.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://wjy6.netlify.app/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
+<link rel="alternate" hreflang="en" href="https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
 <noscript>
     <style>
         #theme-toggle,
@@ -61,7 +61,7 @@ wait()，notify()必须和 synchronized 配合使用。">
 </noscript>
   
 
-<meta property="og:url" content="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
+<meta property="og:url" content="https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait&#43;notify/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="3_multithreading-wait&#43;notify">
   <meta property="og:description" content="本章对线程的等待/唤醒方法进行介绍。
@@ -90,13 +90,13 @@ wait()，notify()必须和 synchronized 配合使用。">
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://009965.xyz/posts/"
+      "item": "https://wjy6.netlify.app/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "3_multithreading-wait+notify",
-      "item": "https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait+notify/"
+      "item": "https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait+notify/"
     }
   ]
 }
@@ -122,14 +122,14 @@ wait()，notify()必须和 synchronized 配合使用。">
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait+notify/"
+    "@id": "https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/3_multithreading-wait+notify/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://009965.xyz/favicon.ico"
+      "url": "https://wjy6.netlify.app/favicon.ico"
     }
   }
 }
@@ -151,7 +151,7 @@ wait()，notify()必须和 synchronized 配合使用。">
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="https://wjy6.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -177,27 +177,27 @@ wait()，notify()必须和 synchronized 配合使用。">
         </div>
         <ul id="menu">
             <li>
-                <a href="https://009965.xyz/" title="🏠主页">
+                <a href="https://wjy6.netlify.app/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/posts" title="📚文章">
+                <a href="https://wjy6.netlify.app/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                <a href="https://wjy6.netlify.app/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/tags" title="🔖标签">
+                <a href="https://wjy6.netlify.app/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://wjy6.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -208,7 +208,7 @@ wait()，notify()必须和 synchronized 配合使用。">
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://wjy6.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://wjy6.netlify.app/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       3_multithreading-wait&#43;notify
     </h1>
@@ -615,14 +615,14 @@ ok，线程调用wait()之后，会释放它锁持有的<code>同步锁</code>�
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://009965.xyz/tags/multithreading/">Multithreading</a></li>
+      <li><a href="https://wjy6.netlify.app/tags/multithreading/">Multithreading</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+        <span>&copy; 2025 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
 
     <span>
         Powered by

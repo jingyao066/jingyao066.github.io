@@ -12,16 +12,16 @@
 同步锁的原理是，对于每一个对象，有且仅有一个同步锁；不同的线程能共同访问该同步锁。但是，在同一个时间点，该同步锁能且只能被一个线程获取到。这样，获取到同步锁的线程就能进行CPU调度，从而在CPU上执行；而没有获取到同步锁的线程，必须进行等待，直到获取到同步锁之后才能继续运行。这就是多线程通过同步锁进行同步的原理。
 下面主要介绍JUC包中的锁。">
 <meta name="author" content="Wjy">
-<link rel="canonical" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/">
+<link rel="canonical" href="https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://009965.xyz/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://009965.xyz/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://009965.xyz/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://009965.xyz/apple-touch-icon.png">
-<link rel="mask-icon" href="https://009965.xyz/safari-pinned-tab.svg">
+<link rel="icon" href="https://wjy6.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://wjy6.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://wjy6.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://wjy6.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://wjy6.netlify.app/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/">
+<link rel="alternate" hreflang="en" href="https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/">
 <noscript>
     <style>
         #theme-toggle,
@@ -61,7 +61,7 @@
 </noscript>
   
 
-<meta property="og:url" content="https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/">
+<meta property="og:url" content="https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="8_multithreading-JUC锁">
   <meta property="og:description" content="根据锁的添加到Java中的时间，Java中的锁，可以分为&#34;同步锁&#34;和&#34;JUC包中的锁&#34;。
@@ -91,13 +91,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "https://009965.xyz/posts/"
+      "item": "https://wjy6.netlify.app/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "8_multithreading-JUC锁",
-      "item": "https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/"
+      "item": "https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/"
     }
   ]
 }
@@ -123,14 +123,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://009965.xyz/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/"
+    "@id": "https://wjy6.netlify.app/posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B/8_multithreading-juc%E9%94%81/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Wjy's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://009965.xyz/favicon.ico"
+      "url": "https://wjy6.netlify.app/favicon.ico"
     }
   }
 }
@@ -152,7 +152,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://009965.xyz/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <a href="https://wjy6.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -178,27 +178,27 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://009965.xyz/" title="🏠主页">
+                <a href="https://wjy6.netlify.app/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/posts" title="📚文章">
+                <a href="https://wjy6.netlify.app/posts" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/archives/" title="⏱时间轴">
+                <a href="https://wjy6.netlify.app/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/tags" title="🔖标签">
+                <a href="https://wjy6.netlify.app/tags" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://009965.xyz/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                <a href="https://wjy6.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍搜索</span>
                 </a>
             </li>
@@ -209,7 +209,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://009965.xyz/">Home</a>&nbsp;»&nbsp;<a href="https://009965.xyz/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="https://wjy6.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://wjy6.netlify.app/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       8_multithreading-JUC锁
     </h1>
@@ -3098,14 +3098,14 @@ CountDownLatch和CyclicBarrier的区别<br>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://009965.xyz/tags/multithreading/">Multithreading</a></li>
+      <li><a href="https://wjy6.netlify.app/tags/multithreading/">Multithreading</a></li>
     </ul>
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="https://009965.xyz/">Wjy&#39;s Blog</a></span> · 
+        <span>&copy; 2025 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
 
     <span>
         Powered by
