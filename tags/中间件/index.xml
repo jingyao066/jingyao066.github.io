@@ -6,8 +6,29 @@
     <description>Recent content in 中间件 on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 11 Mar 2022 18:16:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Sep 2025 20:08:55 +0000</lastBuildDate>
     <atom:link href="https://009965.xyz/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>postgresql</title>
+      <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/postgresql/</link>
+      <pubDate>Tue, 30 Sep 2025 20:08:55 +0000</pubDate>
+      <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/postgresql/</guid>
+      <description>概述 官网： https://www.postgresql.org/</description>
+    </item>
+    <item>
+      <title>zookeeper</title>
+      <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/zookeeper/</link>
+      <pubDate>Mon, 29 Sep 2025 11:29:55 +0000</pubDate>
+      <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/zookeeper/</guid>
+      <description>概述 官网： https://zookeeper.apache.org/</description>
+    </item>
+    <item>
+      <title>plusar</title>
+      <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/pulsar/</link>
+      <pubDate>Sun, 28 Sep 2025 20:08:55 +0000</pubDate>
+      <guid>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/pulsar/</guid>
+      <description>概述 官网：https://pulsar.apache.org/ GitHub：https://github.com/apache/pulsar</description>
+    </item>
     <item>
       <title>nacos</title>
       <link>https://009965.xyz/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/nacos/</link>
