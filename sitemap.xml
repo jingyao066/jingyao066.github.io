@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/postgresql/</loc>
-    <lastmod>2025-09-30T20:08:55+00:00</lastmod>
+    <loc>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/gradle/</loc>
+    <lastmod>2025-10-15T15:53:55+00:00</lastmod>
   </url><url>
     <loc>https://wjy6.netlify.app/posts/</loc>
-    <lastmod>2025-09-30T20:08:55+00:00</lastmod>
+    <lastmod>2025-10-15T15:53:55+00:00</lastmod>
   </url><url>
     <loc>https://wjy6.netlify.app/tags/</loc>
-    <lastmod>2025-09-30T20:08:55+00:00</lastmod>
+    <lastmod>2025-10-15T15:53:55+00:00</lastmod>
   </url><url>
     <loc>https://wjy6.netlify.app/</loc>
-    <lastmod>2025-09-30T20:08:55+00:00</lastmod>
+    <lastmod>2025-10-15T15:53:55+00:00</lastmod>
   </url><url>
     <loc>https://wjy6.netlify.app/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/</loc>
+    <lastmod>2025-10-15T15:53:55+00:00</lastmod>
+  </url><url>
+    <loc>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/xxl-job/</loc>
+    <lastmod>2025-10-10T20:08:55+00:00</lastmod>
+  </url><url>
+    <loc>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/postgresql/</loc>
     <lastmod>2025-09-30T20:08:55+00:00</lastmod>
   </url><url>
     <loc>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/zookeeper/</loc>
@@ -22,6 +28,9 @@
   </url><url>
     <loc>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/pulsar/</loc>
     <lastmod>2025-09-28T20:08:55+00:00</lastmod>
+  </url><url>
+    <loc>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/spring-devtools%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/</loc>
+    <lastmod>2025-09-12T09:27:52+00:00</lastmod>
   </url><url>
     <loc>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/win-%E8%BD%AC-mac/</loc>
     <lastmod>2025-09-12T09:27:52+00:00</lastmod>
