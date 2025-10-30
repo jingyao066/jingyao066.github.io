@@ -103,8 +103,8 @@
   "keywords": [
     "其他"
   ],
-  "articleBody": "系统设置 鼠标 mac默认鼠标滚轮的逻辑和win是相反的，修改方式：\n设置-\u003e鼠标-\u003e自然滚动-\u003e关闭。\n键盘 mac上都是command键组合，例如：command+c，command+v，是复制黏贴。\n如果外接键盘，win键=command键，因为win在ctrl和alt的中间，这会导致一个问题，win+c或win+v等组合按起来没那么丝滑，可以通过设置键盘映射解决。\n设置-\u003e键盘-\u003e键盘快捷键-\u003e修饰键，然后把ctrl键改为command键，command改为ctrl键，就是把俩个键对调。\nMac启动台图标大小调整 打开终端，执行如下命令：\n1 2 3 4 defaults write com.apple.dock springboard-columns -int 10 defaults write com.apple.dock springboard-rows -int 6 defaults write com.apple.dock ResetLaunchPad -bool TRUE killall Dock 第一行：调整每列显示的图标数量，9表示每列显示9个图标，你可以根据自己的喜好设置其他数字。 第二行：调整行数，这里设置为6，你也可以选择8或其他数字，以达到最佳比例。 第三行：重置Launchpad，使其按照新的设置重新排列图标。 第四行：重启Dock，以便更改生效。 IDEA 选中单词：\nwin：ctrl+w\nmac：alt+上\n左右切换标签页：\nwin：alt+左或右\nmac：command+shift+{}\n删除整行：\nwin：ctrl+y\nmac：command+删除键或command+x（就是剪切，只不过不需要选中）\n行号：\nwin：ctrl+g\nmac: command+L\n安装Homebrew 官网：\nhttps://brew.sh/zh-cn/\n1 /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" 检测是否安装成功：\n1 brew -v 安装docker 1 2 3 4 5 # 安装 Docker Desktop brew install --cask docker # 或者只安装 Docker 引擎（命令行版本） brew install docker 常用命令：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 # 查看 Docker 信息 docker info # 查看镜像列表 docker images # 查看容器列表 docker ps -a # 停止所有容器 docker stop $(docker ps -aq) # 删除所有容器 docker rm $(docker ps -aq) # 清理系统 docker system prune 卸载 Docker\n1 2 3 4 5 6 # 使用官方卸载脚本 sudo /Applications/Docker.app/Contents/MacOS/uninstall # 或者手动删除 sudo rm -rf /Applications/Docker.app sudo rm -rf ~/.docker ",
-  "wordCount" : "763",
+  "articleBody": "系统设置 鼠标 mac默认鼠标滚轮的逻辑和win是相反的，修改方式：\n设置-\u003e鼠标-\u003e自然滚动-\u003e关闭。\n键盘 mac上都是command键组合，例如：command+c，command+v，是复制黏贴。\n如果外接键盘，win键=command键，因为win在ctrl和alt的中间，这会导致一个问题，win+c或win+v等组合按起来没那么丝滑，可以通过设置键盘映射解决。\n设置-\u003e键盘-\u003e键盘快捷键-\u003e修饰键，然后把ctrl键改为command键，command改为ctrl键，就是把俩个键对调。\nMac启动台图标大小调整 打开终端，执行如下命令：\n1 2 3 4 defaults write com.apple.dock springboard-columns -int 10 defaults write com.apple.dock springboard-rows -int 6 defaults write com.apple.dock ResetLaunchPad -bool TRUE killall Dock 第一行：调整每列显示的图标数量，9表示每列显示9个图标，你可以根据自己的喜好设置其他数字。 第二行：调整行数，这里设置为6，你也可以选择8或其他数字，以达到最佳比例。 第三行：重置Launchpad，使其按照新的设置重新排列图标。 第四行：重启Dock，以便更改生效。 IDEA 选中单词：\nwin：ctrl+w\nmac：alt+上\n左右切换标签页：\nwin：alt+左或右\nmac：command+shift+{}\n删除整行：\nwin：ctrl+y\nmac：command+删除键或command+x（就是剪切，只不过不需要选中）\n行号：\nwin：ctrl+g\nmac: command+L\n安装Homebrew 官网：\nhttps://brew.sh/zh-cn/\n1 /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" 检测是否安装成功：\n1 brew -v 安装docker 1 2 3 4 5 # 安装 Docker Desktop brew install --cask docker # 或者只安装 Docker 引擎（命令行版本） brew install docker 常用命令：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 # 查看 Docker 信息 docker info # 查看镜像列表 docker images # 查看容器列表 docker ps -a # 停止所有容器 docker stop $(docker ps -aq) # 删除所有容器 docker rm $(docker ps -aq) # 清理系统 docker system prune 卸载 Docker\n1 2 3 4 5 6 # 使用官方卸载脚本 sudo /Applications/Docker.app/Contents/MacOS/uninstall # 或者手动删除 sudo rm -rf /Applications/Docker.app sudo rm -rf ~/.docker 安装PG数据库 https://postgresapp.com/downloads.html\n安装mysql 使用 Homebrew 安装（推荐）\n安装 Homebrew（如果尚未安装）：\n1 /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\" 安装 MySQL：\n1 brew install mysql 启动 MySQL 服务：\n1 brew services start mysql 运行安全配置向导（设置 root 密码等）：\n1 mysql_secure_installation 验证安装：\n1 mysql -u root -p ",
+  "wordCount" : "864",
   "inLanguage": "en",
   "datePublished": "2025-09-12T09:27:52Z",
   "dateModified": "2025-09-12T09:27:52Z",
@@ -229,7 +229,11 @@
                 <li>
                     <a href="#%e5%ae%89%e8%a3%85homebrew" aria-label="安装Homebrew">安装Homebrew</a></li>
                 <li>
-                    <a href="#%e5%ae%89%e8%a3%85docker" aria-label="安装docker">安装docker</a>
+                    <a href="#%e5%ae%89%e8%a3%85docker" aria-label="安装docker">安装docker</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85pg%e6%95%b0%e6%8d%ae%e5%ba%93" aria-label="安装PG数据库">安装PG数据库</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85mysql" aria-label="安装mysql">安装mysql</a>
                 </li>
             </ul>
         </div>
@@ -374,6 +378,55 @@ mac: <code>command+L</code></p>
 </span></span><span style="display:flex;"><span># 或者手动删除
 </span></span><span style="display:flex;"><span>sudo rm -rf /Applications/Docker.app
 </span></span><span style="display:flex;"><span>sudo rm -rf ~/.docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="安装pg数据库">安装PG数据库<a hidden class="anchor" aria-hidden="true" href="#安装pg数据库">#</a></h1>
+<p><a href="https://postgresapp.com/downloads.html">https://postgresapp.com/downloads.html</a></p>
+<h1 id="安装mysql">安装mysql<a hidden class="anchor" aria-hidden="true" href="#安装mysql">#</a></h1>
+<p>使用 Homebrew 安装（推荐）</p>
+<p><strong>安装 Homebrew</strong>（如果尚未安装）：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>/bin/bash -c &#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>安装 MySQL</strong>：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>brew install mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>启动 MySQL 服务</strong>：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>brew services start mysql
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>运行安全配置向导</strong>（设置 root 密码等）：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysql_secure_installation
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>验证安装</strong>：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>mysql -u root -p
 </span></span></code></pre></td></tr></table>
 </div>
 </div>

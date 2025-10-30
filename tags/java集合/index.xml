@@ -60,7 +60,8 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <pubDate>Sat, 10 Dec 2016 21:59:33 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/java%E9%9B%86%E5%90%88/5_queue/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Queue&lt;/code&gt;实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和&lt;code&gt;List&lt;/code&gt;的区别在于，&lt;code&gt;List&lt;/code&gt;可以在任意位置添加和删除元素，而&lt;code&gt;Queue&lt;/code&gt;只有两个操作：&lt;/p&gt;
+&lt;p&gt;原文：https://liaoxuefeng.com/books/java/collection/queue/index.html&lt;/p&gt;
+&lt;p&gt;队列（&lt;code&gt;Queue&lt;/code&gt;）是一种经常使用的集合。&lt;code&gt;Queue&lt;/code&gt;实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和&lt;code&gt;List&lt;/code&gt;的区别在于，&lt;code&gt;List&lt;/code&gt;可以在任意位置添加和删除元素，而&lt;code&gt;Queue&lt;/code&gt;只有两个操作：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;把元素添加到队列末尾；&lt;/li&gt;
 &lt;li&gt;从队列头部取出元素。&lt;/li&gt;

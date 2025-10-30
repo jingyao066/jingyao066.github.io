@@ -20,7 +20,7 @@
       <link>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/xxl-job/</link>
       <pubDate>Fri, 10 Oct 2025 20:08:55 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/xxl-job/</guid>
-      <description>概述 官网：https://pulsar.apache.org/ GitHub：https://github.com/apache/pulsar</description>
+      <description>概述 官网： https://www.xuxueli.com/xxl-job/ 准备工作 环境准备： Maven3+ Jdk17+ (说明：版本3.x开始要求Jdk17；版本2.x及以下支持Jdk1.8。如对Jdk版本有诉求，可选择接入不</description>
     </item>
     <item>
       <title>postgresql</title>
@@ -1844,7 +1844,8 @@ Sharding-Sphere是一套开源的分布式数据库中间件解决方案组成�
       <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/git/</link>
       <pubDate>Mon, 25 Nov 2019 10:14:46 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/git/</guid>
-      <description>&lt;h1 id=&#34;常用命令&#34;&gt;常用命令&lt;/h1&gt;
+      <description>&lt;p&gt;1&lt;/p&gt;
+&lt;h1 id=&#34;常用命令&#34;&gt;常用命令&lt;/h1&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/git/git%E5%91%BD%E4%BB%A4.jpg&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://git-scm.com/book/zh/v2&#34;&gt;git官方文档&lt;/a&gt;&lt;/p&gt;</description>
     </item>
@@ -3082,7 +3083,8 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <pubDate>Sat, 10 Dec 2016 21:59:33 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/java%E9%9B%86%E5%90%88/5_queue/</guid>
       <description>&lt;h1 id=&#34;概述&#34;&gt;概述&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Queue&lt;/code&gt;实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和&lt;code&gt;List&lt;/code&gt;的区别在于，&lt;code&gt;List&lt;/code&gt;可以在任意位置添加和删除元素，而&lt;code&gt;Queue&lt;/code&gt;只有两个操作：&lt;/p&gt;
+&lt;p&gt;原文：https://liaoxuefeng.com/books/java/collection/queue/index.html&lt;/p&gt;
+&lt;p&gt;队列（&lt;code&gt;Queue&lt;/code&gt;）是一种经常使用的集合。&lt;code&gt;Queue&lt;/code&gt;实际上是实现了一个先进先出（FIFO：First In First Out）的有序表。它和&lt;code&gt;List&lt;/code&gt;的区别在于，&lt;code&gt;List&lt;/code&gt;可以在任意位置添加和删除元素，而&lt;code&gt;Queue&lt;/code&gt;只有两个操作：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;把元素添加到队列末尾；&lt;/li&gt;
 &lt;li&gt;从队列头部取出元素。&lt;/li&gt;
@@ -3284,6 +3286,13 @@ ArrayList 支持对元素的快速随机访问，但是插入与删除时速度�
       <guid>https://wjy6.netlify.app/posts/%E7%94%9F%E6%B4%BB/%E8%AF%97/</guid>
       <description>&lt;h1 id=&#34;整首诗词&#34;&gt;整首诗词&lt;/h1&gt;
 &lt;h2 id=&#34;岳阳楼记&#34;&gt;岳阳楼记&lt;/h2&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>https://wjy6.netlify.app/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://wjy6.netlify.app/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/</guid>
+      <description></description>
     </item>
     <item>
       <title></title>
