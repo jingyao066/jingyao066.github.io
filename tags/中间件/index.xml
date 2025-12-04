@@ -6,8 +6,15 @@
     <description>Recent content in 中间件 on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Oct 2025 15:53:55 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 11:09:58 +0000</lastBuildDate>
     <atom:link href="https://wjy6.netlify.app/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>kafka</title>
+      <link>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/</link>
+      <pubDate>Mon, 01 Dec 2025 11:09:58 +0000</pubDate>
+      <guid>https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/</guid>
+      <description>概述 官网： https://kafka.apache.org/ mac 安装kafka 参考官网： https://kafka.apache.org/quickstart jdk必须17及以上。 第一步：下载kafka 使用终端下载并解压： 1 2 3 4 5 cd ~/Downloads wget https://archive.apache.org/dist/kafka/4.1.1/kafka_2.13-4.1.1.tgz tar -xzf kafka_2.13-4.1.1.tgz mv kafka_2.13-4.1.1 ~/kafka cd ~/kafka 第</description>
+    </item>
     <item>
       <title>Gradle</title>
       <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/gradle/</link>

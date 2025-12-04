@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>kafka | Wjy&#39;s Blog</title>
+<meta name="keywords" content="中间件">
+<meta name="description" content="概述 官网： https://kafka.apache.org/ mac 安装kafka 参考官网： https://kafka.apache.org/quickstart jdk必须17及以上。 第一步：下载kafka 使用终端下载并解压： 1 2 3 4 5 cd ~/Downloads wget https://archive.apache.org/dist/kafka/4.1.1/kafka_2.13-4.1.1.tgz tar -xzf kafka_2.13-4.1.1.tgz mv kafka_2.13-4.1.1 ~/kafka cd ~/kafka 第">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://wjy6.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://wjy6.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://wjy6.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://wjy6.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://wjy6.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="kafka">
+  <meta property="og:description" content="概述 官网： https://kafka.apache.org/ mac 安装kafka 参考官网： https://kafka.apache.org/quickstart jdk必须17及以上。 第一步：下载kafka 使用终端下载并解压： 1 2 3 4 5 cd ~/Downloads wget https://archive.apache.org/dist/kafka/4.1.1/kafka_2.13-4.1.1.tgz tar -xzf kafka_2.13-4.1.1.tgz mv kafka_2.13-4.1.1 ~/kafka cd ~/kafka 第">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-01T11:09:58+00:00">
+    <meta property="article:modified_time" content="2025-12-01T11:09:58+00:00">
+    <meta property="article:tag" content="中间件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kafka">
+<meta name="twitter:description" content="概述 官网： https://kafka.apache.org/ mac 安装kafka 参考官网： https://kafka.apache.org/quickstart jdk必须17及以上。 第一步：下载kafka 使用终端下载并解压： 1 2 3 4 5 cd ~/Downloads wget https://archive.apache.org/dist/kafka/4.1.1/kafka_2.13-4.1.1.tgz tar -xzf kafka_2.13-4.1.1.tgz mv kafka_2.13-4.1.1 ~/kafka cd ~/kafka 第">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://wjy6.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "kafka",
+      "item": "https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "kafka",
+  "name": "kafka",
+  "description": "概述 官网： https://kafka.apache.org/ mac 安装kafka 参考官网： https://kafka.apache.org/quickstart jdk必须17及以上。 第一步：下载kafka 使用终端下载并解压： 1 2 3 4 5 cd ~/Downloads wget https://archive.apache.org/dist/kafka/4.1.1/kafka_2.13-4.1.1.tgz tar -xzf kafka_2.13-4.1.1.tgz mv kafka_2.13-4.1.1 ~/kafka cd ~/kafka 第",
+  "keywords": [
+    "中间件"
+  ],
+  "articleBody": "概述 官网：\nhttps://kafka.apache.org/\nmac 安装kafka 参考官网：\nhttps://kafka.apache.org/quickstart\njdk必须17及以上。\n第一步：下载kafka 使用终端下载并解压：\n1 2 3 4 5 cd ~/Downloads wget https://archive.apache.org/dist/kafka/4.1.1/kafka_2.13-4.1.1.tgz tar -xzf kafka_2.13-4.1.1.tgz mv kafka_2.13-4.1.1 ~/kafka cd ~/kafka 第二步：启动kafka环境 生成一个集群 UUID\n1 KAFKA_CLUSTER_ID=\"$(bin/kafka-storage.sh random-uuid)\" 格式日志目录\n1 bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties 启动kafka服务器：\n1 bin/kafka-server-start.sh config/server.properties 第三步：创建TOPIC 打开另一个终端会话并运行：\n1 bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092 主题类似于文件系统中的一个文件夹，事件就是该文件夹里的文件。\n第四步：在主题中写入事件（生产者） Run the console producer client to write a few events into your topic. By default, each line you enter will result in a separate event being written to the topic.\n1 2 3 bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092 \u003eThis is my first event \u003eThis is my second event You can stop the producer client with Ctrl-C at any time.\n第五步：阅读事件（消费者） Open another terminal session and run the console consumer client to read the events you just created:\n1 bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092 你会看到刚才生产者发出的消息：\n1 2 This is my first event This is my second event 现在可以切换到生产者终端，继续生产信息，你发的消息回立刻出现在消费者终端窗口中。\n由于事件在卡夫卡中被永久存储，你可以被无限次、被任意多的消费者阅读。你可以通过打开另一个终端会话并重新运行之前的命令来轻松验证这一点。\nspring boot 集成kafka 在Spring Boot中使用Kafka，首先要引入依赖：\n1 2 3 4 org.springframework.kafka spring-kafka 注意这个依赖是spring-kafka项目提供的。\n然后，在application.yml中添加Kafka配置：\n1 2 3 4 5 6 7 8 9 spring: kafka: bootstrap-servers: localhost:9092 consumer: group-id: my-group auto-offset-reset: earliest producer: key-serializer: org.apache.kafka.common.serialization.StringSerializer value-serializer: org.apache.kafka.common.serialization.StringSerializer 除了bootstrap-servers必须指定外，consumer相关的配置项均为调优选项。例如，max-poll-records表示一次最多抓取100条消息。配置名称去哪里看？IDE里定义一个KafkaProperties.Consumer的变量：\n1 KafkaProperties.Consumer c = null; 然后按住Ctrl查看源码即可。\n新建存储topic名字常量类 1 2 3 public class TopicConstant { public static final String QUICKSTART_EVENTS = \"quickstart-events\"; } 编写 Kafka 生产者（Producer） 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 import org.springframework.kafka.core.KafkaTemplate; import org.springframework.stereotype.Service; @Service public class KafkaProducer { private final KafkaTemplate kafkaTemplate; public KafkaProducer(KafkaTemplate kafkaTemplate) { this.kafkaTemplate = kafkaTemplate; } public void sendMessage(String topic, String message) { kafkaTemplate.send(topic, message); System.out.println(\"Sent message: \" + message); } } 编写 Kafka 消费者（Consumer） 1 2 3 4 5 6 7 8 9 @Service public class KafkaConsumer { @KafkaListener(topics = TopicConstant.QUICKSTART_EVENTS, groupId = \"my-group\") public void listen(ConsumerRecord record) { System.out.printf(\"Received message: topic - %s, partition - %d, offset - %d, key - %s, value - %s%n\", record.topic(), record.partition(), record.offset(), record.key(), record.value()); } } 添加 REST 接口用于测试发送消息 1 2 3 4 5 6 7 8 9 10 11 12 13 @RestController @RequestMapping(\"/kafka\") public class KafkaController { @Autowired private KafkaProducer kafkaProducer; @GetMapping(\"/send\") public String sendMessage(@RequestParam String msg) { kafkaProducer.sendMessage(TopicConstant.QUICKSTART_EVENTS, msg); return \"Message sent: \" + msg; } } 启动kafka环境 前边已经启动了kafka环境，并且创建了一个名为quickstart-events的topic，这里我们直接使用。\n测试 直接在浏览器访问链接，调用接口：\n1 http://localhost:8080/kafka/send?msg=HelloKafka idea控制台会输出：\n1 Received message: topic - test-topic, partition - 0, offset - 5, key - null, value - HelloKafka 这样一个基本的kafka使用示例就完成了。\n",
+  "wordCount" : "1052",
+  "inLanguage": "en",
+  "datePublished": "2025-12-01T11:09:58Z",
+  "dateModified": "2025-12-01T11:09:58Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://wjy6.netlify.app/posts/%E4%B8%AD%E9%97%B4%E4%BB%B6/kafka/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wjy6.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://wjy6.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://wjy6.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://wjy6.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://wjy6.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      kafka
+    </h1>
+    <div class="post-meta"><span title='2025-12-01 11:09:58 +0000 UTC'>2025-12-01</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%a6%82%e8%bf%b0" aria-label="概述">概述</a></li>
+                <li>
+                    <a href="#mac-%e5%ae%89%e8%a3%85kafka" aria-label="mac 安装kafka">mac 安装kafka</a><ul>
+                        
+                <li>
+                    <a href="#%e7%ac%ac%e4%b8%80%e6%ad%a5%e4%b8%8b%e8%bd%bdkafka" aria-label="第一步：下载kafka">第一步：下载kafka</a></li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%ba%8c%e6%ad%a5%e5%90%af%e5%8a%a8kafka%e7%8e%af%e5%a2%83" aria-label="第二步：启动kafka环境">第二步：启动kafka环境</a></li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%b8%89%e6%ad%a5%e5%88%9b%e5%bb%batopic" aria-label="第三步：创建TOPIC">第三步：创建TOPIC</a></li>
+                <li>
+                    <a href="#%e7%ac%ac%e5%9b%9b%e6%ad%a5%e5%9c%a8%e4%b8%bb%e9%a2%98%e4%b8%ad%e5%86%99%e5%85%a5%e4%ba%8b%e4%bb%b6%e7%94%9f%e4%ba%a7%e8%80%85" aria-label="第四步：在主题中写入事件（生产者）">第四步：在主题中写入事件（生产者）</a></li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%ba%94%e6%ad%a5%e9%98%85%e8%af%bb%e4%ba%8b%e4%bb%b6%e6%b6%88%e8%b4%b9%e8%80%85" aria-label="第五步：阅读事件（消费者）">第五步：阅读事件（消费者）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#spring-boot-%e9%9b%86%e6%88%90kafka" aria-label="spring boot 集成kafka">spring boot 集成kafka</a><ul>
+                        
+                <li>
+                    <a href="#%e6%96%b0%e5%bb%ba%e5%ad%98%e5%82%a8topic%e5%90%8d%e5%ad%97%e5%b8%b8%e9%87%8f%e7%b1%bb" aria-label="新建存储topic名字常量类">新建存储topic名字常量类</a></li>
+                <li>
+                    <a href="#%e7%bc%96%e5%86%99-kafka-%e7%94%9f%e4%ba%a7%e8%80%85producer" aria-label="编写 Kafka 生产者（Producer）">编写 Kafka 生产者（Producer）</a></li>
+                <li>
+                    <a href="#%e7%bc%96%e5%86%99-kafka-%e6%b6%88%e8%b4%b9%e8%80%85consumer" aria-label="编写 Kafka 消费者（Consumer）">编写 Kafka 消费者（Consumer）</a></li>
+                <li>
+                    <a href="#%e6%b7%bb%e5%8a%a0-rest-%e6%8e%a5%e5%8f%a3%e7%94%a8%e4%ba%8e%e6%b5%8b%e8%af%95%e5%8f%91%e9%80%81%e6%b6%88%e6%81%af" aria-label="添加 REST 接口用于测试发送消息">添加 REST 接口用于测试发送消息</a></li>
+                <li>
+                    <a href="#%e5%90%af%e5%8a%a8kafka%e7%8e%af%e5%a2%83" aria-label="启动kafka环境">启动kafka环境</a></li>
+                <li>
+                    <a href="#%e6%b5%8b%e8%af%95" aria-label="测试">测试</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h1>
+<p>官网：<br>
+<a href="https://kafka.apache.org/">https://kafka.apache.org/</a></p>
+<h1 id="mac-安装kafka">mac 安装kafka<a hidden class="anchor" aria-hidden="true" href="#mac-安装kafka">#</a></h1>
+<p>参考官网：<br>
+<a href="https://kafka.apache.org/quickstart">https://kafka.apache.org/quickstart</a></p>
+<p>jdk必须17及以上。</p>
+<h2 id="第一步下载kafka">第一步：下载kafka<a hidden class="anchor" aria-hidden="true" href="#第一步下载kafka">#</a></h2>
+<p>使用终端下载并解压：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>cd ~/Downloads
+</span></span><span style="display:flex;"><span>wget https://archive.apache.org/dist/kafka/<span style="color:#ff0;font-weight:bold">4.1</span>.<span style="color:#ff0;font-weight:bold">1</span>/kafka_2.<span style="color:#ff0;font-weight:bold">13</span>-<span style="color:#ff0;font-weight:bold">4.1</span>.<span style="color:#ff0;font-weight:bold">1.</span>tgz
+</span></span><span style="display:flex;"><span>tar -xzf kafka_2.<span style="color:#ff0;font-weight:bold">13</span>-<span style="color:#ff0;font-weight:bold">4.1</span>.<span style="color:#ff0;font-weight:bold">1.</span>tgz
+</span></span><span style="display:flex;"><span>mv kafka_2.<span style="color:#ff0;font-weight:bold">13</span>-<span style="color:#ff0;font-weight:bold">4.1</span>.<span style="color:#ff0;font-weight:bold">1</span> ~/kafka
+</span></span><span style="display:flex;"><span>cd ~/kafka
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="第二步启动kafka环境">第二步：启动kafka环境<a hidden class="anchor" aria-hidden="true" href="#第二步启动kafka环境">#</a></h2>
+<p>生成一个集群 UUID</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>KAFKA_CLUSTER_ID=<span style="color:#0ff;font-weight:bold">&#34;</span><span style="color:#fff;font-weight:bold">$(</span>bin/kafka-storage.sh random-uuid<span style="color:#fff;font-weight:bold">)</span><span style="color:#0ff;font-weight:bold">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>格式日志目录</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/kafka-storage.sh format --standalone -t $KAFKA_CLUSTER_ID -c config/server.properties
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>启动kafka服务器：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/kafka-server-start.sh config/server.properties
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="第三步创建topic">第三步：创建TOPIC<a hidden class="anchor" aria-hidden="true" href="#第三步创建topic">#</a></h2>
+<p>打开另一个终端会话并运行：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>主题类似于文件系统中的一个文件夹，事件就是该文件夹里的文件。</p>
+<h2 id="第四步在主题中写入事件生产者">第四步：在主题中写入事件（生产者）<a hidden class="anchor" aria-hidden="true" href="#第四步在主题中写入事件生产者">#</a></h2>
+<p>Run the console producer client to write a few events into your topic. By default, each line you enter will result in a separate event being written to the topic.</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+</span></span><span style="display:flex;"><span>&gt;This is my first event
+</span></span><span style="display:flex;"><span>&gt;This is my second event
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>You can stop the producer client with <code>Ctrl-C</code> at any time.</p>
+<h2 id="第五步阅读事件消费者">第五步：阅读事件（消费者）<a hidden class="anchor" aria-hidden="true" href="#第五步阅读事件消费者">#</a></h2>
+<p>Open another terminal session and run the console consumer client to read the events you just created:</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你会看到刚才生产者发出的消息：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>This is my first event
+</span></span><span style="display:flex;"><span>This is my second event
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在可以切换到生产者终端，继续生产信息，你发的消息回立刻出现在消费者终端窗口中。</p>
+<p>由于事件在卡夫卡中被永久存储，你可以被无限次、被任意多的消费者阅读。你可以通过打开另一个终端会话并重新运行之前的命令来轻松验证这一点。</p>
+<h1 id="spring-boot-集成kafka">spring boot 集成kafka<a hidden class="anchor" aria-hidden="true" href="#spring-boot-集成kafka">#</a></h1>
+<p>在Spring Boot中使用Kafka，首先要引入依赖：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="font-weight:bold">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;groupId&gt;</span>org.springframework.kafka<span style="font-weight:bold">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">&lt;artifactId&gt;</span>spring-kafka<span style="font-weight:bold">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意这个依赖是<code>spring-kafka</code>项目提供的。</p>
+<p>然后，在<code>application.yml</code>中添加Kafka配置：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="font-weight:bold">spring</span>:
+</span></span><span style="display:flex;"><span>  <span style="font-weight:bold">kafka</span>:
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">bootstrap-servers</span>: localhost:9092
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">consumer</span>:
+</span></span><span style="display:flex;"><span>      <span style="font-weight:bold">group-id</span>: my-group
+</span></span><span style="display:flex;"><span>      <span style="font-weight:bold">auto-offset-reset</span>: earliest
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold">producer</span>:
+</span></span><span style="display:flex;"><span>      <span style="font-weight:bold">key-serializer</span>: org.apache.kafka.common.serialization.StringSerializer
+</span></span><span style="display:flex;"><span>      <span style="font-weight:bold">value-serializer</span>: org.apache.kafka.common.serialization.StringSerializer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>除了<code>bootstrap-servers</code>必须指定外，<code>consumer</code>相关的配置项均为调优选项。例如，<code>max-poll-records</code>表示一次最多抓取100条消息。配置名称去哪里看？IDE里定义一个<code>KafkaProperties.Consumer</code>的变量：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>KafkaProperties.Consumer c = null;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后按住Ctrl查看源码即可。</p>
+<h2 id="新建存储topic名字常量类">新建存储topic名字常量类<a hidden class="anchor" aria-hidden="true" href="#新建存储topic名字常量类">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> TopicConstant { 
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">static</span> <span style="color:#fff;font-weight:bold">final</span> String QUICKSTART_EVENTS = <span style="color:#0ff;font-weight:bold">&#34;quickstart-events&#34;</span>;  
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="编写-kafka-生产者producer">编写 Kafka 生产者（Producer）<a hidden class="anchor" aria-hidden="true" href="#编写-kafka-生产者producer">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.kafka.core.KafkaTemplate;
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">import</span> org.springframework.stereotype.Service;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@Service
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> KafkaProducer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> <span style="color:#fff;font-weight:bold">final</span> KafkaTemplate&lt;String, String&gt; kafkaTemplate;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> KafkaProducer(KafkaTemplate&lt;String, String&gt; kafkaTemplate) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">this</span>.<span style="color:#007f7f">kafkaTemplate</span> = kafkaTemplate;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> sendMessage(String topic, String message) {
+</span></span><span style="display:flex;"><span>        kafkaTemplate.<span style="color:#007f7f">send</span>(topic, message);
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">println</span>(<span style="color:#0ff;font-weight:bold">&#34;Sent message: &#34;</span> + message);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="编写-kafka-消费者consumer">编写 Kafka 消费者（Consumer）<a hidden class="anchor" aria-hidden="true" href="#编写-kafka-消费者consumer">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Service
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> KafkaConsumer {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @KafkaListener(topics = TopicConstant.<span style="color:#007f7f">QUICKSTART_EVENTS</span>, groupId = <span style="color:#0ff;font-weight:bold">&#34;my-group&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">void</span> listen(ConsumerRecord&lt;String, String&gt; record) {
+</span></span><span style="display:flex;"><span>        System.<span style="color:#007f7f">out</span>.<span style="color:#007f7f">printf</span>(<span style="color:#0ff;font-weight:bold">&#34;Received message: topic - %s, partition - %d, offset - %d, key - %s, value - %s%n&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#fff;font-weight:bold">record</span><span style="color:#f00">.</span>topic(), record.<span style="color:#007f7f">partition</span>(), record.<span style="color:#007f7f">offset</span>(), record.<span style="color:#007f7f">key</span>(), record.<span style="color:#007f7f">value</span>());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="添加-rest-接口用于测试发送消息">添加 REST 接口用于测试发送消息<a hidden class="anchor" aria-hidden="true" href="#添加-rest-接口用于测试发送消息">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@RestController
+</span></span><span style="display:flex;"><span>@RequestMapping(<span style="color:#0ff;font-weight:bold">&#34;/kafka&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#fff;font-weight:bold">public</span> <span style="color:#fff;font-weight:bold">class</span> KafkaController {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Autowired
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">private</span> KafkaProducer kafkaProducer;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @GetMapping(<span style="color:#0ff;font-weight:bold">&#34;/send&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fff;font-weight:bold">public</span> String sendMessage(@RequestParam String msg) {
+</span></span><span style="display:flex;"><span>        kafkaProducer.<span style="color:#007f7f">sendMessage</span>(TopicConstant.<span style="color:#007f7f">QUICKSTART_EVENTS</span>, msg);
+</span></span><span style="display:flex;"><span>        <span style="color:#fff;font-weight:bold">return</span> <span style="color:#0ff;font-weight:bold">&#34;Message sent: &#34;</span> + msg;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="启动kafka环境">启动kafka环境<a hidden class="anchor" aria-hidden="true" href="#启动kafka环境">#</a></h2>
+<p>前边已经启动了kafka环境，并且创建了一个名为<code>quickstart-events</code>的topic，这里我们直接使用。</p>
+<h2 id="测试">测试<a hidden class="anchor" aria-hidden="true" href="#测试">#</a></h2>
+<p>直接在浏览器访问链接，调用接口：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>http://localhost:8080/kafka/send?msg=HelloKafka
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>idea控制台会输出：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Received message: topic - test-topic, partition - 0, offset - 5, key - null, value - HelloKafka
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样一个基本的kafka使用示例就完成了。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://wjy6.netlify.app/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
