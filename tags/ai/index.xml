@@ -6,14 +6,21 @@
     <description>Recent content in AI on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 05 Sep 2025 10:57:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 26 May 2026 15:21:18 +0000</lastBuildDate>
     <atom:link href="https://wjy6.netlify.app/tags/ai/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AI-editor</title>
-      <link>https://wjy6.netlify.app/posts/ai/ai-editor/</link>
+      <title>AI能代替程序员么</title>
+      <link>https://wjy6.netlify.app/posts/ai/ai%E8%83%BD%E4%BB%A3%E6%9B%BF%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B9%88/</link>
+      <pubDate>Tue, 26 May 2026 15:21:18 +0000</pubDate>
+      <guid>https://wjy6.netlify.app/posts/ai/ai%E8%83%BD%E4%BB%A3%E6%9B%BF%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B9%88/</guid>
+      <description>先总结 程序员在AI时代的五大优势： 精准定义问题 构建高质量上下文 验证业务语义 做出技术决策 控制Token成本 关键转变在于——不是&amp;quot;AI</description>
+    </item>
+    <item>
+      <title>AI编辑器</title>
+      <link>https://wjy6.netlify.app/posts/ai/ai%E7%BC%96%E8%BE%91%E5%99%A8/</link>
       <pubDate>Fri, 05 Sep 2025 10:57:58 +0000</pubDate>
-      <guid>https://wjy6.netlify.app/posts/ai/ai-editor/</guid>
-      <description>前言 参考： https://linux.do/t/topic/836055 https://rysonai.com/ cursor 独立ide。官网下载安装 https://cursor.com/cn augment 直接在idea中搜索插件安装。 claude code claude出的 cli。 Gemini cli 安装nodejs。 1 brew install node 安装 Gemini CLI</description>
+      <guid>https://wjy6.netlify.app/posts/ai/ai%E7%BC%96%E8%BE%91%E5%99%A8/</guid>
+      <description>前言 参考： https://linux.do/t/topic/836055 https://rysonai.com/ cursor 独立ide。官网下载安装 https://cursor.com/cn augment 直接在idea中搜索插件安装。 claude code claude出的 cli。 参考官网安装： https://code.claude.com/docs/en/overview Gemini cli 安装nodejs。</description>
     </item>
     <item>
       <title>mcp</title>

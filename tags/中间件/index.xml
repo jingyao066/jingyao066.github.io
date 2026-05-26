@@ -20,7 +20,7 @@
       <link>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/gradle/</link>
       <pubDate>Wed, 15 Oct 2025 15:53:55 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/gradle/</guid>
-      <description>概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html</description>
+      <description>概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html 安装 推荐使用sdkman 管理gradle。 安装sdkman 1 curl -s &amp;#34;https://get.sdkman.io&amp;#34; | bash 安装脚本会引导你完成所有步骤。 查看安装的版本： 1 sdk</description>
     </item>
     <item>
       <title>xxl-job</title>

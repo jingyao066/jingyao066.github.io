@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>Gradle | Wjy&#39;s Blog</title>
 <meta name="keywords" content="中间件">
-<meta name="description" content="概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html">
+<meta name="description" content="概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html 安装 推荐使用sdkman 管理gradle。 安装sdkman 1 curl -s &#34;https://get.sdkman.io&#34; | bash 安装脚本会引导你完成所有步骤。 查看安装的版本： 1 sdk">
 <meta name="author" content="Wjy">
 <link rel="canonical" href="https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/gradle/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
@@ -61,7 +61,7 @@
 <meta property="og:url" content="https://wjy6.netlify.app/posts/%E5%85%B6%E4%BB%96/gradle/">
   <meta property="og:site_name" content="Wjy&#39;s Blog">
   <meta property="og:title" content="Gradle">
-  <meta property="og:description" content="概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html">
+  <meta property="og:description" content="概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html 安装 推荐使用sdkman 管理gradle。 安装sdkman 1 curl -s &#34;https://get.sdkman.io&#34; | bash 安装脚本会引导你完成所有步骤。 查看安装的版本： 1 sdk">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -70,7 +70,7 @@
     <meta property="article:tag" content="中间件">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle">
-<meta name="twitter:description" content="概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html">
+<meta name="twitter:description" content="概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html 安装 推荐使用sdkman 管理gradle。 安装sdkman 1 curl -s &#34;https://get.sdkman.io&#34; | bash 安装脚本会引导你完成所有步骤。 查看安装的版本： 1 sdk">
 
 
 <script type="application/ld+json">
@@ -99,12 +99,12 @@
   "@type": "BlogPosting",
   "headline": "Gradle",
   "name": "Gradle",
-  "description": "概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html",
+  "description": "概述 官网： https://gradle.org/ 参考： https://docs.gradle.org.cn/current/userguide/userguide.html 安装 推荐使用sdkman 管理gradle。 安装sdkman 1 curl -s \u0026#34;https://get.sdkman.io\u0026#34; | bash 安装脚本会引导你完成所有步骤。 查看安装的版本： 1 sdk",
   "keywords": [
     "中间件"
   ],
-  "articleBody": "概述 官网：\nhttps://gradle.org/\n参考：\nhttps://docs.gradle.org.cn/current/userguide/userguide.html\n",
-  "wordCount" : "10",
+  "articleBody": "概述 官网：\nhttps://gradle.org/\n参考：\nhttps://docs.gradle.org.cn/current/userguide/userguide.html\n安装 推荐使用sdkman 管理gradle。\n安装sdkman 1 curl -s \"https://get.sdkman.io\" | bash 安装脚本会引导你完成所有步骤。\n查看安装的版本：\n1 sdk version 安装gradle 列出所有可用的 Gradle 版本：\n1 sdk list gradle 安装你需要的版本：\n1 sdk install gradle 8.5 可以选择安装多版本的gradle。\n切换gradle版本 1 2 3 4 5 6 7 8 9 10 11 12 13 # 切换到 Gradle 7.6.4 sdk use gradle 7.6.4 # 验证当前版本 gradle -v # 输出应该显示 Gradle 7.6.4 # 切换到 Gradle 8.5 sdk use gradle 8.5 # 再次验证 gradle -v # 输出应该显示 Gradle 8.5 为特定项目切换版本（推荐做法）：\n这是 SDKMAN! 最强大的功能之一。你可以在项目根目录下设置一个默认的 Gradle 版本。当你进入这个目录时，SDKMAN! 会自动切换到该版本。\n1 2 3 4 5 # 首先，cd 到你的项目目录 cd /path/to/your/project # 为当前目录设置 Gradle 版本 sdk env init gradle 7.6.4 这个命令会在项目根目录下创建一个 .sdkmanrc 文件，内容如下：\n1 gradle=7.6.4 现在，当你进入这个项目目录时，SDKMAN! 会提示你是否切换到 .sdkmanrc 中指定的版本。\n为了让这个功能更流畅，你可以在你的 shell 配置文件（如 ~/.zshrc 或 ~/.bash_profile）中开启自动切换功能：\n1 2 # 将下面这行添加到你的 ~/.zshrc 或 ~/.bash_profile 文件中 sdk env auto 之后，每次 cd 进入带有 .sdkmanrc 文件的目录时，版本就会自动切换，无需手动确认。\n其他常用命令 查看当前使用的版本： sdk current gradle 卸载某个版本： sdk uninstall gradle 7.6.4 更新 SDKMAN! 自身： sdk selfupdate ",
+  "wordCount" : "526",
   "inLanguage": "en",
   "datePublished": "2025-10-15T15:53:55Z",
   "dateModified": "2025-10-15T15:53:55Z",
@@ -215,8 +215,26 @@
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#%e6%a6%82%e8%bf%b0" aria-label="概述">概述</a>
+                    <a href="#%e6%a6%82%e8%bf%b0" aria-label="概述">概述</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85" aria-label="安装">安装</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85sdkman" aria-label="安装sdkman">安装sdkman</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e8%a3%85gradle" aria-label="安装gradle">安装gradle</a></li>
+                <li>
+                    <a href="#%e5%88%87%e6%8d%a2gradle%e7%89%88%e6%9c%ac" aria-label="切换gradle版本">切换gradle版本</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" aria-label="其他常用命令">其他常用命令</a>
                 </li>
+            </ul>
+            </li>
+            </ul>
+            </ul>
+            </li>
             </ul>
         </div>
     </details>
@@ -227,6 +245,126 @@
 <a href="https://gradle.org/">https://gradle.org/</a></p>
 <p>参考：<br>
 <a href="https://docs.gradle.org.cn/current/userguide/userguide.html">https://docs.gradle.org.cn/current/userguide/userguide.html</a></p>
+<h1 id="安装">安装<a hidden class="anchor" aria-hidden="true" href="#安装">#</a></h1>
+<p>推荐使用sdkman 管理gradle。</p>
+<h2 id="安装sdkman">安装sdkman<a hidden class="anchor" aria-hidden="true" href="#安装sdkman">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>curl -s &#34;https://get.sdkman.io&#34; | bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装脚本会引导你完成所有步骤。</p>
+<p>查看安装的版本：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sdk version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="安装gradle">安装gradle<a hidden class="anchor" aria-hidden="true" href="#安装gradle">#</a></h2>
+<p>列出所有可用的 Gradle 版本：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sdk list gradle
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装你需要的版本：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sdk install gradle 8.5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以选择安装多版本的gradle。</p>
+<h2 id="切换gradle版本">切换gradle版本<a hidden class="anchor" aria-hidden="true" href="#切换gradle版本">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 切换到 Gradle 7.6.4
+</span></span><span style="display:flex;"><span>sdk use gradle 7.6.4
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 验证当前版本
+</span></span><span style="display:flex;"><span>gradle -v
+</span></span><span style="display:flex;"><span># 输出应该显示 Gradle 7.6.4
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 切换到 Gradle 8.5
+</span></span><span style="display:flex;"><span>sdk use gradle 8.5
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 再次验证
+</span></span><span style="display:flex;"><span>gradle -v
+</span></span><span style="display:flex;"><span># 输出应该显示 Gradle 8.5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>为特定项目切换版本（推荐做法）：</strong></p>
+<p>这是 SDKMAN! 最强大的功能之一。你可以在项目根目录下设置一个默认的 Gradle 版本。当你进入这个目录时，SDKMAN! 会自动切换到该版本。</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 首先，cd 到你的项目目录
+</span></span><span style="display:flex;"><span>cd /path/to/your/project
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># 为当前目录设置 Gradle 版本
+</span></span><span style="display:flex;"><span>sdk env init gradle 7.6.4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个命令会在项目根目录下创建一个 <code>.sdkmanrc</code> 文件，内容如下：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>gradle=7.6.4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在，当你进入这个项目目录时，SDKMAN! 会提示你是否切换到 <code>.sdkmanrc</code> 中指定的版本。</p>
+<p>为了让这个功能更流畅，你可以在你的 shell 配置文件（如 <code>~/.zshrc</code> 或 <code>~/.bash_profile</code>）中开启自动切换功能：</p>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># 将下面这行添加到你的 ~/.zshrc 或 ~/.bash_profile 文件中
+</span></span><span style="display:flex;"><span>sdk env auto
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后，每次 <code>cd</code> 进入带有 <code>.sdkmanrc</code> 文件的目录时，版本就会自动切换，无需手动确认。</p>
+<h4 id="其他常用命令">其他常用命令<a hidden class="anchor" aria-hidden="true" href="#其他常用命令">#</a></h4>
+<ul>
+<li><strong>查看当前使用的版本：</strong> <code>sdk current gradle</code></li>
+<li><strong>卸载某个版本：</strong> <code>sdk uninstall gradle 7.6.4</code></li>
+<li><strong>更新 SDKMAN! 自身：</strong> <code>sdk selfupdate</code></li>
+</ul>
 
 
   </div>
@@ -240,7 +378,7 @@
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
+        <span>&copy; 2026 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
 
     <span>
         Powered by
