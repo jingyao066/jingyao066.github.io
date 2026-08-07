@@ -6,8 +6,15 @@
     <description>Recent content in AI on Wjy&#39;s Blog</description>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 26 May 2026 15:21:18 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 May 2026 15:53:18 +0000</lastBuildDate>
     <atom:link href="https://wjy6.netlify.app/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI 名词解释</title>
+      <link>https://wjy6.netlify.app/posts/ai/ai-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/</link>
+      <pubDate>Wed, 27 May 2026 15:53:18 +0000</pubDate>
+      <guid>https://wjy6.netlify.app/posts/ai/ai-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/</guid>
+      <description>RAG RAG（Retrieval-Augmented Generation，检索增强生成）​ 是一种将 信息检索​ 与 大语言模型（LLM）生成​ 结合的技</description>
+    </item>
     <item>
       <title>AI能代替程序员么</title>
       <link>https://wjy6.netlify.app/posts/ai/ai%E8%83%BD%E4%BB%A3%E6%9B%BF%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B9%88/</link>
@@ -20,7 +27,7 @@
       <link>https://wjy6.netlify.app/posts/ai/ai%E7%BC%96%E8%BE%91%E5%99%A8/</link>
       <pubDate>Fri, 05 Sep 2025 10:57:58 +0000</pubDate>
       <guid>https://wjy6.netlify.app/posts/ai/ai%E7%BC%96%E8%BE%91%E5%99%A8/</guid>
-      <description>前言 参考： https://linux.do/t/topic/836055 https://rysonai.com/ cursor 独立ide。官网下载安装 https://cursor.com/cn augment 直接在idea中搜索插件安装。 claude code claude出的 cli。 参考官网安装： https://code.claude.com/docs/en/overview Gemini cli 安装nodejs。</description>
+      <description>前言 参考： https://linux.do/t/topic/836055 https://rysonai.com/ cursor 独立ide。官网下载安装 https://cursor.com/cn codex 官网： https://openai.com/zh-Hans-CN/codex/ claude code claude出的 cli。 参考官网安装： https://code.claude.com/docs/en/overview Gemini cli 安装nodejs。 1 brew install node 安装 Gemini CLI 1 npm install</description>
     </item>
     <item>
       <title>mcp</title>

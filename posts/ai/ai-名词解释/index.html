@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>AI 名词解释 | Wjy&#39;s Blog</title>
+<meta name="keywords" content="AI">
+<meta name="description" content="RAG RAG（Retrieval-Augmented Generation，检索增强生成）​ 是一种将 信息检索​ 与 大语言模型（LLM）生成​ 结合的技">
+<meta name="author" content="Wjy">
+<link rel="canonical" href="https://wjy6.netlify.app/posts/ai/ai-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://wjy6.netlify.app/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://wjy6.netlify.app/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://wjy6.netlify.app/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://wjy6.netlify.app/apple-touch-icon.png">
+<link rel="mask-icon" href="https://wjy6.netlify.app/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://wjy6.netlify.app/posts/ai/ai-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:url" content="https://wjy6.netlify.app/posts/ai/ai-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/">
+  <meta property="og:site_name" content="Wjy&#39;s Blog">
+  <meta property="og:title" content="AI 名词解释">
+  <meta property="og:description" content="RAG RAG（Retrieval-Augmented Generation，检索增强生成）​ 是一种将 信息检索​ 与 大语言模型（LLM）生成​ 结合的技">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-27T15:53:18+00:00">
+    <meta property="article:modified_time" content="2026-05-27T15:53:18+00:00">
+    <meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AI 名词解释">
+<meta name="twitter:description" content="RAG RAG（Retrieval-Augmented Generation，检索增强生成）​ 是一种将 信息检索​ 与 大语言模型（LLM）生成​ 结合的技">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://wjy6.netlify.app/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "AI 名词解释",
+      "item": "https://wjy6.netlify.app/posts/ai/ai-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI 名词解释",
+  "name": "AI 名词解释",
+  "description": "RAG RAG（Retrieval-Augmented Generation，检索增强生成）​ 是一种将 信息检索​ 与 大语言模型（LLM）生成​ 结合的技",
+  "keywords": [
+    "AI"
+  ],
+  "articleBody": "RAG RAG（Retrieval-Augmented Generation，检索增强生成）​ 是一种将 信息检索​ 与 大语言模型（LLM）生成​ 结合的技术，用来让 AI 回答问题时能基于你提供的私有/最新知识库，而不仅依赖模型训练时的旧知识。\n🔍 核心思想 普通 LLM 只靠\"大脑里记的东西\"回答问题 → 容易过时、幻觉。\nRAG 的做法：\n检索（Retrieval）：用户提问 → 从外部知识库（文档、手册、数据库等）中查最相关的内容\n增强（Augmented）：把检索到的内容作为上下文（Context）拼接到 Prompt 中\n生成（Generation）：LLM 基于【检索到的资料 + 问题】生成答案\n简单来说：先查资料，再让模型根据资料回答\n⚙️ 典型流程 1 2 3 4 5 6 7 8 9 用户提问 ↓ 【向量化问题】→ 在向量数据库中相似度搜索 ↓ 找到相关文档片段（Top-K） ↓ 拼接： \"参考内容：xxx \\n 请基于以上内容回答问题：xxx\" ↓ 大语言模型生成回答 ✅ RAG 的优点 📚 可用私有数据（公司文档、客服知识库、论文等）\n🆕 知识可更新（只需更新知识库，不用重训模型）\n🧠 减少幻觉（要求模型\"根据给定资料回答\"）\n💰 成本低（比微调大模型便宜很多）\n⚠️ 局限与注意 检索质量影响最终效果（垃圾进→垃圾出）\n需做好文档切分、向量化（Embedding）、重排（Rerank）\n对需要复杂多跳推理或强逻辑推理的问题仍有挑战\n📌 常见应用场景 企业知识库 / 内部 Wiki 问答\n客服机器人（基于产品手册）\n法律/医疗文档问答\n代码库 / API 文档问答\nMCP **MCP（Model Context Protocol，模型上下文协议）**​ 是由 Anthropic 于 2024 年底提出的开放标准协议，用于解决 AI 大模型与外部数据源/工具之间的连接问题，可简单理解为 “AI 应用的 USB 接口”——让 AI 模型能统一、安全地访问本地文件、数据库、API、业务系统等外部资源。\n🔑 核心概念 Host（宿主应用）：如 Claude Desktop、VS Code + Copilot、你的 AI 产品 → 运行 MCP Client\nMCP Client：负责与 MCP Server 通信，嵌在 Host 里\nMCP Server：轻量服务，暴露三类能力：\n📖 Resources（资源）：读取文件、数据库记录等（如 file://、db://）\n🛠️ Tools（工具）：执行操作，如调 API、运行脚本、查搜索引擎\n💬 Prompts（提示模板）：预定义的任务提示供 AI 调用\nTransport（传输层）：通常基于 stdio（本地）或 HTTP+SSE（远程）\n✅ 主要优势 对比项 传统 Function Calling/插件 MCP 对接方式 每个工具单独适配 统一协议，写一次到处用 本地资源 难访问 原生支持（文件/进程） 安全控制 散乱 用户显式授权，Server 隔离 生态 封闭 开源、社区共享 MCP Server 📌 典型使用场景 AI 读取你本地代码仓库并解释/重构\nAI 查询公司内部 Wiki / Notion / 数据库\nAI 调用 Jira、GitHub、Slack 等 SaaS API 创建 Issue 或发消息\n浏览器中的 AI 助理通过 MCP 操控页面/标签页\n🛠️ 简单类比 就像 USB 标准​ 让不同外设（鼠标、U盘、键盘）插到任何电脑都能用——\nMCP 让任意 AI 模型统一接入任意外部工具/数据，无需为每个组合单独开发集成。\n",
+  "wordCount" : "1250",
+  "inLanguage": "en",
+  "datePublished": "2026-05-27T15:53:18Z",
+  "dateModified": "2026-05-27T15:53:18Z",
+  "author":{
+    "@type": "Person",
+    "name": "Wjy"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://wjy6.netlify.app/posts/ai/ai-%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wjy's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wjy6.netlify.app/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://wjy6.netlify.app/" accesskey="h" title="Wjy&#39;s Blog (Alt + H)">Wjy&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://wjy6.netlify.app/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/posts" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://wjy6.netlify.app/search" title="🔍搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://wjy6.netlify.app/">Home</a>&nbsp;»&nbsp;<a href="https://wjy6.netlify.app/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      AI 名词解释
+    </h1>
+    <div class="post-meta"><span title='2026-05-27 15:53:18 +0000 UTC'>2026-05-27</span>&nbsp;·&nbsp;Wjy
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#rag" aria-label="RAG">RAG</a><ul>
+                        
+                <li>
+                    <a href="#-%e6%a0%b8%e5%bf%83%e6%80%9d%e6%83%b3" aria-label="🔍 核心思想">🔍 核心思想</a></li>
+                <li>
+                    <a href="#-%e5%85%b8%e5%9e%8b%e6%b5%81%e7%a8%8b" aria-label="⚙️ 典型流程">⚙️ 典型流程</a></li>
+                <li>
+                    <a href="#-rag-%e7%9a%84%e4%bc%98%e7%82%b9" aria-label="✅ RAG 的优点">✅ RAG 的优点</a></li>
+                <li>
+                    <a href="#-%e5%b1%80%e9%99%90%e4%b8%8e%e6%b3%a8%e6%84%8f" aria-label="⚠️ 局限与注意">⚠️ 局限与注意</a></li>
+                <li>
+                    <a href="#-%e5%b8%b8%e8%a7%81%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="📌 常见应用场景">📌 常见应用场景</a></li></ul>
+                </li>
+                <li>
+                    <a href="#mcp" aria-label="MCP">MCP</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#-%e6%a0%b8%e5%bf%83%e6%a6%82%e5%bf%b5" aria-label="🔑 核心概念">🔑 核心概念</a></li>
+                <li>
+                    <a href="#-%e4%b8%bb%e8%a6%81%e4%bc%98%e5%8a%bf" aria-label="✅ 主要优势">✅ 主要优势</a></li>
+                <li>
+                    <a href="#-%e5%85%b8%e5%9e%8b%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="📌 典型使用场景">📌 典型使用场景</a></li>
+                <li>
+                    <a href="#-%e7%ae%80%e5%8d%95%e7%b1%bb%e6%af%94" aria-label="🛠️ 简单类比">🛠️ 简单类比</a>
+                </li>
+            </ul>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="rag">RAG<a hidden class="anchor" aria-hidden="true" href="#rag">#</a></h1>
+<p><strong>RAG（Retrieval-Augmented Generation，检索增强生成）<strong>​ 是一种将 <strong>信息检索</strong>​ 与 <strong>大语言模型（LLM）生成</strong>​ 结合的技术，用来让 AI 回答问题时能基于你提供的</strong>私有/最新知识库</strong>，而不仅依赖模型训练时的旧知识。</p>
+<hr>
+<h2 id="-核心思想">🔍 核心思想<a hidden class="anchor" aria-hidden="true" href="#-核心思想">#</a></h2>
+<p>普通 LLM 只靠&quot;大脑里记的东西&quot;回答问题 → 容易过时、幻觉。</p>
+<p><strong>RAG 的做法：</strong></p>
+<ol>
+<li>
+<p><strong>检索（Retrieval）</strong>：用户提问 → 从外部知识库（文档、手册、数据库等）中查最相关的内容</p>
+</li>
+<li>
+<p><strong>增强（Augmented）</strong>：把检索到的内容作为上下文（Context）拼接到 Prompt 中</p>
+</li>
+<li>
+<p><strong>生成（Generation）</strong>：LLM 基于【检索到的资料 + 问题】生成答案</p>
+</li>
+</ol>
+<blockquote>
+<p>简单来说：<strong>先查资料，再让模型根据资料回答</strong></p>
+</blockquote>
+<hr>
+<h2 id="-典型流程">⚙️ 典型流程<a hidden class="anchor" aria-hidden="true" href="#-典型流程">#</a></h2>
+<div class="highlight"><div style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#727272">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e5e5e5;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>用户提问
+</span></span><span style="display:flex;"><span>   ↓
+</span></span><span style="display:flex;"><span>【向量化问题】→ 在向量数据库中相似度搜索
+</span></span><span style="display:flex;"><span>   ↓
+</span></span><span style="display:flex;"><span>找到相关文档片段（Top-K）
+</span></span><span style="display:flex;"><span>   ↓
+</span></span><span style="display:flex;"><span>拼接： &#34;参考内容：xxx \n 请基于以上内容回答问题：xxx&#34;
+</span></span><span style="display:flex;"><span>   ↓
+</span></span><span style="display:flex;"><span>大语言模型生成回答
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="-rag-的优点">✅ RAG 的优点<a hidden class="anchor" aria-hidden="true" href="#-rag-的优点">#</a></h2>
+<ul>
+<li>
+<p>📚 <strong>可用私有数据</strong>（公司文档、客服知识库、论文等）</p>
+</li>
+<li>
+<p>🆕 <strong>知识可更新</strong>（只需更新知识库，不用重训模型）</p>
+</li>
+<li>
+<p>🧠 <strong>减少幻觉</strong>（要求模型&quot;根据给定资料回答&quot;）</p>
+</li>
+<li>
+<p>💰 <strong>成本低</strong>（比微调大模型便宜很多）</p>
+</li>
+</ul>
+<hr>
+<h2 id="-局限与注意">⚠️ 局限与注意<a hidden class="anchor" aria-hidden="true" href="#-局限与注意">#</a></h2>
+<ul>
+<li>
+<p>检索质量影响最终效果（垃圾进→垃圾出）</p>
+</li>
+<li>
+<p>需做好<strong>文档切分、向量化（Embedding）、重排（Rerank）</strong></p>
+</li>
+<li>
+<p>对需要复杂多跳推理或强逻辑推理的问题仍有挑战</p>
+</li>
+</ul>
+<hr>
+<h2 id="-常见应用场景">📌 常见应用场景<a hidden class="anchor" aria-hidden="true" href="#-常见应用场景">#</a></h2>
+<ul>
+<li>
+<p>企业知识库 / 内部 Wiki 问答</p>
+</li>
+<li>
+<p>客服机器人（基于产品手册）</p>
+</li>
+<li>
+<p>法律/医疗文档问答</p>
+</li>
+<li>
+<p>代码库 / API 文档问答</p>
+</li>
+</ul>
+<hr>
+<h1 id="mcp">MCP<a hidden class="anchor" aria-hidden="true" href="#mcp">#</a></h1>
+<p>**MCP（Model Context Protocol，模型上下文协议）**​ 是由 Anthropic 于 2024 年底提出的开放标准协议，用于解决 <strong>AI 大模型与外部数据源/工具之间的连接问题</strong>，可简单理解为 <strong>&ldquo;AI 应用的 USB 接口&rdquo;</strong>——让 AI 模型能统一、安全地访问本地文件、数据库、API、业务系统等外部资源。</p>
+<hr>
+<h3 id="-核心概念">🔑 核心概念<a hidden class="anchor" aria-hidden="true" href="#-核心概念">#</a></h3>
+<ul>
+<li>
+<p><strong>Host（宿主应用）</strong>：如 Claude Desktop、VS Code + Copilot、你的 AI 产品 → 运行 MCP Client</p>
+</li>
+<li>
+<p><strong>MCP Client</strong>：负责与 MCP Server 通信，嵌在 Host 里</p>
+</li>
+<li>
+<p><strong>MCP Server</strong>：轻量服务，暴露三类能力：</p>
+<ul>
+<li>
+<p>📖 <strong>Resources（资源）</strong>：读取文件、数据库记录等（如 <code>file://</code>、<code>db://</code>）</p>
+</li>
+<li>
+<p>🛠️ <strong>Tools（工具）</strong>：执行操作，如调 API、运行脚本、查搜索引擎</p>
+</li>
+<li>
+<p>💬 <strong>Prompts（提示模板）</strong>：预定义的任务提示供 AI 调用</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Transport（传输层）</strong>：通常基于 <strong>stdio</strong>（本地）或 <strong>HTTP+SSE</strong>（远程）</p>
+</li>
+</ul>
+<hr>
+<h3 id="-主要优势">✅ 主要优势<a hidden class="anchor" aria-hidden="true" href="#-主要优势">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>传统 Function Calling/插件</th>
+<th>MCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对接方式</td>
+<td>每个工具单独适配</td>
+<td>统一协议，写一次到处用</td>
+</tr>
+<tr>
+<td>本地资源</td>
+<td>难访问</td>
+<td>原生支持（文件/进程）</td>
+</tr>
+<tr>
+<td>安全控制</td>
+<td>散乱</td>
+<td>用户显式授权，Server 隔离</td>
+</tr>
+<tr>
+<td>生态</td>
+<td>封闭</td>
+<td>开源、社区共享 MCP Server</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="-典型使用场景">📌 典型使用场景<a hidden class="anchor" aria-hidden="true" href="#-典型使用场景">#</a></h3>
+<ul>
+<li>
+<p>AI 读取你本地代码仓库并解释/重构</p>
+</li>
+<li>
+<p>AI 查询公司内部 Wiki / Notion / 数据库</p>
+</li>
+<li>
+<p>AI 调用 Jira、GitHub、Slack 等 SaaS API 创建 Issue 或发消息</p>
+</li>
+<li>
+<p>浏览器中的 AI 助理通过 MCP 操控页面/标签页</p>
+</li>
+</ul>
+<hr>
+<h3 id="-简单类比">🛠️ 简单类比<a hidden class="anchor" aria-hidden="true" href="#-简单类比">#</a></h3>
+<blockquote>
+<p>就像 <strong>USB 标准</strong>​ 让不同外设（鼠标、U盘、键盘）插到任何电脑都能用——</p>
+<p><strong>MCP 让任意 AI 模型统一接入任意外部工具/数据，无需为每个组合单独开发集成。</strong></p>
+</blockquote>
+<hr>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://wjy6.netlify.app/tags/ai/">AI</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://wjy6.netlify.app/">Wjy&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
